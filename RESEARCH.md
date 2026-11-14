@@ -88,6 +88,7 @@ Format, length and judging requirements for the video and presentation: **not ye
 - [x] Workshops are judged separately from the main project ✅
 - [x] Final project due **noon Sunday (Nov 15)** ✅
 - [ ] Can one project win the overall prize plus multiple track or sponsor prizes?
+- [ ] Which tracks are for the main project and which are workshop-only?
 - [ ] Future of Intelligence prizes (still "Coming soon")
 - [ ] Judging format and rubric; presentation length
 - [ ] Demo video requirements (length, where to host)
