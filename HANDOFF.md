@@ -1,60 +1,64 @@
 # Team Handoff: Hack The Nest 2026
 
-_For teammates' AI assistants. Load this file first. Last updated 2026-11-14._
+_Context for teammates and their AI assistants. Last updated 2026-11-14._
 
-Details live in [`RESEARCH.md`](RESEARCH.md) (event research) and [`IDEAS.md`](IDEAS.md) (project idea). This file is the short version.
-
----
-
-## Working Rules (from the team lead)
-- **No assumptions.** Only state facts that are confirmed. Mark anything unconfirmed as such.
-- Suggestions are fine but must be **clearly labeled optional** and kept brief.
-- **Don't add ideas to `IDEAS.md`** until the team approves them. Propose them in chat first.
-- Keep docs short and readable.
+This is an overview to get you oriented, not a spec. Fuller details are in [`RESEARCH.md`](RESEARCH.md) (event research) and [`IDEAS.md`](IDEAS.md) (project idea). Where something isn't decided, use your judgment and talk it through with the team.
 
 ---
 
-## Event Facts (confirmed)
-- **Hack The Nest v1.0**, Eastern Michigan University, Ypsilanti, MI. Nov 14–15, 2026, 24 hours, in person. Run by GDG on Campus EMU. MLH member event.
-- Teams of up to 4.
-- **Deadlines (Devpost):**
-  - **Project draft:** by **midnight Sat Nov 14**
-  - **Final project + demo video + presentation:** by **noon Sun Nov 15**
-- **Workshops are separate** from the main project submission.
-- First edition, so there are no previous winners to study.
+## How We've Been Working
 
-## Prize Tracks (summary; full table in `RESEARCH.md`)
-- **Overall:** PS5 each / Nintendo Switch each / monitor each
-- **EMU CS Dept "best code":** $1,000 scholarship. Any track, judged on architecture, algorithms and robustness
-- **Sponsor tracks:** Future of Intelligence (OpenAI + Exa), Mind and Machine (EEG), Future of Money (Breez), Beyond the Horizon (NASA data), Quantum Computing, Code of Life (Seqera), ElevenLabs, Base44, SSOJet, Best Beginner, Capture the Flag
-- **MLH prizes:** Gemini API, Solana, Tiger Data, Vultr, MongoDB Atlas, GoDaddy domain, DEV Writing Challenge ($100), SpaceXSI raffle (requires building with Cursor + Grok Bot)
-- **Unconfirmed:** whether one project can win several prizes, and which tracks count for the main project vs workshops
+The general approach so far:
+
+- **Research first, and keep it accurate.** Event facts came from the official site (hackthenest.tech) and MLH's prize page. Anything unconfirmed is marked as such rather than guessed. We'd like to keep it that way: if something isn't known, saying so is better than filling the gap.
+- **Short, readable docs.** Brief and easy to scan is preferred over exhaustive.
+- **Suggestions are welcome, kept low-key.** Tips and ideas are useful when they're labeled optional and don't dominate the docs.
+- **Ideas are discussed before they're written down.** New ideas get shared with the team first, and they go into `IDEAS.md` once the team agrees they're worth pursuing.
+- **Usefulness and execution over flash.** Several directions were explored (hardware, sponsor-specific builds and others). The team leaned toward something genuinely useful that can be built well and polished, rather than an idea tied to particular hardware or a single sponsor.
+- **Tracks support the project; they don't steer it.** Sponsor and MLH tracks are best treated as features or build tools that fit naturally, not as the reason for the project.
 
 ---
 
-## Chosen Project: LeetCode for AI Prompting
-- Users get a **goal-state web page and pictures of that goal state**.
-- They **prompt a small model** to try to reproduce it.
-- Results are **graded on deterministic factors**.
-- A **leaderboard** ranks player scores, like LeetCode.
-- **Purpose:** help people learn prompt engineering.
+## The Event
 
-**Possible extra challenge types (optional, not decided):**
-- 3D scenes: the model writes scene code; grade by fixed-angle renders and scene-structure comparison
-- ElevenLabs voice: match a goal audio clip; grade by transcript, timing and audio features
+**Hack The Nest v1.0** is the first student-led hackathon at Eastern Michigan University (Ypsilanti, MI), run by GDG on Campus EMU. It runs Nov 14–15, 2026: 24 hours, in person, MLH member event, teams of up to 4. Being the first edition, there are no past winners to learn from.
 
-**Possible track tie-ins (optional, not decided):** see the table in `IDEAS.md`. Examples: the grading engine for the CS Dept track; OpenAI or Gemini as models players prompt; MongoDB for data and the leaderboard; a GoDaddy domain; a DEV write-up.
+**Deadlines (Devpost):**
+- Project draft: by **midnight, Sat Nov 14**
+- Final project, demo video and presentation: by **noon, Sun Nov 15**
 
-**Not decided yet:** stack, architecture, which model players prompt, grading metrics, task split.
+**How the prizes are structured** (as we understand it):
+- An **overall prize** for the best project.
+- **Main tracks:** Future of Intelligence (OpenAI + Exa), Mind and Machine (brain-computer interfaces), Future of Money (Breez), Best Beginner, and a Capture the Flag running alongside the hackathon.
+- **Sponsor, academic and MLH tracks:** NASA data (Beyond the Horizon), Quantum Computing, Code of Life (Seqera), ElevenLabs, Base44, SSOJet, the EMU CS Department's "best code" track (open to any project), and MLH's prizes (Gemini, MongoDB Atlas, Tiger Data, Vultr, Solana, GoDaddy domain, DEV Writing Challenge, SpaceXSI raffle).
+- **Workshops are separate** from the main project.
+
+Prizes and requirements for each are in `RESEARCH.md`.
+
+**Still unclear:** whether one project can win several prizes, which tracks count toward the main project, the judging rubric, and the presentation and demo video requirements.
 
 ---
 
-## Team Constraints
-- The team builds with **Claude Code**: logic, APIs and 2D web UIs are fast; heavy 3D modeling or rendering by hand is hard.
-- Priority: **an idea we can fully build and polish**, aiming for the overall prize. Workshops and side prizes come second.
+## The Project: LeetCode for AI Prompting
 
-## Open Questions
-- Can one project win multiple prizes?
-- Which tracks count for the main project?
-- Judging rubric, presentation length, demo video requirements
-- Future of Intelligence prize details ("Coming soon")
+**Purpose:** help people get better at prompt engineering through practice, with fair and measurable feedback, in the spirit of how LeetCode helps people practice coding.
+
+**The core idea:**
+- Players see a goal state: a web page and pictures of what it should look like.
+- They write prompts for a small model to try to reproduce it.
+- The result is scored on deterministic factors, so grading is consistent and fair.
+- A leaderboard ranks players.
+
+That loop (challenge → prompt → output → score → leaderboard) is the heart of it. Most else is open.
+
+**Possible directions the team has talked about (none decided):**
+- Extra challenge types, such as 3D scenes (the model writes scene code, graded on renders and scene structure) or ElevenLabs voice (matching a goal audio clip).
+- Folding tracks in where they fit naturally. For example, the grading engine could interest the CS Dept "best code" judges, OpenAI or Gemini could be models players prompt, and MongoDB could store data. `IDEAS.md` has a fuller list.
+
+**Not yet decided:** stack, architecture, which model players prompt, how grading is measured, and how work is split. These are open for discussion.
+
+---
+
+## Useful Context
+- The team builds with **Claude Code**. Logic, APIs and 2D web interfaces come together quickly; building 3D models or heavy rendering by hand is harder.
+- The main goal is the overall prize. Side prizes are nice to have.
