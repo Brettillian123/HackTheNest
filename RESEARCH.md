@@ -88,24 +88,22 @@ These are our recommendations, not official rules.
 - Skip **Base44** if we build custom code; it's a community vote and a different stack.
 
 **Execution:**
-- Freeze features around **8 AM Sunday**, about 4 hours before the noon deadline. Follow the Sunday timeline in section 6.
+- Leave buffer time before the noon deadline for the demo video and presentation.
 - The live demo must work. Have a recorded fallback.
 - Talk to the OpenAI, Exa and MSGC people early, ask what impresses them, and mention it in the pitch.
 
 ---
 
-## 6. Final Submission Checklist (due noon Sunday)
+## 6. Submission Requirements ✅
 
-- [ ] **Demo video** (about 2–3 min, uploaded to YouTube or Vimeo and linked on Devpost)
-  - 0:00–0:20: the problem, with one concrete person or scenario
-  - 0:20–2:00: a live walkthrough of the working product, showing the sponsor tech in use (OpenAI/Exa, etc.)
-  - 2:00–2:30: how it works (architecture in one slide), what's next
-- [ ] **Presentation deck** (5–7 slides): Problem → Solution → Live demo → How it works / tech stack → Sponsor tech used → Impact and next steps → Team
-- [ ] Devpost write-up: what it does, how we built it, challenges, what we learned. Tag every track and sponsor prize we're entering
-- [ ] Public repo with a clear README (setup steps, screenshots, architecture), clean enough for the CS Dept judges
-- [ ] A rehearsed pitch, timed to the judging slot, plus a recorded backup in case the live demo fails
+_Only confirmed requirements are listed. Add details as they're announced._
 
-**Sunday timeline:** 8 AM feature freeze → 8–9:30 record and edit the video → 9:30–10:30 finish the deck and Devpost write-up → 10:30–11:15 rehearse the pitch → **submit by 11:30** (30-minute buffer before noon).
+- [ ] **Project draft** on Devpost by **midnight Sat Nov 14**
+- [ ] **Final project** on Devpost by **noon Sun Nov 15**
+- [ ] **Demo video**, ready by noon Sunday
+- [ ] **Presentation**, ready by noon Sunday
+
+Format, length and judging requirements for the video and presentation: **not yet known**.
 
 ---
 
@@ -116,5 +114,6 @@ These are our recommendations, not official rules.
 - [x] Final project due **noon Sunday (Nov 15)** ✅
 - [ ] Can one project win the overall prize plus multiple track or sponsor prizes?
 - [ ] Future of Intelligence prizes (still "Coming soon")
-- [ ] Judging format and rubric; pitch length
+- [ ] Judging format and rubric; presentation length
+- [ ] Demo video requirements (length, where to host)
 - [ ] Full workshop schedule (only the g.tec Sat 2 PM workshop is confirmed)
