@@ -69,32 +69,7 @@ _Source: the track data behind each "See track" button on hackthenest.tech, pull
 
 ---
 
-## 5. Strategy to Win (Recommendations)
-
-These are our recommendations, not official rules.
-
-**Key insight: stack prizes.** The CS Dept track explicitly accepts *any track*. Most sponsor prizes are "Best Use of X" and probably stack too (⚠️ confirm).
-
-**Recommended target stack:**
-1. **Overall** (PS5s) and **Future of Intelligence**: build a polished, real-product-feeling AI agent on **OpenAI + Exa** live-web search.
-2. **CS Dept ($1,000)**: keep the architecture clean, use real algorithms, add tests and a tidy repo. Judges look under the hood, so this costs little extra if we plan for it.
-3. **Cheap add-ons that fit an AI agent:** **ElevenLabs** (a voice interface), **MongoDB Atlas** (database), **Gemini API**, and a **GoDaddy domain** (near-free MLH prize).
-4. **Theme it to stand out.** Pairing the agent with a sponsor dataset gives a second track shot with less competition than generic AI. The best fits are **NASA data with a Michigan angle**, such as Great Lakes or Detroit heat (Beyond the Horizon), and an **assistive tech** angle.
-
-**Other angles:**
-- **Breez bounties pay every entry that clears the bar.** That's nearly guaranteed if one teammate can spare the time.
-- **Mind and Machine** has hardware on site and probably few teams, a high win chance for a BCI-curious team. Attend the g.tec workshop (Sat 2 PM).
-- **Capture the Flag** runs separately all weekend. A teammate could chip away at it during downtime.
-- Skip **Base44** if we build custom code; it's a community vote and a different stack.
-
-**Execution:**
-- Leave buffer time before the noon deadline for the demo video and presentation.
-- The live demo must work. Have a recorded fallback.
-- Talk to the OpenAI, Exa and MSGC people early, ask what impresses them, and mention it in the pitch.
-
----
-
-## 6. Submission Requirements ✅
+## 5. Submission Requirements ✅
 
 _Only confirmed requirements are listed. Add details as they're announced._
 
@@ -107,7 +82,7 @@ Format, length and judging requirements for the video and presentation: **not ye
 
 ---
 
-## 7. Open Questions (ask at check-in)
+## 6. Open Questions (ask at check-in)
 
 - [x] Platform: **Devpost**. Main project draft due **midnight tonight (Nov 14)** ✅
 - [x] Workshops are judged separately from the main project ✅
@@ -117,3 +92,16 @@ Format, length and judging requirements for the video and presentation: **not ye
 - [ ] Judging format and rubric; presentation length
 - [ ] Demo video requirements (length, where to host)
 - [ ] Full workshop schedule (only the g.tec Sat 2 PM workshop is confirmed)
+
+---
+
+## Appendix: Optional Tips
+
+_These are suggestions only, not facts or a plan. Use or ignore them._
+
+- The CS Dept track accepts projects from any track, so it may be worth aiming for alongside another track.
+- Several sponsor prizes ("Best Use of X") might fit alongside the main project. Check the rules first.
+- Breez says every entry that meets its standard wins a bounty.
+- The g.tec workshop (Sat 2 PM) is useful if the team is interested in Mind and Machine.
+- Talking to sponsor reps early can show what they're hoping to see.
+- Leave buffer time before the noon deadline. Keep a recorded backup of the demo.
