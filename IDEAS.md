@@ -12,7 +12,10 @@ _Chosen direction: **Idea #1**._
 - A leaderboard ranks player scores, like LeetCode.
 - Purpose: help people learn prompt engineering.
 
-### Possible track features (optional)
+### Possible extra challenge types (optional)
+- **3D challenges:** players prompt a model to write 3D scene code (e.g. Three.js) that matches a goal scene. Grading stays deterministic: render from fixed camera angles and compare images, and/or compare the scene structure (object types, positions, sizes, colors). The model produces the 3D content; we only build the renderer and grader.
+- **Voice challenges (ElevenLabs):** players prompt to produce speech that matches a goal audio clip (words, pacing, pauses, delivery). Grading stays deterministic: compare the transcript (word error rate), duration, speaking rate, pause timing and pitch/energy profile using standard audio analysis.
+
 _Ways the tracks could fit in as features or build tools. None of these are decided._
 
 | Track | Possible fit |
