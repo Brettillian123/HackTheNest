@@ -2,6 +2,9 @@
 
 _Updated 2026-11-14. ✅ means verified on the official site, [hackthenest.tech](https://hackthenest.tech/). ⚠️ means unconfirmed, so check at check-in._
 
+> ⏰ **DEADLINE: Main project draft due on Devpost by midnight tonight (Sat Nov 14).** Submit a rough draft early, then keep updating it.
+> **Workshops are separate** from the main project submission.
+
 ---
 
 ## 1. Event at a Glance
@@ -92,7 +95,9 @@ These are our recommendations, not official rules.
 
 ## 6. Open Questions (ask at check-in)
 
-- [ ] Submission deadline and platform (Devpost?)
+- [x] Platform: **Devpost**. Main project draft due **midnight tonight (Nov 14)** ✅
+- [x] Workshops are judged separately from the main project ✅
+- [ ] Final submission deadline (after the draft)
 - [ ] Can one project win the overall prize plus multiple track or sponsor prizes?
 - [ ] Future of Intelligence prizes (still "Coming soon")
 - [ ] Judging format and rubric; pitch length
