@@ -50,7 +50,21 @@ _Source: the track data behind each "See track" button on hackthenest.tech, pull
 | **Best Use of ElevenLabs** | **ElevenLabs** | Voice: TTS, voice agents, STT, custom voices. Free Creator plan for a month | 🥇 Scale plan 3 months each · 🥈 Pro plan 3 months each |
 | **Best Use of Base44** | **Base44** | App built with the Base44 AI app builder, with a live link by demo time. **Judged by community vote** | 🥇 Ray-Ban Meta glasses + plan each · 🥈 AirPods + plan each · 🥉 plan each |
 | **Best Use of SSOJet** | **SSOJet** | Add SSO or secure login with SSOJet (free plan) | 🥇🥈 SSOJet business licenses |
-| **MLH Tracks** | **MLH** | Best Use of **Gemini API** · **Solana** · **Tiger Data** · **Vultr** · **MongoDB Atlas** · Best Domain from **GoDaddy Registry** · DEV Writing Challenge · "Build Your Hackathon A-Team with SpaceXSI" | Set by MLH (see mlh.io) |
+| **MLH Tracks** | **MLH** | Best Use of **Gemini API** · **Solana** · **Tiger Data** · **Vultr** · **MongoDB Atlas** · Best Domain from **GoDaddy Registry** · DEV Writing Challenge · "Build Your Hackathon A-Team with SpaceXSI" | See MLH prizes below |
+
+### MLH prizes ✅
+_Source: [mlh.com/events/hack-the-nest-96/prizes](https://www.mlh.com/events/hack-the-nest-96/prizes)_
+
+| Category | Prize | Requirement |
+|---|---|---|
+| Build Your Hackathon A-Team with SpaceXSI | Mechanical keyboard (raffle) | Build with **Cursor and Grok Bot** to enter the raffle |
+| Best Use of Gemini API | MLH swag kits | Use Google Gemini |
+| Best Use of Solana | Unruggable hardware wallets | Build on Solana |
+| Best Use of Tiger Data | Stream Deck Mini | Use Tiger Data (database) |
+| Best Use of Vultr | Assorted prizes | Use Vultr (cloud hosting) |
+| DEV Writing Challenge | $100 | Publish a project write-up on DEV |
+| Best Use of MongoDB Atlas | M5Stack IoT kit | Use MongoDB Atlas |
+| Best Domain Name from GoDaddy Registry | Digital gift card | Register a domain via GoDaddy Registry |
 
 ---
 
