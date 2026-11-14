@@ -1,8 +1,6 @@
 # Hack The Nest 2026: Research Brief
 
-_Compiled 2026-11-14. ✅ means verified in at least one source. ⚠️ means sources disagree or the fact could not be confirmed, so check it at check-in or on the official site._
-
-> **Caveat:** The research environment blocked direct access to hackthenest.tech, Devpost, the GDG page and news sites. Facts below come from search-engine summaries of those pages. Prize amounts, exact tracks and judging details were **not published or not reachable**. Get them at the opening ceremony and add them below.
+_Updated 2026-11-14. ✅ means verified on the official site, [hackthenest.tech](https://hackthenest.tech/). ⚠️ means unconfirmed, so check at check-in._
 
 ---
 
@@ -10,81 +8,92 @@ _Compiled 2026-11-14. ✅ means verified in at least one source. ⚠️ means so
 
 | | |
 |---|---|
-| **Event** | Hack The Nest, the **first student-led hackathon at Eastern Michigan University (EMU)** ✅ |
-| **Organizer** | GDG on Campus EMU (Google Developer Groups). Founder: Chanuth Jayatissa. Team of about 20 with 5 committee leads ✅ |
-| **Dates** | **Nov 14–15, 2026** ✅. Exact start and end times conflict between sources ⚠️ |
-| **Location** | EMU, Ypsilanti, MI. Check-in at the Student Center, hacking in Halle Library ✅ |
-| **Format** | In person, about 24 hours, free ✅ |
-| **Eligibility** | High school and college students, no experience required ✅ |
-| **Team size** | Up to 4 ⚠️ (one source) |
-| **Expected size** | 500+ ⚠️ (other sources say a 500 cap or 1,000) |
-| **MLH** | Appears MLH-affiliated: the site has an `/mlh/contest-terms` page ✅. Official MLH prize list: hack.mlh.io/prizes |
+| **Event** | Hack The Nest v1.0, the **first student-led hackathon at Eastern Michigan University** ✅ |
+| **Organizer** | GDG on Campus EMU (Google Developer Groups). Founder: Chanuth Jayatissa ✅ |
+| **Dates** | **Nov 14–15, 2026**, 24 hours of build time ✅. Exact start and end times conflict in news coverage ⚠️ |
+| **Location** | EMU, Ypsilanti, MI. Check-in at the Student Center, hacking in Halle Library (per news coverage) |
+| **Who** | College and high school students, up to 500 hackers, free ✅ |
+| **Teams** | Up to 4 people; team matching at the start ✅ |
+| **MLH** | Official MLH member event ✅ |
 
-**Official links:** [hackthenest.tech](https://hackthenest.tech/) · [GDG event page](https://gdg.community.dev/events/details/google-gdg-on-campus-eastern-michigan-university-presents-hack-the-nest/) · [X: @HackThe_Nest](https://x.com/HackThe_Nest) · [EMU Today story](https://today.emich.edu/story/story/13394) · [Eastern Echo: what to know](https://www.easternecho.com/article/2026/11/what-to-know-about-the-first-ever-student-led-hackathon-at-emu-hack-the-nest)
+Links: [Site](https://hackthenest.tech/) · [GDG page](https://gdg.community.dev/events/details/google-gdg-on-campus-eastern-michigan-university-presents-hack-the-nest/) · [X](https://x.com/HackThe_Nest) · [Instagram](https://www.instagram.com/hack_the_nest) · [Linktree](https://linktr.ee/hackthenest.org)
 
 ---
 
-## 2. Tracks & Prizes
+## 2. Tracks & Prizes ✅
 
-- The official site describes **sponsor, academic and MLH tracks**, and said **"four prize tracks"** would be revealed later ✅
-- Prize amounts, track names and judging criteria: **not found** ⚠️
+_Source: the track data behind each "See track" button on hackthenest.tech, pulled 2026-11-14._
 
-**To fill in at opening ceremony:**
+### Main tracks
 
-| Track | Prize | What judges want | Our fit? |
+| Track | Led by | What they want | Prizes |
 |---|---|---|---|
-| Overall / Grand Prize | | | |
-| Track 1 | | | |
-| Track 2 | | | |
-| Track 3 | | | |
-| Track 4 | | | |
-| MLH side prizes | | | |
+| **Hack The Nest (Overall)** | — | Best project overall | 🥇 **PS5 each** · 🥈 Nintendo Switch each · 🥉 Monitor each |
+| **Future of Intelligence** (AI/ML) | **OpenAI**, with **Exa** | Agents, apps or tools built on OpenAI models and Exa's AI search engine, reasoning over the live web. *"Polish it like a real product."* $50 in Exa credits per hacker | "Coming soon" |
+| **Mind and Machine** (BCI) | **g.tec**, with **PiEEG** | Brain-computer interface projects. g.tec Unicorn EEG hardware on site, 7 brain-signal datasets, PiEEG boards and cloud streams. Suggested directions: video games, assistive tech, data science. **g.tec workshop Sat 2 PM** | 🥇 g.tec Unicorn Hybrid Black headset (one for the team) · 🥈 2× PiEEG Octopus 16 boards · 🥉 Logitech MX Keys S each |
+| **Future of Money** | **Breez** | Working app built with the **Breez SDK** (Bitcoin/Lightning payments) that solves one of 10 bounties; a starter template is provided. Include a write-up of how you built it, since it becomes an open-source guide | **A bounty for every entry that meets Breez's bar** |
+| **Best Beginner** | — | Teams where most members are first-timers. Judged on growth, not polish | Logitech MX Master 4 each |
+| **Capture the Flag** | — | Separate CTF all weekend (ciphers, vulnerable apps, hidden files). Most flags wins | Flipper Zero each |
+
+### Sponsor, academic & side tracks
+
+| Track | Led by | What they want | Prizes |
+|---|---|---|---|
+| **Beyond the Horizon** | **MSGC + NASA open data** | Analysis, map, model, game or teaching tool using NASA APIs, Landsat, MODIS, Worldview, Prithvi AI models, or ISS, exoplanet or JWST data. **Michigan ideas welcome** (Great Lakes ice, algal blooms, Detroit heat) | Celestron Travel Scope 60 each |
+| **Quantum Computing** | **Quantum Rings** | A game, visualizer or algorithm demo on the Quantum Rings SDK (free 200-qubit license), with the quantum part *explained in plain words* | Internship interview (2027), compute credits, Turtle Beach Stealth 700 each |
+| **Department of CS Track** | **EMU CS Dept** | *"The best code wins."* Clean architecture, smart algorithms, robust code. **Any idea, any stack, any track** | **$1,000 scholarship** ($250 each) |
+| **Code of Life** | **Seqera** (Nextflow) | Bioinformatics pipelines on the Seqera Platform with its AI Co-Scientist, nf-core pipelines and 12 datasets. Themes: teaching, precision medicine, single-cell, cancer, health data. No real patient data | $250 credits, platform access, up to 8 hours of mentoring |
+| **Best Use of ElevenLabs** | **ElevenLabs** | Voice: TTS, voice agents, STT, custom voices. Free Creator plan for a month | 🥇 Scale plan 3 months each · 🥈 Pro plan 3 months each |
+| **Best Use of Base44** | **Base44** | App built with the Base44 AI app builder, with a live link by demo time. **Judged by community vote** | 🥇 Ray-Ban Meta glasses + plan each · 🥈 AirPods + plan each · 🥉 plan each |
+| **Best Use of SSOJet** | **SSOJet** | Add SSO or secure login with SSOJet (free plan) | 🥇🥈 SSOJet business licenses |
+| **MLH Tracks** | **MLH** | Best Use of **Gemini API** · **Solana** · **Tiger Data** · **Vultr** · **MongoDB Atlas** · Best Domain from **GoDaddy Registry** · DEV Writing Challenge · "Build Your Hackathon A-Team with SpaceXSI" | Set by MLH (see mlh.io) |
 
 ---
 
-## 3. Sponsors & Partners
+## 3. Sponsors ✅
 
-Confirmed by name ✅, with tiers and specific challenges unknown:
-
-| Sponsor | What they'd likely reward (our inference, not confirmed) |
-|---|---|
-| **OpenAI** | Meaningful, non-trivial use of the OpenAI API (agents, tool use, multimodal), not just a chat wrapper |
-| **IBM** | Use of IBM AI or cloud tools (watsonx, IBM Cloud) |
-| **NASA / Michigan Space Grant Consortium** | Space, earth science or STEM-education themes; using NASA open data (api.nasa.gov, Earthdata) |
-| **Google (GDG host)** | Not a confirmed sponsor, but the organizer is a Google club, so Google tech such as Gemini, Firebase or Cloud may go down well |
-
-Workshops and side events: **not found** ⚠️. Check the schedule at check-in.
+- **Track sponsors:** OpenAI, Exa, g.tec, PiEEG, Breez, MSGC/NASA, Quantum Rings, Seqera, ElevenLabs, Base44, SSOJet, EMU CS Department
+- **Other sponsors listed:** IBM, Kawasaki Robotics, and MLH's button partner. None of these has a track
+- **MLH partners:** Google Gemini, Solana, Tiger Data, Vultr, MongoDB, GoDaddy Registry
+- **Snacks and prize partners:** Logitech, Celsius, Red Bull, Ryse; Compass Detroit is also listed
 
 ---
 
 ## 4. Previous Winners
 
-**There are no previous winners for this event.** 2026 is the first EMU Hack The Nest ✅, so there is no past gallery to copy.
-
-A separate, unrelated **high school hackathon of the same name** runs in the DMV area (Tysons, VA, hackthenest.org; about 300 hackers, 36 hours). Its 2023 Devpost listed **$18,900 in prizes**, a Grand Prize and a **Social Good** track, with judging on **technicality, creativity, functionality and presentation** ✅ (secondhand). We could not get its winning projects. It is a different organizer, so treat it only as a general signal.
+**None exist.** This is the first EMU Hack The Nest (v1.0), so there is no gallery to study. A same-named high school hackathon in Virginia (hackthenest.org) is unrelated. Its 2023 edition judged on **technicality, creativity, functionality and presentation**, which is a reasonable default if this event's rubric isn't published.
 
 ---
 
-## 5. How to Get an Edge (Recommendations)
+## 5. Strategy to Win (Recommendations)
 
 These are our recommendations, not official rules.
 
-1. **Stack prizes.** Build one project that is eligible for the overall prize, one main track and two or three sponsor or MLH prizes at once. Most hackathons allow this; confirm in the rules.
-2. **Use a sponsor's tech deeply.** OpenAI is the most likely fit. Add NASA open data if the idea allows. Judges notice when a sponsor API is central to the project rather than bolted on.
-3. **Optimize for a first-year event.** New organizers and judges tend to reward a **working live demo**, a **clear real-world problem** (local or community impact plays well at a university event), and **polish**.
-4. **Assume the standard criteria:** technicality, creativity, functionality and presentation. Spend the **last 2–3 hours on the demo and pitch**, not on new features.
-5. **Scope small, finish strong.** In a 24-hour event, a reliable core feature beats an ambitious half-built one. Freeze features about 4 hours before the deadline.
-6. **Talk to sponsors early.** Ask the OpenAI, IBM and NASA/MSGC reps what they want to see, and mention their input in the pitch.
-7. **Side prizes and workshops:** attend the workshops that line up with prizes we're targeting. MLH side prizes are usually low effort if we already use that tech.
-8. **Submission hygiene:** a public repo with a README, a short demo video, screenshots and a clear Devpost write-up (if they use Devpost). Submit early and update it later.
+**Key insight: stack prizes.** The CS Dept track explicitly accepts *any track*. Most sponsor prizes are "Best Use of X" and probably stack too (⚠️ confirm).
+
+**Recommended target stack:**
+1. **Overall** (PS5s) and **Future of Intelligence**: build a polished, real-product-feeling AI agent on **OpenAI + Exa** live-web search.
+2. **CS Dept ($1,000)**: keep the architecture clean, use real algorithms, add tests and a tidy repo. Judges look under the hood, so this costs little extra if we plan for it.
+3. **Cheap add-ons that fit an AI agent:** **ElevenLabs** (a voice interface), **MongoDB Atlas** (database), **Gemini API**, and a **GoDaddy domain** (near-free MLH prize).
+4. **Theme it to stand out.** Pairing the agent with a sponsor dataset gives a second track shot with less competition than generic AI. The best fits are **NASA data with a Michigan angle**, such as Great Lakes or Detroit heat (Beyond the Horizon), and an **assistive tech** angle.
+
+**Other angles:**
+- **Breez bounties pay every entry that clears the bar.** That's nearly guaranteed if one teammate can spare the time.
+- **Mind and Machine** has hardware on site and probably few teams, a high win chance for a BCI-curious team. Attend the g.tec workshop (Sat 2 PM).
+- **Capture the Flag** runs separately all weekend. A teammate could chip away at it during downtime.
+- Skip **Base44** if we build custom code; it's a community vote and a different stack.
+
+**Execution:**
+- Freeze features about 4 hours before the deadline. Spend the last 2–3 hours on the demo, video, README and pitch.
+- The live demo must work. Have a recorded fallback.
+- Talk to the OpenAI, Exa and MSGC people early, ask what impresses them, and mention it in the pitch.
 
 ---
 
 ## 6. Open Questions (ask at check-in)
 
-- [ ] Exact submission deadline and platform (Devpost?)
-- [ ] The four tracks, prize amounts and judging rubric
-- [ ] Sponsor challenges and required APIs
-- [ ] Can one project win multiple prizes?
-- [ ] Workshop schedule and any workshop prizes
-- [ ] Judging format: science fair or stage pitch, and how long
+- [ ] Submission deadline and platform (Devpost?)
+- [ ] Can one project win the overall prize plus multiple track or sponsor prizes?
+- [ ] Future of Intelligence prizes (still "Coming soon")
+- [ ] Judging format and rubric; pitch length
+- [ ] Full workshop schedule (only the g.tec Sat 2 PM workshop is confirmed)
