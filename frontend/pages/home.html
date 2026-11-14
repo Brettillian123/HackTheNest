@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f2" />
+    <title>PromptDyno — Build what you imagine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="PromptDyno home"><span class="brand-mark">P<span>↗</span></span><span>Prompt<span class="brand-light">Dyno</span></span></a>
+      <nav class="topnav"><a class="nav-active" href="#challenge">Challenges</a><a href="#leaderboard">Leaderboard</a><a href="#how-it-works">How it works</a></nav>
+      <button class="profile" aria-label="Your profile"><span class="avatar">Y</span><span class="profile-name">You</span><span class="chevron">⌄</span></button>
+    </header>
+
+    <main id="challenge">
+      <section class="intro">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> THE PROMPTING GYM <span class="eyebrow-rule"></span> CHALLENGE 01</div>
+        <div class="intro-row"><div><h1>Make it <span>click.</span></h1><p class="subtitle">A little practice goes a long way. Recreate the page below with a prompt.</p></div><div class="streak"><span class="streak-icon">✳</span><div><b id="streak-count">0 day streak</b><small>Keep your momentum</small></div></div></div>
+      </section>
+
+      <section class="test-object-card" aria-labelledby="test-object-title">
+        <div><div class="eyebrow">DATABASE CONNECTION CHECK</div><h2 id="test-object-title">MongoDB test object</h2><p>Save a small test record to the <code>testObjects</code> collection.</p></div>
+        <div class="test-object-action"><button id="create-test-object" class="build-button"><span>Create test object</span><span class="button-arrow">↗</span></button><p id="test-object-status" role="status" aria-live="polite">Nothing saved yet.</p></div>
+      </section>
+
+      <section class="challenge-card">
+        <div class="challenge-heading"><div class="challenge-title"><span class="challenge-number">01</span><div><div class="title-line"><h2>The daily pour</h2><span class="level">FOUNDATIONS</span></div><p>Recreate a clean, editorial landing page for a neighborhood coffee shop.</p></div></div><button class="more" aria-label="More challenge details">···</button></div>
+        <div class="workspace">
+          <section class="reference-panel">
+            <div class="panel-top"><div class="panel-label"><span class="target-icon">⊙</span> THE TARGET</div><button id="open-reference" class="expand-link">View full size <span>↗</span></button></div>
+            <div class="reference-frame">
+              <div class="coffee-site">
+                <div class="coffee-nav"><span class="coffee-logo">slow<span>day</span><i>®</i></span><span>OUR COFFEE</span><span>OUR STORY</span><span>FIND US</span><button>ORDER AHEAD <b>↗</b></button></div>
+                <div class="coffee-hero"><div class="coffee-copy"><span class="coffee-kicker">GOOD COFFEE, NO RUSH.</span><h3>A slower<br />kind of <em>morning.</em></h3><p>Thoughtfully sourced. Slowly made.<br />Right around the corner.</p><button>COME ON IN <span>↗</span></button></div><div class="coffee-art"><div class="sun"></div><div class="steam steam-one"></div><div class="steam steam-two"></div><div class="cup"><div class="cup-coffee"></div><div class="cup-handle"></div></div><div class="saucer"></div><div class="coffee-leaf leaf-one"></div><div class="coffee-leaf leaf-two"></div><span class="art-note">A LITTLE PAUSE<br />IN YOUR DAY</span></div></div>
+                <div class="coffee-bottom"><span>✳ &nbsp; LOCAL BY NATURE</span><span>EST. 2018 · YPSILANTI, MI</span><span>SCROLL A LITTLE <b>↓</b></span></div>
+              </div>
+            </div>
+            <div class="reference-hint"><span>✳</span> Study the layout, colors, and copy. Your prompt is the only tool you need.</div>
+          </section>
+
+          <section class="builder-panel">
+            <div class="panel-top"><div class="panel-label"><span class="sparkle">✳</span> YOUR WORKSPACE</div><div class="model-tag"><span></span> MINI MODEL <b>⌄</b></div></div>
+            <div class="prompt-label"><span>YOUR PROMPT</span><span id="char-count">0 / 500</span></div>
+            <textarea id="prompt" maxlength="500" placeholder="Describe the page you want to build...&#10;&#10;Try calling out the layout, colors, typography, and any details that stand out to you."></textarea>
+            <div class="prompt-footer"><span><kbd>↵</kbd> New line</span><span class="prompt-tip">Be specific. Every detail counts.</span></div>
+            <button id="build-button" class="build-button"><span>Build my page</span><span class="button-arrow">↗</span></button>
+            <div class="output-heading"><span>YOUR RESULT</span><span class="output-status"><i></i><span id="output-status">WAITING FOR PROMPT</span></span></div>
+            <div id="output" class="output-frame"><div class="empty-state"><span class="empty-icon">↗</span><b>Your page will show up here.</b><small>Write a prompt above, then hit build.</small></div></div>
+            <div class="score-row"><div class="score-label"><span>YOUR SCORE</span><small id="score-detail">Build a page to get your first score</small><div id="score-breakdown" class="score-breakdown" aria-live="polite"></div></div><div class="score-value"><b id="score">—</b><span>/ 100</span></div></div>
+          </section>
+        </div>
+        <div class="challenge-footer"><div class="criteria-label">WHAT WE LOOK AT</div><div class="criteria"><span><i>01</i> Layout</span><span><i>02</i> Color palette</span><span><i>03</i> Typography</span><span><i>04</i> Key details</span></div><div class="attempts"><span class="attempt-dot">↻</span><span><b id="attempt-count">0</b> builds</span></div></div>
+      </section>
+
+      <section id="leaderboard" class="leaderboard-card"><div><div class="eyebrow">A LITTLE FRIENDLY COMPETITION</div><h2>Today's leaderboard<span>.</span></h2><p>Your best score earns your spot. Give it a try.</p></div><div class="leaderboard-table"><div class="leader-head"><span>RANK</span><span>PLAYER</span><span>BEST SCORE</span></div><div class="leader-row"><span class="rank">01</span><span class="player-cell"><span class="mini-avatar avatar-peach">M</span> Maya Chen <span class="you-pill">TOP SCORE</span></span><b>91 <small>pts</small></b></div><div class="leader-row"><span class="rank">02</span><span class="player-cell"><span class="mini-avatar avatar-blue">J</span> Jordan Lee</span><b>84 <small>pts</small></b></div><div class="leader-row"><span class="rank">03</span><span class="player-cell"><span class="mini-avatar avatar-green">A</span> Alex Rivera</span><b>78 <small>pts</small></b></div><div class="leader-row your-row" id="your-row"><span class="rank" id="your-rank">—</span><span class="player-cell"><span class="mini-avatar avatar-dark">Y</span> You <span class="you-pill">YOU</span></span><b id="your-score">— <small>pts</small></b></div></div></section>
+      <footer id="how-it-works"><span>✳ &nbsp; SMALL PROMPTS. BIG IDEAS.</span><span>Practice makes progress <b>↗</b></span><span>MADE FOR THE CURIOUS · 2026</span></footer>
+    </main>
+    <div id="toast" class="toast" role="status"></div>
+    <dialog id="reference-dialog"><button class="dialog-close" aria-label="Close">×</button><div class="coffee-site enlarged" id="enlarged-reference"></div></dialog>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/test-object.js"></script>
+  </body>
+</html>
