@@ -3,6 +3,7 @@
 _Updated 2026-11-14. ✅ means verified on the official site, [hackthenest.tech](https://hackthenest.tech/). ⚠️ means unconfirmed, so check at check-in._
 
 > ⏰ **DEADLINE: Main project draft due on Devpost by midnight tonight (Sat Nov 14).** Submit a rough draft early, then keep updating it.
+> 🏁 **FINAL: Project due on Devpost by noon Sunday (Nov 15).**
 > **Workshops are separate** from the main project submission.
 
 ---
@@ -87,7 +88,7 @@ These are our recommendations, not official rules.
 - Skip **Base44** if we build custom code; it's a community vote and a different stack.
 
 **Execution:**
-- Freeze features about 4 hours before the deadline. Spend the last 2–3 hours on the demo, video, README and pitch.
+- Freeze features around **8 AM Sunday**, about 4 hours before the noon deadline. Spend 9 AM to noon on the demo, video, README and pitch.
 - The live demo must work. Have a recorded fallback.
 - Talk to the OpenAI, Exa and MSGC people early, ask what impresses them, and mention it in the pitch.
 
@@ -97,7 +98,7 @@ These are our recommendations, not official rules.
 
 - [x] Platform: **Devpost**. Main project draft due **midnight tonight (Nov 14)** ✅
 - [x] Workshops are judged separately from the main project ✅
-- [ ] Final submission deadline (after the draft)
+- [x] Final project due **noon Sunday (Nov 15)** ✅
 - [ ] Can one project win the overall prize plus multiple track or sponsor prizes?
 - [ ] Future of Intelligence prizes (still "Coming soon")
 - [ ] Judging format and rubric; pitch length
