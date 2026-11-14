@@ -53,12 +53,40 @@ That loop (challenge → prompt → output → score → leaderboard) is the hea
 
 **Possible directions the team has talked about (none decided):**
 - Extra challenge types, such as 3D scenes (the model writes scene code, graded on renders and scene structure) or ElevenLabs voice (matching a goal audio clip).
+- Model tiers with a credit system: more capable models cost more credits per run. Solana is a possible way to implement the credits later (it is also an MLH prize category).
 - Folding tracks in where they fit naturally. For example, the grading engine could interest the CS Dept "best code" judges, OpenAI or Gemini could be models players prompt, and MongoDB could store data. `IDEAS.md` has a fuller list.
 
-**Not yet decided:** stack, architecture, which model players prompt, how grading is measured, and how work is split. These are open for discussion.
+**Not yet decided:** architecture details, the exact OpenAI and Gemini models, the grading design, and how work is split. These are open for discussion.
+
+---
+
+## The Stack
+
+_Decided 2026-11-14._
+
+| Layer | Choice |
+|---|---|
+| Language | TypeScript everywhere |
+| App | Next.js (App Router), one repo, UI and API routes together |
+| UI | Tailwind CSS + shadcn/ui |
+| Prompt input | Plain text box styled to match the site |
+| Output preview | Sandboxed iframe. Generated pages are HTML and CSS only, no JavaScript |
+| Grader rendering | Playwright (headless Chromium), fixed viewport, network blocked |
+| Grader scoring | Visual similarity plus our own structure and style diff |
+| Models players prompt | Several models across OpenAI, Gemini and Claude, selectable, behind one shared interface so adding a model is a config entry. Starting set: one small model per provider. Claude: Haiku 5.5 (`claude-haiku-5-5`) proposed. OpenAI and Gemini: not yet picked |
+| Database | MongoDB Atlas (free tier) |
+| Login | Auth.js with GitHub sign-in |
+| Hosting | One Vultr VM running Docker. Fallback: Railway or Fly with the same image |
+| Code quality | Vitest tests on the grader, ESLint + Prettier, GitHub Actions CI |
+| Tooling | Current Node LTS, npm |
+
+**Grading requirement:** scores stay deterministic, and they should also match human judgment of "is this what I asked for?", the way a boss would judge the result against the goal. How to achieve that is not yet designed.
+
+**Unconfirmed:** whether the event provides OpenAI, Gemini or Claude credits. If not, the team needs its own API key for each.
 
 ---
 
 ## Useful Context
 - The team builds with **Claude Code**. Logic, APIs and 2D web interfaces come together quickly; building 3D models or heavy rendering by hand is harder.
+- Left out of the base stack until the core loop works: model tiers and credits (including Solana), Exa, ElevenLabs voice challenges, 3D challenges, SSOJet, Tiger Data.
 - The main goal is the overall prize. Side prizes are nice to have.
