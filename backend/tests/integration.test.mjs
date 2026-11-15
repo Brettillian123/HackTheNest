@@ -165,7 +165,7 @@ test('an ungradable submission is stored as 0 with the grader\'s reason', async 
 // ------------------------------------------------------------------ 6: generation constraints and clean-up
 
 test('the model is told the grader\'s rendering constraints', async () => {
-  const text = pageInstruction({ width: 1280, height: 800 });
+  const text = pageInstruction({ width: 1280, height: 800 }, 6000, true); // the challenge has content
   for (const phrase of [/1280 x 800/, /JavaScript turned off/, /network turned off/, /one self-contained HTML file/, /CSS inline/, /inline <svg> or data: URIs/, /no web fonts, CDNs/, /remote images/, /Arial, Georgia, Courier New/]) {
     assert.match(text, phrase);
   }

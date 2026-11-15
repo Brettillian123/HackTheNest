@@ -2,10 +2,10 @@
 // Every handler is wrapped by guarded() (http.js), so failures become plain JSON errors.
 import { HttpError, guarded, queryOf, readJson, sendJson, logError } from './http.js';
 import { getDeps } from '../services/deps.js';
-import { challengeData, getChallengeFile, getLesson, listChallengeFiles, listLessons, PROMPT_LIMITS, SLUG_RE } from '../services/challengeStore.js';
+import { challengeData, getChallengeFile, getLesson, listChallengeFiles, listLessons, PROMPT_LIMITS, SLUG_RE, publicChallenge } from '../services/challengeStore.js';
 import { KINDS, NO_PAGE, isRefusal, leakChecker } from '../services/kinds.js';
 import { MODELS, availableModels, findModel, generate, ModelError, GENERATION_TIMEOUT_MS } from '../services/models/index.js';
-import { graderMode, liveGraderVersion } from '../services/grader/index.js';
+import { checkPromptCopy, graderMode, liveGraderVersion } from '../services/grader/index.js';
 import { checkDailyCap, optionalPlayer, requirePlayer, resolvePlayer, sessionUser, validAnonId } from '../services/playerService.js';
 import { ID_RE, PASTED_CODE, beginRun, claim, currentAttempt, finishRun, newId, previousOutput, promptHasCode, scoreRun, startOver } from '../services/gameService.js';
 import { BRACKETS, challengeStats, leaderboard, playerSummary, profile } from '../services/boardService.js';
@@ -23,9 +23,12 @@ function requireSlug(value) {
 function summary(c, stats, cost) {
   const s = stats?.get(c.slug) || { solvedCount: null, topScore: null, yourBest: null, yourBestPrompts: null };
   const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, category: c.category ?? null, format: c.format || 'spec', brief: c.brief, kind: c.kind, available: c.available, maxPromptChars: c.maxPromptChars, maxOutputTokens: c.maxOutputTokens, ...s };
+  // Brief-format entries show the acceptance statements and the content the model is handed.
+  if (c.acceptance) out.acceptance = c.acceptance.slice();
+  if (c.content) out.content = c.content;
   if (c.lesson !== undefined) out.lesson = c.lesson;
   if (cost !== undefined) out.cost = cost;
-  return out;
+  return publicChallenge(out);
 }
 
 async function statsOrNull(player, deps) {
@@ -71,17 +74,15 @@ const getChallenge = guarded('Get challenge', async (request, response, [slug]) 
     ...summary(challenge, stats, costFor(challenge, free, deps.env)),
     goalUrl: challenge.kind === 'page' ? `/data/goals/${challenge.slug}.html` : null,
     viewport: { ...challenge.viewport },
-    requirements: challenge.requirements || [],
-    keyFacts: challenge.keyFacts || [],
-    designNotes: challenge.designNotes || [],
     models,
     simulated: !models.some(m => m.available),
   };
-  // The pixel spec goes out only for old-shape entries; exactSpec never does.
+  // The pixel spec goes out only for old-shape entries; requirements, keyFacts, designNotes and
+  // exactSpec never do (publicChallenge strips them).
   if (challenge.format !== 'brief') detail.spec = challenge.spec || [];
   if (!challenge.available) detail.unavailableReason = challenge.unavailableReason;
   if (challenge.criteria) detail.criteria = challenge.criteria;
-  sendJson(response, 200, { challenge: detail, statsAvailable: Boolean(stats) });
+  sendJson(response, 200, { challenge: publicChallenge(detail), statsAvailable: Boolean(stats) });
 });
 
 // Public, player-independent responses: the CDN may cache them. Player-specific routes
@@ -127,6 +128,11 @@ const createRun = guarded('Create run', async (request, response) => {
   const model = input.model ? findModel(input.model, deps.env) : enabled[0];
   if (!model) throw new HttpError(400, `That model is not available. Pick one of: ${enabled.map(m => m.id).join(', ')}.`);
   const prompt = input.prompt.trim();
+  // Optional copy check by the grader (off unless enabled); a refusal is a 400 and counts nothing.
+  if (challenge.kind === 'page') {
+    const refusal = await checkPromptCopy({ prompt, challenge, env: deps.env, fetch: deps.fetch, now: deps.now });
+    if (refusal) throw new HttpError(400, refusal);
+  }
   const runId = newId('run');
   const controller = new AbortController();
   const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(GENERATION_TIMEOUT_MS)]);
@@ -145,7 +151,7 @@ const createRun = guarded('Create run', async (request, response) => {
     const stream = generate({
       model, env: deps.env, fetch: deps.fetch, signal, maxOutputTokens: challenge.maxOutputTokens,
       system,
-      user: kind.userMessage(prompt, previous),
+      user: kind.userMessage(prompt, previous, challenge),
     });
     const cleaner = kind.cleaner(challenge);
     const leak = leakChecker(system);

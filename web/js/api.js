@@ -548,18 +548,27 @@ export function categoryOf(c) {
 export function formatOf(c) {
   if (!c) return "spec";
   if (c.format === "brief" || c.format === "spec") return c.format;
-  return Array.isArray(c.requirements) && !Array.isArray(c.spec) ? "brief" : "spec";
+  if (Array.isArray(c.spec)) return "spec";
+  return Array.isArray(c.requirements) || Array.isArray(c.acceptance) || (typeof c.content === "string" && c.content.trim()) ? "brief" : "spec";
 }
 export function filterByCategory(list, cat = "all") {
   if (!CATEGORY_FILTERS.includes(cat) || cat === "all") return list.slice();
   return list.filter((c) => categoryOf(c) === cat);
 }
 
-// Brief-format fields, from the server or the mock, read defensively. Returns {} for a spec challenge.
+// Brief-format fields a page may see, read defensively: the brief, the acceptance statements and the
+// content the model is given. Returns {} for a spec challenge. requirements, keyFacts, designNotes and
+// exactSpec are grader-only and never copied here (the live server strips them; mock mode reads them raw).
 export function briefFields(sc) {
   if (formatOf(sc) !== "brief") return {};
-  const strs = (a) => (Array.isArray(a) ? a.map((x) => String(x == null ? "" : x).trim()).filter(Boolean) : []);
-  const requirements = (Array.isArray(sc.requirements) ? sc.requirements : [])
+  const acceptance = (Array.isArray(sc.acceptance) ? sc.acceptance : []).map((x) => String(x == null ? "" : x).trim()).filter(Boolean);
+  const content = typeof sc.content === "string" ? sc.content.trim() : "";
+  return { format: "brief", brief: String(sc.brief || ""), acceptance, content };
+}
+
+// Mock grader only: the requirement list a brief challenge is marked on. Never put on a page object.
+function mockRequirements(sc) {
+  return (Array.isArray(sc.requirements) ? sc.requirements : [])
     .filter((r) => r && (r.text || r.id))
     .map((r, i) => ({
       id: String(r.id ?? `r${i + 1}`),
@@ -567,7 +576,6 @@ export function briefFields(sc) {
       kind: REQUIREMENT_KINDS.includes(r.kind) ? r.kind : r.kind === "behavior" ? "behaviour" : "content",
       exact: r.exact === true,
     }));
-  return { format: "brief", brief: String(sc.brief || ""), requirements, keyFacts: strs(sc.keyFacts), designNotes: strs(sc.designNotes) };
 }
 
 // Mock-only extras for the preview build: categories, and two challenges in the brief format.
@@ -589,6 +597,8 @@ const MOCK_META = {
     ],
     keyFacts: ["Create your account", "Start your 14-day free trial. No credit card required.", "At least 8 characters, with one number and one symbol.", "Create account", "Already have an account?"],
     designNotes: ["Calm and trustworthy", "Plenty of white space", "Blue brand panel"],
+    acceptance: ["The promise and the form sit side by side on a wide screen", "Every field has a visible label", "The account cannot be created until the terms are ticked"],
+    content: "Ledgerly\nBookkeeping for small studios.\n\nCreate your account\nStart your 14-day free trial. No credit card required.\n\nFull name\nWork email\nPassword: At least 8 characters, with one number and one symbol.\nCompany size\n\nCreate account\nContinue with Google\nAlready have an account? Sign in",
   },
   "harbor-landing": {
     category: "marketing",
@@ -605,6 +615,8 @@ const MOCK_META = {
     ],
     keyFacts: ["One calm inbox for your whole team", "Start free trial", "Shared inbox", "Smart sorting", "Weekly reports", "Made for small teams everywhere."],
     designNotes: ["Quiet and friendly", "One accent colour", "Lots of breathing room"],
+    acceptance: ["A visitor sees what Harbor is without scrolling", "There is one clear main button", "The three features read at a glance"],
+    content: "Harbor\nProduct · Pricing · Customers · Sign in\n\nOne calm inbox for your whole team\nShare, sort and answer every message together.\nStart free trial\n\nShared inbox: Everyone sees the same messages.\nSmart sorting: The urgent ones rise to the top.\nWeekly reports: See how fast your team replies.\n\nMade for small teams everywhere.",
   },
   "nav-hero": { category: "marketing" },
   "pricing-plans": { category: "marketing" },
@@ -690,7 +702,7 @@ export function mockDetailFields(c) {
 
 async function mockChallenge(slug) {
   const { data, c } = await findChallenge(slug);
-  return {
+  return stripHidden({
     ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
     goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
     criteria: Array.isArray(c.criteria) ? c.criteria.slice() : [],
@@ -699,7 +711,14 @@ async function mockChallenge(slug) {
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
     ...mockDetailFields(c),
-  };
+  });
+}
+
+// Grader-only fields; a page-facing challenge object never carries them.
+export const HIDDEN_FIELDS = ["requirements", "keyFacts", "designNotes", "exactSpec"];
+function stripHidden(o) {
+  HIDDEN_FIELDS.forEach((k) => delete o[k]);
+  return o;
 }
 
 export async function listChallenges() {
@@ -745,12 +764,12 @@ export async function getChallenge(slug) {
     format: "spec",
     ...briefFields(sc),
   };
-  if (body.statsAvailable) return { ...fromServerSummary(sc), ...details };
+  if (body.statsAvailable) return stripHidden({ ...fromServerSummary(sc), ...details });
   simulated.add("boards");
   const mock = await mockChallenge(slug).catch(() => null);
   const base = { ...(mock || fromServerSummary(sc)) };
-  if (details.format === "spec") ["requirements", "keyFacts", "designNotes"].forEach((k) => delete base[k]);
-  return { ...base, ...details };
+  if (details.format === "spec") ["acceptance", "content"].forEach((k) => delete base[k]);
+  return stripHidden({ ...base, ...details });
 }
 
 // ---------------------------------------------------------------- attempts
@@ -1002,10 +1021,11 @@ async function mockGrade(slug, n, prompt) {
 // The requirement ids come from the same fields the page shows (mockDetailFields).
 function mockBriefGrade(c, prompt) {
   const slug = c.slug;
-  const meta = mockDetailFields(c);
-  if (meta.format !== "brief" || !meta.requirements.length) return {};
+  const src = formatOf(c) === "brief" ? c : { ...c, ...(MOCK_META[slug] || {}) };
+  const reqs = formatOf(src) === "brief" ? mockRequirements(src) : [];
+  if (!reqs.length) return {};
   if (!MOCK_INTENT.has(slug)) return { intentGraded: false };
-  return { intentGraded: true, requirements: meta.requirements.map((q) => ({ id: q.id, met: hash(`${prompt}|${q.id}`) % 4 !== 0 })) };
+  return { intentGraded: true, requirements: reqs.map((q) => ({ id: q.id, met: hash(`${prompt}|${q.id}`) % 4 !== 0 })) };
 }
 
 // Saves a finished run into the current attempt and the best record; returns { attempt, run }.

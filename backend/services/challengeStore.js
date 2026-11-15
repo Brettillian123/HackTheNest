@@ -31,13 +31,22 @@ function validSpec(spec) {
     && g.items.every(i => i && typeof i.label === 'string' && typeof i.value === 'string'));
 }
 
+// Fields that never leave the server; every challenge API response passes through publicChallenge.
+export const HIDDEN_FIELDS = ['requirements', 'keyFacts', 'designNotes', 'exactSpec'];
+export function publicChallenge(out) {
+  const copy = { ...out };
+  for (const k of HIDDEN_FIELDS) delete copy[k];
+  return copy;
+}
+
 const intIn = (n, min, max) => Number.isInteger(n) && n >= min && n <= max;
 
-// Brief-format entries (format "brief"): a plain-words brief plus requirements, key facts and design
-// notes instead of a pixel spec. Old entries keep `spec` (format "spec"). `exactSpec` (a rewritten
+// Brief-format entries (format "brief"): a plain-words brief, 3 to 5 acceptance statements and the
+// page's exact content (shown to players), plus requirements, key facts and design notes (server
+// only: see HIDDEN_FIELDS) instead of a pixel spec. Old entries keep `spec` (format "spec"). `exactSpec` (a rewritten
 // old entry's pixel spec) is kept off the enumerable fields, so it never reaches an API response.
 export const REQUIREMENT_KINDS = ['content', 'structure', 'behaviour', 'style', 'engineering'];
-export const BRIEF_LIMITS = { brief: 4000, category: 80, requirements: 40, requirementText: 600, requirementId: 40, keyFacts: 150, keyFact: 300, designNotes: 30, designNote: 300 };
+export const BRIEF_LIMITS = { brief: 4000, acceptanceMin: 3, acceptanceMax: 5, acceptanceText: 600, content: 10000, category: 80, requirements: 40, requirementText: 600, requirementId: 40, keyFacts: 150, keyFact: 300, designNotes: 30, designNote: 300 };
 const textIn = (v, max) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const textList = (v, maxItems, maxLen) => Array.isArray(v) && v.length <= maxItems && v.every(x => textIn(x, maxLen));
 
@@ -56,6 +65,8 @@ function briefProblem(c) {
       if (typeof r.exact !== 'boolean') return `requirement "${r.id}": exact must be true or false.`;
     }
   }
+  if (c.acceptance !== undefined && !(textList(c.acceptance, L.acceptanceMax, L.acceptanceText) && c.acceptance.length >= L.acceptanceMin)) return `acceptance must be a list of ${L.acceptanceMin} to ${L.acceptanceMax} non-empty texts of at most ${L.acceptanceText} characters.`;
+  if (c.content !== undefined && !textIn(c.content, L.content)) return `content must be non-empty text of at most ${L.content} characters.`;
   if (c.keyFacts !== undefined && !textList(c.keyFacts, L.keyFacts, L.keyFact)) return `keyFacts must be a list of up to ${L.keyFacts} non-empty texts.`;
   if (c.designNotes !== undefined && !textList(c.designNotes, L.designNotes, L.designNote)) return `designNotes must be a list of up to ${L.designNotes} non-empty texts.`;
   if (c.exactSpec !== undefined && !validSpec(c.exactSpec)) return 'exactSpec must be groups of { label, value } items.';
@@ -67,7 +78,9 @@ function briefProblem(c) {
 // requirement texts, key facts and design notes instead of the spec), x 1.5 + 1000, rounded up to the
 // next 500, never under 2000 and never over 12000. An entry may also set `maxPromptChars` (500 to
 // 12000); the effective limit is the larger of the two, so entries written under an older, tighter
-// rule are not tight.
+// rule are not tight. An entry with `acceptance` (the current brief format) counts only the brief
+// and its acceptance statements: the content is handed to the model with every run, so the player
+// never has to retype it.
 export const PROMPT_LIMITS = { min: 500, max: 12000, ruleMin: 2000, ruleMax: 12000 };
 export function computedPromptLimit(brief, spec = [], criteria = []) {
   let count = brief.length;
@@ -94,6 +107,7 @@ function readJson(path) {
 // The larger of the rule's limit and any explicit `maxPromptChars` on the entry.
 export function effectivePromptLimit(c, kind = c.kind || 'page') {
   const criteria = (kind === 'doc' || kind === 'workflow') && Array.isArray(c.criteria) ? c.criteria : [];
+  if (Array.isArray(c.acceptance)) return Math.max(computedPromptLimit(c.brief, [], [...c.acceptance, ...criteria]), c.maxPromptChars ?? 0);
   if (Array.isArray(c.requirements)) {
     const texts = [...c.requirements.map(r => r.text), ...(c.keyFacts || []), ...(c.designNotes || []), ...criteria];
     return Math.max(computedPromptLimit(c.brief, [], texts), c.maxPromptChars ?? 0);
@@ -134,6 +148,8 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
     requirements: format === 'brief' ? c.requirements.map(r => ({ id: r.id, text: r.text, kind: r.kind, exact: r.exact })) : [],
     keyFacts: Array.isArray(c.keyFacts) ? c.keyFacts.slice() : [],
     designNotes: Array.isArray(c.designNotes) ? c.designNotes.slice() : [],
+    acceptance: Array.isArray(c.acceptance) ? c.acceptance.slice() : null,
+    content: typeof c.content === 'string' ? c.content : null,
     available: KINDS[kind].available,
     unavailableReason: KINDS[kind].notBuilt || null,
     maxPromptChars: effectivePromptLimit(c, kind),
