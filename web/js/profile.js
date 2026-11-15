@@ -1,15 +1,16 @@
 // Profile page: profile.html?u=<username>. Without u: the signed-in player, or a local view of this browser's runs.
 import { mountShell, shellUser } from './shell.js';
 import { esc, levelClass, fitFrames, demoTag } from './ui.js';
-import { getProfile, getLeaderboard, listChallenges, getChallenge, getAttempt, me, logout, isSimulated } from './api.js';
+import { getProfile, getLeaderboard, listChallenges, getChallenge, me, logout, isSimulated } from './api.js';
+import * as store from './store.js';
 
 const $ = (id) => document.getElementById(id);
 const BUCKETS = [
   { label: '1 prompt', lo: 1, hi: 1 },
-  { label: '2', lo: 2, hi: 2 },
+  { label: '2 prompts', lo: 2, hi: 2 },
   { label: '3 to 5', lo: 3, hi: 5 },
   { label: '6 to 10', lo: 6, hi: 10 },
-  { label: '11+', lo: 11, hi: Infinity },
+  { label: '11 or more', lo: 11, hi: Infinity },
 ];
 const ICON = {
   target: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>',
@@ -61,10 +62,10 @@ async function localProfile(challenges) {
       const b = await getLeaderboard(c.slug, { bracket: 'all', period: 'all' });
       if (b.you) promptCount = b.you.promptCount;
     } catch { /* keep null */ }
+    // When the best was set: stored with the best itself, so it survives "Start over".
     try {
-      const a = await getAttempt(c.slug);
-      const last = a && Array.isArray(a.runs) && a.runs.length ? a.runs[a.runs.length - 1] : null;
-      if (last && last.at) when = new Date(last.at).toISOString().slice(0, 10);
+      const b = store.getBest(c.slug);
+      if (b && b.when) { const d = new Date(b.when); when = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
     } catch { /* keep null */ }
     return { slug: c.slug, title: c.title, best: c.yourBest, promptCount: promptCount ?? 1, when };
   }));
@@ -106,16 +107,17 @@ function headHtml(p, { self, local, rank }) {
   const sub = local
     ? `<span class="pf-local">${ICON.info}These scores live only in this browser. <a class="link" href="signup.html">Sign up to keep these scores</a></span>`
     : `${joined ? `<span class="meta">${ICON.cal}Joined ${joined}</span>` : ''}${self ? '<span class="meta">This is you</span><button type="button" class="btn btn-ghost sm" id="logoutBtn">Log out</button>' : ''}`;
-  const avg = p.totals.solved ? String(p.totals.averagePrompts) : 'none yet';
+  const avg = p.totals.solved ? Number(p.totals.averagePrompts).toFixed(1) : 'None yet';
+  const v = (t) => `<div class="v${/\d/.test(String(t)) ? '' : ' is-word'}">${esc(t)}</div>`;
   return `<div class="pf-id">
       <span class="avatar lg">${local ? ICON.user.replace('stroke-width="1.5"', 'stroke-width="1.7" width="26" height="26"') : esc(initials(p.username))}</span>
       <div><div class="phead-t"><h1>${esc(name)}</h1></div><div class="phead-sub">${sub}</div></div>
     </div>
     <div class="phead-side">
-      <div class="stat"><div class="k">Challenges solved</div><div class="v">${p.totals.solved}</div></div>
-      <div class="stat"><div class="k">Best score</div><div class="v">${p.totals.solved ? p.totals.best : 'none yet'}</div></div>
-      <div class="stat"><div class="k">Average prompts</div><div class="v">${avg}</div></div>
-      <div class="stat"><div class="k">Overall rank</div><div class="v">${rank ? '#' + rank : 'none yet'}</div></div>
+      <div class="stat"><div class="k">Challenges solved</div>${v(p.totals.solved)}</div>
+      <div class="stat"><div class="k">Best score</div>${v(p.totals.solved ? p.totals.best : 'None yet')}</div>
+      <div class="stat"><div class="k">Average prompts</div>${v(avg)}</div>
+      <div class="stat"><div class="k">Overall rank</div>${v(rank ? '#' + rank : 'None yet')}</div>
     </div>`;
 }
 
@@ -135,15 +137,15 @@ function solvedHtml(p, challenges, { self, local, demo }) {
       <span class="chal-main"><span class="chal-title">${esc(s.title)}</span><span class="chal-brief">${esc(c && c.brief ? c.brief : '')}</span></span>
       <span class="chal-cell"><span class="k">Best</span><span class="v best">${s.best}</span></span>
       <span class="chal-cell"><span class="k">Prompts</span><span class="v">${s.promptCount}</span></span>
-      <span class="chal-cell"><span class="k">When</span><span class="v">${esc(ago(s.when))}</span></span>
+      <span class="chal-cell"><span class="k">When</span><span class="v is-word">${esc(ago(s.when))}</span></span>
       ${ICON.arrow}</a>`;
   }).join('');
   const openRows = open.map((c) => `<a class="chal open" href="workspace.html?c=${encodeURIComponent(c.slug)}">
       <span class="lvl ${levelClass(c.level)}">Lv ${c.level}</span>
       <span class="chal-main"><span class="chal-title">${esc(c.title)}</span><span class="chal-brief">${esc(c.brief || '')}</span></span>
-      <span class="chal-cell"><span class="k">Top</span><span class="v">${c.topScore ?? '-'}</span></span>
+      <span class="chal-cell"><span class="k">Top</span><span class="v${c.topScore == null ? ' is-word' : ''}">${c.topScore ?? 'None yet'}</span></span>
       <span class="chal-cell"><span class="k">Solved by</span><span class="v">${Number(c.solvedCount || 0).toLocaleString('en-US')}</span></span>
-      <span class="chal-cell"><span class="k">${mine ? 'Status' : 'Yours'}</span><span class="v quiet">${mine ? 'Not tried' : (c.yourBest ?? 'Not tried')}</span></span>
+      <span class="chal-cell"><span class="k">Status</span><span class="v quiet">${mine ? 'Not tried' : 'Not solved'}</span></span>
       ${ICON.arrow}</a>`).join('');
   const who = mine ? 'You have' : `${esc(p.username)} has`;
   const none = list.length ? '' : `<p class="pf-none">${who} not solved a challenge yet. A solved challenge shows here with its best score and the prompts it took.</p>`;
@@ -161,7 +163,7 @@ function bucketsHtml(p) {
     <p class="callout">${ICON.info}<span>A perfect 100 is rare. Scores in the <b>high 80s and 90s</b> are strong prompting, and a score under 100 does not make a weak prompter.</span></p></section>`;
 }
 
-function nextHtml(next, detail) {
+function nextHtml(next, detail, other) {
   if (!next) {
     return `<section class="panel grow pf-next"><div class="panel-head"><h2 class="h">Next challenge</h2></div>
       <div class="empty">${ICON.target}<p class="title">No challenges are open right now</p><a class="btn btn-secondary" href="challenges.html">Browse challenges</a></div></section>`;
@@ -170,23 +172,27 @@ function nextHtml(next, detail) {
   const frame = detail && detail.goalUrl
     ? `<div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="frame"><iframe sandbox="allow-same-origin" src="${esc(detail.goalUrl)}" title="Goal page for ${esc(c.title)}" tabindex="-1"></iframe></div>`
     : '';
-  return `<section class="panel grow pf-next"><div class="panel-head"><h2 class="h">Next challenge</h2><span class="note">${next.fresh ? 'Not tried yet' : 'Your lowest score'}</span></div>
+  // On someone else's page this is about them: one they have not solved, with no "your" numbers.
+  const head = other ? `Try one ${esc(other)} has not solved` : 'Next challenge';
+  const note = other ? '' : next.fresh ? 'Not tried yet' : 'Your lowest score';
+  const top = c.topScore == null ? '<div class="v is-word">None yet</div>' : `<div class="v">${c.topScore}</div>`;
+  return `<section class="panel grow pf-next"><div class="panel-head"><h2 class="h">${head}</h2><span class="note">${note}</span></div>
     ${frame}
     <div class="t"><span class="lvl ${levelClass(c.level)}">Lv ${c.level}</span><h3>${esc(c.title)}</h3></div>
     <p>${esc(c.brief || '')}</p>
     <div class="kvrow">
       <div class="stat"><div class="k">Players solved</div><div class="v">${Number(c.solvedCount || 0).toLocaleString('en-US')}</div></div>
-      <div class="stat"><div class="k">Top score</div><div class="v">${c.topScore ?? 'none yet'}</div></div>
-      <div class="stat"><div class="k">Your best</div><div class="v">${c.yourBest ?? 'Not tried'}</div></div>
+      <div class="stat"><div class="k">Top score</div>${top}</div>
+      ${other ? '' : `<div class="stat"><div class="k">Your best</div>${c.yourBest == null ? '<div class="v is-word">None yet</div>' : `<div class="v">${c.yourBest}</div>`}</div>`}
     </div>
-    <a class="btn btn-primary block" href="workspace.html?c=${encodeURIComponent(c.slug)}">${ICON.play}${next.fresh ? 'Start this challenge' : 'Try it again'}</a></section>`;
+    <a class="btn btn-primary block" href="workspace.html?c=${encodeURIComponent(c.slug)}">${ICON.play}${other ? 'Try this challenge' : next.fresh ? 'Start this challenge' : 'Try it again'}</a></section>`;
 }
 
-function notFound(name, message) {
+function notFound(name) {
   $('head').outerHTML = '';
-  $('body').innerHTML = `<section class="panel" style="grid-column:1 / -1"><div class="empty" style="min-height:420px">${ICON.user}
-    <p class="title">There is no player called ${esc(name)}</p>
-    <p class="small">${esc(message || 'Check the spelling, or find them on the leaderboard.')}</p>
+  $('body').innerHTML = `<section class="panel pf-missing" style="grid-column:1 / -1"><div class="empty">${ICON.user}
+    <h1 class="title">There is no player called ${esc(name)}</h1>
+    <p class="small">Check the spelling or pick a player from the board.</p>
     <a class="btn btn-secondary" href="leaderboard.html">Open the leaderboard</a></div></section>`;
 }
 
@@ -218,7 +224,7 @@ async function start() {
   try {
     p = local ? await localProfile(challenges) : await getProfile(name);
   } catch (err) {
-    if (err && err.status === 404) notFound(name, err.message);
+    if (err && err.status === 404) notFound(name);
     else errorView(err && err.message);
     return;
   }
@@ -226,7 +232,12 @@ async function start() {
 
   const bySlug = new Map(challenges.map((c) => [c.slug, c]));
   const solvedSlugs = new Set(p.solved.map((s) => s.slug));
-  const [rank, next] = await Promise.all([overallRank(p.username, local), Promise.resolve(pickNext(challenges, self || local ? new Set() : solvedSlugs))]);
+  const other = !(self || local);
+  const notSolved = challenges.slice().sort((a, b) => a.level - b.level).find((c) => !solvedSlugs.has(c.slug));
+  const [rank, next] = await Promise.all([
+    overallRank(p.username, local),
+    Promise.resolve(other ? (notSolved ? { c: notSolved, fresh: true } : null) : pickNext(challenges, new Set())),
+  ]);
   let detail = null;
   if (next) { try { detail = await getChallenge(next.c.slug); } catch { detail = null; } }
 
@@ -239,7 +250,7 @@ async function start() {
   });
   $('body').innerHTML =
     `<div class="pf-main">${solvedHtml(p, challenges, { self, local, demo: !self && !local && isSimulated('profile') })}</div>` +
-    `<aside class="bd-side">${nextHtml(next, detail)}${bucketsHtml(p)}</aside>`;
+    `<aside class="bd-side">${nextHtml(next, detail, self || local ? null : p.username)}${bucketsHtml(p)}</aside>`;
   fitFrames($('body'));
 }
 

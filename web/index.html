@@ -28,24 +28,31 @@
         <a class="run" href="workspace.html?c=login-card"><svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.5v11l9.5-5.5z"/></svg>Try the first challenge</a>
         <a class="btn btn-secondary" href="challenges.html">Browse challenges</a>
       </div>
+      <ol class="hero-steps" aria-label="How a run goes">
+        <li><span class="lvl r sm">1</span>Study the goal page</li>
+        <li><span class="lvl r sm">2</span>Describe it in one prompt</li>
+        <li><span class="lvl r sm">3</span>See what every lost point was for</li>
+      </ol>
       <div class="hero-stats">
         <div class="stat"><div class="k">Challenges</div><div class="v" id="statCount">6</div></div>
         <div class="stat"><div class="k">Levels</div><div class="v" id="statLevels">3</div></div>
-        <div class="stat"><div class="k">Account</div><div class="v">Not needed</div></div>
+        <div class="stat"><div class="k">Account</div><div class="v is-word" id="statAcct">Optional</div></div>
       </div>
     </section>
 
     <section class="panel hero-goal">
       <div class="panel-head"><h2 class="h">Goal page</h2><span class="note" id="heroTitle">Pricing page</span></div>
       <div class="stage">
-        <div class="frame"><iframe src="data/goals/pricing-plans.html" title="Goal page: pricing plans" sandbox="allow-same-origin" loading="eager" tabindex="-1" aria-hidden="true"></iframe></div>
+        <div class="frame"><iframe src="data/goals/pricing-plans.html" title="Goal page: pricing plans" sandbox="allow-same-origin" scrolling="no" loading="eager" tabindex="-1" aria-hidden="true"></iframe></div>
         <div class="panel score mini overlay" aria-label="Example score for this goal page">
-          <div class="sc">
-            <div class="bigscore"><span class="n">89</span><span class="of">/100</span></div>
-            <div class="info"><div class="gain">Example run</div><div class="rk">1 prompt</div></div>
+          <div>
+            <div class="sc">
+              <div class="bigscore"><span class="n">89</span><span class="of">/100</span></div>
+              <div class="info"><div class="gain">Example run</div><div class="rk">1 prompt</div></div>
+            </div>
+            <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div>
+            <div class="segcap"><span><b>12 of 14</b> checks passed</span></div>
           </div>
-          <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div>
-          <div class="segcap"><span><b>12 of 14</b> checks passed</span></div>
           <div class="costs">
             <div class="cost"><span class="pt">&minus;7</span><span class="w">"Most popular" label is missing</span></div>
             <div class="cost"><span class="pt">&minus;4</span><span class="w">Plan cards are narrower than the goal</span></div>
@@ -63,7 +70,7 @@
         <div class="step-t"><span class="lvl r">1</span><h3 class="title">Study the goal page</h3></div>
         <p class="small">Every challenge is a real web page. Note the layout, the words, the sizes and the colours.</p>
         <div class="step-body">
-          <div class="frame"><iframe src="data/goals/login-card.html" title="Goal page: sign-in card" sandbox="allow-same-origin" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="frame"><iframe src="data/goals/login-card.html" title="Goal page: sign-in card" sandbox="allow-same-origin" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
         </div>
       </article>
 
@@ -118,9 +125,9 @@
       <section class="panel brackets">
         <div class="panel-head"><h3 class="h">Prompt brackets</h3><span class="note">How ranking works</span></div>
         <p class="lead-line">Fewer prompts for the same score <b>ranks higher</b> in its bracket.</p>
-        <div class="pills" aria-label="Brackets">
-          <span>1 prompt</span><span>2</span><span>3 to 5</span><span>6 to 10</span><span>11 or more</span>
-        </div>
+        <nav class="pills" aria-label="Leaderboard by prompt bracket">
+          <a href="leaderboard.html?b=1">1 prompt</a><a href="leaderboard.html?b=2">2 prompts</a><a href="leaderboard.html?b=3-5">3 to 5</a><a href="leaderboard.html?b=6-10">6 to 10</a><a href="leaderboard.html?b=11%2B">11 or more</a>
+        </nav>
         <p class="small">Each board is split by how many prompts a player used to reach their score, so a one-shot 92 is not ranked against a 92 that took eight tries.</p>
         <dl class="kv">
           <div><dt>92 in 1 prompt</dt><dd>1 prompt board</dd></div>
@@ -150,16 +157,7 @@
     </section>
   </section>
 
-  <footer class="foot">
-    <a class="word" href="index.html">prompt<i>dyno</i></a>
-    <nav aria-label="Footer">
-      <a href="challenges.html">Challenges</a>
-      <a href="leaderboard.html">Leaderboard</a>
-      <a href="login.html">Log in</a>
-      <a href="signup.html">Sign up</a>
-    </nav>
-    <span class="end">Built at Hack The Nest 2026</span>
-  </footer>
+  <footer id="foot"></footer>
 </main>
 
 <script type="module" src="js/landing.js"></script>

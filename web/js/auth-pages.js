@@ -1,6 +1,6 @@
 // Log in, sign up and not-found pages.
 // initAuthPage('login' | 'signup') wires the form and side panel; initNotFound() fills 404.html.
-import { mountShell, shellUser } from './shell.js';
+import { mountShell, shellUser, WELCOME_KEY } from './shell.js';
 import { esc, levelClass, demoTag } from './ui.js';
 import * as api from './api.js';
 
@@ -45,33 +45,28 @@ async function loadWaiting() {
 }
 
 function stat(k, v) {
-  return `<div class="stat"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
+  return `<div class="stat"><div class="k">${esc(k)}</div><div class="v${/\d/.test(String(v)) ? '' : ' is-word'}">${esc(v)}</div></div>`;
 }
 
 const ICON_INFO = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg>';
 
-function strip(rows) {
-  return '<ul class="lb-strip">' + rows.slice(0, 4).map((r) =>
-    `<li${r.isYou ? ' class="you"' : ''}><span class="pos">#${esc(r.rank)}</span><span class="nm">${esc(r.isYou ? 'You' : r.username)}</span><span class="s">${esc(r.score)}</span></li>`,
-  ).join('') + '</ul>';
-}
+const BOARD_ROWS = 8;
 
-// Leaderboard rows for a strip: the top three plus your row when you are lower down.
-function stripRows(board) {
+// Leaderboard rows to show: the top eight, with your row as the last one when you are lower down.
+function boardRows(board) {
   const rows = (board && board.rows) || [];
-  const top = rows.slice(0, 4);
+  const top = rows.slice(0, BOARD_ROWS);
   const you = rows.find((r) => r.isYou);
-  if (you && !top.includes(you)) return [...rows.slice(0, 3), you];
+  if (you && !top.includes(you)) return [...rows.slice(0, BOARD_ROWS - 1), you];
   return top;
 }
 
-// Rows after the strip, as a short leaderboard table.
-function more(board) {
-  const shown = new Set(stripRows(board));
-  const rows = ((board && board.rows) || []).filter((r) => !shown.has(r)).slice(0, 4);
+// One short leaderboard table from #1.
+function table(board) {
+  const rows = boardRows(board);
   if (!rows.length) return '';
   const ini = (n) => String(n).replace(/[_\-.]+/g, ' ').trim().slice(0, 2).toUpperCase();
-  return '<table class="lbt gap-t"><thead><tr><th>Rank</th><th>Player</th><th class="r">Prompts</th><th class="r">Score</th></tr></thead><tbody>' +
+  return '<table class="lbt"><thead><tr><th>Rank</th><th>Player</th><th class="r">Prompts</th><th class="r">Score</th></tr></thead><tbody>' +
     rows.map((r) => `<tr${r.isYou ? ' class="you"' : ''}><td class="pos">#${esc(r.rank)}</td><td><span class="who"><span class="avatar">${esc(ini(r.username))}</span>${esc(r.isYou ? 'You' : r.username)}</span></td><td class="r num">${esc(r.promptCount)}</td><td class="r sc-cell">${esc(r.score)}</td></tr>`).join('') +
     '</tbody></table>';
 }
@@ -83,9 +78,10 @@ async function renderSide(kind, signedIn) {
   const verb = kind === 'signup' ? 'Sign up' : 'Log in';
 
   if (stats) {
-    stats.innerHTML = stat('Challenges', list.length || '-') +
+    stats.classList.add('keep');
+    stats.innerHTML = stat('Challenges', list.length || 'None yet') +
       stat('Scores waiting', waiting.length) +
-      stat('Your best', waiting.length ? Math.max(...waiting.map((w) => w.best)) : '-');
+      stat('Your best', waiting.length ? Math.max(...waiting.map((w) => w.best)) : 'None yet');
   }
 
   if (waiting.length && !signedIn) {
@@ -110,8 +106,8 @@ async function renderSide(kind, signedIn) {
       </section>` +
       (board && board.rows && board.rows.length
         ? `<section class="panel grow">
-            <div class="panel-head"><div class="ph-l"><h2 class="h">Leaderboard</h2>${api.isSimulated('boards') ? demoTag() : ''}</div><span class="note">${esc(top.title)}</span></div>
-            ${strip(stripRows(board))}${more(board)}
+            <div class="panel-head"><div class="ph-l"><h2 class="h">Leaderboard</h2>${api.isSimulated('boards') ? demoTag() : ''}</div><span class="note">Challenge: ${esc(top.title)}</span></div>
+            ${table(board)}
           </section>`
         : '');
     return;
@@ -125,7 +121,7 @@ async function renderSide(kind, signedIn) {
   const lead = rows[0];
   side.innerHTML =
     `<section class="panel score">
-      <div class="panel-head"><div class="ph-l"><h2 class="h">Top score</h2>${api.isSimulated('boards') ? demoTag() : ''}</div><span class="note">${first ? esc(first.title) : ''}</span></div>
+      <div class="panel-head"><div class="ph-l"><h2 class="h">Top score</h2>${api.isSimulated('boards') ? demoTag() : ''}</div><span class="note">${first ? `Challenge: ${esc(first.title)}` : ''}</span></div>
       <div class="sc">
         <div class="bigscore"><span class="n">${lead ? esc(lead.score) : '-'}</span><span class="of">/100</span></div>
         <div class="info"><div class="gain">${lead ? esc(lead.username) : 'No runs yet'}</div>
@@ -138,7 +134,7 @@ async function renderSide(kind, signedIn) {
     (rows.length
       ? `<section class="panel grow">
           <div class="panel-head"><div class="ph-l"><h2 class="h">Leaderboard</h2>${api.isSimulated('boards') ? demoTag() : ''}</div>${first ? `<a class="note" href="leaderboard.html">See all</a>` : ''}</div>
-          ${strip(stripRows(board))}${more(board)}
+          ${table(board)}
         </section>`
       : '');
 }
@@ -258,6 +254,7 @@ function wireForm(kind, onDone) {
         try { await api.claimAttempts(); } catch { /* scores stay on this browser */ }
       }
       $('announce').textContent = kind === 'signup' ? 'Account created.' : 'Logged in.';
+      try { sessionStorage.setItem(WELCOME_KEY, (user && user.username) || ''); } catch { /* the note is optional */ }
       onDone(user);
     } catch (e) {
       const msg = (e && e.message) || 'Something went wrong. Try again.';
@@ -301,7 +298,8 @@ function renderSignedIn(kind, user) {
 }
 
 export async function initAuthPage(kind) {
-  const active = kind === 'login' ? 'login' : 'home';
+  // Log in and sign up share the rail's log-in icon.
+  const active = 'login';
   let user = null;
   try { user = await api.me(); } catch { user = null; }
   mount(active, user);

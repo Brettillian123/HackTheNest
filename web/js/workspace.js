@@ -2,7 +2,7 @@
 import * as api from './api.js';
 import * as store from './store.js';
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote } from './ui.js';
+import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer } from './ui.js';
 import { createTools } from './tools.js';
 
 const slug = new URLSearchParams(location.search).get('c') || 'login-card';
@@ -21,6 +21,10 @@ const S = {
   status: '',
   sel: null, // selected run number in the Runs view
   confirm: false,
+  statusBad: false, // status is an error (red) rather than a note
+  useRun: null, // run whose prompt was put back in the editor with "Use this prompt"
+  ins: false, // instructions column open
+  sim: false, // preview-build note showing
 };
 
 const ta = $('prompt');
@@ -52,6 +56,7 @@ function setupFrames() {
   });
   tools.link(layers.goalSmall, layers.mineSmall);
   document.querySelectorAll('.tools').forEach((g) => tools.bind(g));
+  frameViewer(['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'].map($));
   $('goalFrame').querySelector('iframe').src = S.ch.goalUrl;
   $('goalSmall').querySelector('iframe').src = S.ch.goalUrl;
 }
@@ -67,6 +72,8 @@ let pending = null;
 let flushTimer = null;
 let lastFlush = 0;
 function pushHtml(h) {
+  // Keep the neutral placeholder until the page's styles are in, so the frame never flashes white.
+  if (!/<body[\s>]/i.test(h)) return;
   pending = h;
   const wait = 200 - (performance.now() - lastFlush);
   if (wait <= 0) flush();
@@ -90,10 +97,9 @@ function renderHeader() {
   $('hTitle').textContent = c.title;
   $('hSolved').textContent = `${Number(c.solvedCount || 0).toLocaleString('en-US')} players solved`;
   $('hViewport').textContent = `${c.viewport.width} x ${c.viewport.height}`;
-  $('hBest').textContent = c.yourBest == null ? 'Not tried' : c.yourBest;
-  $('hTop').textContent = c.topScore == null ? 'none yet' : c.topScore;
+  setStat($('hBest'), c.yourBest == null ? 'None yet' : c.yourBest);
+  setStat($('hTop'), c.topScore == null ? 'None yet' : c.topScore);
   const m = c.models.find((x) => x.id === S.model) || c.models[0];
-  $('hModel').textContent = m.label;
   $('modelLabel').textContent = m.label;
   document.title = c.title + ' - promptdyno';
 }
@@ -101,29 +107,29 @@ function renderHeader() {
 async function renderBoard() {
   const list = $('lbList');
   try {
-    let lb = await api.getLeaderboard(slug, { period: 'week' });
-    let note = 'This week';
-    if (lb.rows.length < 4) { lb = await api.getLeaderboard(slug, { period: 'all' }); note = 'All time'; }
-    $('lbNote').textContent = note;
+    // The same all-time board the score panel's rank comes from, so the two always agree.
+    const lb = await api.getLeaderboard(slug, { period: 'all' });
+    $('lbNote').textContent = 'All time';
     $('lbDemo').innerHTML = api.isSimulated('boards') ? demoTag() : '';
     let rows = lb.rows.slice(0, 4);
     const you = lb.rows.find((r) => r.isYou);
     if (you && !rows.includes(you)) rows = rows.slice(0, 3).concat(you);
+    const gap = (r, i) => i > 0 && r.rank > rows[i - 1].rank + 1;
     list.innerHTML = rows.length
-      ? rows.map((r) => `<li${r.isYou ? ' class="you"' : ''}><span class="pos">#${r.rank}</span><span class="nm">${esc(r.username)}</span><span class="s">${r.score}</span></li>`).join('')
+      ? rows.map((r, i) => `<li class="${r.isYou ? 'you' : ''}${gap(r, i) ? ' gap' : ''}"><span class="pos">#${r.rank}</span><span class="nm">${esc(r.username)}</span><span class="s">${r.score}</span></li>`).join('')
       : '<li><span class="nm">No scores yet. Yours can be first.</span></li>';
   } catch {
     list.innerHTML = '<li><span class="nm">The leaderboard could not load. Reload the page to try again.</span></li>';
   }
 }
 
+// Instructions: a column docked inside the page panel on show; the button opens and closes it.
 function renderInstructions() {
   const groups = S.ch.spec.map((g) =>
-    `<h4 class="ws-ins-group">${esc(g.group)}</h4><dl class="kv">` +
+    `<h4 class="ws-ins-group">${esc(g.group)}</h4><dl>` +
     g.items.map((i) => `<div><dt>${esc(i.label)}</dt><dd>${esc(i.value)}</dd></div>`).join('') + '</dl>').join('');
-  $('insMenu').innerHTML = `<div class="ws-ins-body" tabindex="0"><h3 class="h">Match these exactly</h3>${groups}</div>`;
-  $('insMenu').removeAttribute('tabindex');
-  dropdown($('insBtn'), $('insMenu'));
+  $('insMenu').innerHTML = `<h3 class="h">Match these exactly</h3><div class="ws-ins-cols">${groups}</div>`;
+  $('insBtn').addEventListener('click', () => { S.ins = !S.ins; render(); });
 }
 
 function renderModels() {
@@ -147,7 +153,9 @@ const OK_SVG = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strok
 const NO_SVG = '<svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg>';
 
 function signed(n) { return (n >= 0 ? '+' : MINUS) + Math.abs(n); }
-function topCosts(r) { return (r.costs || []).slice().sort((a, b) => b.points - a.points).slice(0, 3); }
+function sortedCosts(r) { return (r.costs || []).slice().sort((a, b) => b.points - a.points); }
+function topCosts(r) { return sortedCosts(r).slice(0, 3); }
+const COST_ROWS = 3; // rows the score panel has room for at 1280 x 800
 function miniCosts(r) {
   const cs = topCosts(r);
   return cs.length
@@ -173,11 +181,11 @@ function renderRunPrompt(run) {
 function renderScore(run) {
   const r = run.result;
   $('scN').textContent = r.total;
-  $('scGain').textContent = r.delta == null ? 'First prompt' : `${signed(r.delta)} pts`;
+  $('scGain').textContent = r.delta == null ? 'Run 1' : `${signed(r.delta)} pts`;
   const rk = r.rank;
   let rankText = '';
-  if (rk && rk.before && rk.after && rk.before !== rk.after) rankText = `rank #${rk.before} to #${rk.after}`;
-  else if (rk && rk.after) rankText = `rank #${rk.after}`;
+  if (rk && rk.before && rk.after && rk.before !== rk.after) rankText = `Rank #${rk.before} to #${rk.after}`;
+  else if (rk && rk.after) rankText = `Rank #${rk.after}`;
   const vs = r.delta == null ? '' : `vs run ${run.n - 1}`;
   $('scRk').textContent = [vs, rankText].filter(Boolean).join(', ');
   const passed = r.passedCount ?? (r.checks || []).filter((c) => c.passed).length;
@@ -187,10 +195,17 @@ function renderScore(run) {
   seg.innerHTML = Array.from({ length: total }, (_, i) => (i < passed ? '<i></i>' : '<i class="x"></i>')).join('');
   $('scCap').innerHTML = `<b>${passed} of ${total}</b> checks passed`;
   $('scRun').textContent = 'Run ' + run.n;
-  const cs = topCosts(r);
-  $('scCosts').innerHTML = cs.length
-    ? cs.map((c) => `<div class="cost"><span class="pt">${MINUS}${c.points}</span><span class="w">${esc(c.message)}</span></div>`).join('')
+  // Every cost when they fit; otherwise the biggest ones and one row with the rest, which opens Runs.
+  const all = sortedCosts(r);
+  const shown = all.length <= COST_ROWS ? all : all.slice(0, COST_ROWS - 1);
+  const rest = all.slice(shown.length);
+  const restPts = rest.reduce((s, c) => s + c.points, 0);
+  $('scCosts').innerHTML = all.length
+    ? shown.map((c) => `<div class="cost"><span class="pt">${MINUS}${c.points}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
+      (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${MINUS}${restPts}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
     : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
+  const more = $('moreCosts');
+  if (more) more.addEventListener('click', () => { S.sel = run.n; viewTabs.select(1); });
   $('scNoteText').innerHTML = r.total >= 100
     ? '<b>A perfect 100.</b> Very few prompts get every check right. This one is worth keeping.'
     : '<b>A perfect 100 is rare.</b> Small models drift on spacing and sizes, so a score in the 80s or 90s means a strong prompt.';
@@ -220,7 +235,7 @@ function renderRuns() {
     : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
 }
 
-function setStatus(text) { S.status = text || ''; }
+function setStatus(text, bad = false) { S.status = text || ''; S.statusBad = !!(text && bad); }
 
 // ---------------------------------------------------------------- render
 
@@ -250,8 +265,17 @@ function render() {
   // Instructions menu lives in whichever page panel is showing.
   const host = [ 'goalPanel', 'comparePanel' ].map($).find((p) => !p.hidden);
   const dd = $('insDd');
-  if (host) { const slot = host.querySelector('.dd-slot'); if (dd.parentNode !== slot) slot.appendChild(dd); }
+  const ins = $('insMenu');
+  if (host) {
+    const slot = host.querySelector('.dd-slot'); if (dd.parentNode !== slot) slot.appendChild(dd);
+    if (ins.parentNode !== host) host.appendChild(ins);
+  }
   dd.hidden = !host;
+  if (!host) S.ins = false;
+  ['goalPanel', 'comparePanel'].forEach((id) => $(id).classList.toggle('ins-open', S.ins && $(id) === host));
+  $('insBtn').setAttribute('aria-expanded', String(S.ins));
+  // The docked column needs the height: the leaderboard strip steps aside while it is open.
+  if (S.ins && host === $('goalPanel')) show('lbPanel', false);
 
   $('runCount').textContent = runs.length;
   $('usedA').textContent = runs.length;
@@ -260,25 +284,31 @@ function render() {
   // prompt panel
   $('mineNote').textContent = 'Run ' + S.runN;
   $('runBtn').disabled = busy;
+  $('runBtn').classList.toggle('busy', busy);
   $('runLabel').innerHTML = busy ? 'Running' : last ? 'Run prompt<small>adds 1 prompt</small>' : 'Run prompt';
   show('cancelBtn', busy);
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
   st.textContent = S.status;
   st.hidden = !S.status;
-  show('lastBox', m === 'refine' && !!last);
-  if (m === 'refine' && last) {
-    $('lastScore').textContent = last.result.total;
-    $('lastCosts').innerHTML = miniCosts(last.result);
+  st.classList.toggle('bad', S.statusBad);
+  $('simRun').hidden = !S.sim || !!S.status;
+  // While refining: the run being built on (the last one, or the one picked with "Use this prompt").
+  const base = (S.useRun && runs.find((r) => r.n === S.useRun)) || last;
+  show('lastBox', m === 'refine' && !!base);
+  if (m === 'refine' && base) {
+    $('lastLbl').textContent = base === last ? 'Last run' : `Run ${base.n}`;
+    $('lastScore').textContent = base.result.total;
+    $('lastCosts').innerHTML = miniCosts(base.result);
   }
 
   // stages
-  $('stageNote').textContent = m === 'generating' ? 'The model is writing your page'
-    : m === 'grading' ? 'Grading run ' + S.runN : 'Stopped';
+  // One tight row: what is happening now, then the four scoring steps.
+  $('stageNote').textContent = m === 'grading' ? 'Grading run ' + S.runN : 'Writing your page';
   $('stageList').innerHTML = api.STAGES.map((s, i) =>
     `<li class="${i < S.stage ? 'done' : i === S.stage && m === 'grading' ? 'on' : ''}">${esc(s.label)}</li>`).join('');
 
-  if (ws && compare && last) { renderCompare(last); renderRunPrompt(last); }
+  if (ws && compare && base) { renderCompare(base); renderRunPrompt(base); }
   show('runPromptBox', ws ? compare && !!last : runs.length > 0);
   if (ws && m === 'scored' && last) renderScore(last);
   if (!ws) {
@@ -296,7 +326,7 @@ async function doRun() {
   const prompt = ta.value;
   if (!prompt.trim()) {
     if (S.mode === 'scored') S.mode = 'refine';
-    setStatus('Write a prompt first, then run it.');
+    setStatus('Write a prompt first, then run it.', true);
     render();
     ta.focus();
     return;
@@ -308,6 +338,9 @@ async function doRun() {
   viewTabs.select(0, false);
   S.stage = -1;
   S.runN = runs.length + 1;
+  S.useRun = null;
+  S.ins = false;
+  tools.setMode(null);
   setStatus('');
   pending = null;
   setDoc('mineFrame', '');
@@ -329,13 +362,16 @@ async function doRun() {
     renderBoard();
   } catch (e) {
     flush();
-    S.mode = 'stopped';
-    if (e && e.name === 'AbortError') setStatus('Run cancelled. Nothing was scored and your prompt count did not change. Edit and run again when ready.');
-    else setStatus(`The run did not finish: ${(e && e.message) || 'unknown error'} Your prompt is kept, so run it again.`);
+    // Back to where the run started: the goal page, or the last run's compare view.
+    S.mode = runs.length ? 'refine' : 'idle';
+    if (e && e.name === 'AbortError') setStatus('Run cancelled. Nothing was scored and your prompt count did not change.');
+    else setStatus(`The run did not finish: ${(e && e.message) || 'unknown error'} Your prompt is kept, so run it again.`, true);
   } finally {
     S.ctrl = null;
     render();
   }
+  // Phones: the score sits below the compare view, so bring it into view.
+  if (S.mode === 'scored' && window.matchMedia('(max-width:760px)').matches) $('scorePanel').scrollIntoView({ block: 'start' });
 }
 
 function cancel() { if (S.ctrl) S.ctrl.abort(); }
@@ -386,6 +422,7 @@ function wire() {
   $('runBtn').addEventListener('click', doRun);
   const keepPrompting = () => {
     S.mode = 'refine';
+    S.useRun = null;
     setStatus('');
     render();
     ta.focus();
@@ -403,20 +440,24 @@ function wire() {
     S.view = 'workspace';
     viewTabs.select(0, false);
     if (S.mode === 'scored' || S.mode === 'idle') S.mode = 'refine';
+    S.useRun = run.n;
     setStatus(`Prompt ${run.n} is in the editor. Edit it, then run it.`);
     render();
     ta.focus();
   });
   viewTabs = tabs($('tabs'), (i) => { S.view = i === 0 ? 'workspace' : 'runs'; render(); });
+  // A click anywhere in the editor box puts the cursor in the prompt.
+  $('editor').addEventListener('mousedown', (e) => { if (e.target !== ta) { e.preventDefault(); ta.focus(); } });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       doRun();
     } else if (e.key === 'Escape') {
-      if (document.querySelector('.dd-menu:not([hidden])')) return;
+      if (document.querySelector('.dd-menu:not([hidden])') || document.querySelector('.fv')) return;
       if (S.ctrl) { cancel(); return; }
-      tools.escape();
+      if (tools.escape()) return;
+      if (S.ins) { S.ins = false; render(); $('insBtn').focus(); }
     }
   });
 }
@@ -458,9 +499,10 @@ async function main() {
 
 // The preview-build note sits by the run button and in the scored state while runs are simulated.
 function renderSim(sim) {
+  S.sim = !!sim;
   ['simRun', 'simScore'].forEach((id) => {
     $(id).innerHTML = sim ? simNote() : '';
-    $(id).hidden = !sim;
+    $(id).hidden = !sim || (id === 'simRun' && !!S.status);
   });
 }
 

@@ -291,7 +291,16 @@ async function findChallenge(slug) {
 
 const boardCache = new Map();
 
-// About 40 players per challenge, every prompt bracket filled. Others only; "you" is merged later.
+// Players and top score per challenge: easy ones are solved more and score higher. Every prompt bracket filled.
+// Others only; "you" is merged later.
+const BOARD_SHAPE = {
+  "login-card": { players: 44, top: 98 },
+  "footer-columns": { players: 38, top: 97 },
+  "nav-hero": { players: 31, top: 95 },
+  "blog-header": { players: 26, top: 94 },
+  "pricing-plans": { players: 19, top: 92 },
+  "product-grid": { players: 14, top: 90 },
+};
 async function mockBoard(slug) {
   if (boardCache.has(slug)) return boardCache.get(slug);
   const { c } = await findChallenge(slug);
@@ -304,7 +313,8 @@ async function mockBoard(slug) {
   }
   const ranges = [[1, 1], [2, 2], [3, 5], [6, 10], [11, 18]];
   const ceilings = [92, 95, 97, 98, 98];
-  const rows = pool.slice(0, 40).map((username, i) => {
+  const shape = BOARD_SHAPE[slug] || { players: 40, top: 98 };
+  const rows = pool.slice(0, shape.players).map((username, i) => {
     const b = i % 5;
     const [lo, hi] = ranges[b];
     const promptCount = lo + Math.floor(r() * (hi - lo + 1));
@@ -312,12 +322,12 @@ async function mockBoard(slug) {
     const daysAgo = r() < 0.5 ? Math.floor(r() * 7) : 8 + Math.floor(r() * 50);
     return { username, promptCount, score, daysAgo };
   });
-  // A few strong runs so the top of every board sits in the high 90s, never 100.
-  rows[3].score = 98 - (c.level === 3 ? 1 : 0);
-  rows[2].score = 96;
-  rows[8].score = 97 - (c.level === 3 ? 1 : 0);
-  rows[1].score = 94;
-  rows[0].score = 91;
+  // A few strong runs so the top of every board sits at its shape's top score, never 100.
+  rows[3].score = shape.top;
+  rows[8].score = shape.top - 1;
+  rows[2].score = shape.top - 2;
+  rows[1].score = shape.top - 4;
+  rows[0].score = shape.top - 7;
   rows[3].daysAgo = 2;
   rows[2].daysAgo = 1;
   boardCache.set(slug, rows);
@@ -334,7 +344,8 @@ function rankAmong(rows, entry) {
 }
 
 function sortRows(rows) {
-  return rows.slice().sort((a, b) => (better(a, b) ? -1 : better(b, a) ? 1 : a.username.localeCompare(b.username)));
+  // Exact ties: you first, so a board rank always matches rankAmong() (1 + players strictly better).
+  return rows.slice().sort((a, b) => (better(a, b) ? -1 : better(b, a) ? 1 : !!b.isYou - !!a.isYou || a.username.localeCompare(b.username)));
 }
 
 function youName() {
@@ -412,30 +423,19 @@ export async function startOver(slug) {
   return null;
 }
 
-function mockTotal(n, level, prompt) {
-  const seq = [71, 84, 91, 94, 95, 96, 96, 97];
-  let t = seq[Math.min(n - 1, seq.length - 1)];
-  t -= level - 1;
-  t += (hash(prompt.trim()) % 3) - 1;
-  if (prompt.trim().length < 25) t -= 12;
-  return Math.max(20, Math.min(97, t));
+// Every mock fault has one fixed cost, so the same fault costs the same on every run.
+function faultCost(f) {
+  return f.weight + Math.ceil(f.weight / 4);
 }
 
-// Splits the lost points over the most important faults so the costs add up exactly.
-function splitCosts(faults, lost) {
-  if (lost <= 0) return [];
-  const k = Math.max(1, Math.min(faults.length, Math.ceil(lost / 4)));
-  const active = faults.slice(0, k);
-  const weight = active.reduce((s, f) => s + f.weight, 0);
-  const pts = active.map((f) => Math.max(1, Math.floor((lost * f.weight) / weight)));
-  let diff = lost - pts.reduce((s, p) => s + p, 0);
-  for (let i = 0; diff > 0; i = (i + 1) % k, diff--) pts[i]++;
-  while (diff < 0) {
-    const i = pts.indexOf(Math.max(...pts));
-    pts[i]--;
-    diff++;
-  }
-  return active.map((f, i) => ({ fault: f, points: pts[i] })).sort((a, b) => b.points - a.points);
+// Which faults are still in the page on version n of the prompt: version n fixes the n biggest
+// faults. Harder challenges always keep a few; a very short prompt keeps them all.
+// The score is 100 minus the costs of the faults left, so the costs always add up.
+function activeFaults(faults, n, level, prompt) {
+  const all = faults.slice().sort((a, b) => faultCost(b) - faultCost(a));
+  const floor = Math.min(all.length, Math.max(1, level));
+  const k = prompt.trim().length < 25 ? all.length : Math.max(floor, all.length - n);
+  return all.slice(all.length - k).map((f) => ({ fault: f, points: faultCost(f) }));
 }
 
 function applyFaults(html, faults) {
@@ -465,8 +465,8 @@ async function mockGrade(slug, n, prompt) {
   const { c } = await findChallenge(slug);
   const faults = await loadJson("mock/faults.json");
   const list = faults.challenges[slug] || [];
-  const total = mockTotal(n, c.level, prompt);
-  const split = splitCosts(list, 100 - total);
+  const split = activeFaults(list, n, c.level, prompt);
+  const total = 100 - split.reduce((s, x) => s + x.points, 0);
   const failed = new Set(split.map((s) => s.fault.check));
   const checks = [
     ...list.map((f) => ({ label: f.check, passed: !failed.has(f.check) })),
@@ -524,7 +524,9 @@ async function commitRun(slug, prev, { prompt, model, html, result, serverIds })
 
 async function mockRun({ slug, prompt, model, signal, onStage, onHtml }) {
   const prev = store.getAttempt(slug);
-  const n = (prev ? prev.runs.length : 0) + 1;
+  // Version of the prompt: running the same prompt again builds the same page and scores the same.
+  const prompts = (prev ? prev.runs.map((r) => r.prompt) : []).concat(prompt).map((t) => String(t).trim());
+  const n = prompts.filter((t, i) => i === 0 || t !== prompts[i - 1]).length;
   const goal = await loadText(`data/goals/${slug}.html`);
   const grade = await mockGrade(slug, n, prompt);
   const html = applyFaults(goal, grade.activeFaults);
@@ -729,6 +731,7 @@ async function mockLeaderboard(slug, bracket, period) {
       username: u.username,
       score: u.score,
       promptCount: Math.max(1, Math.round(u.prompts / u.count)),
+      avgPrompts: Math.round((u.prompts / u.count) * 10) / 10,
       isYou: u.isYou,
     }));
   }
@@ -738,6 +741,7 @@ async function mockLeaderboard(slug, bracket, period) {
     promptCount: r.promptCount,
     score: r.score,
     isYou: !!r.isYou,
+    ...(r.avgPrompts != null ? { avgPrompts: r.avgPrompts } : {}),
   }));
   const y = rows.find((r) => r.isYou);
   return { rows, you: y ? { rank: y.rank, score: y.score, promptCount: y.promptCount } : null };

@@ -12,6 +12,7 @@
   --line:rgba(255,255,255,.125);
   --line-soft:rgba(255,255,255,.06);
   --hover:rgba(255,255,255,.063);
+  --section-hover:#303135;    /* panel row hover, solid */
   --fill-soft:rgba(255,255,255,.08);
   --fill-off:rgba(255,255,255,.12);
   --divider:#3a3b40;          /* rail dot */
@@ -37,9 +38,9 @@
   --red-btn:#bb432c;          /* small buttons */
   --red-deep:#7a1f14;
   --red-soft:#ff8a7a;         /* editor emphasis */
+  --red-hover:#ff5c5c;         /* primary action hover, flat */
+  --red-btn-hover:#c64a32;     /* small button hover, flat */
   --red-tint:rgba(255,77,77,.14);
-  --red-glow:rgba(255,77,77,.22);
-  --red-glow-0:rgba(255,77,77,0);
   --red-ring:rgba(255,77,77,.35);
   --red-kbd:rgba(22,23,27,.16);
   --peach:#f29871;
@@ -74,15 +75,16 @@
   --w-bold:700;
   --w-black:900;
 
-  /* radii */
+  /* radii: two in use. 4 for controls (buttons, inputs, pills, tags, links),
+     8 for panels and boxes (panels, stats, frames, rows, wells, menus).
+     1 to 3 are only for tiny marks (rail marker, score bar, check mark). */
   --r-1:1px;
   --r-2:2px;
   --r-3:3px;
   --r-4:4px;
-  --r-5:5px;
-  --r-6:6px;
   --r-8:8px;
-  --r-pill:20px;
+  --r-control:var(--r-4);
+  --r-panel:var(--r-8);
 
   /* spacing steps */
   --s-1:4px;
@@ -102,10 +104,6 @@
   --gutter:16px;
   --side-w:540px;
 
-  /* shadows */
-  --shadow-panel:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
-  --shadow-run:0 6px 18px -6px rgba(255,77,77,.55);
-  --shadow-float:0 8px 24px rgba(0,0,0,.5);
-  --shadow-frame:0 0 0 1px var(--line);
+  /* no glows, drop shadows or gradients anywhere; the keyboard focus ring is the only ring */
   --focus:0 0 0 2px var(--bg),0 0 0 4px var(--red);
 }
