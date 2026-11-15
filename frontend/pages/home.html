@@ -55,13 +55,19 @@
           </section>
 
           <section class="builder-panel">
-            <div class="panel-top"><div class="panel-label"><span class="sparkle">✳</span> YOUR WORKSPACE</div><div class="model-tag"><span></span> MINI MODEL <b>⌄</b></div></div>
-            <div class="prompt-label"><span>YOUR PROMPT</span><span id="char-count">0 / 500</span></div>
-            <textarea id="prompt" maxlength="500" placeholder="Describe the page you want to build...&#10;&#10;Try calling out the layout, colors, typography, and any details that stand out to you."></textarea>
-            <div class="prompt-footer"><span><kbd>↵</kbd> New line</span><span class="prompt-tip">Be specific. Every detail counts.</span></div>
-            <button id="build-button" class="build-button"><span>Build my page</span><span class="button-arrow">↗</span></button>
-            <div class="output-heading"><span>YOUR RESULT</span><span class="output-status"><i></i><span id="output-status">WAITING FOR PROMPT</span></span></div>
-            <div id="output" class="output-frame"><div class="empty-state"><span class="empty-icon">↗</span><b>Your page will show up here.</b><small>Write a prompt above, then hit build.</small></div></div>
+            <div class="panel-top"><div class="panel-label"><span class="sparkle">✳</span> YOUR WORKSPACE</div><div class="model-tag"><span></span> PLAYWRIGHT GRADER <b>0.2</b></div></div>
+            <div class="prompt-label"><span>YOUR PROMPT <small>(OPTIONAL NOTES)</small></span><span id="char-count">0 / 500</span></div>
+            <textarea id="prompt" maxlength="500" placeholder="Write the prompt you would give your model. Paste the model's HTML and CSS below to grade its result."></textarea>
+            <div class="code-submission">
+              <label for="html-source">GENERATED HTML <small>Paste the page markup</small></label>
+              <textarea id="html-source" maxlength="240000" spellcheck="false" placeholder="&lt;main class=&quot;canvas&quot;&gt;&#10;  &lt;div class=&quot;circle&quot;&gt;&lt;/div&gt;&#10;&lt;/main&gt;"></textarea>
+              <label for="css-source">GENERATED CSS <small>Styles for this page</small></label>
+              <textarea id="css-source" maxlength="40000" spellcheck="false" placeholder=".canvas { min-height: 100vh; display: grid; place-items: center; }&#10;.circle { width: 120px; height: 120px; border-radius: 50%; background: red; }"></textarea>
+              <p>The grader renders your HTML and CSS in Chromium and compares its screenshot with the target. Scripts and network requests are disabled.</p>
+            </div>
+            <button id="build-button" class="build-button"><span>Render &amp; grade</span><span class="button-arrow">↗</span></button>
+            <div class="output-heading"><span>YOUR RENDERED PAGE</span><span class="output-status"><i></i><span id="output-status">WAITING FOR SUBMISSION</span></span></div>
+            <div id="output" class="output-frame"><div class="empty-state"><span class="empty-icon">↗</span><b>Your rendered page will show up here.</b><small>Paste generated HTML and CSS, then grade it.</small></div><iframe id="candidate-preview" title="Your rendered page preview" sandbox="" hidden></iframe></div>
             <div class="score-row"><div class="score-label"><span>YOUR SCORE</span><small id="score-detail">Build a page to get your first score</small><div id="score-breakdown" class="score-breakdown" aria-live="polite"></div></div><div class="score-value"><b id="score">—</b><span>/ 100</span></div></div>
           </section>
         </div>

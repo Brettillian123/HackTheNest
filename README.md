@@ -4,20 +4,22 @@ A browser prototype for practicing prompts by recreating progressively more comp
 
 ## Start the app
 
-Requirements: Node.js and npm. Put `MONGODB_URI=...` in the root `.env` file, then run:
+Requirements: Node.js, npm, and Playwright Chromium. Put `MONGODB_URI=...` in the root `.env` file if you use the account or MongoDB features, then run:
 
 ```sh
 npm install
+npm install --prefix grader
+npx --prefix grader playwright install chromium
 npm run dev
 ```
 
-Open the URL printed by the server (default `http://localhost:3000`). The home page is at `/home`; `/` redirects there.
+Open `http://localhost:3000`. `npm run dev` starts both the web app and local grader service. The home page is at `/home`; `/` redirects there.
 
 ## Challenges
 
 Challenge references live in `frontend/testHtml/`, with one numbered folder per generic target and its own HTML/CSS files. Browse the five targets—from a simple shape through a login form—with the arrows or selector; the active target and its rubric update together. Your selected target is saved in the browser.
 
-Challenge order, rubric terms, and the local preview behavior are in `frontend/scripts/app.js`. The scorer is a prototype and currently awards points for describing challenge-specific visual details; generated previews are local mockups, not model output.
+The challenge order is in `frontend/scripts/app.js`; references live in `frontend/testHtml/`. Write a prompt for your model, paste its generated HTML and CSS, and select **Render & grade**. The Playwright grader compares the rendered page against the selected target using content, layout, style, and screenshot similarity. Model generation is not connected yet. See [grader integration](docs/grader-integration.md) for local and deployment setup.
 
 ## Account pages
 
