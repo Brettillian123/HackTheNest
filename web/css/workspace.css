@@ -23,7 +23,8 @@
 .ws-page{--vw:1280;--vh:800}
 .ws-slot{flex:1 1 0;min-height:0;min-width:0;container-type:size;display:flex;align-items:center;justify-content:center}
 .ws-slot:has(> .frame[hidden]){display:none}
-.ws-slot > .frame{flex:none;width:min(100cqw, 100cqh * var(--vw) / var(--vh))}
+.ws-slot > .frame{flex:none}
+.ws-slot{align-items:flex-start}
 .ws-page .col > #goalPanel{flex:1 1 0}
 .ws-page .col > #lbPanel{flex:none}
 .ws-compare{container-type:inline-size}
@@ -172,4 +173,39 @@
 .ws-done{margin-top:var(--s-2);padding-left:18px;list-style:disc}
 .ws-done li{font-size:var(--fs-13);line-height:19px;color:var(--text);padding:2px 0}
 .ws-content-note{display:block;margin-top:var(--s-1)}
+/* ---------- bigger goal: the page column takes about 64 percent, panels trim their padding ---------- */
+.ws-page > .split{grid-template-columns:minmax(0,64fr) minmax(400px,36fr)}
+.ws-page .col > .panel.ws-dd-host{padding:var(--s-4)}
+.ws-page .col > .panel.ws-dd-host > .panel-head{margin-bottom:var(--s-3)}
+.ws-page .col > .panel.ins-open > .ws-ins{top:calc(var(--s-4) + 34px + var(--s-2));right:var(--s-4);bottom:var(--s-4)}
+.ws-hint{flex:none;margin-top:var(--s-2);text-align:center}
+.ws-pair-box .frame-lbl{display:flex;align-items:center;gap:var(--s-2);height:28px;margin:0 0 var(--s-2)}
+.ws-pair-box .ws-big-btn{margin-left:auto;height:26px}
+.ws-compare > .pair{max-height:calc((100cqw - var(--s-5)) / 2 * var(--vh) / var(--vw) + 28px + var(--s-2) + 4px)}
+/* leaderboard: a slim row under the prompt panel */
+.ws-page .panel.ws-lb{flex:none;padding:var(--s-4) var(--s-5)}
+.ws-page .panel.ws-lb > .panel-head{min-height:0;margin-bottom:var(--s-2)}
+.ws-lb .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-2)}
+.ws-lb .lb-strip li{height:30px}
+/* start hint: read the brief first */
+.ws-start{display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-4);font:var(--w-semi) var(--fs-13)/18px var(--ui);color:var(--text);text-align:left}
+.ws-start::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+/* after scoring: score above, the editor with the submitted prompt below */
+.ws-page .col > .panel.ws-score{flex:none;gap:var(--s-4)}
+.ws-score .callout:not(:has(b)){display:none}
+.ws-page .col > .panel.ws-prompt.ws-after{flex:1 1 0}
+.ws-prompt .editor{overflow:auto}
+/* full-size view */
+.ws-big{position:fixed;inset:0;z-index:90;display:flex;padding:var(--s-7);background:var(--overlay)}
+.ws-big-box{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--s-4);padding:var(--s-5);background:var(--section);border:1px solid var(--line);border-radius:var(--r-panel)}
+.ws-big-bar{display:flex;align-items:center;gap:var(--s-5);flex:none}
+.ws-big-t{margin-right:auto}
+.ws-big-sw{display:flex;gap:var(--s-2)}
+.ws-big-body{flex:1;min-height:0;display:flex;justify-content:center}
+.ws-big-frame{position:relative;overflow:hidden;background:var(--white);border-radius:var(--r-panel)}
+.ws-big-frame > iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+@media (max-width:760px){
+  .ws-big{padding:0}
+  .ws-big-box{border-radius:0;border:0;padding:var(--s-4)}
+}
 .ws-content{margin:var(--s-3) 0 var(--s-2);padding:var(--s-3) var(--s-4);max-height:220px;overflow:auto;background:var(--sunk);border:1px solid var(--line-soft);border-radius:var(--r-3);font:var(--w-reg) var(--fs-12)/18px var(--mono);color:var(--text);white-space:pre-wrap;word-break:break-word}

@@ -49,6 +49,7 @@
           <h2 class="h" id="goalTitle">Goal page</h2>
           <div class="right">
             <span class="dd-slot"></span>
+            <button class="btn btn-secondary sm ws-big-btn" id="goalBig" type="button" data-big="goal">Enlarge</button>
             <div class="tools" role="group" aria-label="Page tools">
               <button class="tool" data-tool="ruler" title="Ruler" aria-label="Ruler"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 11.5L11.5 2 14 4.5 4.5 14z"/><path d="M5 8.5l1.5 1.5M7 6.5l1 1M9 4.5l1.5 1.5"/></svg></button>
               <button class="tool" data-tool="mag" title="Magnifier" aria-label="Magnifier"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
@@ -56,6 +57,7 @@
           </div>
         </div>
         <div class="ws-slot"><div class="frame" id="goalFrame"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div>
+        <p class="note ws-hint" id="goalHint" hidden>Scroll to see the whole page</p>
         <div class="ws-doc" id="goalDoc" hidden></div>
       </section>
 
@@ -72,11 +74,6 @@
         </div>
         <div class="ws-slot"><div class="frame" id="mineFrame"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div>
         <div class="ws-doc md" id="mineDoc" hidden></div>
-      </section>
-
-      <section class="panel grow" id="lbPanel">
-        <div class="panel-head"><div class="ph-l"><h2 class="h">Top on this challenge</h2><span id="lbDemo"></span></div><span class="note" id="lbNote">This week</span></div>
-        <ul class="lb-strip" id="lbList"></ul>
       </section>
 
       <section class="panel ws-stages" id="stagePanel" hidden>
@@ -97,18 +94,14 @@
           </div>
         </div>
         <div class="pair" id="cmpPair">
-          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="ws-slot"><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div></div>
-          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page</div><div class="ws-slot"><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div></div>
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page<button class="btn btn-ghost sm ws-big-btn" type="button" data-big="goal">Enlarge</button></div><div class="ws-slot"><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div></div>
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page<button class="btn btn-ghost sm ws-big-btn" type="button" data-big="mine">Enlarge</button></div><div class="ws-slot"><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div></div>
         </div>
         <div class="ws-doc md ws-cmp-doc" id="cmpDoc" hidden></div>
         <div class="checks-wrap">
           <div class="panel-head" style="margin-bottom:4px"><h3 class="h" id="checksTitle">Checks</h3></div>
           <ul class="checks" id="checkList"></ul>
           <div class="report" id="reportCard" hidden></div>
-        </div>
-        <div class="ws-run-prompt" id="runPromptBox">
-          <div class="panel-head"><h3 class="h">Prompt for this run</h3><button class="btn btn-ghost sm" id="editKeepBtn">Edit and keep prompting</button></div>
-          <div class="editor code ws-rp" id="runPrompt" aria-label="Prompt for this run" tabindex="0"></div>
         </div>
       </section>
     </div>
@@ -127,6 +120,7 @@
             </div>
           </div>
         </div>
+        <button type="button" class="ws-start" id="startHint" hidden>Start here: read the brief</button>
         <div class="ws-last" id="lastBox" hidden>
           <div class="ws-last-top"><span id="lastLbl">Last run</span> <b id="lastScore">0</b><span>/100, fix these first</span></div>
           <div id="lastCosts"></div>
@@ -142,7 +136,13 @@
           <div class="used" id="costBox" hidden><span class="k">Next prompt</span><span class="v is-word" id="costNext"></span></div>
           <button class="run" id="runBtn"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9.5-5.5z"/></svg><span id="runLabel" class="ws-bl">Run prompt</span><kbd>Ctrl Enter</kbd></button>
           <button class="btn btn-secondary ws-tall" id="cancelBtn" hidden><span class="ws-bl">Cancel<small>Esc</small></span></button>
+          <button class="btn btn-secondary ws-tall" id="overBtn" hidden><span class="ws-bl"><span id="overLabel">Start over</span><small id="overNote">back to 0 prompts</small></span></button>
         </div>
+      </section>
+
+      <section class="panel ws-lb" id="lbPanel">
+        <div class="panel-head"><div class="ph-l"><h2 class="h">Top on this challenge</h2><span id="lbDemo"></span></div><span class="note" id="lbNote">This week</span></div>
+        <ul class="lb-strip" id="lbList"></ul>
       </section>
 
       <section class="panel grow score fill ws-score" id="scorePanel" hidden>
@@ -158,11 +158,6 @@
         <div class="costs"><h3 class="h">Point costs</h3><div id="scCosts"></div></div>
         <div class="ws-sim" id="simScore" hidden></div>
         <p class="callout" id="scNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span id="scNoteText"></span></p>
-        <div class="again">
-          <div class="used"><span class="k">Prompts used</span><span class="v" id="usedB">0</span></div>
-          <button class="run" id="keepBtn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 7a5 5 0 11-1.5-3.6M12 1.5v2.8H9.2"/></svg><span class="ws-bl">Keep prompting<small>adds 1 prompt</small></span></button>
-          <button class="btn btn-secondary ws-tall" id="overBtn"><span class="ws-bl"><span id="overLabel">Start over</span><small id="overNote">back to 0 prompts</small></span></button>
-        </div>
       </section>
 
       <section class="panel grow ws-runs" id="runsPanel" hidden>
@@ -185,7 +180,7 @@
 </main>
 
 <div class="dd" id="insDd">
-  <button class="btn btn-secondary sm dd-btn" id="insBtn" type="button" aria-expanded="false" aria-controls="insMenu"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg>Instructions<svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
+  <button class="btn btn-secondary sm dd-btn" id="insBtn" type="button" aria-expanded="false" aria-controls="insMenu"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span id="insLabel">Instructions</span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
 </div>
 <div class="ws-ins" id="insMenu" role="region" aria-label="Instructions"></div>
 
