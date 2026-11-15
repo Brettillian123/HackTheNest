@@ -5,6 +5,8 @@ const routes = [
   ['GET', /^\/api\/health$/, h.health],
   ['GET', /^\/api\/challenges$/, h.listChallenges],
   ['GET', /^\/api\/challenges\/([^/]+)$/, h.getChallenge],
+  ['GET', /^\/api\/lessons$/, h.lessons],
+  ['GET', /^\/api\/lessons\/([^/]+)$/, h.lesson],
   ['POST', /^\/api\/runs$/, h.createRun],
   ['POST', /^\/api\/runs\/([^/]+)\/score$/, h.scoreRun],
   ['GET', /^\/api\/attempts\/current$/, h.getCurrentAttempt],

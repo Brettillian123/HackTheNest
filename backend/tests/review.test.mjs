@@ -19,7 +19,7 @@ const score = (id, headers = anon(), cookie) => call('POST', `/api/runs/${id}/sc
 
 // ------------------------------------------------------------------ clean-up
 
-const ALLOWED_LT = /<(?:!doctype html>|\/?(?:html|head|body|meta|div|span|p|a|br|hr|wbr|h[1-6]|header|nav|main|footer|section|article|aside|address|ul|ol|li|dl|dt|dd|strong|em|b|i|u|s|small|mark|sub|sup|abbr|q|cite|del|ins|time|code|pre|kbd|samp|var|blockquote|figure|figcaption|img|table|caption|thead|tbody|tfoot|tr|th|td|colgroup|col|form|fieldset|legend|label|input|button|select|option|optgroup|textarea|details|summary|progress|meter|output|title|style)[\s>])/;
+const ALLOWED_LT = /<(?:!doctype html>|\/?(?:html|head|body|meta|div|span|p|a|br|hr|wbr|h[1-6]|header|nav|main|footer|section|article|aside|address|ul|ol|li|dl|dt|dd|strong|em|b|i|u|s|small|mark|sub|sup|abbr|q|cite|del|ins|time|code|pre|kbd|samp|var|blockquote|figure|figcaption|img|table|caption|thead|tbody|tfoot|tr|th|td|colgroup|col|form|fieldset|legend|label|input|button|select|option|optgroup|textarea|details|summary|progress|meter|output|title|style|svg|g|defs|desc|symbol|path|circle|ellipse|rect|line|polyline|polygon|text|tspan|lineargradient|radialgradient|stop|clippath|mask|use)[\s>/])/;
 function everyLtIsAllowed(html) {
   // Inside <style>, "<" is always written as a CSS escape, so every "<" must open an allowed tag.
   for (let i = html.indexOf('<'); i >= 0; i = html.indexOf('<', i + 1)) {
@@ -53,7 +53,7 @@ const PAYLOADS = [
   '<!--><script>alert(1)</script>-->',
   '<a href="mailto:a@b.co">mail</a><a href="#top">top</a>',
 ];
-const BAD = [/onerror/i, /onclick/i, /http-equiv/i, /<link/i, /<script/i, /<iframe/i, /srcdoc/i, /<svg/i, /<object/i, /<embed/i, /<base/i, /javascript:/i, /evil\.example/, /@import/i, /mport/, /image-set/i, /formaction/i, /action=/i];
+const BAD = [/onerror/i, /onclick/i, /http-equiv/i, /<link/i, /<script/i, /<iframe/i, /srcdoc/i, /<object/i, /<embed/i, /<base/i, /javascript:/i, /evil\.example/, /@import/i, /mport/, /image-set/i, /formaction/i, /action=/i];
 
 // The active parts of a page: its tags (with attributes) and its CSS. Text between tags is inert.
 const active = html => [...(html.match(/<[^>]*>/g) || []), ...[...html.matchAll(/<style>([\s\S]*?)<\/style>/g)].map(m => m[1])].join('\n');
@@ -149,12 +149,14 @@ test('stand-in: hidden goal text, CSS-comment colours and empty tags all score u
 
 // ------------------------------------------------------------------ grader
 
-test('a grader answer with an error or no numeric total is a failed grade, not a 0', async () => {
+test('a grader answer with no numeric total and no error is a failed grade; one with an error is stored as 0 with the reason', async () => {
   const env = { GRADER_URL: 'https://g.test', GRADER_API_KEY: 'k' };
-  for (const result of [{ total: 0, error: 'Could not render.' }, { pillars: {} }, { total: 'n/a' }]) {
+  const rejected = await gradePage({ goalHtml: 'g', html: 'c', env, fetch: async () => Response.json({ result: { total: 0, error: 'A file is over 300 KB.' } }) });
+  assert.deepEqual([rejected.total, rejected.rejectedReason, rejected.provisional], [0, 'A file is over 300 KB.', false]);
+  for (const result of [{ pillars: {} }, { total: 'n/a' }]) {
     await assert.rejects(gradePage({ goalHtml: 'g', html: 'c', env, fetch: async () => Response.json({ result }) }), GraderRejected);
   }
-  const { store } = setup({ env: { ANTHROPIC_API_KEY: 'k', ...env }, model: GOAL, grader: () => Response.json({ result: { total: 0, error: 'Could not render.' } }) });
+  const { store } = setup({ env: { ANTHROPIC_API_KEY: 'k', ...env }, model: GOAL, grader: () => Response.json({ result: { pillars: { works: 50 } } }) });
   const r = await run('a login card');
   const s = await score(r.headers['x-run-id']);
   assert.deepEqual([s.status, s.body], [502, { error: 'The grader could not score this page. Try scoring it again.' }]);
@@ -191,14 +193,17 @@ test('a provisional score from a grader outage is replaced by re-scoring; boards
   assert.equal((await score(r.headers['x-run-id'], {}, cookie)).body.run.result.total, 81);
 });
 
-test('stand-in mode boards include provisional scores and say so', async () => {
+test('with no grader configured the boards are empty and say provisional', async () => {
   setup({ model: GOAL });
   const { cookie } = await signUp('standin_u');
   const r = await run('a login card', { 'X-Forwarded-For': '10.0.0.8' }, cookie);
   await score(r.headers['x-run-id'], {}, cookie);
   const board = (await call('GET', '/api/leaderboards?slug=login-card', { cookie })).body;
   assert.equal(board.provisional, true);
-  assert.equal(board.rows.length, 1);
+  assert.deepEqual([board.rows, board.you], [[], null]);
+  assert.deepEqual((await call('GET', '/api/players/me', { cookie })).body.points, 0);
+  const mine = (await call('GET', '/api/attempts/current?slug=login-card', { cookie })).body.attempt;
+  assert.equal(mine.runs[0].result.provisional, true, 'the player still sees the provisional result');
 });
 
 // ------------------------------------------------------------------ caps
@@ -292,7 +297,7 @@ test('six parallel first runs share one attempt with prompt counts 1 to 6', asyn
 
 test('challenge stats are cached for 30 s per instance', async () => {
   let clock = Date.parse('2026-11-15T09:00:00Z');
-  setup({ model: GOAL, now: () => clock });
+  setup({ model: GOAL, now: () => clock, service: true });
   const { cookie } = await signUp('cache_u');
   const solved = async () => (await call('GET', '/api/challenges')).body.challenges.find(c => c.slug === 'login-card').solvedCount;
   assert.equal(await solved(), 0);

@@ -45,7 +45,7 @@ test('anonymous run, score, continue, start over', async () => {
   assert.equal(res1.total, 100);
   assert.equal(res1.delta, null);
   assert.equal(res1.provisional, true);
-  assert.deepEqual(res1.rank, { before: null, after: 1 });
+  assert.equal(res1.rank, null, 'provisional scores do not rank');
   assert.equal(res1.passedCount, res1.totalChecks);
   assert.equal(s1.body.attempt.best, 100);
   assert.equal(s1.body.attempt.promptCount, 1);
@@ -82,7 +82,7 @@ test('anonymous run, score, continue, start over', async () => {
 });
 
 test('claim after sign-up moves anonymous attempts, idempotently; boards show users only', async () => {
-  setup({ model: fakeModel });
+  setup({ model: fakeModel, service: true });
   const r = await run('login-card', 'A login card');
   await score(r.headers['x-run-id']);
   const before = await call('GET', '/api/leaderboards?slug=login-card', { headers: anon() });
@@ -106,7 +106,7 @@ test('claim after sign-up moves anonymous attempts, idempotently; boards show us
 
 test('leaderboard brackets, tie-breaks, week period, overall board and profiles', async () => {
   let clock = Date.parse('2026-11-01T12:00:00Z');
-  const { store } = setup({ model: fakeModel, now: () => clock });
+  const { store } = setup({ model: fakeModel, now: () => clock, service: true });
   const users = {};
   for (const name of ['amy', 'bob', 'cat', 'dan']) users[name] = await signUp(name);
   const play = async (name, prompts, slug = 'login-card') => {
@@ -128,6 +128,7 @@ test('leaderboard brackets, tie-breaks, week period, overall board and profiles'
 
   const all = (await call('GET', '/api/leaderboards?slug=login-card&bracket=all&period=all', { cookie: users.bob.cookie })).body;
   assert.equal(all.kind, 'score');
+  assert.deepEqual([all.provisional, all.graderVersions], [false, ['0.6.0']]);
   assert.deepEqual(all.rows.map(r => [r.rank, r.username, r.promptCount, r.isYou]), [[1, 'amy', 1, false], [2, 'cat', 1, false], [3, 'bob', 2, true], [4, 'dan', 1, false]]);
   assert.deepEqual(all.you, { rank: 3, score: 100, promptCount: 2 });
   assert.deepEqual(all.counts, { all: 4, 1: 4, 2: 1, '3-5': 0, '6-10': 0, '11+': 0 });
@@ -268,7 +269,7 @@ test('scoring through the grader service path, end to end', async () => {
   const r = await run('login-card', 'card');
   const s = await score(r.headers['x-run-id']);
   assert.equal(s.status, 200);
-  assert.equal(s.body.run.result.total, 93);
+  assert.equal(s.body.run.result.total, 93.4);
   assert.equal(s.body.run.result.provisional, false);
-  assert.deepEqual(s.body.run.result.costs, [{ points: 7, message: 'The button is a little too wide.' }]);
+  assert.deepEqual(s.body.run.result.costs, [{ points: 6.6, message: 'The button is a little too wide.' }]);
 });

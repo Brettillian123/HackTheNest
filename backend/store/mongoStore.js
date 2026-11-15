@@ -132,10 +132,11 @@ export class MongoStore {
       { $group: {
         _id: { ownerKind: '$ownerKind', ownerId: '$ownerId', slug: '$slug', n: '$n' },
         username: { $first: '$username' },
+        graderVersion: { $first: '$graderVersion' },
         score: { $first: '$score' },
         at: { $first: '$scoredAt' },
       } },
     ]).toArray();
-    return rows.map(r => ({ ...r._id, username: r.username, score: r.score, at: r.at }));
+    return rows.map(r => ({ ...r._id, username: r.username, score: r.score, at: r.at, graderVersion: r.graderVersion ?? null }));
   }
 }

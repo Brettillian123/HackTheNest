@@ -6,6 +6,7 @@ import { handleApiRequest } from '../route/api.js';
 import { setDatabaseOverride } from '../config/database.js';
 import { setDeps } from '../services/deps.js';
 import { MemoryStore } from '../store/memoryStore.js';
+import { standinScore } from '../services/grader/standin.js';
 
 export const ANON = 'anon_test_player_0001';
 export const ANON2 = 'anon_test_player_0002';
@@ -93,11 +94,26 @@ export function anthropicStream(text) {
 
 // Wires a fresh in-memory store and fake dependencies. `model` is the text the fake model returns
 // (or a function of the request body); `grader` handles grader-service calls.
-export function setup({ env = { ANTHROPIC_API_KEY: 'test-model-key' }, model, grader, now } = {}) {
+// A fake grader service in the README's shapes that scores like the stand-in but returns final
+// (non-provisional) results; `state.graderVersion` is its version (also on GET /health).
+function standinService(state) {
+  return async (url, init) => {
+    if (url.endsWith('/health')) return Response.json({ ok: true, version: state.graderVersion, browserReady: true, busy: false });
+    const body = JSON.parse(init.body);
+    const s = standinScore(body.goal['index.html'], body.candidate['index.html']);
+    return Response.json({ result: { version: state.graderVersion, total: s.total, pillars: { works: 100, engineering: 95, looks: s.total }, bonus: 0, exactMatch: s.total === 100, feedback: s.costs, measurements: { bytes: 1 } } });
+  };
+}
+
+export function setup({ env = { ANTHROPIC_API_KEY: 'test-model-key' }, model, grader, now, service = false } = {}) {
   const store = new MemoryStore();
   setDatabaseOverride(store.database());
   const calls = { model: [], grader: [] };
-  const state = { modelText: model };
+  const state = { modelText: model, graderVersion: '0.6.0' };
+  if (service) {
+    env = { ...env, GRADER_URL: 'https://grader.test', GRADER_API_KEY: 'grader-test-key' };
+    if (!grader) grader = standinService(state);
+  }
   const fetch = async (url, init = {}) => {
     const u = String(url);
     if (u.startsWith('https://api.anthropic.com/') || u.startsWith('https://api.openai.com/') || u.startsWith('https://generativelanguage.googleapis.com/')) {
