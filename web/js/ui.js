@@ -244,3 +244,14 @@ export function kindTag(kind) {
   if (!kind || kind === 'page') return '';
   return `<span class="mtag kind-tag">${esc(KIND_LABEL[kind] || kind)}</span>`;
 }
+
+// What the next prompt costs, in one short label: "Free today", "1 credit", "2 credits"; '' when unknown.
+export function costLabel(cost) {
+  const n = Number(cost);
+  if (cost == null || !Number.isFinite(n)) return '';
+  return n === 0 ? 'Free today' : `${n} ${n === 1 ? 'credit' : 'credits'}`;
+}
+export function costTag(cost) {
+  const t = costLabel(cost);
+  return t ? `<span class="mtag cost-tag${Number(cost) === 0 ? ' free' : ''}">${esc(t)}</span>` : '';
+}

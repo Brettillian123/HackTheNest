@@ -2,7 +2,7 @@
 import * as api from './api.js';
 import * as store from './store.js';
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer, provisionalNote, provisionalTag, fmtScore, kindTag } from './ui.js';
+import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer, provisionalNote, provisionalTag, fmtScore, kindTag, costLabel } from './ui.js';
 import { renderMarkdown } from './markdown.js';
 import { createTools } from './tools.js';
 
@@ -26,6 +26,8 @@ const S = {
   useRun: null, // run whose prompt was put back in the editor with "Use this prompt"
   ins: false, // instructions column open
   sim: false, // preview-build note showing
+  statusLink: null, // { href, label } after the status line (Buy credits, Sign up)
+  user: null, // the signed-in player, or null
 };
 
 const ta = $('prompt');
@@ -308,7 +310,7 @@ function renderRuns() {
     : '<div class="cost"><span class="w">No points lost on this run</span></div>';
 }
 
-function setStatus(text, bad = false) { S.status = text || ''; S.statusBad = !!(text && bad); }
+function setStatus(text, bad = false, link = null) { S.status = text || ''; S.statusBad = !!(text && bad); S.statusLink = text ? link : null; }
 
 // ---------------------------------------------------------------- prompt length limit
 // maxPromptChars comes with the challenge; 2000 when the server does not send it.
@@ -388,6 +390,17 @@ function render() {
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
   st.textContent = S.status;
+  if (S.status && S.statusLink) {
+    const a = document.createElement('a');
+    a.href = S.statusLink.href;
+    a.className = 'ws-status-link';
+    a.textContent = S.statusLink.label;
+    st.append(' ', a);
+  }
+  // What the next prompt costs (scoring a saved page is free).
+  const costText = S.ch && !(S.attempt && S.attempt.pending) ? costLabel(S.ch.cost) : '';
+  $('costNext').textContent = costText;
+  show('costBox', !!costText);
   st.hidden = !S.status;
   st.classList.toggle('bad', S.statusBad);
   $('simRun').hidden = !S.sim || !!S.status;
@@ -458,7 +471,7 @@ async function doRun() {
     renderSim(api.isSimulated('run'));
     S.ch = { ...S.ch, ...(await api.getChallenge(slug)) };
     renderHeader();
-    api.me().then((u) => { if (u) mountShell({ active: 'challenges', user: shellUser(u), crumb: [{ label: 'Challenges', href: 'challenges.html' }, { label: S.ch.title }] }); }).catch(() => {});
+    api.me().then((u) => { S.user = u; if (u) mountShell({ active: 'challenges', user: shellUser(u), crumb: [{ label: 'Challenges', href: 'challenges.html' }, { label: S.ch.title }] }); }).catch(() => {});
     renderBoard();
   } catch (e) {
     flush();
@@ -466,7 +479,11 @@ async function doRun() {
     // Otherwise back to where the run started: the goal page, or the last run's compare view.
     S.mode = S.attempt && S.attempt.pending ? 'stopped' : runs.length ? 'refine' : 'idle';
     const aborted = e && e.name === 'AbortError';
-    if (e && e.userMessage) setStatus(e.userMessage, !aborted);
+    if (e && e.code === 'credits_required') {
+      // Not charged, nothing counted: the prompt stays in the editor.
+      const msg = String(e.message || 'This prompt needs credits').replace(/.$/, '');
+      setStatus(msg, true, S.user ? { href: 'credits.html', label: 'Buy credits' } : { href: `signup.html?next=${encodeURIComponent(location.pathname.split('/').pop() + location.search)}`, label: 'Sign up' });
+    } else if (e && e.userMessage) setStatus(e.userMessage, !aborted);
     else if (aborted) setStatus('Run cancelled, your prompt count did not change');
     else setStatus(`The run did not finish (${String((e && e.message) || 'unknown error').replace(/\.$/, '')}), your prompt is kept so run it again`, true);
   } finally {
@@ -581,7 +598,7 @@ async function main() {
     crumb: [{ label: 'Challenges', href: 'challenges.html' }].concat(S.ch ? [{ label: S.ch.title }] : []),
   });
   shell();
-  api.me().then((u) => { user = u; shell(); }).catch(() => {});
+  api.me().then((u) => { user = u; S.user = u; shell(); }).catch(() => {});
   const attemptP = api.getAttempt(slug);
   attemptP.catch(() => {}); // awaited below once the challenge is in
   const probeP = api.probeRun().catch(() => true);

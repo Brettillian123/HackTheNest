@@ -160,3 +160,6 @@
 .ws-doc-crit li::before{content:"";position:absolute;left:4px;top:7px;width:6px;height:6px;border-radius:50%;background:var(--red)}
 .ws-cmp-doc{max-height:300px}
 .kind-tag{margin-left:var(--s-3)}
+/* Next prompt cost beside the run button; the status line's link (Buy credits, Sign up). */
+.used .v.is-word{font-family:var(--ui);font-weight:var(--w-bold);white-space:nowrap}
+.ws-status-link{color:var(--red);font-weight:var(--w-semi);text-decoration:underline;text-underline-offset:2px;margin-left:var(--s-1)}

@@ -253,7 +253,7 @@ const enc = encodeURIComponent;
 // With no cache (or no storage, as in node) the call fetches. Changes clear the affected keys.
 
 const SWR_PREFIX = "pd.swr.";
-const FRESH = { health: 60e3, challenges: 300e3, lessons: 300e3, boards: 30e3, me: 30e3 };
+const FRESH = { health: 60e3, challenges: 300e3, lessons: 300e3, boards: 30e3, me: 30e3, billing: 30e3 };
 const inflight = new Map();
 let swrGen = 0;
 
@@ -325,7 +325,7 @@ function cachedGet(key, freshMs, path) {
 // After anything that changes the player's data (a scored run, start over, log in or out, claim).
 function dropPlayerData() {
   statsCache = undefined;
-  swrClear(["challenges", "challenge:", "boards:", "me"]);
+  swrClear(["challenges", "challenge:", "boards:", "me", "billing", "lessons", "lesson:"]);
 }
 
 // ---------------------------------------------------------------- server health
@@ -546,7 +546,15 @@ function summary(data, c, others, best) {
     yourBestPrompts: best ? best.promptCount : null,
     kind: c.kind || "page",
     available: c.available !== false,
+    cost: mockCost(c),
+    maxPromptChars: Number(c.maxPromptChars) || 2500,
   };
+}
+
+// What the next prompt costs: 0 (free for this player now), 1 or 2 credits; null when unknown.
+function costOf(v) {
+  const n = Number(v);
+  return v == null || !Number.isFinite(n) || n < 0 ? null : n;
 }
 
 // Server summary -> client summary (same fields; stats can be null when nobody has played).
@@ -563,6 +571,8 @@ function fromServerSummary(s) {
     yourBestPrompts: s.yourBestPrompts ?? null,
     kind: s.kind || "page",
     available: s.available !== false,
+    cost: costOf(s.cost),
+    ...(Number(s.maxPromptChars) > 0 ? { maxPromptChars: Number(s.maxPromptChars) } : {}),
     ...(s.lesson ? { lesson: s.lesson } : {}),
   };
 }
@@ -626,6 +636,8 @@ export async function getChallenge(slug) {
     kind,
     available: sc.available !== false,
     unavailableReason: sc.unavailableReason || null,
+    cost: costOf(sc.cost),
+    maxPromptChars: Number(sc.maxPromptChars) > 0 ? Number(sc.maxPromptChars) : 2000,
     criteria: Array.isArray(sc.criteria) ? sc.criteria.map((c) => (typeof c === "string" ? c : c && (c.name || c.text || c.label) || "")).filter(Boolean) : [],
     goalUrl: kind === "page" ? goalUrlFor(slug) : null,
     viewport: sc.viewport ? { width: sc.viewport.width, height: sc.viewport.height } : { width: 1280, height: 800 },
@@ -822,10 +834,30 @@ async function walkStages(onStage, signal, totalMs, from = 0) {
   }
 }
 
+// A challenge with no entry in mock/faults.json gets a few plausible faults built from its own
+// goal page (a type size, a line of text, a colour), so every challenge is playable in mock mode.
+function genericFaults(goal) {
+  const list = [];
+  const size = goal.match(/font-size:\s*(\d+)px/);
+  if (size) {
+    const px = Number(size[1]);
+    list.push({ check: "Heading size", message: "A text size is smaller than in the goal.", weight: 12, find: size[0], replace: `font-size: ${Math.max(8, Math.round(px * 0.75))}px` });
+  }
+  const body = goal.slice(Math.max(0, goal.search(/<body/i)));
+  const text = body.match(/>([^<>{}\n]*[A-Za-z][^<>{}\n]{10,80})</);
+  if (text) list.push({ check: "All text present", message: "A line of text from the goal is missing.", weight: 8, find: text[0], replace: "><" });
+  const colour = goal.match(/#[0-9A-Fa-f]{6}\b/);
+  if (colour) {
+    const swap = colour[0].toUpperCase() === "#7F7F7F" ? "#3366CC" : "#7F7F7F";
+    list.push({ check: "Colours match", message: "A colour differs from the goal.", weight: 6, find: colour[0], replace: swap });
+  }
+  return list;
+}
+
 async function mockGrade(slug, n, prompt) {
   const { c } = await findChallenge(slug);
   const faults = await loadJson("mock/faults.json");
-  const list = faults.challenges[slug] || [];
+  const list = faults.challenges[slug] || genericFaults(await loadText(`data/goals/${slug}.html`));
   const split = activeFaults(list, n, c.level, prompt);
   const total = 100 - split.reduce((s, x) => s + x.points, 0);
   const failed = new Set(split.map((s) => s.fault.check));
@@ -993,6 +1025,10 @@ async function runError(res) {
   if (res.status === 429) {
     const lead = text || "You have used today's runs.";
     return apiError(`${lead} ${resetText(res.headers.get("Retry-After"))}`, { status: 429 });
+  }
+  if (res.status === 402) {
+    const msg = text || "This prompt needs credits.";
+    return apiError(msg, { status: 402, code: "credits_required", cost: costOf(body && body.cost), credits: body && Number.isFinite(body.credits) ? body.credits : null, freeChallengesLeft: body && Number.isFinite(body.freeChallengesLeft) ? body.freeChallengesLeft : 0 });
   }
   if (res.status === 400 && text) return apiError(text, { status: 400, userMessage: `${text} Your prompt is kept and your prompt count did not change.` });
   if (res.status === 501) return apiError(text || "This kind of challenge is not playable yet.", { status: 501, userMessage: `${text || "This kind of challenge is not playable yet."} Your prompt count did not change.` });
@@ -1463,7 +1499,7 @@ async function liveStats() {
   if (!live) return null;
   try {
     const body = await live.req;
-    statsCache = body && Number.isFinite(body.points) ? { points: body.points, level: Number.isFinite(body.level) ? body.level : levelFor(body.points) } : null;
+    statsCache = body && Number.isFinite(body.points) ? { points: body.points, level: Number.isFinite(body.level) ? body.level : levelFor(body.points), ...walletOf(body) } : null;
   } catch {
     statsCache = null;
   }
@@ -1473,7 +1509,10 @@ async function liveStats() {
 // Returns { id, username, email, points, level } or null when not logged in.
 // A 401 is the normal signed-out answer; the user is kept for the life of the page.
 export async function me() {
-  if (options.mode !== "live") return withStats(adopt(mockAuth.me()));
+  if (options.mode !== "live") {
+    const u = withStats(adopt(mockAuth.me()));
+    return u ? { ...u, credits: mockCredits(), free: mockFree() } : null;
+  }
   let statsP = null;
   if (meCache === undefined) {
     const before = store.getPlayer();
@@ -1576,6 +1615,15 @@ function fromServerLesson(l) {
     minutes: Number(l.minutes) || null,
     summary: String(l.summary || ""),
     bonusChallenge: l.bonusChallenge ? String(l.bonusChallenge) : null,
+    bonusChallenges: (Array.isArray(l.bonusChallenges) ? l.bonusChallenges : []).filter((b) => b && b.slug).map((b) => ({
+      slug: String(b.slug),
+      title: String(b.title || b.slug),
+      level: Number(b.level) || 1,
+      kind: b.kind || "page",
+      cost: costOf(b.cost),
+      available: b.available !== false,
+      unavailableReason: b.unavailableReason ? String(b.unavailableReason) : null,
+    })),
     order: Number(l.order) || 0,
   };
 }
@@ -1609,4 +1657,140 @@ export async function getLesson(slug) {
   const l = body && body.lesson;
   if (!l) throw apiError(NO_LESSON, { status: 404 });
   return { ...fromServerLesson(l), fields: l.fields && typeof l.fields === "object" ? { ...l.fields } : {}, markdown: String(l.markdown || "") };
+}
+
+// ---------------------------------------------------------------- credits and billing
+// Payments are Stripe Checkout in test mode: the card is entered only on Stripe's own page.
+// Two Level 1 challenges a day are free; other prompts cost 1 credit (lesson challenges 2).
+// Mock mode has a demo wallet in this browser: a checkout comes straight back as paid.
+
+const MOCK_PACKS = [
+  { id: "starter", credits: 20, price: 200, currency: "usd" },
+  { id: "standard", credits: 60, price: 500, currency: "usd" },
+  { id: "large", credits: 200, price: 1500, currency: "usd" },
+];
+const MOCK_START_CREDITS = 12;
+
+function nextMidnightUtc() {
+  const d = new Date();
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1)).toISOString();
+}
+
+function mockCredits() {
+  const u = store.getPlayer();
+  if (!u) return null;
+  const n = Number(store.read("mock.credits." + u.id, MOCK_START_CREDITS));
+  return Number.isFinite(n) ? n : MOCK_START_CREDITS;
+}
+
+function mockFree() {
+  return { challengesLeft: 2, promptsPerChallenge: 5, resetsAt: nextMidnightUtc() };
+}
+
+function mockCost(c) {
+  if (c.lesson || c.bonus) return 2;
+  return Number(c.level) === 1 && mockFree().challengesLeft > 0 ? 0 : 1;
+}
+
+function freeOf(f) {
+  if (!f || typeof f !== "object") return null;
+  return {
+    challengesLeft: Math.max(0, Number(f.challengesLeft) || 0),
+    promptsPerChallenge: Number(f.promptsPerChallenge) > 0 ? Number(f.promptsPerChallenge) : null,
+    resetsAt: f.resetsAt ? String(f.resetsAt) : null,
+  };
+}
+
+// credits (null when anonymous) and the free allowance from /api/players/me or the billing summary.
+function walletOf(body) {
+  return { credits: body && Number.isFinite(body.credits) ? body.credits : null, free: freeOf(body && body.free) };
+}
+
+function fromServerBilling(b, demo = false) {
+  const packs = (Array.isArray(b && b.packs) ? b.packs : []).filter((p) => p && p.id && Number(p.credits) > 0).map((p) => ({
+    id: String(p.id),
+    credits: Number(p.credits),
+    price: Number(p.price) || 0,
+    currency: String(p.currency || "usd").toLowerCase(),
+  }));
+  const costs = (b && b.costs) || {};
+  return {
+    configured: !!(b && b.configured),
+    packs,
+    ...walletOf(b),
+    costs: { standard: costOf(costs.standard) ?? 1, lesson: costOf(costs.lesson) ?? 2 },
+    demo,
+  };
+}
+
+function mockBilling() {
+  return fromServerBilling({ configured: true, packs: MOCK_PACKS, credits: mockCredits(), free: mockFree(), costs: { standard: 1, lesson: 2 } }, true);
+}
+
+// { configured, packs: [{ id, credits, price (cents), currency }], credits | null, free, costs, demo }
+export async function getBilling() {
+  const live = await whenLive(() => cachedGet("billing", FRESH.billing, "/api/billing/summary"));
+  if (!live) return mockBilling();
+  try {
+    return fromServerBilling(await live.req);
+  } catch {
+    // No billing route on this server: the packs show, switched off.
+    return { ...mockBilling(), configured: false, demo: false, credits: null };
+  }
+}
+
+const PAYMENTS_OFF = "Payments are not connected yet.";
+const LOG_IN_TO_BUY = "Log in to buy credits.";
+
+function safeCheckoutUrl(url) {
+  const s = String(url || "");
+  if (/^https:\/\//i.test(s) || /^credits\.html\?/.test(s)) return s;
+  throw apiError("Checkout did not open. Try again.");
+}
+
+// Returns { url } for the checkout page (Stripe's own page; in mock mode, straight back here as paid).
+export async function startCheckout(pack) {
+  const id = String(pack || "");
+  if (options.mode !== "live" || !(await storedLive())) {
+    if (!store.getPlayer()) throw apiError(LOG_IN_TO_BUY, { status: 401 });
+    if (!MOCK_PACKS.some((p) => p.id === id)) throw apiError("That pack is not on sale.", { status: 400 });
+    if (options.mode === "live") throw apiError(PAYMENTS_OFF, { status: 503, code: "payments_off" });
+    return { url: `credits.html?mock_paid=${enc(id)}&session_id=mock_${enc(id)}_${store.randomId("")}` };
+  }
+  let body;
+  try {
+    body = await getJson("/api/billing/checkout", { method: "POST", body: JSON.stringify({ pack: id }) });
+  } catch (e) {
+    if (e.status === 401) throw apiError(LOG_IN_TO_BUY, { status: 401 });
+    if (e.status === 503) throw apiError(PAYMENTS_OFF, { status: 503, code: "payments_off" });
+    throw e;
+  }
+  return { url: safeCheckoutUrl(body && body.url) };
+}
+
+// After paying: credits the session once. Returns { credited, alreadyCredited, credits }.
+export async function confirmCheckout(sessionId) {
+  const id = String(sessionId || "").trim();
+  if (!id) throw apiError("No checkout to confirm.", { status: 400 });
+  if (options.mode !== "live" && id.startsWith("mock_")) {
+    const u = store.getPlayer();
+    if (!u) throw apiError(LOG_IN_TO_BUY, { status: 401 });
+    const pack = MOCK_PACKS.find((p) => id.startsWith(`mock_${p.id}_`));
+    if (!pack) throw apiError("That checkout is not known.", { status: 404 });
+    const seen = store.read("mock.sessions", []);
+    if (seen.includes(id)) return { credited: 0, alreadyCredited: true, credits: mockCredits() };
+    store.write("mock.sessions", seen.concat(id).slice(-50));
+    store.write("mock.credits." + u.id, mockCredits() + pack.credits);
+    return { credited: pack.credits, alreadyCredited: false, credits: mockCredits() };
+  }
+  let body;
+  try {
+    body = await getJson("/api/billing/confirm", { method: "POST", body: JSON.stringify({ sessionId: id }) });
+  } catch (e) {
+    if (e.status === 401) throw apiError(LOG_IN_TO_BUY, { status: 401 });
+    if (e.status === 503) throw apiError(PAYMENTS_OFF, { status: 503, code: "payments_off" });
+    throw e;
+  }
+  dropPlayerData();
+  return { credited: Number(body && body.credited) || 0, alreadyCredited: !!(body && body.alreadyCredited), credits: body && Number.isFinite(body.credits) ? body.credits : null };
 }

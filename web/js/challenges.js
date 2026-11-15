@@ -1,6 +1,6 @@
 // Challenge list: level filter and sort kept in the URL query (?level=1&sort=solved).
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, levelClass, esc, demoTag, setStat, fmtScore, kindTag } from './ui.js';
+import { fitFrames, levelClass, esc, demoTag, setStat, fmtScore, kindTag, costTag } from './ui.js';
 import { listChallenges, me, isSimulated } from './api.js';
 
 const LEVELS = ['all', '1', '2', '3'];
@@ -53,7 +53,7 @@ function row(c) {
       : `<div class="frame chal-kind" aria-hidden="true"><span>${esc((c.kind || '').toUpperCase())}</span></div>`) +
     `<span class="chal-main">${title}` +
     `<span class="chal-brief">${brief}</span>` +
-    (c.levelLabel || !page ? `<span class="chal-meta">${c.levelLabel ? `<span class="mtag">${esc(c.levelLabel)}</span>` : ''}${kindTag(c.kind)}</span>` : '') +
+    (c.levelLabel || !page || costTag(c.cost) ? `<span class="chal-meta">${c.levelLabel ? `<span class="mtag">${esc(c.levelLabel)}</span>` : ''}${kindTag(c.kind)}${c.available === false ? '' : costTag(c.cost)}</span>` : '') +
     `</span>` +
     `<span class="chal-cell"><span class="k">Solved</span><span class="v">${num(c.solvedCount)}</span></span>` +
     `<span class="chal-cell"><span class="k">Top score</span>${top}</span>` +

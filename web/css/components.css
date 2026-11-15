@@ -395,3 +395,17 @@ button.cost:hover .w{text-decoration:underline;text-decoration-color:var(--red-b
 .md table{width:100%;border-collapse:collapse;font-size:var(--fs-13)}
 .md th,.md td{text-align:left;padding:6px var(--s-3);border-bottom:1px solid var(--line-soft)}
 .md th{color:var(--text);font-weight:var(--w-semi);border-bottom-color:var(--line)}
+
+/* ---------- Markdown <details>: a collapsible block, matte like a well ---------- */
+.md details{background:var(--sunk);border-radius:var(--r-panel);padding:var(--s-4) var(--s-6)}
+.md details>*+*{margin-top:var(--s-5)}
+.md summary{cursor:pointer;color:var(--text);font-weight:var(--w-semi)}
+.md summary:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:var(--r-3)}
+
+/* ---------- credits: nav chip, cost tag ---------- */
+/* .nav-credits sits beside .nav-me in the top nav (signed in only) / <a class="nav-me nav-credits" href="credits.html"><span class="pts">12<small>credits</small></span></a> */
+.nav-credits{padding:5px var(--s-5)}
+.nav-credits + .nav-me{margin-left:var(--s-2)}
+/* .cost-tag: what the next prompt costs ("Free today", "1 credit") / <span class="mtag cost-tag">1 credit</span> */
+.cost-tag{height:20px;padding:0 var(--s-3);border:1px solid var(--line);border-radius:var(--r-control);font-family:var(--ui);font-weight:var(--w-semi);color:var(--text-2);white-space:nowrap}
+.cost-tag.free{border-color:var(--red-ring);color:var(--red)}

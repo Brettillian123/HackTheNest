@@ -10,6 +10,7 @@ import { modeFor } from "../js/config.js";
 const FAST = { streamMs: 0, stageMs: 0, pollMs: 0 };
 const faults = JSON.parse(readFileSync(new URL("../mock/faults.json", import.meta.url), "utf8"));
 const PROMPT = "Build a centred sign-in card, 400px wide, white, with a green Sign in button.";
+const ORIGINAL = ["login-card", "footer-columns", "nav-hero", "blog-header", "pricing-plans", "product-grid"];
 
 beforeEach(() => {
   store._resetForTests();
@@ -38,7 +39,11 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
     assert.ok(existsSync(goalPath), `goal file for ${slug}`);
     const goal = readFileSync(goalPath, "utf8");
     assert.ok(!/<script/i.test(goal), "no scripts in goal");
-    assert.deepEqual(c.spec.map((g) => g.group), ["Page", "Type", "Layout", "Output"]);
+    const groups = c.spec.map((g) => g.group);
+    if (ORIGINAL.includes(slug)) assert.deepEqual(groups, ["Page", "Type", "Layout", "Output"]);
+    assert.ok(groups.length >= 2, `${slug}: at least two spec groups`);
+    assert.ok(groups.every((g) => typeof g === "string" && g.trim()), `${slug}: group names`);
+    assert.equal(new Set(groups).size, groups.length, `${slug}: unique group names`);
     for (const g of c.spec) {
       assert.ok(g.items.length > 0);
       for (const it of g.items) {
@@ -50,7 +55,7 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
     const colours = JSON.stringify(c.spec).match(/#[0-9A-F]{6}/g) || [];
     for (const col of colours) assert.ok(goal.includes(col), `${slug}: ${col} not in goal`);
     // Every mock fault edits something that really is in the goal.
-    for (const f of faults.challenges[slug]) assert.ok(goal.includes(f.find), `${slug}: fault "${f.check}" does not match`);
+    for (const f of faults.challenges[slug] || []) assert.ok(goal.includes(f.find), `${slug}: fault "${f.check}" does not match`);
   }
   await assert.rejects(api.getChallenge("nope"), /no challenge/);
 });
@@ -81,6 +86,25 @@ test("a full mock run streams html, walks four stages and returns a consistent r
   assert.equal(run.html, html.at(-1));
   assert.equal(attempt.promptCount, 1);
   assert.equal(attempt.best, r.total);
+});
+
+test("a mock run on a challenge with no fault data streams, grades and returns a consistent result", async () => {
+  assert.equal(faults.challenges["profile-card"], undefined, "profile-card has no fault data");
+  const html = [];
+  const stages = [];
+  const { attempt, run } = await api.run({ slug: "profile-card", prompt: PROMPT, onHtml: (h) => html.push(h), onStage: (s) => stages.push(s) });
+  assert.ok(html.length > 5, "several html chunks");
+  assert.match(html.at(-1), /<\/html>\s*$/i);
+  assert.equal(stages.length, 4);
+  const r = run.result;
+  assert.ok(r.total > 0 && r.total < 100, `total ${r.total}`);
+  assert.equal(r.costs.reduce((s, c) => s + c.points, 0), 100 - r.total);
+  assert.equal(r.passedCount, r.checks.filter((c) => c.passed).length);
+  assert.equal(r.checks.length - r.passedCount, r.costs.length, "one failed check per cost");
+  assert.equal(run.html, html.at(-1));
+  assert.equal(attempt.promptCount, 1);
+  const goal = readFileSync(fileURLToPath((await api.getChallenge("profile-card")).goalUrl), "utf8");
+  assert.notEqual(run.html, goal, "the faults changed the page");
 });
 
 test("costs are largest first and sum to 100 minus the total on every run", async () => {

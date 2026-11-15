@@ -4,7 +4,9 @@
 // source (including <script>) always comes out as visible text, never as markup.
 // Supported: headings, paragraphs, lists (ordered and not), code fences, inline code, tables,
 // links (http, https, mailto and relative; open in a new tab with rel="noopener"), bold, emphasis,
-// blockquotes and rules. Front matter at the top is dropped.
+// blockquotes, rules, and <details><summary>..</summary>..</details> blocks (a real collapsible
+// element; summary and body are rendered as Markdown). Every other tag stays text.
+// Front matter at the top is dropped.
 
 const SAFE_URL = /^(https?:\/\/|mailto:|#|\/|\.{0,2}\/|[A-Za-z0-9_-]+(\.[A-Za-z0-9]+)?([?#].*)?$)/;
 
@@ -73,6 +75,32 @@ function splitRow(line) {
 }
 
 const LIST_RE = /^(\s*)([-*+]|\d+[.)])\s+(.*)$/;
+const DETAILS_RE = /^\s*<details\s*>(.*)$/i;
+const DETAILS_TAG = /<(\/?)details\s*>/gi;
+
+// From lines[i] (an opening <details>): { summary, body, next } up to its matching </details>, or null.
+function readDetails(lines, i) {
+  const first = DETAILS_RE.exec(lines[i]);
+  if (!first) return null;
+  let depth = 1;
+  const parts = [];
+  for (let j = i; j < lines.length; j++) {
+    const line = j === i ? first[1] : lines[j];
+    let cut = -1;
+    for (const t of line.matchAll(DETAILS_TAG)) {
+      depth += t[1] ? -1 : 1;
+      if (depth === 0) { cut = t.index; break; }
+    }
+    if (cut >= 0) {
+      parts.push(line.slice(0, cut));
+      const inner = parts.join('\n');
+      const sm = /^\s*<summary\s*>([\s\S]*?)<\/summary\s*>/i.exec(inner);
+      return { summary: sm ? sm[1].trim() : 'Details', body: sm ? inner.slice(sm[0].length) : inner, next: j + 1 };
+    }
+    parts.push(line);
+  }
+  return null;
+}
 
 // Block structure. Returns { tree: [nodes], headings: [{ level, text, id }] }.
 export function parseMarkdown(src) {
@@ -108,6 +136,12 @@ export function parseMarkdown(src) {
       i++;
       continue;
     }
+    const det = DETAILS_RE.test(line) ? readDetails(lines, i) : null;
+    if (det) {
+      tree.push(el('details', [el('summary', parseInline(det.summary)), ...parseMarkdown(det.body).tree]));
+      i = det.next;
+      continue;
+    }
     if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { tree.push(el('hr')); i++; continue; }
     if (/^\s*>/.test(line)) {
       const body = [];
@@ -141,14 +175,14 @@ export function parseMarkdown(src) {
       continue;
     }
     const para = [];
-    while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|\s*(```|~~~)|\s*>)/.test(lines[i]) && !LIST_RE.test(lines[i])) para.push(lines[i++].trim());
+    while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|\s*(```|~~~)|\s*>|\s*<details\s*>)/i.test(lines[i]) && !LIST_RE.test(lines[i])) para.push(lines[i++].trim());
     if (!para.length) { para.push(lines[i++].trim()); }
     tree.push(el('p', parseInline(para.join(' '))));
   }
   return { tree, headings };
 }
 
-const ALLOWED = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'pre', 'code', 'strong', 'em', 'a', 'blockquote', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td']);
+const ALLOWED = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'pre', 'code', 'strong', 'em', 'a', 'blockquote', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'details', 'summary']);
 const ATTRS = new Set(['href', 'target', 'rel', 'id', 'data-lang']);
 
 // Builds DOM nodes from the tree. Only known tags and attributes; text through text nodes.
