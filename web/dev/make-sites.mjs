@@ -95,6 +95,9 @@ const SITES = [
 ];
 
 function build(site) {
+  // Page ids are neutral (page1, page2, ...) so the model's instructions give away no page names.
+  const names = site.pages.map(p => p[0]);
+  site.pages.forEach((p, i) => { p[0] = `page${i + 1}`; });
   const texts = new Set();
   const t = s => { texts.add(s); return esc(s); };
   const notes = {};
@@ -194,7 +197,7 @@ ${sections}
         'Put side by side with the reference, each page is hard to tell apart',
       ],
       content: `Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n${sorted.map(x => `- ${x}`).join('\n')}`,
-      pages: site.pages.map((p, i) => ({ id: p[0], path: i === 0 ? 'index.html' : `${p[0]}.html`, title: p[1] })),
+      pages: site.pages.map((p, i) => ({ id: p[0], path: i === 0 ? 'index.html' : `${names[i]}.html`, title: p[1] })),
       requirements: reqs.map((r, i) => ({ id: `r${i + 1}`, text: r[2], kind: r[0], exact: r[1] })),
       keyFacts,
       designNotes: [

@@ -12,8 +12,8 @@ nav a{margin-left:28px;color:#18181b;text-decoration:none;font-size:16px}
 nav a:hover{color:#7c3aed}
 .page{display:none;max-width:1040px;margin:0 auto;padding:48px 32px;min-height:560px}
 .page:target{display:block}
-#home{display:block}
-.page:target~#home{display:none}
+#page1{display:block}
+.page:target~#page1{display:none}
 .hero{padding:40px 0 48px}
 h1{font-size:52px;line-height:1.1;margin:0 0 16px;max-width:720px}
 h2{font-size:28px;margin:0 0 16px}
@@ -40,22 +40,22 @@ footer{padding:24px 64px;border-top:1px solid #e2e4e8;color:#5b6470;font-size:14
 </style>
 </head>
 <body>
-<header><div class="brand">Relay API</div><nav><a href="#home">Home</a><a href="#quickstart">Quickstart</a><a href="#reference">Reference</a><a href="#pricing">Pricing</a><a href="#changelog">Changelog</a></nav></header>
-<section class="page" id="quickstart">
+<header><div class="brand">Relay API</div><nav><a href="#page1">Home</a><a href="#page2">Quickstart</a><a href="#page3">Reference</a><a href="#page4">Pricing</a><a href="#page5">Changelog</a></nav></header>
+<section class="page" id="page2">
 <h2>Send your first message</h2><ul><li>Create an API key in the dashboard</li><li>POST to /v1/messages with a number and a body</li><li>Read the delivery status from the response</li></ul>
 <h2>Test mode</h2><p>Keys that start with test_ never send a real message.</p>
 </section>
-<section class="page" id="reference">
+<section class="page" id="page3">
 <h2>Endpoints</h2><table><thead><tr><th>Method</th><th>Path</th><th>What it does</th></tr></thead><tbody><tr><td>POST</td><td>/v1/messages</td><td>Send a message</td></tr><tr><td>GET</td><td>/v1/messages/:id</td><td>Read one message</td></tr><tr><td>GET</td><td>/v1/messages</td><td>List messages</td></tr><tr><td>POST</td><td>/v1/numbers</td><td>Rent a number</td></tr><tr><td>DELETE</td><td>/v1/numbers/:id</td><td>Release a number</td></tr></tbody></table>
 </section>
-<section class="page" id="pricing">
-<div class="row"><div class="card price"><h3>Pay as you go</h3><div class="amt">$0.008 a message</div><ul><li>No minimum</li><li>Email support</li></ul><a class="btn" href="#changelog">Create a key</a></div><div class="card price"><h3>Scale</h3><div class="amt">$400 a month</div><ul><li>75,000 messages</li><li>Chat support</li></ul><a class="btn" href="#changelog">Choose Scale</a></div><div class="card price"><h3>Enterprise</h3><div class="amt">Custom</div><ul><li>Volume pricing</li><li>Named engineer</li></ul><a class="btn" href="#changelog">Contact sales</a></div></div>
+<section class="page" id="page4">
+<div class="row"><div class="card price"><h3>Pay as you go</h3><div class="amt">$0.008 a message</div><ul><li>No minimum</li><li>Email support</li></ul><a class="btn" href="#page5">Create a key</a></div><div class="card price"><h3>Scale</h3><div class="amt">$400 a month</div><ul><li>75,000 messages</li><li>Chat support</li></ul><a class="btn" href="#page5">Choose Scale</a></div><div class="card price"><h3>Enterprise</h3><div class="amt">Custom</div><ul><li>Volume pricing</li><li>Named engineer</li></ul><a class="btn" href="#page5">Contact sales</a></div></div>
 </section>
-<section class="page" id="changelog">
+<section class="page" id="page5">
 <h2>Recent changes</h2><table><thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead><tbody><tr><td>2.4</td><td>April 22</td><td>Scheduled sending</td></tr><tr><td>2.3</td><td>March 30</td><td>Delivery webhooks retry for 24 hours</td></tr><tr><td>2.2</td><td>March 4</td><td>Alphanumeric sender names</td></tr><tr><td>2.1</td><td>February 11</td><td>Faster number search</td></tr></tbody></table>
 </section>
-<section class="page" id="home">
-<div class="hero"><h1>Send a text with one request</h1><p>A messaging API with delivery in 190 countries and no monthly minimum.</p><a class="btn" href="#quickstart">Read the quickstart</a></div>
+<section class="page" id="page1">
+<div class="hero"><h1>Send a text with one request</h1><p>A messaging API with delivery in 190 countries and no monthly minimum.</p><a class="btn" href="#page2">Read the quickstart</a></div>
 <div class="row"><div class="stat"><b>99.99%</b><span>uptime</span></div><div class="stat"><b>1.2 s</b><span>median delivery</span></div><div class="stat"><b>190</b><span>countries</span></div></div>
 </section>
 <footer>Relay API. Status: all systems normal.</footer>

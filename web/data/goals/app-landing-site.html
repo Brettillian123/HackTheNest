@@ -12,8 +12,8 @@ nav a{margin-left:28px;color:#111827;text-decoration:none;font-size:16px}
 nav a:hover{color:#4f46e5}
 .page{display:none;max-width:1040px;margin:0 auto;padding:48px 32px;min-height:560px}
 .page:target{display:block}
-#home{display:block}
-.page:target~#home{display:none}
+#page1{display:block}
+.page:target~#page1{display:none}
 .hero{padding:40px 0 48px}
 h1{font-size:52px;line-height:1.1;margin:0 0 16px;max-width:720px}
 h2{font-size:28px;margin:0 0 16px}
@@ -40,20 +40,20 @@ footer{padding:24px 64px;border-top:1px solid #e2e4e8;color:#5b6470;font-size:14
 </style>
 </head>
 <body>
-<header><div class="brand">Ledgerly</div><nav><a href="#home">Home</a><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav></header>
-<section class="page" id="features">
+<header><div class="brand">Ledgerly</div><nav><a href="#page1">Home</a><a href="#page2">Features</a><a href="#page3">Pricing</a><a href="#page4">FAQ</a></nav></header>
+<section class="page" id="page2">
 <div class="row"><div class="card"><h3>One-minute invoices</h3><p>Pick a client, add a line, press send.</p></div><div class="card"><h3>Automatic reminders</h3><p>Polite nudges at 7, 14 and 30 days.</p></div><div class="card"><h3>Card and bank payments</h3><p>Clients pay from the invoice itself.</p></div><div class="card"><h3>Tax-ready reports</h3><p>Export a full year in one click.</p></div></div>
 </section>
-<section class="page" id="pricing">
-<div class="row"><div class="card price"><h3>Solo</h3><div class="amt">$0</div><ul><li>3 clients</li><li>Unlimited invoices</li></ul><a class="btn" href="#faq">Start free</a></div><div class="card price"><h3>Studio</h3><div class="amt">$12 a month</div><ul><li>Unlimited clients</li><li>Automatic reminders</li></ul><a class="btn" href="#faq">Choose Studio</a></div><div class="card price"><h3>Agency</h3><div class="amt">$29 a month</div><ul><li>Five team seats</li><li>Priority support</li></ul><a class="btn" href="#faq">Choose Agency</a></div></div>
+<section class="page" id="page3">
+<div class="row"><div class="card price"><h3>Solo</h3><div class="amt">$0</div><ul><li>3 clients</li><li>Unlimited invoices</li></ul><a class="btn" href="#page4">Start free</a></div><div class="card price"><h3>Studio</h3><div class="amt">$12 a month</div><ul><li>Unlimited clients</li><li>Automatic reminders</li></ul><a class="btn" href="#page4">Choose Studio</a></div><div class="card price"><h3>Agency</h3><div class="amt">$29 a month</div><ul><li>Five team seats</li><li>Priority support</li></ul><a class="btn" href="#page4">Choose Agency</a></div></div>
 </section>
-<section class="page" id="faq">
+<section class="page" id="page4">
 <h2>Is there a contract?</h2><p>No. Pay monthly and leave whenever you like.</p>
 <h2>Which currencies work?</h2><p>Invoice in any of 32 currencies.</p>
 <h2>Can I import clients?</h2><p>Yes, upload a spreadsheet and we do the rest.</p>
 </section>
-<section class="page" id="home">
-<div class="hero"><h1>Get paid without the paperwork</h1><p>Send an invoice in under a minute and let Ledgerly chase it for you.</p><a class="btn" href="#features">Start free</a></div>
+<section class="page" id="page1">
+<div class="hero"><h1>Get paid without the paperwork</h1><p>Send an invoice in under a minute and let Ledgerly chase it for you.</p><a class="btn" href="#page2">Start free</a></div>
 <div class="row"><div class="stat"><b>38,000</b><span>freelancers</span></div><div class="stat"><b>$210M</b><span>invoiced last year</span></div><div class="stat"><b>9 days</b><span>average time to paid</span></div></div>
 </section>
 <footer>Ledgerly Inc. Invoices sent in under a minute.</footer>
