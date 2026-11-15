@@ -1,10 +1,7 @@
 import { handleCreateTestObject } from '../controller/testObjectController.js';
 import { handleCurrentUser, handleLogin, handleLogout, handleSignup } from '../controller/authController.js';
-<<<<<<< HEAD
 import { handleGrade } from '../controller/gradeController.js';
-=======
 import { matchGameRoute } from './game.js';
->>>>>>> a6354e9744a0e9c27117c55af6ea20efba3b98d3
 
 export function handleApiRequest(request, response, pathname) {
   if (request.method === 'POST' && pathname === '/api/auth/signup') return handleSignup(request, response);
