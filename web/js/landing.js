@@ -1,7 +1,7 @@
 // Landing page: shell, live counts, top 5 overall leaderboard.
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, esc, demoTag } from './ui.js';
-import { listChallenges, getLeaderboard, me, isSimulated } from './api.js';
+import { fitFrames, esc, demoTag, provisionalTag } from './ui.js';
+import { listChallenges, getLeaderboard, me, isSimulated, isProvisional } from './api.js';
 
 async function start() {
   mountShell({ active: 'home', user: null });
@@ -28,7 +28,7 @@ async function loadBoard() {
   try {
     const { rows } = await getLeaderboard(null, { bracket: 'all', period: 'all' });
     const top = (rows || []).slice(0, 5);
-    document.getElementById('boardDemo').innerHTML = isSimulated('boards') ? demoTag() : '';
+    document.getElementById('boardDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'));
     if (!top.length) {
       host.innerHTML = '<div class="empty"><p class="title">No scores yet</p><p class="small">Be the first on the board.</p><a class="btn btn-secondary" href="workspace.html?c=login-card">Try the first challenge</a></div>';
       return;

@@ -66,11 +66,14 @@ function randomId(prefix) {
 
 export { randomId };
 
-// Anonymous player id, created on first use.
+// Anonymous player id, created on first use. The server's X-Anon-Id rule: 16 to 64 of A-Z a-z 0-9 _ -.
+const ANON_RE = /^[A-Za-z0-9_-]{16,64}$/;
 export function getAnonId() {
   let id = read("anonId");
-  if (!id) {
-    id = randomId("anon_");
+  if (typeof id !== "string" || !ANON_RE.test(id)) {
+    id = randomId("anon_").replace(/[^A-Za-z0-9_-]/g, "");
+    while (id.length < 16) id += Math.random().toString(36).slice(2);
+    id = id.slice(0, 64);
     write("anonId", id);
   }
   return id;
