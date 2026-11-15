@@ -226,5 +226,7 @@
 
 /* the run row wraps so Adjust this build and Start over are never pushed out of the panel */
 .ws-prompt .again{flex-wrap:wrap;row-gap:var(--s-3)}
-.ws-prompt .again .run{flex:1 1 180px}
+.ws-prompt .again .run{flex:1 1 100%;min-width:0}
+.ws-prompt .again .run kbd{display:none}
+.ws-prompt .again .used{flex:1 1 0}
 .ws-prompt .again .ws-tall{flex:1 1 auto;white-space:nowrap}
