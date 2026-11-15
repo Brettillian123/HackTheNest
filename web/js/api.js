@@ -34,7 +34,7 @@ export function configure(next = {}) {
     rescored.clear();
     liveAttempts.clear();
     realSlugs.clear();
-    try { globalThis.sessionStorage && globalThis.sessionStorage.removeItem(HEALTH_KEY); } catch { /* storage blocked */ }
+    swrClear([""]);
   }
   return { mode: options.mode, base: options.base, timing: { ...options.timing } };
 }
@@ -247,34 +247,117 @@ async function getJson(path, init = { method: "GET" }) {
 
 const enc = encodeURIComponent;
 
-// ---------------------------------------------------------------- server health
-// One cheap call decides, for the tab, what is real: no server or no database means stored data
-// (boards, profiles, attempts) comes from the mock; no model means runs are simulated.
+// ---------------------------------------------------------------- GET cache (stale-while-revalidate)
+// The last good body of each GET is kept in sessionStorage with its time. A call returns it at once;
+// when it is older than its freshness it is also refreshed in the background for the next call.
+// With no cache (or no storage, as in node) the call fetches. Changes clear the affected keys.
 
-const HEALTH_KEY = "pd.health";
-const HEALTH_TTL_MS = 5 * 60 * 1000;
-const NO_SERVER = Object.freeze({ reachable: false, db: false, models: [], grader: "standin" });
-let healthPromise = null;
-let healthNow = null;
+const SWR_PREFIX = "pd.swr.";
+const FRESH = { health: 60e3, challenges: 300e3, lessons: 300e3, boards: 30e3, me: 30e3 };
+const inflight = new Map();
+let swrGen = 0;
 
-function readHealthCache() {
+function quiet(p) {
+  p.catch(() => {});
+  return p;
+}
+
+function swrRead(key) {
   try {
     const ss = globalThis.sessionStorage;
-    const v = ss && JSON.parse(ss.getItem(HEALTH_KEY) || "null");
-    if (!v || v.base !== options.base || !(Date.now() - v.at < HEALTH_TTL_MS)) return null;
-    return v.health;
+    const v = ss && JSON.parse(ss.getItem(SWR_PREFIX + key) || "null");
+    return v && v.base === options.base && typeof v.at === "number" ? v : null;
   } catch {
     return null;
   }
 }
 
-function writeHealthCache(health) {
+function swrWrite(key, value) {
   try {
     const ss = globalThis.sessionStorage;
-    if (ss) ss.setItem(HEALTH_KEY, JSON.stringify({ at: Date.now(), base: options.base, health }));
+    if (ss) ss.setItem(SWR_PREFIX + key, JSON.stringify({ at: Date.now(), base: options.base, value }));
   } catch {
-    // Storage blocked: the page-level memory still applies.
+    // Storage blocked or full: the call still works, uncached.
   }
+}
+
+// Removes every cached key starting with one of the prefixes ("" clears all).
+function swrClear(prefixes) {
+  swrGen++;
+  inflight.clear();
+  try {
+    const ss = globalThis.sessionStorage;
+    if (!ss) return;
+    const drop = [];
+    for (let i = 0; i < ss.length; i++) {
+      const k = ss.key(i);
+      if (k && k.startsWith(SWR_PREFIX) && prefixes.some((p) => k.startsWith(SWR_PREFIX + p))) drop.push(k);
+    }
+    drop.forEach((k) => ss.removeItem(k));
+  } catch {
+    // Storage blocked.
+  }
+}
+
+function swrRefresh(key, fetcher) {
+  if (inflight.has(key)) return inflight.get(key);
+  const gen = swrGen;
+  const p = fetcher().then((value) => {
+    if (gen === swrGen) swrWrite(key, value);
+    return value;
+  });
+  inflight.set(key, p);
+  quiet(p.finally(() => { if (inflight.get(key) === p) inflight.delete(key); }));
+  return quiet(p);
+}
+
+function swr(key, freshMs, fetcher) {
+  const hit = swrRead(key);
+  if (!hit) return swrRefresh(key, fetcher);
+  if (!(Date.now() - hit.at < freshMs)) swrRefresh(key, fetcher);
+  return Promise.resolve(hit.value);
+}
+
+function cachedGet(key, freshMs, path) {
+  return swr(key, freshMs, () => getJson(path));
+}
+
+// After anything that changes the player's data (a scored run, start over, log in or out, claim).
+function dropPlayerData() {
+  statsCache = undefined;
+  swrClear(["challenges", "challenge:", "boards:", "me"]);
+}
+
+// ---------------------------------------------------------------- server health
+// One cheap call decides, for the tab, what is real: no server or no database means stored data
+// (boards, profiles, attempts) comes from the mock; no model means runs are simulated.
+
+const HEALTH_KEY = "health";
+const NO_SERVER = Object.freeze({ reachable: false, db: false, models: [], grader: "standin" });
+let healthPromise = null;
+let healthNow = null;
+
+function writeHealthCache(health) {
+  swrWrite(HEALTH_KEY, health);
+}
+
+// true when the known health (this page or the tab's cache) already says the data is live.
+// Unknown health means no request yet: a server without a database never gets stored-data calls.
+function maybeLive(needDb = true) {
+  const h = healthNow || (swrRead(HEALTH_KEY) || {}).value;
+  return !!(h && h.reachable && (!needDb || h.db));
+}
+
+// Starts a GET together with the health check (no waterfall) when health is already known live;
+// on a tab's very first call the health answer comes first. Returns { req } when the data is
+// live, or null (mock mode, no server, no database).
+async function whenLive(start, needDb = true) {
+  if (options.mode !== "live") return null;
+  const healthP = getHealth();
+  const early = maybeLive(needDb) ? quiet(start()) : null;
+  const h = await healthP;
+  if (!(h.reachable && (!needDb || h.db))) return null;
+  return { req: quiet(early || start()) };
 }
 
 async function fetchHealth() {
@@ -308,15 +391,7 @@ function applyHealth(h) {
 }
 
 function getHealth() {
-  if (!healthPromise) {
-    const cached = readHealthCache();
-    healthPromise = cached
-      ? Promise.resolve(applyHealth(cached))
-      : fetchHealth().then((h) => {
-        writeHealthCache(h);
-        return applyHealth(h);
-      });
-  }
+  if (!healthPromise) healthPromise = swr(HEALTH_KEY, FRESH.health, fetchHealth).then(applyHealth);
   return healthPromise;
 }
 
@@ -518,9 +593,10 @@ async function mockChallenge(slug) {
 }
 
 export async function listChallenges() {
-  if (await storedLive()) {
+  const live = await whenLive(() => cachedGet("challenges", FRESH.challenges, "/api/challenges"));
+  if (live) {
     try {
-      const body = await getJson("/api/challenges");
+      const body = await live.req;
       if (body && Array.isArray(body.challenges) && body.statsAvailable) return body.challenges.map(fromServerSummary);
     } catch {
       // Falls back to demo stats below.
@@ -531,10 +607,11 @@ export async function listChallenges() {
 }
 
 export async function getChallenge(slug) {
-  if (!(await storedLive())) return mockChallenge(slug);
+  const live = await whenLive(() => cachedGet(`challenge:${slug}`, FRESH.challenges, `/api/challenges/${enc(slug)}`));
+  if (!live) return mockChallenge(slug);
   let body = null;
   try {
-    body = await getJson(`/api/challenges/${enc(slug)}`);
+    body = await live.req;
   } catch (e) {
     if ((e.status === 404 && e.message !== "API route not found.") || e.status === 400) throw apiError(`There is no challenge called "${slug}". Pick one from the challenge list.`, { status: 404 });
   }
@@ -625,8 +702,8 @@ function fromServerAttempt(a, runs, pending = null) {
   return { id: a.id, serverId: a.id, promptCount: a.promptCount, best: a.best ?? null, runs, pending, startedAt: a.startedAt };
 }
 
-async function readServerAttempt(slug) {
-  const body = await getJson(`/api/attempts/current?slug=${enc(slug)}`);
+async function readServerAttempt(slug, started = null) {
+  const body = await (started || getJson(`/api/attempts/current?slug=${enc(slug)}`));
   const a = body && body.attempt;
   if (!a) {
     liveAttempts.delete(slug);
@@ -666,6 +743,7 @@ function rescoreProvisional(attempt) {
         if (!body || !body.run || !body.run.result) continue;
         r.result = fromServerResult(body.run.result);
         if (body.attempt && body.attempt.best != null) attempt.best = body.attempt.best;
+        dropPlayerData();
       } catch {
         // Keeps the provisional result; the server can grade it again later.
       }
@@ -674,11 +752,13 @@ function rescoreProvisional(attempt) {
   })();
 }
 
+// Never cached: the player's own attempt is always read fresh (in parallel with the health check).
 export async function getAttempt(slug) {
-  if (!(await storedLive())) return store.getAttempt(slug);
+  const live = await whenLive(() => getJson(`/api/attempts/current?slug=${enc(slug)}`));
+  if (!live) return store.getAttempt(slug);
   let attempt = null;
   try {
-    attempt = await readServerAttempt(slug);
+    attempt = await readServerAttempt(slug, live.req);
   } catch {
     warnOnce("attempt." + slug, `could not read the current attempt for ${slug}.`);
     attempt = null;
@@ -698,6 +778,7 @@ export async function startOver(slug) {
       throw apiError(e.status === 0 ? NETWORK_DOWN : "Could not start over on the server. Try again.", { status: e.status });
     }
     realSlugs.delete(slug);
+    dropPlayerData();
   }
   return null;
 }
@@ -1044,7 +1125,7 @@ async function liveScore(slug, attempt, { signal, onStage }) {
   }
   const run = fromServerRun({ kind: p.kind, ...scored.run }, (p.kind === "doc" ? p.markdown : p.html) || undefined);
   provisionalSeen = !!(run.result && run.result.provisional);
-  statsCache = undefined;
+  dropPlayerData();
   const next = await attemptAfter(slug, scored.attempt, run, { attemptId: attempt.id, promptCount: attempt.promptCount });
   return { attempt: next, run };
 }
@@ -1138,14 +1219,17 @@ async function mockLeaderboard(slug, bracket, period) {
 export async function getLeaderboard(slug = null, { bracket = "all", period = "all" } = {}) {
   if (!BRACKET_RANGE[bracket]) throw apiError(`Unknown prompt filter "${bracket}". Use all, 1, 2, 3-5, 6-10 or 11+.`);
   if (period !== "week" && period !== "all") throw apiError(`Unknown period "${period}". Use week or all.`);
-  if (slug) await findChallenge(slug);
   const mock = () => mockLeaderboard(slug, bracket, period);
-  if (!(await storedLive())) return mock();
   const q = new URLSearchParams({ bracket, period });
   if (slug) q.set("slug", slug);
+  const [live] = await Promise.all([
+    whenLive(() => cachedGet(`boards:${q}`, FRESH.boards, `/api/leaderboards?${q}`)),
+    slug ? findChallenge(slug) : null,
+  ]);
+  if (!live) return mock();
   let body;
   try {
-    body = await getJson(`/api/leaderboards?${q}`);
+    body = await live.req;
   } catch (e) {
     if (e.status >= 400 && e.status < 500) throw e;
     simulated.add("boards");
@@ -1211,17 +1295,19 @@ export async function getProfile(username) {
   const name = String(username || "").trim();
   if (!name) throw apiError("No player name given. Open a profile from the leaderboard.");
   const mock = () => mockProfile(name);
-  if (!(await storedLive())) return mock();
+  const live = await whenLive(() => getJson(`/api/users/${enc(name)}`));
+  if (!live) return mock();
+  const dataP = challengeData().catch(() => ({ challenges: [] }));
   let body;
   try {
-    body = await getJson(`/api/users/${enc(name)}`);
+    body = await live.req;
   } catch (e) {
     if (e.status === 404) throw apiError(`There is no player called "${name}". Check the spelling.`, { status: 404 });
     if (e.status >= 400 && e.status < 500) throw e;
     simulated.add("profile");
     return mock();
   }
-  const data = await challengeData().catch(() => ({ challenges: [] }));
+  const data = await dataP;
   const solved = (body.solved || []).map((s) => {
     const c = data.challenges.find((x) => x.slug === s.slug);
     return { slug: s.slug, title: s.title || (c ? c.title : s.slug), best: s.best, promptCount: s.promptCount, when: s.when ? String(s.when).slice(0, 10) : null };
@@ -1372,9 +1458,10 @@ async function liveAuth(path, init, mockFn, onResponse) {
 // Points and level for the signed-in player from /api/players/me (live with a database), or null.
 async function liveStats() {
   if (statsCache !== undefined) return statsCache;
-  if (!(await storedLive())) return null;
+  const live = await whenLive(() => cachedGet("me", FRESH.me, "/api/players/me"));
+  if (!live) return null;
   try {
-    const body = await getJson("/api/players/me");
+    const body = await live.req;
     statsCache = body && Number.isFinite(body.points) ? { points: body.points, level: Number.isFinite(body.level) ? body.level : levelFor(body.points) } : null;
   } catch {
     statsCache = null;
@@ -1386,10 +1473,13 @@ async function liveStats() {
 // A 401 is the normal signed-out answer; the user is kept for the life of the page.
 export async function me() {
   if (options.mode !== "live") return withStats(adopt(mockAuth.me()));
+  let statsP = null;
   if (meCache === undefined) {
     const before = store.getPlayer();
     let u = null;
     if (!tabFlag("pd.signedOut")) {
+      // Points start with the account check, not after it.
+      statsP = quiet(liveStats());
       try {
         const res = await apiFetch("/api/auth/me", { method: "GET" });
         if (await isMissingRoute(res)) {
@@ -1408,7 +1498,7 @@ export async function me() {
     if (u && (!before || before.id !== u.id)) claimAttempts().catch(() => {});
   }
   if (!meCache) return null;
-  const stats = await liveStats();
+  const stats = await (statsP || liveStats()).catch(() => null);
   return withStats(stats ? { ...meCache, ...stats } : meCache);
 }
 
@@ -1418,7 +1508,7 @@ export async function login({ email, password } = {}) {
   if (options.mode !== "live") return adopt(mockAuth.login(input));
   const user = await liveAuth("/api/auth/login", { method: "POST", body: JSON.stringify(input) }, () => mockAuth.login(input), userFrom);
   tabFlag("pd.signedOut", false);
-  statsCache = undefined;
+  dropPlayerData();
   liveAttempts.clear();
   return adopt(user);
 }
@@ -1429,7 +1519,7 @@ export async function signup({ username, email, password } = {}) {
   if (options.mode !== "live") return adopt(mockAuth.signup(input), { isNew: true });
   const user = await liveAuth("/api/auth/signup", { method: "POST", body: JSON.stringify(input) }, () => mockAuth.signup(input), userFrom);
   tabFlag("pd.signedOut", false);
-  statsCache = undefined;
+  dropPlayerData();
   liveAttempts.clear();
   return adopt(user, { isNew: true });
 }
@@ -1438,7 +1528,7 @@ export async function logout() {
   const wasLive = options.mode === "live";
   adopt(null);
   meCache = wasLive ? null : undefined;
-  statsCache = undefined;
+  dropPlayerData();
   liveAttempts.clear();
   realSlugs.clear();
   if (!wasLive) return mockAuth.logout();
@@ -1465,7 +1555,7 @@ export async function claimAttempts() {
     const res = await apiFetch("/api/attempts/claim", { method: "POST", body: JSON.stringify({ anonId: store.getAnonId() }) });
     if (!res.ok) return { moved };
     const body = await res.json().catch(() => ({}));
-    statsCache = undefined;
+    dropPlayerData();
     liveAttempts.clear();
     return { moved: Math.max(moved, Number(body.moved) || 0) };
   } catch {
@@ -1490,11 +1580,10 @@ function fromServerLesson(l) {
 }
 
 export async function listLessons() {
-  if (options.mode !== "live") return [];
-  const h = await getHealth();
-  if (!h.reachable) return [];
+  const live = await whenLive(() => cachedGet("lessons", FRESH.lessons, "/api/lessons"), false);
+  if (!live) return [];
   try {
-    const body = await getJson("/api/lessons");
+    const body = await live.req;
     return (Array.isArray(body && body.lessons) ? body.lessons : []).filter((l) => l && l.slug).map(fromServerLesson).sort((a, b) => a.order - b.order);
   } catch {
     return [];
@@ -1507,10 +1596,11 @@ const NO_LESSON = "That lesson is not here. Pick one from the lessons list.";
 export async function getLesson(slug) {
   const name = String(slug || "").trim();
   if (!name) throw apiError(NO_LESSON, { status: 404 });
-  if (options.mode !== "live" || !(await getHealth()).reachable) throw apiError("Lessons are being written. Check back soon.", { status: 404 });
+  const live = await whenLive(() => cachedGet(`lesson:${name}`, FRESH.lessons, `/api/lessons/${enc(name)}`), false);
+  if (!live) throw apiError("Lessons are being written. Check back soon.", { status: 404 });
   let body;
   try {
-    body = await getJson(`/api/lessons/${enc(name)}`);
+    body = await live.req;
   } catch (e) {
     if (e.status === 404 || e.status === 400) throw apiError(NO_LESSON, { status: 404 });
     throw e;

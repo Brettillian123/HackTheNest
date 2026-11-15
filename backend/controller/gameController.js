@@ -66,14 +66,19 @@ const getChallenge = guarded('Get challenge', async (request, response, [slug]) 
   sendJson(response, 200, { challenge: detail, statsAvailable: Boolean(stats) });
 });
 
+// Public, player-independent responses: the CDN may cache them. Player-specific routes
+// (challenges and boards carry yourBest / you) keep the default private no-store.
+export const LESSON_CACHE = { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600' };
+export const HEALTH_CACHE = { 'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120' };
+
 const lessons = guarded('List lessons', async (_request, response) => {
-  sendJson(response, 200, { lessons: listLessons() });
+  sendJson(response, 200, { lessons: listLessons() }, LESSON_CACHE);
 });
 
 const lesson = guarded('Get lesson', async (_request, response, [slug]) => {
   const found = getLesson(slug);
   if (!found) throw new HttpError(404, 'There is no lesson with that name.');
-  sendJson(response, 200, { lesson: found });
+  sendJson(response, 200, { lesson: found }, LESSON_CACHE);
 });
 
 // ------------------------------------------------------------------ runs
@@ -93,8 +98,6 @@ const createRun = guarded('Create run', async (request, response) => {
   if (!enabled.length) throw new HttpError(503, 'No model is set up on the server yet, so runs are simulated.', { code: 'no_model' });
   const model = input.model ? findModel(input.model, deps.env) : enabled[0];
   if (!model) throw new HttpError(400, `That model is not available. Pick one of: ${enabled.map(m => m.id).join(', ')}.`);
-  await checkDailyCap(request, player, deps);
-
   const prompt = input.prompt.trim();
   const runId = newId('run');
   const controller = new AbortController();
@@ -102,8 +105,9 @@ const createRun = guarded('Create run', async (request, response) => {
   let finished = false;
   response.on?.('close', () => { if (!finished) controller.abort(); });
 
-  // Nothing is saved until the model has sent its first text.
-  const previous = await previousOutput(player, challenge, deps);
+  // Nothing is saved until the model has sent its first text. The cap check and the previous
+  // output are independent reads, made together.
+  const [, previous] = await Promise.all([checkDailyCap(request, player, deps), previousOutput(player, challenge, deps)]);
   const stream = generate({
     model, env: deps.env, fetch: deps.fetch, signal,
     system: kind.instruction(challenge),
@@ -219,12 +223,16 @@ const playersMe = guarded('Player summary', async (request, response) => {
 
 const health = guarded('Health', async (_request, response) => {
   const deps = getDeps();
-  let db = false;
-  try {
-    db = await Promise.race([deps.store.ping(), new Promise(resolve => setTimeout(() => resolve(false), 4000).unref?.())]) === true;
-  } catch (error) {
-    logError('Health database check', error);
-  }
+  // The database ping and the grader version are independent: asked together.
+  const dbCheck = (async () => {
+    try {
+      return await Promise.race([deps.store.ping(), new Promise(resolve => setTimeout(() => resolve(false), 4000).unref?.())]) === true;
+    } catch (error) {
+      logError('Health database check', error);
+      return false;
+    }
+  })();
+  const [db, graderVersion] = await Promise.all([dbCheck, liveGraderVersion(deps)]);
   const data = challengeData();
   const body = {
     ok: db && data.challenges.length > 0,
@@ -234,9 +242,8 @@ const health = guarded('Health', async (_request, response) => {
     challenges: data.challenges.length,
     problems: data.problems,
   };
-  const graderVersion = await liveGraderVersion(deps);
   if (graderVersion) body.graderVersion = graderVersion;
-  sendJson(response, 200, body);
+  sendJson(response, 200, body, HEALTH_CACHE);
 });
 
 export const gameHandlers = {
