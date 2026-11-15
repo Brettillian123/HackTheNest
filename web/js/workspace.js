@@ -172,7 +172,9 @@ const briefWord = () => (isBrief() ? 'brief' : 'instructions');
 // ---------------------------------------------------------------- doc challenges
 // A doc challenge has no goal page: the left panel shows the brief and what the grader looks for,
 // and the model's answer is Markdown rendered to safe DOM nodes (never as HTML).
-const isDoc = () => !!(S.ch && S.ch.kind === 'doc');
+// Text kinds have no goal page: a written document, or an agent plan (shown as a JSON block).
+const isDoc = () => !!(S.ch && (S.ch.kind === 'doc' || S.ch.kind === 'workflow'));
+const docText = (t) => (S.ch && S.ch.kind === 'workflow' && t && !/^\s*```/.test(t) ? '```json\n' + t + '\n```' : t || '');
 function setupDoc() {
   ['goalFrame', 'mineFrame'].forEach((id) => { $(id).hidden = true; });
   $('goalBig').hidden = true;
@@ -194,7 +196,7 @@ function codePage(code) {
 }
 function showMine(text) {
   if (isScene()) setDoc('mineFrame', /^<!doctype html>/i.test(text || '') ? text : codePage(text));
-  else if (isDoc()) renderMarkdown($('mineDoc'), text || '');
+  else if (isDoc()) renderMarkdown($('mineDoc'), docText(text));
   else setDoc('mineFrame', text || '');
 }
 function outputOf(run) {
@@ -345,7 +347,7 @@ function miniCosts(r) {
 function renderCompare(run) {
   $('cmpNote').textContent = 'Run ' + run.n;
   $('cmpTag').textContent = run.n;
-  if (isDoc()) renderMarkdown($('cmpDoc'), run.markdown || 'This answer was not kept on this device');
+  if (isDoc()) renderMarkdown($('cmpDoc'), docText(run.markdown) || 'This answer was not kept on this device');
   else setDoc('mineSmall', (isScene() ? (run.result && run.result.viewsHtml) || codePage(run.markdown) : run.html) || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device</p>');
   // The grader's report card says what to change in the prompt; older results keep the checks list.
   const crit = run.result.criteria;

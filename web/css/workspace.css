@@ -230,3 +230,9 @@
 .ws-prompt .again .run kbd{display:none}
 .ws-prompt .again .used{flex:1 1 0}
 .ws-prompt .again .ws-tall{flex:1 1 auto;white-space:nowrap}
+
+/* desktop: the workspace never squeezes below a usable height; the page scrolls instead, with room below */
+@media (min-width:761px){
+  .ws-page{height:max(calc(100vh - var(--nav-h)), 860px);overflow:visible;margin-bottom:var(--s-10)}
+  .ws-page .col > .panel.ws-prompt{overflow:auto}
+}
