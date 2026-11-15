@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in to Fernway</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Helvetica, Arial, sans-serif; background: #F7F5F0; color: #1C1B19; min-height: 800px; display: flex; align-items: center; justify-content: center; }
+  .card { width: 400px; background: #FFFFFF; border: 1px solid #E5E1D8; border-radius: 12px; padding: 40px; box-shadow: 0 8px 24px rgba(28, 27, 25, 0.08); }
+  .brand { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #2F5D50; margin-bottom: 24px; }
+  h1 { font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+  .sub { font-size: 15px; color: #6B6862; margin-bottom: 28px; }
+  label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  input { display: block; width: 100%; height: 44px; border: 1px solid #D9D5CC; border-radius: 8px; padding: 0 14px; font-size: 15px; font-family: inherit; margin-bottom: 18px; background: #FFFFFF; }
+  .row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; margin-bottom: 24px; }
+  .row a { color: #2F5D50; text-decoration: none; font-weight: 600; }
+  .remember { display: flex; align-items: center; gap: 8px; color: #6B6862; }
+  .remember span { width: 16px; height: 16px; border: 1px solid #D9D5CC; border-radius: 4px; display: inline-block; }
+  button { width: 100%; height: 44px; border: 0; border-radius: 8px; background: #2F5D50; color: #FFFFFF; font-size: 15px; font-weight: 600; font-family: inherit; }
+  .foot { text-align: center; font-size: 14px; color: #6B6862; margin-top: 24px; }
+  .foot a { color: #2F5D50; font-weight: 600; text-decoration: none; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">Fernway</div>
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to pick up where you left off.</p>
+    <form>
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="At least 8 characters">
+      <div class="row">
+        <span class="remember"><span></span>Remember me</span>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button type="submit">Sign in</button>
+    </form>
+    <p class="foot">New to Fernway? <a href="#">Create an account</a></p>
+  </main>
+</body>
+</html>

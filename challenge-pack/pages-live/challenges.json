@@ -1,0 +1,1125 @@
+{
+  "challenges": [
+    {
+      "slug": "login-card",
+      "title": "Login card",
+      "level": 1,
+      "category": "Components",
+      "brief": "I'd like you to build the sign-in page for Fernway, our project planning app. The people landing here are returning customers who just want to get back to work, so signing in should take seconds and nothing on the page should compete with the form. Keep it calm and warm, in line with the rest of Fernway. All the wording is supplied, and the attached reference is exactly what we want: match it as closely as you can. It needs to work with a keyboard and a screen reader. It's done when a returning customer can sign in, reset a forgotten password or find their way to creating an account without having to think about it.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The card shows the brand line Fernway, the heading Welcome back and the line Sign in to pick up where you left off.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Two fields in this order: Email, then Password, each with a visible label above it",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The fields carry the hints you@example.com and At least 8 characters",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "One row under the fields with Remember me on the left and a Forgot password? link on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "A full-width Sign in button in the brand green with white text",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Under the button, a centred line reads New to Fernway? Create an account, with Create an account as a link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A white card with a thin border and rounded corners, centred on a warm off-white page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The brand line is small, bold, uppercase and green; the heading is the largest text on the card",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Each input is tied to its label, and Sign in is a real button inside a form",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fernway",
+        "Welcome back",
+        "Sign in to pick up where you left off.",
+        "Email",
+        "you@example.com",
+        "Password",
+        "At least 8 characters",
+        "Remember me",
+        "Forgot password?",
+        "Sign in",
+        "New to Fernway?",
+        "Create an account"
+      ],
+      "content": "Company: Fernway (project planning app)\nPage: sign-in for returning customers\nHeading: Welcome back\nSubheading: Sign in to pick up where you left off.\nFields:\n- Email; placeholder: you@example.com\n- Password; placeholder: At least 8 characters\nOption: Remember me\nLink: Forgot password?\nMain button: Sign in\nNew customer prompt: New to Fernway?; link: Create an account",
+      "acceptance": [
+        "A returning customer can see straight away where to type and what to press to sign in",
+        "Every field has a visible name, so it works with a screen reader and a keyboard",
+        "Forgetting a password or being new to Fernway each has an obvious way forward",
+        "Nothing on the page distracts from signing in",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "one calm card centred on a warm off-white page",
+        "deep green brand accent",
+        "soft rounded corners and thin borders",
+        "plenty of breathing room around the fields"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#F7F5F0"
+            },
+            {
+              "label": "Card position",
+              "value": "Centred horizontally and vertically"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Brand line",
+              "value": "Fernway, 14px, 700, uppercase, letter-spacing 0.08em, #2F5D50"
+            },
+            {
+              "label": "Heading",
+              "value": "Welcome back, 28px, 700, #1C1B19"
+            },
+            {
+              "label": "Subtext",
+              "value": "15px, #6B6862"
+            },
+            {
+              "label": "Field labels",
+              "value": "Email and Password, 14px, 600"
+            },
+            {
+              "label": "Button text",
+              "value": "Sign in, 15px, 600, #FFFFFF"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Card",
+              "value": "400px wide, #FFFFFF, 1px #E5E1D8 border, 12px radius, 40px padding"
+            },
+            {
+              "label": "Inputs",
+              "value": "Full width, 44px tall, 1px #D9D5CC border, 8px radius"
+            },
+            {
+              "label": "Remember row",
+              "value": "Remember me left, Forgot password? right, 14px"
+            },
+            {
+              "label": "Button",
+              "value": "Full width, 44px tall, #2F5D50, 8px radius"
+            },
+            {
+              "label": "Footer line",
+              "value": "New to Fernway? Create an account, centred, 14px"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "footer-columns",
+      "title": "Footer with columns",
+      "level": 1,
+      "category": "Components",
+      "brief": "Our marketing site for Harbor stops abruptly, and I need you to give it a proper ending. Visitors who scroll this far are interested, so give them one last confident nudge to start a trial, then a footer that helps anyone looking for something specific find it quickly: product pages, company information, help and the legal bits. You have all the copy, and the reference design is the target; the closer your page gets to it, the better. Keep it tidy and quiet so the nudge stands out. It's done when a visitor can either start a trial or find any link they need within a few seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The band heading reads Ready to ship faster?, with the line Join 4,000 teams who plan their releases with Harbor. and a Start free trial button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The band sits above the footer on a light background, its content centred",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The footer has a brand column (Harbor and its description), then the columns Product, Company and Resources in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each link column holds its four links in the order given in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A bottom bar under a thin divider line: the copyright on the left, Privacy · Terms · Cookies on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Dark navy footer with white headings and soft light grey-blue links; the button is amber with navy text",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The brand column is clearly wider than each link column",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The footer is a footer element and each link column is a list of real links",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Ready to ship faster?",
+        "Join 4,000 teams who plan their releases with Harbor.",
+        "Start free trial",
+        "Harbor",
+        "Release planning for small product teams. Built in Halifax, used around the world.",
+        "Product",
+        "Roadmaps",
+        "Changelog",
+        "Integrations",
+        "Pricing",
+        "Company",
+        "About",
+        "Careers",
+        "Press",
+        "Contact",
+        "Resources",
+        "Docs",
+        "Guides",
+        "Status",
+        "Help center",
+        "© 2026 Harbor Software Inc.",
+        "Privacy · Terms · Cookies"
+      ],
+      "content": "Company: Harbor (Harbor Software Inc.)\nCall to action:\n- Heading: Ready to ship faster?\n- Line: Join 4,000 teams who plan their releases with Harbor.\n- Button: Start free trial\nAbout: Harbor; Release planning for small product teams. Built in Halifax, used around the world.\nLink groups (group name: links, in order):\n- Product: Roadmaps, Changelog, Integrations, Pricing\n- Company: About, Careers, Press, Contact\n- Resources: Docs, Guides, Status, Help center\nCopyright: © 2026 Harbor Software Inc.\nLegal links: Privacy · Terms · Cookies",
+      "acceptance": [
+        "The invitation to start a free trial is the first thing I notice",
+        "I can find any footer link quickly because related links sit together under a clear name",
+        "The legal and copyright details are present but stay out of the way",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "light call-to-action band above a dark navy footer",
+        "amber button as the one bright accent",
+        "wide brand column, three narrower link columns",
+        "small uppercase column headings"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#F4F6FA"
+            },
+            {
+              "label": "Footer background",
+              "value": "#14213D"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Band heading",
+              "value": "Ready to ship faster?, 36px, 700, #14213D"
+            },
+            {
+              "label": "Band text",
+              "value": "18px, #4A5672"
+            },
+            {
+              "label": "Band button",
+              "value": "Start free trial, 16px, 700, #14213D on #F2A541"
+            },
+            {
+              "label": "Logo",
+              "value": "Harbor, 22px, 700, #FFFFFF"
+            },
+            {
+              "label": "Column headings",
+              "value": "14px, 700, uppercase, letter-spacing 0.08em, #FFFFFF"
+            },
+            {
+              "label": "Links",
+              "value": "15px, #C9D1E0"
+            },
+            {
+              "label": "Copyright line",
+              "value": "13px, #8E99B3"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Band",
+              "value": "Fills the space above the footer, content centred"
+            },
+            {
+              "label": "Footer content",
+              "value": "Max width 1120px, centred, 32px side padding"
+            },
+            {
+              "label": "Columns",
+              "value": "4 columns in a 2 : 1 : 1 : 1 ratio, 48px gap"
+            },
+            {
+              "label": "Link columns",
+              "value": "Product, Company, Resources, 4 links each"
+            },
+            {
+              "label": "Bottom bar",
+              "value": "1px #2C3A5C top border, 24px padding, copyright left, legal links right"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "nav-hero",
+      "title": "Nav bar with hero",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Northwind needs the first screen of its homepage, the part every visitor sees before they decide whether to stay. In a few seconds they should know what Northwind is, why it helps their team, and what to do next, with one main action clearly ahead of the alternative. Give them a simple way to move around the site as well, and make sure our new feature announcement gets noticed. The copy is supplied, and the attached reference shows the finished screen exactly, so match it as closely as you can. It's done when a first-time visitor can explain what we do and knows exactly where to click to get started.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The nav has Northwind on the left, Product, Solutions, Pricing and Docs in the middle in that order, and Get started on the right",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The pill reads New: live dashboards",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The headline reads Analytics your whole team can read",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The lead sentence and the note under the buttons match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Two buttons side by side: Start for free, then Book a demo",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The hero text is centred and the headline is by far the largest, boldest text, kept to a comfortable width",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Start for free and Get started are solid indigo with white text; Book a demo is white with a thin grey outline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "A white nav bar with a thin line under it, over a very pale blue page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The nav links are a list of real links inside a nav, and the headline is the page's only main heading",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Northwind",
+        "Product",
+        "Solutions",
+        "Pricing",
+        "Docs",
+        "Get started",
+        "New: live dashboards",
+        "Analytics your whole team can read",
+        "Northwind turns raw product data into clear weekly reports, so everyone sees the same numbers.",
+        "Start for free",
+        "Book a demo",
+        "No credit card needed. Free for teams up to 5."
+      ],
+      "content": "Company: Northwind (analytics product)\nNavigation links: Product, Solutions, Pricing, Docs\nNavigation button: Get started\nAnnouncement: New: live dashboards\nHeadline: Analytics your whole team can read\nSubheadline: Northwind turns raw product data into clear weekly reports, so everyone sees the same numbers.\nMain button: Start for free\nSecond button: Book a demo\nNote: No credit card needed. Free for teams up to 5.",
+      "acceptance": [
+        "A first-time visitor can tell what Northwind does within a few seconds",
+        "Starting for free is clearly the main action, with booking a demo as the alternative",
+        "The new feature announcement is noticeable without shouting",
+        "Site navigation is easy to find and to use with a keyboard",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "clean white nav over a very pale blue page",
+        "one huge bold headline, centred",
+        "indigo as the single accent colour",
+        "small soft pill above the headline"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#F5F7FF"
+            },
+            {
+              "label": "Nav background",
+              "value": "#FFFFFF, 1px #E6E8EC bottom border"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Logo",
+              "value": "Northwind, 20px, 700, #111827"
+            },
+            {
+              "label": "Nav links",
+              "value": "Product, Solutions, Pricing, Docs, 15px, #4B5563"
+            },
+            {
+              "label": "Pill",
+              "value": "13px, 600, #4F46E5 on #E0E7FF"
+            },
+            {
+              "label": "Headline",
+              "value": "56px, 800, line-height 1.1, #111827"
+            },
+            {
+              "label": "Lead text",
+              "value": "20px, line-height 1.5, #4B5563"
+            },
+            {
+              "label": "Buttons",
+              "value": "16px, 600"
+            },
+            {
+              "label": "Note",
+              "value": "14px, #6B7280"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Nav",
+              "value": "72px tall, content max width 1200px, 40px side padding"
+            },
+            {
+              "label": "Nav order",
+              "value": "Logo left, links centre with 32px gap, Get started button right"
+            },
+            {
+              "label": "Nav button",
+              "value": "#4F46E5, 10px 18px padding, 8px radius"
+            },
+            {
+              "label": "Hero",
+              "value": "Text centred, 120px top padding"
+            },
+            {
+              "label": "Headline width",
+              "value": "Max 760px"
+            },
+            {
+              "label": "Lead width",
+              "value": "Max 600px"
+            },
+            {
+              "label": "Buttons",
+              "value": "Start for free on #4F46E5, Book a demo white with 1px #D1D5DB border, 16px gap, 8px radius"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "blog-header",
+      "title": "Blog post header",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "We're redesigning the article pages on our design blog, and I want you to start with the opening of a post: the part that convinces someone to keep reading. Use our current feature as the example; the text is supplied, and the reference design is precisely what we want this to look like. It should read like a thoughtful magazine, not a tech blog, with the title doing the real work and the author information easy to find without crowding it. Readers must be able to tell what the piece is about and how long it will take before they scroll. It's done when it reads like a page you'd want to finish.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The category tag reads Design",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The title reads Why slow design wins in a fast market",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The standfirst matches the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The byline shows the initials MR in the avatar, the name Maya Robles and the line March 4, 2026 · 8 min read",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "From top to bottom: tag, title, standfirst, byline, cover",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The title is in a serif face; the tag, standfirst and byline are in a plain sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The tag is small, uppercase, letter-spaced and amber",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The avatar is a warm yellow circle with dark brown initials, and a thin line runs under the byline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The cover is a wide rounded block with a warm gradient from pale yellow through amber to burnt orange, drawn without an image file",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Everything sits in one centred reading column on a warm, almost-white page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "The header is inside an article and the title is the page's only main heading",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Design",
+        "Why slow design wins in a fast market",
+        "Teams that spend an extra week on research ship fewer features, and keep more customers. Here is what we learned from twelve launches.",
+        "MR",
+        "Maya Robles",
+        "March 4, 2026 · 8 min read"
+      ],
+      "content": "Article\nCategory: Design\nTitle: Why slow design wins in a fast market\nStandfirst: Teams that spend an extra week on research ship fewer features, and keep more customers. Here is what we learned from twelve launches.\nAuthor: Maya Robles; initials: MR\nDate and reading time: March 4, 2026 · 8 min read",
+      "acceptance": [
+        "The title is the first thing I read, and it feels like a considered publication",
+        "I can tell the topic, the author and the reading time before scrolling",
+        "The supporting details never compete with the title",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "editorial, one centred reading column",
+        "serif title, sans-serif everything else",
+        "warm amber accents on an almost-white page",
+        "a warm gradient cover in place of a photo"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#FFFDF8"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Body font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Title font",
+              "value": "Georgia, \"Times New Roman\", serif"
+            },
+            {
+              "label": "Tag",
+              "value": "Design, 13px, 700, uppercase, letter-spacing 0.08em, #B45309"
+            },
+            {
+              "label": "Title",
+              "value": "44px, 700, line-height 1.15, #1F2937"
+            },
+            {
+              "label": "Standfirst",
+              "value": "20px, line-height 1.5, #4B5563"
+            },
+            {
+              "label": "Author name",
+              "value": "Maya Robles, 15px, 600"
+            },
+            {
+              "label": "Date line",
+              "value": "March 4, 2026 · 8 min read, 14px, #6B7280"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Column",
+              "value": "720px wide, centred, 72px top padding"
+            },
+            {
+              "label": "Avatar",
+              "value": "44px circle, #FCD34D, initials MR in #78350F"
+            },
+            {
+              "label": "Byline",
+              "value": "14px gap, 32px padding below, 1px #ECE6D9 bottom border"
+            },
+            {
+              "label": "Cover",
+              "value": "720 x 300, 12px radius, 135deg gradient #FDE68A to #F59E0B to #B45309"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "pricing-plans",
+      "title": "Pricing with three plans",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "Fernway needs a pricing page. Visitors should be able to compare our plans at a glance and pick the plan that suits them without reading everything twice, and we want most people steered toward the plan most teams choose. All the plan details are supplied, and the attached reference is the page we want: we'll judge it on how close you get. It must be accessible and hold up on a phone. Done means a visitor can say which plan suits them and take the next step in under a minute.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads Simple pricing for every team, with the line Start free. Upgrade when you need more seats.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Three plans in this order: Starter $0, Team $24, Business $79, each followed by / month",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each plan's description, three features and button label match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three cards side by side, the same width, centred on the page",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Team card carries a badge reading Most popular",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The Team card has a stronger green border and the badge sits on its top edge",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Team button is filled green with white text; the other two are outlined in green",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Each feature has a green check mark, with light dividers between features",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Plan names are headings under the page heading, and each feature list is a real list",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Simple pricing for every team",
+        "Start free. Upgrade when you need more seats.",
+        "Starter",
+        "For solo makers.",
+        "$0",
+        "/ month",
+        "1 project",
+        "Basic reports",
+        "Community support",
+        "Get started",
+        "Most popular",
+        "Team",
+        "For growing teams.",
+        "$24",
+        "Unlimited projects",
+        "Shared dashboards",
+        "Priority email support",
+        "Start free trial",
+        "Business",
+        "For larger companies.",
+        "$79",
+        "Single sign-on",
+        "Audit log",
+        "Dedicated manager",
+        "Contact sales"
+      ],
+      "content": "Company: Fernway\nHeading: Simple pricing for every team\nSubheading: Start free. Upgrade when you need more seats.\nPrices are per month, written as the amount followed by \"/ month\".\nPlans (name; tagline; price; included; button):\n- Starter; For solo makers.; $0 / month; 1 project, Basic reports, Community support; Get started\n- Team; For growing teams.; $24 / month; Unlimited projects, Shared dashboards, Priority email support; Start free trial\n- Business; For larger companies.; $79 / month; Single sign-on, Audit log, Dedicated manager; Contact sales\nMost popular plan: Team (label text: Most popular)",
+      "acceptance": [
+        "I can compare what each plan costs and includes at a glance",
+        "It is obvious which plan most teams pick",
+        "Every plan has a clear next step",
+        "It works on a phone without losing the comparison",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "three white cards on a warm off-white page",
+        "the middle plan highlighted in deep green",
+        "large prices, quiet descriptions",
+        "calm and uncluttered"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#F7F5F0"
+            },
+            {
+              "label": "Page padding",
+              "value": "64px top and bottom"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Heading",
+              "value": "Simple pricing for every team, 40px, 700, #1C1B19"
+            },
+            {
+              "label": "Subheading",
+              "value": "18px, #6B6862"
+            },
+            {
+              "label": "Plan names",
+              "value": "Starter, Team, Business, 20px, 700"
+            },
+            {
+              "label": "Prices",
+              "value": "$0, $24, $79, 44px, 700, with / month at 16px #6B6862"
+            },
+            {
+              "label": "Features",
+              "value": "15px, check mark in #2F5D50"
+            },
+            {
+              "label": "Badge",
+              "value": "Most popular, 12px, 700, uppercase, #FFFFFF on #2F5D50"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Cards",
+              "value": "3 in a row, 320px wide, 24px gap, centred"
+            },
+            {
+              "label": "Card style",
+              "value": "#FFFFFF, 1px #E5E1D8 border, 12px radius, 32px padding"
+            },
+            {
+              "label": "Featured card",
+              "value": "Middle card, 2px #2F5D50 border, badge on the top edge"
+            },
+            {
+              "label": "Features",
+              "value": "3 per plan, 8px vertical padding, 1px #F0ECE3 divider"
+            },
+            {
+              "label": "Buttons",
+              "value": "Full width, 44px tall, 8px radius; outlined #2F5D50, filled on the featured card"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "product-grid",
+      "title": "Product card grid",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "Oak and Clay wants a new-arrivals section for the homepage. Shoppers should be able to scan the latest pieces quickly, see what each costs, and spot the bargains, with an easy way to see the whole range. Product details are supplied, and the reference design is the exact target, so match it as faithfully as you can. Keep it warm and uncluttered, like the shop itself, and make it hold up on smaller screens. Done means a shopper finds something they like and knows its price without hunting.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads New arrivals and the link reads View all",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The heading is on the left and View all on the right of the same row",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "Eight cards in four columns and two rows",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Products in this order, with these categories and prices: Stoneware mug, Kitchen, $18; Linen throw, Living, $64; Clay planter, Garden, $28 (was $36); Oak side table, Furniture, $149; Wool cushion, Living, $42; Glass carafe, Kitchen, $26; Rattan basket, Storage, $31 (was $39); Brass lamp, Lighting, $118",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each card has a flat colour block on top, then the name, the category and the price",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Sale prices are burnt orange with the old price smaller, grey and struck through; regular prices are deep green",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "White cards with thin borders and rounded corners on a near-white page; categories in small grey text",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "New arrivals is the page's main heading and View all is a real link",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "New arrivals",
+        "View all",
+        "Stoneware mug",
+        "Kitchen",
+        "$18",
+        "Linen throw",
+        "Living",
+        "$64",
+        "Clay planter",
+        "Garden",
+        "$28",
+        "$36",
+        "Oak side table",
+        "Furniture",
+        "$149",
+        "Wool cushion",
+        "$42",
+        "Glass carafe",
+        "$26",
+        "Rattan basket",
+        "Storage",
+        "$31",
+        "$39",
+        "Brass lamp",
+        "Lighting",
+        "$118"
+      ],
+      "content": "Shop: Oak and Clay\nSection title: New arrivals\nLink: View all\nProducts (name; category; price):\n1. Stoneware mug; Kitchen; $18\n2. Linen throw; Living; $64\n3. Clay planter; Garden; on sale for $28, was $36\n4. Oak side table; Furniture; $149\n5. Wool cushion; Living; $42\n6. Glass carafe; Kitchen; $26\n7. Rattan basket; Storage; on sale for $31, was $39\n8. Brass lamp; Lighting; $118",
+      "acceptance": [
+        "I can scan every new product and its price quickly",
+        "Items on sale stand out, and I can see both the sale and the regular price",
+        "There is an obvious way to see the full range",
+        "It stays tidy and readable on a small screen",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "clean, airy four-column grid",
+        "soft flat colour blocks in place of photos",
+        "deep green prices, burnt orange for sales",
+        "white rounded cards with thin borders"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#FAFAFA"
+            }
+          ]
+        },
+        {
+          "group": "Type",
+          "items": [
+            {
+              "label": "Font",
+              "value": "Helvetica, Arial, sans-serif"
+            },
+            {
+              "label": "Heading",
+              "value": "New arrivals, 32px, 700, #1A1A1A"
+            },
+            {
+              "label": "View all link",
+              "value": "15px, 600, #2F5D50"
+            },
+            {
+              "label": "Product name",
+              "value": "16px, 600"
+            },
+            {
+              "label": "Category",
+              "value": "13px, #777777"
+            },
+            {
+              "label": "Price",
+              "value": "15px, 700, #2F5D50; sale prices #C2410C with old price 13px #999999 struck through"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Content",
+              "value": "1160px wide, centred, 48px top and bottom padding"
+            },
+            {
+              "label": "Header row",
+              "value": "Heading left, View all right, 28px below"
+            },
+            {
+              "label": "Grid",
+              "value": "4 columns of 272px, 24px gap, 2 rows"
+            },
+            {
+              "label": "Card",
+              "value": "#FFFFFF, 1px #ECECEC border, 10px radius"
+            },
+            {
+              "label": "Image area",
+              "value": "180px tall, flat colour block per product"
+            },
+            {
+              "label": "Card text",
+              "value": "14px 16px 16px padding"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    }
+  ]
+}

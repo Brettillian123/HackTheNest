@@ -1,0 +1,38 @@
+{
+  "bike-builder-site": {
+    "title": "Bike builder site",
+    "brief": "A three-page site for Tidewater Bikes, a small frame builder: home, about and pricing, sharing one stylesheet and one menu.",
+    "what": "A small business site for Tidewater Bikes, hand-built steel city bikes from Ypsilanti, Michigan",
+    "order": ["index.html", "about.html", "pricing.html"]
+  },
+  "restaurant-site": {
+    "title": "Restaurant site",
+    "brief": "A four-page site for Olive & Ember, a wood-fired restaurant: home, menu, a booking form and an opening-hours page with a map.",
+    "what": "A restaurant site for Olive & Ember, a wood-fired restaurant on a harbour",
+    "order": ["index.html", "menu.html", "reservations.html", "find-us.html"]
+  },
+  "shop-site": {
+    "title": "Tea shop site",
+    "brief": "A five-page shop for Kettle & Leaf loose-leaf tea: home, catalogue, a product page, the basket and a contact form.",
+    "what": "An online shop for Kettle & Leaf, a loose-leaf tea seller",
+    "order": ["index.html", "catalogue.html", "product.html", "basket.html", "contact.html"]
+  },
+  "docs-site": {
+    "title": "Documentation site",
+    "brief": "A six-page documentation site for Lumen with a sidebar, breadcrumbs and guide pages in a sub-folder.",
+    "what": "Product documentation for Lumen, with an overview, three guide pages in guide/, a reference page and a changelog",
+    "order": ["index.html", "guide/install.html", "guide/config.html", "guide/deploy.html", "reference.html", "changelog.html"]
+  },
+  "portfolio-site": {
+    "title": "Portfolio and blog",
+    "brief": "An eight-page portfolio for Mara Quinn, a designer and developer, with a projects page and a blog whose posts sit two folders deep.",
+    "what": "A personal portfolio and blog for Mara Quinn, designer and developer",
+    "order": ["index.html", "about.html", "projects.html", "blog/index.html", "blog/2026/grid-notes.html", "blog/2026/on-color.html", "blog/2026/quiet-tools.html", "contact.html"]
+  },
+  "conference-site": {
+    "title": "Conference site",
+    "brief": "An eleven-page site for Fieldwork 2027, a conference on field research: home, schedule, speakers with six speaker pages, tickets and FAQ.",
+    "what": "An event site for Fieldwork 2027, a conference on field research",
+    "order": ["index.html", "schedule.html", "speakers.html", "speakers/ada-lin.html", "speakers/ben-okafor.html", "speakers/carla-diaz.html", "speakers/dev-patel.html", "speakers/emi-sato.html", "speakers/femi-adeyemi.html", "tickets.html", "faq.html"]
+  }
+}

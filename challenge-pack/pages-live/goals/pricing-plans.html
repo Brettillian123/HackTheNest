@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernway pricing</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Helvetica, Arial, sans-serif; background: #F7F5F0; color: #1C1B19; min-height: 800px; padding: 64px 0; }
+  .head { text-align: center; margin-bottom: 48px; }
+  h1 { font-size: 40px; font-weight: 700; margin-bottom: 12px; }
+  .head p { font-size: 18px; color: #6B6862; }
+  .plans { display: flex; gap: 24px; justify-content: center; align-items: flex-start; }
+  .plan { width: 320px; background: #FFFFFF; border: 1px solid #E5E1D8; border-radius: 12px; padding: 32px; position: relative; }
+  .plan.featured { border: 2px solid #2F5D50; }
+  .badge { position: absolute; top: -13px; left: 32px; background: #2F5D50; color: #FFFFFF; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; }
+  h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .desc { font-size: 15px; color: #6B6862; margin-bottom: 24px; }
+  .price { font-size: 44px; font-weight: 700; margin-bottom: 24px; }
+  .price span { font-size: 16px; font-weight: 400; color: #6B6862; }
+  ul { list-style: none; margin-bottom: 28px; }
+  li { font-size: 15px; padding: 8px 0; border-bottom: 1px solid #F0ECE3; }
+  li::before { content: "\2713"; color: #2F5D50; font-weight: 700; margin-right: 10px; }
+  .btn { display: block; text-align: center; height: 44px; line-height: 44px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid #2F5D50; color: #2F5D50; }
+  .featured .btn { background: #2F5D50; color: #FFFFFF; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>Simple pricing for every team</h1>
+    <p>Start free. Upgrade when you need more seats.</p>
+  </div>
+  <div class="plans">
+    <div class="plan">
+      <h2>Starter</h2>
+      <p class="desc">For solo makers.</p>
+      <div class="price">$0 <span>/ month</span></div>
+      <ul>
+        <li>1 project</li>
+        <li>Basic reports</li>
+        <li>Community support</li>
+      </ul>
+      <a class="btn" href="#">Get started</a>
+    </div>
+    <div class="plan featured">
+      <div class="badge">Most popular</div>
+      <h2>Team</h2>
+      <p class="desc">For growing teams.</p>
+      <div class="price">$24 <span>/ month</span></div>
+      <ul>
+        <li>Unlimited projects</li>
+        <li>Shared dashboards</li>
+        <li>Priority email support</li>
+      </ul>
+      <a class="btn" href="#">Start free trial</a>
+    </div>
+    <div class="plan">
+      <h2>Business</h2>
+      <p class="desc">For larger companies.</p>
+      <div class="price">$79 <span>/ month</span></div>
+      <ul>
+        <li>Single sign-on</li>
+        <li>Audit log</li>
+        <li>Dedicated manager</li>
+      </ul>
+      <a class="btn" href="#">Contact sales</a>
+    </div>
+  </div>
+</body>
+</html>

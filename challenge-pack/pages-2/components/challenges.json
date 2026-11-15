@@ -1,0 +1,835 @@
+{
+  "challenges": [
+    {
+      "slug": "alert-stack",
+      "title": "Alert stack",
+      "level": 1,
+      "category": "Components",
+      "brief": "Our billing app sends four kinds of message, good news, information, warnings and errors, and I'd like you to build a notifications page that shows them together. Someone glancing at the page should be able to tell immediately which message is good news and which needs action, and each message should offer one clear thing to do next. All the wording is supplied, and the attached reference is exactly the page we want, so match it as closely as you can. Colour alone mustn't carry the meaning, because some of our users can't rely on it, and it has to work with a screen reader. It's done when a user can tell what each message is about and what to do without reading every word.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Notifications, with the line Four messages from the last 24 hours under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four banners in this order: success, info, warning, error",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each banner has an icon, a bold title, one line of text and a text button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The banner titles, texts and button labels match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each banner is tinted in its own colour family (green, blue, amber, red) with a stronger stripe on its left edge",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The icons are drawn shapes that match their kind: a tick, an i, an exclamation mark and a cross",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The banners form a single centred column with even gaps between them",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The banners are a list and the text buttons are real buttons",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against each banner's tint",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Notifications",
+        "Four messages from the last 24 hours",
+        "Payment received",
+        "Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.",
+        "View invoice",
+        "New version available",
+        "Version 4.2 adds shared workspaces and faster PDF exports.",
+        "See what's new",
+        "Storage almost full",
+        "You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.",
+        "Upgrade plan",
+        "Sync failed",
+        "We could not reach Google Drive. Your last 3 changes are saved on this device.",
+        "Try again"
+      ],
+      "content": "Page title: Notifications\nSubtitle: Four messages from the last 24 hours\nMessages, newest first (kind; title; text; action):\n1. Success; Payment received; Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.; View invoice\n2. Information; New version available; Version 4.2 adds shared workspaces and faster PDF exports.; See what's new\n3. Warning; Storage almost full; You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.; Upgrade plan\n4. Error; Sync failed; We could not reach Google Drive. Your last 3 changes are saved on this device.; Try again",
+      "acceptance": [
+        "I can tell at a glance which message is good news and which needs action",
+        "The kind of each message is clear even without colour",
+        "Each message offers one clear next step",
+        "A screen reader announces each message sensibly",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "calm, roomy single column",
+        "soft tints with a stronger left stripe per kind",
+        "text in a dark shade of each banner's own colour",
+        "small underlined actions at the right"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "empty-state",
+      "title": "Empty state",
+      "level": 1,
+      "category": "Components",
+      "brief": "When a new customer opens Lumen for the first time, their projects screen is empty, and at the moment it just looks broken. I'd like you to design the empty state for it. A new customer should understand straight away that nothing is wrong, why projects are useful, and what to do next, with creating a project as the main path and importing as the alternative. Add a small, friendly picture so the page feels welcoming. The text is supplied, and the attached reference shows exactly what we're after: get as close to it as you can. It's done when a first-time customer feels invited, not stuck, and knows exactly which button to press.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads No projects yet",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The sentence under the heading matches the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Two buttons, Create project then Import from Trello, side by side",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "From top to bottom: illustration, heading, sentence, buttons, all centred on the page",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The illustration is drawn inline: a folder in indigo shades with a paper sheet behind its front and a white circle with a plus sign",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Create project is a solid indigo button with white text; Import from Trello is white with a thin grey outline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The illustration has a text alternative",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The buttons are real buttons and the heading is the page's only main heading",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "No projects yet",
+        "Projects keep your files, tasks and teammates in one place. Create your first one to get started.",
+        "Create project",
+        "Import from Trello"
+      ],
+      "content": "Product: Lumen (team workspace app)\nPage: Projects (the account has no projects yet)\nHeading: No projects yet\nMessage: Projects keep your files, tasks and teammates in one place. Create your first one to get started.\nMain action: Create project\nSecond action: Import from Trello",
+      "acceptance": [
+        "A first-time customer can tell that the page is empty on purpose, not broken",
+        "Creating a project is clearly the main next step, and importing is the alternative",
+        "The page feels friendly and welcoming",
+        "Both actions work with a keyboard and have clear names",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "welcoming and uncluttered",
+        "everything centred with generous space above",
+        "one indigo accent, used for the main action and the illustration",
+        "secondary action visibly quieter than the primary"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "checkout-steps",
+      "title": "Checkout steps",
+      "level": 1,
+      "category": "Components",
+      "brief": "Shoppers in our checkout keep asking where they are and how much remains, so I'd like you to build a progress indicator for the payment step, along with the order summary. At a glance a shopper should see which steps they've finished, which step they're on and what's still to come, and they should be able to check what they're paying before moving on. The figures are supplied, and the attached reference is the exact target; I'll judge your page by how closely it matches. Progress mustn't be shown by colour alone, and a screen reader should announce the current step. It's done when a shopper knows where they are and what they owe without thinking.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Checkout",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four steps in this order: Cart, Shipping, Payment, Review",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Cart and Shipping are shown done (filled circle with a tick); Payment is current (outlined circle with 3, bold label); Review is upcoming (grey, with 4)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A line joins the circles; it is in the accent colour up to the current step and grey after it",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "An Order summary card under the steps lists Subtotal (3 items) $184.00, Shipping $9.50, Tax $15.48 and Total $208.98",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The total row is bold and separated from the lines above by a rule",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A full-width Continue to review button ends the card",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The steps are an ordered list in a labelled navigation, and the current step is marked as current for screen readers",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Checkout",
+        "Cart",
+        "Shipping",
+        "Payment",
+        "Review",
+        "Order summary",
+        "Subtotal (3 items)",
+        "$184.00",
+        "$9.50",
+        "Tax",
+        "$15.48",
+        "Total",
+        "$208.98",
+        "Continue to review"
+      ],
+      "content": "Page: Checkout\nSteps, in order: 1 Cart, 2 Shipping, 3 Payment, 4 Review\nCompleted steps: Cart, Shipping\nCurrent step: Payment (step 3)\nOrder summary:\n- Subtotal (3 items): $184.00\n- Shipping: $9.50\n- Tax: $15.48\n- Total: $208.98\nButton: Continue to review",
+      "acceptance": [
+        "I can tell which steps are finished, which one I'm on and what is left",
+        "The current step is announced to a screen reader, not shown by colour alone",
+        "The order total and how it adds up are easy to check",
+        "Moving on to the next step is one obvious action",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "clean and trustworthy",
+        "one indigo accent marks progress and the main action",
+        "steps spread evenly across the width of the card",
+        "figures right-aligned against their labels"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "tabbed-panel",
+      "title": "Tabbed panel",
+      "level": 2,
+      "category": "Components",
+      "brief": "Atlas Logistics needs the Billing page of its account settings. The billing contact comes here to check their plan, when the next payment is due and what they've paid recently, and should be able to move to the other settings sections easily. The details are supplied, and the reference design is exactly what we want; match it closely. The section switcher must work properly with a keyboard and a screen reader. It's done when the billing contact can answer \"what do we pay and when?\" in a few seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Atlas Logistics, with Account settings for the Business workspace under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Five tabs in this order: Overview, Billing, Team, Integrations, Security",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The selected tab, Billing, is clearly distinguished from the others with colour, weight and an underline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The panel shows a Billing heading and the sentence about renewal from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Four labelled details in two columns: Plan, Billing contact, Next invoice, Payment method, with the values in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "A Recent invoices table with columns Invoice, Date, Amount, Status and three rows: INV-3108, INV-2987, INV-2861",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Amounts are right-aligned and every status reads Paid in green",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The details are a description list and the table has header cells",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The tabs are buttons in a tab list, with the selected one marked as selected",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Atlas Logistics",
+        "Account settings for the Business workspace",
+        "Overview",
+        "Billing",
+        "Team",
+        "Integrations",
+        "Security",
+        "Your plan renews automatically. Invoices are emailed to the billing contact.",
+        "Business, billed yearly",
+        "Priya Shah, priya.shah@atlaslogistics.com",
+        "1 December 2026, $2,400.00",
+        "Mastercard ending 8831",
+        "Recent invoices",
+        "INV-3108",
+        "1 Nov 2026",
+        "INV-2987",
+        "1 Oct 2026",
+        "INV-2861",
+        "1 Sep 2026",
+        "$2,150.00",
+        "Paid"
+      ],
+      "content": "Company: Atlas Logistics\nPage subtitle: Account settings for the Business workspace\nSettings sections: Overview, Billing, Team, Integrations, Security\nCurrent section: Billing\nBilling:\n- Intro: Your plan renews automatically. Invoices are emailed to the billing contact.\n- Plan: Business, billed yearly\n- Billing contact: Priya Shah, priya.shah@atlaslogistics.com\n- Next invoice: 1 December 2026, $2,400.00\n- Payment method: Mastercard ending 8831\nRecent invoices (Invoice | Date | Amount | Status):\nINV-3108 | 1 Nov 2026 | $2,400.00 | Paid\nINV-2987 | 1 Oct 2026 | $2,400.00 | Paid\nINV-2861 | 1 Sep 2026 | $2,150.00 | Paid",
+      "acceptance": [
+        "I can tell which settings section I am in",
+        "The plan, next invoice and payment method are easy to find",
+        "Recent invoices are easy to read and marked up as a table",
+        "The section switcher works with a keyboard and a screen reader",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "tidy and businesslike",
+        "one white card on a pale grey-blue page",
+        "indigo only on the selected tab",
+        "quiet grey labels above dark values"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "settings-toggles",
+      "title": "Settings toggles",
+      "level": 2,
+      "category": "Components",
+      "brief": "Harbor Studio needs its notification settings screen. People come here to switch particular notifications on or off, so they must see the current state of every setting at a glance and change it with one action. Settings are grouped by kind; all of them, and their current states, are supplied. The reference design is the exact target; match it as closely as you can. Every switch must be a real, labelled control that works with a keyboard and a screen reader. It's done when a user can find and change any setting in seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Settings",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A left menu with Profile, Account, Notifications, Privacy, Billing in that order, with Notifications highlighted as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three groups in this order: Email (3 settings), Push notifications (3 settings), Workspace (2 settings)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each setting shows its name, helper text and a switch, with the names and helper texts in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "On: Weekly summary, Mentions, Direct messages, Task reminders, Billing alerts. Off: Product updates, Quiet hours, New members",
+          "kind": "behaviour",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "On and off switches are clearly different: accent colour with the knob right versus grey with the knob left",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Rows inside a group are separated by thin lines",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Each switch is a real checkbox with a visible label, and its helper text is linked to it",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The section menu is a list of links in a navigation landmark",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Settings",
+        "Profile",
+        "Account",
+        "Notifications",
+        "Privacy",
+        "Billing",
+        "Email",
+        "Weekly summary",
+        "A digest of activity across your projects, sent every Monday at 8:00.",
+        "Product updates",
+        "News about features and improvements, about once a month.",
+        "Mentions",
+        "An email when someone mentions you in a comment.",
+        "Push notifications",
+        "Direct messages",
+        "Notify me when a teammate sends me a message.",
+        "Task reminders",
+        "Remind me 1 hour before a task is due.",
+        "Quiet hours",
+        "Pause push notifications from 22:00 to 07:00.",
+        "Workspace",
+        "New members",
+        "Tell me when someone joins the Harbor Studio workspace.",
+        "Billing alerts",
+        "Warn me 7 days before the card on file is charged."
+      ],
+      "content": "Workspace: Harbor Studio\nPage: Settings\nSettings sections: Profile, Account, Notifications, Privacy, Billing\nCurrent section: Notifications\nNotification settings by group (name; description; on or off):\nEmail\n- Weekly summary; A digest of activity across your projects, sent every Monday at 8:00.; on\n- Product updates; News about features and improvements, about once a month.; off\n- Mentions; An email when someone mentions you in a comment.; on\nPush notifications\n- Direct messages; Notify me when a teammate sends me a message.; on\n- Task reminders; Remind me 1 hour before a task is due.; on\n- Quiet hours; Pause push notifications from 22:00 to 07:00.; off\nWorkspace\n- New members; Tell me when someone joins the Harbor Studio workspace.; off\n- Billing alerts; Warn me 7 days before the card on file is charged.; on",
+      "acceptance": [
+        "I can tell at a glance which notifications are on and which are off",
+        "I can always see which settings section I am in",
+        "Every switch has a clear name, so it works with a screen reader and a keyboard",
+        "Related settings are easy to find together",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "orderly and easy to scan",
+        "narrow menu column, wide content column",
+        "white cards with soft borders on an off-white page",
+        "indigo marks what is on or current"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "comment-thread",
+      "title": "Comment thread",
+      "level": 2,
+      "category": "Components",
+      "brief": "Our team discussion tool needs a thread view. Readers should follow the conversation in order, see who said what and when, reply to any comment, and add their own reply at the end. The thread itself is supplied, and the attached reference is exactly what we want, so match it as closely as you can. Keep it calm and readable even when a thread gets long, and make sure the reply box and buttons work with a keyboard and a screen reader. It's done when someone can catch up on the whole discussion in a minute and join in.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The label Growth team sits above the heading Should we switch onboarding emails to a weekly digest?",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A 5 comments heading, then five comments by Dana Whitfield, Marcus Lee, Sofia Alvarez, Priya Nair and Tom Okafor in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Marcus Lee's and Sofia Alvarez's comments are indented replies to Dana Whitfield's",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each comment has a round avatar with the person's initials, a bold name, a timestamp, the text and a Reply action",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Each person's avatar has its own colour, and the initials are white",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The timestamps and comment texts match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A reply box at the end with the label Write a reply, a text area and a Post reply button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Comments are nested lists, timestamps use time elements, and the text area has a label",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Growth team",
+        "Should we switch onboarding emails to a weekly digest?",
+        "5 comments",
+        "Dana Whitfield",
+        "2 hours ago",
+        "New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.",
+        "Marcus Lee",
+        "1 hour ago",
+        "Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?",
+        "Sofia Alvarez",
+        "45 minutes ago",
+        "Keeping day 1 makes sense. I can have the digest template ready by Thursday.",
+        "Priya Nair",
+        "30 minutes ago",
+        "Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.",
+        "Tom Okafor",
+        "12 minutes ago",
+        "I'll set up the test cohort in the email tool today and share the dashboard link here.",
+        "Reply",
+        "Write a reply",
+        "Post reply"
+      ],
+      "content": "Team: Growth team\nDiscussion title: Should we switch onboarding emails to a weekly digest?\nComment count: 5 comments\nComments, oldest first (author; initials; posted; text):\n1. Dana Whitfield; DW; 2 hours ago; New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.\n2. Marcus Lee; ML; 1 hour ago; Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?\n3. Sofia Alvarez; SA; 45 minutes ago; Keeping day 1 makes sense. I can have the digest template ready by Thursday.\n4. Priya Nair; PN; 30 minutes ago; Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.\n5. Tom Okafor; TO; 12 minutes ago; I'll set up the test cohort in the email tool today and share the dashboard link here.\nAction on each comment: Reply\nNew reply: placeholder: Write a reply; button: Post reply",
+      "acceptance": [
+        "I can follow the conversation in order and see who said what and when",
+        "Each comment's author is easy to recognise",
+        "Replying is easy to find, both per comment and at the end",
+        "The reply box has a clear name for screen readers",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "friendly but focused",
+        "one narrow centred column",
+        "comments as rounded white cards with soft borders",
+        "colour only in the avatars and the indigo actions"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "data-table-paged",
+      "title": "Paged data table",
+      "level": 3,
+      "category": "Components",
+      "brief": "Ledgerly's finance team lives in the invoices list, so it has to be dense yet easy to read. They need to scan invoices, spot what's overdue, search, export and move through pages. Data is supplied; the reference is the exact target, so match it. It must be real, accessible table markup. Done means the team finds any invoice and its status in seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads Invoices, with 142 invoices, $318,420.00 outstanding under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A toolbar with a labelled search field on the left and Export CSV and New invoice buttons on the right, New invoice being the solid primary one",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six columns in this order: Invoice, Customer, Issued, Due, Amount, Status",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Twelve rows, INV-2412 down to INV-2401, with the customers, dates, amounts and statuses in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Issued header shows a downward sort arrow and is marked in the accent colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Statuses are rounded pills coloured by kind: Paid green, Pending amber, Overdue red, Draft grey",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The INV-2410 row is visibly selected",
+          "kind": "behaviour",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Amounts are right-aligned",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Under the table: Showing 1 to 12 of 142 invoices on the left; Previous, 1, 2, 3, a gap, 12 and Next on the right, with 1 current and Previous disabled",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "The table has header cells, the sorted column is announced as sorted, and the search field has a label",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "The pagination is a labelled navigation with the current page marked",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Invoices",
+        "142 invoices, $318,420.00 outstanding",
+        "Search",
+        "Export CSV",
+        "New invoice",
+        "Issued",
+        "INV-2412",
+        "Northwind Traders",
+        "14 Nov 2026",
+        "14 Dec 2026",
+        "$4,250.00",
+        "INV-2411",
+        "Bluebird Dental",
+        "13 Nov 2026",
+        "13 Dec 2026",
+        "$1,180.00",
+        "INV-2410",
+        "Halcyon Studio",
+        "12 Nov 2026",
+        "27 Nov 2026",
+        "$2,940.50",
+        "INV-2409",
+        "Ferro & Sons",
+        "10 Nov 2026",
+        "10 Dec 2026",
+        "$760.00",
+        "INV-2408",
+        "Cedar Ridge Farms",
+        "7 Nov 2026",
+        "7 Dec 2026",
+        "$12,400.00",
+        "INV-2407",
+        "Oakline Legal",
+        "5 Nov 2026",
+        "5 Dec 2026",
+        "$3,615.00",
+        "INV-2406",
+        "Meridian Health",
+        "1 Nov 2026",
+        "15 Nov 2026",
+        "$8,020.00",
+        "INV-2405",
+        "Polar Freight",
+        "30 Oct 2026",
+        "29 Nov 2026",
+        "$5,300.00",
+        "INV-2404",
+        "Juniper Books",
+        "28 Oct 2026",
+        "11 Nov 2026",
+        "$420.00",
+        "INV-2403",
+        "Tidewater Marine",
+        "24 Oct 2026",
+        "23 Nov 2026",
+        "$9,875.00",
+        "INV-2402",
+        "Lark Coffee Co.",
+        "21 Oct 2026",
+        "20 Nov 2026",
+        "$1,045.75",
+        "INV-2401",
+        "Granite Peak Gym",
+        "17 Oct 2026",
+        "16 Nov 2026",
+        "$2,200.00",
+        "Paid",
+        "Pending",
+        "Overdue",
+        "Draft",
+        "Showing 1 to 12 of 142 invoices",
+        "Previous",
+        "Next"
+      ],
+      "content": "Product: Ledgerly\nPage title: Invoices\nSummary: 142 invoices, $318,420.00 outstanding\nSearch: label: Search; placeholder: Customer or invoice number\nActions: Export CSV, New invoice\nInvoices (Invoice | Customer | Issued | Due | Amount | Status):\nINV-2412 | Northwind Traders | 14 Nov 2026 | 14 Dec 2026 | $4,250.00 | Pending\nINV-2411 | Bluebird Dental | 13 Nov 2026 | 13 Dec 2026 | $1,180.00 | Paid\nINV-2410 | Halcyon Studio | 12 Nov 2026 | 27 Nov 2026 | $2,940.50 | Pending\nINV-2409 | Ferro & Sons | 10 Nov 2026 | 10 Dec 2026 | $760.00 | Draft\nINV-2408 | Cedar Ridge Farms | 7 Nov 2026 | 7 Dec 2026 | $12,400.00 | Paid\nINV-2407 | Oakline Legal | 5 Nov 2026 | 5 Dec 2026 | $3,615.00 | Paid\nINV-2406 | Meridian Health | 1 Nov 2026 | 15 Nov 2026 | $8,020.00 | Overdue\nINV-2405 | Polar Freight | 30 Oct 2026 | 29 Nov 2026 | $5,300.00 | Pending\nINV-2404 | Juniper Books | 28 Oct 2026 | 11 Nov 2026 | $420.00 | Overdue\nINV-2403 | Tidewater Marine | 24 Oct 2026 | 23 Nov 2026 | $9,875.00 | Paid\nINV-2402 | Lark Coffee Co. | 21 Oct 2026 | 20 Nov 2026 | $1,045.75 | Paid\nINV-2401 | Granite Peak Gym | 17 Oct 2026 | 16 Nov 2026 | $2,200.00 | Paid\nSelected invoice: INV-2410\nPaging: Showing 1 to 12 of 142 invoices; pages 1, 2, 3, ..., 12; current page: 1; Previous (unavailable on page 1), Next",
+      "acceptance": [
+        "I can spot overdue and pending invoices immediately",
+        "Dense rows stay easy to read and amounts are easy to compare",
+        "Searching, exporting, creating and paging are obvious",
+        "It is real table markup a screen reader can follow",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "dense but easy to read",
+        "one white card holding toolbar, table and pagination",
+        "small uppercase grey column headers",
+        "colour reserved for status pills, the sort, the selection and the primary action"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "modal-over-page",
+      "title": "Modal over page",
+      "level": 3,
+      "category": "Components",
+      "brief": "In Fieldnote, deleting a project opens a confirmation dialog over the projects page, and we want that moment captured. The user must understand exactly what will be lost and that it can't be undone, and cancelling should feel safe. Content is supplied; the reference design is exactly what we want, so match it closely. The dialog must be accessible. Done means nobody deletes a project by accident.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A top bar with Fieldnote on the left and Projects, Reports, Settings links on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Behind the overlay: a Projects heading and three cards in a row: Spring campaign (48 files), Customer interviews (31 files), Brand refresh (22 files), each with its description",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The whole page is dimmed by a half-transparent black overlay that covers the full window",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A white dialog is centred on the window, above the overlay, with rounded corners and a shadow",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The dialog is titled Delete project and its warning text matches the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Two fields in this order: Type the project name to confirm (empty, hinting Spring campaign) and Reason for deleting (filled with Campaign has ended)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "An unticked checkbox labelled Also delete the 12 linked reports",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Cancel then Delete project at the bottom right; Delete project is solid red with white text, Cancel is outlined",
+          "kind": "style",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The dialog is marked as a modal dialog and named by its title",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every field and the checkbox has a visible label",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fieldnote",
+        "Projects",
+        "Reports",
+        "Settings",
+        "Spring campaign",
+        "Launch plan, ad copy and landing pages for the April release.",
+        "48 files",
+        "Customer interviews",
+        "Notes and recordings from 14 interviews with clinic managers.",
+        "31 files",
+        "Brand refresh",
+        "Logo options, colour studies and the updated style guide.",
+        "22 files",
+        "Delete project",
+        "This permanently removes Spring campaign and its 48 files. It cannot be undone.",
+        "Type the project name to confirm",
+        "Reason for deleting",
+        "Also delete the 12 linked reports",
+        "Cancel"
+      ],
+      "content": "Product: Fieldnote\nNavigation: Projects, Reports, Settings (current: Projects)\nProjects (name; description; file count):\n- Spring campaign; Launch plan, ad copy and landing pages for the April release.; 48 files\n- Customer interviews; Notes and recordings from 14 interviews with clinic managers.; 31 files\n- Brand refresh; Logo options, colour studies and the updated style guide.; 22 files\nOpen dialog: deleting the project Spring campaign\n- Title: Delete project\n- Warning: This permanently removes Spring campaign and its 48 files. It cannot be undone.\n- Field: Type the project name to confirm; placeholder: Spring campaign\n- Field: Reason for deleting; filled in: Campaign has ended\n- Checkbox: Also delete the 12 linked reports\n- Buttons: Cancel; Delete project (the destructive action)",
+      "acceptance": [
+        "It is clear what will be deleted and that it cannot be undone",
+        "The destructive action is clearly distinct from cancelling",
+        "The page behind is visible but clearly inactive",
+        "The dialog and its fields are accessible to keyboard and screen reader users",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "serious without being alarming",
+        "the page behind stays recognisable through the dim",
+        "red used only for the destructive button",
+        "dialog compact and focused, about a third of the window wide"
+      ],
+      "maxPromptChars": 4000
+    }
+  ]
+}

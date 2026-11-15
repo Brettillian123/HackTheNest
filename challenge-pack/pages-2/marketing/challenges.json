@@ -1,0 +1,835 @@
+{
+  "challenges": [
+    {
+      "slug": "not-found-page",
+      "title": "Friendly 404 page",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "People keep hitting dead links in the Fieldnote help site, and at the moment they land on a bare error. I'd like you to build our proper 'page not found' screen. Someone who arrives here is a little lost and possibly annoyed, so within a second they should know what happened and see an easy way forward: searching, jumping to a popular page, or going home. Keep it calm and uncluttered, with our indigo as the brand colour and one clear focal point. The content is supplied. The attached reference is exactly what we want, so match it as closely as you can. Done means a lost visitor finds their way on without thinking.",
+      "acceptance": [
+        "A lost visitor understands straight away that the page they wanted is missing",
+        "I can search or reach a popular page without hunting for it",
+        "The screen feels calm and friendly rather than like a crash",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Fieldnote name on the left and a 'Back to home' link on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A very large '404' numeral is the first and biggest thing in the centre of the page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The heading reads \"We couldn't find that page\" and is followed by one explanatory sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A search field with a visible label 'Search the help centre' and a Search button beside it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Three helpful links in a row, in this order: Getting started, Pricing and plans, Contact support, each with a short description",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The three links are marked up as a list and the search is a real form with a real button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Everything in the main area is centred in a narrow column",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "One accent colour is used for the numeral, the links and the button",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fieldnote",
+        "Back to home",
+        "404",
+        "We couldn't find that page",
+        "Search the help centre",
+        "Search",
+        "Popular pages",
+        "Getting started",
+        "Pricing and plans",
+        "Contact support",
+        "© 2026 Fieldnote Labs, Inc."
+      ],
+      "designNotes": [
+        "calm and roomy, everything centred",
+        "a huge indigo 404 as the focal point",
+        "one accent colour for links and the button",
+        "three small white link cards in a single row"
+      ],
+      "content": "Company: Fieldnote\nLink back: Back to home\nError code: 404\nHeading: We couldn't find that page\nMessage: The link may be broken, or the page may have moved. Try a search, or start from one of the pages below.\nSearch field label: Search the help centre\nSearch button: Search\nPopular pages (heading: Popular pages), each with its description:\n- Getting started: Set up your first notebook in five minutes\n- Pricing and plans: Compare Free, Team and Business\n- Contact support: We reply within one business day\nLegal line: © 2026 Fieldnote Labs, Inc.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "newsletter-band",
+      "title": "Newsletter sign-up band",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "We're relaunching The Roast Report, our coffee newsletter, and I need the sign-up section that sits just above the Harbor & Pine site footer, plus that footer. Visitors should want to subscribe after a few seconds of reading: they need to get what they'll receive, how often, and that we won't misuse their email. Signing up has to feel like one easy step. The brand is warm and crafted, with rust brown as our accent. The content is supplied. The reference design is the finished section: get yours as close to it as possible. Done means it looks like part of our shop and the form is properly labelled.",
+      "acceptance": [
+        "I can tell what the newsletter is and how often it arrives without reading everything",
+        "Subscribing feels like a single obvious step",
+        "The email field is properly labelled so it works with a screen reader",
+        "The footer links are easy to find",
+        "It matches the reference design closely"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A full-width band in a warm cream colour fills the space above the footer",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r2",
+          "text": "The band's left side has an envelope icon, 'The Roast Report' label, the headline 'Fresh lots, brewed better' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The band's right side is a white card with an email field labelled 'Email address' and a 'Subscribe' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A small privacy note sits under the field",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The email field is a real email input with a visible label, inside a form with a real button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A dark footer with two rows: brand name and five links (Shop coffee, Subscriptions, Wholesale, Brewing guides, Contact), then the copyright line with Privacy policy and Terms of sale",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "The headline and footer brand name use a serif font; everything else is sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Footer links are marked up as lists inside a footer element",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background, in the band and the footer",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "The Roast Report",
+        "Fresh lots, brewed better",
+        "Email address",
+        "Subscribe",
+        "Harbor & Pine",
+        "Shop coffee",
+        "Subscriptions",
+        "Wholesale",
+        "Brewing guides",
+        "Contact",
+        "© 2026 Harbor & Pine Coffee Roasters, Portland, Oregon",
+        "Privacy policy",
+        "Terms of sale"
+      ],
+      "designNotes": [
+        "warm cream band over a near-black footer",
+        "rust brown for the icon, label and button",
+        "serif headline, sans-serif body",
+        "copy on the left, sign-up card on the right"
+      ],
+      "content": "Brand: Harbor & Pine\nNewsletter\nName: The Roast Report\nTagline: Fresh lots, brewed better\nDescription: One email every other Thursday: new single-origin lots, brewing guides from our roasters and subscriber-only prices.\nSignup field label: Email address\nSignup button: Subscribe\nPrivacy note: We only use your email to send the newsletter. Unsubscribe in one click, any time.\nSite links: Shop coffee, Subscriptions, Wholesale, Brewing guides, Contact\nLegal line: © 2026 Harbor & Pine Coffee Roasters, Portland, Oregon\nLegal links: Privacy policy, Terms of sale",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "feature-grid",
+      "title": "Feature grid",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "I need the Features page for Ledgerly, our accounting app for small businesses. The people reading it are busy owners deciding whether to try us, so they should be able to skim it in half a minute and come away knowing what Ledgerly does for them, then find the trial easily. Every feature should get equal weight; none is the star. Keep it light and spacious, with teal as our accent and used sparingly. The content is supplied. The attached reference is the target, and I will judge the work on how closely it matches. Done means a skimmer can name three things we do and knows how to start a trial.",
+      "acceptance": [
+        "I can skim the page and quickly see what each feature does",
+        "No feature looks more important than the others",
+        "Starting a free trial is easy to find",
+        "It stays tidy and readable on a phone as well as a laptop",
+        "Next to the reference, the two look like the same page"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Ledgerly name, three links (Features, Pricing, Customers) and a 'Start free trial' link styled as a solid button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred intro with the label 'Features', the heading 'Everything your books need, in one place' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six feature cards laid out three across and two down",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Cards in this order: Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready, Team access",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each card has an icon drawn as inline SVG, a title and about two lines of text",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Icons sit on a soft tinted square tile and match each feature's meaning",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The cards are a list, each title is a heading below the page heading",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Cards are white with a thin border and rounded corners on a very light page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Ledgerly",
+        "Features",
+        "Pricing",
+        "Customers",
+        "Start free trial",
+        "Everything your books need, in one place",
+        "Smart invoicing",
+        "Bank sync",
+        "Receipt capture",
+        "Live reports",
+        "Tax ready",
+        "Team access",
+        "12,000 banks"
+      ],
+      "designNotes": [
+        "tidy and light, lots of white space",
+        "teal used only for the label, icons and trial link",
+        "equal white cards with thin borders",
+        "three across, two down on a wide screen"
+      ],
+      "content": "Product: Ledgerly\nSite links: Features, Pricing, Customers\nMain action: Start free trial\nPage label: Features\nHeading: Everything your books need, in one place\nIntro: Ledgerly handles the busywork of small-business accounting, so you can close the month in an afternoon instead of a week.\nFeatures (name: description), six in all:\n- Smart invoicing: Send branded invoices in seconds and get paid by card or bank transfer.\n- Bank sync: Connect over 12,000 banks and see every transaction matched overnight.\n- Receipt capture: Snap a photo of any receipt and Ledgerly files it against the right expense.\n- Live reports: Profit and loss, cash flow and balance sheet, updated as money moves.\n- Tax ready: Sales tax is worked out on every invoice and filed reports export in one click.\n- Team access: Invite your accountant and staff with roles that show only what they need.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "testimonial-wall",
+      "title": "Testimonial wall",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Sales wants a customer stories page for Tandem, our planning tool. Prospects should land on it and feel that real, credible teams love us. The stories differ a lot in length, and the page should make that feel natural rather than awkward, with one short quote standing out as the star. Each quote must clearly belong to a named person and company. Keep it friendly but grown-up. The content is supplied. Treat the reference design as the final page and match it closely. Done means it is pleasant to browse and convincing at a glance.",
+      "acceptance": [
+        "Every quote clearly belongs to a named person and their company",
+        "One story clearly stands out from the rest",
+        "Quotes of different lengths sit together without awkward gaps",
+        "The page still reads comfortably on a phone",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Tandem name and links Product, Customers, Pricing and Sign in",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred intro with 'Customer stories', the heading 'Teams that plan together, ship together' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six testimonial cards arranged in three columns",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Cards have uneven heights and stack without lining up in rows",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Each card has a quote, a name, a role with company, and a round avatar showing the person's initials",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Every avatar has a different colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Elena Marquez card is clearly highlighted: dark background, white text, larger quote",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The six people are Priya Natarajan, Tomas Oyelaran, Elena Marquez, James Whitlock, Aiko Kobayashi and Sam Becker, with their quotes as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Quotes are marked up as quotations, and the cards as a list",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the highlighted card",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Tandem",
+        "Customer stories",
+        "Teams that plan together, ship together",
+        "Priya Natarajan",
+        "Head of Operations, Kestrel Freight",
+        "Tomas Oyelaran",
+        "CTO, Brightline Health",
+        "Setup took one afternoon.",
+        "Elena Marquez",
+        "Managing Director, Northfold Studio",
+        "James Whitlock",
+        "Engineering Manager, Quarry Labs",
+        "Aiko Kobayashi",
+        "Product Lead, Driftwood",
+        "Sam Becker",
+        "Founder, Lumen Coffee Co.",
+        "Honest, simple, fast. Exactly what planning software should be."
+      ],
+      "designNotes": [
+        "masonry wall of white cards on soft lavender",
+        "one deep indigo card as the star",
+        "colourful initials avatars",
+        "friendly but grown-up"
+      ],
+      "content": "Company: Tandem\nSite links: Product, Customers, Pricing, Sign in\nPage label: Customer stories\nHeading: Teams that plan together, ship together\nIntro: More than 4,000 teams use Tandem to plan their week. Here is what a few of them say.\nTestimonials (quote / person / role and company / initials):\n1. \"We used to lose an hour every Monday working out who was doing what. Now the plan is just there when we open our laptops.\" / Priya Natarajan / Head of Operations, Kestrel Freight / PN\n2. \"Setup took one afternoon.\" / Tomas Oyelaran / CTO, Brightline Health / TO\n3. \"Tandem replaced three tools and a spreadsheet nobody trusted. Our delivery dates went from guesses to promises, and our clients noticed within a month.\" / Elena Marquez / Managing Director, Northfold Studio / EM\n4. \"The workload view is the first thing I check each morning. It tells me who needs help before they have to ask for it.\" / James Whitlock / Engineering Manager, Quarry Labs / JW\n5. \"Our remote team spans nine time zones. Tandem is the one place where everyone agrees on what this week looks like.\" / Aiko Kobayashi / Product Lead, Driftwood / AK\n6. \"Honest, simple, fast. Exactly what planning software should be.\" / Sam Becker / Founder, Lumen Coffee Co. / SB",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "faq-page",
+      "title": "FAQ page",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Our support inbox is full of billing questions, so I want the Parcelwise Help billing FAQ live this week. Customers arrive with one question and want its answer fast: they should see the topics we cover, know they are in the billing section, and spot their question without wading through text. Answers must stay readable, and anyone using a keyboard or screen reader must get the same experience. Calm, lots of breathing room, blue as our only accent. The content is supplied. The reference is exactly the page we signed off, so copy it as faithfully as you can. Done means a customer finds their answer in seconds.",
+      "acceptance": [
+        "I can tell which help topic I am looking at",
+        "I can scan the questions and find mine quickly",
+        "Answers are comfortable to read",
+        "It works properly with a keyboard and a screen reader",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Parcelwise Help' and a 'Contact support' link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A banner with the heading 'Frequently asked questions' and one line of text",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Two columns: a narrow category list on the left and the questions on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "Five categories in order: Getting started, Billing, Shipping and labels, Account and security, Integrations, with Billing highlighted as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The category list stays in view while the page scrolls",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Eight Billing questions, in the order given, with the first and third open showing their answers and the other six closed",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Each question has a plus icon drawn in SVG that shows as a minus when the question is open",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Questions open and close when clicked, without JavaScript",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Questions are separated by thin lines",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Parcelwise Help",
+        "Contact support",
+        "Frequently asked questions",
+        "Categories",
+        "Getting started",
+        "Billing",
+        "Shipping and labels",
+        "Account and security",
+        "Integrations",
+        "When will I be charged?",
+        "Can I switch between monthly and yearly billing?",
+        "Where do I find my invoices?",
+        "Which payment methods do you accept?",
+        "Do you offer refunds?",
+        "How do I add a tax ID to my invoices?",
+        "What happens if a payment fails?",
+        "Can I cancel at any time?"
+      ],
+      "designNotes": [
+        "clean and calm, lots of line spacing",
+        "blue is the only accent",
+        "thin divider lines between questions",
+        "narrow category column, wide answer column"
+      ],
+      "content": "Site name: Parcelwise Help\nSupport link: Contact support\nHeading: Frequently asked questions\nIntro: Quick answers about shipping, billing and your Parcelwise account.\nCategories (label: Categories): Getting started, Billing, Shipping and labels, Account and security, Integrations\nCurrent category: Billing\nCategory heading: Billing\nCategory intro: Eight questions about plans, invoices and payments.\nQuestions and answers:\nQ: When will I be charged?\nA: Your card is charged on the same day each month as the day you upgraded. Label postage is charged separately, at the moment you buy each label.\nQ: Can I switch between monthly and yearly billing?\nA: Yes. Switch in Settings, then Billing. Moving to yearly takes effect at once and credits any unused days of your monthly plan.\nQ: Where do I find my invoices?\nA: Every invoice is listed under Settings, then Billing, then Invoice history, and a PDF copy is emailed to your billing contact on the day it is issued.\nQ: Which payment methods do you accept?\nA: Visa, Mastercard and American Express, plus ACH bank transfer on yearly plans.\nQ: Do you offer refunds?\nA: Yearly plans can be refunded in full within 30 days of purchase.\nQ: How do I add a tax ID to my invoices?\nA: Enter it under Settings, then Billing, then Company details.\nQ: What happens if a payment fails?\nA: We retry three times over seven days and email you before each attempt.\nQ: Can I cancel at any time?\nA: Yes. Your plan stays active until the end of the current billing period.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "team-page",
+      "title": "Team page",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Investors and job candidates keep asking who is behind Orbital Analytics, so we need a team page. Visitors should come away feeling we are a credible, friendly group of experts, able to see each person's name and role at a glance and reach them easily. Nobody should look more important than anyone else. Finish the page with a clear nudge towards our open roles, because hiring is the real goal. The brand is teal with slate. The content is supplied. The attached reference design is the goal: the closer your page is to it, the better. Done means it looks professional and every contact link is usable.",
+      "acceptance": [
+        "I can see each person's name and role at a glance",
+        "Everyone is presented as equally important",
+        "The contact links are clearly named so they work with a screen reader",
+        "The hiring message is hard to miss",
+        "It matches the reference design closely"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Orbital Analytics' and links Product, Customers, Team and Careers, with Team marked as the current page",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred page header with 'Our team', the heading 'The people behind Orbital' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Eight team member cards, four across and two down",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each card has an initials avatar, name, job title, one-line bio and two links: LinkedIn and Email",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The eight people and titles are as given, in order from Nadia Okafor to Tom Whitaker",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Avatar colours alternate between two colours",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A 'We're hiring' band follows the grid, with a sentence and a 'See open roles' link styled as a button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The team is a list and each member's name is a heading",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Card text is centred; cards have a light background, thin border and rounded corners",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the teal band",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Orbital Analytics",
+        "Our team",
+        "The people behind Orbital",
+        "Nadia Okafor",
+        "Co-founder and CEO",
+        "Lars Henriksen",
+        "Co-founder and CTO",
+        "Maya Shapiro",
+        "Head of Data Science",
+        "Diego Ramos",
+        "Head of Design",
+        "Amara Chen",
+        "Engineering Manager",
+        "Kwame Boateng",
+        "Remote Sensing Scientist",
+        "Sofia Ferreira",
+        "Customer Success Lead",
+        "Tom Whitaker",
+        "Senior Platform Engineer",
+        "LinkedIn",
+        "Email",
+        "We're hiring",
+        "See open roles"
+      ],
+      "designNotes": [
+        "bright, open and professional",
+        "teal accent with slate as the second colour",
+        "eight equal cards in a tidy grid",
+        "a bold teal band to close the page"
+      ],
+      "content": "Company: Orbital Analytics\nSite links: Product, Customers, Team, Careers\nPage label: Our team\nHeading: The people behind Orbital\nIntro: We are a team of 42 engineers, scientists and designers turning satellite data into crop forecasts farmers can act on.\nPeople (name / role / one-line bio / initials):\n- Nadia Okafor / Co-founder and CEO / Former NASA Earth science lead. / NA\n- Lars Henriksen / Co-founder and CTO / Built imaging pipelines at Planet. / LH\n- Maya Shapiro / Head of Data Science / Ten years modelling crop yields. / MS\n- Diego Ramos / Head of Design / Designs tools for people in fields. / DR\n- Amara Chen / Engineering Manager / Keeps our forecasts on schedule. / AC\n- Kwame Boateng / Remote Sensing Scientist / Reads soil moisture from orbit. / KB\n- Sofia Ferreira / Customer Success Lead / Grew up on a vineyard in Douro. / SF\n- Tom Whitaker / Senior Platform Engineer / Keeps our servers running. / TW\nContact links for every person: LinkedIn, Email\nHiring\nHeading: We're hiring\nText: Six open roles across engineering, science and support. Remote-first, with hubs in Lisbon and Toronto.\nButton: See open roles",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "event-schedule",
+      "title": "Conference schedule",
+      "level": 3,
+      "category": "Marketing and content",
+      "brief": "Build the day one page for Frontier UX Summit. Attendees will check it on their phones in the venue, so the schedule must answer 'what's on now, where, and which track' fast. Sell the day too: key details and booking up front, the headline speakers, a closing ticket pitch. Navy and amber are the brand. The content is supplied. The reference is the target; match it as closely as you can. Done means the timetable is easy to scan and stays usable on a small screen.",
+      "acceptance": [
+        "I can find what is on at a given time and where in seconds",
+        "Tracks are easy to tell apart without relying on colour alone",
+        "Booking a ticket is always easy to reach",
+        "The schedule stays usable on a phone",
+        "Next to the reference, the two look like the same page"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A dark navy header and hero with the heading 'Frontier UX Summit 2027' and the label 'Day one schedule'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The hero shows the date 'Thursday 18 March 2027', venue 'Kelvin Hall, Glasgow' and '8 sessions, 3 tracks', plus a 'Get your ticket' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "A schedule table with header cells Time, Session, Speaker, Room and Track",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Ten rows in time order from 08:30 to 16:30, with the sessions, speakers and rooms as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Registration and lunch rows look quieter than talk rows; talk titles are bold",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Each talk's track is a rounded pill, with a different colour for Design, Engineering and Research",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A 'Featured speakers' row of three cards: Ingrid Solberg, Ravi Menon and Grace Adeyemi, each with an initials avatar, role and short bio",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "A dark ticket band with 'Join us in Glasgow', a 'Book your ticket' button and the price £249 with 'Early bird price until 31 January 2027'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Amber is used for the label, buttons and price on the dark areas",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "The page uses header, main and footer, and headings in order",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background, including inside the pills",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Frontier UX Summit 2027",
+        "Day one schedule",
+        "Thursday 18 March 2027",
+        "Kelvin Hall, Glasgow",
+        "8 sessions, 3 tracks",
+        "Get your ticket",
+        "Schedule",
+        "Registration and coffee",
+        "Opening keynote: Designing for trust",
+        "Shipping accessible components at scale",
+        "Interviewing users who don't want to talk",
+        "Lunch",
+        "Motion that explains, not decorates",
+        "Measuring what onboarding really costs",
+        "Design tokens without the drama",
+        "Panel: The future of product teams",
+        "Closing keynote: Small screens, big decisions",
+        "Featured speakers",
+        "Ingrid Solberg",
+        "Ravi Menon",
+        "Grace Adeyemi",
+        "Join us in Glasgow",
+        "Book your ticket",
+        "£249",
+        "Early bird price until 31 January 2027"
+      ],
+      "designNotes": [
+        "dark navy bands at the top and the ticket section",
+        "amber accent only on dark areas",
+        "soft coloured track pills",
+        "a crisp white table that is easy to scan"
+      ],
+      "content": "Event: Frontier UX Summit 2027 (short name: Frontier UX Summit)\nSite links: Schedule, Speakers, Venue, Tickets\nPage heading: Day one schedule\nKey details:\nDate: Thursday 18 March 2027\nVenue: Kelvin Hall, Glasgow\nTalks: 8 sessions, 3 tracks\nMain action: Get your ticket\nSchedule (heading: Schedule)\nNote: All times are GMT. Rooms are on the ground floor unless marked.\nTime | Session | Speaker | Room | Track\n08:30 | Registration and coffee | - | Main foyer | -\n09:15 | Opening keynote: Designing for trust | Ingrid Solberg | Main hall | Design\n10:15 | Shipping accessible components at scale | Ravi Menon | Room A | Engineering\n11:00 | Interviewing users who don't want to talk | Grace Adeyemi | Room B | Research\n12:00 | Lunch | - | Main foyer | -\n13:00 | Motion that explains, not decorates | Luca Bianchi | Room A | Design\n13:45 | Measuring what onboarding really costs | Hannah Kerr | Room B | Research\n14:30 | Design tokens without the drama | Owen Fraser | Room A | Engineering\n15:30 | Panel: The future of product teams | Grace Adeyemi and guests | Main hall | Research\n16:30 | Closing keynote: Small screens, big decisions | Ravi Menon | Main hall | Engineering\nFeatured speakers (heading: Featured speakers; intro: Three of the people opening and closing the day.)\n- Ingrid Solberg (IS), VP of Design, Fjordbank: Ingrid led the redesign of Norway's most used banking app and now writes about trust in digital services.\n- Ravi Menon (RM), Principal Engineer, Canvasly: Ravi maintains a component library used by 900 product teams and talks about making accessibility the default.\n- Grace Adeyemi (GA), Research Director, Hearth Labs: Grace has run more than 2,000 user interviews across four continents and teaches research for hard-to-reach groups.\nTickets\nHeading: Join us in Glasgow\nText: Your ticket covers every talk, lunch, coffee and the evening reception.\nButton: Book your ticket\nPrice: £249\nPrice note: Early bird price until 31 January 2027\nLegal line: © 2027 Frontier UX Summit Ltd. Kelvin Hall, 1445 Argyle Street, Glasgow.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "case-study",
+      "title": "Editorial case study",
+      "level": 3,
+      "category": "Marketing and content",
+      "brief": "We need the Greenleaf Grocers case study for the Stackwell site. Prospective clients should grasp the result before reading a word, then be able to follow the story and trust the numbers. Make it read like a good magazine piece, with forest green as our only accent. The chart and table must make sense to someone who cannot see colour. The content is supplied. The reference design is the agreed final version, and yours should be indistinguishable from it. Done means a busy reader leaves knowing what we did and what it achieved.",
+      "acceptance": [
+        "The headline results land before I start reading",
+        "The story is comfortable to read from start to finish",
+        "The chart makes the before and after clear, even without colour",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Stackwell' and links Services, Case studies, About and Contact, with Case studies marked current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The title 'How Greenleaf Grocers cut checkout drop-off by 38%' with a 'Case study · Retail' label and a short summary",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three large result figures in a row, separated by thin lines: 38%, 2.4x and $1.2M, each with its caption",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three section headings in order: The challenge, What we changed, The results",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A pull quote with a green bar on its left, credited to Dana Whitfield, Head of Digital, Greenleaf Grocers",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "An SVG bar chart with six months (Jan to Jun), values 52, 54, 53, 61, 68 and 71 percent, a labelled percentage axis from 0% to 80% and a month axis",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Bars before launch are grey and bars after launch are green, explained in a caption under the chart",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The chart has a text alternative describing what it shows",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "A before-and-after table with header cells Measure, Before and After, and four rows of figures as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "Reading text is serif in a narrow centred column; navigation, labels and tables are sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "A footer with the copyright line and a 'Start a project with us' link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r12",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Stackwell",
+        "Case studies",
+        "How Greenleaf Grocers cut checkout drop-off by 38%",
+        "38%",
+        "fewer abandoned checkouts",
+        "2.4x",
+        "faster checkout page loads",
+        "$1.2M",
+        "added yearly online revenue",
+        "The challenge",
+        "What we changed",
+        "The results",
+        "For the first time, our online checkout feels as quick as our fastest till.",
+        "Dana Whitfield, Head of Digital, Greenleaf Grocers",
+        "Checkout completion",
+        "Month, 2026",
+        "Measure",
+        "Before",
+        "After",
+        "4 min 10 s",
+        "1 min 35 s",
+        "3.1 MB",
+        "1.2 MB",
+        "© 2026 Stackwell Digital, Portland, Oregon",
+        "Start a project with us"
+      ],
+      "designNotes": [
+        "reads like a magazine article",
+        "serif reading text on warm off-white",
+        "forest green as the only accent",
+        "big result figures as the visual hook",
+        "a quiet, well-labelled chart"
+      ],
+      "content": "Agency: Stackwell\nSite links: Services, Case studies, About, Contact\nPage label: Case study · Retail (part of Case studies)\nHeading: How Greenleaf Grocers cut checkout drop-off by 38%\nIntro: A regional grocery chain was losing one in two online baskets at checkout. In twelve weeks we rebuilt the flow around speed and fewer decisions.\nHeadline results (figure: meaning):\n- 38%: fewer abandoned checkouts\n- 2.4x: faster checkout page loads\n- $1.2M: added yearly online revenue\nThe challenge: Greenleaf runs 46 stores across Oregon and Washington. Online orders had doubled since 2024, but almost half of the shoppers who reached checkout left before paying. The checkout asked for an account, five pages of details and a delivery slot chosen last.\nWhat we changed: We cut checkout to a single page, made guest checkout the default and moved the delivery slot to the start, so shoppers knew their time before they filled in anything else. Page weight fell from 3.1 MB to 1.2 MB.\nClient quote: \"For the first time, our online checkout feels as quick as our fastest till.\"\nQuote by: Dana Whitfield, Head of Digital, Greenleaf Grocers\nThe results: The new checkout launched on 1 April 2026. Completion rose in the first month and kept climbing as returning shoppers got used to it.\nChart data, title: Checkout completion; months axis label: Month, 2026; scale 0% to 80%\nJan 52% (old checkout), Feb 54% (old), Mar 53% (old), Apr 61% (new), May 68% (new), Jun 71% (new)\nComparison table, title: Before and after the new checkout\nMeasure | Before | After\nCheckout completion | 53% | 71%\nPages in checkout | 5 | 1\nMedian time to pay | 4 min 10 s | 1 min 35 s\nCheckout page weight | 3.1 MB | 1.2 MB\nClosing action: Start a project with us\nLegal line: © 2026 Stackwell Digital, Portland, Oregon",
+      "maxPromptChars": 4500
+    }
+  ]
+}

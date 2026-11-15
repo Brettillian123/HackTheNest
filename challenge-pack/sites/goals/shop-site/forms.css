@@ -1,0 +1,8 @@
+label{display:block;margin:0 0 6px;font-weight:bold}
+.check{display:block;margin:4px 0;font-weight:normal}
+input[type=text],input[type=email],input[type=number],select,textarea{display:block;width:100%;padding:9px 11px;margin:0 0 14px;border:1px solid #cfc6b6;border-radius:6px;font:inherit;background:#fff}
+textarea{min-height:110px}
+fieldset{border:0;margin:0 0 14px;padding:0}
+legend{margin-bottom:6px;font-family:Georgia,serif;font-size:17px;font-weight:bold}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-box{background:#fff;border:1px solid #e7e0d4;border-radius:10px;padding:20px}

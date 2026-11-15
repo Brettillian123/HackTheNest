@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a table - Osteria Lume</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f7f3ee; color: #1c1917; }
+main { width: 1080px; margin: 0 auto; padding: 64px 0; }
+.kicker { margin: 0 0 8px; font-size: 13px; line-height: 16px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; color: #9f1239; }
+h1 { margin: 0 0 32px; font-family: Georgia, "Times New Roman", serif; font-size: 36px; line-height: 44px; }
+.layout { display: flex; align-items: flex-start; gap: 32px; }
+form { flex: 1; padding: 40px; background: #ffffff; border-radius: 16px; box-shadow: 0 6px 20px rgba(28, 25, 23, 0.06); }
+fieldset { margin: 0 0 28px; padding: 0; border: 0; }
+legend, .field label { display: block; margin-bottom: 10px; padding: 0; font-size: 14px; line-height: 20px; font-weight: bold; }
+.choices { display: grid; gap: 10px; }
+.sizes { grid-template-columns: repeat(6, 1fr); }
+.times { grid-template-columns: repeat(4, 1fr); }
+.choices input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choices label { display: block; height: 48px; font-size: 16px; line-height: 46px; font-weight: bold; text-align: center; color: #1c1917; background: #ffffff; border: 1px solid #d6d3d1; border-radius: 8px; }
+.choices input:checked + label { color: #ffffff; background: #9f1239; border-color: #9f1239; }
+.choices input:disabled + label { font-weight: normal; color: #57534e; background: #e7e5e4; border-color: #e7e5e4; text-decoration: line-through; }
+.field { margin-bottom: 20px; }
+.row { display: flex; gap: 16px; }
+.row .field { flex: 1; }
+input[type="text"], input[type="tel"], input[type="email"], input[type="date"], textarea { display: block; width: 100%; padding: 12px 14px; font-family: inherit; font-size: 15px; line-height: 20px; color: #1c1917; background: #ffffff; border: 1px solid #d6d3d1; border-radius: 8px; }
+input[type="date"] { width: 240px; }
+textarea { height: 104px; resize: vertical; }
+::placeholder { color: #78716c; }
+.submit { margin-top: 8px; padding: 14px 36px; font-family: inherit; font-size: 16px; line-height: 20px; font-weight: bold; color: #ffffff; background: #9f1239; border: 0; border-radius: 8px; }
+aside { width: 340px; padding: 32px; background: #1c1917; color: #f5f5f4; border-radius: 16px; }
+h2 { margin: 0 0 24px; font-family: Georgia, "Times New Roman", serif; font-size: 24px; line-height: 32px; }
+.summary { margin: 0 0 24px; }
+.summary div { padding: 14px 0; border-bottom: 1px solid #44403c; }
+.summary dt { margin-bottom: 4px; font-size: 12px; line-height: 16px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #d6d3d1; }
+.summary dd { margin: 0; font-size: 17px; line-height: 24px; }
+.note { margin: 0; font-size: 14px; line-height: 22px; color: #d6d3d1; }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Osteria Lume, Bristol</p>
+  <h1>Book a table</h1>
+  <div class="layout">
+    <form action="#" method="post">
+      <fieldset>
+        <legend>Party size</legend>
+        <div class="choices sizes">
+          <input id="size-1" name="size" type="radio" value="1"><label for="size-1">1</label>
+          <input id="size-2" name="size" type="radio" value="2" checked><label for="size-2">2</label>
+          <input id="size-3" name="size" type="radio" value="3"><label for="size-3">3</label>
+          <input id="size-4" name="size" type="radio" value="4"><label for="size-4">4</label>
+          <input id="size-5" name="size" type="radio" value="5"><label for="size-5">5</label>
+          <input id="size-6" name="size" type="radio" value="6"><label for="size-6">6</label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" value="2027-03-19" required>
+      </div>
+      <fieldset>
+        <legend>Time</legend>
+        <div class="choices times">
+          <input id="t1800" name="time" type="radio" value="18:00"><label for="t1800">18:00</label>
+          <input id="t1830" name="time" type="radio" value="18:30"><label for="t1830">18:30</label>
+          <input id="t1900" name="time" type="radio" value="19:00" checked><label for="t1900">19:00</label>
+          <input id="t1930" name="time" type="radio" value="19:30" disabled><label for="t1930">19:30</label>
+          <input id="t2000" name="time" type="radio" value="20:00"><label for="t2000">20:00</label>
+          <input id="t2030" name="time" type="radio" value="20:30"><label for="t2030">20:30</label>
+          <input id="t2100" name="time" type="radio" value="21:00" disabled><label for="t2100">21:00</label>
+          <input id="t2130" name="time" type="radio" value="21:30"><label for="t2130">21:30</label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" placeholder="Tom Hartley" autocomplete="name" required>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="07700 900418" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="tom@example.com" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="requests">Special requests</label>
+        <textarea id="requests" name="requests" placeholder="Allergies, high chair, a quiet corner..."></textarea>
+      </div>
+      <button class="submit" type="submit">Confirm booking</button>
+    </form>
+    <aside>
+      <h2>Your booking</h2>
+      <dl class="summary">
+        <div><dt>Guests</dt><dd>2 people</dd></div>
+        <div><dt>Date</dt><dd>Friday 19 March 2027</dd></div>
+        <div><dt>Time</dt><dd>19:00</dd></div>
+        <div><dt>Where</dt><dd>12 Wapping Wharf, Bristol BS1 4RW</dd></div>
+      </dl>
+      <p class="note">We hold tables for 15 minutes. To change or cancel, call 0117 496 0251.</p>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

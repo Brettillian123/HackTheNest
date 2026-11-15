@@ -1,0 +1,3379 @@
+{
+  "challenges": [
+    {
+      "slug": "profile-card",
+      "title": "Profile card",
+      "level": 1,
+      "category": "Components",
+      "brief": "I need a profile for the people directory in our design community app. Someone browsing the directory should be able to see who this person is, what they do and how active they are in one glance, and follow them with a single click. We don't use photos, so you'll need a simple stand-in for the picture. Their details are supplied, and the attached reference is exactly what I want, so get as close to it as you can. Keep it friendly and compact so it would work alongside many others. It's done when a visitor can size someone up and follow them within a couple of seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The name reads Maya Renner and the role reads Senior Product Designer",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Three stats in this order: 248 Posts, 12.4k Followers, 310 Following",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "From top to bottom: avatar, name, role, stats row, Follow button",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The avatar is a circle with a drawn head and shoulders in indigo on pale indigo, made without an image file",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The stats sit in three equal columns, each number bold above a smaller grey label, with thin lines above and below the row",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A full-width indigo Follow button with bold white text",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A white card with rounded corners and a soft shadow, centred near the top of a lavender page, all text centred",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The name is the page's main heading and Follow is a real link or button",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Maya Renner",
+        "Senior Product Designer",
+        "248",
+        "Posts",
+        "12.4k",
+        "Followers",
+        "310",
+        "Following",
+        "Follow"
+      ],
+      "content": "Person: Maya Renner\nJob title: Senior Product Designer\nStats (figure; label):\n- 248; Posts\n- 12.4k; Followers\n- 310; Following\nProfile in: the people directory of a design community app\nPicture: none supplied (the community does not use photos)\nAction button: Follow",
+      "acceptance": [
+        "I can see who the person is and what they do at a glance",
+        "Their activity figures are easy to read and each is clearly labelled",
+        "Following them is one obvious action that works with a keyboard",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "friendly white card on a lavender page",
+        "indigo as the one accent",
+        "soft shadow and rounded corners",
+        "everything centred"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800"
+            },
+            {
+              "label": "Background",
+              "value": "#e0e7ff"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, Helvetica, sans-serif"
+            },
+            {
+              "label": "Box sizing",
+              "value": "border-box on every element"
+            }
+          ]
+        },
+        {
+          "group": "Card",
+          "items": [
+            {
+              "label": "Size and position",
+              "value": "400px wide, centred horizontally, 80px from the top of the page"
+            },
+            {
+              "label": "Style",
+              "value": "#ffffff, 16px radius, padding 40px 32px, shadow 0 10px 30px rgba(30, 41, 99, 0.18), all text centred"
+            }
+          ]
+        },
+        {
+          "group": "Avatar",
+          "items": [
+            {
+              "label": "Circle",
+              "value": "112px circle, #c7d2fe, centred, 20px gap below, contents clipped to the circle"
+            },
+            {
+              "label": "Head",
+              "value": "40px circle, #4f46e5, placed 36px from the avatar's left and 22px from its top"
+            },
+            {
+              "label": "Body",
+              "value": "84px circle, #4f46e5, placed 14px from the left and 70px from the top, so its lower part is cut off"
+            }
+          ]
+        },
+        {
+          "group": "Text",
+          "items": [
+            {
+              "label": "Name",
+              "value": "Maya Renner, 26px, line-height 32px, bold, #0f172a, 6px gap below"
+            },
+            {
+              "label": "Role",
+              "value": "Senior Product Designer, 16px, line-height 22px, #64748b, 28px gap below"
+            }
+          ]
+        },
+        {
+          "group": "Stats row",
+          "items": [
+            {
+              "label": "Box",
+              "value": "Three equal columns, 16px padding top and bottom, 1px #e2e8f0 lines above and below, 28px gap below"
+            },
+            {
+              "label": "Stats",
+              "value": "248 / Posts, 12.4k / Followers, 310 / Following"
+            },
+            {
+              "label": "Numbers",
+              "value": "22px, line-height 28px, bold, #0f172a"
+            },
+            {
+              "label": "Labels",
+              "value": "13px, line-height 18px, #64748b, 4px below the number"
+            }
+          ]
+        },
+        {
+          "group": "Button",
+          "items": [
+            {
+              "label": "Follow",
+              "value": "Full card width, #4f46e5, padding 14px 20px, 10px radius; text Follow, 16px, line-height 24px, bold, #ffffff"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files; the avatar is drawn with CSS"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "harbor-landing",
+      "title": "Harbor landing page",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "Harbor is a shared inbox for small teams, and we need a simple one-screen landing page for it. A visitor should understand what Harbor does from the first line, see the three reasons it helps, and know how to start a trial or sign in. The copy is all supplied, and the attached reference is the finished page: match it as closely as possible. Keep it light and calm, because calm is the whole promise of the product, and make sure it reads well on a phone. It's done when a visitor can explain Harbor in a sentence and start a trial without scrolling around looking for the button.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The header has Harbor on the left and Features, Pricing, Customers, Sign in on the right in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The headline reads One calm inbox for your whole team, followed by the sentence in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The hero button reads Start free trial",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three feature cards in this order: Shared inbox, Smart sorting, Weekly reports, each with its text from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The footer reads © 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The header, hero, cards and footer all fit on the first screen, with the footer at the bottom",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The hero is centred with a large bold headline; the button is bright blue with white text",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Three equal white cards with thin borders and rounded corners; a white header with a thin line under it; a dark footer",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The header links are in a nav, the headline is the only main heading and the card titles are headings below it",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Harbor",
+        "Features",
+        "Pricing",
+        "Customers",
+        "Sign in",
+        "One calm inbox for your whole team",
+        "Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.",
+        "Start free trial",
+        "Shared inbox",
+        "Assign every message to a teammate and see who is replying.",
+        "Smart sorting",
+        "Urgent requests rise to the top while newsletters wait quietly.",
+        "Weekly reports",
+        "Track reply times and workload with a clear summary each Monday.",
+        "© 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved."
+      ],
+      "content": "Company: Harbor (Harbor Labs, Inc.)\nNavigation links: Features, Pricing, Customers\nNavigation action: Sign in\nHeadline: One calm inbox for your whole team\nSubheadline: Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.\nMain button: Start free trial\nFeatures (name: description):\n- Shared inbox: Assign every message to a teammate and see who is replying.\n- Smart sorting: Urgent requests rise to the top while newsletters wait quietly.\n- Weekly reports: Track reply times and workload with a clear summary each Monday.\nFooter text: © 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.",
+      "acceptance": [
+        "I understand what Harbor does from the first line",
+        "The benefits are easy to scan and each is clearly named",
+        "Starting a free trial is the obvious next step, and signing in is easy to find",
+        "The page feels calm and uncluttered, and works on a phone",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "calm and uncluttered on a light grey page",
+        "one bright blue call to action",
+        "three equal white cards",
+        "dark footer closing the screen"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 x 800, the footer sits at the bottom of the first screen"
+            },
+            {
+              "label": "Background",
+              "value": "#f3f4f6"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, Helvetica, sans-serif, text #111827"
+            },
+            {
+              "label": "Box sizing",
+              "value": "border-box on every element"
+            }
+          ]
+        },
+        {
+          "group": "Header",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "73px tall, #ffffff, 1px #e5e7eb bottom border, padding 0 80px, logo left, links right"
+            },
+            {
+              "label": "Logo",
+              "value": "Harbor, 24px, line-height 28px, bold, #111827"
+            },
+            {
+              "label": "Links",
+              "value": "Features, Pricing, Customers, Sign in; 16px, line-height 20px, #4b5563, no underline, 32px apart"
+            }
+          ]
+        },
+        {
+          "group": "Hero",
+          "items": [
+            {
+              "label": "Section",
+              "value": "Padding 96px 80px 88px, centred text"
+            },
+            {
+              "label": "Heading",
+              "value": "One calm inbox for your whole team; 56px, line-height 64px, bold, #111827, 20px gap below"
+            },
+            {
+              "label": "Text",
+              "value": "Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.; 20px, line-height 30px, #4b5563, 36px gap below"
+            },
+            {
+              "label": "Button",
+              "value": "Start free trial; #2563eb, #ffffff text, 18px, line-height 24px, bold, padding 16px 36px, 8px radius"
+            }
+          ]
+        },
+        {
+          "group": "Features",
+          "items": [
+            {
+              "label": "Row",
+              "value": "Three equal cards side by side, 32px gap, padding 0 80px 111px"
+            },
+            {
+              "label": "Card",
+              "value": "#ffffff, 1px #d1d5db border, 12px radius, 28px padding"
+            },
+            {
+              "label": "Card heading",
+              "value": "22px, line-height 28px, bold, #111827, 12px gap below"
+            },
+            {
+              "label": "Card text",
+              "value": "16px, line-height 24px, #4b5563"
+            },
+            {
+              "label": "Card 1",
+              "value": "Shared inbox / Assign every message to a teammate and see who is replying."
+            },
+            {
+              "label": "Card 2",
+              "value": "Smart sorting / Urgent requests rise to the top while newsletters wait quietly."
+            },
+            {
+              "label": "Card 3",
+              "value": "Weekly reports / Track reply times and workload with a clear summary each Monday."
+            }
+          ]
+        },
+        {
+          "group": "Footer",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "#111827, padding 30px 80px, centred"
+            },
+            {
+              "label": "Text",
+              "value": "© 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.; 14px, line-height 20px, #d1d5db"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "release-changelog",
+      "title": "Release changelog",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "Brightleaf, our calendar and task app, needs a public changelog. Customers come here to see what changed and when, usually looking for the latest release first, so make it easy to scan down through versions and spot what each one brought. All release notes are supplied, and the reference design, in our navy, is exactly the page we want; match it closely. Keep it clean and on brand, with our navy as the main colour, and make it readable on a phone. It's done when a customer can find any release and its date quickly and tell at a glance what kind of changes it contained.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The title bar reads Brightleaf changelog",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Twelve cards, newest first: Version 4.11, 4.10, 4.9 and so on down to Version 4.0",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The dates run Released Nov 2026 down to Released Jan 2026 for 4.11 to 4.1, then Released Dec 2026 for 4.0",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each paragraph matches the key facts, ending with that card's release number (11 down to 0)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each card lists the highlights Faster sync, Bug fixes and Shortcuts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Each card shows, in order: version heading, date, paragraph, highlights",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "All cards have the same height and the same gap between them; the highlights sit in one row as bullets",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "A navy title bar with white text; version headings in navy; white cards with thin borders and rounded corners on a very light grey page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Each release is its own section with a heading, and the highlights are a real list",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Brightleaf changelog",
+        "Version 4.11",
+        "Released Nov 2026",
+        "Version 4.0",
+        "Released Dec 2026",
+        "This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release 11.",
+        "Faster sync",
+        "Bug fixes",
+        "Shortcuts"
+      ],
+      "content": "Product: Brightleaf\nPage title: Brightleaf changelog\nEvery release has the same three labels: Faster sync, Bug fixes, Shortcuts\nEvery release has the same notes, ending with its own release number N: \"This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release N.\"\nReleases, newest first (version; date; N):\n- Version 4.11; Released Nov 2026; 11\n- Version 4.10; Released Oct 2026; 10\n- Version 4.9; Released Sep 2026; 9\n- Version 4.8; Released Aug 2026; 8\n- Version 4.7; Released Jul 2026; 7\n- Version 4.6; Released Jun 2026; 6\n- Version 4.5; Released May 2026; 5\n- Version 4.4; Released Apr 2026; 4\n- Version 4.3; Released Mar 2026; 3\n- Version 4.2; Released Feb 2026; 2\n- Version 4.1; Released Jan 2026; 1\n- Version 4.0; Released Dec 2026; 0\nNotes for Version 4.11 in full: This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release 11.",
+      "acceptance": [
+        "The newest release is the first one I see",
+        "I can scan from one release to the next without losing my place",
+        "Each release's version, date and kind of change are easy to pick out",
+        "It reads comfortably on a phone",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "orderly single column of identical cards",
+        "navy title bar and navy headings",
+        "white cards on a very light grey page",
+        "easy to scan from top to bottom"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page is long and scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#f8fafc"
+            },
+            {
+              "label": "Font",
+              "value": "Verdana, sans-serif, text #0f172a"
+            }
+          ]
+        },
+        {
+          "group": "Header",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "Full width, #1e3a8a, padding 28px 0, centred"
+            },
+            {
+              "label": "Title",
+              "value": "Brightleaf changelog; 28px, 700, #ffffff"
+            }
+          ]
+        },
+        {
+          "group": "Layout",
+          "items": [
+            {
+              "label": "Column",
+              "value": "Max width 760px, centred, padding 32px 24px"
+            },
+            {
+              "label": "Cards",
+              "value": "Twelve cards, each exactly 220px tall including padding and border (border-box), 24px gap below each"
+            },
+            {
+              "label": "Card style",
+              "value": "#ffffff, 1px #e2e8f0 border, 10px radius, padding 24px 28px"
+            }
+          ]
+        },
+        {
+          "group": "Card content",
+          "items": [
+            {
+              "label": "Heading",
+              "value": "Version 4.N; 22px, bold, #1e3a8a, 4px gap below"
+            },
+            {
+              "label": "Date",
+              "value": "Released <Mon> 2026; 13px, #64748b, 12px gap below"
+            },
+            {
+              "label": "Paragraph",
+              "value": "This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release N.; 15px, line-height 1.5, 10px gap below"
+            },
+            {
+              "label": "List",
+              "value": "Bulleted list laid out in one row, 28px between items, 20px left padding, 14px, #334155: Faster sync, Bug fixes, Shortcuts"
+            }
+          ]
+        },
+        {
+          "group": "Cards in order",
+          "items": [
+            {
+              "label": "Versions",
+              "value": "4.11, 4.10, 4.9, 4.8, 4.7, 4.6, 4.5, 4.4, 4.3, 4.2, 4.1, 4.0; N in the paragraph is the number after the dot (11 down to 0)"
+            },
+            {
+              "label": "Dates",
+              "value": "Nov, Oct, Sep, Aug, Jul, Jun, May, Apr, Mar, Feb, Jan, then Dec for 4.0; all 2026"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "split-signup",
+      "title": "Split-screen sign-up",
+      "level": 1,
+      "category": "Forms, commerce and documents",
+      "brief": "Ledgerly is bookkeeping software for small businesses, and we need a sign-up page that sells while it asks. Someone arriving here is close to deciding, so remind them why Ledgerly is worth it while making the form itself feel short and easy to finish. They should also be able to sign up with Google or go to sign-in if they already have an account. All the wording is supplied, and the attached reference, in our deep blue brand, is exactly the page we want: match it as closely as you can. It must be accessible and work on a phone. It's done when a visitor feels reassured and can create an account in under a minute.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The left panel shows the L logo with Ledgerly and the headline Bookkeeping that does itself.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Three benefits in this order: Connect your bank in two minutes, Receipts matched automatically, Tax-ready reports every quarter",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The customer quote and its attribution match the key facts and sit at the bottom of the panel",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The form heading reads Create your account, with the line Start your 14-day free trial. No credit card required.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Fields in this order: Full name (hint Jane Cooper), Work email (hint jane@company.com), Password with its rule hint below, Company size showing 1–10 employees",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "An agreement checkbox with links to the Terms of Service and the Privacy Policy",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Under the fields: Create account, an or divider, Continue with Google, then Already have an account? Sign in",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "A narrower, full-height left panel in a deep blue gradient with white text; the form is centred in the right side",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Create account is solid blue with white text; Continue with Google is white with a thin grey outline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every field has a visible label, and the two buttons are real buttons inside a form",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Ledgerly",
+        "Bookkeeping that does itself.",
+        "Connect your bank in two minutes",
+        "Receipts matched automatically",
+        "Tax-ready reports every quarter",
+        "“We closed our books in a day instead of a week.” — Priya N., Fernway Studio",
+        "Create your account",
+        "Start your 14-day free trial. No credit card required.",
+        "Full name",
+        "Jane Cooper",
+        "Work email",
+        "jane@company.com",
+        "Password",
+        "At least 8 characters, with one number and one symbol.",
+        "Company size",
+        "1–10 employees",
+        "Terms of Service",
+        "Privacy Policy",
+        "Create account",
+        "Continue with Google",
+        "Already have an account?",
+        "Sign in"
+      ],
+      "content": "Company: Ledgerly (bookkeeping); logo letter: L\nTagline: Bookkeeping that does itself.\nBenefits:\n- Connect your bank in two minutes\n- Receipts matched automatically\n- Tax-ready reports every quarter\nTestimonial: “We closed our books in a day instead of a week.” — Priya N., Fernway Studio\nSign-up form:\n- Heading: Create your account\n- Subheading: Start your 14-day free trial. No credit card required.\n- Full name; placeholder: Jane Cooper\n- Work email; placeholder: jane@company.com\n- Password; hint: At least 8 characters, with one number and one symbol.\n- Company size; chosen option: 1–10 employees\n- Agreement: I agree to the Terms of Service and Privacy Policy (both are links)\n- Button: Create account\n- Alternative, after the word \"or\": Continue with Google\n- Existing customer prompt: Already have an account?; link: Sign in",
+      "acceptance": [
+        "The reasons to choose Ledgerly are visible while I fill in the form",
+        "Every field has a clear name and helpful hint, so it works with a screen reader",
+        "Creating an account is the obvious main action, with Google sign-up as an alternative",
+        "On a phone the form stays easy to complete",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "split screen: deep blue brand panel, white form side",
+        "one clear blue primary button",
+        "quiet labels and thin field borders",
+        "trustworthy rather than salesy"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page is exactly 920px tall"
+            },
+            {
+              "label": "Background",
+              "value": "#fff"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, Helvetica, sans-serif, text #0f172a"
+            },
+            {
+              "label": "Layout",
+              "value": "Two columns filling the page height: a 520px left panel and the rest on the right"
+            }
+          ]
+        },
+        {
+          "group": "Left panel",
+          "items": [
+            {
+              "label": "Panel",
+              "value": "520px wide, linear-gradient(160deg, #1e3a8a 0%, #2563eb 100%), white text, padding 64px 56px"
+            },
+            {
+              "label": "Brand",
+              "value": "32px white square, 8px radius, with L in 18px #1e3a8a centred; then Ledgerly, 24px bold; 10px gap"
+            },
+            {
+              "label": "Headline",
+              "value": "Bookkeeping that / does itself. (line break after that); 34px, bold, line-height 1.25, 120px gap above"
+            },
+            {
+              "label": "List",
+              "value": "32px gap above, no bullets; items 16px, #dbeafe, 16px apart, 30px left padding; each has a 20px circle in rgba(255,255,255,.2) with a white ✓ at 12px"
+            },
+            {
+              "label": "List items",
+              "value": "Connect your bank in two minutes; Receipts matched automatically; Tax-ready reports every quarter"
+            },
+            {
+              "label": "Quote",
+              "value": "Pinned to the bottom of the panel: “We closed our books in a day instead of a week.” — Priya N., Fernway Studio; 14px, italic, #bfdbfe"
+            }
+          ]
+        },
+        {
+          "group": "Form",
+          "items": [
+            {
+              "label": "Position",
+              "value": "400px wide, centred horizontally and vertically in the right column"
+            },
+            {
+              "label": "Heading",
+              "value": "Create your account; 28px, bold"
+            },
+            {
+              "label": "Subtext",
+              "value": "Start your 14-day free trial. No credit card required.; 15px, #64748b, 8px above, 28px below"
+            },
+            {
+              "label": "Fields",
+              "value": "18px apart; label 14px, bold, #334155, 6px above the input"
+            },
+            {
+              "label": "Inputs",
+              "value": "Full width, 42px tall, 1px #cbd5e1 border, 8px radius, padding 0 12px, 15px Arial, #0f172a on #fff"
+            },
+            {
+              "label": "Full name",
+              "value": "Placeholder Jane Cooper"
+            },
+            {
+              "label": "Work email",
+              "value": "Placeholder jane@company.com"
+            },
+            {
+              "label": "Password",
+              "value": "Password field showing 11 masked characters (value secretpass1); hint below: At least 8 characters, with one number and one symbol.; 12px, #64748b, 6px above"
+            },
+            {
+              "label": "Company size",
+              "value": "Select showing 1–10 employees"
+            },
+            {
+              "label": "Agreement",
+              "value": "Unchecked 16px checkbox, 8px gap, 14px #334155: I agree to the Terms of Service and Privacy Policy (both links #2563eb, no underline); margin 4px 0 22px"
+            }
+          ]
+        },
+        {
+          "group": "Buttons",
+          "items": [
+            {
+              "label": "All buttons",
+              "value": "Full width, 44px tall, 8px radius, 16px bold Arial"
+            },
+            {
+              "label": "Primary",
+              "value": "Create account; #2563eb, #fff text, no border"
+            },
+            {
+              "label": "Divider",
+              "value": "or, 13px #94a3b8, centred between two 1px #e2e8f0 lines, 12px gap, margin 20px 0"
+            },
+            {
+              "label": "Google",
+              "value": "Continue with Google; #fff, 1px #cbd5e1 border, #334155 text"
+            },
+            {
+              "label": "Footer line",
+              "value": "Already have an account? Sign in; centred, 14px, #64748b, Sign in in #2563eb, 22px above"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "restaurant-menu",
+      "title": "Restaurant menu",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Osteria Lume wants its menu online, and it should feel like the printed one guests hold at the table: elegant, unhurried and easy to read. Diners need to browse by course, find a dish and its price quickly, and see how to find us and book. The full menu and our details are supplied, and the reference design is the exact target; I'll judge it on how close it gets. It has to work on a phone, since most people will read it on the way over. It's done when it feels like our restaurant and nobody has to squint to find a price.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The header shows Osteria Lume, the tagline Cucina di stagione · Est. 2011, and the links Menu, Wine, Reservations, Visit in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four courses in this order: Antipasti (4 dishes), Primi (4), Secondi (4), Dolci (3)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Every dish name and description matches the key facts, in the order listed",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Prices in order: Antipasti 16, 18, 14, 11; Primi 24, 21, 26, 23; Secondi 34, 29, 92, 25; Dolci 12, 11, 9",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each dish row has the name on the left, a dotted leader and the price on the right, with an italic description underneath",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The service note and the three footer columns (Find us, Hours, Book) match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Menu is marked as the current page with a terracotta underline; course headings are centred, uppercase, terracotta, with thin lines on each side",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Serif type for the name and dishes, a plain sans-serif for the nav, course headings and footer; cream page, forest green footer",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The course names are headings and the menu links are real links inside a nav",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Osteria Lume",
+        "Cucina di stagione · Est. 2011",
+        "Menu",
+        "Wine",
+        "Reservations",
+        "Visit",
+        "Antipasti",
+        "Burrata con pesche",
+        "Burrata, grilled peaches, basil oil, toasted hazelnuts",
+        "Carpaccio di manzo",
+        "Thin-sliced beef, rocket, aged parmesan, lemon",
+        "Arancini al tartufo",
+        "Three crisp risotto balls, black truffle, fontina",
+        "Zuppa di ceci",
+        "Chickpea soup, rosemary, olive oil crouton",
+        "Primi",
+        "Tagliatelle al ragù",
+        "Hand-cut egg pasta, slow-cooked beef and pork ragù",
+        "Cacio e pepe",
+        "Tonnarelli, pecorino romano, cracked black pepper",
+        "Risotto ai funghi",
+        "Carnaroli rice, wild mushrooms, thyme, mascarpone",
+        "Ravioli di zucca",
+        "Roasted squash ravioli, brown butter, sage, amaretti",
+        "Secondi",
+        "Branzino al forno",
+        "Whole roasted sea bass, fennel, capers, salsa verde",
+        "Pollo alla diavola",
+        "Spatchcocked chicken, chili, garlic, charred lemon",
+        "Bistecca alla fiorentina",
+        "900 g T-bone for two, rosemary potatoes",
+        "Melanzane alla parmigiana",
+        "Layered aubergine, tomato, basil, mozzarella",
+        "Dolci",
+        "Tiramisù",
+        "Espresso-soaked savoiardi, mascarpone, cocoa",
+        "Panna cotta",
+        "Vanilla cream, blood orange, pistachio crumble",
+        "Affogato",
+        "Fior di latte gelato drowned in espresso",
+        "A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.",
+        "Find us",
+        "214 Harbour Street",
+        "Portland, ME 04101",
+        "Hours",
+        "Tuesday – Sunday",
+        "5:00 pm – 11:00 pm",
+        "Book",
+        "(207) 555-0148",
+        "hello@osterialume.com"
+      ],
+      "content": "Restaurant: Osteria Lume\nTagline: Cucina di stagione · Est. 2011\nSite sections: Menu, Wine, Reservations, Visit (current section: Menu)\nMenu, by course (dish; price in dollars; description):\nAntipasti\n- Burrata con pesche; 16; Burrata, grilled peaches, basil oil, toasted hazelnuts\n- Carpaccio di manzo; 18; Thin-sliced beef, rocket, aged parmesan, lemon\n- Arancini al tartufo; 14; Three crisp risotto balls, black truffle, fontina\n- Zuppa di ceci; 11; Chickpea soup, rosemary, olive oil crouton\nPrimi\n- Tagliatelle al ragù; 24; Hand-cut egg pasta, slow-cooked beef and pork ragù\n- Cacio e pepe; 21; Tonnarelli, pecorino romano, cracked black pepper\n- Risotto ai funghi; 26; Carnaroli rice, wild mushrooms, thyme, mascarpone\n- Ravioli di zucca; 23; Roasted squash ravioli, brown butter, sage, amaretti\nSecondi\n- Branzino al forno; 34; Whole roasted sea bass, fennel, capers, salsa verde\n- Pollo alla diavola; 29; Spatchcocked chicken, chili, garlic, charred lemon\n- Bistecca alla fiorentina; 92; 900 g T-bone for two, rosemary potatoes\n- Melanzane alla parmigiana; 25; Layered aubergine, tomato, basil, mozzarella\nDolci\n- Tiramisù; 12; Espresso-soaked savoiardi, mascarpone, cocoa\n- Panna cotta; 11; Vanilla cream, blood orange, pistachio crumble\n- Affogato; 9; Fior di latte gelato drowned in espresso\nNote: A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.\nPractical details:\n- Find us: 214 Harbour Street, Portland, ME 04101\n- Hours: Tuesday – Sunday, 5:00 pm – 11:00 pm\n- Book: (207) 555-0148, hello@osterialume.com",
+      "acceptance": [
+        "It feels like a printed menu from an elegant Italian restaurant",
+        "I can browse by course and find any dish and its price quickly",
+        "How to find us, our hours and how to book are easy to spot",
+        "It reads comfortably on a phone without zooming",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "warm, old-world printed-menu feel",
+        "cream page, forest green and terracotta accents",
+        "dotted leaders from dish to price",
+        "serif dishes, small uppercase sans-serif labels"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#f7f1e3"
+            },
+            {
+              "label": "Font",
+              "value": "Georgia, serif, text #2b2b25; labels and footer in Arial, sans-serif"
+            },
+            {
+              "label": "Reset",
+              "value": "All default margins and padding removed, border-box"
+            }
+          ]
+        },
+        {
+          "group": "Header",
+          "items": [
+            {
+              "label": "Box",
+              "value": "Centred, padding 56px 24px 32px, 1px #d8ccb0 bottom border"
+            },
+            {
+              "label": "Name",
+              "value": "Osteria Lume; 52px, normal weight, #2f4a3a, letter-spacing 1px"
+            },
+            {
+              "label": "Tagline",
+              "value": "Cucina di stagione · Est. 2011; 17px, italic, #7a6f58, 8px above"
+            },
+            {
+              "label": "Nav",
+              "value": "22px above; Menu, Wine, Reservations, Visit; Arial 13px, uppercase, letter-spacing 2px, #2f4a3a, margin 0 16px each"
+            },
+            {
+              "label": "Active link",
+              "value": "Menu has a 2px #b5562e underline (bottom border) with 4px bottom padding"
+            }
+          ]
+        },
+        {
+          "group": "Courses",
+          "items": [
+            {
+              "label": "Column",
+              "value": "Max width 760px, centred, padding 24px 24px 48px; each course 36px below the previous"
+            },
+            {
+              "label": "Course heading",
+              "value": "Arial 14px, uppercase, letter-spacing 4px, #b5562e, centred, 18px gap below, with a 1px #d8ccb0 line filling each side, 16px gap"
+            },
+            {
+              "label": "Dish row",
+              "value": "Name 20px #2b2b25, then a 2px dotted #c7b994 leader filling the space (8px gaps, raised 5px), then price 19px bold #2f4a3a; rows share a baseline"
+            },
+            {
+              "label": "Description",
+              "value": "15px, italic, #7a6f58, 3px below the row; 18px gap after each dish"
+            }
+          ]
+        },
+        {
+          "group": "Antipasti",
+          "items": [
+            {
+              "label": "Burrata con pesche, 16",
+              "value": "Burrata, grilled peaches, basil oil, toasted hazelnuts"
+            },
+            {
+              "label": "Carpaccio di manzo, 18",
+              "value": "Thin-sliced beef, rocket, aged parmesan, lemon"
+            },
+            {
+              "label": "Arancini al tartufo, 14",
+              "value": "Three crisp risotto balls, black truffle, fontina"
+            },
+            {
+              "label": "Zuppa di ceci, 11",
+              "value": "Chickpea soup, rosemary, olive oil crouton"
+            }
+          ]
+        },
+        {
+          "group": "Primi",
+          "items": [
+            {
+              "label": "Tagliatelle al ragù, 24",
+              "value": "Hand-cut egg pasta, slow-cooked beef and pork ragù"
+            },
+            {
+              "label": "Cacio e pepe, 21",
+              "value": "Tonnarelli, pecorino romano, cracked black pepper"
+            },
+            {
+              "label": "Risotto ai funghi, 26",
+              "value": "Carnaroli rice, wild mushrooms, thyme, mascarpone"
+            },
+            {
+              "label": "Ravioli di zucca, 23",
+              "value": "Roasted squash ravioli, brown butter, sage, amaretti"
+            }
+          ]
+        },
+        {
+          "group": "Secondi",
+          "items": [
+            {
+              "label": "Branzino al forno, 34",
+              "value": "Whole roasted sea bass, fennel, capers, salsa verde"
+            },
+            {
+              "label": "Pollo alla diavola, 29",
+              "value": "Spatchcocked chicken, chili, garlic, charred lemon"
+            },
+            {
+              "label": "Bistecca alla fiorentina, 92",
+              "value": "900 g T-bone for two, rosemary potatoes"
+            },
+            {
+              "label": "Melanzane alla parmigiana, 25",
+              "value": "Layered aubergine, tomato, basil, mozzarella"
+            }
+          ]
+        },
+        {
+          "group": "Dolci",
+          "items": [
+            {
+              "label": "Tiramisù, 12",
+              "value": "Espresso-soaked savoiardi, mascarpone, cocoa"
+            },
+            {
+              "label": "Panna cotta, 11",
+              "value": "Vanilla cream, blood orange, pistachio crumble"
+            },
+            {
+              "label": "Affogato, 9",
+              "value": "Fior di latte gelato drowned in espresso"
+            }
+          ]
+        },
+        {
+          "group": "Note and footer",
+          "items": [
+            {
+              "label": "Note",
+              "value": "A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.; centred, 14px, #7a6f58, max width 760px, padding 0 24px, 40px below"
+            },
+            {
+              "label": "Footer",
+              "value": "#2f4a3a, #efe7d2 text, padding 36px 24px, three columns centred with 96px gaps, Arial 14px, line-height 1.7"
+            },
+            {
+              "label": "Column headings",
+              "value": "Georgia 18px, normal weight, #fff, 6px below"
+            },
+            {
+              "label": "Columns",
+              "value": "Find us: 214 Harbour Street / Portland, ME 04101. Hours: Tuesday – Sunday / 5:00 pm – 11:00 pm. Book: (207) 555-0148 / hello@osterialume.com"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "field-notes-post",
+      "title": "Field Notes blog post",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "The Field Notes is our company blog, and this post reports on our year of four-day weeks. I want it to read like a well-made long-form article: comfortable to read from start to finish, with the quote and the key sentence given the weight they deserve, and the numbers easy to understand in both the chart and the table. The full text and figures are supplied, and the attached reference is the finished article, so match it as closely as you can. It must be accessible and readable on a phone. It's done when a reader can get through it without effort and come away remembering the results.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The masthead reads THE FIELD NOTES, the headline reads What we learned from a year of four-day weeks, and the byline reads By Maya Ortiz · March 4, 2026 · 7 min read",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The paragraphs and the pull quote match the key facts, in order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The pull quote is italic with an amber bar down its left side, and Nobody wanted to go back. is bold",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "After the third paragraph: the subheading The numbers, then the chart with its caption, then the table, then the closing paragraph",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The chart has six amber bars labelled Jan to Jun on a light background, getting taller overall with a small dip in March and June the tallest",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The table has the columns Team, Hours per week, Output change and these rows in order: Design 32 +6%, Engineering 32 +4%, Support 34 +2%, Sales 33 +5%, Marketing 32 +3%, Finance 32 +1%, People 32 +7%, Legal 33 +2%, Operations 34 +3%, Research 32 +8%",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "The footer reads © 2026 The Field Notes",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Serif type for the article, a plain sans-serif for the byline and table; one centred reading column with a thin line under the masthead",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The table uses header cells, the chart sits in a figure with a caption, and the pull quote is a blockquote",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "THE FIELD NOTES",
+        "What we learned from a year of four-day weeks",
+        "By Maya Ortiz · March 4, 2026 · 7 min read",
+        "Last March we tried something our board called “brave” and our accountant called “unwise”: every team would work Monday to Thursday, with Friday off and no cut in pay. We promised to measure everything and to stop if it didn’t work.",
+        "We expected output to fall. Instead, most teams shipped slightly more, and the number of late projects dropped by a third. The biggest change was not speed but focus: people stopped filling Fridays with meetings that could have been an email.",
+        "“I get more done in four focused days than I used to in five scattered ones.”",
+        "That line came from our support lead, and it summed up the survey.",
+        "Nobody wanted to go back.",
+        "Even the two teams whose numbers dipped asked to keep the schedule and fix the problems instead.",
+        "The numbers",
+        "Projects shipped per month, January to June.",
+        "Team",
+        "Hours per week",
+        "Output change",
+        "Research",
+        "+8%",
+        "We’re keeping it. Next year we’ll publish the full data set, including the parts that didn’t go well.",
+        "© 2026 The Field Notes"
+      ],
+      "content": "Publication: THE FIELD NOTES\nTitle: What we learned from a year of four-day weeks\nByline: By Maya Ortiz · March 4, 2026 · 7 min read\nBody, in order:\n1. Last March we tried something our board called “brave” and our accountant called “unwise”: every team would work Monday to Thursday, with Friday off and no cut in pay. We promised to measure everything and to stop if it didn’t work.\n2. We expected output to fall. Instead, most teams shipped slightly more, and the number of late projects dropped by a third. The biggest change was not speed but focus: people stopped filling Fridays with meetings that could have been an email.\n3. Pull quote: “I get more done in four focused days than I used to in five scattered ones.”\n4. That line came from our support lead, and it summed up the survey.\n5. Key sentence (the one to stress): Nobody wanted to go back.\n6. Even the two teams whose numbers dipped asked to keep the schedule and fix the problems instead.\nSection: The numbers\nChart: months Jan, Feb, Mar, Apr, May, Jun; caption: Projects shipped per month, January to June.\nTable (Team | Hours per week | Output change):\nDesign | 32 | +6%\nEngineering | 32 | +4%\nSupport | 34 | +2%\nSales | 33 | +5%\nMarketing | 32 | +3%\nFinance | 32 | +1%\nPeople | 32 | +7%\nLegal | 33 | +2%\nOperations | 34 | +3%\nResearch | 32 | +8%\nClosing: We’re keeping it. Next year we’ll publish the full data set, including the parts that didn’t go well.\nFooter: © 2026 The Field Notes",
+      "acceptance": [
+        "It is comfortable to read from start to finish, like a good magazine article",
+        "The quote and the key sentence stand out from the body text",
+        "I can read the chart and the table easily and understand the results",
+        "The table is marked up so a screen reader can follow it",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "classic, readable single column",
+        "serif article, sans-serif byline and table",
+        "warm brown and amber accents",
+        "a simple inline bar chart, no decoration"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#ffffff"
+            },
+            {
+              "label": "Font",
+              "value": "Georgia, serif, text #292524; byline and table in Verdana, sans-serif"
+            }
+          ]
+        },
+        {
+          "group": "Masthead",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "THE FIELD NOTES; centred, 22px, 700, letter-spacing 1px, #78350f, padding 20px 0, 1px #e7e5e4 bottom border"
+            }
+          ]
+        },
+        {
+          "group": "Article top",
+          "items": [
+            {
+              "label": "Column",
+              "value": "Max width 720px, centred, padding 40px 24px 60px"
+            },
+            {
+              "label": "Heading",
+              "value": "What we learned from a year of four-day weeks; 40px, bold, line-height 1.2, 12px gap below"
+            },
+            {
+              "label": "Byline",
+              "value": "By Maya Ortiz · March 4, 2026 · 7 min read (non-breaking space in 7 min); Verdana 15px, #78716c, 32px gap below"
+            },
+            {
+              "label": "Paragraphs",
+              "value": "18px, line-height 1.5, #44403c, 20px gap below; curly quotes and apostrophes throughout"
+            },
+            {
+              "label": "Paragraph 1",
+              "value": "Last March we tried something our board called “brave” and our accountant called “unwise”: every team would work Monday to Thursday, with Friday off and no cut in pay. We promised to measure everything and to stop if it didn’t work."
+            },
+            {
+              "label": "Paragraph 2",
+              "value": "We expected output to fall. Instead, most teams shipped slightly more, and the number of late projects dropped by a third. The biggest change was not speed but focus: people stopped filling Fridays with meetings that could have been an email."
+            }
+          ]
+        },
+        {
+          "group": "Pull quote",
+          "items": [
+            {
+              "label": "Quote",
+              "value": "“I get more done in four focused days than I used to in five scattered ones.”"
+            },
+            {
+              "label": "Style",
+              "value": "Margin 28px 0, 20px left padding, 4px #b45309 left border, 22px italic #78350f"
+            },
+            {
+              "label": "Paragraph 3",
+              "value": "That line came from our support lead, and it summed up the survey. Nobody wanted to go back. (this sentence bold) Even the two teams whose numbers dipped asked to keep the schedule and fix the problems instead."
+            }
+          ]
+        },
+        {
+          "group": "Chart",
+          "items": [
+            {
+              "label": "Heading",
+              "value": "The numbers; 26px, bold, margin 36px 0 16px"
+            },
+            {
+              "label": "Figure",
+              "value": "Margin 24px 0; inline SVG 680 x 260 with viewBox 0 0 680 260"
+            },
+            {
+              "label": "Background",
+              "value": "Full-size rect, #fafaf9"
+            },
+            {
+              "label": "Baseline",
+              "value": "Line from (50, 220) to (660, 220), stroke #a8a29e"
+            },
+            {
+              "label": "Bars",
+              "value": "Six rects, width 56, fill #b45309, bottoms on y 220, x at 80, 178, 276, 374, 472, 570, heights 120, 150, 135, 170, 185, 200"
+            },
+            {
+              "label": "Labels",
+              "value": "Jan, Feb, Mar, Apr, May, Jun centred under each bar (x + 28), y 242, Georgia, font-size 13, #57534e"
+            },
+            {
+              "label": "Caption",
+              "value": "Projects shipped per month, January to June.; 14px, #78716c, 8px above"
+            }
+          ]
+        },
+        {
+          "group": "Table",
+          "items": [
+            {
+              "label": "Style",
+              "value": "Full width, collapsed borders, Verdana 14px, 28px gap below; headers left-aligned with a 2px #292524 bottom border; cells with a 1px #e7e5e4 bottom border; 8px padding everywhere"
+            },
+            {
+              "label": "Columns",
+              "value": "Team, Hours per week, Output change"
+            },
+            {
+              "label": "Rows",
+              "value": "Design 32 +6%; Engineering 32 +4%; Support 34 +2%; Sales 33 +5%; Marketing 32 +3%; Finance 32 +1%; People 32 +7%; Legal 33 +2%; Operations 34 +3%; Research 32 +8%"
+            },
+            {
+              "label": "Last paragraph",
+              "value": "We’re keeping it. Next year we’ll publish the full data set, including the parts that didn’t go well."
+            }
+          ]
+        },
+        {
+          "group": "Footer",
+          "items": [
+            {
+              "label": "Footer",
+              "value": "© 2026 The Field Notes; centred, 14px, #78716c, padding 20px, 1px #e7e5e4 top border"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "Inline SVG only; no images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "pricing-compare-signup",
+      "title": "Pricing, compare and sign up",
+      "level": 2,
+      "category": "Forms, commerce and documents",
+      "brief": "Fernway needs a full pricing page that takes a visitor from choosing a plan to starting a trial. They should be able to compare plans quickly, check the finer details when they need to, and sign up without leaving the page, with the plan most teams choose clearly recommended. All plan details and form content are supplied, and the reference design is exactly what we want; the closer the match, the better. It must be accessible and hold up on a phone. Done means a visitor can choose, compare and start their trial in one smooth pass.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The nav has Fernway on the left, then Product, Pricing, Customers, Docs and a Start free button",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The hero heading reads Simple pricing for growing teams, with the line Start free for 14 days. No credit card needed. Cancel any time.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Plans in order: Starter $12, Team $39, Business $99, each / month, with the descriptions, features and button labels in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The cards overlap the bottom of the hero; the Team card is raised, has a teal border, a Most popular badge and a filled teal button, while the others have outlined buttons",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The Compare plans table has the columns Feature, Starter, Team, Business and rows in order: Custom domains (yes, yes, yes); Team members (1, 10, Unlimited); Version history (no, yes, yes); Single sign-on (no, no, yes); Audit log (no, no, yes); Uptime guarantee (99.5%, 99.9%, 99.99%)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Yes is a bold green tick and no is a pale grey cross",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The form shows Full name Jordan Lee, Work email jordan@example.com, Plan Team - $39 / month, a ticked I agree to the terms of service box and a Start my free trial button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The dark footer shows Fernway and © 2026 Fernway Inc. on the left and Privacy, Terms, Status, Contact on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The comparison table has header cells, each form field has a label, and Start my free trial is a real button",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fernway",
+        "Start free",
+        "Simple pricing for growing teams",
+        "Start free for 14 days. No credit card needed. Cancel any time.",
+        "Starter",
+        "$12",
+        "For freelancers and side projects.",
+        "3 projects",
+        "5 GB storage",
+        "Email support",
+        "Choose Starter",
+        "Most popular",
+        "Team",
+        "$39",
+        "For small teams shipping every week.",
+        "Unlimited projects",
+        "100 GB storage",
+        "Priority support",
+        "Choose Team",
+        "Business",
+        "$99",
+        "For companies with many teams.",
+        "1 TB storage",
+        "Dedicated manager",
+        "Choose Business",
+        "Compare plans",
+        "Feature",
+        "Custom domains",
+        "Team members",
+        "Version history",
+        "Single sign-on",
+        "Audit log",
+        "Uptime guarantee",
+        "99.99%",
+        "Create your account",
+        "Jordan Lee",
+        "jordan@example.com",
+        "Team - $39 / month",
+        "I agree to the terms of service",
+        "Start my free trial",
+        "© 2026 Fernway Inc."
+      ],
+      "content": "Company: Fernway\nNavigation links: Product, Pricing, Customers, Docs; navigation button: Start free\nHeading: Simple pricing for growing teams\nSubheading: Start free for 14 days. No credit card needed. Cancel any time.\nPlans (name; price per month; tagline; included; button):\n- Starter; $12 / month; For freelancers and side projects.; 3 projects, 5 GB storage, Email support; Choose Starter\n- Team; $39 / month; For small teams shipping every week.; Unlimited projects, 100 GB storage, Priority support; Choose Team\n- Business; $99 / month; For companies with many teams.; Unlimited projects, 1 TB storage, Dedicated manager; Choose Business\nMost popular plan: Team (label text: Most popular)\nCompare plans (Feature | Starter | Team | Business; yes = included, no = not included):\nCustom domains | yes | yes | yes\nTeam members | 1 | 10 | Unlimited\nVersion history | no | yes | yes\nSingle sign-on | no | no | yes\nAudit log | no | no | yes\nUptime guarantee | 99.5% | 99.9% | 99.99%\nSign-up form: Create your account\n- Full name: Jordan Lee (filled in)\n- Work email: jordan@example.com (filled in)\n- Plan: Team - $39 / month (chosen)\n- Checkbox, ticked: I agree to the terms of service\n- Button: Start my free trial\nFooter: Fernway; © 2026 Fernway Inc.; links: Privacy, Terms, Status, Contact",
+      "acceptance": [
+        "I can compare plans at a glance and see which one is recommended",
+        "The detailed comparison is easy to read, and a screen reader can follow it",
+        "The sign-up form is clear, labelled and ready to submit",
+        "It holds up on a phone without losing anything important",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "bright teal accent with a teal-to-blue hero",
+        "plan cards overlapping the hero",
+        "clean comparison table with ticks and crosses",
+        "dark footer"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#ffffff"
+            },
+            {
+              "label": "Font",
+              "value": "Verdana, sans-serif, text #1e293b"
+            },
+            {
+              "label": "Accent",
+              "value": "#0d9488; the shared radius is 14px"
+            }
+          ]
+        },
+        {
+          "group": "Nav",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "68px tall, #ffffff, 1px #e2e8f0 bottom border, shadow 0 2px 8px rgba(15,23,42,0.06); content 1120px wide, centred"
+            },
+            {
+              "label": "Logo",
+              "value": "Fernway; 22px, bold, #0d9488"
+            },
+            {
+              "label": "Links",
+              "value": "Product, Pricing, Customers, Docs; 14px, #475569, 28px left margin each"
+            },
+            {
+              "label": "Button",
+              "value": "Start free; #0d9488, #ffffff text, padding 10px 18px, 14px radius"
+            }
+          ]
+        },
+        {
+          "group": "Hero",
+          "items": [
+            {
+              "label": "Band",
+              "value": "linear-gradient(135deg, #0d9488 0%, #2563eb 100%), #ffffff text, centred, padding 70px 0 120px"
+            },
+            {
+              "label": "Heading",
+              "value": "Simple pricing for growing teams; 42px, bold, 16px gap below"
+            },
+            {
+              "label": "Text",
+              "value": "Start free for 14 days. No credit card needed. Cancel any time.; 18px, opacity 0.9"
+            }
+          ]
+        },
+        {
+          "group": "Plans",
+          "items": [
+            {
+              "label": "Row",
+              "value": "1040px wide, centred, pulled up into the hero (margin-top -80px), three equal cards, 28px gap, top-aligned"
+            },
+            {
+              "label": "Card",
+              "value": "#ffffff, 1px #e2e8f0 border, 14px radius, padding 30px 28px, shadow 0 10px 30px rgba(15,23,42,0.08)"
+            },
+            {
+              "label": "Middle card",
+              "value": "2px #0d9488 border, raised 16px (margin-top -16px), top padding 46px; badge Most popular centred 14px from its top: #0d9488, #ffffff, 12px bold, padding 5px 14px, 999px radius"
+            },
+            {
+              "label": "Plan name",
+              "value": "18px, bold, 8px gap below"
+            },
+            {
+              "label": "Price",
+              "value": "40px, bold, margin 6px 0 4px; suffix \" / month\" 15px, normal weight, #64748b"
+            },
+            {
+              "label": "Description",
+              "value": "14px, #64748b, 20px gap below"
+            },
+            {
+              "label": "Features",
+              "value": "No bullets, 14px, line-height 2, 24px gap below"
+            },
+            {
+              "label": "Button",
+              "value": "Full width, centred text, padding 12px, 2px #0d9488 border, 14px radius, #0d9488 bold 15px text; middle card's button is filled #0d9488 with #ffffff text"
+            },
+            {
+              "label": "Starter",
+              "value": "$12 / month; For freelancers and side projects.; 3 projects, 5 GB storage, Email support; Choose Starter"
+            },
+            {
+              "label": "Team",
+              "value": "$39 / month; For small teams shipping every week.; Unlimited projects, 100 GB storage, Priority support; Choose Team"
+            },
+            {
+              "label": "Business",
+              "value": "$99 / month; For companies with many teams.; Unlimited projects, 1 TB storage, Dedicated manager; Choose Business"
+            }
+          ]
+        },
+        {
+          "group": "Compare table",
+          "items": [
+            {
+              "label": "Section",
+              "value": "1040px wide, centred, 70px gap above; heading Compare plans, 28px, bold, centred, 26px gap below"
+            },
+            {
+              "label": "Table",
+              "value": "Full width, collapsed, 15px; header cells padding 14px 16px on #f1f5f9; body cells padding 13px 16px with a 1px #e2e8f0 bottom border; all centred except the first column (left)"
+            },
+            {
+              "label": "Marks",
+              "value": "Yes is ✓ bold #059669; no is ✗ bold #cbd5e1"
+            },
+            {
+              "label": "Header",
+              "value": "Feature, Starter, Team, Business"
+            },
+            {
+              "label": "Rows",
+              "value": "Custom domains ✓ ✓ ✓; Team members 1, 10, Unlimited; Version history ✗ ✓ ✓; Single sign-on ✗ ✗ ✓; Audit log ✗ ✗ ✓; Uptime guarantee 99.5%, 99.9%, 99.99%"
+            }
+          ]
+        },
+        {
+          "group": "Sign-up form",
+          "items": [
+            {
+              "label": "Section",
+              "value": "70px gap above; heading Create your account, 28px, bold, centred, 26px gap below"
+            },
+            {
+              "label": "Box",
+              "value": "560px wide, centred, #f8fafc, 1px #e2e8f0 border, 14px radius, padding 32px 36px"
+            },
+            {
+              "label": "Labels",
+              "value": "14px, bold, 6px gap below"
+            },
+            {
+              "label": "Fields",
+              "value": "Full width, 44px tall, 1px #cbd5e1 border, 8px radius, padding 0 12px, 15px Verdana, #ffffff, 18px gap below"
+            },
+            {
+              "label": "Values",
+              "value": "Full name: Jordan Lee; Work email: jordan@example.com; Plan (select): Team - $39 / month"
+            },
+            {
+              "label": "Checkbox",
+              "value": "Checked box, then I agree to the terms of service; 14px, 22px gap below"
+            },
+            {
+              "label": "Button",
+              "value": "Start my free trial; full width, 48px tall, no border, 14px radius, #0d9488, #ffffff, bold 16px"
+            }
+          ]
+        },
+        {
+          "group": "Footer",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "#0f172a, #94a3b8 text, 80px gap above; content 1120px centred, padding 40px 0, 14px, left and right blocks"
+            },
+            {
+              "label": "Left",
+              "value": "Fernway (bold 18px #ffffff), a blank line, then © 2026 Fernway Inc."
+            },
+            {
+              "label": "Right",
+              "value": "Privacy, Terms, Status, Contact; #94a3b8, 24px left margin each"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "planner-landing",
+      "title": "Planner landing page",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Brightleaf helps teams plan their week, and we need a full marketing landing page. A visitor should grasp the promise straight away, see why teams choose us, compare plans, read what customers say, and request early access, all without feeling overwhelmed. Copy, plans and quotes are supplied, and the attached reference, built around our green, is the exact page we want: match it. It must be accessible and work on a phone. Done means a visitor scrolling once can explain what Brightleaf does and knows how to get in.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The header has Brightleaf on the left and Features, Pricing, Customers, Blog, Contact on the right in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The hero headline, sentence and Start free trial button match the key facts, with the text on the left and the drawn landscape on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The landscape is drawn inline (sky, sun, two green hills) and the white rating chip overlaps its bottom-left corner",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "Sections in this order: Why teams choose Brightleaf (under a small Features label), Simple pricing, What customers say, Get early access",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Six feature cards in order: Shared calendars, Smart reminders, Weekly reviews, Time blocking, Integrations, Reports, each with its text from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Feature cards sit in three columns, each with a round green icon holding a simple white shape",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Pricing tiers in order: Starter $19, Team $49, Business $99, each /month, with their three features and Choose buttons; Team is marked Most popular",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Two quotes with their names and roles as in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The form has Name, Work email, Company and Team size in two columns, with Request access on its own row below",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "The dark green footer shows © 2026 Brightleaf Inc. on the left and Privacy and Terms on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r11",
+          "text": "One main heading then section headings in order, form fields with labels, Request access as a real button, and the quotes as blockquotes",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Brightleaf",
+        "Features",
+        "Pricing",
+        "Customers",
+        "Blog",
+        "Contact",
+        "Plan your week in five minutes",
+        "Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.",
+        "Start free trial",
+        "★ 4.9 from 2,000 teams",
+        "Why teams choose Brightleaf",
+        "Shared calendars",
+        "See every project, meeting and deadline on one calendar your whole team can edit.",
+        "Smart reminders",
+        "Get a nudge before a task slips, not after the deadline has passed.",
+        "Weekly reviews",
+        "A five-minute summary every Friday shows what got done and what moved.",
+        "Time blocking",
+        "Drag tasks onto your week and protect time for deep, focused work.",
+        "Integrations",
+        "Connect Slack, Gmail and GitHub so tasks arrive where you already plan.",
+        "Reports",
+        "Spot overloaded teammates early with simple charts of planned hours.",
+        "Simple pricing",
+        "Starter",
+        "$19",
+        "Up to 5 people",
+        "3 projects",
+        "Email support",
+        "Choose Starter",
+        "Most popular",
+        "Team",
+        "$49",
+        "Up to 25 people",
+        "Unlimited projects",
+        "Priority support",
+        "Choose Team",
+        "Business",
+        "$99",
+        "Unlimited people",
+        "SSO and audit log",
+        "Dedicated manager",
+        "Choose Business",
+        "What customers say",
+        "“Brightleaf cut our Monday planning meeting from an hour to ten minutes.”",
+        "Priya Shah, Head of Operations, Northwind",
+        "“The Friday review alone is worth the price.”",
+        "Tom Becker, Engineering Lead, Lumen Labs",
+        "Get early access",
+        "Name",
+        "Work email",
+        "Company",
+        "Team size",
+        "Request access",
+        "© 2026 Brightleaf Inc.",
+        "Privacy",
+        "Terms"
+      ],
+      "content": "Company: Brightleaf (team planner)\nNavigation links: Features, Pricing, Customers, Blog, Contact\nHeadline: Plan your week in five minutes\nSubheadline: Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.\nMain button: Start free trial\nRating: ★ 4.9 from 2,000 teams\nFeatures section (label: Features; heading: Why teams choose Brightleaf), name: description:\n- Shared calendars: See every project, meeting and deadline on one calendar your whole team can edit.\n- Smart reminders: Get a nudge before a task slips, not after the deadline has passed.\n- Weekly reviews: A five-minute summary every Friday shows what got done and what moved.\n- Time blocking: Drag tasks onto your week and protect time for deep, focused work.\n- Integrations: Connect Slack, Gmail and GitHub so tasks arrive where you already plan.\n- Reports: Spot overloaded teammates early with simple charts of planned hours.\nPricing section heading: Simple pricing\nPlans (name; price; included; button), prices per month written as \"/month\":\n- Starter; $19 /month; Up to 5 people, 3 projects, Email support; Choose Starter\n- Team; $49 /month; Up to 25 people, Unlimited projects, Priority support; Choose Team\n- Business; $99 /month; Unlimited people, SSO and audit log, Dedicated manager; Choose Business\nMost popular plan: Team (label text: Most popular)\nTestimonials (heading: What customers say):\n- “Brightleaf cut our Monday planning meeting from an hour to ten minutes.” — Priya Shah, Head of Operations, Northwind\n- “The Friday review alone is worth the price.” — Tom Becker, Engineering Lead, Lumen Labs\nEarly access form (heading: Get early access): fields Name, Work email, Company, Team size; button: Request access\nFooter: © 2026 Brightleaf Inc.; links: Privacy, Terms",
+      "acceptance": [
+        "I grasp the promise and the main action from the first screen",
+        "Features, plans and customer quotes are each easy to scan",
+        "The recommended plan is obvious",
+        "The early access form is clear and every field is labelled",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "fresh green palette, soft gradient hero",
+        "simple drawn landscape instead of a photo",
+        "white cards with thin borders throughout",
+        "one consistent green button style",
+        "dark green footer"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#f9fafb"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, sans-serif, text #1f2937"
+            },
+            {
+              "label": "Content width",
+              "value": "Max 1080px, centred, 24px side padding, in every band"
+            }
+          ]
+        },
+        {
+          "group": "Header",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "#ffffff, 1px #e5e7eb bottom border, 72px tall"
+            },
+            {
+              "label": "Logo",
+              "value": "Brightleaf; 24px, 700, #15803d"
+            },
+            {
+              "label": "Links",
+              "value": "Features, Pricing, Customers, Blog, Contact; 15px, #374151, 28px left margin each"
+            }
+          ]
+        },
+        {
+          "group": "Hero",
+          "items": [
+            {
+              "label": "Band",
+              "value": "linear-gradient(135deg, #f0fdf4, #86efac), padding 44px 0; text left, picture right, 48px gap, vertically centred"
+            },
+            {
+              "label": "Heading",
+              "value": "Plan your week in five minutes; 44px, bold, line-height 1.15, #064e3b, 16px gap below"
+            },
+            {
+              "label": "Text",
+              "value": "Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.; 18px, line-height 1.5, #4b5563, 28px gap below"
+            },
+            {
+              "label": "Button style (all green buttons)",
+              "value": "#16a34a, #ffffff, padding 14px 28px, 8px radius, 16px, 700"
+            },
+            {
+              "label": "Hero button",
+              "value": "Start free trial"
+            },
+            {
+              "label": "Picture",
+              "value": "Inline SVG 400 x 260 with viewBox 0 0 460 300: rect full size rx 16 #bae6fd; circle cx 360 cy 80 r 36 #fde047; path M0 240 L120 110 L210 200 L300 120 L460 250 L460 300 L0 300 Z #15803d; path M0 270 L160 190 L300 260 L460 220 L460 300 L0 300 Z #166534"
+            },
+            {
+              "label": "Rating chip",
+              "value": "★ 4.9 from 2,000 teams; overlaps the picture's bottom-left corner (left -28px, bottom -22px); #ffffff, 10px radius, padding 14px 18px, 15px, 700, #064e3b, shadow 0 4px 14px rgba(0,0,0,0.15)"
+            }
+          ]
+        },
+        {
+          "group": "Features",
+          "items": [
+            {
+              "label": "Sections",
+              "value": "Every section below has padding 28px 0; section headings 30px, bold, #111827, 20px gap below"
+            },
+            {
+              "label": "Eyebrow",
+              "value": "Features; 13px, uppercase, letter-spacing 2px, 700, #16a34a, 8px gap below"
+            },
+            {
+              "label": "Heading",
+              "value": "Why teams choose Brightleaf"
+            },
+            {
+              "label": "Grid",
+              "value": "3 columns, 24px gap, six cards"
+            },
+            {
+              "label": "Card",
+              "value": "#ffffff, 1px #e5e7eb border, 12px radius, 24px padding; icon then 16px gap; title 18px bold #111827, 8px gap below; text 15px, line-height 1.5, #4b5563"
+            },
+            {
+              "label": "Icons",
+              "value": "40px SVG, #16a34a circle with a white shape: rounded square, small circle, triangle, horizontal bar, diamond, three rising bars (in card order)"
+            },
+            {
+              "label": "Cards",
+              "value": "Shared calendars / See every project, meeting and deadline on one calendar your whole team can edit. | Smart reminders / Get a nudge before a task slips, not after the deadline has passed. | Weekly reviews / A five-minute summary every Friday shows what got done and what moved. | Time blocking / Drag tasks onto your week and protect time for deep, focused work. | Integrations / Connect Slack, Gmail and GitHub so tasks arrive where you already plan. | Reports / Spot overloaded teammates early with simple charts of planned hours."
+            }
+          ]
+        },
+        {
+          "group": "Pricing",
+          "items": [
+            {
+              "label": "Heading",
+              "value": "Simple pricing"
+            },
+            {
+              "label": "Tiers",
+              "value": "Three equal cards, 24px gap; #ffffff, 1px #e5e7eb border, 12px radius, 28px padding"
+            },
+            {
+              "label": "Middle tier",
+              "value": "2px #16a34a border; badge Most popular sits on the top border (top -13px, left 28px): #16a34a, #ffffff, 12px, 700, padding 5px 12px, 999px radius"
+            },
+            {
+              "label": "Tier name",
+              "value": "20px, bold, #111827"
+            },
+            {
+              "label": "Price",
+              "value": "40px, 700, #064e3b, margin 8px 0 16px; /month 16px, normal weight, #6b7280"
+            },
+            {
+              "label": "List",
+              "value": "No bullets, 24px gap below; items 15px, #374151, padding 6px 0, 1px #f3f4f6 bottom border"
+            },
+            {
+              "label": "Button",
+              "value": "Full width, centred text, green button style"
+            },
+            {
+              "label": "Starter",
+              "value": "$19/month; Up to 5 people, 3 projects, Email support; Choose Starter"
+            },
+            {
+              "label": "Team",
+              "value": "$49/month; Up to 25 people, Unlimited projects, Priority support; Choose Team"
+            },
+            {
+              "label": "Business",
+              "value": "$99/month; Unlimited people, SSO and audit log, Dedicated manager; Choose Business"
+            }
+          ]
+        },
+        {
+          "group": "Quotes",
+          "items": [
+            {
+              "label": "Heading",
+              "value": "What customers say"
+            },
+            {
+              "label": "Quote box",
+              "value": "#ffffff, 4px #16a34a left border, padding 20px 24px, radius 0 8px 8px 0, 16px gap below; quote 18px #1f2937, 8px gap below; name line 14px, #6b7280, not italic"
+            },
+            {
+              "label": "Quote 1",
+              "value": "“Brightleaf cut our Monday planning meeting from an hour to ten minutes.” / Priya Shah, Head of Operations, Northwind"
+            },
+            {
+              "label": "Quote 2",
+              "value": "“The Friday review alone is worth the price.” / Tom Becker, Engineering Lead, Lumen Labs"
+            }
+          ]
+        },
+        {
+          "group": "Form",
+          "items": [
+            {
+              "label": "Heading",
+              "value": "Get early access"
+            },
+            {
+              "label": "Box",
+              "value": "Two-column grid, 16px gap, #ffffff, 1px #e5e7eb border, 12px radius, 24px padding"
+            },
+            {
+              "label": "Fields",
+              "value": "Name, Work email, Company, Team size; labels 14px, 700, #374151, 6px gap below; empty inputs full width, padding 12px, 1px #d1d5db border, 6px radius, 15px"
+            },
+            {
+              "label": "Button",
+              "value": "Request access; green button style, on its own row, left-aligned"
+            }
+          ]
+        },
+        {
+          "group": "Footer",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "#064e3b, #d1fae5 text, padding 28px 0, 14px"
+            },
+            {
+              "label": "Content",
+              "value": "© 2026 Brightleaf Inc. on the left; Privacy and Terms on the right, 20px left margin each, #d1fae5, no underline"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "Inline SVG only; no images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "analytics-dashboard",
+      "title": "Analytics dashboard",
+      "level": 3,
+      "category": "App screens and data",
+      "brief": "Orbit Analytics needs its Overview screen. Shop owners open it every morning to check how the business is doing and whether any orders need attention. Key figures, the revenue trend and recent orders are supplied; the reference is the exact target, so match it closely. Make the important numbers readable in seconds and problem orders impossible to miss. Done means an owner can answer \"how are we doing?\" in five seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The sidebar shows Orbit Analytics, then Overview, Orders, Customers, Products, Reports, the label Account, then Team, Billing, Settings",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The sidebar is dark slate and runs the full height; Overview is highlighted in indigo as the current page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The top bar has a search box reading Search orders, customers... and, on the right, Maya Chen with an amber circle showing MC",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Four stat cards in order: Revenue $48,250 (+12.4% this month), Orders 1,284 (+8.1% this month), New customers 312 (+4.6% this month), Refund rate 2.3% (+0.4% this month)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The first three changes are green and the refund change is red",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Monthly revenue chart has twelve indigo bars labelled Jan to Dec, rising overall with small dips, over light gridlines marked 0, 25k and 50k",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Recent orders table has the columns Order, Customer, Date, Amount, Status and the ten rows from #10241 Liam Patel down to #10232 Chloe Silva, as in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Status pills are green for Paid, amber for Pending and red for Failed",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "White cards with thin borders and rounded corners on a light grey-blue page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "The sidebar links are inside a nav, the table has header cells, and the search box is a real input",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Orbit Analytics",
+        "Overview",
+        "Orders",
+        "Customers",
+        "Products",
+        "Reports",
+        "Account",
+        "Team",
+        "Billing",
+        "Settings",
+        "Search orders, customers...",
+        "Maya Chen",
+        "MC",
+        "Revenue",
+        "$48,250",
+        "+12.4% this month",
+        "1,284",
+        "+8.1% this month",
+        "New customers",
+        "312",
+        "+4.6% this month",
+        "Refund rate",
+        "2.3%",
+        "+0.4% this month",
+        "Monthly revenue",
+        "Recent orders",
+        "Order",
+        "Customer",
+        "Date",
+        "Amount",
+        "Status",
+        "#10241",
+        "Liam Patel",
+        "Nov 12, 2026",
+        "$320.00",
+        "Paid",
+        "#10240",
+        "Sofia Garcia",
+        "$89.50",
+        "Pending",
+        "#10239",
+        "Noah Kim",
+        "Nov 11, 2026",
+        "$1,240.00",
+        "#10238",
+        "Emma Rossi",
+        "$56.20",
+        "Failed",
+        "#10237",
+        "Oliver Brown",
+        "Nov 10, 2026",
+        "$410.75",
+        "#10236",
+        "Ava Johnson",
+        "$215.00",
+        "#10235",
+        "Lucas Martin",
+        "Nov 9, 2026",
+        "$78.40",
+        "#10234",
+        "Mia Dubois",
+        "$642.10",
+        "#10233",
+        "Ethan Novak",
+        "Nov 8, 2026",
+        "$33.00",
+        "#10232",
+        "Chloe Silva",
+        "$905.60"
+      ],
+      "content": "Product: Orbit Analytics\nNavigation: Overview, Orders, Customers, Products, Reports\nNavigation group \"Account\": Team, Billing, Settings\nCurrent section: Overview\nSearch placeholder: Search orders, customers...\nSigned-in user: Maya Chen; initials: MC\nPage title: Overview\nKey figures (label; value; change):\n- Revenue; $48,250; +12.4% this month\n- Orders; 1,284; +8.1% this month\n- New customers; 312; +4.6% this month\n- Refund rate; 2.3%; +0.4% this month\nChart: Monthly revenue; months Jan to Dec; scale marks 0, 25k, 50k\nRecent orders (Order | Customer | Date | Amount | Status):\n#10241 | Liam Patel | Nov 12, 2026 | $320.00 | Paid\n#10240 | Sofia Garcia | Nov 12, 2026 | $89.50 | Pending\n#10239 | Noah Kim | Nov 11, 2026 | $1,240.00 | Paid\n#10238 | Emma Rossi | Nov 11, 2026 | $56.20 | Failed\n#10237 | Oliver Brown | Nov 10, 2026 | $410.75 | Paid\n#10236 | Ava Johnson | Nov 10, 2026 | $215.00 | Pending\n#10235 | Lucas Martin | Nov 9, 2026 | $78.40 | Paid\n#10234 | Mia Dubois | Nov 9, 2026 | $642.10 | Paid\n#10233 | Ethan Novak | Nov 8, 2026 | $33.00 | Failed\n#10232 | Chloe Silva | Nov 8, 2026 | $905.60 | Paid",
+      "acceptance": [
+        "I can read the key figures and their changes in seconds",
+        "Failed and pending orders are impossible to miss",
+        "I always know where I am and how to reach other sections",
+        "The orders table is real table markup a screen reader can follow",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "dark slate sidebar, light main area",
+        "indigo as the single accent",
+        "white cards with quiet borders",
+        "small coloured status pills",
+        "data first, no decoration"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls a little"
+            },
+            {
+              "label": "Background",
+              "value": "#f4f6fa"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, sans-serif, text #1f2937"
+            },
+            {
+              "label": "Layout",
+              "value": "Sidebar on the left running the full page height, main area to its right; shared radius 10px"
+            }
+          ]
+        },
+        {
+          "group": "Sidebar",
+          "items": [
+            {
+              "label": "Panel",
+              "value": "240px wide, #1e293b, padding 24px 16px"
+            },
+            {
+              "label": "Brand",
+              "value": "Orbit Analytics; 20px, bold, #ffffff, margin 0 8px 32px"
+            },
+            {
+              "label": "Links",
+              "value": "Block links, 15px, #cbd5e1, padding 11px 14px, 4px gap below, 10px radius"
+            },
+            {
+              "label": "Active link",
+              "value": "Overview: #4f46e5 background, #ffffff, bold"
+            },
+            {
+              "label": "Order",
+              "value": "Overview, Orders, Customers, Products, Reports, then group label Account, then Team, Billing, Settings"
+            },
+            {
+              "label": "Group label",
+              "value": "11px, uppercase, letter-spacing 1px, #64748b, margin 28px 14px 10px"
+            }
+          ]
+        },
+        {
+          "group": "Top bar",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "64px tall, #ffffff, 1px #e5e7eb bottom border, padding 0 32px"
+            },
+            {
+              "label": "Search",
+              "value": "Input 360px x 38px, 1px #d1d5db border, 10px radius, padding 0 14px, #f9fafb, 14px #6b7280 text, value Search orders, customers..."
+            },
+            {
+              "label": "User",
+              "value": "Maya Chen (14px), then a 38px #f59e0b circle with MC in bold #fff; 12px gap"
+            }
+          ]
+        },
+        {
+          "group": "Stats",
+          "items": [
+            {
+              "label": "Content area",
+              "value": "Padding 28px 32px 40px; heading Overview, 24px bold, 20px gap below"
+            },
+            {
+              "label": "Row",
+              "value": "Four equal cards, 20px gap, 24px gap below"
+            },
+            {
+              "label": "Card",
+              "value": "#ffffff, 1px #e5e7eb border, 10px radius, padding 18px 20px"
+            },
+            {
+              "label": "Card text",
+              "value": "Label 13px #6b7280; value 28px bold, margin 8px 0 6px; change 13px #059669 (the last one #dc2626)"
+            },
+            {
+              "label": "Cards",
+              "value": "Revenue $48,250 +12.4% this month; Orders 1,284 +8.1% this month; New customers 312 +4.6% this month; Refund rate 2.3% +0.4% this month (red)"
+            }
+          ]
+        },
+        {
+          "group": "Chart",
+          "items": [
+            {
+              "label": "Card",
+              "value": "Same white card style with padding 20px 24px, 24px gap below; heading Monthly revenue, 17px bold, 16px gap below"
+            },
+            {
+              "label": "SVG",
+              "value": "Inline SVG 960 x 250, viewBox 0 0 960 250"
+            },
+            {
+              "label": "Grid lines",
+              "value": "From x 40 to 950: y 210 stroke #e5e7eb; y 140 and y 70 stroke #f1f5f9"
+            },
+            {
+              "label": "Axis labels",
+              "value": "At x 0, font-size 12, #9ca3af: 0 at y 214, 25k at y 144, 50k at y 74"
+            },
+            {
+              "label": "Bars",
+              "value": "Twelve rects, fill #4f46e5, width 50, rx 4, bottoms on y 210, x from 60 in steps of 75; heights 80, 98, 90, 114, 106, 126, 120, 138, 132, 150, 158, 170"
+            },
+            {
+              "label": "Month labels",
+              "value": "Jan to Dec centred under each bar (x 85, 160, ... 910), y 232, font-size 12, #6b7280"
+            }
+          ]
+        },
+        {
+          "group": "Orders table",
+          "items": [
+            {
+              "label": "Card",
+              "value": "Same white card; heading Recent orders"
+            },
+            {
+              "label": "Table",
+              "value": "Full width, collapsed borders, 14px"
+            },
+            {
+              "label": "Header",
+              "value": "Order, Customer, Date, Amount, Status; 12px, uppercase, #6b7280, left-aligned, padding 10px 12px, 1px #e5e7eb bottom border"
+            },
+            {
+              "label": "Cells",
+              "value": "Padding 13px 12px, 1px #f1f5f9 bottom border"
+            },
+            {
+              "label": "Pills",
+              "value": "Padding 3px 10px, 999px radius, 12px bold; Paid #dcfce7 / #166534; Pending #fef3c7 / #92400e; Failed #fee2e2 / #991b1b"
+            },
+            {
+              "label": "Rows 1-5",
+              "value": "#10241 Liam Patel, Nov 12, 2026, $320.00, Paid | #10240 Sofia Garcia, Nov 12, 2026, $89.50, Pending | #10239 Noah Kim, Nov 11, 2026, $1,240.00, Paid | #10238 Emma Rossi, Nov 11, 2026, $56.20, Failed | #10237 Oliver Brown, Nov 10, 2026, $410.75, Paid"
+            },
+            {
+              "label": "Rows 6-10",
+              "value": "#10236 Ava Johnson, Nov 10, 2026, $215.00, Pending | #10235 Lucas Martin, Nov 9, 2026, $78.40, Paid | #10234 Mia Dubois, Nov 9, 2026, $642.10, Paid | #10233 Ethan Novak, Nov 8, 2026, $33.00, Failed | #10232 Chloe Silva, Nov 8, 2026, $905.60, Paid"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "Inline SVG only; no images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "night-train-article",
+      "title": "Long-form news article",
+      "level": 3,
+      "category": "Marketing and content",
+      "brief": "The Ledger needs a proper long-form layout for this travel feature. Readers should enjoy it like a quality newspaper piece, and the chart, route table, code sample and tips must each be easy to use. Text and data are supplied, and the reference design, with our red as the brand colour, is exactly the page we want: match it. It must be accessible and read well on a phone. Done means it feels like The Ledger and nothing interrupts the reading.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The header has The Ledger on the left and World, Travel, Climate, Culture, Subscribe on the right in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The kicker reads Travel, the headline The Quiet Return of the Night Train, and the byline By Hannah Okafor · November 9, 2026 · 8 min read with the name in bold",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The two opening paragraphs, the pull quote and the figure caption match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The chart is drawn inline: a red line through seven points with a dot on each, rising from 2020 to 2026, years labelled underneath, on a light warm background",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Subheadings in order: Where the new lines run (with the table), Checking the timetable yourself (with the paragraph and code block), How to book a good berth (with the numbered list)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The table has the columns Route, Operator, Hours, From and rows in order: Paris to Berlin, Nightjet, 14, €79; Amsterdam to Prague, European Sleeper, 15, €69; Stockholm to Hamburg, SJ Euronight, 12, €59; Rome to Munich, Nightjet, 13, €89",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "The code block shows the five-line query in the key facts, one clause per line, in a monospace face on a dark background",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The numbered list has the four tips in the order given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The footer has three columns: Sections (World, Travel, Climate, Culture), The Ledger (About us, Careers, Contact, Press), Follow (Newsletter, Podcast, RSS feed, Archive)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "Serif body text, sans-serif for the nav, kicker, byline, caption, table and footer; red as the single accent; a warm almost-white page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "One main heading with subheadings below it, a table with header cells, a real numbered list, and the code in a preformatted block",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "The Ledger",
+        "World",
+        "Travel",
+        "Climate",
+        "Culture",
+        "Subscribe",
+        "The Quiet Return of the Night Train",
+        "By Hannah Okafor · November 9, 2026 · 8 min read",
+        "Ten years ago, the sleeper train looked finished. Budget airlines had taken the routes, the carriages were old, and operators were cutting services every winter. Today new lines open every season, and many of them sell out weeks in advance.",
+        "What changed was not the trains themselves but the travellers. Families, remote workers and people avoiding short flights now treat a night on the rails as part of the trip rather than a cost of it.",
+        "\"You go to sleep in one country and wake up in another. No airport has ever given me that.\"",
+        "Figure 1. Night train routes in Europe, 2020 to 2026. Source: Rail Europe Watch.",
+        "Where the new lines run",
+        "Route",
+        "Operator",
+        "Hours",
+        "From",
+        "Paris to Berlin",
+        "Nightjet",
+        "€79",
+        "European Sleeper",
+        "SJ Euronight",
+        "Rome to Munich",
+        "Checking the timetable yourself",
+        "Most operators publish their timetables as open data. A short query is enough to find every overnight departure:",
+        "SELECT route, depart, arrive",
+        "FROM departures",
+        "WHERE depart >= '20:00'",
+        "AND overnight = true",
+        "ORDER BY depart;",
+        "How to book a good berth",
+        "Book as soon as the season opens, usually ninety days ahead.",
+        "Choose a lower berth if you want an easy climb at night.",
+        "Bring a small bag; there is little room for suitcases.",
+        "Check whether breakfast is included before you pay extra.",
+        "Sections",
+        "About us",
+        "Newsletter",
+        "Podcast",
+        "RSS feed",
+        "Archive"
+      ],
+      "content": "Publication: The Ledger\nSections: World, Travel, Climate, Culture; action: Subscribe\nArticle category: Travel\nTitle: The Quiet Return of the Night Train\nByline: By Hannah Okafor · November 9, 2026 · 8 min read\nBody:\n1. Ten years ago, the sleeper train looked finished. Budget airlines had taken the routes, the carriages were old, and operators were cutting services every winter. Today new lines open every season, and many of them sell out weeks in advance.\n2. What changed was not the trains themselves but the travellers. Families, remote workers and people avoiding short flights now treat a night on the rails as part of the trip rather than a cost of it.\nPull quote: \"You go to sleep in one country and wake up in another. No airport has ever given me that.\"\nFigure: years 2020, 2021, 2022, 2023, 2024, 2025, 2026; caption: Figure 1. Night train routes in Europe, 2020 to 2026. Source: Rail Europe Watch.\nSection: Where the new lines run\nTable (Route | Operator | Hours | From):\nParis to Berlin | Nightjet | 14 | €79\nAmsterdam to Prague | European Sleeper | 15 | €69\nStockholm to Hamburg | SJ Euronight | 12 | €59\nRome to Munich | Nightjet | 13 | €89\nSection: Checking the timetable yourself\nText: Most operators publish their timetables as open data. A short query is enough to find every overnight departure:\nCode (SQL):\nSELECT route, depart, arrive\nFROM departures\nWHERE depart >= '20:00'\nAND overnight = true\nORDER BY depart;\nSection: How to book a good berth\nTips:\n- Book as soon as the season opens, usually ninety days ahead.\n- Choose a lower berth if you want an easy climb at night.\n- Bring a small bag; there is little room for suitcases.\n- Check whether breakfast is included before you pay extra.\nFooter link groups:\n- Sections: World, Travel, Climate, Culture\n- The Ledger: About us, Careers, Contact, Press\n- Follow: Newsletter, Podcast, RSS feed, Archive",
+      "acceptance": [
+        "It reads like a quality newspaper feature",
+        "The chart, table, code and tips are each easy to use",
+        "The code sample stays readable and is marked up as code",
+        "It reads comfortably on a phone without zooming",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "designNotes": [
+        "serious newspaper feel, one centred reading column",
+        "serif body, sans-serif furniture",
+        "deep red as the only accent",
+        "warm light footer with three link columns"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#fffdf8"
+            },
+            {
+              "label": "Fonts",
+              "value": "Body Georgia, serif, text #222222; nav, kicker, byline, caption, table and footer in Arial, sans-serif; code in \"Courier New\", monospace"
+            },
+            {
+              "label": "Accent",
+              "value": "#b91c1c; shared radius 6px"
+            }
+          ]
+        },
+        {
+          "group": "Header",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "#ffffff, 1px #e7e2d8 bottom border; content 1040px wide, centred, 64px tall, logo left, links right"
+            },
+            {
+              "label": "Logo",
+              "value": "The Ledger; Georgia 26px, bold, #111111, with Ledger in #b91c1c"
+            },
+            {
+              "label": "Links",
+              "value": "World, Travel, Climate, Culture, Subscribe; 15px, #444444, 26px left margin each"
+            }
+          ]
+        },
+        {
+          "group": "Article top",
+          "items": [
+            {
+              "label": "Column",
+              "value": "720px wide, centred, padding 44px 0 30px"
+            },
+            {
+              "label": "Kicker",
+              "value": "Travel; 13px, bold, uppercase, letter-spacing 1.5px, #b91c1c"
+            },
+            {
+              "label": "Heading",
+              "value": "The Quiet Return of the Night Train; 44px, bold, line-height 1.15, margin 12px 0 16px"
+            },
+            {
+              "label": "Byline",
+              "value": "By Hannah Okafor · November 9, 2026 · 8 min read; name bold #222222, rest 14px #6b6b6b; 22px bottom padding, 1px #e7e2d8 bottom border, 26px gap below"
+            },
+            {
+              "label": "Paragraphs",
+              "value": "19px, line-height 1.65, 20px gap below"
+            },
+            {
+              "label": "Paragraph 1",
+              "value": "Ten years ago, the sleeper train looked finished. Budget airlines had taken the routes, the carriages were old, and operators were cutting services every winter. Today new lines open every season, and many of them sell out weeks in advance."
+            },
+            {
+              "label": "Paragraph 2",
+              "value": "What changed was not the trains themselves but the travellers. Families, remote workers and people avoiding short flights now treat a night on the rails as part of the trip rather than a cost of it."
+            }
+          ]
+        },
+        {
+          "group": "Pull quote",
+          "items": [
+            {
+              "label": "Text",
+              "value": "\"You go to sleep in one country and wake up in another. No airport has ever given me that.\" (straight double quotes)"
+            },
+            {
+              "label": "Style",
+              "value": "Margin 30px 0, padding 4px 0 4px 26px, 4px #b91c1c left border, 26px italic, line-height 1.4, #333333"
+            }
+          ]
+        },
+        {
+          "group": "Figure",
+          "items": [
+            {
+              "label": "Box",
+              "value": "Margin 28px 0; inline SVG 720 x 230, viewBox 0 0 720 230, background #f6f1e7, 6px radius"
+            },
+            {
+              "label": "Line",
+              "value": "Polyline 40,190 140,176 240,168 340,140 440,110 540,82 640,50; no fill, stroke #b91c1c, width 4"
+            },
+            {
+              "label": "Points",
+              "value": "A circle of r 6, fill #b91c1c, on each of the seven points"
+            },
+            {
+              "label": "Labels",
+              "value": "2020 to 2026 centred at x 40, 140 ... 640, y 218, Arial, font-size 13, #6b6b6b"
+            },
+            {
+              "label": "Caption",
+              "value": "Figure 1. Night train routes in Europe, 2020 to 2026. Source: Rail Europe Watch.; 13px, #6b6b6b, 10px above"
+            }
+          ]
+        },
+        {
+          "group": "Table",
+          "items": [
+            {
+              "label": "Subheadings (all three)",
+              "value": "27px, bold, margin 34px 0 14px"
+            },
+            {
+              "label": "Subheading",
+              "value": "Where the new lines run"
+            },
+            {
+              "label": "Table",
+              "value": "Full width, collapsed, 15px, margin 8px 0 26px; header cells left-aligned, #f6f1e7, padding 10px 12px, 2px #d6cfc0 bottom border; body cells padding 10px 12px, 1px #e7e2d8 bottom border"
+            },
+            {
+              "label": "Header",
+              "value": "Route, Operator, Hours, From"
+            },
+            {
+              "label": "Rows",
+              "value": "Paris to Berlin, Nightjet, 14, €79 | Amsterdam to Prague, European Sleeper, 15, €69 | Stockholm to Hamburg, SJ Euronight, 12, €59 | Rome to Munich, Nightjet, 13, €89"
+            }
+          ]
+        },
+        {
+          "group": "Code",
+          "items": [
+            {
+              "label": "Subheading",
+              "value": "Checking the timetable yourself"
+            },
+            {
+              "label": "Paragraph",
+              "value": "Most operators publish their timetables as open data. A short query is enough to find every overnight departure:"
+            },
+            {
+              "label": "Block",
+              "value": "#1f2430, #e6e1cf text, Courier New 15px, line-height 1.5, padding 18px 20px, 6px radius, margin 8px 0 26px"
+            },
+            {
+              "label": "Code lines",
+              "value": "SELECT route, depart, arrive / FROM departures / WHERE depart >= '20:00' / (two spaces)AND overnight = true / ORDER BY depart;"
+            }
+          ]
+        },
+        {
+          "group": "List",
+          "items": [
+            {
+              "label": "Subheading",
+              "value": "How to book a good berth"
+            },
+            {
+              "label": "List",
+              "value": "Numbered, 19px, line-height 1.6, 28px left padding, 24px gap below, 8px between items"
+            },
+            {
+              "label": "Items",
+              "value": "Book as soon as the season opens, usually ninety days ahead. | Choose a lower berth if you want an easy climb at night. | Bring a small bag; there is little room for suitcases. | Check whether breakfast is included before you pay extra."
+            }
+          ]
+        },
+        {
+          "group": "Footer",
+          "items": [
+            {
+              "label": "Band",
+              "value": "#f3eee4, 1px #e7e2d8 top border; content 1040px centred, padding 36px 0 40px, three equal columns, 60px gap"
+            },
+            {
+              "label": "Headings",
+              "value": "13px, bold, uppercase, letter-spacing 1px, #111111, 12px gap below"
+            },
+            {
+              "label": "Links",
+              "value": "One per line, 14px, #555555, 8px gap below"
+            },
+            {
+              "label": "Columns",
+              "value": "Sections: World, Travel, Climate, Culture | The Ledger: About us, Careers, Contact, Press | Follow: Newsletter, Podcast, RSS feed, Archive"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "Inline SVG only; no images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "print-invoice",
+      "title": "Print invoice",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "Northwind Print Co. needs an invoice template that looks good on screen and on paper; use the supplied invoice as the example. Clients must find what they owe, when and how to pay at a glance, and the line items must add up clearly. The attached reference, with teal as our brand colour, is exactly what we want; match it as closely as you can. Done means it prints cleanly on one page and a client never has to ask what to pay.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The top row shows the N logo, Northwind Print Co. and its address and VAT line on the left, and INVOICE with No. INV-2026-0418 on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Three detail blocks in order: Bill to (Harbourlight Events Ltd, Attn: Marcus Ode, 12 Quayside Walk, Newcastle NE1 3DX), Ship to (Harbourlight Events Ltd, Unit 4, Baltic Works, Gateshead NE8 2BA), and the dates (Issued 3 November 2026, Due 3 December 2026, PO number HL-7731) with an Awaiting payment badge",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The items table has the columns Description, Code, Qty, Unit price, Amount and these eight rows in order: Business cards (BC-216, 2,000, $0.09, $180.00); Tri-fold brochure (BR-310, 1,500, $0.62, $930.00); Pull-up banner (PB-085, 4, $145.00, $580.00); Letterhead (LH-120, 2,500, $0.11, $275.00); Presentation folder (PF-400, 600, $1.35, $810.00); Vinyl window decal (VD-022, 6, $68.00, $408.00); Design proof revisions (SV-001, 5, $75.00, $375.00); Courier delivery (SH-NXT, 1, $42.00, $42.00), with the full descriptions from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Qty, Unit price and Amount are right-aligned and the codes are in a typewriter-style face",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The totals read Subtotal $3,600.00, Loyalty discount (5%) −$180.00, VAT (5%) $171.00 and Total due $3,591.00",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The totals box sits on the right, with Total due larger, bold and teal above a strong rule",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Payment and Terms notes and the thank-you line match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "One white sheet with a teal top band on a light grey page; small uppercase grey headings for each block; the badge is amber",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The line items are a table with header cells",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "N",
+        "Northwind Print Co.",
+        "88 Mill Lane, Leeds LS1 4BX · VAT GB 284 1193 56",
+        "INVOICE",
+        "No. INV-2026-0418",
+        "Bill to",
+        "Harbourlight Events Ltd",
+        "Attn: Marcus Ode",
+        "12 Quayside Walk",
+        "Newcastle NE1 3DX",
+        "Ship to",
+        "Unit 4, Baltic Works",
+        "Gateshead NE8 2BA",
+        "Issued",
+        "3 November 2026",
+        "Due",
+        "3 December 2026",
+        "PO number",
+        "HL-7731",
+        "Awaiting payment",
+        "Description",
+        "Code",
+        "Qty",
+        "Unit price",
+        "Amount",
+        "Business cards, 16pt matte, double-sided",
+        "Tri-fold brochure, A4, 150gsm gloss",
+        "Pull-up banner, 850 × 2000 mm, with stand",
+        "Letterhead, 120gsm uncoated",
+        "Presentation folder with pocket",
+        "Vinyl window decal, custom cut",
+        "Design proof revisions (hours)",
+        "Courier delivery, next day",
+        "BC-216",
+        "SH-NXT",
+        "Subtotal",
+        "$3,600.00",
+        "Loyalty discount (5%)",
+        "−$180.00",
+        "VAT (5%)",
+        "$171.00",
+        "Total due",
+        "$3,591.00",
+        "Payment",
+        "Bank transfer to Northwind Print Co.",
+        "Sort code 40-12-76 · Account 31926819",
+        "Reference: INV-2026-0418",
+        "Terms",
+        "Payment due within 30 days. A late fee of 2% per month applies to overdue balances.",
+        "Thank you for your business — questions? accounts@northwindprint.co.uk · 0113 496 0021"
+      ],
+      "content": "Seller: Northwind Print Co.; logo letter: N\nSeller address: 88 Mill Lane, Leeds LS1 4BX · VAT GB 284 1193 56\nDocument: INVOICE; No. INV-2026-0418\nStatus: Awaiting payment\nBill to: Harbourlight Events Ltd; Attn: Marcus Ode; 12 Quayside Walk; Newcastle NE1 3DX\nShip to: Harbourlight Events Ltd; Unit 4, Baltic Works; Gateshead NE8 2BA\nIssued: 3 November 2026\nDue: 3 December 2026\nPO number: HL-7731\nLine items (Description | Code | Qty | Unit price | Amount):\nBusiness cards, 16pt matte, double-sided | BC-216 | 2,000 | $0.09 | $180.00\nTri-fold brochure, A4, 150gsm gloss | BR-310 | 1,500 | $0.62 | $930.00\nPull-up banner, 850 × 2000 mm, with stand | PB-085 | 4 | $145.00 | $580.00\nLetterhead, 120gsm uncoated | LH-120 | 2,500 | $0.11 | $275.00\nPresentation folder with pocket | PF-400 | 600 | $1.35 | $810.00\nVinyl window decal, custom cut | VD-022 | 6 | $68.00 | $408.00\nDesign proof revisions (hours) | SV-001 | 5 | $75.00 | $375.00\nCourier delivery, next day | SH-NXT | 1 | $42.00 | $42.00\nTotals:\n- Subtotal: $3,600.00\n- Loyalty discount (5%): −$180.00\n- VAT (5%): $171.00\n- Total due: $3,591.00\nPayment: Bank transfer to Northwind Print Co.; Sort code 40-12-76 · Account 31926819; Reference: INV-2026-0418\nTerms: Payment due within 30 days. A late fee of 2% per month applies to overdue balances.\nClosing line: Thank you for your business — questions? accounts@northwindprint.co.uk · 0113 496 0021",
+      "acceptance": [
+        "I can find the total due, the due date and how to pay at a glance",
+        "The line items and totals are easy to check",
+        "I can tell straight away whether it has been paid",
+        "It prints cleanly on paper without anything cut off",
+        "It matches the reference design closely in structure and look"
+      ],
+      "designNotes": [
+        "precise, professional single sheet",
+        "teal brand band and teal total",
+        "numbers right-aligned in tidy columns",
+        "small uppercase grey block headings"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls a little"
+            },
+            {
+              "label": "Background",
+              "value": "#eef0f3, padding 40px 0"
+            },
+            {
+              "label": "Font",
+              "value": "Arial, Helvetica, sans-serif, text #1f2933"
+            },
+            {
+              "label": "Reset",
+              "value": "All default margins and padding removed, border-box"
+            }
+          ]
+        },
+        {
+          "group": "Sheet",
+          "items": [
+            {
+              "label": "Sheet",
+              "value": "880px wide, centred, #fff, padding 56px 64px, 6px #0f766e top border"
+            }
+          ]
+        },
+        {
+          "group": "Top row",
+          "items": [
+            {
+              "label": "Company",
+              "value": "48px #0f766e circle with N in bold 20px Georgia, #fff; 14px gap; Northwind Print Co. (20px bold) above 88 Mill Lane, Leeds LS1 4BX · VAT GB 284 1193 56 (13px, #52606d)"
+            },
+            {
+              "label": "Title",
+              "value": "Right-aligned: INVOICE, 34px, normal weight, letter-spacing 6px, #0f766e; below it No. INV-2026-0418, 13px, #52606d, 4px above"
+            }
+          ]
+        },
+        {
+          "group": "Details",
+          "items": [
+            {
+              "label": "Row",
+              "value": "Three blocks spread across the width, 44px gap above, 14px, line-height 1.6"
+            },
+            {
+              "label": "Block headings",
+              "value": "11px, uppercase, letter-spacing 2px, #7b8794, 6px gap below"
+            },
+            {
+              "label": "Bill to",
+              "value": "Harbourlight Events Ltd (bold) / Attn: Marcus Ode / 12 Quayside Walk / Newcastle NE1 3DX"
+            },
+            {
+              "label": "Ship to",
+              "value": "Harbourlight Events Ltd / Unit 4, Baltic Works / Gateshead NE8 2BA"
+            },
+            {
+              "label": "Dates",
+              "value": "Two-column list, labels #7b8794, values 24px to the right, 2px vertical padding: Issued 3 November 2026; Due 3 December 2026; PO number HL-7731"
+            },
+            {
+              "label": "Status",
+              "value": "Awaiting payment; #fef3c7, #92400e, 12px bold, padding 4px 10px, 12px radius, 8px above"
+            }
+          ]
+        },
+        {
+          "group": "Items table",
+          "items": [
+            {
+              "label": "Table",
+              "value": "Full width, collapsed, 14px, 40px gap above"
+            },
+            {
+              "label": "Header",
+              "value": "Description, Code, Qty, Unit price, Amount; 11px, uppercase, letter-spacing 1px, #52606d, #f5f7fa, padding 10px 12px, 2px #cbd2d9 bottom border; last three right-aligned"
+            },
+            {
+              "label": "Cells",
+              "value": "Padding 12px, 1px #e4e7eb bottom border; Qty, Unit price and Amount right-aligned; codes in 'Courier New', monospace, 13px, #7b8794"
+            },
+            {
+              "label": "Rows 1-4",
+              "value": "Business cards, 16pt matte, double-sided | BC-216 | 2,000 | $0.09 | $180.00 ; Tri-fold brochure, A4, 150gsm gloss | BR-310 | 1,500 | $0.62 | $930.00 ; Pull-up banner, 850 × 2000 mm, with stand | PB-085 | 4 | $145.00 | $580.00 ; Letterhead, 120gsm uncoated | LH-120 | 2,500 | $0.11 | $275.00"
+            },
+            {
+              "label": "Rows 5-8",
+              "value": "Presentation folder with pocket | PF-400 | 600 | $1.35 | $810.00 ; Vinyl window decal, custom cut | VD-022 | 6 | $68.00 | $408.00 ; Design proof revisions (hours) | SV-001 | 5 | $75.00 | $375.00 ; Courier delivery, next day | SH-NXT | 1 | $42.00 | $42.00"
+            }
+          ]
+        },
+        {
+          "group": "Totals",
+          "items": [
+            {
+              "label": "Box",
+              "value": "320px wide, right-aligned, 20px gap above, 14px; each line label left and figure right, padding 7px 12px"
+            },
+            {
+              "label": "Lines",
+              "value": "Subtotal $3,600.00; Loyalty discount (5%) −$180.00 (true minus sign); VAT (5%) $171.00"
+            },
+            {
+              "label": "Total",
+              "value": "Total due $3,591.00; 2px #1f2933 top border, 6px above, 12px top padding, 20px bold #0f766e"
+            }
+          ]
+        },
+        {
+          "group": "Notes and footer",
+          "items": [
+            {
+              "label": "Notes",
+              "value": "Two blocks side by side sized to their content, 48px gap, 48px above, 13px, line-height 1.6, #52606d; headings as in Details"
+            },
+            {
+              "label": "Payment",
+              "value": "Bank transfer to Northwind Print Co. / Sort code 40-12-76 · Account 31926819 / Reference: INV-2026-0418"
+            },
+            {
+              "label": "Terms",
+              "value": "Payment due within 30 days. A late fee of 2% per month applies to overdue balances."
+            },
+            {
+              "label": "Thanks line",
+              "value": "Thank you for your business — questions? accounts@northwindprint.co.uk · 0113 496 0021; centred, 13px, #7b8794, 44px above, 20px top padding, 1px #e4e7eb top border"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "No images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "product-detail",
+      "title": "Product detail page",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "Fernpeak Outfitters needs the product page for its Alder pack. Shoppers should decide quickly: see the pack, its price and rating, choose a size, add it to the cart, then dig into details, specs and reviews if they want. Content is supplied, and the reference design is the exact target; it will be judged on how closely you match it. It must be accessible and work on a phone. Done means a shopper can buy it with confidence or find any detail they need.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The nav shows Fernpeak Outfitters, the links Packs, Tents, Clothing, Sale and Cart (0), with the breadcrumb Home / Packs / Daypacks / Alder 28L Roll-Top Pack below",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The main row has the picture panel on the left and the buying column on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The picture panel is light grey with rounded corners and holds an inline drawing of a burnt orange backpack with a handle and a front pocket",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The buying column shows, in order: Alder 28L Roll-Top Pack, five stars with 4.8 · 312 reviews, $149.00, the description, Colour: Ember, Size, Add to cart, the stock line and the two perks",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Four round colour swatches with the orange Ember one ringed as selected, and two size boxes with M/L outlined in bold as selected",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Add to cart fills the width in deep green with white text, with a square outlined heart button beside it",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Tabs in order: Description (shown as active), Specifications, Reviews (312); below them the two description paragraphs and the specifications table match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Three reviews in order: Daniel K. (five stars), Sofia M. (four stars), Ravi P. (five stars), with their texts from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Four related items in order: Ridge 18 Daypack $89, Summit Hip Pack $45, Trailhead Duffel 40L $129, Stormproof Pack Cover $24",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "The green footer shows © 2026 Fernpeak Outfitters on the left and Shipping · Returns · Contact on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r11",
+          "text": "The product name is the page's main heading, What customers say and You may also like are headings below it, and the specifications are a table",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fernpeak Outfitters",
+        "Packs",
+        "Tents",
+        "Clothing",
+        "Sale",
+        "Cart (0)",
+        "Home / Packs / Daypacks / Alder 28L Roll-Top Pack",
+        "Alder 28L Roll-Top Pack",
+        "4.8 · 312 reviews",
+        "$149.00",
+        "A waterproof roll-top pack with a padded 16-inch laptop sleeve, quick-access side pockets and a removable hip belt. Built from recycled 420D nylon.",
+        "Colour: Ember",
+        "Size",
+        "S/M",
+        "M/L",
+        "Add to cart",
+        "In stock — ships in 1–2 business days",
+        "Free returns within 60 days",
+        "Lifetime repair guarantee",
+        "Description",
+        "Specifications",
+        "Reviews (312)",
+        "The Alder is our everyday pack for people who don't stop at the city limits. The roll-top closure expands from 24 to 28 litres, and welded seams keep rain out.",
+        "Inside, a suspended laptop sleeve keeps your machine off the ground when you set the pack down, and a zip pocket holds keys and passport.",
+        "Volume",
+        "24–28 litres",
+        "Weight",
+        "1.1 kg",
+        "Material",
+        "Recycled 420D nylon, TPU coated",
+        "Laptop sleeve",
+        "Fits up to 16 inches",
+        "Dimensions",
+        "52 × 30 × 17 cm",
+        "What customers say",
+        "Daniel K.",
+        "Took it on a 9-day trek in the Dolomites. The hip belt carried everything and the roll-top kept my gear dry through two storms.",
+        "Sofia M.",
+        "Great daily bag. Laptop sleeve fits a 16-inch machine. Wish the side pockets were a little deeper for my bottle.",
+        "Ravi P.",
+        "Third year using it for my commute and it still looks new. The orange is brighter in person.",
+        "You may also like",
+        "Ridge 18 Daypack",
+        "$89",
+        "Summit Hip Pack",
+        "$45",
+        "Trailhead Duffel 40L",
+        "$129",
+        "Stormproof Pack Cover",
+        "$24",
+        "© 2026 Fernpeak Outfitters",
+        "Shipping · Returns · Contact"
+      ],
+      "content": "Shop: Fernpeak Outfitters\nShop sections: Packs, Tents, Clothing, Sale; basket link: Cart (0)\nBreadcrumb: Home / Packs / Daypacks / Alder 28L Roll-Top Pack\nProduct: Alder 28L Roll-Top Pack\nRating: 5 of 5 stars; 4.8 · 312 reviews\nPrice: $149.00\nSummary: A waterproof roll-top pack with a padded 16-inch laptop sleeve, quick-access side pockets and a removable hip belt. Built from recycled 420D nylon.\nColour: Ember (chosen colour; written \"Colour: Ember\")\nSize options: S/M, M/L\nButtons: Add to cart; save to wishlist\nAssurances:\n- In stock — ships in 1–2 business days\n- Free returns within 60 days\n- Lifetime repair guarantee\nInformation sections: Description, Specifications, Reviews (312); current section: Description\nDescription:\nThe Alder is our everyday pack for people who don't stop at the city limits. The roll-top closure expands from 24 to 28 litres, and welded seams keep rain out.\nInside, a suspended laptop sleeve keeps your machine off the ground when you set the pack down, and a zip pocket holds keys and passport.\nSpecifications:\n- Volume: 24–28 litres\n- Weight: 1.1 kg\n- Material: Recycled 420D nylon, TPU coated\n- Laptop sleeve: Fits up to 16 inches\n- Dimensions: 52 × 30 × 17 cm\nReviews (heading: What customers say), reviewer; stars out of 5; text:\n- Daniel K.; 5; Took it on a 9-day trek in the Dolomites. The hip belt carried everything and the roll-top kept my gear dry through two storms.\n- Sofia M.; 4; Great daily bag. Laptop sleeve fits a 16-inch machine. Wish the side pockets were a little deeper for my bottle.\n- Ravi P.; 5; Third year using it for my commute and it still looks new. The orange is brighter in person.\nRelated products (heading: You may also like):\n- Ridge 18 Daypack; $89\n- Summit Hip Pack; $45\n- Trailhead Duffel 40L; $129\n- Stormproof Pack Cover; $24\nFooter: © 2026 Fernpeak Outfitters; links: Shipping · Returns · Contact",
+      "acceptance": [
+        "I can see the price, rating and stock status at a glance",
+        "Choosing a size and adding to the cart is obvious and keyboard friendly",
+        "Details, specifications and reviews are easy to find",
+        "It works on a phone without losing anything important",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "designNotes": [
+        "outdoorsy and premium, without fuss",
+        "deep forest green with a burnt orange product",
+        "serif names and headings, plain sans-serif body",
+        "light grey panels with rounded corners"
+      ],
+      "exactSpec": [
+        {
+          "group": "Page",
+          "items": [
+            {
+              "label": "Viewport",
+              "value": "1280 wide; the page scrolls"
+            },
+            {
+              "label": "Background",
+              "value": "#fff"
+            },
+            {
+              "label": "Fonts",
+              "value": "Verdana, Geneva, sans-serif, text #1c1917; logo, product name and section headings in Georgia, serif"
+            },
+            {
+              "label": "Reset",
+              "value": "All default margins and padding removed, border-box"
+            }
+          ]
+        },
+        {
+          "group": "Nav and breadcrumb",
+          "items": [
+            {
+              "label": "Bar",
+              "value": "68px tall, padding 0 48px, 1px #e7e5e4 bottom border; logo left, links centre, cart right"
+            },
+            {
+              "label": "Logo",
+              "value": "Fernpeak Outfitters; bold 22px Georgia, #14532d"
+            },
+            {
+              "label": "Links",
+              "value": "Packs, Tents, Clothing, Sale; 14px, #44403c, margin 0 16px"
+            },
+            {
+              "label": "Cart",
+              "value": "Cart (0); 14px, bold, #14532d"
+            },
+            {
+              "label": "Breadcrumb",
+              "value": "Home / Packs / Daypacks / Alder 28L Roll-Top Pack; padding 18px 48px, 12px, #78716c"
+            }
+          ]
+        },
+        {
+          "group": "Product picture",
+          "items": [
+            {
+              "label": "Layout",
+              "value": "Hero row padding 12px 48px 48px, picture left, buying column right, 56px gap"
+            },
+            {
+              "label": "Box",
+              "value": "560px x 520px, #f5f5f4, 16px radius, drawing centred"
+            },
+            {
+              "label": "SVG",
+              "value": "360 x 360, viewBox 0 0 200 200"
+            },
+            {
+              "label": "Shapes",
+              "value": "Handle rect x 70 y 20 w 60 h 30 rx 14, no fill, stroke #7c2d12 width 8; body rect x 45 y 40 w 110 h 140 rx 26 #c2410c; pocket rect x 62 y 100 w 76 h 56 rx 10 #7c2d12 opacity .55; strip rect x 62 y 96 w 76 h 8 rx 4 #fde68a; circle cx 100 cy 70 r 6 #fde68a"
+            }
+          ]
+        },
+        {
+          "group": "Buying column",
+          "items": [
+            {
+              "label": "Column",
+              "value": "Fills the rest, 12px top padding"
+            },
+            {
+              "label": "Name",
+              "value": "Alder 28L Roll-Top Pack; Georgia 34px, normal weight, line-height 1.2"
+            },
+            {
+              "label": "Rating",
+              "value": "10px above; ★★★★★ 16px #ca8a04, then 4.8 · 312 reviews, 13px #78716c, 8px left margin"
+            },
+            {
+              "label": "Price",
+              "value": "$149.00; 30px, bold, #14532d, 20px above"
+            },
+            {
+              "label": "Blurb",
+              "value": "A waterproof roll-top pack with a padded 16-inch laptop sleeve, quick-access side pockets and a removable hip belt. Built from recycled 420D nylon.; 14px, line-height 1.7, #44403c, 16px above"
+            },
+            {
+              "label": "Option labels",
+              "value": "Colour: Ember, then Size; 12px, bold, uppercase, letter-spacing 1px, #57534e, 26px above"
+            },
+            {
+              "label": "Swatches",
+              "value": "Four 34px circles, 12px gap, 10px above, 2px #fff border plus a 1px #d6d3d1 outer ring; #c2410c (selected: 2px #1c1917 ring), #1e3a8a, #3f6212, #292524"
+            },
+            {
+              "label": "Sizes",
+              "value": "Boxes 64px x 40px, 10px gap, 10px above, 1px #d6d3d1 border, 8px radius, 14px: S/M, M/L (selected: 2px #1c1917 border, bold)"
+            },
+            {
+              "label": "Buttons",
+              "value": "28px above, 12px gap: Add to cart fills the width, 52px tall, #14532d, #fff, 10px radius, 16px bold; heart ♡ box 52px square, 1px #d6d3d1 border, 10px radius, 22px #57534e"
+            },
+            {
+              "label": "Stock",
+              "value": "In stock — ships in 1–2 business days; 13px, #15803d, 16px above"
+            },
+            {
+              "label": "Perks",
+              "value": "Free returns within 60 days / Lifetime repair guarantee; 13px, line-height 2, #57534e, 22px above, 1px #e7e5e4 top border, 16px top padding"
+            }
+          ]
+        },
+        {
+          "group": "Tabs and details",
+          "items": [
+            {
+              "label": "Tabs",
+              "value": "Margin 0 48px, 1px #e7e5e4 bottom border, 36px gap; tabs 15px #78716c, padding 14px 0: Description (active: bold #1c1917, 3px #14532d underline), Specifications, Reviews (312)"
+            },
+            {
+              "label": "Row",
+              "value": "Padding 32px 48px, text left, table right, 56px gap"
+            },
+            {
+              "label": "Description",
+              "value": "14px, line-height 1.8, #44403c, 14px between paragraphs: The Alder is our everyday pack for people who don't stop at the city limits. The roll-top closure expands from 24 to 28 litres, and welded seams keep rain out. / Inside, a suspended laptop sleeve keeps your machine off the ground when you set the pack down, and a zip pocket holds keys and passport."
+            },
+            {
+              "label": "Spec table",
+              "value": "440px wide, 14px; cells padding 10px 0, 1px #e7e5e4 bottom border; first column 160px, #78716c"
+            },
+            {
+              "label": "Spec rows",
+              "value": "Volume 24–28 litres; Weight 1.1 kg; Material Recycled 420D nylon, TPU coated; Laptop sleeve Fits up to 16 inches; Dimensions 52 × 30 × 17 cm"
+            }
+          ]
+        },
+        {
+          "group": "Reviews",
+          "items": [
+            {
+              "label": "Section",
+              "value": "Padding 16px 48px 32px; heading What customers say, Georgia 24px normal weight, 18px gap below (same heading style for You may also like)"
+            },
+            {
+              "label": "Cards",
+              "value": "Three equal, 24px gap, #fafaf9, 1px #e7e5e4 border, 12px radius, 20px padding, 14px, line-height 1.6, #44403c; name bold #1c1917; stars #ca8a04, margin 4px 0 8px"
+            },
+            {
+              "label": "Review 1",
+              "value": "Daniel K. ★★★★★ Took it on a 9-day trek in the Dolomites. The hip belt carried everything and the roll-top kept my gear dry through two storms."
+            },
+            {
+              "label": "Review 2",
+              "value": "Sofia M. ★★★★☆ Great daily bag. Laptop sleeve fits a 16-inch machine. Wish the side pockets were a little deeper for my bottle."
+            },
+            {
+              "label": "Review 3",
+              "value": "Ravi P. ★★★★★ Third year using it for my commute and it still looks new. The orange is brighter in person."
+            }
+          ]
+        },
+        {
+          "group": "Related and footer",
+          "items": [
+            {
+              "label": "Section",
+              "value": "Padding 16px 48px 56px; heading You may also like; four equal cards, 24px gap"
+            },
+            {
+              "label": "Card",
+              "value": "180px tall #f5f5f4 placeholder, 12px radius; name 14px, 10px above; price bold 14px #14532d, 2px above"
+            },
+            {
+              "label": "Items",
+              "value": "Ridge 18 Daypack $89; Summit Hip Pack $45; Trailhead Duffel 40L $129; Stormproof Pack Cover $24"
+            },
+            {
+              "label": "Footer",
+              "value": "#14532d, #dcfce7 text, padding 28px 48px, 13px; © 2026 Fernpeak Outfitters left, Shipping · Returns · Contact right"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "One HTML file, inline CSS, no scripts"
+            },
+            {
+              "label": "Assets",
+              "value": "Inline SVG only; no images, fonts or external files"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 5000
+    }
+  ]
+}
