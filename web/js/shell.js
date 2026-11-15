@@ -29,9 +29,9 @@ function initialsOf(name) {
   return s.toUpperCase();
 }
 
-// The shell's user object from api.me(): { name, level, points }, or null when signed out.
+// The shell's user object from api.me(): { name, level, points, credits }, or null when signed out.
 export function shellUser(u) {
-  return u ? { name: u.username, level: u.level, points: u.points } : null;
+  return u ? { name: u.username, level: u.level, points: u.points, credits: u.credits } : null;
 }
 
 export function mountShell({ active = 'home', user = null, crumb = null } = {}) {
@@ -70,7 +70,12 @@ export function mountShell({ active = 'home', user = null, crumb = null } = {}) 
       // Level tag and points show only when the caller knows them.
       const lv = Number(user.level);
       const pts = Number(user.points);
-      right =
+      // Credit balance chip, when known.
+      const cr = Number(user.credits);
+      const chip = user.credits != null && Number.isFinite(cr)
+        ? `<a class="nav-me nav-credits${active === 'credits' ? ' on' : ''}" href="credits.html" title="Your credits"><span class="pts">${cr.toLocaleString('en-US')}<small>${cr === 1 ? 'credit' : 'credits'}</small></span></a>`
+        : '';
+      right = chip +
         `<a class="nav-me${active === 'profile' ? ' on' : ''}" href="profile.html" title="Your profile">` +
         (user.level != null && Number.isFinite(lv) && lv >= 1 ? `<span class="lvl ${levelClass(lv)}">Lv ${lv}</span>` : '') +
         (user.points != null && Number.isFinite(pts) ? `<span class="pts">${pts.toLocaleString('en-US')}<small>pts</small></span>` : '') +
@@ -120,7 +125,7 @@ function mountFoot(user) {
     : '<a href="login.html">Log in</a><a href="signup.html">Sign up</a>';
   foot.innerHTML =
     '<a class="brand" href="index.html" aria-label="promptdyno home">' + BRAND + '</a>' +
-    '<nav aria-label="Footer"><a href="challenges.html">Challenges</a><a href="lessons.html">Lessons</a><a href="leaderboard.html">Leaderboard</a>' + acct + '</nav>' +
+    '<nav aria-label="Footer"><a href="challenges.html">Challenges</a><a href="lessons.html">Lessons</a><a href="leaderboard.html">Leaderboard</a><a href="credits.html">Credits</a>' + acct + '</nav>' +
     '<span class="end">Built at Hack The Nest 2026</span>';
 }
 

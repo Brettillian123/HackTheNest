@@ -205,7 +205,7 @@ test("lessons: list sorted by order, one lesson with Markdown; mock mode and err
   })) });
   const list = await api.listLessons();
   assert.deepEqual(list.map((l) => l.slug), ["naming", "tables"]);
-  assert.deepEqual(list[0], { slug: "naming", title: "Naming", level: 1, minutes: 4, summary: "Name things.", bonusChallenge: "file-names", order: 1 });
+  assert.deepEqual(list[0], { slug: "naming", title: "Naming", level: 1, minutes: 4, summary: "Name things.", bonusChallenge: "file-names", bonusChallenges: [], order: 1 });
   const l = await api.getLesson("naming");
   assert.equal(l.markdown, "# Naming\n\n## Why\n\nText.");
   assert.equal(l.bonusChallenge, "file-names");
