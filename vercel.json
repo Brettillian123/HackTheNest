@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "outputDirectory": "frontend",
+  "redirects": [
+    { "source": "/", "destination": "/home", "statusCode": 302 }
+  ],
+  "rewrites": [
+    { "source": "/api/:route*", "destination": "/api/index?__route=:route*" },
+    { "source": "/challenge", "destination": "/pages/home.html" },
+    { "source": "/([A-Za-z0-9_-]+)", "destination": "/pages/$1.html" }
+  ]
+}
