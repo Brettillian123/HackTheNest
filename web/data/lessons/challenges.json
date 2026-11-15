@@ -136,9 +136,9 @@
       "brief": "Get the model to write a JSON list of three MCP tool definitions a model could choose and call correctly.",
       "spec": [
         { "group": "Tools", "items": [
-          { "label": "library_search", "value": "Search the catalogue by title or author; changes nothing" },
-          { "label": "library_get_book", "value": "Get one book by id, such as bk_1234; changes nothing" },
-          { "label": "library_place_hold", "value": "Place a hold on a book for a student id, such as st_5678; adds a record" }
+          { "label": "library_search", "value": "Search the catalogue by title or author, with parameters query and field; changes nothing" },
+          { "label": "library_get_book", "value": "Get one book by id, such as bk_1234, with parameter book_id; changes nothing" },
+          { "label": "library_place_hold", "value": "Place a hold on a book for a student id, such as st_5678, with parameters book_id and student_id; adds a record" }
         ] },
         { "group": "Output", "items": [
           { "label": "Format", "value": "A JSON array only, no prose" },

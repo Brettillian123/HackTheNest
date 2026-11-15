@@ -1,0 +1,22 @@
+{
+  "sections": [
+    { "name": "Install", "aliases": ["Installation", "Installing", "Getting started", "Setup"], "importance": "critical" },
+    { "name": "Use", "aliases": ["Usage", "How to use", "Running", "Run"], "importance": "normal" },
+    { "name": "Configuration", "aliases": ["Config", "Settings", "Environment variables", "Environment"], "importance": "normal" },
+    { "name": "Test", "aliases": ["Tests", "Testing", "Running tests", "Development"], "importance": "normal" },
+    { "name": "Limits", "aliases": ["Limitations", "Known limitations", "Known issues", "Not supported"], "importance": "normal", "mustContain": ["image"] }
+  ],
+  "keyFacts": [
+    { "label": "the install command", "anyOf": ["pip install site-check"], "importance": "critical", "inCode": true, "section": "Install" },
+    { "label": "the run command", "anyOf": ["site-check ./public"], "importance": "critical", "inCode": true },
+    { "label": "the test command", "anyOf": ["pytest"], "inCode": true, "section": "Test" },
+    { "label": "the --external flag", "anyOf": ["--external"] },
+    { "label": "the SITE_CHECK_TIMEOUT setting", "anyOf": ["SITE_CHECK_TIMEOUT"], "importance": "major", "section": "Configuration" },
+    { "label": "the default timeout of 10", "anyOf": ["10"], "section": "Configuration" }
+  ],
+  "forbidden": [
+    { "label": "a placeholder repository link", "pattern": "example\\.com/your|your[-_](repo|project|username)" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 400, "minWords": 60 }
+}
