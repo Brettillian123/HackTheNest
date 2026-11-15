@@ -1,6 +1,6 @@
 // Leaderboard page: leaderboard.html?c=<slug>&b=<bracket>&p=<period>
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, esc, levelClass, demoTag, setStat, provisionalTag } from './ui.js';
+import { dropdown, esc, levelClass, demoTag, setStat, provisionalTag, fmtScore } from './ui.js';
 import { getLeaderboard, listChallenges, me, BRACKETS, isSimulated, isProvisional } from './api.js';
 
 const $ = (id) => document.getElementById(id);
@@ -124,7 +124,7 @@ function topCell(r, n) {
   const tag = n === 1 ? 'r' : n === 2 ? 'p' : 'w';
   return `<div class="bd-top${n === 1 ? ' first' : ''}${r.isYou ? ' you' : ''}">
     <div class="who"><span class="lvl ${tag}">#${r.rank}</span><span class="avatar">${esc(initials(r.username))}</span>${nameHtml(r)}</div>
-    <div class="low"><span class="pr"><b>${promptsOf(r)}</b> ${state.c && r.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}</span><span class="big">${r.score}<small class="unit">${state.c ? 'Score' : 'Points'}</small></span></div>
+    <div class="low"><span class="pr"><b>${promptsOf(r)}</b> ${state.c && r.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}</span><span class="big">${fmtScore(r.score)}<small class="unit">${state.c ? 'Score' : 'Points'}</small></span></div>
   </div>`;
 }
 
@@ -135,10 +135,10 @@ function nameHtml(r) {
 
 function renderBoard(data) {
   const { rows, you } = data;
-  $('bdDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'));
+  $('bdDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'), isProvisional('versions'));
   const top = rows.length ? rows[0].score : null;
   setStat($('stPlayers'), rows.length.toLocaleString('en-US'));
-  setStat($('stTop'), top == null ? 'None yet' : String(top));
+  setStat($('stTop'), top == null ? 'None yet' : fmtScore(top));
   setStat($('stYou'), you ? `#${you.rank}` : 'None yet');
 
   // Podium only with three or more players; the table then starts at #4, so no row shows twice.
@@ -160,7 +160,7 @@ function renderBoard(data) {
     <td class="pos">#${r.rank}</td>
     <td><span class="who"><span class="avatar">${esc(initials(r.username))}</span>${nameHtml(r)}</span></td>
     <td class="r num">${promptsOf(r)}</td>
-    <td class="r sc-cell">${r.score}</td></tr>`).join('');
+    <td class="r sc-cell">${fmtScore(r.score)}</td></tr>`).join('');
   pinYou(you);
 }
 
@@ -181,7 +181,7 @@ function pinYou(you) {
   if (youObserver) { youObserver.disconnect(); youObserver = null; }
   const row = $('youRow');
   if (!you || !row) { pin.hidden = true; return; }
-  pin.innerHTML = `<span class="pos">#${you.rank}</span><span>You: rank <b>${you.rank}</b>, <b>${you.score}</b> ${state.c ? 'score' : 'points'}${you.promptCount != null ? `, <b>${state.c ? you.promptCount : promptsOf(you)}</b> ${state.c && you.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}` : ''}</span>
+  pin.innerHTML = `<span class="pos">#${you.rank}</span><span>You: rank <b>${you.rank}</b>, <b>${fmtScore(you.score)}</b> ${state.c ? 'score' : 'points'}${you.promptCount != null ? `, <b>${state.c ? you.promptCount : promptsOf(you)}</b> ${state.c && you.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}` : ''}</span>
     <button type="button" class="btn btn-ghost sm" id="pinJump">${ICON.down}Show my row</button>`;
   $('pinJump').addEventListener('click', () => row.scrollIntoView({ block: 'center', behavior: 'smooth' }));
   youObserver = new IntersectionObserver(([e]) => { pin.hidden = e.isIntersecting; }, { root: null, threshold: 0.9, rootMargin: '0px 0px -72px 0px' });

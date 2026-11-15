@@ -23,7 +23,7 @@ test("listChallenges returns at least 6 challenges over three levels", async () 
   for (const c of list) {
     for (const k of ["slug", "title", "levelLabel", "brief"]) assert.equal(typeof c[k], "string", k);
     assert.ok(c.solvedCount > 0);
-    assert.ok(c.topScore >= 90 && c.topScore < 100, `top score ${c.topScore}`);
+    assert.ok(c.topScore >= 90 && c.topScore <= 120, `top score ${c.topScore}`); // scores run to 120 since the bonus rule
     assert.equal(c.yourBest, null);
   }
 });
@@ -151,7 +151,7 @@ test("every leaderboard bracket returns only matching rows, ranked", async () =>
   }
   const all = await api.getLeaderboard("login-card", { bracket: "all", period: "all" });
   assert.ok(all.rows.length >= 35 && all.rows.length <= 45);
-  assert.ok(all.rows[0].score >= 95 && all.rows[0].score < 100);
+  assert.ok(all.rows[0].score >= 95 && all.rows[0].score <= 120); // an exact match can earn a bonus over 100
   assert.equal(all.you, null);
   await assert.rejects(api.getLeaderboard("login-card", { bracket: "4" }), /Unknown prompt filter/);
 });

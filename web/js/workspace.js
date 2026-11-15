@@ -2,7 +2,8 @@
 import * as api from './api.js';
 import * as store from './store.js';
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer, provisionalNote, provisionalTag } from './ui.js';
+import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer, provisionalNote, provisionalTag, fmtScore, kindTag } from './ui.js';
+import { renderMarkdown } from './markdown.js';
 import { createTools } from './tools.js';
 
 const slug = new URLSearchParams(location.search).get('c') || 'login-card';
@@ -57,8 +58,35 @@ function setupFrames() {
   tools.link(layers.goalSmall, layers.mineSmall);
   document.querySelectorAll('.tools').forEach((g) => tools.bind(g));
   frameViewer(['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'].map($));
-  $('goalFrame').querySelector('iframe').src = S.ch.goalUrl;
-  $('goalSmall').querySelector('iframe').src = S.ch.goalUrl;
+  if (S.ch.goalUrl) {
+    $('goalFrame').querySelector('iframe').src = S.ch.goalUrl;
+    $('goalSmall').querySelector('iframe').src = S.ch.goalUrl;
+  }
+}
+
+// ---------------------------------------------------------------- doc challenges
+// A doc challenge has no goal page: the left panel shows the brief and what the grader looks for,
+// and the model's answer is Markdown rendered to safe DOM nodes (never as HTML).
+const isDoc = () => !!(S.ch && S.ch.kind === 'doc');
+function setupDoc() {
+  ['goalFrame', 'mineFrame'].forEach((id) => { $(id).hidden = true; });
+  document.querySelectorAll('#goalPanel .tools, #minePanel .tools, #comparePanel .tools').forEach((t) => { t.hidden = true; });
+  $('cmpPair').hidden = true;
+  ['goalDoc', 'mineDoc', 'cmpDoc'].forEach((id) => { $(id).hidden = false; });
+  $('goalTitle').textContent = 'The task';
+  $('mineTitle').textContent = 'Your answer';
+  $('hViewportTag').hidden = true;
+  const crit = S.ch.criteria || [];
+  $('goalDoc').innerHTML = `<p class="ws-doc-brief">${esc(S.ch.brief)}</p>` +
+    (crit.length ? `<h3 class="h">What the grader looks for</h3><ul class="ws-doc-crit">${crit.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : '');
+}
+// The model output on show while running: a page in the frame, or Markdown for a doc.
+function showMine(text) {
+  if (isDoc()) renderMarkdown($('mineDoc'), text || '');
+  else setDoc('mineFrame', text || '');
+}
+function outputOf(run) {
+  return isDoc() ? run.markdown || '' : run.html || '';
 }
 
 function setDoc(frameId, html) {
@@ -73,7 +101,7 @@ let flushTimer = null;
 let lastFlush = 0;
 function pushHtml(h) {
   // Keep the neutral placeholder until the page's styles are in, so the frame never flashes white.
-  if (!/<body[\s>]/i.test(h)) return;
+  if (!isDoc() && !/<body[\s>]/i.test(h)) return;
   pending = h;
   const wait = 200 - (performance.now() - lastFlush);
   if (wait <= 0) flush();
@@ -83,7 +111,7 @@ function flush() {
   clearTimeout(flushTimer);
   flushTimer = null;
   if (pending == null) return;
-  setDoc('mineFrame', pending);
+  showMine(pending);
   lastFlush = performance.now();
   pending = null;
 }
@@ -97,8 +125,9 @@ function renderHeader() {
   $('hTitle').textContent = c.title;
   $('hSolved').textContent = `${Number(c.solvedCount || 0).toLocaleString('en-US')} players solved`;
   $('hViewport').textContent = `${c.viewport.width} x ${c.viewport.height}`;
-  setStat($('hBest'), c.yourBest == null ? 'None yet' : c.yourBest);
-  setStat($('hTop'), c.topScore == null ? 'None yet' : c.topScore);
+  setStat($('hBest'), c.yourBest == null ? 'None yet' : fmtScore(c.yourBest));
+  setStat($('hTop'), c.topScore == null ? 'None yet' : fmtScore(c.topScore));
+  $('hKind').innerHTML = kindTag(c.kind);
   const m = c.models.find((x) => x.id === S.model) || c.models[0];
   $('modelLabel').textContent = m.label;
   document.title = c.title + ' - promptdyno';
@@ -110,13 +139,13 @@ async function renderBoard() {
     // The same all-time board the score panel's rank comes from, so the two always agree.
     const lb = await api.getLeaderboard(slug, { period: 'all' });
     $('lbNote').textContent = 'All time';
-    $('lbDemo').innerHTML = api.isSimulated('boards') ? demoTag() : provisionalTag(api.isProvisional('boards'));
+    $('lbDemo').innerHTML = api.isSimulated('boards') ? demoTag() : provisionalTag(api.isProvisional('boards'), api.isProvisional('versions'));
     let rows = lb.rows.slice(0, 4);
     const you = lb.rows.find((r) => r.isYou);
     if (you && !rows.includes(you)) rows = rows.slice(0, 3).concat(you);
     const gap = (r, i) => i > 0 && r.rank > rows[i - 1].rank + 1;
     list.innerHTML = rows.length
-      ? rows.map((r, i) => `<li class="${r.isYou ? 'you' : ''}${gap(r, i) ? ' gap' : ''}"><span class="pos">#${r.rank}</span><span class="nm">${esc(r.username)}</span><span class="s">${r.score}</span></li>`).join('')
+      ? rows.map((r, i) => `<li class="${r.isYou ? 'you' : ''}${gap(r, i) ? ' gap' : ''}"><span class="pos">#${r.rank}</span><span class="nm">${esc(r.username)}</span><span class="s">${fmtScore(r.score)}</span></li>`).join('')
       : '<li><span class="nm">No scores yet. Yours can be first.</span></li>';
   } catch {
     list.innerHTML = '<li><span class="nm">The leaderboard could not load. Reload the page to try again.</span></li>';
@@ -152,21 +181,28 @@ function renderModels() {
 const OK_SVG = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg>';
 const NO_SVG = '<svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg>';
 
-function signed(n) { return (n >= 0 ? '+' : MINUS) + Math.abs(n); }
+function signed(n) { return (n >= 0 ? '+' : MINUS) + fmtScore(Math.abs(n)); }
 function sortedCosts(r) { return (r.costs || []).slice().sort((a, b) => b.points - a.points); }
 function topCosts(r) { return sortedCosts(r).slice(0, 3); }
 const COST_ROWS = 3; // rows the score panel has room for at 1280 x 800
 function miniCosts(r) {
   const cs = topCosts(r);
   return cs.length
-    ? cs.map((c) => `<div class="ws-mini"><span class="pt">${MINUS}${c.points}</span><span>${esc(c.message)}</span></div>`).join('')
+    ? cs.map((c) => `<div class="ws-mini"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span>${esc(c.message)}</span></div>`).join('')
     : '<div class="ws-mini none">No points lost on this run.</div>';
 }
 
 function renderCompare(run) {
   $('cmpNote').textContent = 'Run ' + run.n;
   $('cmpTag').textContent = run.n;
-  setDoc('mineSmall', run.html || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device.</p>');
+  if (isDoc()) renderMarkdown($('cmpDoc'), run.markdown || 'This answer was not kept on this device.');
+  else setDoc('mineSmall', run.html || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device.</p>');
+  // The grader's report card says what to change in the prompt; older results keep the checks list.
+  const crit = run.result.criteria;
+  $('checksTitle').textContent = crit && crit.length ? 'Report card' : 'Checks';
+  $('checkList').hidden = !!(crit && crit.length);
+  $('reportCard').hidden = !(crit && crit.length);
+  if (crit && crit.length) { $('reportCard').innerHTML = reportCard(crit); return; }
   const checks = (run.result.checks || []).slice().sort((a, b) => Number(a.passed) - Number(b.passed));
   $('checkList').innerHTML = checks.map((c) =>
     `<li class="${c.passed ? 'ok' : 'no'}"><span class="m">${c.passed ? OK_SVG : NO_SVG}</span>${esc(c.label)}</li>`).join('');
@@ -178,9 +214,39 @@ function renderRunPrompt(run) {
   show('editKeepBtn', S.mode === 'scored' && S.view === 'workspace');
 }
 
+const GROUPS = [['works', 'It works'], ['looks', 'Looks like the goal'], ['engineering', 'Well engineered']];
+const pct = (v) => Math.max(0, Math.min(100, Math.round(Number(v) || 0)));
+function reportCard(crit) {
+  return GROUPS.map(([g, label]) => {
+    const items = crit.filter((c) => c.group === g);
+    if (!items.length) return '';
+    return `<div class="rc-group"><h4 class="rc-h">${label}</h4>` + items.map((c) =>
+      `<div class="rc-item"><div class="rc-top"><span class="rc-name">${esc(c.name)}</span>` +
+      (c.value == null ? '<span class="rc-na">n/a</span>' : `<span class="meter sm" aria-hidden="true"><i style="width:${pct(c.value * 100)}%"></i></span><span class="rc-v">${pct(c.value * 100)}</span>`) +
+      `</div>${(c.notes || []).slice(0, 3).map((n) => `<p class="rc-note">${esc(n)}</p>`).join('')}</div>`).join('') + '</div>';
+  }).join('');
+}
+
+const DECIDED = { efficiency: 'size and speed', size: 'size and speed', speed: 'size and speed', accessibility: 'accessibility', cleanCode: 'clean code', clean_code: 'clean code', 'clean code': 'clean code' };
+function renderPillars(r) {
+  const P = $('scPillars');
+  P.hidden = !(r.pillars && r.pillars.length) || !!r.rejectedReason;
+  if (P.hidden) { P.innerHTML = ''; return; }
+  const by = r.engineering && r.engineering.decidedBy;
+  P.innerHTML = r.pillars.map((p) =>
+    `<div class="pl"><div class="pl-top"><span class="pl-k">${esc(p.label)}</span><span class="pl-v">${p.value == null ? 'n/a' : fmtScore(p.value)}</span></div>` +
+    `<span class="meter" aria-hidden="true"><i style="width:${pct(p.value)}%"></i></span>` +
+    (p.id === 'engineering' && by ? `<span class="pl-note">Decided by ${esc(DECIDED[by] || by)}</span>` : '') + '</div>').join('');
+}
+
 function renderScore(run) {
   const r = run.result;
-  $('scN').textContent = r.total;
+  const rejected = !!r.rejectedReason;
+  $('scN').textContent = rejected ? '0' : fmtScore(r.total);
+  const bonus = !rejected && r.total > 100 ? (r.bonus > 0 ? r.bonus : r.total - 100) : 0;
+  $('scBonus').hidden = !bonus;
+  $('scBonus').textContent = bonus ? `Bonus +${fmtScore(bonus)}` : '';
+  renderPillars(r);
   $('scGain').textContent = r.delta == null ? 'Run 1' : `${signed(r.delta)} pts`;
   const rk = r.rank;
   let rankText = '';
@@ -188,8 +254,9 @@ function renderScore(run) {
   else if (rk && rk.after) rankText = `Rank #${rk.after}`;
   const vs = r.delta == null ? '' : `vs run ${run.n - 1}`;
   $('scRk').textContent = [vs, rankText].filter(Boolean).join(', ');
-  const passed = r.passedCount ?? (r.checks || []).filter((c) => c.passed).length;
   const total = r.totalChecks ?? (r.checks || []).length;
+  // At 100 or more the bar is full.
+  const passed = r.total >= 100 && !rejected ? total : r.passedCount ?? (r.checks || []).filter((c) => c.passed).length;
   const seg = $('scSeg');
   seg.style.setProperty('--n', Math.max(1, total));
   seg.innerHTML = Array.from({ length: total }, (_, i) => (i < passed ? '<i></i>' : '<i class="x"></i>')).join('');
@@ -201,12 +268,16 @@ function renderScore(run) {
   const rest = all.slice(shown.length);
   const restPts = rest.reduce((s, c) => s + c.points, 0);
   $('scCosts').innerHTML = all.length
-    ? shown.map((c) => `<div class="cost"><span class="pt">${MINUS}${c.points}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
-      (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${MINUS}${restPts}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
+    ? shown.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
+      (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${MINUS}${fmtScore(restPts)}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
     : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
   const more = $('moreCosts');
   if (more) more.addEventListener('click', () => { S.sel = run.n; viewTabs.select(1); });
-  $('scNoteText').innerHTML = r.total >= 100
+  $('scNoteText').innerHTML = rejected
+    ? `<b>The grader could not mark this page:</b> ${esc(r.rejectedReason)}`
+    : bonus
+    ? `<b>A perfect score, plus a bonus.</b> Your page matched the goal and came out leaner, which earned +${fmtScore(bonus)}.`
+    : r.total >= 100
     ? '<b>A perfect 100.</b> Very few prompts get every check right. This one is worth keeping.'
     : '<b>A perfect 100 is rare.</b> Small models drift on spacing and sizes, so a score in the 80s or 90s means a strong prompt.';
 }
@@ -221,17 +292,17 @@ function renderRuns() {
   if (!runs.find((r) => r.n === S.sel)) S.sel = runs[runs.length - 1].n;
   $('histList').innerHTML = runs.slice().reverse().map((r) => {
     const d = r.result.delta == null ? '' : `<small>${signed(r.result.delta)}</small>`;
-    return `<button class="hist${r.n === S.sel ? ' on' : ''}" role="option" aria-selected="${r.n === S.sel}" data-n="${r.n}"><span class="hist-n">#${r.n}</span><span class="hist-x">${esc(r.prompt)}</span><span class="hist-s">${r.result.total}${d}</span></button>`;
+    return `<button class="hist${r.n === S.sel ? ' on' : ''}" role="option" aria-selected="${r.n === S.sel}" data-n="${r.n}"><span class="hist-n">#${r.n}</span><span class="hist-x">${esc(r.prompt)}</span><span class="hist-s">${fmtScore(r.result.total)}${d}</span></button>`;
   }).join('');
   $('histList').querySelectorAll('.hist').forEach((b) => b.addEventListener('click', () => { S.sel = Number(b.dataset.n); render(); }));
   const run = runs.find((r) => r.n === S.sel);
   $('rdTag').textContent = run.n;
-  $('rdScore').textContent = run.result.total;
+  $('rdScore').textContent = fmtScore(run.result.total);
   $('rdDelta').textContent = run.result.delta == null ? 'First prompt of this attempt' : `${signed(run.result.delta)} pts vs run ${run.n - 1}`;
   // Every cost of the selected run; its prompt shows on the left under the checks.
   const all = (run.result.costs || []).slice().sort((a, b) => b.points - a.points);
   $('rdCosts').innerHTML = all.length
-    ? all.map((c) => `<div class="cost"><span class="pt">${MINUS}${c.points}</span><span class="w">${esc(c.message)}</span></div>`).join('')
+    ? all.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('')
     : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
 }
 
@@ -284,7 +355,7 @@ function render() {
 
   // prompt panel
   $('mineNote').textContent = 'Run ' + S.runN;
-  $('runBtn').disabled = busy;
+  $('runBtn').disabled = busy || (S.ch && S.ch.available === false);
   $('runBtn').classList.toggle('busy', busy);
   $('runLabel').innerHTML = busy ? 'Running' : S.attempt && S.attempt.pending ? 'Score this page' : last ? 'Run prompt<small>adds 1 prompt</small>' : 'Run prompt';
   show('cancelBtn', busy);
@@ -299,7 +370,7 @@ function render() {
   show('lastBox', m === 'refine' && !!base);
   if (m === 'refine' && base) {
     $('lastLbl').textContent = base === last ? 'Last run' : `Run ${base.n}`;
-    $('lastScore').textContent = base.result.total;
+    $('lastScore').textContent = fmtScore(base.result.total);
     $('lastCosts').innerHTML = miniCosts(base.result);
   }
 
@@ -345,7 +416,7 @@ async function doRun() {
   tools.setMode(null);
   setStatus('');
   pending = null;
-  setDoc('mineFrame', unscored ? unscored.html : '');
+  showMine(unscored ? outputOf(unscored) : '');
   render();
   try {
     const onStage = (s) => { flush(); S.mode = 'grading'; S.stage = s.index; render(); };
@@ -490,6 +561,7 @@ async function main() {
   renderModels();
   renderInstructions();
   setupFrames();
+  if (isDoc()) setupDoc();
   wire();
 
   S.attempt = await api.getAttempt(slug);
@@ -498,7 +570,8 @@ async function main() {
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
-  if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; setDoc('mineFrame', S.attempt.pending.html); setStatus('This page is saved but not scored yet. Score it to see the result.'); }
+  if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('This page is saved but not scored yet. Score it to see the result.'); }
+  if (S.ch.available === false) setStatus(S.ch.unavailableReason || 'This challenge is not playable yet. Check back soon.');
   render();
   renderBoard();
   renderSim(await api.probeRun().catch(() => true));

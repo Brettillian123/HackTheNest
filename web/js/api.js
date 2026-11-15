@@ -30,6 +30,7 @@ export function configure(next = {}) {
     healthNow = null;
     provisionalSeen = false;
     boardsProvisional = false;
+    boardsMixed = false;
     rescored.clear();
     liveAttempts.clear();
     realSlugs.clear();
@@ -143,9 +144,11 @@ export function isSimulated(kind) {
 // latest result said so). isProvisional("boards"): the boards on this page use stand-in scores.
 let provisionalSeen = false;
 let boardsProvisional = false;
+let boardsMixed = false;
 export function isProvisional(kind = "run") {
   if (options.mode !== "live") return false;
   if (kind === "boards") return boardsProvisional && !simulated.has("boards");
+  if (kind === "versions") return boardsMixed && !simulated.has("boards");
   if (simulated.has("run")) return false;
   return provisionalSeen || !!(healthNow && healthNow.reachable && healthNow.grader === "standin");
 }
@@ -169,7 +172,8 @@ function unscored(e, attempt) {
   else if (e.status === 502) {
     out.message = SCORE_FAILED;
     out.userMessage = SCORE_FAILED;
-  } else out.userMessage = `${e.message} Your page is saved; score it again.`;
+  } else if (e.code === "no_grader") out.userMessage = e.message;
+  else out.userMessage = `${e.message} Your page is saved; score it again.`;
   out.attempt = attempt;
   out.unscored = true;
   return out;
@@ -284,6 +288,7 @@ async function fetchHealth() {
       db: body.db === true,
       models: Array.isArray(body.models) ? body.models.filter((m) => typeof m === "string") : [],
       grader: body.grader === "service" ? "service" : "standin",
+      graderVersion: typeof body.graderVersion === "string" ? body.graderVersion : null,
     };
   } catch {
     return NO_SERVER;
@@ -420,6 +425,12 @@ async function mockBoard(slug) {
   rows[0].score = shape.top - 7;
   rows[3].daysAgo = 2;
   rows[2].daysAgo = 1;
+  // Scores run to 120 with one decimal: an exact match leaner than the goal earns a bonus.
+  // One board shows it, so the above-100 and decimal states are exercised in the preview build.
+  if (slug === "login-card") {
+    rows[3].score = 104.5;
+    rows[8].score = 97.5;
+  }
   boardCache.set(slug, rows);
   return rows;
 }
@@ -458,6 +469,8 @@ function summary(data, c, others, best) {
     topScore: scores.length ? Math.max(...scores) : null,
     yourBest: best ? best.score : null,
     yourBestPrompts: best ? best.promptCount : null,
+    kind: c.kind || "page",
+    available: c.available !== false,
   };
 }
 
@@ -473,6 +486,9 @@ function fromServerSummary(s) {
     topScore: s.topScore ?? null,
     yourBest: s.yourBest ?? null,
     yourBestPrompts: s.yourBestPrompts ?? null,
+    kind: s.kind || "page",
+    available: s.available !== false,
+    ...(s.lesson ? { lesson: s.lesson } : {}),
   };
 }
 
@@ -492,7 +508,9 @@ async function mockChallenge(slug) {
   const { data, c } = await findChallenge(slug);
   return {
     ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
-    goalUrl: goalUrlFor(slug),
+    goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
+    criteria: Array.isArray(c.criteria) ? c.criteria.slice() : [],
+    unavailableReason: null,
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
     spec: c.spec.map((g) => ({ group: g.group, items: g.items.map((i) => ({ ...i })) })),
@@ -525,8 +543,13 @@ export async function getChallenge(slug) {
     simulated.add("boards");
     return mockChallenge(slug);
   }
+  const kind = sc.kind || "page";
   const details = {
-    goalUrl: goalUrlFor(slug),
+    kind,
+    available: sc.available !== false,
+    unavailableReason: sc.unavailableReason || null,
+    criteria: Array.isArray(sc.criteria) ? sc.criteria.map((c) => (typeof c === "string" ? c : c && (c.name || c.text || c.label) || "")).filter(Boolean) : [],
+    goalUrl: kind === "page" ? goalUrlFor(slug) : null,
     viewport: sc.viewport ? { width: sc.viewport.width, height: sc.viewport.height } : { width: 1280, height: 800 },
     models: fromServerModels(sc.models),
     spec: (sc.spec || []).map((g) => ({ group: g.group, items: (g.items || []).map((i) => ({ ...i })) })),
@@ -546,25 +569,54 @@ const liveAttempts = new Map(); // slug -> the client attempt last read from the
 const realSlugs = new Set(); // challenges with real server runs in the open attempt
 
 // Server result -> client result. Costs largest first, as the pages show them.
+const round1 = (v) => Math.round((Number(v) || 0) * 10) / 10;
+const PILLAR_LABEL = { works: "It works", engineering: "Well engineered", looks: "Looks like the goal" };
+
+// Every field the grader adds, passed through in one place. Totals and costs: 0 to 120, one decimal.
 function fromServerResult(r) {
   if (!r) return null;
   const checks = (r.checks || []).map((x) => ({ label: String(x.label), passed: !!x.passed }));
   const out = {
-    total: Math.round(Number(r.total) || 0),
-    delta: r.delta ?? null,
+    total: round1(r.total),
+    delta: r.delta == null ? null : round1(r.delta),
     checks,
     passedCount: r.passedCount ?? checks.filter((x) => x.passed).length,
     totalChecks: r.totalChecks ?? checks.length,
-    costs: (r.costs || []).map((c) => ({ points: Math.round(Number(c.points) || 0), message: String(c.message || "") })).sort((a, b) => b.points - a.points),
+    costs: (r.costs || []).map((c) => ({ points: round1(c.points), message: String(c.message || "") })).sort((a, b) => b.points - a.points),
     rank: r.rank && typeof r.rank === "object" ? { before: r.rank.before ?? null, after: r.rank.after ?? null } : null,
     provisional: !!r.provisional,
   };
   if (r.notice) out.notice = String(r.notice);
+  if (r.graderVersion) out.graderVersion = String(r.graderVersion);
+  if (Array.isArray(r.pillars)) {
+    out.pillars = r.pillars.filter((x) => x && x.id).map((x) => ({ id: String(x.id), label: x.label || PILLAR_LABEL[x.id] || String(x.id), value: x.value == null ? null : round1(x.value) }));
+  }
+  if (r.engineering && typeof r.engineering === "object") {
+    const e = r.engineering;
+    out.engineering = { efficiency: e.efficiency ?? null, accessibility: e.accessibility ?? null, cleanCode: e.cleanCode ?? null, decidedBy: e.decidedBy ?? null };
+  }
+  if (r.bonus != null) out.bonus = round1(r.bonus);
+  if (r.exactMatch != null) out.exactMatch = !!r.exactMatch;
+  if (Array.isArray(r.criteria)) {
+    out.criteria = r.criteria.filter((c) => c && c.name).map((c) => ({
+      id: String(c.id ?? c.name),
+      name: String(c.name),
+      group: ["works", "looks", "engineering"].includes(c.group) ? c.group : "works",
+      value: c.value == null || !Number.isFinite(Number(c.value)) ? null : Math.max(0, Math.min(1, Number(c.value))),
+      notes: (Array.isArray(c.notes) ? c.notes : []).map(String),
+    }));
+  }
+  if (r.rejectedReason) out.rejectedReason = String(r.rejectedReason);
   return out;
 }
 
-function fromServerRun(r, html) {
-  return { n: r.n, prompt: r.prompt, model: r.model, html: html ?? r.html ?? "", result: fromServerResult(r.result), at: r.at, serverId: r.id };
+// A run: page runs keep the page in html; doc runs keep the answer in markdown (html stays "").
+function fromServerRun(r, output) {
+  const kind = r.kind || "page";
+  const text = output ?? (kind === "doc" ? r.markdown : r.html) ?? "";
+  const run = { n: r.n, kind, prompt: r.prompt, model: r.model, html: kind === "doc" ? "" : text, result: fromServerResult(r.result), at: r.at, serverId: r.id };
+  if (kind === "doc") run.markdown = text;
+  return run;
 }
 
 // attempt.runs holds scored runs only. attempt.pending is the latest saved page that has no score
@@ -584,7 +636,7 @@ async function readServerAttempt(slug) {
   const saved = (a.runs || []).filter((r) => r.status === "done" || r.result).sort((x, y) => x.n - y.n);
   const runs = saved.filter((r) => r.result).map((r) => fromServerRun(r));
   const last = saved[saved.length - 1];
-  const pending = last && !last.result ? { n: last.n, prompt: last.prompt, model: last.model, html: last.html || "", at: last.at, serverId: last.id } : null;
+  const pending = last && !last.result ? { n: last.n, kind: last.kind || "page", prompt: last.prompt, model: last.model, html: last.html || "", markdown: last.markdown || "", at: last.at, serverId: last.id } : null;
   const attempt = fromServerAttempt(a, runs, pending);
   if (runs.length) provisionalSeen = runs[runs.length - 1].result.provisional;
   realSlugs.add(slug);
@@ -596,9 +648,15 @@ async function readServerAttempt(slug) {
 // With the grader service connected, provisional results are graded again once, quietly, and
 // replaced in place (the page shows the new result on its next render).
 const rescored = new Set();
+function needsRescore(result) {
+  if (!result) return false;
+  if (result.provisional) return true;
+  const live = healthNow && healthNow.graderVersion;
+  return !!(live && result.graderVersion && result.graderVersion !== live);
+}
 function rescoreProvisional(attempt) {
   if (!healthNow || healthNow.grader !== "service") return null;
-  const todo = attempt.runs.filter((r) => r.result && r.result.provisional && r.serverId && !rescored.has(r.serverId));
+  const todo = attempt.runs.filter((r) => needsRescore(r.result) && r.serverId && !rescored.has(r.serverId));
   if (!todo.length) return null;
   todo.forEach((r) => rescored.add(r.serverId));
   return (async () => {
@@ -693,12 +751,19 @@ async function mockGrade(slug, n, prompt) {
     ...list.map((f) => ({ label: f.check, passed: !failed.has(f.check) })),
     ...faults.alwaysPass.map((label) => ({ label, passed: true })),
   ];
+  const lost = 100 - total;
   return {
     total,
     checks,
     passedCount: checks.filter((x) => x.passed).length,
     totalChecks: checks.length,
     costs: split.map((s) => ({ points: s.points, message: s.fault.message })),
+    pillars: [
+      { id: "works", label: "It works", value: 100 },
+      { id: "engineering", label: "Well engineered", value: Math.max(60, 96 - c.level * 3) },
+      { id: "looks", label: "Looks like the goal", value: Math.max(0, 100 - lost) },
+    ],
+    engineering: { efficiency: 0.9, accessibility: 0.85, cleanCode: 0.8, decidedBy: "cleanCode" },
     activeFaults: split.map((s) => s.fault),
   };
 }
@@ -848,14 +913,18 @@ async function runError(res) {
     return apiError(`${lead} ${resetText(res.headers.get("Retry-After"))}`, { status: 429 });
   }
   if (res.status === 400 && text) return apiError(text, { status: 400, userMessage: `${text} Your prompt is kept and your prompt count did not change.` });
+  if (res.status === 501) return apiError(text || "This kind of challenge is not playable yet.", { status: 501, userMessage: `${text || "This kind of challenge is not playable yet."} Your prompt count did not change.` });
   if (res.status === 503 && body && body.code === "no_model") return apiError(NO_MODEL, { status: 503, code: "no_model" });
   if (res.status >= 500) return apiError(text || MODEL_BUSY, { status: res.status });
   return apiError(text || `The server could not start the run (${res.status}). Try again in a moment.`, { status: res.status });
 }
 
 // Errors from POST /api/runs/:id/score.
+const NO_GRADER = "Scoring for this kind of challenge is not connected yet. Your answer is saved; score it later.";
 async function scoreError(res) {
-  const text = await readError(res);
+  const body = await readBody(res);
+  if (res.status === 503 && body && body.code === "no_grader") return apiError(NO_GRADER, { status: 503, code: "no_grader" });
+  const text = body && typeof body.error === "string" ? body.error : "";
   if (res.status === 502 || res.status === 503 || res.status === 504) return apiError(SCORER_BUSY, { status: res.status });
   return apiError(text || `Scoring did not finish (${res.status}). Run again.`, { status: res.status });
 }
@@ -957,7 +1026,8 @@ async function liveRun(args) {
   const attempt = prev && prev.id === header.attemptId
     ? { ...prev, runs: prev.runs.slice() }
     : { id: header.attemptId, serverId: header.attemptId, promptCount: 0, best: null, runs: [], startedAt: new Date().toISOString() };
-  attempt.pending = { n, prompt, model, html, at: new Date().toISOString(), serverId: header.runId };
+  const kind = args.kind || "page";
+  attempt.pending = { n, kind, prompt, model, html: kind === "doc" ? "" : html, markdown: kind === "doc" ? html : "", at: new Date().toISOString(), serverId: header.runId };
   attempt.promptCount = n;
   liveAttempts.set(slug, attempt);
   return liveScore(slug, attempt, { signal, onStage });
@@ -972,7 +1042,7 @@ async function liveScore(slug, attempt, { signal, onStage }) {
   } catch (e) {
     throw unscored(e, attempt);
   }
-  const run = fromServerRun(scored.run, p.html || undefined);
+  const run = fromServerRun({ kind: p.kind, ...scored.run }, (p.kind === "doc" ? p.markdown : p.html) || undefined);
   provisionalSeen = !!(run.result && run.result.provisional);
   statsCache = undefined;
   const next = await attemptAfter(slug, scored.attempt, run, { attemptId: attempt.id, promptCount: attempt.promptCount });
@@ -999,7 +1069,8 @@ export async function run({ slug, prompt, model, signal, onStage, onHtml } = {})
   const text = String(prompt || "");
   if (!text.trim()) throw apiError("Write a prompt first, then run it.");
   const ch = await getChallenge(slug);
-  const args = { slug, prompt: text, model: model || ch.models[0].id, signal, onStage, onHtml };
+  if (ch.available === false) throw apiError(ch.unavailableReason || "This challenge is not playable yet.", { status: 501 });
+  const args = { slug, kind: ch.kind || "page", prompt: text, model: model || ch.models[0].id, signal, onStage, onHtml };
   if (await storedLive()) {
     if (await runsLive()) {
       if (model && !ch.models.some((m) => m.id === model)) args.model = ch.models[0].id;
@@ -1082,6 +1153,8 @@ export async function getLeaderboard(slug = null, { bracket = "all", period = "a
   }
   const you = body.you || null;
   if (body.provisional) boardsProvisional = true;
+  const versions = Array.isArray(body.graderVersions) ? body.graderVersions.filter(Boolean) : [];
+  if (versions.length > 1) boardsMixed = true;
   const rows = (body.rows || []).map((r) => ({
     rank: r.rank,
     username: r.username,
@@ -1095,6 +1168,7 @@ export async function getLeaderboard(slug = null, { bracket = "all", period = "a
     counts: body.counts || {},
     kind: body.kind || (slug ? "score" : "points"),
     provisional: !!body.provisional,
+    graderVersions: versions,
   };
 }
 
@@ -1397,4 +1471,51 @@ export async function claimAttempts() {
   } catch {
     return { moved };
   }
+}
+
+// ---------------------------------------------------------------- lessons
+// Lessons come from the server only. In mock mode, or with no server or no lessons, the list is
+// empty and the page shows its "being written" state.
+
+function fromServerLesson(l) {
+  return {
+    slug: String(l.slug),
+    title: String(l.title || l.slug),
+    level: Number(l.level) || 1,
+    minutes: Number(l.minutes) || null,
+    summary: String(l.summary || ""),
+    bonusChallenge: l.bonusChallenge ? String(l.bonusChallenge) : null,
+    order: Number(l.order) || 0,
+  };
+}
+
+export async function listLessons() {
+  if (options.mode !== "live") return [];
+  const h = await getHealth();
+  if (!h.reachable) return [];
+  try {
+    const body = await getJson("/api/lessons");
+    return (Array.isArray(body && body.lessons) ? body.lessons : []).filter((l) => l && l.slug).map(fromServerLesson).sort((a, b) => a.order - b.order);
+  } catch {
+    return [];
+  }
+}
+
+const NO_LESSON = "That lesson is not here. Pick one from the lessons list.";
+
+// { slug, title, level, minutes, summary, bonusChallenge, order, fields, markdown }
+export async function getLesson(slug) {
+  const name = String(slug || "").trim();
+  if (!name) throw apiError(NO_LESSON, { status: 404 });
+  if (options.mode !== "live" || !(await getHealth()).reachable) throw apiError("Lessons are being written. Check back soon.", { status: 404 });
+  let body;
+  try {
+    body = await getJson(`/api/lessons/${enc(name)}`);
+  } catch (e) {
+    if (e.status === 404 || e.status === 400) throw apiError(NO_LESSON, { status: 404 });
+    throw e;
+  }
+  const l = body && body.lesson;
+  if (!l) throw apiError(NO_LESSON, { status: 404 });
+  return { ...fromServerLesson(l), fields: l.fields && typeof l.fields === "object" ? { ...l.fields } : {}, markdown: String(l.markdown || "") };
 }

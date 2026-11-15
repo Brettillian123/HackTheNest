@@ -1,5 +1,5 @@
 // promptdyno shell: fills <aside id="rail"> and <header id="nav"> with the v8 rail and top nav.
-// mountShell({ active: "challenges" | "leaderboard" | "profile" | "home",
+// mountShell({ active: "challenges" | "lessons" | "leaderboard" | "profile" | "home",
 //              user: { name, level, points, initials? } | null,
 //              crumb: [{ label, href? }, ...] (optional) })
 // Also adds a skip link to <main>, fills <footer id="foot"> when the page has one,
@@ -11,6 +11,7 @@ const BRAND = '<svg viewBox="0 -14 735 122" class="brand-svg" aria-hidden="true"
 
 const ICONS = {
   challenges: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>',
+  lessons: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5c2.5-1 5-1 7 .8v11c-2-1.8-4.5-1.8-7-.8zM17 4.5c-2.5-1-5-1-7 .8v11c2-1.8 4.5-1.8 7-.8z"/></svg>',
   leaderboard: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17.5h15M4 17.5V11h3.5v6.5M8.3 17.5V6h3.5v11.5M12.6 17.5V9h3.5v8.5"/></svg>',
   profile: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17.5c.8-3.3 3.4-5 6.5-5s5.7 1.7 6.5 5"/></svg>',
   login: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5h3a1.5 1.5 0 011.5 1.5v10a1.5 1.5 0 01-1.5 1.5h-3M8 6.5L11.5 10 8 13.5M11.5 10H3"/></svg>',
@@ -42,6 +43,7 @@ export function mountShell({ active = 'home', user = null, crumb = null } = {}) 
     rail.setAttribute('aria-label', 'Main');
     rail.innerHTML =
       railLink('challenges', 'challenges.html', 'Challenges', active) +
+      railLink('lessons', 'lessons.html', 'Lessons', active) +
       railLink('leaderboard', 'leaderboard.html', 'Leaderboard', active) +
       '<span class="rail-dot" aria-hidden="true"></span>' +
       // Signed out on the profile page (this browser's runs): the profile icon shows, marked, before Log in.
@@ -85,6 +87,7 @@ export function mountShell({ active = 'home', user = null, crumb = null } = {}) 
       crumbHtml +
       '<nav class="nav-links" aria-label="Site">' +
       link('challenges', 'challenges.html', 'Challenges') +
+      link('lessons', 'lessons.html', 'Lessons') +
       link('leaderboard', 'leaderboard.html', 'Leaderboard') +
       right + '</nav>';
   }
@@ -117,7 +120,7 @@ function mountFoot(user) {
     : '<a href="login.html">Log in</a><a href="signup.html">Sign up</a>';
   foot.innerHTML =
     '<a class="word" href="index.html">prompt<i>dyno</i></a>' +
-    '<nav aria-label="Footer"><a href="challenges.html">Challenges</a><a href="leaderboard.html">Leaderboard</a>' + acct + '</nav>' +
+    '<nav aria-label="Footer"><a href="challenges.html">Challenges</a><a href="lessons.html">Lessons</a><a href="leaderboard.html">Leaderboard</a>' + acct + '</nav>' +
     '<span class="end">Built at Hack The Nest 2026</span>';
 }
 

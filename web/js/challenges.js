@@ -1,6 +1,6 @@
 // Challenge list: level filter and sort kept in the URL query (?level=1&sort=solved).
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, levelClass, esc, demoTag, setStat } from './ui.js';
+import { fitFrames, levelClass, esc, demoTag, setStat, fmtScore, kindTag } from './ui.js';
 import { listChallenges, me, isSimulated } from './api.js';
 
 const LEVELS = ['all', '1', '2', '3'];
@@ -37,15 +37,23 @@ function num(n) {
 function row(c) {
   const best = c.yourBest == null
     ? '<span class="v none">Not tried</span>'
-    : `<span class="v best">${esc(c.yourBest)}</span>`;
-  const top = c.topScore == null ? '<span class="v none">None yet</span>' : `<span class="v">${esc(c.topScore)}</span>`;
+    : `<span class="v best">${esc(fmtScore(c.yourBest))}</span>`;
+  const top = c.topScore == null ? '<span class="v none">None yet</span>' : `<span class="v">${esc(fmtScore(c.topScore))}</span>`;
   const href = `workspace.html?c=${encodeURIComponent(c.slug)}`;
+  const page = !c.kind || c.kind === 'page';
+  // Not playable yet: listed, with the reason, but not a link.
+  const title = c.available === false
+    ? `<span class="chal-title">${esc(c.title)}</span>`
+    : `<a class="chal-link chal-title" href="${href}">${esc(c.title)}</a>`;
+  const brief = c.available === false && c.unavailableReason ? `${esc(c.brief)} <span class="chal-off">${esc(c.unavailableReason)}</span>` : esc(c.brief);
   return `<div class="chal wide">` +
     `<span class="lvl ${levelClass(c.level)}" title="${esc(c.levelLabel || '')}">Lv ${esc(c.level)}</span>` +
-    `<div class="frame" aria-hidden="true"><iframe src="data/goals/${encodeURIComponent(c.slug)}.html" title="" sandbox="allow-same-origin" scrolling="no" loading="lazy" tabindex="-1"></iframe></div>` +
-    `<span class="chal-main"><a class="chal-link chal-title" href="${href}">${esc(c.title)}</a>` +
-    `<span class="chal-brief">${esc(c.brief)}</span>` +
-    (c.levelLabel ? `<span class="chal-meta"><span class="mtag">${esc(c.levelLabel)}</span></span>` : '') +
+    (page
+      ? `<div class="frame" aria-hidden="true"><iframe src="data/goals/${encodeURIComponent(c.slug)}.html" title="" sandbox="allow-same-origin" scrolling="no" loading="lazy" tabindex="-1"></iframe></div>`
+      : `<div class="frame chal-kind" aria-hidden="true"><span>${esc((c.kind || '').toUpperCase())}</span></div>`) +
+    `<span class="chal-main">${title}` +
+    `<span class="chal-brief">${brief}</span>` +
+    (c.levelLabel || !page ? `<span class="chal-meta">${c.levelLabel ? `<span class="mtag">${esc(c.levelLabel)}</span>` : ''}${kindTag(c.kind)}</span>` : '') +
     `</span>` +
     `<span class="chal-cell"><span class="k">Solved</span><span class="v">${num(c.solvedCount)}</span></span>` +
     `<span class="chal-cell"><span class="k">Top score</span>${top}</span>` +
@@ -94,7 +102,7 @@ function renderCounts() {
   const n = all.length;
   const tried = all.filter((c) => c.yourBest != null);
   document.getElementById('statTried').textContent = `${tried.length} of ${n}`;
-  if (tried.length) setStat(document.getElementById('statBest'), Math.max(...tried.map((c) => c.yourBest)));
+  if (tried.length) setStat(document.getElementById('statBest'), fmtScore(Math.max(...tried.map((c) => c.yourBest))));
 }
 
 async function load() {
