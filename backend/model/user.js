@@ -1,8 +1,4 @@
-/**
- * Basic user data shape for the prototype.
- * Password is stored as plain text per the current request; do not use this for
- * real accounts until password hashing and secure storage are implemented.
- */
+/** Basic user data shape. Persisted passwords are scrypt hashes. */
 export class User {
   constructor({ id, username, email, password }) {
     this.id = id;

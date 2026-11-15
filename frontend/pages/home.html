@@ -13,8 +13,20 @@
   <body>
     <header class="topbar">
       <a class="brand" href="#" aria-label="PromptDyno home"><span class="brand-mark">P<span>↗</span></span><span>Prompt<span class="brand-light">Dyno</span></span></a>
-      <nav class="topnav"><a class="nav-active" href="#challenge">Challenges</a><a href="#leaderboard">Leaderboard</a><a href="#how-it-works">How it works</a></nav>
-      <button class="profile" aria-label="Your profile"><span class="avatar">Y</span><span class="profile-name">You</span><span class="chevron">⌄</span></button>
+      <nav class="topnav"><a class="nav-active" href="#challenge">Challenges</a><a href="#leaderboard">Leaderboard</a><a href="#how-it-works">How it works</a><a href="/signup">Sign up</a></nav>
+      <div class="profile-menu-wrap">
+        <button id="profile-button" class="profile" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-dropdown"><span class="avatar" id="profile-avatar">↗</span><span class="profile-name" id="profile-name">Guest</span><span class="chevron">⌄</span></button>
+        <div id="profile-dropdown" class="profile-dropdown" role="menu" hidden>
+          <div class="dropdown-heading"><span id="dropdown-greeting">YOUR ACCOUNT</span><b id="dropdown-username">Guest</b></div>
+          <a role="menuitem" href="/home">Home</a>
+          <a role="menuitem" href="/challenge">Challenges</a>
+          <a role="menuitem" href="/home#leaderboard">Leaderboard</a>
+          <div class="dropdown-divider"></div>
+          <a class="guest-menu-item" role="menuitem" href="/login">Log in</a>
+          <a class="guest-menu-item" role="menuitem" href="/signup">Create account</a>
+          <button id="logout-button" class="logout-menu-item" role="menuitem" type="button" hidden>Log out</button>
+        </div>
+      </div>
     </header>
 
     <main id="challenge">
@@ -62,7 +74,15 @@
     </main>
     <div id="toast" class="toast" role="status"></div>
     <dialog id="reference-dialog"><button class="dialog-close" aria-label="Close">×</button><div class="coffee-site enlarged" id="enlarged-reference"></div></dialog>
+    <dialog id="logout-dialog" class="logout-dialog" aria-labelledby="logout-title">
+      <div class="logout-dialog-icon">↗</div>
+      <h2 id="logout-title">Log out of PromptDyno?</h2>
+      <p>Your current session will end on this device.</p>
+      <p id="logout-message" class="logout-message" role="status" aria-live="polite"></p>
+      <div class="logout-actions"><button id="cancel-logout" class="logout-cancel" type="button">Stay logged in</button><button id="confirm-logout" class="logout-confirm" type="button">Log out</button></div>
+    </dialog>
     <script src="/scripts/app.js"></script>
     <script src="/scripts/test-object.js"></script>
+    <script src="/scripts/auth-state.js"></script>
   </body>
 </html>
