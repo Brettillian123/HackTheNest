@@ -75,6 +75,52 @@ test('OpenAI: a non-200 answer fails fast with a plain message', async () => {
   assert.ok(Date.now() - started < 1000);
 });
 
+const delta = d => ({ event: 'response.output_text.delta', data: { type: 'response.output_text.delta', delta: d } });
+const incomplete = reason => ({ event: 'response.incomplete', data: { type: 'response.incomplete', response: { status: 'incomplete', incomplete_details: { reason } } } });
+
+// Captures console.error lines while fn runs.
+async function withErrorLog(fn) {
+  const lines = [];
+  const original = console.error;
+  console.error = (...args) => lines.push(args.join(' '));
+  try { return { result: await fn().catch(e => e), lines }; } finally { console.error = original; }
+}
+
+test('OpenAI: request carries low reasoning effort and the cap plus the reasoning allowance', async () => {
+  const seen = [];
+  const fetch = async (url, init) => { seen.push(init); return sseResponse([{ event: 'response.completed', data: { type: 'response.completed' } }]); };
+  const model = MODELS.find(m => m.id === 'openai-mini');
+  for await (const _ of generate({ model, system: 'S', user: 'U', env: { OPENAI_API_KEY: 'ok' }, fetch, maxOutputTokens: 6000 })) { /* drain */ }
+  const body = JSON.parse(seen[0].body);
+  assert.deepEqual(body.reasoning, { effort: 'low' });
+  assert.equal(body.max_output_tokens, 6000 + 8000);
+});
+
+test('OpenAI: incomplete at the token cap with a complete document is accepted', async () => {
+  const { text } = await collect('openai-mini', { OPENAI_API_KEY: 'ok' }, sseResponse([
+    delta('<!doctype html><html><body><p>Hi</p></body>'), delta('</html>\n'), incomplete('max_output_tokens'),
+  ]));
+  assert.equal(text, '<!doctype html><html><body><p>Hi</p></body></html>\n');
+});
+
+test('OpenAI: incomplete at the token cap without a closing tag fails with the room message', async () => {
+  const { result, lines } = await withErrorLog(() => collect('openai-mini', { OPENAI_API_KEY: 'ok' }, sseResponse([
+    delta('<!doctype html><html><body><p>Hi'), incomplete('max_output_tokens'),
+  ])));
+  assert.equal(result.name, 'ModelError');
+  assert.equal(result.message, 'The model ran out of room. Shorten the prompt or ask for less.');
+  assert.ok(lines.some(l => l.includes('max_output_tokens')));
+});
+
+test('OpenAI: an error event is surfaced with its code in the log line', async () => {
+  const { result, lines } = await withErrorLog(() => collect('openai-mini', { OPENAI_API_KEY: 'secret-key' }, sseResponse([
+    delta('<p>'), { event: 'error', data: { type: 'error', code: 'server_error', message: 'boom USER' } },
+  ])));
+  assert.equal(result.message, 'The model stopped with an error. Run again.');
+  assert.ok(lines.some(l => l.includes('openai-mini') && l.includes('server_error')));
+  assert.ok(!lines.some(l => l.includes('secret-key') || l.includes('USER')));
+});
+
 test('Anthropic: an error event becomes a plain error', async () => {
   await assert.rejects(collect('claude-haiku', { ANTHROPIC_API_KEY: 'ak' }, sseResponse([
     { event: 'content_block_delta', data: { type: 'content_block_delta', delta: { type: 'text_delta', text: '<p>' } } },
