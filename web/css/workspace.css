@@ -221,3 +221,5 @@
 }
 
 .ws-built{margin:var(--s-3) 0 0}
+
+.rc-lost{margin-left:var(--s-3);font:var(--w-bold) var(--fs-12) var(--mono);color:var(--red)}

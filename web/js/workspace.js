@@ -366,6 +366,7 @@ function reportCard(crit) {
     if (!items.length) return '';
     return `<div class="rc-group"><h4 class="rc-h">${label}</h4>` + items.map((c) =>
       `<div class="rc-item"><div class="rc-top"><span class="rc-name">${esc(c.name)}</span>` +
+      (c.points > 0 ? `<span class="rc-lost">${MINUS}${fmtScore(c.points)}</span>` : '') +
       (c.value == null ? '<span class="rc-na">n/a</span>' : `<span class="meter sm" aria-hidden="true"><i style="width:${pct(c.value * 100)}%"></i></span><span class="rc-v">${pct(c.value * 100)}</span>`) +
       `</div>${(c.notes || []).slice(0, 3).map((n) => `<p class="rc-note">${esc(n)}</p>`).join('')}</div>`).join('') + '</div>';
   }).join('');

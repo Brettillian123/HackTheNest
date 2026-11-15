@@ -818,6 +818,7 @@ function fromServerResult(r) {
       group: ["works", "looks", "engineering"].includes(c.group) ? c.group : "works",
       value: c.value == null || !Number.isFinite(Number(c.value)) ? null : Math.max(0, Math.min(1, Number(c.value))),
       notes: (Array.isArray(c.notes) ? c.notes : []).map(String),
+      points: Number(c.points) > 0 ? Number(c.points) : 0,
     }));
   }
   if (r.rejectedReason) out.rejectedReason = String(r.rejectedReason);
