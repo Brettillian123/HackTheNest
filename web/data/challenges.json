@@ -11,7 +11,7 @@
   "models": [
     {
       "id": "openai-mini",
-      "label": "OpenAI Sol"
+      "label": "OpenAI Luna"
     },
     {
       "id": "claude-haiku",
