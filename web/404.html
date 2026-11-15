@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>Page not found - promptdyno</title>
+<meta name="description" content="This page does not exist on promptdyno. Pick a challenge or open the leaderboard.">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/auth.css">
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+<main class="page">
+  <div class="split nf-split">
+    <section class="panel nf" aria-labelledby="nfTitle">
+      <h1 class="sr-only" id="nfTitle">Page not found</h1>
+      <span class="h">Error</span>
+      <div class="bigscore" aria-hidden="true"><span class="n">404</span></div>
+      <p class="nf-line">That page does not exist.</p>
+      <p class="nf-path" id="nfPath"></p>
+      <div class="auth-acts">
+        <a class="btn btn-primary" href="challenges.html">Go to challenges</a>
+        <a class="btn btn-secondary" href="index.html">Go home</a>
+      </div>
+    </section>
+    <div class="col">
+      <section class="panel score fill grow" aria-label="Score for this page">
+        <div class="sc">
+          <div class="bigscore"><span class="n">0</span><span class="of">/100</span></div>
+          <div class="info"><div class="gain">+0 pts</div><div class="rk">Nothing here to grade</div></div>
+        </div>
+        <div>
+          <div class="seg" aria-hidden="true"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></div>
+          <div class="segcap"><span><b>0 of 14</b> checks passed</span></div>
+        </div>
+        <div class="costs">
+          <h2 class="h nf-costs-h">Point costs</h2>
+          <div class="cost"><span class="pt wide">&minus;100</span><span class="w">Page not found<small>The link may be old or mistyped</small></span></div>
+        </div>
+        <div class="costs">
+          <h2 class="h nf-costs-h">Start here instead</h2>
+          <div class="wait">
+            <a href="workspace.html?c=login-card"><span class="lvl d sm">Lv 1</span><span class="t">Login card</span><span class="p">Easy</span><span class="s"></span></a>
+            <a href="workspace.html?c=footer-columns"><span class="lvl d sm">Lv 1</span><span class="t">Footer with columns</span><span class="p">Easy</span><span class="s"></span></a>
+            <a href="leaderboard.html"><span class="lvl w sm">#1</span><span class="t">Leaderboard</span><span class="p">All players</span><span class="s"></span></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+<script type="module">
+import { initNotFound } from '/js/auth-pages.js';
+initNotFound();
+</script>
+</body>
+</html>

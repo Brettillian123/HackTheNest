@@ -1,0 +1,209 @@
+{
+  "levels": { "1": "Easy", "2": "Medium", "3": "Hard" },
+  "viewport": { "width": 1280, "height": 800 },
+  "models": [
+    { "id": "openai-mini", "label": "OpenAI mini" },
+    { "id": "gemini-flash", "label": "Gemini Flash" },
+    { "id": "claude-haiku", "label": "Claude Haiku" }
+  ],
+  "challenges": [
+    {
+      "slug": "login-card",
+      "title": "Login card",
+      "level": 1,
+      "brief": "A centred sign-in card with two fields, a remember-me row and a green button.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#F7F5F0" },
+          { "label": "Card position", "value": "Centred horizontally and vertically" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Brand line", "value": "Fernway, 14px, 700, uppercase, letter-spacing 0.08em, #2F5D50" },
+          { "label": "Heading", "value": "Welcome back, 28px, 700, #1C1B19" },
+          { "label": "Subtext", "value": "15px, #6B6862" },
+          { "label": "Field labels", "value": "Email and Password, 14px, 600" },
+          { "label": "Button text", "value": "Sign in, 15px, 600, #FFFFFF" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Card", "value": "400px wide, #FFFFFF, 1px #E5E1D8 border, 12px radius, 40px padding" },
+          { "label": "Inputs", "value": "Full width, 44px tall, 1px #D9D5CC border, 8px radius" },
+          { "label": "Remember row", "value": "Remember me left, Forgot password? right, 14px" },
+          { "label": "Button", "value": "Full width, 44px tall, #2F5D50, 8px radius" },
+          { "label": "Footer line", "value": "New to Fernway? Create an account, centred, 14px" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    },
+    {
+      "slug": "footer-columns",
+      "title": "Footer with columns",
+      "level": 1,
+      "brief": "A call-to-action band above a dark navy footer with a brand column and three link columns.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#F4F6FA" },
+          { "label": "Footer background", "value": "#14213D" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Band heading", "value": "Ready to ship faster?, 36px, 700, #14213D" },
+          { "label": "Band text", "value": "18px, #4A5672" },
+          { "label": "Band button", "value": "Start free trial, 16px, 700, #14213D on #F2A541" },
+          { "label": "Logo", "value": "Harbor, 22px, 700, #FFFFFF" },
+          { "label": "Column headings", "value": "14px, 700, uppercase, letter-spacing 0.08em, #FFFFFF" },
+          { "label": "Links", "value": "15px, #C9D1E0" },
+          { "label": "Copyright line", "value": "13px, #8E99B3" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Band", "value": "Fills the space above the footer, content centred" },
+          { "label": "Footer content", "value": "Max width 1120px, centred, 32px side padding" },
+          { "label": "Columns", "value": "4 columns in a 2 : 1 : 1 : 1 ratio, 48px gap" },
+          { "label": "Link columns", "value": "Product, Company, Resources, 4 links each" },
+          { "label": "Bottom bar", "value": "1px #2C3A5C top border, 24px padding, copyright left, legal links right" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    },
+    {
+      "slug": "nav-hero",
+      "title": "Nav bar with hero",
+      "level": 2,
+      "brief": "A white top navigation bar over a centred hero with a pill, a large headline and two buttons.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#F5F7FF" },
+          { "label": "Nav background", "value": "#FFFFFF, 1px #E6E8EC bottom border" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Logo", "value": "Northwind, 20px, 700, #111827" },
+          { "label": "Nav links", "value": "Product, Solutions, Pricing, Docs, 15px, #4B5563" },
+          { "label": "Pill", "value": "13px, 600, #4F46E5 on #E0E7FF" },
+          { "label": "Headline", "value": "56px, 800, line-height 1.1, #111827" },
+          { "label": "Lead text", "value": "20px, line-height 1.5, #4B5563" },
+          { "label": "Buttons", "value": "16px, 600" },
+          { "label": "Note", "value": "14px, #6B7280" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Nav", "value": "72px tall, content max width 1200px, 40px side padding" },
+          { "label": "Nav order", "value": "Logo left, links centre with 32px gap, Get started button right" },
+          { "label": "Nav button", "value": "#4F46E5, 10px 18px padding, 8px radius" },
+          { "label": "Hero", "value": "Text centred, 120px top padding" },
+          { "label": "Headline width", "value": "Max 760px" },
+          { "label": "Lead width", "value": "Max 600px" },
+          { "label": "Buttons", "value": "Start for free on #4F46E5, Book a demo white with 1px #D1D5DB border, 16px gap, 8px radius" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    },
+    {
+      "slug": "blog-header",
+      "title": "Blog post header",
+      "level": 2,
+      "brief": "The top of a blog post: category tag, serif title, standfirst, author byline and a gradient cover.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#FFFDF8" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Body font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Title font", "value": "Georgia, \"Times New Roman\", serif" },
+          { "label": "Tag", "value": "Design, 13px, 700, uppercase, letter-spacing 0.08em, #B45309" },
+          { "label": "Title", "value": "44px, 700, line-height 1.15, #1F2937" },
+          { "label": "Standfirst", "value": "20px, line-height 1.5, #4B5563" },
+          { "label": "Author name", "value": "Maya Robles, 15px, 600" },
+          { "label": "Date line", "value": "March 4, 2026 · 8 min read, 14px, #6B7280" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Column", "value": "720px wide, centred, 72px top padding" },
+          { "label": "Avatar", "value": "44px circle, #FCD34D, initials MR in #78350F" },
+          { "label": "Byline", "value": "14px gap, 32px padding below, 1px #ECE6D9 bottom border" },
+          { "label": "Cover", "value": "720 x 300, 12px radius, 135deg gradient #FDE68A to #F59E0B to #B45309" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    },
+    {
+      "slug": "pricing-plans",
+      "title": "Pricing with three plans",
+      "level": 3,
+      "brief": "Three pricing cards in a row with the middle plan highlighted and a Most popular badge.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#F7F5F0" },
+          { "label": "Page padding", "value": "64px top and bottom" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Heading", "value": "Simple pricing for every team, 40px, 700, #1C1B19" },
+          { "label": "Subheading", "value": "18px, #6B6862" },
+          { "label": "Plan names", "value": "Starter, Team, Business, 20px, 700" },
+          { "label": "Prices", "value": "$0, $24, $79, 44px, 700, with / month at 16px #6B6862" },
+          { "label": "Features", "value": "15px, check mark in #2F5D50" },
+          { "label": "Badge", "value": "Most popular, 12px, 700, uppercase, #FFFFFF on #2F5D50" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Cards", "value": "3 in a row, 320px wide, 24px gap, centred" },
+          { "label": "Card style", "value": "#FFFFFF, 1px #E5E1D8 border, 12px radius, 32px padding" },
+          { "label": "Featured card", "value": "Middle card, 2px #2F5D50 border, badge on the top edge" },
+          { "label": "Features", "value": "3 per plan, 8px vertical padding, 1px #F0ECE3 divider" },
+          { "label": "Buttons", "value": "Full width, 44px tall, 8px radius; outlined #2F5D50, filled on the featured card" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    },
+    {
+      "slug": "product-grid",
+      "title": "Product card grid",
+      "level": 3,
+      "brief": "A shop section with a header row and eight product cards in a four-column grid.",
+      "spec": [
+        { "group": "Page", "items": [
+          { "label": "Viewport", "value": "1280 x 800" },
+          { "label": "Background", "value": "#FAFAFA" }
+        ] },
+        { "group": "Type", "items": [
+          { "label": "Font", "value": "Helvetica, Arial, sans-serif" },
+          { "label": "Heading", "value": "New arrivals, 32px, 700, #1A1A1A" },
+          { "label": "View all link", "value": "15px, 600, #2F5D50" },
+          { "label": "Product name", "value": "16px, 600" },
+          { "label": "Category", "value": "13px, #777777" },
+          { "label": "Price", "value": "15px, 700, #2F5D50; sale prices #C2410C with old price 13px #999999 struck through" }
+        ] },
+        { "group": "Layout", "items": [
+          { "label": "Content", "value": "1160px wide, centred, 48px top and bottom padding" },
+          { "label": "Header row", "value": "Heading left, View all right, 28px below" },
+          { "label": "Grid", "value": "4 columns of 272px, 24px gap, 2 rows" },
+          { "label": "Card", "value": "#FFFFFF, 1px #ECECEC border, 10px radius" },
+          { "label": "Image area", "value": "180px tall, flat colour block per product" },
+          { "label": "Card text", "value": "14px 16px 16px padding" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "One HTML file, inline CSS, no scripts" },
+          { "label": "Assets", "value": "No images, fonts or external files" }
+        ] }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- Dev only: shows a page at a set size, for screenshots below Chrome's 500px window minimum.
+     dev/frame.html?w=390&h=844&src=/profile.html%3Fu%3Drosa_l -->
+<html><head><meta charset="utf-8"><title>Frame - promptdyno dev</title><meta name="robots" content="noindex"></head>
+<body style="margin:0;background:#000">
+<iframe id="f" style="border:0;display:block"></iframe>
+<script>
+const q = new URLSearchParams(location.search);
+const f = document.getElementById('f');
+f.width = q.get('w') || 390;
+f.height = q.get('h') || 844;
+const src = q.get('src') || '/';
+f.src = src.startsWith('/') && !src.startsWith('//') ? src : '/';
+</script>
+</body></html>

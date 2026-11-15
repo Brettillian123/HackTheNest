@@ -1,0 +1,99 @@
+/* Narrow screens. Loaded last on every page. Tokens only; no new colours or sizes.
+   1180 and below: laptops and tablets in landscape. 760 and below: phones.
+   On phones the rail becomes a bottom bar, every grid becomes one column and
+   tap targets are at least 40px. Page tools (ruler, magnifier) hide on touch screens. */
+
+/* ---------- touch screens: no ruler or magnifier ---------- */
+@media (hover:none) and (pointer:coarse){
+  .tools,.tool-ov,.tool-lens{display:none !important}
+}
+
+/* ---------- 1180 and below ---------- */
+@media (max-width:1180px){
+  .bd-top{padding:var(--s-4) var(--s-5)}
+  .bd-top .big{font-size:var(--fs-28);letter-spacing:-1px}
+  .bd-top.first .big{font-size:calc(var(--fs-20) * 2);letter-spacing:-1.5px}
+  .bd-top{height:auto;min-height:112px}
+  .bd-top .low{flex-wrap:wrap;row-gap:var(--s-2)}
+  .bd-top .pr{white-space:nowrap}
+  .overlay{width:270px}
+}
+
+/* ---------- 760 and below: phones ---------- */
+@media (max-width:1000px){
+  body{min-width:0}
+}
+
+@media (max-width:760px){
+  .bd-picker .dd-btn{min-width:0;max-width:100%}
+  .bd-picker .dd-menu{min-width:0}
+  .ws-model-menu{min-width:0}
+  /* frame: bottom bar instead of the left rail */
+  #rail,.rail{inset:auto 0 0 0;width:auto;height:var(--nav-h);flex-direction:row;justify-content:space-around;align-items:center;padding:0 var(--s-3);gap:0;border-top:1px solid var(--line)}
+  .rail-logo,.rail-dot{display:none}
+  .rail-link{width:56px;height:var(--nav-h)}
+  .rail-link.on::before{left:14px;right:14px;top:0;bottom:auto;width:auto;height:3px;border-radius:0 0 var(--r-3) var(--r-3)}
+  #nav,.top{margin-left:0;padding:0 var(--gutter);align-items:center}
+  .page{margin-left:0;padding:0 var(--gutter) calc(var(--nav-h) + var(--s-8))}
+  .brand,.word{margin-top:0}
+  .crumb{display:none}
+  .nav-links{margin-top:0;gap:var(--s-2)}
+  .nav-links > a:not(.nav-me){display:none}
+  .nav-auth{margin-left:0}
+  .nav-auth .btn{height:40px}
+  .nav-me{margin-left:0}
+
+  /* tap targets */
+  .btn,.btn.sm{min-height:40px}
+  .pills{flex-wrap:wrap}
+  .pills > button,.pills > a{height:40px}
+  .tabs > a,.tabs > button{height:44px;padding:0 var(--s-7)}
+  .dd-item{min-height:40px}
+  .dd-menu{min-width:0;max-width:calc(100vw - 32px)}
+  .ws-ins{min-width:0;width:calc(100vw - 32px)}
+
+  /* one column everywhere */
+  .split,.pair,.bd-grid,.bd-grid.wide,.auth-grid,.hero,.board,.steps,.why,.bands{grid-template-columns:minmax(0,1fr) !important}
+  .split,.auth-grid,.nf-split{min-height:0}
+  .phead{flex-direction:column;align-items:stretch;gap:var(--s-5)}
+  .phead-side{margin-left:0;flex-wrap:wrap}
+  .phead-side .stat,.phead-side .stat:nth-child(3){display:block;flex:1 1 calc(50% - var(--s-4));min-width:0}
+  .panel,.section{padding:var(--s-6)}
+  .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .checks{grid-template-columns:1fr}
+  .bands{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+
+  /* challenge and profile rows: title on top, numbers in a row underneath */
+  .chal,.chal.wide,.pf-list .chal{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-4) var(--s-6);padding:var(--s-5)}
+  .chal-main{flex:1 1 calc(100% - 64px)}
+  .chal-cell{flex:1 1 0;min-width:0}
+  .chal > svg{display:none}
+  .chal.wide .frame{order:-1;flex:1 1 100%;width:100%}
+
+  /* landing */
+  .hero-copy{padding:var(--s-6)}
+  .overlay{position:static;width:auto;margin-top:var(--s-5)}
+  .foot{flex-wrap:wrap;gap:var(--s-5)}
+  .foot nav{flex-wrap:wrap;gap:var(--s-5)}
+  .foot .end{margin-left:0}
+  .bar{flex-wrap:wrap}
+  .bar .end{margin-left:0}
+
+  /* leaderboard */
+  .bd-board{min-height:0}
+  .bd-podium{grid-template-columns:minmax(0,1fr)}
+  .bd-top{height:auto;min-height:88px}
+  .bd-wrap{flex:none;contain:none;height:60vh;min-height:0}
+  .bd-board .panel-head .filters{display:flex;flex-wrap:wrap;gap:var(--s-3)}
+
+  /* workspace: goal, prompt and results stack and the page scrolls */
+  .ws-page{height:auto;overflow:visible}
+  .ws-page > .split{flex:none}
+  .ws-page .col > .panel,.ws-page .col > .panel.grow{flex:none;overflow:visible}
+  .ws-prompt .editor{min-height:200px}
+  .ws-rp{min-height:120px}
+  .ws-rd-costs{min-height:0}
+  .again{flex-wrap:wrap}
+  .ws-tall{flex:1 1 auto}
+  .run kbd{display:none}
+}

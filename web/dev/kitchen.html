@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno kitchen</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+
+<main class="page">
+  <!-- page header -->
+  <section class="panel phead">
+    <div>
+      <div class="phead-t">
+        <span class="lvl r">Lv 4</span>
+        <h1>Pricing page with three plans</h1>
+      </div>
+      <div class="phead-sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M4.6 7.2l1.7 1.6 3.2-3.4"/></svg>2,418 players solved</span>
+        <span class="mtag"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2" width="10" height="7" rx="1"/><path d="M4 11h4"/></svg>1280 x 800</span>
+      </div>
+    </div>
+    <div class="phead-side">
+      <div class="stat"><div class="k">Model</div><div class="v model"><span class="chip-ico"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="8" height="8" rx="1.5"/><path d="M4.5 6h3M6 4.5v3"/></svg></span>Llama 3.2 3B</div></div>
+      <div class="stat"><div class="k">Your best</div><div class="v">84</div></div>
+      <div class="stat"><div class="k">Top score</div><div class="v">99</div></div>
+    </div>
+  </section>
+
+  <!-- tabs -->
+  <nav class="tabs" id="kTabs">
+    <a href="#" class="on"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2" width="11" height="10" rx="1.5"/><path d="M1.5 5h11"/></svg>Workspace</a>
+    <a href="#"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="8" height="6" rx="1"/><path d="M5 6V4.5a2 2 0 014 0V6"/></svg>Solutions</a>
+    <a href="#"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 3h10v6H6l-3 2.5V9H2z"/></svg>Discussion (38)</a>
+    <div class="tabs-right"><span>Runs today <b>3</b></span></div>
+  </nav>
+
+  <!-- state A: goal + prompt -->
+  <div class="split">
+    <div class="col">
+      <section class="panel">
+        <div class="panel-head">
+          <h2 class="h">Goal page</h2>
+          <div class="right">
+            <span class="note">Recreate it with one prompt</span>
+            <div class="tools" role="group" aria-label="Page tools">
+              <button class="tool" aria-pressed="false" title="Ruler" aria-label="Ruler"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 11.5L11.5 2 14 4.5 4.5 14z"/><path d="M5 8.5l1.5 1.5M7 6.5l1 1M9 4.5l1.5 1.5"/></svg></button>
+              <button class="tool" aria-pressed="true" title="Magnifier" aria-label="Magnifier"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="frame"><iframe class="goal" title="Goal page"></iframe></div>
+      </section>
+
+      <section class="panel grow">
+        <div class="panel-head"><h2 class="h">Top on this challenge</h2><span class="note">This week</span></div>
+        <ul class="lb-strip">
+          <li><span class="pos">#1</span><span class="nm">kmorrow</span><span class="s">99</span></li>
+          <li><span class="pos">#2</span><span class="nm">ada_lin</span><span class="s">97</span></li>
+          <li><span class="pos">#3</span><span class="nm">rvasquez</span><span class="s">96</span></li>
+          <li class="you"><span class="pos">#188</span><span class="nm">jrivera</span><span class="s">84</span></li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel grow" style="display:flex;flex-direction:column">
+        <div class="panel-head">
+          <h2 class="h">Prompt</h2>
+          <div class="dd">
+            <button class="btn btn-secondary sm dd-btn" id="ddBtn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg>Instructions<svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
+            <div class="dd-menu end" id="ddMenu" role="menu">
+              <h3 class="h">Challenge rules</h3>
+              <dl class="kv">
+                <div><dt>Viewport</dt><dd>1280 x 800</dd></div>
+                <div><dt>Model</dt><dd>Llama 3.2 3B</dd></div>
+                <div><dt>Output</dt><dd>One HTML file</dd></div>
+                <div><dt>Scripts</dt><dd>Not allowed</dd></div>
+                <div><dt>Max prompt</dt><dd>600 chars</dd></div>
+              </dl>
+              <div class="dd-sep"></div>
+              <button class="dd-item" role="menuitem"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="8" height="8" rx="1.5"/><path d="M2 10V3a1 1 0 011-1h7"/></svg>Copy goal size</button>
+            </div>
+          </div>
+        </div>
+        <div class="editor">
+<div class="l">Build a pricing page titled <q>"Simple pricing"</q> with a one line subtitle.</div>
+<div class="l">Show three plan cards in one row: Free <em>$0</em>, Pro <em>$8</em>, Team <em>$20</em> a month.</div>
+<div class="l">Each card lists three features and ends with a full width button.</div>
+<div class="l">Give the Pro card a dark border and a <q>"Most popular"</q> label.</div>
+<div class="l">Use a warm off-white background, dark text, one teal accent.</div>
+<div class="l">Add a slim white top bar: brand left, three links right.</div>
+        </div>
+        <button class="run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9.5-5.5z"/></svg>Run prompt<kbd>Ctrl Enter</kbd></button>
+      </section>
+    </div>
+  </div>
+
+  <!-- state B: compare + score -->
+  <div class="split gap-t">
+    <div class="col">
+      <section class="panel grow">
+        <div class="panel-head"><h2 class="h">Compare</h2><span class="note">Run 3</span></div>
+        <div class="pair">
+          <div><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="frame"><iframe class="goal" title="Goal page"></iframe></div></div>
+          <div><div class="frame-lbl"><span class="lvl r sm">3</span>Your page</div><div class="frame"><iframe class="mine" title="Your page"></iframe></div></div>
+        </div>
+        <div class="checks-wrap">
+          <div class="panel-head" style="margin-bottom:4px"><h3 class="h">Checks</h3></div>
+          <ul class="checks">
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Footer has four links</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Title reads "Simple pricing"</li>
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Page size within 1.5x of goal</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Three plan cards in one row</li>
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Card width within 10% of goal</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Prices $0, $8 and $20</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="panel score fill grow">
+        <div class="sc">
+          <div class="bigscore"><span class="n">84</span><span class="of">/100</span></div>
+          <div class="info"><div class="gain">+24 pts</div><div class="rk">rank #212 to #188</div></div>
+        </div>
+        <div>
+          <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i></div>
+          <div class="segcap"><span><b>11 of 14</b> checks passed</span></div>
+        </div>
+        <div class="costs">
+          <h3 class="h" style="margin-bottom:6px">Point costs</h3>
+          <div class="cost"><span class="pt">&minus;8</span><span class="w">Footer links are missing</span></div>
+          <div class="cost"><span class="pt">&minus;5</span><span class="w">Page is 2x the goal size<small>Goal 1280 x 1900, yours 1280 x 3800</small></span></div>
+          <div class="cost"><span class="pt">&minus;3</span><span class="w">Plan cards are narrower than the goal</span></div>
+        </div>
+        <div class="again">
+          <div class="used"><span class="k">Prompts used</span><span class="v">3</span></div>
+          <button class="run"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 7a5 5 0 11-1.5-3.6M12 1.5v2.8H9.2"/></svg>Run again</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- leaderboard: pills + table -->
+  <section class="panel gap-t">
+    <div class="panel-head">
+      <h2 class="h">Leaderboard</h2>
+      <div class="filters">
+        <div class="pills" role="group" aria-label="Prompts used" id="kPills">
+          <button aria-pressed="true">1 prompt</button><button aria-pressed="false">2</button><button aria-pressed="false">3 to 5</button><button aria-pressed="false">6 to 10</button><button aria-pressed="false">11+</button>
+        </div>
+        <div class="pills" role="group" aria-label="Period" id="kPeriod">
+          <button aria-pressed="true">This week</button><button aria-pressed="false">All time</button>
+        </div>
+      </div>
+    </div>
+    <table class="lbt">
+      <thead><tr><th>Rank</th><th>Player</th><th class="r">Prompts</th><th class="r">Score</th></tr></thead>
+      <tbody>
+        <tr><td class="pos">#1</td><td><span class="who"><span class="lvl d sm">Lv 1</span><span class="avatar">KM</span>kmorrow</span></td><td class="r num">1</td><td class="r sc-cell">99</td></tr>
+        <tr><td class="pos">#2</td><td><span class="who"><span class="lvl r sm">Lv 3</span><span class="avatar">AL</span>ada_lin</span></td><td class="r num">1</td><td class="r sc-cell">97</td></tr>
+        <tr class="you"><td class="pos">#3</td><td><span class="who"><span class="lvl p sm">Lv 5</span><span class="avatar">JR</span>jrivera</span></td><td class="r num">1</td><td class="r sc-cell">96</td></tr>
+        <tr><td class="pos">#4</td><td><span class="who"><span class="lvl p sm">Lv 5</span><span class="avatar">TJ</span>tjin</span></td><td class="r num">1</td><td class="r sc-cell">95</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- challenge rows -->
+  <section class="gap-t">
+    <div class="panel-head"><h2 class="h">Challenges</h2><span class="note">12 open</span></div>
+    <div class="chal-list">
+      <a class="chal" href="#"><span class="lvl r">Lv 4</span><span class="chal-main"><span class="chal-title">Pricing page with three plans</span><span class="chal-brief">Three plan cards, one highlighted, a top bar and a footer.</span></span><span class="chal-cell"><span class="k">Solved</span><span class="v">2,418</span></span><span class="chal-cell"><span class="k">Your best</span><span class="v best">84</span></span><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 2.5L9.5 7 5 11.5"/></svg></a>
+      <a class="chal" href="#"><span class="lvl p">Lv 5</span><span class="chal-main"><span class="chal-title">Sign-in card</span><span class="chal-brief">A centered card with two fields, a button and a link below.</span></span><span class="chal-cell"><span class="k">Solved</span><span class="v">5,102</span></span><span class="chal-cell"><span class="k">Your best</span><span class="v none">none yet</span></span><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 2.5L9.5 7 5 11.5"/></svg></a>
+    </div>
+  </section>
+
+  <!-- buttons, auth, callout, history, states -->
+  <div class="pair gap-t">
+    <div class="col">
+      <section class="panel">
+        <div class="panel-head"><h2 class="h">Buttons</h2></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary">Start challenge</button>
+          <button class="btn btn-secondary">View solutions</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-primary sm">Save</button>
+          <button class="btn btn-secondary sm">Reset</button>
+          <span class="lvl w">Lv 7</span><span class="lvl d">Lv 1</span>
+        </div>
+        <div class="toast-slot" id="kToast"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2 class="h">Your runs</h2><span class="note">3 prompts</span></div>
+        <div class="hist-list">
+          <button class="hist on"><span class="hist-n">#3</span><span class="hist-x">Build a pricing page titled "Simple pricing" with a one line subtitle.</span><span class="hist-s">84</span></button>
+          <button class="hist"><span class="hist-n">#2</span><span class="hist-x">Pricing page, three cards, Pro card highlighted with a dark border.</span><span class="hist-s">60</span></button>
+          <button class="hist"><span class="hist-n">#1</span><span class="hist-x">Make a pricing page.</span><span class="hist-s">31</span></button>
+        </div>
+        <p class="callout gap-t"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span>A perfect 100 is rare. <b>Fewer prompts</b> rank higher at the same score.</span></p>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2 class="h">Scoring</h2><span class="note">Run 4</span></div>
+        <ol class="stages">
+          <li class="done">Sending prompt</li>
+          <li class="done">Model writes the page</li>
+          <li class="on">Rendering at 1280 x 800</li>
+          <li>Running checks</li>
+        </ol>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2 class="h">Loading</h2></div>
+        <div class="skel"><i></i><i></i><i class="line"></i></div>
+      </section>
+      <section class="panel">
+        <div class="empty">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>
+          <p class="title">No runs yet</p>
+          <p class="small">Write a prompt and run it to see your score here.</p>
+          <a class="btn btn-secondary" href="#">Browse challenges</a>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="panel auth" style="margin-top:0">
+        <div class="auth-head">
+          <svg viewBox="0 0 34 34"><rect x="2" y="4" width="30" height="26" rx="6" style="fill:var(--red)"/><rect x="5" y="7" width="24" height="20" rx="4" style="fill:var(--rail)"/><path d="M10.5 13l4.5 4-4.5 4M17 21.5h6.5" fill="none" style="stroke:var(--red)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h1 class="title">Log in to promptdyno</h1>
+          <p class="small">Your scores and rank follow you.</p>
+        </div>
+        <label class="field"><span class="field-lbl">Username</span><input class="input" autocomplete="username" value="jrivera"><span class="field-err">That username is not registered.</span></label>
+        <label class="field bad"><span class="field-lbl">Password</span><input class="input" type="password" autocomplete="current-password"><span class="field-err">Enter your password.</span></label>
+        <button class="btn btn-primary block">Log in</button>
+        <p class="auth-foot">New here? <a class="link" href="#">Create an account</a></p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { mountShell } from '../js/shell.js';
+import { dropdown, tabs, toast, fitFrames } from '../js/ui.js';
+
+mountShell({ active: 'challenges', user: { name: 'jrivera', initials: 'JR', level: 5, points: 1284 },
+  crumb: [{ label: 'Challenges', href: 'challenges.html' }, { label: 'Pricing page with three plans' }] });
+
+dropdown(document.getElementById('ddBtn'), document.getElementById('ddMenu'));
+tabs(document.getElementById('kTabs'));
+tabs(document.getElementById('kPills'), (i, el) => toast('Showing ' + el.textContent + ' runs', { slot: document.getElementById('kToast') }));
+tabs(document.getElementById('kPeriod'));
+document.querySelectorAll('.tool').forEach((b) => b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
+
+// Sample goal page content (a model-made page, not site styling).
+const mock = (mine) => `<!doctype html><style>
+body{margin:0;width:960px;height:600px;background:#f7f4ef;color:#1f2933;font:400 15px/1.5 Lato,system-ui,sans-serif;position:relative;overflow:hidden}
+.b{height:56px;display:flex;align-items:center;padding:0 40px;border-bottom:1px solid #e7e1d8;background:#fff}.br{font-weight:900;font-size:18px}.br i{font-style:normal;color:#0f766e}
+.l{margin-left:auto;display:flex;gap:26px;font-size:14px;color:#52606d}.h{text-align:center;padding:38px 0 26px}h2{margin:0;font:900 ${mine ? 38 : 40}px/1.1 Lato,sans-serif;letter-spacing:-.5px}
+.h p{margin:10px 0 0;color:#52606d;font-size:16px}.c{display:grid;grid-template-columns:repeat(3,1fr);gap:${mine ? 16 : 20}px;max-width:${mine ? 700 : 840}px;margin:0 auto}
+.d{position:relative;background:#fff;border:1px solid #e4ded6;border-radius:10px;padding:24px}.d.p{border:2px solid #1f2933;padding:23px}
+.pl{position:absolute;top:-12px;left:23px;background:#0f766e;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.n{font-weight:700;font-size:16px}.pr{margin-top:6px;font:900 38px/1 Lato,sans-serif}.pr small{font:400 14px Lato;color:#7b8794}
+ul{list-style:none;margin:16px 0 20px;padding:0;font-size:14px;color:#3e4c59}li{padding:4px 0}.m{display:block;text-align:center;padding:10px;border-radius:6px;border:1px solid #cbd2d9;font-weight:700;font-size:14px}
+.p .m{background:#1f2933;color:#fff}.f{position:absolute;left:0;right:0;bottom:0;height:58px;display:flex;align-items:center;padding:0 40px;border-top:1px solid #e7e1d8;font-size:13px;color:#7b8794}
+.f nav{display:${mine ? 'none' : 'flex'};gap:22px;color:#52606d}.f span{margin-left:auto}</style>
+<div class="b"><span class="br">tally<i>.</i></span><span class="l"><span>Product</span><span>Pricing</span><span>Sign in</span></span></div>
+<div class="h"><h2>Simple pricing</h2><p>One plan for you, one for your team. Cancel any time.</p></div>
+<div class="c"><div class="d"><div class="n">Free</div><div class="pr">$0<small>/month</small></div><ul><li>1 project</li><li>Basic reports</li><li>Community support</li></ul><span class="m">Start free</span></div>
+<div class="d p"><span class="pl">Most popular</span><div class="n">Pro</div><div class="pr">$8<small>/month</small></div><ul><li>Unlimited projects</li><li>Advanced reports</li><li>Email support</li></ul><span class="m">Choose Pro</span></div>
+<div class="d"><div class="n">Team</div><div class="pr">$20<small>/month</small></div><ul><li>Up to 10 seats</li><li>Shared workspaces</li><li>Priority support</li></ul><span class="m">Choose Team</span></div></div>
+<div class="f"><nav><span>Docs</span><span>Changelog</span><span>Privacy</span><span>Terms</span></nav><span>&copy; 2026 Tally</span></div>`;
+document.querySelectorAll('iframe.goal').forEach((f) => { f.srcdoc = mock(false); });
+document.querySelectorAll('iframe.mine').forEach((f) => { f.srcdoc = mock(true); });
+fitFrames();
+</script>
+</body>
+</html>

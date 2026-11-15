@@ -1,0 +1,53 @@
+{
+  "alwaysPass": ["Page renders", "One HTML file", "No scripts or external files"],
+  "challenges": {
+    "login-card": [
+      { "check": "Card is 400px wide", "message": "The card is 460px wide; the goal is 400px.", "weight": 8, "find": "width: 400px;", "replace": "width: 460px;" },
+      { "check": "Button colour", "message": "The button is #3B7A68 instead of #2F5D50.", "weight": 6, "find": "background: #2F5D50; color: #FFFFFF; font-size: 15px;", "replace": "background: #3B7A68; color: #FFFFFF; font-size: 15px;" },
+      { "check": "Heading size", "message": "The heading is 32px; the goal uses 28px.", "weight": 5, "find": "h1 { font-size: 28px;", "replace": "h1 { font-size: 32px;" },
+      { "check": "Inputs are 44px tall", "message": "Inputs are 40px tall instead of 44px.", "weight": 4, "find": "height: 44px; border: 1px solid #D9D5CC", "replace": "height: 40px; border: 1px solid #D9D5CC" },
+      { "check": "Card corners", "message": "Card corners are 6px; the goal rounds them to 12px.", "weight": 3, "find": "border-radius: 12px; padding: 40px;", "replace": "border-radius: 6px; padding: 40px;" },
+      { "check": "Footer line text", "message": "The footer link says Sign up instead of Create an account.", "weight": 2, "find": ">Create an account<", "replace": ">Sign up<" }
+    ],
+    "footer-columns": [
+      { "check": "Column widths", "message": "The four columns are equal; the brand column should be twice as wide.", "weight": 8, "find": "grid-template-columns: 2fr 1fr 1fr 1fr;", "replace": "grid-template-columns: 1fr 1fr 1fr 1fr;" },
+      { "check": "Footer colour", "message": "The footer is #1F2A44 instead of #14213D.", "weight": 6, "find": "footer { background: #14213D;", "replace": "footer { background: #1F2A44;" },
+      { "check": "Band heading size", "message": "The band heading is 40px; the goal uses 36px.", "weight": 5, "find": ".cta h2 { font-size: 36px;", "replace": ".cta h2 { font-size: 40px;" },
+      { "check": "Column headings uppercase", "message": "Column headings are not uppercase.", "weight": 4, "find": "text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;", "replace": "letter-spacing: 0.08em; margin-bottom: 16px;" },
+      { "check": "Bottom bar border", "message": "The bottom bar is missing its 1px top border.", "weight": 3, "find": "border-top: 1px solid #2C3A5C; ", "replace": "" },
+      { "check": "Band button colour", "message": "The band button is #F5B85E instead of #F2A541.", "weight": 2, "find": "background: #F2A541;", "replace": "background: #F5B85E;" }
+    ],
+    "nav-hero": [
+      { "check": "Headline size", "message": "The headline is 48px; the goal uses 56px.", "weight": 8, "find": "h1 { font-size: 56px;", "replace": "h1 { font-size: 48px;" },
+      { "check": "Nav height", "message": "The nav bar is 64px tall instead of 72px.", "weight": 6, "find": "nav { height: 72px;", "replace": "nav { height: 64px;" },
+      { "check": "Primary button colour", "message": "The main button is #6366F1 instead of #4F46E5.", "weight": 5, "find": ".primary { background: #4F46E5;", "replace": ".primary { background: #6366F1;" },
+      { "check": "Nav link spacing", "message": "Nav links are 24px apart; the goal spaces them 32px.", "weight": 4, "find": "gap: 32px;", "replace": "gap: 24px;" },
+      { "check": "Pill above headline", "message": "The New: live dashboards pill is missing.", "weight": 3, "find": "<span class=\"pill\">New: live dashboards</span>", "replace": "" },
+      { "check": "Note under buttons", "message": "The note line under the buttons is missing.", "weight": 2, "find": "<p class=\"note\">No credit card needed. Free for teams up to 5.</p>", "replace": "" }
+    ],
+    "blog-header": [
+      { "check": "Serif title", "message": "The title uses the body font; the goal sets it in Georgia.", "weight": 8, "find": "h1 { font-family: Georgia, \"Times New Roman\", serif; ", "replace": "h1 { " },
+      { "check": "Column width", "message": "The column is 680px wide instead of 720px.", "weight": 6, "find": ".post { width: 720px;", "replace": ".post { width: 680px;" },
+      { "check": "Cover height", "message": "The cover is 260px tall; the goal is 300px.", "weight": 5, "find": ".cover { height: 300px;", "replace": ".cover { height: 260px;" },
+      { "check": "Tag colour", "message": "The tag is #D97706 instead of #B45309.", "weight": 4, "find": "color: #B45309; margin-bottom: 16px;", "replace": "color: #D97706; margin-bottom: 16px;" },
+      { "check": "Round avatar", "message": "The avatar is a rounded square, not a circle.", "weight": 3, "find": "border-radius: 50%;", "replace": "border-radius: 8px;" },
+      { "check": "Byline divider", "message": "The line under the byline is missing.", "weight": 2, "find": "border-bottom: 1px solid #ECE6D9; ", "replace": "" }
+    ],
+    "pricing-plans": [
+      { "check": "Featured card border", "message": "The middle card has no green border.", "weight": 8, "find": ".plan.featured { border: 2px solid #2F5D50; }", "replace": ".plan.featured { }" },
+      { "check": "Card width", "message": "Cards are 300px wide; the goal uses 320px.", "weight": 6, "find": "width: 320px;", "replace": "width: 300px;" },
+      { "check": "Price size", "message": "Prices are 36px; the goal uses 44px.", "weight": 5, "find": ".price { font-size: 44px;", "replace": ".price { font-size: 36px;" },
+      { "check": "Most popular badge", "message": "The Most popular badge is missing.", "weight": 4, "find": "<div class=\"badge\">Most popular</div>", "replace": "" },
+      { "check": "Card spacing", "message": "Cards are 32px apart instead of 24px.", "weight": 3, "find": "gap: 24px;", "replace": "gap: 32px;" },
+      { "check": "Feature dividers", "message": "Feature rows are missing their dividers.", "weight": 2, "find": " border-bottom: 1px solid #F0ECE3;", "replace": "" }
+    ],
+    "product-grid": [
+      { "check": "Four columns", "message": "The grid has 3 columns; the goal has 4.", "weight": 8, "find": "repeat(4, 272px)", "replace": "repeat(3, 272px)" },
+      { "check": "Image height", "message": "Image areas are 200px tall instead of 180px.", "weight": 6, "find": ".img { height: 180px; }", "replace": ".img { height: 200px; }" },
+      { "check": "Price colour", "message": "Prices are #1A1A1A; the goal uses #2F5D50.", "weight": 5, "find": ".price { font-size: 15px; font-weight: 700; color: #2F5D50; }", "replace": ".price { font-size: 15px; font-weight: 700; color: #1A1A1A; }" },
+      { "check": "Old sale price struck through", "message": "Sale prices do not strike through the old price.", "weight": 4, "find": " text-decoration: line-through;", "replace": "" },
+      { "check": "Card corners", "message": "Cards have square corners; the goal rounds them to 10px.", "weight": 3, "find": "border-radius: 10px;", "replace": "border-radius: 0;" },
+      { "check": "Heading text", "message": "The heading says New in instead of New arrivals.", "weight": 2, "find": "<h1>New arrivals</h1>", "replace": "<h1>New in</h1>" }
+    ]
+  }
+}

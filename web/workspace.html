@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace - promptdyno</title>
+<meta name="description" content="Write a prompt, let a small model build the page, and see how close it gets to the goal.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/workspace.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="ws">
+<aside id="rail"></aside>
+<header id="nav"></header>
+
+<main class="page ws-page" id="page">
+  <section class="panel phead" id="phead">
+    <div>
+      <div class="phead-t">
+        <span class="lvl r" id="hLevel">Lv 1</span>
+        <h1 id="hTitle">Loading challenge</h1>
+      </div>
+      <div class="phead-sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M4.6 7.2l1.7 1.6 3.2-3.4"/></svg><span id="hSolved">0 players solved</span></span>
+        <span class="mtag"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2" width="10" height="7" rx="1"/><path d="M4 11h4"/></svg><span id="hViewport">1280 x 800</span></span>
+      </div>
+    </div>
+    <div class="phead-side">
+      <div class="stat"><div class="k">Model</div><div class="v model"><span class="chip-ico"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="8" height="8" rx="1.5"/><path d="M4.5 6h3M6 4.5v3"/></svg></span><span id="hModel"></span></div></div>
+      <div class="stat"><div class="k">Your best</div><div class="v" id="hBest">none yet</div></div>
+      <div class="stat"><div class="k">Top score</div><div class="v" id="hTop">none yet</div></div>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs" aria-label="Workspace views">
+    <a href="#" class="on"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2" width="11" height="10" rx="1.5"/><path d="M1.5 5h11"/></svg>Workspace</a>
+    <a href="#"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.2V7l2 1.3"/></svg>Runs <span class="ws-count" id="runCount">0</span></a>
+  </nav>
+
+  <div class="split" id="split">
+    <!-- left: pages -->
+    <div class="col">
+      <section class="panel ws-dd-host" id="goalPanel">
+        <div class="panel-head">
+          <h2 class="h">Goal page</h2>
+          <div class="right">
+            <span class="dd-slot"></span>
+            <div class="tools" role="group" aria-label="Page tools">
+              <button class="tool" data-tool="ruler" title="Ruler" aria-label="Ruler"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 11.5L11.5 2 14 4.5 4.5 14z"/><path d="M5 8.5l1.5 1.5M7 6.5l1 1M9 4.5l1.5 1.5"/></svg></button>
+              <button class="tool" data-tool="mag" title="Magnifier" aria-label="Magnifier"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="frame" id="goalFrame"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div>
+      </section>
+
+      <section class="panel" id="minePanel" hidden>
+        <div class="panel-head">
+          <h2 class="h">Your page</h2>
+          <div class="right">
+            <span class="note" id="mineNote">Run 1</span>
+            <div class="tools" role="group" aria-label="Page tools">
+              <button class="tool" data-tool="ruler" title="Ruler" aria-label="Ruler"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 11.5L11.5 2 14 4.5 4.5 14z"/><path d="M5 8.5l1.5 1.5M7 6.5l1 1M9 4.5l1.5 1.5"/></svg></button>
+              <button class="tool" data-tool="mag" title="Magnifier" aria-label="Magnifier"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="frame" id="mineFrame"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div>
+      </section>
+
+      <section class="panel grow" id="lbPanel">
+        <div class="panel-head"><div class="ph-l"><h2 class="h">Top on this challenge</h2><span id="lbDemo"></span></div><span class="note" id="lbNote">This week</span></div>
+        <ul class="lb-strip" id="lbList"></ul>
+      </section>
+
+      <section class="panel grow ws-stages" id="stagePanel" hidden>
+        <div class="panel-head"><h2 class="h">Scoring</h2><span class="note" id="stageNote">The model is writing your page</span></div>
+        <ol class="stages row" id="stageList"></ol>
+      </section>
+
+      <section class="panel grow ws-dd-host ws-compare" id="comparePanel" hidden>
+        <div class="panel-head">
+          <h2 class="h">Compare</h2>
+          <div class="right">
+            <span class="note" id="cmpNote">Run 1</span>
+            <span class="dd-slot"></span>
+            <div class="tools" role="group" aria-label="Page tools">
+              <button class="tool" data-tool="ruler" title="Ruler" aria-label="Ruler"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 11.5L11.5 2 14 4.5 4.5 14z"/><path d="M5 8.5l1.5 1.5M7 6.5l1 1M9 4.5l1.5 1.5"/></svg></button>
+              <button class="tool" data-tool="mag" title="Magnifier" aria-label="Magnifier"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="pair">
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div>
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page</div><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div>
+        </div>
+        <div class="checks-wrap">
+          <div class="panel-head" style="margin-bottom:4px"><h3 class="h">Checks</h3></div>
+          <ul class="checks" id="checkList"></ul>
+        </div>
+        <div class="ws-run-prompt" id="runPromptBox">
+          <div class="panel-head"><h3 class="h">Prompt for this run</h3><button class="btn btn-ghost sm" id="editKeepBtn">Edit and keep prompting</button></div>
+          <div class="editor code ws-rp" id="runPrompt" aria-label="Prompt for this run" tabindex="0"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- right: prompt, score or runs -->
+    <div class="col">
+      <section class="panel grow ws-prompt" id="promptPanel">
+        <div class="panel-head">
+          <h2 class="h">Prompt</h2>
+          <div class="right">
+            <button class="btn btn-ghost sm" id="backBtn" hidden>Back to score</button>
+            <div class="dd">
+              <button class="btn btn-secondary sm dd-btn" id="modelBtn" aria-label="Model"><span id="modelLabel"></span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
+              <div class="dd-menu end ws-model-menu" id="modelMenu" role="menu"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ws-last" id="lastBox" hidden>
+          <div class="ws-last-top">Last run <b id="lastScore">0</b><span>/100. Fix these first:</span></div>
+          <div id="lastCosts"></div>
+        </div>
+        <div class="editor editable" id="editor">
+          <div class="gutter" aria-hidden="true"></div>
+          <textarea id="prompt" aria-label="Your prompt" spellcheck="false" placeholder="Describe the goal page: layout, sizes, colours and text."></textarea>
+        </div>
+        <p class="ws-status" id="status" role="status" hidden></p>
+        <div class="ws-sim" id="simRun" hidden></div>
+        <div class="again">
+          <div class="used"><span class="k">Prompts used</span><span class="v" id="usedA">0</span></div>
+          <button class="run" id="runBtn"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9.5-5.5z"/></svg><span id="runLabel" class="ws-bl">Run prompt</span><kbd>Ctrl Enter</kbd></button>
+          <button class="btn btn-secondary ws-tall" id="cancelBtn" hidden><span class="ws-bl">Cancel<small>Esc</small></span></button>
+        </div>
+      </section>
+
+      <section class="panel grow score fill ws-score" id="scorePanel" hidden>
+        <div class="sc">
+          <div class="bigscore"><span class="n" id="scN">0</span><span class="of">/100</span></div>
+          <div class="info"><div class="gain" id="scGain"></div><div class="rk" id="scRk"></div></div>
+        </div>
+        <div>
+          <div class="seg" id="scSeg"></div>
+          <div class="segcap"><span id="scCap"></span><span id="scRun"></span></div>
+        </div>
+        <div class="costs"><h3 class="h">Point costs</h3><div id="scCosts"></div></div>
+        <div class="ws-sim" id="simScore" hidden></div>
+        <p class="callout" id="scNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span id="scNoteText"></span></p>
+        <div class="again">
+          <div class="used"><span class="k">Prompts used</span><span class="v" id="usedB">0</span></div>
+          <button class="run" id="keepBtn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 7a5 5 0 11-1.5-3.6M12 1.5v2.8H9.2"/></svg><span class="ws-bl">Keep prompting<small>adds 1 prompt</small></span></button>
+          <button class="btn btn-secondary ws-tall" id="overBtn"><span class="ws-bl"><span id="overLabel">Start over</span><small id="overNote">back to 0 prompts</small></span></button>
+        </div>
+      </section>
+
+      <section class="panel grow ws-runs" id="runsPanel" hidden>
+        <div class="panel-head"><h2 class="h">Runs in this attempt</h2><span class="note" id="runsNote"></span></div>
+        <div class="hist-list ws-hist" id="histList" role="listbox" aria-label="Runs"></div>
+        <div class="ws-detail" id="runDetail">
+          <div class="ws-detail-top"><span class="lvl r sm" id="rdTag">1</span><span><span class="big" id="rdScore">0</span><span class="of">/100</span></span><span class="note" id="rdDelta"></span></div>
+          <h3 class="h">Point costs</h3>
+          <div class="costs ws-rd-costs" id="rdCosts"></div>
+          <button class="btn btn-secondary block" id="useBtn">Use this prompt</button>
+        </div>
+        <div class="empty" id="runsEmpty">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>
+          <p class="title">No runs yet</p>
+          <p class="small">Write a prompt and run it. Every run of this attempt shows up here.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="dd" id="insDd">
+  <button class="btn btn-secondary sm dd-btn" id="insBtn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg>Instructions<svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
+  <div class="dd-menu end ws-ins" id="insMenu" role="dialog" aria-label="Instructions" tabindex="0"></div>
+</div>
+
+<script type="module" src="js/workspace.js"></script>
+</body>
+</html>

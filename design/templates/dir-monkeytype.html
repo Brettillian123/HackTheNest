@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" data-state="a" data-theme="ember">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500&family=Roboto+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Theme colours. Five roles, like a typing-test theme: bg, sub-alt (filled surfaces), sub (chrome), text, main (the one accent). */
+:root, [data-theme="ember"] {
+  --bg: #121011;
+  --sub-alt: #1d1a1b;
+  --sub: #8a8184;
+  --text: #ece4e1;
+  --main: #ff3344;
+  --on-main: #121011;
+  --frame: #1d1a1b;
+}
+[data-theme="oxblood"] {
+  --bg: #7d1622;
+  --sub-alt: #6a101b;
+  --sub: #e9a59f;
+  --text: #fbe9df;
+  --main: #ffd0a8;
+  --on-main: #5a0c15;
+  --frame: #6a101b;
+}
+[data-theme="paper"] {
+  --bg: #f4ede8;
+  --sub-alt: #e9dfd8;
+  --sub: #8a5a5c;
+  --text: #2b1215;
+  --main: #b5121f;
+  --on-main: #f4ede8;
+  --frame: #e9dfd8;
+}
+:root { --round: 8px; --mono: "Roboto Mono", ui-monospace, monospace; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--text);
+  font: 400 16px/1.25 var(--mono);
+  min-width: 1000px; overflow-x: hidden;
+  transition: background .25s, color .25s;
+}
+svg { display: block; }
+.ico { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ico.fill { fill: currentColor; stroke: none; }
+
+.page { width: 1024px; max-width: calc(100% - 48px); margin: 0 auto; height: calc(100vh - 34px); min-height: 766px; display: grid; grid-template-rows: auto auto 1fr auto; padding-top: 30px; }
+
+/* header: big wordmark, tiny icon nav */
+header { display: flex; align-items: center; gap: 22px; height: 48px; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+.logo-mark { width: 40px; height: 28px; color: var(--main); }
+.logo-word { font: 400 32px/1 "Lexend Deca", sans-serif; letter-spacing: -.01em; margin-top: -3px; }
+.logo-word span { color: var(--main); }
+.nav { display: flex; gap: 4px; margin-left: 6px; }
+.nav a, .nav-r a { color: var(--sub); padding: 8px; border-radius: var(--round); font-size: 18px; display: grid; place-items: center; transition: color .125s; }
+.nav a:hover, .nav-r a:hover { color: var(--text); }
+.nav a.on { color: var(--text); }
+.nav-r { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+.nav-r .who { font-size: 12px; color: var(--sub); display: flex; gap: 8px; align-items: center; padding: 8px; }
+.nav-r .who b { color: var(--main); font-weight: 400; }
+
+/* settings row: filled pills, no borders, 12px */
+.config { margin: 26px auto 0; display: flex; gap: 16px; font-size: 12px; height: 39px; }
+.config.b { visibility: hidden; }
+.pill { background: var(--sub-alt); border-radius: var(--round); display: flex; align-items: center; padding: 0 6px; transition: background .25s; }
+.pill button { all: unset; cursor: pointer; color: var(--sub); padding: 12px 8px; display: flex; gap: 6px; align-items: center; transition: color .125s; }
+.pill button:hover { color: var(--text); }
+.pill button.on { color: var(--main); }
+.pill .sep { width: 4px; height: 20px; border-radius: 2px; background: var(--bg); margin: 0 6px; }
+
+main { position: relative; padding-top: 36px; }
+
+/* ---------- state a ---------- */
+.ws { display: grid; grid-template-columns: 420px 1fr; gap: 56px; align-items: start; }
+.label { font-size: 12px; color: var(--sub); display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.label .ico { font-size: 13px; }
+.label b { color: var(--text); font-weight: 400; }
+.frame { background: var(--frame); border-radius: var(--round); padding: 10px; transition: background .25s; }
+.shot { position: relative; overflow: hidden; border-radius: 4px; }
+.shot .site { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.shot.lg { width: 400px; height: 300px; }
+.shot.lg .site { transform: scale(.5); }
+.shot.md { width: 356px; height: 267px; }
+.shot.md .site { transform: scale(.445); }
+
+.goal-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--sub); margin-top: 12px; padding: 0 2px; }
+.goal-meta b { color: var(--text); font-weight: 400; }
+
+.prompt-head { display: flex; align-items: center; gap: 10px; color: var(--sub); font-size: 16px; margin-bottom: 18px; }
+.prompt-head .ico { font-size: 15px; }
+.prompt-head .ch { color: var(--text); }
+.prompt-head .lvl { margin-left: auto; font-size: 12px; color: var(--main); background: var(--sub-alt); padding: 5px 10px; border-radius: var(--round); }
+.prompt { font-size: 21px; line-height: 1.62; color: var(--text); min-height: 272px; }
+.prompt q { quotes: none; color: var(--main); }
+.caret { display: inline-block; width: 2px; height: 1.15em; background: var(--main); vertical-align: -0.2em; margin-left: 2px; border-radius: 1px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.prompt-foot { display: flex; align-items: center; gap: 22px; margin-top: 22px; font-size: 12px; color: var(--sub); }
+.prompt-foot b { color: var(--text); font-weight: 400; }
+.run { all: unset; cursor: pointer; margin-left: auto; display: flex; align-items: center; gap: 10px; background: var(--main); color: var(--on-main); font: 500 16px/1 var(--mono); padding: 12px 20px 12px 16px; border-radius: var(--round); transition: filter .125s, background .25s; }
+.run:hover { filter: brightness(1.08); }
+.run .ico { font-size: 14px; }
+
+/* ---------- state b: results ---------- */
+.res { display: grid; grid-template-columns: 180px 1fr; gap: 40px; }
+.big .k { font-size: 30px; color: var(--sub); line-height: 1; }
+.big .v { font-size: 92px; color: var(--main); line-height: 1; margin: 4px 0 20px -4px; letter-spacing: -.02em; }
+.big .v.s { font-size: 46px; margin: 6px 0 0 -2px; letter-spacing: 0; }
+.big .v.s small { font-size: 24px; color: var(--sub); }
+.big .of { font-size: 14px; color: var(--sub); margin: -14px 0 22px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pair .label { margin-bottom: 8px; }
+.pair .label .tag { margin-left: auto; color: var(--main); }
+
+.res2 { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 40px; margin-top: 26px; align-items: start; }
+.stat .k { font-size: 16px; color: var(--sub); }
+.stat .v { font-size: 26px; color: var(--main); margin-top: 4px; }
+.stats { display: grid; grid-template-columns: auto auto; gap: 18px 36px; }
+.stats .v { font-size: 26px; }
+.stat .v.sm { font-size: 14px; line-height: 1.5; margin-top: 6px; }
+.costs .k { font-size: 16px; color: var(--sub); margin-bottom: 8px; }
+.cost { display: grid; grid-template-columns: 44px 1fr; align-items: baseline; font-size: 15px; padding: 6px 0; color: var(--text); }
+.cost b { color: var(--main); font-weight: 500; font-size: 20px; }
+
+.actions { display: flex; justify-content: center; gap: 10px; margin-top: 26px; }
+.actions a { color: var(--sub); font-size: 20px; padding: 14px 26px; border-radius: var(--round); transition: color .125s, background .125s; display: grid; place-items: center; }
+.actions a:hover { color: var(--text); background: var(--sub-alt); }
+.actions a.go { color: var(--main); }
+
+/* key hints + footer: tiny chrome */
+.foot { padding-bottom: 14px; }
+.hints { display: flex; justify-content: center; gap: 22px; font-size: 12px; color: var(--sub); margin-bottom: 26px; }
+kbd { font: 400 10px/1 var(--mono); background: var(--sub); color: var(--bg); padding: 3px 5px; border-radius: 3px; margin: 0 2px; }
+.links { display: flex; gap: 18px; font-size: 12px; color: var(--sub); align-items: center; }
+.links span { display: flex; gap: 6px; align-items: center; }
+.links .r { margin-left: auto; }
+.links .theme-name { color: var(--main); }
+
+html[data-state="a"] .b { display: none !important; }
+html[data-state="b"] .a { display: none !important; }
+html[data-state="b"] main { padding-top: 30px; }
+html[data-state="b"] .res2 { margin-top: 18px; }
+html[data-state="b"] .actions { margin-top: 12px; }
+html[data-state="b"] .hints { margin-bottom: 18px; }
+html[data-state="b"] .cost { padding: 4px 0; }
+
+/* ---------- the pricing page mock (fixed light page, not themed) ---------- */
+.site { width: 800px; height: 600px; background: #f6f6f4; color: #1d1d1f; font-family: Inter, Arial, sans-serif; padding: 26px 44px 0; }
+.s-nav { display: flex; align-items: center; gap: 26px; font-size: 14px; color: #5d5d63; }
+.s-nav b { font-size: 17px; color: #1d1d1f; margin-right: auto; }
+.s-nav i { font-style: normal; background: #1d1d1f; color: #fff; padding: 7px 14px; border-radius: 6px; }
+.site h1 { text-align: center; font-size: 40px; font-weight: 700; letter-spacing: -.02em; margin-top: 44px; }
+.s-sub { text-align: center; font-size: 16px; color: #66666c; margin-top: 10px; }
+.s-plans { display: flex; justify-content: center; gap: 18px; margin-top: 36px; }
+.s-card { width: 218px; background: #fff; border-radius: 12px; padding: 22px 20px; border: 1px solid #e3e3e0; }
+.s-card.hot { border: 2px solid #1d1d1f; }
+.s-card h3 { font-size: 15px; font-weight: 600; color: #4a4a50; }
+.s-price { font-size: 36px; font-weight: 700; margin: 8px 0 14px; letter-spacing: -.02em; }
+.s-price small { font-size: 14px; color: #77777d; font-weight: 400; letter-spacing: 0; }
+.s-card ul { list-style: none; font-size: 13px; color: #4a4a50; line-height: 1.9; margin-bottom: 16px; }
+.s-card a { display: block; text-align: center; font-size: 13px; font-weight: 600; padding: 9px; border-radius: 7px; background: #ececea; color: #1d1d1f; }
+.s-card.hot a { background: #1d1d1f; color: #fff; }
+.s-foot { display: flex; gap: 22px; justify-content: center; font-size: 13px; color: #77777d; margin-top: 44px; padding-top: 18px; border-top: 1px solid #e3e3e0; }
+.site.yours .s-plans { gap: 14px; }
+.site.yours .s-card { width: 176px; padding: 20px 16px; }
+.site.yours .s-foot { justify-content: flex-start; }
+.site.yours .s-foot span { display: none; }
+
+/* ---------- demo switcher ---------- */
+.dev { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; background: var(--sub-alt); display: flex; align-items: center; gap: 6px; padding: 0 16px; font-size: 12px; color: var(--sub); z-index: 10; transition: background .25s; }
+.dev .t { margin-right: 6px; }
+.dev button { all: unset; cursor: pointer; padding: 5px 10px; border-radius: 6px; color: var(--sub); display: flex; align-items: center; gap: 8px; }
+.dev button:hover { color: var(--text); }
+.dev button.on { background: var(--main); color: var(--on-main); }
+.dev .gap { width: 24px; }
+.sw { display: flex; gap: 3px; padding: 3px; border-radius: 10px; box-shadow: 0 0 0 1px rgba(128,128,128,.45); }
+.sw i { width: 9px; height: 9px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="#" aria-label="promptdyno home">
+      <svg class="logo-mark" viewBox="0 0 40 28" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="25" rx="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 9l5 5-5 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 19h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <span class="logo-word">prompt<span>dyno</span></span>
+    </a>
+    <nav class="nav" aria-label="main">
+      <a href="#" class="on" title="practice"><svg class="ico" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></a>
+      <a href="#" title="leaderboards"><svg class="ico" viewBox="0 0 24 24"><path d="M6 20V11M12 20V5M18 20v-6"/></svg></a>
+      <a href="#" title="about"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></a>
+      <a href="#" title="settings"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></a>
+    </nav>
+    <div class="nav-r">
+      <a href="#" title="notifications"><svg class="ico" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15zM10 21h4"/></svg></a>
+      <span class="who"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>kiran_o <b>#212</b></span>
+    </div>
+  </header>
+
+  <div class="config a">
+    <div class="pill">
+      <button class="on"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>daily</button>
+      <button><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>practice</button>
+    </div>
+    <div class="pill">
+      <button class="on">llama 3.2 3b</button>
+      <button>qwen 2.5 3b</button>
+      <button>gemma 2 2b</button>
+    </div>
+    <div class="pill">
+      <button>easy</button>
+      <button class="on">medium</button>
+      <button>hard</button>
+      <span class="sep"></span>
+      <button><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>browse</button>
+    </div>
+  </div>
+  <div class="config b"></div>
+
+  <main>
+    <!-- state a: before a run -->
+    <section class="ws a">
+      <div>
+        <div class="label"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>goal page</div>
+        <div class="frame">
+          <div class="shot lg">
+            <div class="site">
+              <div class="s-nav"><b>Tallyhouse</b><span>Product</span><span>Pricing</span><span>Docs</span><i>Sign in</i></div>
+              <h1>Simple pricing</h1>
+              <p class="s-sub">One price per seat. Cancel any time.</p>
+              <div class="s-plans">
+                <div class="s-card"><h3>Free</h3><div class="s-price">$0<small> /month</small></div><ul><li>1 project</li><li>Community help</li></ul><a>Start free</a></div>
+                <div class="s-card hot"><h3>Pro</h3><div class="s-price">$8<small> /month</small></div><ul><li>Unlimited projects</li><li>Email support</li></ul><a>Choose Pro</a></div>
+                <div class="s-card"><h3>Team</h3><div class="s-price">$20<small> /month</small></div><ul><li>Shared workspaces</li><li>Admin controls</li></ul><a>Contact sales</a></div>
+              </div>
+              <div class="s-foot"><span>Docs</span><span>Status</span><span>Privacy</span><span>Contact</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="goal-meta"><span>800 x 600</span><span>14 checks</span><span>best <b>97</b></span></div>
+      </div>
+
+      <div>
+        <div class="prompt-head">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
+          <span class="ch">pricing page with three plans</span>
+          <span class="lvl">medium</span>
+        </div>
+        <div class="prompt">Build a pricing page titled <q>"Simple pricing"</q> with a short subtitle under it. Show three plan cards in one row: Free $0, Pro $8 and Team $20 a month. Give each card two features and a full width button. Make the Pro card stand out with a dark border. Use a light grey background, white cards and rounded corners. End with a footer of four links.<span class="caret"></span></div>
+        <div class="prompt-foot">
+          <span><b>352</b> chars</span>
+          <span>prompt <b>1</b> of 3</span>
+          <span>model <b>llama 3.2 3b</b></span>
+          <button class="run"><svg class="ico fill" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 001.5.9l12-7.5a1 1 0 000-1.8l-12-7.5A1 1 0 007 4.5z"/></svg>run</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- state b: after scoring -->
+    <section class="b">
+      <div class="res">
+        <div class="big">
+          <div class="k">score</div>
+          <div class="v">84</div>
+          <div class="of">out of 100</div>
+          <div class="k">checks</div>
+          <div class="v s">11<small>/14</small></div>
+        </div>
+        <div class="pair">
+          <div>
+            <div class="label"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>goal</div>
+            <div class="frame"><div class="shot md">
+              <div class="site">
+                <div class="s-nav"><b>Tallyhouse</b><span>Product</span><span>Pricing</span><span>Docs</span><i>Sign in</i></div>
+                <h1>Simple pricing</h1>
+                <p class="s-sub">One price per seat. Cancel any time.</p>
+                <div class="s-plans">
+                  <div class="s-card"><h3>Free</h3><div class="s-price">$0<small> /month</small></div><ul><li>1 project</li><li>Community help</li></ul><a>Start free</a></div>
+                  <div class="s-card hot"><h3>Pro</h3><div class="s-price">$8<small> /month</small></div><ul><li>Unlimited projects</li><li>Email support</li></ul><a>Choose Pro</a></div>
+                  <div class="s-card"><h3>Team</h3><div class="s-price">$20<small> /month</small></div><ul><li>Shared workspaces</li><li>Admin controls</li></ul><a>Contact sales</a></div>
+                </div>
+                <div class="s-foot"><span>Docs</span><span>Status</span><span>Privacy</span><span>Contact</span></div>
+              </div>
+            </div></div>
+          </div>
+          <div>
+            <div class="label"><svg class="ico" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>yours <span class="tag">prompt 3</span></div>
+            <div class="frame"><div class="shot md">
+              <div class="site yours">
+                <div class="s-nav"><b>Tallyhouse</b><span>Product</span><span>Pricing</span><span>Docs</span><i>Sign in</i></div>
+                <h1>Simple pricing</h1>
+                <p class="s-sub">One price per seat. Cancel any time.</p>
+                <div class="s-plans">
+                  <div class="s-card"><h3>Free</h3><div class="s-price">$0<small> /month</small></div><ul><li>1 project</li><li>Community help</li></ul><a>Start free</a></div>
+                  <div class="s-card hot"><h3>Pro</h3><div class="s-price">$8<small> /month</small></div><ul><li>Unlimited projects</li><li>Email support</li></ul><a>Choose Pro</a></div>
+                  <div class="s-card"><h3>Team</h3><div class="s-price">$20<small> /month</small></div><ul><li>Shared workspaces</li><li>Admin controls</li></ul><a>Contact sales</a></div>
+                </div>
+                <div class="s-foot">Tallyhouse 2026</div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="res2">
+        <div class="stat"><div class="k">challenge</div><div class="v sm">pricing page with three plans<br>llama 3.2 3b<br>daily medium</div></div>
+        <div class="stats">
+          <div class="stat"><div class="k">prompts</div><div class="v">3</div></div>
+          <div class="stat"><div class="k">prompt length</div><div class="v">352</div></div>
+          <div class="stat"><div class="k">rank today</div><div class="v">#212</div></div>
+          <div class="stat"><div class="k">best</div><div class="v">84</div></div>
+        </div>
+        <div class="costs">
+          <div class="k">point costs</div>
+          <div class="cost"><b>&minus;8</b>Footer links are missing</div>
+          <div class="cost"><b>&minus;5</b>Page is 2x the goal size</div>
+          <div class="cost"><b>&minus;3</b>Plan cards are narrower than the goal</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="#" class="go" title="run again"><svg class="ico" viewBox="0 0 24 24"><path d="M20 12a8 8 0 11-2.4-5.7M20 4v5h-5"/></svg></a>
+        <a href="#" title="edit prompt"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"/></svg></a>
+        <a href="#" title="leaderboard"><svg class="ico" viewBox="0 0 24 24"><path d="M6 20V11M12 20V5M18 20v-6"/></svg></a>
+        <a href="#" title="next challenge"><svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <div class="foot">
+    <div class="hints a"><span><kbd>ctrl</kbd> + <kbd>enter</kbd> run prompt</span><span><kbd>tab</kbd> next challenge</span><span><kbd>esc</kbd> command line</span></div>
+    <div class="hints b"><span><kbd>ctrl</kbd> + <kbd>enter</kbd> run again</span><span><kbd>e</kbd> edit prompt</span><span><kbd>tab</kbd> next challenge</span></div>
+    <div class="links">
+      <span>contact</span><span>github</span><span>discord</span><span>terms</span><span>privacy</span>
+      <span class="r"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18z" fill="currentColor"/></svg><span class="theme-name">ember</span></span>
+      <span>v0.6.0</span>
+    </div>
+  </div>
+</div>
+
+<div class="dev" role="toolbar" aria-label="template preview">
+  <span class="t">preview</span>
+  <button data-state-btn="a" class="on">Before run</button>
+  <button data-state-btn="b">After scoring</button>
+  <span class="gap"></span>
+  <span class="t">theme</span>
+  <button data-theme-btn="ember" class="on"><span class="sw" style="background:#121011"><i style="background:#ff3344"></i><i style="background:#ece4e1"></i></span>ember</button>
+  <button data-theme-btn="oxblood"><span class="sw" style="background:#7d1622"><i style="background:#ffd0a8"></i><i style="background:#fbe9df"></i></span>oxblood</button>
+  <button data-theme-btn="paper"><span class="sw" style="background:#f4ede8"><i style="background:#b5121f"></i><i style="background:#2b1215"></i></span>paper</button>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  function mark(attr, val) {
+    document.querySelectorAll('[' + attr + ']').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute(attr) === val);
+    });
+  }
+  document.querySelectorAll('[data-state-btn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-state-btn');
+      root.setAttribute('data-state', v);
+      mark('data-state-btn', v);
+    });
+  });
+  document.querySelectorAll('[data-theme-btn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-theme-btn');
+      root.setAttribute('data-theme', v);
+      mark('data-theme-btn', v);
+      document.querySelector('.theme-name').textContent = v;
+    });
+  });
+})();
+</script>
+</body>
+</html>
