@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete project - Fieldnote</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #0f172a; }
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 40px; border-bottom: 1px solid #e2e8f0; background: #ffffff; }
+.brand { font-size: 20px; line-height: 28px; font-weight: bold; color: #0f172a; text-decoration: none; }
+.topbar ul { display: flex; gap: 32px; margin: 0; padding: 0; list-style: none; }
+.topbar ul a { font-size: 15px; line-height: 20px; color: #334155; text-decoration: none; }
+.content { width: 1040px; margin: 0 auto; padding: 48px 0; }
+h1 { margin: 0 0 24px; font-size: 28px; line-height: 36px; }
+.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.project { padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff; }
+.project h2 { margin: 0 0 8px; font-size: 18px; line-height: 24px; }
+.project p { margin: 0 0 16px; font-size: 14px; line-height: 20px; color: #475569; }
+.project .count { margin: 0; font-size: 13px; line-height: 18px; font-weight: bold; color: #4f46e5; }
+.overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0, 0, 0, 0.5); }
+.dialog { position: fixed; top: 50%; left: 50%; width: 480px; padding: 28px; border-radius: 12px; background: #ffffff; box-shadow: 0 20px 48px rgba(15, 23, 42, 0.35); transform: translate(-50%, -50%); }
+.dialog h2 { margin: 0 0 8px; font-size: 20px; line-height: 28px; }
+.dialog .warning { margin: 0 0 24px; font-size: 15px; line-height: 22px; color: #475569; }
+.field { margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 6px; font-size: 14px; line-height: 20px; font-weight: bold; color: #334155; }
+.field input { display: block; width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 15px; line-height: 20px; color: #0f172a; }
+.field input::placeholder { color: #64748b; }
+.check { display: flex; align-items: center; gap: 10px; margin: 4px 0 28px; font-size: 14px; line-height: 20px; color: #334155; }
+.check input { width: 16px; height: 16px; margin: 0; accent-color: #dc2626; }
+.actions { display: flex; justify-content: flex-end; gap: 12px; }
+.button { padding: 10px 18px; border-radius: 8px; font-family: inherit; font-size: 15px; line-height: 20px; font-weight: bold; }
+.button-cancel { border: 1px solid #cbd5e1; background: #ffffff; color: #334155; }
+.button-danger { border: 1px solid #dc2626; background: #dc2626; color: #ffffff; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#">Fieldnote</a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Reports</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+</header>
+<main class="content">
+  <h1>Projects</h1>
+  <ul class="projects">
+    <li class="project"><h2>Spring campaign</h2><p>Launch plan, ad copy and landing pages for the April release.</p><p class="count">48 files</p></li>
+    <li class="project"><h2>Customer interviews</h2><p>Notes and recordings from 14 interviews with clinic managers.</p><p class="count">31 files</p></li>
+    <li class="project"><h2>Brand refresh</h2><p>Logo options, colour studies and the updated style guide.</p><p class="count">22 files</p></li>
+  </ul>
+</main>
+<div class="overlay"></div>
+<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+  <h2 id="dialog-title">Delete project</h2>
+  <p class="warning">This permanently removes Spring campaign and its 48 files. It cannot be undone.</p>
+  <form>
+    <div class="field">
+      <label for="confirm-name">Type the project name to confirm</label>
+      <input type="text" id="confirm-name" name="confirm-name" placeholder="Spring campaign">
+    </div>
+    <div class="field">
+      <label for="reason">Reason for deleting</label>
+      <input type="text" id="reason" name="reason" value="Campaign has ended">
+    </div>
+    <label class="check"><input type="checkbox" name="reports">Also delete the 12 linked reports</label>
+    <div class="actions">
+      <button class="button button-cancel" type="button">Cancel</button>
+      <button class="button button-danger" type="submit">Delete project</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

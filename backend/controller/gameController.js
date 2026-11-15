@@ -22,7 +22,7 @@ function requireSlug(value) {
 
 function summary(c, stats, cost) {
   const s = stats?.get(c.slug) || { solvedCount: null, topScore: null, yourBest: null, yourBestPrompts: null };
-  const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, brief: c.brief, kind: c.kind, available: c.available, maxPromptChars: c.maxPromptChars, maxOutputTokens: c.maxOutputTokens, ...s };
+  const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, category: c.category ?? null, format: c.format || 'spec', brief: c.brief, kind: c.kind, available: c.available, maxPromptChars: c.maxPromptChars, maxOutputTokens: c.maxOutputTokens, ...s };
   if (c.lesson !== undefined) out.lesson = c.lesson;
   if (cost !== undefined) out.cost = cost;
   return out;
@@ -52,9 +52,13 @@ function modelList(env) {
 const listChallenges = guarded('List challenges', async (request, response) => {
   const deps = getDeps();
   const player = optionalPlayer(request);
-  const includeLessons = queryOf(request).get('include') === 'lessons';
+  const query = queryOf(request);
+  const includeLessons = query.get('include') === 'lessons';
+  // Optional ?category= filter: exact category name, case and outer spaces ignored.
+  const category = (query.get('category') || '').trim().toLowerCase();
+  const list = listChallengeFiles({ includeLessons }).filter(c => !category || (c.category || '').toLowerCase() === category);
   const [stats, free] = await Promise.all([statsOrNull(player, deps), freeOrNull(request, player, deps)]);
-  sendJson(response, 200, { challenges: listChallengeFiles({ includeLessons }).map(c => summary(c, stats, costFor(c, free, deps.env))), statsAvailable: Boolean(stats) });
+  sendJson(response, 200, { challenges: list.map(c => summary(c, stats, costFor(c, free, deps.env))), statsAvailable: Boolean(stats) });
 });
 
 const getChallenge = guarded('Get challenge', async (request, response, [slug]) => {
@@ -67,10 +71,14 @@ const getChallenge = guarded('Get challenge', async (request, response, [slug]) 
     ...summary(challenge, stats, costFor(challenge, free, deps.env)),
     goalUrl: challenge.kind === 'page' ? `/data/goals/${challenge.slug}.html` : null,
     viewport: { ...challenge.viewport },
-    spec: challenge.spec,
+    requirements: challenge.requirements || [],
+    keyFacts: challenge.keyFacts || [],
+    designNotes: challenge.designNotes || [],
     models,
     simulated: !models.some(m => m.available),
   };
+  // The pixel spec goes out only for old-shape entries; exactSpec never does.
+  if (challenge.format !== 'brief') detail.spec = challenge.spec || [];
   if (!challenge.available) detail.unavailableReason = challenge.unavailableReason;
   if (challenge.criteria) detail.criteria = challenge.criteria;
   sendJson(response, 200, { challenge: detail, statsAvailable: Boolean(stats) });

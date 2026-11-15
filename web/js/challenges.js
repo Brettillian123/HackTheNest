@@ -1,10 +1,11 @@
-// Challenge list: level filter and sort kept in the URL query (?level=1&sort=solved).
+// Challenge list: level and category filters and sort kept in the URL query (?level=1&cat=forms&sort=solved).
 import { mountShell, shellUser } from './shell.js';
 import { fitFrames, levelClass, esc, demoTag, setStat, fmtScore, kindTag, costTag } from './ui.js';
-import { listChallenges, me, isSimulated } from './api.js';
+import { listChallenges, me, isSimulated, filterByCategory, categoryOf, CATEGORY_FILTERS } from './api.js';
 
 const LEVELS = ['all', '1', '2', '3'];
 const SORTS = ['level', 'solved'];
+const CAT_LABEL = { components: 'Components', marketing: 'Marketing', apps: 'Apps', forms: 'Forms', classic: 'Classic' };
 const CHEVRON = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 2.5L9.5 7 5 11.5"/></svg>';
 
 const listEl = document.getElementById('list');
@@ -14,12 +15,14 @@ function readState() {
   const q = new URLSearchParams(location.search);
   const level = LEVELS.includes(q.get('level')) ? q.get('level') : 'all';
   const sort = SORTS.includes(q.get('sort')) ? q.get('sort') : 'level';
-  return { level, sort };
+  const cat = CATEGORY_FILTERS.includes(q.get('cat')) ? q.get('cat') : 'all';
+  return { level, cat, sort };
 }
 
 function writeState(state) {
   const q = new URLSearchParams();
   if (state.level !== 'all') q.set('level', state.level);
+  if (state.cat !== 'all') q.set('cat', state.cat);
   if (state.sort !== 'level') q.set('sort', state.sort);
   const s = q.toString();
   history.replaceState(null, '', s ? `?${s}` : location.pathname);
@@ -27,6 +30,7 @@ function writeState(state) {
 
 function syncPills(state) {
   document.querySelectorAll('#levels button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.level === state.level)));
+  document.querySelectorAll('#cats button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === state.cat)));
   document.querySelectorAll('#sorts button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sort === state.sort)));
 }
 
@@ -53,7 +57,7 @@ function row(c) {
       : `<div class="frame chal-kind" aria-hidden="true"><span>${esc((c.kind || '').toUpperCase())}</span></div>`) +
     `<span class="chal-main">${title}` +
     `<span class="chal-brief">${brief}</span>` +
-    (c.levelLabel || !page || costTag(c.cost) ? `<span class="chal-meta">${c.levelLabel ? `<span class="mtag">${esc(c.levelLabel)}</span>` : ''}${kindTag(c.kind)}${c.available === false ? '' : costTag(c.cost)}</span>` : '') +
+    `<span class="chal-meta"><span class="mtag cat-tag">${CAT_LABEL[categoryOf(c)]}</span>${c.levelLabel ? `<span class="mtag">${esc(c.levelLabel)}</span>` : ''}${kindTag(c.kind)}${c.available === false ? '' : costTag(c.cost)}</span>` +
     `</span>` +
     `<span class="chal-cell"><span class="k">Solved</span><span class="v">${num(c.solvedCount)}</span></span>` +
     `<span class="chal-cell"><span class="k">Top score</span>${top}</span>` +
@@ -64,7 +68,7 @@ function row(c) {
 function render() {
   const state = readState();
   syncPills(state);
-  let items = all.filter((c) => state.level === 'all' || String(c.level) === state.level);
+  let items = filterByCategory(all, state.cat).filter((c) => state.level === 'all' || String(c.level) === state.level);
   renderCount(items.length);
   items = items.slice().sort((a, b) =>
     state.sort === 'solved'
@@ -75,10 +79,10 @@ function render() {
     listEl.innerHTML =
       '<section class="panel"><div class="empty">' +
       '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>' +
-      `<p class="title">No challenges at level ${esc(state.level)} yet</p>` +
-      '<p class="small">Try another level</p>' +
-      '<button class="btn btn-secondary" type="button" data-level="all">Show all levels</button></div></section>';
-    listEl.querySelector('button').addEventListener('click', () => setState({ level: 'all' }));
+      `<p class="title">No challenges ${state.cat === 'all' ? '' : `in ${esc(CAT_LABEL[state.cat])} `}${state.level === 'all' ? '' : `at level ${esc(state.level)} `}yet</p>` +
+      '<p class="small">Try another filter</p>' +
+      '<button class="btn btn-secondary" type="button">Show all challenges</button></div></section>';
+    listEl.querySelector('button').addEventListener('click', () => setState({ level: 'all', cat: 'all' }));
     return;
   }
   listEl.innerHTML = `<div class="chal-list">${items.map(row).join('')}</div>`;
@@ -91,7 +95,7 @@ function setState(patch) {
   if (all) render(); else syncPills(next);
 }
 
-// "6 challenges", or "2 of 6 challenges" while a level filter is on.
+// "6 challenges", or "2 of 6 challenges" while a filter is on.
 function renderCount(shown) {
   const n = all.length;
   const word = `challenge${n === 1 ? '' : 's'}`;
@@ -123,6 +127,10 @@ async function load() {
 document.getElementById('levels').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-level]');
   if (b) setState({ level: b.dataset.level });
+});
+document.getElementById('cats').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-cat]');
+  if (b) setState({ cat: b.dataset.cat });
 });
 document.getElementById('sorts').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-sort]');

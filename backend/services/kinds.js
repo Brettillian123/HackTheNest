@@ -234,6 +234,8 @@ export const KINDS = {
     outputField: 'html',
     graderRoute: '/v1/grade/site',
     gradeBody: (challenge, output) => withMarks(challenge, { goal: { 'index.html': challenge.goalHtml }, candidate: { 'index.html': output } }),
+    // Optional `intent` field (sent only when enabled, grader/index.js): the exact texts that must appear.
+    intent: challenge => (challenge.keyFacts?.length ? { 'index.html': { keyFacts: challenge.keyFacts.slice() } } : null),
     standin: (challenge, output) => standinScore(challenge.goalHtml, output),
   },
   // POST /v1/grade/doc { kind, rubric, candidate } (grader/service/README.md); kind is the document kind.

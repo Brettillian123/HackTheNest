@@ -2226,6 +2226,3136 @@
         }
       ],
       "maxPromptChars": 6000
+    },
+    {
+      "slug": "alert-stack",
+      "title": "Alert stack",
+      "level": 1,
+      "category": "Components",
+      "brief": "We need a notifications page for our billing app that shows the four kinds of message our product sends: success, info, warning and error. Put a page heading, Notifications, with a short line under it saying these are four messages from the last 24 hours. Below that, stack the four messages as banners, one per kind, each tinted in its own colour family (green, blue, amber, red) with a stronger stripe down its left edge. Every banner needs a round icon that matches its kind, a bold title, one sentence of detail and a small underlined text button on the right. Keep it calm and readable on a soft grey-blue page; the colours should tell you the kind of message at a glance without shouting.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Notifications, with the line Four messages from the last 24 hours under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four banners in this order: success, info, warning, error",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each banner has an icon, a bold title, one line of text and a text button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The banner titles, texts and button labels match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each banner is tinted in its own colour family (green, blue, amber, red) with a stronger stripe on its left edge",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The icons are drawn shapes that match their kind: a tick, an i, an exclamation mark and a cross",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The banners form a single centred column with even gaps between them",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The banners are a list and the text buttons are real buttons",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against each banner's tint",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Notifications",
+        "Four messages from the last 24 hours",
+        "Payment received",
+        "Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.",
+        "View invoice",
+        "New version available",
+        "Version 4.2 adds shared workspaces and faster PDF exports.",
+        "See what's new",
+        "Storage almost full",
+        "You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.",
+        "Upgrade plan",
+        "Sync failed",
+        "We could not reach Google Drive. Your last 3 changes are saved on this device.",
+        "Try again"
+      ],
+      "designNotes": [
+        "calm, roomy single column",
+        "soft tints with a stronger left stripe per kind",
+        "text in a dark shade of each banner's own colour",
+        "small underlined actions at the right"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "empty-state",
+      "title": "Empty state",
+      "level": 1,
+      "category": "Components",
+      "brief": "When a new customer opens Lumen for the first time, their projects screen is empty, and right now it just looks broken. Design the empty state for it. Centre everything on the page: a small friendly illustration of a folder with a sheet of paper sticking out and a plus sign on its front, then the heading No projects yet, then one sentence explaining that projects keep files, tasks and teammates in one place and inviting them to create their first one. Under that, two buttons side by side: a solid indigo Create project button as the main action and a quieter outlined Import from Trello button. It should feel welcoming and uncluttered, with plenty of white space around it.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads No projects yet",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The sentence under the heading matches the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Two buttons, Create project then Import from Trello, side by side",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "From top to bottom: illustration, heading, sentence, buttons, all centred on the page",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The illustration is drawn inline: a folder in indigo shades with a paper sheet behind its front and a white circle with a plus sign",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Create project is a solid indigo button with white text; Import from Trello is white with a thin grey outline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The illustration has a text alternative",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The buttons are real buttons and the heading is the page's only main heading",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "No projects yet",
+        "Projects keep your files, tasks and teammates in one place. Create your first one to get started.",
+        "Create project",
+        "Import from Trello"
+      ],
+      "designNotes": [
+        "welcoming and uncluttered",
+        "everything centred with generous space above",
+        "one indigo accent, used for the main action and the illustration",
+        "secondary action visibly quieter than the primary"
+      ],
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "checkout-steps",
+      "title": "Checkout steps",
+      "level": 1,
+      "category": "Components",
+      "brief": "Our checkout needs a progress indicator so shoppers know where they are. Show four steps in a row, Cart, Shipping, Payment and Review, as numbered circles joined by a line, with the step name under each circle. The shopper has finished Cart and Shipping, so those circles are filled indigo with a white tick, and the line up to Payment is indigo too. Payment is the current step: an indigo ring with its number and a bold indigo label. Review is still to come and stays grey. Under the steps, put a white Order summary card listing the subtotal for 3 items, shipping, tax and a bold total, with a full-width Continue to review button at the bottom. Keep it clean and trustworthy.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Checkout",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four steps in this order: Cart, Shipping, Payment, Review",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Cart and Shipping are shown done (filled circle with a tick); Payment is current (outlined circle with 3, bold label); Review is upcoming (grey, with 4)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A line joins the circles; it is in the accent colour up to the current step and grey after it",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "An Order summary card under the steps lists Subtotal (3 items) $184.00, Shipping $9.50, Tax $15.48 and Total $208.98",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The total row is bold and separated from the lines above by a rule",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A full-width Continue to review button ends the card",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The steps are an ordered list in a labelled navigation, and the current step is marked as current for screen readers",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Checkout",
+        "Cart",
+        "Shipping",
+        "Payment",
+        "Review",
+        "Order summary",
+        "Subtotal (3 items)",
+        "$184.00",
+        "$9.50",
+        "Tax",
+        "$15.48",
+        "Total",
+        "$208.98",
+        "Continue to review"
+      ],
+      "designNotes": [
+        "clean and trustworthy",
+        "one indigo accent marks progress and the main action",
+        "steps spread evenly across the width of the card",
+        "figures right-aligned against their labels"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "tabbed-panel",
+      "title": "Tabbed panel",
+      "level": 2,
+      "category": "Components",
+      "brief": "Build the Billing tab of the account settings for our customer Atlas Logistics. The page heading is the company name with a line under it saying these are the account settings for the Business workspace. Below sits a white card with a row of five tabs across its top: Overview, Billing, Team, Integrations and Security. Billing is selected, so it should be bold, in our indigo accent and underlined, while the others stay plain grey. The panel under the tabs has a Billing heading, a sentence about automatic renewal, then a light grey box with four details in two columns: plan, billing contact, next invoice and payment method. Finish with a Recent invoices table of three paid invoices with amounts lined up on the right. Tidy and businesslike.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Atlas Logistics, with Account settings for the Business workspace under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Five tabs in this order: Overview, Billing, Team, Integrations, Security",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The selected tab, Billing, is clearly distinguished from the others with colour, weight and an underline",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The panel shows a Billing heading and the sentence about renewal from the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Four labelled details in two columns: Plan, Billing contact, Next invoice, Payment method, with the values in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "A Recent invoices table with columns Invoice, Date, Amount, Status and three rows: INV-3108, INV-2987, INV-2861",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Amounts are right-aligned and every status reads Paid in green",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The details are a description list and the table has header cells",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The tabs are buttons in a tab list, with the selected one marked as selected",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Atlas Logistics",
+        "Account settings for the Business workspace",
+        "Overview",
+        "Billing",
+        "Team",
+        "Integrations",
+        "Security",
+        "Your plan renews automatically. Invoices are emailed to the billing contact.",
+        "Business, billed yearly",
+        "Priya Shah, priya.shah@atlaslogistics.com",
+        "1 December 2026, $2,400.00",
+        "Mastercard ending 8831",
+        "Recent invoices",
+        "INV-3108",
+        "1 Nov 2026",
+        "INV-2987",
+        "1 Oct 2026",
+        "INV-2861",
+        "1 Sep 2026",
+        "$2,150.00",
+        "Paid"
+      ],
+      "designNotes": [
+        "tidy and businesslike",
+        "one white card on a pale grey-blue page",
+        "indigo only on the selected tab",
+        "quiet grey labels above dark values"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "settings-toggles",
+      "title": "Settings toggles",
+      "level": 2,
+      "category": "Components",
+      "brief": "Harbor Studio needs a notification settings screen. Title it Settings, with a section menu down the left (Profile, Account, Notifications, Privacy, Billing) where Notifications is highlighted as the current section in a pale indigo pill. On the right, three white cards group the switches: Email, Push notifications and Workspace. Each setting is a row with a bold name, a line of grey helper text explaining it, and a switch on the far right. Switches that are on are indigo with the knob to the right; switches that are off are light grey with the knob to the left. Draw the switches with styles rather than images. Weekly summary, Mentions, Direct messages, Task reminders and Billing alerts are on; the rest are off. It should feel orderly and easy to scan.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page heading reads Settings",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A left menu with Profile, Account, Notifications, Privacy, Billing in that order, with Notifications highlighted as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three groups in this order: Email (3 settings), Push notifications (3 settings), Workspace (2 settings)",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each setting shows its name, helper text and a switch, with the names and helper texts in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "On: Weekly summary, Mentions, Direct messages, Task reminders, Billing alerts. Off: Product updates, Quiet hours, New members",
+          "kind": "behaviour",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "On and off switches are clearly different: accent colour with the knob right versus grey with the knob left",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Rows inside a group are separated by thin lines",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Each switch is a real checkbox with a visible label, and its helper text is linked to it",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The section menu is a list of links in a navigation landmark",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Settings",
+        "Profile",
+        "Account",
+        "Notifications",
+        "Privacy",
+        "Billing",
+        "Email",
+        "Weekly summary",
+        "A digest of activity across your projects, sent every Monday at 8:00.",
+        "Product updates",
+        "News about features and improvements, about once a month.",
+        "Mentions",
+        "An email when someone mentions you in a comment.",
+        "Push notifications",
+        "Direct messages",
+        "Notify me when a teammate sends me a message.",
+        "Task reminders",
+        "Remind me 1 hour before a task is due.",
+        "Quiet hours",
+        "Pause push notifications from 22:00 to 07:00.",
+        "Workspace",
+        "New members",
+        "Tell me when someone joins the Harbor Studio workspace.",
+        "Billing alerts",
+        "Warn me 7 days before the card on file is charged."
+      ],
+      "designNotes": [
+        "orderly and easy to scan",
+        "narrow menu column, wide content column",
+        "white cards with soft borders on an off-white page",
+        "indigo marks what is on or current"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "comment-thread",
+      "title": "Comment thread",
+      "level": 2,
+      "category": "Components",
+      "brief": "Our team discussion tool needs a thread view. The thread belongs to the Growth team (show that as a small uppercase label in the accent colour) and asks: Should we switch onboarding emails to a weekly digest? Under a 5 comments heading, show the comments as white cards. Each has a round avatar with the person's initials in white on their own strong colour, their name in bold, a grey relative timestamp next to it, the comment text and a small Reply action. Dana opens the thread; Marcus and Sofia reply to her, and their cards are indented under hers. Priya and Tom then comment at the top level. End the page with a reply box: a labelled text area and a Post reply button. Friendly but focused, like a good team chat.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The label Growth team sits above the heading Should we switch onboarding emails to a weekly digest?",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A 5 comments heading, then five comments by Dana Whitfield, Marcus Lee, Sofia Alvarez, Priya Nair and Tom Okafor in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Marcus Lee's and Sofia Alvarez's comments are indented replies to Dana Whitfield's",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each comment has a round avatar with the person's initials, a bold name, a timestamp, the text and a Reply action",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Each person's avatar has its own colour, and the initials are white",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The timestamps and comment texts match the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A reply box at the end with the label Write a reply, a text area and a Post reply button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Comments are nested lists, timestamps use time elements, and the text area has a label",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Growth team",
+        "Should we switch onboarding emails to a weekly digest?",
+        "5 comments",
+        "Dana Whitfield",
+        "2 hours ago",
+        "New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.",
+        "Marcus Lee",
+        "1 hour ago",
+        "Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?",
+        "Sofia Alvarez",
+        "45 minutes ago",
+        "Keeping day 1 makes sense. I can have the digest template ready by Thursday.",
+        "Priya Nair",
+        "30 minutes ago",
+        "Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.",
+        "Tom Okafor",
+        "12 minutes ago",
+        "I'll set up the test cohort in the email tool today and share the dashboard link here.",
+        "Reply",
+        "Write a reply",
+        "Post reply"
+      ],
+      "designNotes": [
+        "friendly but focused",
+        "one narrow centred column",
+        "comments as rounded white cards with soft borders",
+        "colour only in the avatars and the indigo actions"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "data-table-paged",
+      "title": "Paged data table",
+      "level": 3,
+      "category": "Components",
+      "brief": "Ledgerly's finance team lives in the invoices list, so it has to be dense but easy to read. Title the page Invoices with a summary line of 142 invoices and $318,420.00 outstanding. Put everything else in one white card: a toolbar with a labelled search field on the left and Export CSV and New invoice buttons on the right; then a table of the twelve newest invoices with columns Invoice, Customer, Issued, Due, Amount and Status. The table is sorted by Issued, newest first, so that header is indigo with a small down arrow. Amounts line up on the right and statuses are rounded pills: green Paid, amber Pending, red Overdue, grey Draft. The row for INV-2410 is selected and highlighted in pale indigo with an accent bar on its left. Under the table, show which rows are visible and page controls for 12 pages, with page 1 current.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The heading reads Invoices, with 142 invoices, $318,420.00 outstanding under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A toolbar with a labelled search field on the left and Export CSV and New invoice buttons on the right, New invoice being the solid primary one",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six columns in this order: Invoice, Customer, Issued, Due, Amount, Status",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Twelve rows, INV-2412 down to INV-2401, with the customers, dates, amounts and statuses in the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Issued header shows a downward sort arrow and is marked in the accent colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Statuses are rounded pills coloured by kind: Paid green, Pending amber, Overdue red, Draft grey",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The INV-2410 row is visibly selected",
+          "kind": "behaviour",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Amounts are right-aligned",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Under the table: Showing 1 to 12 of 142 invoices on the left; Previous, 1, 2, 3, a gap, 12 and Next on the right, with 1 current and Previous disabled",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "The table has header cells, the sorted column is announced as sorted, and the search field has a label",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "The pagination is a labelled navigation with the current page marked",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Invoices",
+        "142 invoices, $318,420.00 outstanding",
+        "Search",
+        "Export CSV",
+        "New invoice",
+        "Issued",
+        "INV-2412",
+        "Northwind Traders",
+        "14 Nov 2026",
+        "14 Dec 2026",
+        "$4,250.00",
+        "INV-2411",
+        "Bluebird Dental",
+        "13 Nov 2026",
+        "13 Dec 2026",
+        "$1,180.00",
+        "INV-2410",
+        "Halcyon Studio",
+        "12 Nov 2026",
+        "27 Nov 2026",
+        "$2,940.50",
+        "INV-2409",
+        "Ferro & Sons",
+        "10 Nov 2026",
+        "10 Dec 2026",
+        "$760.00",
+        "INV-2408",
+        "Cedar Ridge Farms",
+        "7 Nov 2026",
+        "7 Dec 2026",
+        "$12,400.00",
+        "INV-2407",
+        "Oakline Legal",
+        "5 Nov 2026",
+        "5 Dec 2026",
+        "$3,615.00",
+        "INV-2406",
+        "Meridian Health",
+        "1 Nov 2026",
+        "15 Nov 2026",
+        "$8,020.00",
+        "INV-2405",
+        "Polar Freight",
+        "30 Oct 2026",
+        "29 Nov 2026",
+        "$5,300.00",
+        "INV-2404",
+        "Juniper Books",
+        "28 Oct 2026",
+        "11 Nov 2026",
+        "$420.00",
+        "INV-2403",
+        "Tidewater Marine",
+        "24 Oct 2026",
+        "23 Nov 2026",
+        "$9,875.00",
+        "INV-2402",
+        "Lark Coffee Co.",
+        "21 Oct 2026",
+        "20 Nov 2026",
+        "$1,045.75",
+        "INV-2401",
+        "Granite Peak Gym",
+        "17 Oct 2026",
+        "16 Nov 2026",
+        "$2,200.00",
+        "Paid",
+        "Pending",
+        "Overdue",
+        "Draft",
+        "Showing 1 to 12 of 142 invoices",
+        "Previous",
+        "Next"
+      ],
+      "designNotes": [
+        "dense but easy to read",
+        "one white card holding toolbar, table and pagination",
+        "small uppercase grey column headers",
+        "colour reserved for status pills, the sort, the selection and the primary action"
+      ],
+      "maxPromptChars": 5500
+    },
+    {
+      "slug": "modal-over-page",
+      "title": "Modal over page",
+      "level": 3,
+      "category": "Components",
+      "brief": "In Fieldnote, deleting a project opens a confirmation dialog over the projects page, and we want that moment captured. Behind the dialog is the normal page: a white top bar with the Fieldnote name on the left and Projects, Reports and Settings links on the right, then a Projects heading and three project cards in a row (Spring campaign, Customer interviews, Brand refresh), each with a short description and a file count. The whole page is dimmed by a half-transparent black overlay. Centred on top sits a white dialog titled Delete project, warning that Spring campaign and its 48 files will be removed for good. It has two labelled fields, a confirmation box for the 12 linked reports, and two buttons on the right: Cancel, and a red Delete project button. It should feel serious without being alarming.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A top bar with Fieldnote on the left and Projects, Reports, Settings links on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Behind the overlay: a Projects heading and three cards in a row: Spring campaign (48 files), Customer interviews (31 files), Brand refresh (22 files), each with its description",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The whole page is dimmed by a half-transparent black overlay that covers the full window",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A white dialog is centred on the window, above the overlay, with rounded corners and a shadow",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The dialog is titled Delete project and its warning text matches the key facts",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Two fields in this order: Type the project name to confirm (empty, hinting Spring campaign) and Reason for deleting (filled with Campaign has ended)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "An unticked checkbox labelled Also delete the 12 linked reports",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Cancel then Delete project at the bottom right; Delete project is solid red with white text, Cancel is outlined",
+          "kind": "style",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The dialog is marked as a modal dialog and named by its title",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every field and the checkbox has a visible label",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fieldnote",
+        "Projects",
+        "Reports",
+        "Settings",
+        "Spring campaign",
+        "Launch plan, ad copy and landing pages for the April release.",
+        "48 files",
+        "Customer interviews",
+        "Notes and recordings from 14 interviews with clinic managers.",
+        "31 files",
+        "Brand refresh",
+        "Logo options, colour studies and the updated style guide.",
+        "22 files",
+        "Delete project",
+        "This permanently removes Spring campaign and its 48 files. It cannot be undone.",
+        "Type the project name to confirm",
+        "Reason for deleting",
+        "Also delete the 12 linked reports",
+        "Cancel"
+      ],
+      "designNotes": [
+        "serious without being alarming",
+        "the page behind stays recognisable through the dim",
+        "red used only for the destructive button",
+        "dialog compact and focused, about a third of the window wide"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "not-found-page",
+      "title": "Friendly 404 page",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "Fieldnote is a note-taking app, and people keep landing on dead links from old blog posts. We need a 404 page that tells them plainly what happened and gets them moving again instead of leaving. Keep our usual thin white header with the Fieldnote name on the left and a 'Back to home' link on the right. The centre of the page should lead with a very large '404' in our indigo, then a short heading and one calm sentence. Under that, give them a labelled search box for the help centre with a Search button, and below it three helpful links shown as small cards: Getting started, Pricing and plans, and Contact support, each with a one-line description. Finish with a quiet copyright line. It should feel friendly and uncluttered, not like an error screen.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Fieldnote name on the left and a 'Back to home' link on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A very large '404' numeral is the first and biggest thing in the centre of the page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The heading reads \"We couldn't find that page\" and is followed by one explanatory sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A search field with a visible label 'Search the help centre' and a Search button beside it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Three helpful links in a row, in this order: Getting started, Pricing and plans, Contact support, each with a short description",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The three links are marked up as a list and the search is a real form with a real button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Everything in the main area is centred in a narrow column",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "One accent colour is used for the numeral, the links and the button",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fieldnote",
+        "Back to home",
+        "404",
+        "We couldn't find that page",
+        "Search the help centre",
+        "Search",
+        "Popular pages",
+        "Getting started",
+        "Pricing and plans",
+        "Contact support",
+        "© 2026 Fieldnote Labs, Inc."
+      ],
+      "designNotes": [
+        "calm and roomy, everything centred",
+        "a huge indigo 404 as the focal point",
+        "one accent colour for links and the button",
+        "three small white link cards in a single row"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "newsletter-band",
+      "title": "Newsletter sign-up band",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "Harbor & Pine is a small coffee roaster in Portland, and we want more people on our fortnightly newsletter, The Roast Report. Build the bottom of our site: a warm, full-width sign-up band and the footer under it. On the left of the band put a small envelope icon, the newsletter name as a little label, a big serif headline and one sentence saying what subscribers get. On the right, a white sign-up card with a labelled email field, a Subscribe button in our rust brown and a short privacy reassurance. Under the band, a dark footer in two rows: our name and five links on top, and the copyright line with Privacy policy and Terms of sale underneath. It should feel cosy and trustworthy, like the inside of a good café.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A full-width band in a warm cream colour fills the space above the footer",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r2",
+          "text": "The band's left side has an envelope icon, 'The Roast Report' label, the headline 'Fresh lots, brewed better' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The band's right side is a white card with an email field labelled 'Email address' and a 'Subscribe' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A small privacy note sits under the field",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "The email field is a real email input with a visible label, inside a form with a real button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A dark footer with two rows: brand name and five links (Shop coffee, Subscriptions, Wholesale, Brewing guides, Contact), then the copyright line with Privacy policy and Terms of sale",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "The headline and footer brand name use a serif font; everything else is sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Footer links are marked up as lists inside a footer element",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background, in the band and the footer",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "The Roast Report",
+        "Fresh lots, brewed better",
+        "Email address",
+        "Subscribe",
+        "Harbor & Pine",
+        "Shop coffee",
+        "Subscriptions",
+        "Wholesale",
+        "Brewing guides",
+        "Contact",
+        "© 2026 Harbor & Pine Coffee Roasters, Portland, Oregon",
+        "Privacy policy",
+        "Terms of sale"
+      ],
+      "designNotes": [
+        "warm cream band over a near-black footer",
+        "rust brown for the icon, label and button",
+        "serif headline, sans-serif body",
+        "copy on the left, sign-up card on the right"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "feature-grid",
+      "title": "Feature grid",
+      "level": 1,
+      "category": "Marketing and content",
+      "brief": "Ledgerly is accounting software for small businesses, and our features page needs a clean overview section. At the top, a simple header: the Ledgerly name on the left, links to Features, Pricing and Customers, and a solid 'Start free trial' link in our teal. Below, a centred introduction: a small 'Features' label, the heading 'Everything your books need, in one place' and one sentence about closing the month faster. Then six feature cards in a grid of three across and two down. Each card gets a simple line icon on a soft teal tile, a short title and about two lines of description. The six features are Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready and Team access. It should feel tidy, light and trustworthy.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Ledgerly name, three links (Features, Pricing, Customers) and a 'Start free trial' link styled as a solid button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred intro with the label 'Features', the heading 'Everything your books need, in one place' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six feature cards laid out three across and two down",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Cards in this order: Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready, Team access",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each card has an icon drawn as inline SVG, a title and about two lines of text",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Icons sit on a soft tinted square tile and match each feature's meaning",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The cards are a list, each title is a heading below the page heading",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Cards are white with a thin border and rounded corners on a very light page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Ledgerly",
+        "Features",
+        "Pricing",
+        "Customers",
+        "Start free trial",
+        "Everything your books need, in one place",
+        "Smart invoicing",
+        "Bank sync",
+        "Receipt capture",
+        "Live reports",
+        "Tax ready",
+        "Team access",
+        "12,000 banks"
+      ],
+      "designNotes": [
+        "tidy and light, lots of white space",
+        "teal used only for the label, icons and trial link",
+        "equal white cards with thin borders",
+        "three across, two down on a wide screen"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "testimonial-wall",
+      "title": "Testimonial wall",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Tandem is a team planning tool, and we want a customer stories page that feels like a wall of real voices rather than a tidy carousel. Keep a simple header with our name and four links. Under a centred intro (a 'Customer stories' label, the heading 'Teams that plan together, ship together' and one sentence), show six testimonial cards in three columns. The quotes are different lengths, so let the cards be different heights and stack naturally like a masonry wall, not forced into equal rows. Each card has the quote, then a round avatar with the person's initials in its own colour, their name and their role and company. Make the Elena Marquez card stand out: deep indigo with white text and a slightly larger quote. Soft lavender page, white cards, friendly but grown-up.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with the Tandem name and links Product, Customers, Pricing and Sign in",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred intro with 'Customer stories', the heading 'Teams that plan together, ship together' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Six testimonial cards arranged in three columns",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Cards have uneven heights and stack without lining up in rows",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Each card has a quote, a name, a role with company, and a round avatar showing the person's initials",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Every avatar has a different colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Elena Marquez card is clearly highlighted: dark background, white text, larger quote",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The six people are Priya Natarajan, Tomas Oyelaran, Elena Marquez, James Whitlock, Aiko Kobayashi and Sam Becker, with their quotes as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Quotes are marked up as quotations, and the cards as a list",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the highlighted card",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Tandem",
+        "Customer stories",
+        "Teams that plan together, ship together",
+        "Priya Natarajan",
+        "Head of Operations, Kestrel Freight",
+        "Tomas Oyelaran",
+        "CTO, Brightline Health",
+        "Setup took one afternoon.",
+        "Elena Marquez",
+        "Managing Director, Northfold Studio",
+        "James Whitlock",
+        "Engineering Manager, Quarry Labs",
+        "Aiko Kobayashi",
+        "Product Lead, Driftwood",
+        "Sam Becker",
+        "Founder, Lumen Coffee Co.",
+        "Honest, simple, fast. Exactly what planning software should be."
+      ],
+      "designNotes": [
+        "masonry wall of white cards on soft lavender",
+        "one deep indigo card as the star",
+        "colourful initials avatars",
+        "friendly but grown-up"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "faq-page",
+      "title": "FAQ page",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Parcelwise sells shipping software, and our support team answers the same billing questions every day. We want a proper FAQ page in our help centre. A thin header with 'Parcelwise Help' and a 'Contact support' link, then a light grey banner with the heading 'Frequently asked questions' and one line under it. Below, two columns: on the left, a narrow category list (Getting started, Billing, Shipping and labels, Account and security, Integrations) that stays in view as you scroll, with Billing marked as the current one. On the right, the Billing section with eight questions that open and close. Show the first and third open with their answers; the rest closed. Each question has a plus icon on the right that becomes a minus when it is open. Clean, calm, very readable, with blue as the only accent.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Parcelwise Help' and a 'Contact support' link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A banner with the heading 'Frequently asked questions' and one line of text",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Two columns: a narrow category list on the left and the questions on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "Five categories in order: Getting started, Billing, Shipping and labels, Account and security, Integrations, with Billing highlighted as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The category list stays in view while the page scrolls",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Eight Billing questions, in the order given, with the first and third open showing their answers and the other six closed",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Each question has a plus icon drawn in SVG that shows as a minus when the question is open",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Questions open and close when clicked, without JavaScript",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Questions are separated by thin lines",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Parcelwise Help",
+        "Contact support",
+        "Frequently asked questions",
+        "Categories",
+        "Getting started",
+        "Billing",
+        "Shipping and labels",
+        "Account and security",
+        "Integrations",
+        "When will I be charged?",
+        "Can I switch between monthly and yearly billing?",
+        "Where do I find my invoices?",
+        "Which payment methods do you accept?",
+        "Do you offer refunds?",
+        "How do I add a tax ID to my invoices?",
+        "What happens if a payment fails?",
+        "Can I cancel at any time?"
+      ],
+      "designNotes": [
+        "clean and calm, lots of line spacing",
+        "blue is the only accent",
+        "thin divider lines between questions",
+        "narrow category column, wide answer column"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "team-page",
+      "title": "Team page",
+      "level": 2,
+      "category": "Marketing and content",
+      "brief": "Orbital Analytics turns satellite data into crop forecasts, and we are growing, so we want a team page that feels human and helps hiring. Simple header with our name and links to Product, Customers, Team (marked current) and Careers. A centred page header: a small 'Our team' label, the heading 'The people behind Orbital' and one sentence about who we are. Then eight people in a grid of four across and two down. Each card has a round avatar with initials, the person's name, their job title in our teal, a one-line bio and two small text links, LinkedIn and Email. Alternate the avatar colours between teal and slate. Finish with a wide teal 'We're hiring' band with a sentence about open roles and a white 'See open roles' button on the right. Bright, open and professional.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Orbital Analytics' and links Product, Customers, Team and Careers, with Team marked as the current page",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A centred page header with 'Our team', the heading 'The people behind Orbital' and one sentence",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Eight team member cards, four across and two down",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Each card has an initials avatar, name, job title, one-line bio and two links: LinkedIn and Email",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The eight people and titles are as given, in order from Nadia Okafor to Tom Whitaker",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Avatar colours alternate between two colours",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A 'We're hiring' band follows the grid, with a sentence and a 'See open roles' link styled as a button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The team is a list and each member's name is a heading",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Card text is centred; cards have a light background, thin border and rounded corners",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the teal band",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Orbital Analytics",
+        "Our team",
+        "The people behind Orbital",
+        "Nadia Okafor",
+        "Co-founder and CEO",
+        "Lars Henriksen",
+        "Co-founder and CTO",
+        "Maya Shapiro",
+        "Head of Data Science",
+        "Diego Ramos",
+        "Head of Design",
+        "Amara Chen",
+        "Engineering Manager",
+        "Kwame Boateng",
+        "Remote Sensing Scientist",
+        "Sofia Ferreira",
+        "Customer Success Lead",
+        "Tom Whitaker",
+        "Senior Platform Engineer",
+        "LinkedIn",
+        "Email",
+        "We're hiring",
+        "See open roles"
+      ],
+      "designNotes": [
+        "bright, open and professional",
+        "teal accent with slate as the second colour",
+        "eight equal cards in a tidy grid",
+        "a bold teal band to close the page"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "event-schedule",
+      "title": "Conference schedule",
+      "level": 3,
+      "category": "Marketing and content",
+      "brief": "We run Frontier UX Summit, a one-day design and engineering conference in Glasgow, and we need the day one schedule page. Dark navy header and hero with an amber accent: the event name as the main heading, a small 'Day one schedule' label, and the date (Thursday 18 March 2027), the venue (Kelvin Hall, Glasgow) and '8 sessions, 3 tracks' in one row, then a 'Get your ticket' button. Next, a proper schedule table with columns Time, Session, Speaker, Room and Track: ten rows including registration and lunch, which should look quieter than the talks. Each talk shows its track as a coloured pill: Design, Engineering or Research, each with its own colour. Then a 'Featured speakers' row of three cards with initials avatars, and a dark ticket band with the early bird price of £249. Professional, energetic, easy to scan.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A dark navy header and hero with the heading 'Frontier UX Summit 2027' and the label 'Day one schedule'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The hero shows the date 'Thursday 18 March 2027', venue 'Kelvin Hall, Glasgow' and '8 sessions, 3 tracks', plus a 'Get your ticket' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "A schedule table with header cells Time, Session, Speaker, Room and Track",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Ten rows in time order from 08:30 to 16:30, with the sessions, speakers and rooms as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Registration and lunch rows look quieter than talk rows; talk titles are bold",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Each talk's track is a rounded pill, with a different colour for Design, Engineering and Research",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A 'Featured speakers' row of three cards: Ingrid Solberg, Ravi Menon and Grace Adeyemi, each with an initials avatar, role and short bio",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "A dark ticket band with 'Join us in Glasgow', a 'Book your ticket' button and the price £249 with 'Early bird price until 31 January 2027'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Amber is used for the label, buttons and price on the dark areas",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "The page uses header, main and footer, and headings in order",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background, including inside the pills",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Frontier UX Summit 2027",
+        "Day one schedule",
+        "Thursday 18 March 2027",
+        "Kelvin Hall, Glasgow",
+        "8 sessions, 3 tracks",
+        "Get your ticket",
+        "Schedule",
+        "Registration and coffee",
+        "Opening keynote: Designing for trust",
+        "Shipping accessible components at scale",
+        "Interviewing users who don't want to talk",
+        "Lunch",
+        "Motion that explains, not decorates",
+        "Measuring what onboarding really costs",
+        "Design tokens without the drama",
+        "Panel: The future of product teams",
+        "Closing keynote: Small screens, big decisions",
+        "Featured speakers",
+        "Ingrid Solberg",
+        "Ravi Menon",
+        "Grace Adeyemi",
+        "Join us in Glasgow",
+        "Book your ticket",
+        "£249",
+        "Early bird price until 31 January 2027"
+      ],
+      "designNotes": [
+        "dark navy bands at the top and the ticket section",
+        "amber accent only on dark areas",
+        "soft coloured track pills",
+        "a crisp white table that is easy to scan"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "case-study",
+      "title": "Editorial case study",
+      "level": 3,
+      "category": "Marketing and content",
+      "brief": "Stackwell is a digital agency, and this case study about rebuilding Greenleaf Grocers' online checkout is going to be our main sales piece, so it should read like a magazine article. Use a serif typeface for the reading text on a warm off-white page, with forest green (#166534) as the only accent. Header with our name and four links, Case studies marked current. Then the title 'How Greenleaf Grocers cut checkout drop-off by 38%' with a short summary, and a row of three big result figures: 38%, 2.4x and $1.2M, each with a short caption. The article has three sections (The challenge, What we changed, The results), a pull quote from Dana Whitfield, a bar chart of checkout completion from January to June 2026 with labelled axes and the post-launch months in green, and a before-and-after table. A simple footer closes it.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A header with 'Stackwell' and links Services, Case studies, About and Contact, with Case studies marked current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The title 'How Greenleaf Grocers cut checkout drop-off by 38%' with a 'Case study · Retail' label and a short summary",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three large result figures in a row, separated by thin lines: 38%, 2.4x and $1.2M, each with its caption",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three section headings in order: The challenge, What we changed, The results",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A pull quote with a green bar on its left, credited to Dana Whitfield, Head of Digital, Greenleaf Grocers",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "An SVG bar chart with six months (Jan to Jun), values 52, 54, 53, 61, 68 and 71 percent, a labelled percentage axis from 0% to 80% and a month axis",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Bars before launch are grey and bars after launch are green, explained in a caption under the chart",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The chart has a text alternative describing what it shows",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "A before-and-after table with header cells Measure, Before and After, and four rows of figures as given",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "Reading text is serif in a narrow centred column; navigation, labels and tables are sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "A footer with the copyright line and a 'Start a project with us' link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r12",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Stackwell",
+        "Case studies",
+        "How Greenleaf Grocers cut checkout drop-off by 38%",
+        "38%",
+        "fewer abandoned checkouts",
+        "2.4x",
+        "faster checkout page loads",
+        "$1.2M",
+        "added yearly online revenue",
+        "The challenge",
+        "What we changed",
+        "The results",
+        "For the first time, our online checkout feels as quick as our fastest till.",
+        "Dana Whitfield, Head of Digital, Greenleaf Grocers",
+        "Checkout completion",
+        "Month, 2026",
+        "Measure",
+        "Before",
+        "After",
+        "4 min 10 s",
+        "1 min 35 s",
+        "3.1 MB",
+        "1.2 MB",
+        "© 2026 Stackwell Digital, Portland, Oregon",
+        "Start a project with us"
+      ],
+      "designNotes": [
+        "reads like a magazine article",
+        "serif reading text on warm off-white",
+        "forest green as the only accent",
+        "big result figures as the visual hook",
+        "a quiet, well-labelled chart"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "weather-card",
+      "title": "Weather card",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "We need the current-weather card for our travel app, shown for Lisbon on Sunday 15 November at 14:00. Someone glancing at it should get the temperature first, then the sky, then the details. Put the city and the date and time at the top, then a big 18° next to a drawn sun-behind-a-cloud icon, with 'Partly cloudy' and 'Feels like 17°' beside it. Under that, three small boxes for humidity, wind and UV index. Finish with a five-day forecast row, Monday to Friday, each day with a little weather icon and its high and low. Keep it as one clean white card floating on a pale sky-blue page, friendly and calm rather than techy, with sunny yellow icons and soft grey clouds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Lisbon, Portugal' with 'Sunday 15 November, 14:00' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The temperature 18° is the largest text on the card",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "A drawn icon of a sun partly behind a cloud sits beside the temperature, with 'Partly cloudy' and 'Feels like 17°' next to it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three stat boxes in this order: Humidity 72%, Wind 14 km/h NW, UV index 3 Moderate",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A section headed '5-day forecast' lists Mon to Fri in order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Each forecast day shows an icon and a high and low: Mon 21°/14°, Tue 19°/13°, Wed 16°/12°, Thu 17°/12°, Fri 20°/13°",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Forecast icons match the day: sunny Mon and Fri, partly cloudy Tue, rain Wed, cloudy Thu",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Everything sits on one white rounded card centred on a pale blue page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Icons are drawn shapes with text alternatives, and the stats and forecast are lists",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Lisbon, Portugal",
+        "Sunday 15 November, 14:00",
+        "18°",
+        "Partly cloudy",
+        "Feels like 17°",
+        "Humidity",
+        "72%",
+        "Wind",
+        "14 km/h NW",
+        "UV index",
+        "3 Moderate",
+        "5-day forecast",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "21°",
+        "14°",
+        "16°"
+      ],
+      "designNotes": [
+        "one white card on a pale sky-blue page",
+        "temperature first, details second",
+        "warm yellow sun, soft grey clouds",
+        "stats in tinted rounded boxes"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "leaderboard-table",
+      "title": "Leaderboard table",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "Our players want to see this week's top ten. Build the weekly leaderboard for week 46 (9 to 15 November 2026). It is a table with rank, player, score and prompts used; each player has a round avatar with their initials in a strong colour. The top three ranks get gold, silver and bronze medal-style badges, and the viewer, Jordan Ellis in seventh place, must be able to spot their own row at a glance from a soft highlight. Numbers should line up on the right so scores are easy to compare. Add a short line under the title that says fewer prompts break a tie, and a note under the table that scores reset every Monday. It should feel competitive but tidy, like a sports results page, on a light grey background.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Weekly leaderboard' with the line 'Week 46, 9 to 15 November 2026. Fewer prompts break a tie.'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A real table with column headers Rank, Player, Score, Prompts used",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Ten rows in this order: Priya Nair 9,840/31, Marcus Okafor 9,615/28, Lena Brandt 9,402/35, Daniel Kim 9,118/33, Sofia Rossi 8,977/40, Tom Whitfield 8,730/37, Jordan Ellis (you) 8,544/29, Aisha Haddad 8,301/44, Rafael Costa 8,066/39, Emma Visser 7,912/42",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Ranks 1, 2 and 3 sit in round gold, silver and bronze badges; ranks 4 to 10 are plain",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Every player has a round avatar with their initials",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Jordan Ellis's row is highlighted so it stands out from the others",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Score and Prompts used are right-aligned; scores are bold",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Note under the table: 'Scores reset every Monday at 00:00 UTC.'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Text, including avatar initials and badge numbers, is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Weekly leaderboard",
+        "Week 46, 9 to 15 November 2026. Fewer prompts break a tie.",
+        "Rank",
+        "Player",
+        "Score",
+        "Prompts used",
+        "Priya Nair",
+        "9,840",
+        "Marcus Okafor",
+        "Lena Brandt",
+        "Jordan Ellis (you)",
+        "8,544",
+        "Emma Visser",
+        "7,912",
+        "Scores reset every Monday at 00:00 UTC."
+      ],
+      "designNotes": [
+        "light grey page, one white rounded table",
+        "medal colours only on the top three",
+        "soft indigo highlight for the viewer's row",
+        "thin dividers, generous row height"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "now-playing",
+      "title": "Now playing",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "Design the now-playing screen for our music app, as a single card in dark mode. The song is 'Harbour Lights' by The Wandering Pines, playing from the playlist Autumn Drive. The album art is a simple illustration: a moon over a harbour at night with a small lighthouse and reflections on the water. Under it, the title and artist, a progress bar about a third of the way along with 1:24 elapsed and 3:42 total, and the five usual controls: shuffle, previous, a big pause button, next and repeat. End with an 'Up next' list of three songs with a small coloured square, the title, the artist and the length. Night-time mood: deep navy and indigo with one soft periwinkle accent for the progress and the main button.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Small caps-style line 'Playing from Autumn Drive' at the top",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Square album art drawn as an illustration of a moon over a harbour with a lighthouse",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "Title 'Harbour Lights' is the heading, with 'The Wandering Pines' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A progress bar roughly a third full, with 1:24 at the left and 3:42 at the right below it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Five control buttons in this order: shuffle, previous, pause, next, repeat; the pause button is larger and filled with the accent colour",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Each control is a real button with an accessible name and a drawn icon",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "An 'Up next' list, in order: Slow Tide (The Wandering Pines, 4:05), Neon Orchard (Mira Sol, 3:18), Paper Kites (Juniper Lane, 3:51)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Dark card on a deep indigo page; light text that is easy to read",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Playing from Autumn Drive",
+        "Harbour Lights",
+        "The Wandering Pines",
+        "1:24",
+        "3:42",
+        "Up next",
+        "Slow Tide",
+        "4:05",
+        "Neon Orchard",
+        "Mira Sol",
+        "3:18",
+        "Paper Kites",
+        "Juniper Lane",
+        "3:51"
+      ],
+      "designNotes": [
+        "dark mode, deep navy card on indigo",
+        "one periwinkle accent for progress and play",
+        "big art, compact controls",
+        "quiet grey secondary text"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "inbox-list",
+      "title": "Inbox list",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "Build the desktop inbox screen for our mail app, filling the whole window. A slim top bar has the app name, Mail, and a Compose button. Below it, three panes side by side: a folder list on the left (Inbox, Starred, Sent, Drafts, Archive, Spam, each with a count), the Inbox message list in the middle, and a reading pane on the right. The list holds nine messages, newest first, each with sender, subject, a one-line preview cut off with an ellipsis, and a time. The first three are unread and must look clearly bolder; the first one is open, so it is highlighted with a blue bar on its left and shown in full in the reading pane with Reply, Reply all and Forward buttons. It should feel like a calm, professional work tool: white, thin grey dividers, a single blue accent.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Top bar with 'Mail' as the page heading and a 'Compose' button on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Folder navigation, in order, with counts: Inbox 3, Starred 12, Sent 248, Drafts 2, Archive 1,406, Spam 7; Inbox is marked as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three panes side by side: folders, message list, reading pane",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "Nine messages in order from Hannah Lee, GitHub, Omar Farouk, Grace Turner, Northwind Air, Lucas Moreau, Figma, Priya Shah, Bank of Lisbon, each with subject, preview and time",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The first three messages are unread and visibly bolder than the others",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Hannah Lee's message is selected: tinted background and a blue bar on its left",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Long previews stay on one line and end with an ellipsis",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Reading pane shows 'Venue confirmed for the offsite', the sender line, the date 'Sunday 15 November 2026, 9:42' and the full message",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Buttons Reply, Reply all, Forward under the message",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "Folders are links in a labelled nav list; messages are a list",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Mail",
+        "Compose",
+        "Inbox",
+        "Starred",
+        "Sent",
+        "Drafts",
+        "Archive",
+        "1,406",
+        "Spam",
+        "Hannah Lee",
+        "Venue confirmed for the offsite",
+        "GitHub",
+        "[web-app] Pull request #482 approved",
+        "Omar Farouk",
+        "Quick question about the Q4 budget",
+        "Grace Turner",
+        "Northwind Air",
+        "Lucas Moreau",
+        "Figma",
+        "Priya Shah",
+        "Bank of Lisbon",
+        "Nov 11",
+        "Sunday 15 November 2026, 9:42",
+        "Reply",
+        "Reply all",
+        "Forward"
+      ],
+      "designNotes": [
+        "calm work tool, white with thin grey dividers",
+        "one blue accent for brand, Compose and selection",
+        "unread shown by weight, not colour alone",
+        "dense but tidy list"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "transactions-list",
+      "title": "Transactions list",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "This is the account screen of our banking app, for the Everyday Account ending 4821. At the top, a deep green header card shows the available balance, $4,286.52, large, with when it was updated and two buttons: Send money (the main action, in a bright mint green) and Add money. Below it, four filter chips: All (selected), Money in, Money out, Pending. Then twelve transactions grouped under three date headings: today, yesterday and Friday 13 November, four in each. Each row has a round initials badge, the merchant or person, a category underneath, and the amount on the right. Money coming in must be shown in green with a plus sign; spending stays dark with a minus. It should feel trustworthy and easy to scan.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Header with 'Everyday Account, ending 4821', the balance '$4,286.52' as the biggest text, and 'Available balance, updated 15 Nov at 14:02'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Two buttons in the header: 'Send money' (the stronger one) and 'Add money'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Four filter chips in order: All, Money in, Money out, Pending; All is shown as selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three date headings in order: 'Today, Sunday 15 November', 'Yesterday, Saturday 14 November', 'Friday 13 November'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Twelve transactions, four under each heading, with the names, categories and amounts of the goal",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Amounts are right-aligned",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Money in (+$42.00, +$129.95, +$3,850.00) is green with a plus sign; money out is dark with a minus sign",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Each transaction has a round badge with two initials, tinted by kind of spending",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Filters are real buttons that say whether they are pressed; each day's transactions are a list",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the green header",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Everyday Account, ending 4821",
+        "$4,286.52",
+        "Available balance, updated 15 Nov at 14:02",
+        "Send money",
+        "Add money",
+        "All",
+        "Money in",
+        "Money out",
+        "Pending",
+        "Today, Sunday 15 November",
+        "Yesterday, Saturday 14 November",
+        "Friday 13 November",
+        "Blue Bottle Coffee",
+        "-$6.40",
+        "Alex Rivera",
+        "+$42.00",
+        "Refund from REI",
+        "+$129.95",
+        "Northline Studio",
+        "+$3,850.00",
+        "Pacific Gas & Electric",
+        "Greenway Rentals",
+        "-$1,650.00",
+        "Chipotle",
+        "-$13.75"
+      ],
+      "designNotes": [
+        "deep forest-green balance card, mint main action",
+        "money in in green, money out in dark text",
+        "white grouped lists on a light grey page",
+        "small uppercase date headings"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "kanban-board",
+      "title": "Kanban board",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "Make the task board for our 'Website relaunch' project, sprint 14 (9 to 27 November). A white top bar holds the project name, the sprint dates and a 'New card' button. Below it, four equal columns: Backlog, In progress, Review and Done, each with a count of its cards in a small pill in the header. There are eleven cards in all. Each card has a coloured label (Design, Frontend, Content or Bug, each with its own colour), a short title, the assignee's initials in a round avatar and a due date. One card in progress is overdue and its date should be red; the cards in Done have their titles struck through and show when they were finished. It should feel light and organised, like a modern project tool, with an indigo accent.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Website relaunch' with 'Sprint 14, 9 to 27 November' and a 'New card' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four columns in this order: Backlog, In progress, Review, Done",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each column header shows how many cards it holds: 3, 3, 2, 3 (eleven cards in all)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Every card shows a label, a title, an initials avatar and a date",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Labels Design, Frontend, Content and Bug each have their own colour, used the same way on every card",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Card titles and dates match the goal, e.g. 'Build the new pricing table' due Nov 18, 'Contact form validation' due Nov 16",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "'Menu closes on iOS scroll' is overdue: 'Due Nov 14' is shown in red",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Done cards have struck-through titles and dates written 'Done Nov 10', 'Done Nov 11', 'Done Nov 12'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Columns are sections with headings and their cards are lists",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text, including labels and avatar initials, is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Website relaunch",
+        "Sprint 14, 9 to 27 November",
+        "New card",
+        "Backlog",
+        "In progress",
+        "Review",
+        "Done",
+        "Write FAQ answers for pricing",
+        "Empty states for the dashboard",
+        "Lazy-load case study images",
+        "Build the new pricing table",
+        "Menu closes on iOS scroll",
+        "Due Nov 14",
+        "Homepage hero illustration",
+        "About page copy, second draft",
+        "Contact form validation",
+        "New colour palette",
+        "Broken link in footer",
+        "Team bios and photos",
+        "Done Nov 12"
+      ],
+      "designNotes": [
+        "light and organised, soft grey columns",
+        "white cards with a faint shadow",
+        "one colour per label kind",
+        "indigo accent for the main button"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "calendar-month",
+      "title": "Calendar month",
+      "level": 3,
+      "category": "App screens and data",
+      "brief": "Build the month view of our calendar app for November 2026, filling the whole window. The top bar has a Today button, previous and next month arrows, the month name as the heading, and a Month / Week / Day switch on the right with Month selected. Weeks start on Monday, so the grid shows six weeks from Monday 26 October to Sunday 6 December; the days outside November are greyed out but still readable. Today is Sunday 15 November and its date should sit in a filled blue circle. There are nine events, shown as small coloured chips inside their day, coloured by kind (work, health, personal, travel, deadline), and the Web Summit in Lisbon is one chip that stretches across Wednesday 11 to Friday 13. The dates must fall on the right weekdays. It should look like a mature calendar product: clean grid lines, quiet colours.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Top bar with a 'Today' button, previous and next month buttons, the heading 'November 2026', and a Month / Week / Day switch with Month selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Weekday headers in order: Mon, Tue, Wed, Thu, Fri, Sat, Sun",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The dates fall on the right weekdays for November 2026: the 1st is a Sunday and the 30th a Monday",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Six week rows, from 26 October to 6 December; October and December days are greyed out but readable",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Today, 15 November, is marked with a filled blue circle behind its number",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Nine events on the right days: Design review 10:00 (3rd), Dentist 15:30 (5th), Sprint planning 09:30 (9th), Web Summit, Lisbon (11th to 13th), Ana's birthday (14th), 1:1 with Priya 11:00 (18th), Quarterly report due (20th), Yoga 18:00 (24th), Team dinner 19:30 (26th)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "'Web Summit, Lisbon' is a single chip spanning Wednesday 11 to Friday 13",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Event chips are coloured by kind, with the same kind always the same colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Arrow buttons have accessible names; the view switch says which view is pressed; dates are marked up as dates",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including greyed-out days and chips",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Today",
+        "November 2026",
+        "Month",
+        "Week",
+        "Day",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun",
+        "10:00 Design review",
+        "15:30 Dentist",
+        "09:30 Sprint planning",
+        "Web Summit, Lisbon",
+        "Ana's birthday",
+        "11:00 1:1 with Priya",
+        "Quarterly report due",
+        "18:00 Yoga",
+        "19:30 Team dinner"
+      ],
+      "designNotes": [
+        "clean grid with thin grey lines",
+        "pastel event chips with dark text",
+        "one strong blue for today and the selected view",
+        "out-of-month days on a faint grey"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "fitness-dashboard",
+      "title": "Fitness dashboard",
+      "level": 3,
+      "category": "App screens and data",
+      "brief": "Build the personal activity dashboard for Sam, as seen on Sunday 15 November 2026. Greet Sam at the top with the date. Then four stat tiles: steps today, active minutes, calories burned and resting heart rate, each with a small change note (green when it is good, red when it is not). Below, a bar chart of steps for the past seven days, Monday to Sunday, with each value written on its bar, a dashed line marking the 10,000-step goal and today's bar picked out in a darker shade; beside it, a progress ring showing 84% of the daily goal with the steps still to go. The bottom row has a table of the five most recent workouts and a list of three weekly goals with progress bars. Fresh and motivating: white panels on a light grey page, teal as the one accent.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Good afternoon, Sam' with 'Sunday 15 November 2026' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four tiles in order: Steps today 8,432; Active minutes 47 min; Calories burned 612 kcal; Resting heart rate 58 bpm, each with its change note",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Change notes are green, except the heart-rate note '+2 on last week', which is red",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A drawn bar chart titled 'Steps this week' with seven bars Mon to Sun labelled 7,240, 9,815, 6,120, 11,032, 8,904, 12,460, 8,432, heights in proportion",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A dashed goal line labelled 'Goal 10,000' across the chart, and Sunday's bar darker than the rest",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A drawn progress ring titled 'Daily step goal' about 84% full, showing '84%', 'of 10,000' and '1,568 steps to go today'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A table 'Recent workouts' with headers Date, Activity, Duration, Distance, Calories and five rows, newest first",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "'Weekly goals' with three progress bars in order: Run 20 km (14.2 / 20 km), Strength sessions (2 / 3), Sleep 7 h a night (6.6 / 7 h), each filled in proportion",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Chart and ring carry text alternatives; progress bars expose their value",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Layout: tiles in one row of four, then chart wide with ring narrow, then table wide with goals narrow",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background, including the labels on the bars",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Good afternoon, Sam",
+        "Sunday 15 November 2026",
+        "Steps today",
+        "8,432",
+        "Active minutes",
+        "Calories burned",
+        "612",
+        "Resting heart rate",
+        "58",
+        "+2 on last week",
+        "Steps this week",
+        "Goal 10,000",
+        "12,460",
+        "Daily step goal",
+        "84%",
+        "of 10,000",
+        "1,568 steps to go today",
+        "Recent workouts",
+        "Morning run",
+        "24.8 km",
+        "Strength training",
+        "Weekly goals",
+        "Run 20 km",
+        "14.2 / 20 km",
+        "Strength sessions",
+        "Sleep 7 h a night",
+        "6.6 / 7 h"
+      ],
+      "designNotes": [
+        "white panels on a light grey page",
+        "teal as the single accent",
+        "numbers big, labels small and grey",
+        "good news green, bad news red"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "contact-form",
+      "title": "Contact page",
+      "level": 1,
+      "category": "Forms, commerce and documents",
+      "brief": "We are Northfield Studio, a small design studio in Manchester, and we need a contact page for people thinking of hiring us. On the left, a short friendly intro headed \"Let's talk about your project\" with our studio address, phone number and opening hours listed underneath. On the right, a simple form: full name and email side by side, a topic dropdown, a roomy message box, a consent checkbox and a send button. It should feel calm, clean and trustworthy, all sitting on one white card on a pale grey-blue page. Use a deep teal as the one accent, for the small 'Contact' label above the heading and the send button.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The page has one main heading, \"Let's talk about your project\", with a short intro paragraph under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The intro side lists the studio address, phone and hours, each under its own small label, in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The intro sits on the left and the form on the right, side by side on one white card",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The form has, in order: full name and email in one row, a topic dropdown, a message box, a consent checkbox and a 'Send message' button",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The topic dropdown offers New project enquiry, Existing project, Careers and Press, with the first one shown",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Every field has a visible label, the email field is an email input, and name, email, message and consent are required",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The fields show example placeholder text rather than being blank",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "One teal accent colour is used for the small label and the button only",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Contact",
+        "Let's talk about your project",
+        "24 Canal Street, Manchester M1 3HE",
+        "0161 496 0732",
+        "Monday to Friday, 9:00 to 17:30",
+        "Send us a message",
+        "Full name",
+        "Email",
+        "Topic",
+        "Message",
+        "Send message"
+      ],
+      "designNotes": [
+        "calm and trustworthy",
+        "one white card on a pale page",
+        "teal accent used only for the label and the button",
+        "small uppercase labels above the contact details"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "boarding-pass",
+      "title": "Boarding pass",
+      "level": 1,
+      "category": "Forms, commerce and documents",
+      "brief": "Aurora Air needs a digital boarding pass that passengers can show at the gate. Make it look like a real paper pass: a wide white ticket with a tear-off stub on the right, separated by a dashed perforation line with half-circle notches at the top and bottom. Both parts have a royal blue header strip; the main part carries the airline name with a small round logo and the words 'Boarding pass'. The main part shows the passenger, the travel class, a big LIS to CPH route with a small plane icon on a dashed line between the airport codes, and a row with flight, date, gate, seat and boarding time. The stub repeats the passenger, route and seat and ends with a drawn barcode and the gate closing time. Everything should be readable at a glance.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A ticket with a separate stub on the right, divided by a dashed perforation line with notches",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r2",
+          "text": "The ticket header shows the airline name 'Aurora Air' with a small logo and the heading 'Boarding pass'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Passenger 'Ms Elena Sousa' and class 'Economy' appear above the route",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The route shows LIS (Lisbon) and CPH (Copenhagen) as large codes with a plane icon on a dashed line between them",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A details row shows Flight AU 2471, Date 14 Mar 2027, Gate B12, Seat 14C and Boarding 07:35, in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "The stub shows the flight and date, passenger, route, seat, a barcode drawn as bars and 'Gate closes at 07:55'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Each value has a small uppercase label above it",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The plane, logo and barcode are drawn in the page (no image files) and the meaningful ones have text alternatives",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Aurora Air",
+        "Boarding pass",
+        "Ms Elena Sousa",
+        "Economy",
+        "LIS",
+        "Lisbon",
+        "CPH",
+        "Copenhagen",
+        "AU 2471",
+        "14 Mar 2027",
+        "B12",
+        "14C",
+        "07:35",
+        "Elena Sousa",
+        "LIS - CPH",
+        "Gate closes at 07:55"
+      ],
+      "designNotes": [
+        "looks like a real paper pass",
+        "royal blue header strips",
+        "big bold airport codes",
+        "dashed perforation with notches",
+        "lots of white space"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "recipe-card",
+      "title": "Recipe card",
+      "level": 1,
+      "category": "Forms, commerce and documents",
+      "brief": "We publish home-cooking recipes and want a clean recipe page for our Lemon and Herb Roast Chicken. Readers glance at it while cooking, so it must be easy to scan. Start with a small 'Sunday dinner' label, the recipe name in a classic serif, and a one-line description. Then a boxed row of three quick facts: time, serves and difficulty. Below that, the nine ingredients in two columns, the six method steps with numbered circles, and a highlighted cook's tip at the end. The page should feel warm and homely: a cream page, a white card, burnt orange for the accents and a soft yellow tip box.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The title 'Lemon and Herb Roast Chicken' is the only main heading, with a 'Sunday dinner' label above and a short description below",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A row of three facts: Time 1 hr 30 min, Serves 4, Difficulty Easy",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "An 'Ingredients' section lists nine ingredients split across two columns",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A 'Method' section has six steps in order, each with a numbered circle",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A highlighted 'Cook's tip' box closes the recipe",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Ingredients are a list and the method is a numbered list",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Headings use a serif face and body text a sans-serif",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Warm colours: cream page, white card, burnt orange accents, pale yellow tip box",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Sunday dinner",
+        "Lemon and Herb Roast Chicken",
+        "Time",
+        "1 hr 30 min",
+        "Serves",
+        "Difficulty",
+        "Easy",
+        "Ingredients",
+        "1 whole chicken, about 1.6 kg",
+        "2 unwaxed lemons",
+        "1 head of garlic",
+        "4 sprigs of thyme",
+        "2 sprigs of rosemary",
+        "40 g soft butter",
+        "2 tbsp olive oil",
+        "150 ml chicken stock",
+        "Sea salt and black pepper",
+        "Method",
+        "Cook's tip"
+      ],
+      "designNotes": [
+        "warm and homely",
+        "easy to scan while cooking",
+        "serif headings",
+        "numbered circles for steps"
+      ],
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "shopping-cart",
+      "title": "Shopping cart",
+      "level": 2,
+      "category": "Forms, commerce and documents",
+      "brief": "Harbor & Pine sells clothing and accessories online, and we need the cart page shoppers see just before checkout. A simple white top bar holds our name in a serif and a 'Continue shopping' link. The page heading says how many items are in the cart. On the left, a list of the three items, each with a small drawn thumbnail, the product name, its variant, a remove link, a quantity stepper with minus and plus buttons, and the line price. On the right, a promo code box with an Apply button, and an order summary card with subtotal, shipping, tax and total, then a big Checkout button. The figures must add up. Keep it tidy and reassuring, with one strong royal blue for the main action.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A top bar with the brand 'Harbor & Pine' and a 'Continue shopping' link",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The heading reads 'Your cart (3 items)'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three line items, each with a thumbnail, name, variant, quantity control, price and a remove link",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Items are Linen Overshirt (Size M, Sand, 1, $68.00), Merino Crew Socks (One size, Charcoal, 2, $24.00 at $12.00 each) and Canvas Tote Bag (Natural, 1, $32.00)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Each quantity stepper is a number field with a visible label and real minus and plus buttons",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A promo code field with a visible label, placeholder and an Apply button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "The order summary shows subtotal $124.00, shipping $6.00, tax (8%) $9.92 and total $139.92, and they add up",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The total stands out from the other lines and a full-width Checkout button sits under it",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Items on the left, promo and summary in a narrower column on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Harbor & Pine",
+        "Continue shopping",
+        "Your cart (3 items)",
+        "Linen Overshirt",
+        "Size M, Sand",
+        "$68.00",
+        "Merino Crew Socks",
+        "One size, Charcoal",
+        "$24.00",
+        "$12.00 each",
+        "Canvas Tote Bag",
+        "Natural",
+        "$32.00",
+        "Remove",
+        "Qty",
+        "Promo code",
+        "Apply",
+        "Order summary",
+        "Subtotal",
+        "$124.00",
+        "Shipping",
+        "$6.00",
+        "Tax (8%)",
+        "$9.92",
+        "Total",
+        "$139.92",
+        "Checkout",
+        "Free returns within 30 days"
+      ],
+      "designNotes": [
+        "tidy and reassuring",
+        "white cards on a very light grey page",
+        "one royal blue used for the checkout action",
+        "red remove links"
+      ],
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "booking-form",
+      "title": "Table booking form",
+      "level": 2,
+      "category": "Forms, commerce and documents",
+      "brief": "Osteria Lume is an Italian restaurant in Bristol and we want guests to book a table online. The form sits in a white card on the left: party size as a row of six number buttons from 1 to 6, a date picker, and the evening's eight time slots from 18:00 to 21:30 in two rows of four. Two of the slots are already taken and must clearly look unavailable. Then the guest's name, phone and email, a box for special requests, and a Confirm booking button. On the right, a dark summary card repeats what has been picked so far and gives our address and cancellation note. The example shows a party of 2 at 19:00 on Friday 19 March 2027. It should feel warm and a little elegant: a warm off-white page, serif headings, and a deep wine red as the accent.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A 'Book a table' heading with the small label 'Osteria Lume, Bristol' above it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Party size is a row of six choices, 1 to 6, with 2 selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "A date field set to 19 March 2027",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Eight time slots from 18:00 to 21:30 every half hour in two rows of four, with 19:00 selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The 19:30 and 21:00 slots are unavailable and look unavailable (greyed and struck through) and cannot be chosen",
+          "kind": "behaviour",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Full name, phone and email fields, a special requests box and a 'Confirm booking' button follow, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Party size and time are real radio choices grouped with a legend; every field has a visible label and the right type (date, tel, email)",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "A dark summary card on the right shows Guests, Date, Time and Where, then the hold and cancellation note",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "The selected choices use the wine red accent",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including the unavailable slots",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Osteria Lume, Bristol",
+        "Book a table",
+        "Party size",
+        "Date",
+        "Time",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",
+        "Full name",
+        "Phone",
+        "Email",
+        "Special requests",
+        "Confirm booking",
+        "Your booking",
+        "Guests",
+        "2 people",
+        "Friday 19 March 2027",
+        "Where",
+        "12 Wapping Wharf, Bristol BS1 4RW",
+        "We hold tables for 15 minutes. To change or cancel, call 0117 496 0251."
+      ],
+      "designNotes": [
+        "warm and a little elegant",
+        "serif headings",
+        "deep wine red accent for selections and the main button",
+        "dark summary card beside a white form"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "order-tracking",
+      "title": "Order tracking",
+      "level": 2,
+      "category": "Forms, commerce and documents",
+      "brief": "Brightwell Home sells homewares, and customers keep emailing us to ask where their order is. We need an order status page that answers that at a glance. Under a simple white top bar with our name and links to Shop, Orders and Help, show the order number, when it was placed, and a green pill with the expected arrival day. Then a five-stage progress tracker across the page: Ordered, Packed, Shipped, Out for delivery, Delivered, with the first two done, Shipped as the current stage and the last two still to come. Below, on the left, the delivery address and the three items in the order with small drawn thumbnails and prices; on the right, a timeline of the four latest shipping updates, newest first. It should feel calm and reassuring, with green meaning progress.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A top bar with 'Brightwell Home' and navigation links Shop, Orders and Help",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The heading 'Order #48213' with 'Placed on 3 March 2027 · 3 items · $187.00' under it and an 'Arriving Monday 8 March' pill",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "A five-stage tracker in order: Ordered, Packed, Shipped, Out for delivery, Delivered",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "The first two stages look done, Shipped looks current and the last two look not reached yet; the line between done stages is green",
+          "kind": "style",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A 'Delivery address' card with the full address",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "An 'Items in this order' card lists three items with thumbnails: Arc Table Lamp $89.00, Waffle Knit Throw $64.00, Stoneware Mug $34.00, adding up to $187.00",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A 'Shipping updates' timeline lists four dated updates, newest first, with the newest marked in green",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "The tracker and timeline are ordered lists, the current stage is marked as current for assistive technology, and update times use time elements",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Address and items on the left, the updates timeline in a narrower column on the right",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Brightwell Home",
+        "Shop",
+        "Orders",
+        "Help",
+        "Order #48213",
+        "Placed on 3 March 2027",
+        "Arriving Monday 8 March",
+        "Ordered",
+        "Packed",
+        "Shipped",
+        "Out for delivery",
+        "Delivered",
+        "Delivery address",
+        "Daniel Okafor",
+        "48 Larchmont Avenue, Apt 3B",
+        "Portland, OR 97214",
+        "Items in this order",
+        "Arc Table Lamp",
+        "$89.00",
+        "Waffle Knit Throw",
+        "$64.00",
+        "Stoneware Mug",
+        "$34.00",
+        "Shipping updates",
+        "Departed sorting centre",
+        "Arrived at sorting centre",
+        "Picked up by carrier",
+        "Packed and ready to ship"
+      ],
+      "designNotes": [
+        "calm and reassuring",
+        "green means progress",
+        "white cards on a very light grey page",
+        "numbered circles joined by a line"
+      ],
+      "maxPromptChars": 4500
+    },
+    {
+      "slug": "resume-page",
+      "title": "One-page CV",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "I'm Priya Natarajan, a senior data engineer in Edinburgh, and I want my CV as a single web page that looks like a polished printed resume. Put my name in a large serif and my job title in a dark slate header band, with my email, phone, city and GitHub on one line beneath. Below, two columns: a narrow, lightly shaded left column with my skills as rounded tags, my two degrees, and my three languages with level bars; and a wider right column with a short summary, my three jobs (each with dates, location and three achievements) and two side projects. Section titles should be small, spaced-out capitals in teal with a thin line under them. It must look professional and easy for a recruiter to skim in thirty seconds.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A dark header with the name 'Priya Natarajan' as the only main heading, 'Senior Data Engineer' under it, and a contact line with email, phone, city and GitHub",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Two columns below the header: a narrow shaded left column and a wider right column",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The left column has Skills (nine tags), Education (two degrees with places and years) and Languages, in that order",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Languages show English Native, Tamil Fluent and German Intermediate, each with a bar filled to match its level",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The right column has Summary, Experience and Projects, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Three jobs, each with title and employer, dates on the right, location, and exactly three bullet points",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Two projects, 'tidetables' and 'Edinburgh Bike Map', each with one line of description",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Section titles are small spaced capitals in teal with a thin line underneath",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Headings go in order without skipping levels, skills and bullets are real lists, and the email is a mailto link",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the dark header",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Priya Natarajan",
+        "Senior Data Engineer",
+        "priya.natarajan@example.com",
+        "+44 7700 900 512",
+        "Edinburgh, UK",
+        "github.com/priyanat",
+        "Skills",
+        "Python",
+        "SQL",
+        "Apache Spark",
+        "Airflow",
+        "dbt",
+        "Kafka",
+        "AWS",
+        "Terraform",
+        "Data modelling",
+        "Education",
+        "MSc Data Science",
+        "University of Edinburgh, 2015 - 2016",
+        "BSc Mathematics",
+        "University of Leeds, 2012 - 2015",
+        "Languages",
+        "English",
+        "Native",
+        "Tamil",
+        "Fluent",
+        "German",
+        "Intermediate",
+        "Summary",
+        "Experience",
+        "Senior Data Engineer, Northwind Travel",
+        "2021 - present",
+        "Data Engineer, Lumen Analytics",
+        "2018 - 2021",
+        "Data Analyst, Brightline Media",
+        "2016 - 2018",
+        "Projects",
+        "tidetables",
+        "Edinburgh Bike Map"
+      ],
+      "designNotes": [
+        "polished printed resume",
+        "dark slate header band with a serif name",
+        "teal section titles in small spaced capitals",
+        "skills as rounded tags",
+        "easy to skim"
+      ],
+      "maxPromptChars": 5000
+    },
+    {
+      "slug": "receipt-email",
+      "title": "Order confirmation email",
+      "level": 3,
+      "category": "Forms, commerce and documents",
+      "brief": "Fernleaf is an online plant shop, and we need the order confirmation email customers get after buying. Build it the way emails are laid out: a single white column about 640 pixels wide, centred on a light grey background. At the top, our leaf logo and name on the left and the order number and date on the right. Then a friendly 'Thanks for your order, Sam!' heading with a short line about what happens next, a table of the four items with quantity and price, and a totals block on the right with subtotal, shipping, tax and a bold total that all add up. Show the shipping and billing addresses side by side in a soft grey panel, then a centred 'View your order' button. Underneath the white column, small print explaining why they got the email, with Help centre, Returns policy and Unsubscribe links. Our brand green is #166534.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A single white column about 640 pixels wide, centred on a light grey background, with the small print below it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r2",
+          "text": "A logo row with a leaf logo and 'Fernleaf' on the left and 'Order FL-20931 · 9 March 2027' on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The heading 'Thanks for your order, Sam!' with a short paragraph about what happens next",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "An order details table with Item, Qty and Price column headers and four rows: Monstera Deliciosa, 30 cm pot (1, $42.00); Terracotta Planter, 18 cm (2, $36.00); Organic Potting Mix, 10 L (1, $14.50); Brass Plant Mister (1, $22.00)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Totals on the right: Subtotal $114.50, Shipping $7.50, Tax $9.16 and a bold Total $131.16, and they add up",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Shipping and billing addresses side by side in a light grey panel",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "A centred green 'View your order' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Small print with the company address and three links: Help centre, Returns policy, Unsubscribe",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Tables have proper header cells and the addresses use address elements",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including the small print on grey",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Fernleaf",
+        "Order FL-20931",
+        "9 March 2027",
+        "Thanks for your order, Sam!",
+        "Order details",
+        "Item",
+        "Qty",
+        "Price",
+        "Monstera Deliciosa, 30 cm pot",
+        "$42.00",
+        "Terracotta Planter, 18 cm",
+        "$36.00",
+        "Organic Potting Mix, 10 L",
+        "$14.50",
+        "Brass Plant Mister",
+        "$22.00",
+        "Subtotal",
+        "$114.50",
+        "Shipping",
+        "$7.50",
+        "Tax",
+        "$9.16",
+        "Total",
+        "$131.16",
+        "Shipping to",
+        "Billing address",
+        "Sam Whitaker",
+        "17 Orchard Lane",
+        "Asheville, NC 28801",
+        "Visa ending 4417",
+        "View your order",
+        "Help centre",
+        "Returns policy",
+        "Unsubscribe"
+      ],
+      "designNotes": [
+        "classic transactional email",
+        "single centred white column on grey",
+        "brand green for the logo and button only",
+        "quiet small print footer"
+      ],
+      "maxPromptChars": 5000
     }
   ]
 }

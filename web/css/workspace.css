@@ -163,3 +163,27 @@
 /* Next prompt cost beside the run button; the status line's link (Buy credits, Sign up). */
 .used .v.is-word{font-family:var(--ui);font-weight:var(--w-bold);white-space:nowrap}
 .ws-status-link{color:var(--red);font-weight:var(--w-semi);text-decoration:underline;text-underline-offset:2px;margin-left:var(--s-1)}
+
+/* ---------- brief-format challenges: the Brief column beside the example ---------- */
+.ws-page .col > .panel.ins-open.ins-brief{grid-template-columns:minmax(0,40fr) minmax(0,60fr)}
+.ws-ex-note{margin:0 auto 0 var(--s-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ws-brief-p{font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.ws-brief .ws-brief-h{margin:var(--s-6) 0 0}
+.ws-brief .ws-ins-group{padding-top:var(--s-3)}
+.ws-reqs li{align-items:flex-start;padding:4px 0}
+.ws-reqs .m{margin-top:2px}
+.ws-reqs li.todo .m{border:1px solid var(--line)}
+.ws-req-t{flex:1;min-width:0}
+.ws-exact{flex:none;margin-top:1px;padding:0 var(--s-2);border:1px solid var(--line);border-radius:var(--r-3);font:var(--w-semi) var(--fs-11)/16px var(--mono);color:var(--text-3)}
+.ws-facts{margin-top:var(--s-2)}
+.ws-facts li{display:flex;align-items:center;gap:var(--s-3);padding:3px 0;border-bottom:1px solid var(--line-soft)}
+.ws-facts code{flex:1;min-width:0;font:var(--w-reg) var(--fs-12)/17px var(--mono);color:var(--text);word-break:break-word}
+.ws-copy{flex:none;gap:var(--s-2)}
+.ws-copy svg{width:12px;height:12px}
+.ws-copy[data-state="ok"]{color:var(--text)}
+.ws-copy[data-state="no"]{color:var(--text-fail)}
+.ws-notes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-3);padding-bottom:var(--s-2)}
+.ws-notes li{padding:3px var(--s-4);border-radius:var(--r-control);background:var(--sunk);font-size:var(--fs-12);line-height:18px;color:var(--text-2)}
+/* the example keeps its own height in the docked layout: the slot fills the row, the frame sits at the top */
+.ws-page .col > .panel.ins-open > .ws-slot{align-self:stretch;align-items:flex-start}
+.ws-page .col > .panel.ins-open > .pair{align-self:stretch}
