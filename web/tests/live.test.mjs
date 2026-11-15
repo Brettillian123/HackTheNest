@@ -27,7 +27,7 @@ const challenge = () => ({
     goalUrl: "/data/goals/login-card.html",
     viewport: { width: 1280, height: 800 },
     spec: [{ group: "Page", items: [{ label: "Background", value: "#F3F4F6" }] }],
-    models: [{ id: "gemini-flash", label: "Gemini Flash", available: false }, { id: "openai-mini", label: "GPT mini", available: true }],
+    models: [{ id: "claude-haiku", label: "Claude Haiku", available: false }, { id: "openai-mini", label: "GPT mini", available: true }],
     simulated: false,
   },
   statsAvailable: true,

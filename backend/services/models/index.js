@@ -1,20 +1,16 @@
 // Model providers over plain fetch (no SDKs). A provider is enabled only when its key is set.
 // Public model ids match web/data/challenges.json "models"; the provider model id can be
-// overridden with OPENAI_MODEL, GEMINI_MODEL or ANTHROPIC_MODEL.
+// overridden with OPENAI_MODEL or ANTHROPIC_MODEL.
 //
 // Sources for the defaults and request formats (checked 2026-11-15):
 // - OpenAI: https://developers.openai.com/api/docs/models ("gpt-6-luna": most efficient model for
 //   high-volume tasks) and https://developers.openai.com/api/docs/guides/streaming-responses
 //   (Responses API, stream: true, SSE "response.output_text.delta" with "delta").
-// - Gemini: https://aistudio.google.com/docs/models ("gemini-3.8-flash", stable) and
-//   https://aistudio.google.com/docs/api-reference/generate-content (models.streamGenerateContent,
-//   candidates[].content.parts[].text).
 // - Anthropic: Messages API with stream: true (content_block_delta / text_delta); default model
 //   "claude-haiku-5-5" as agreed for this project.
 
 export const MODELS = [
   { id: 'openai-mini', label: 'OpenAI mini', provider: 'openai', keyEnv: 'OPENAI_API_KEY', modelEnv: 'OPENAI_MODEL', defaultModel: 'gpt-6-luna' },
-  { id: 'gemini-flash', label: 'Gemini Flash', provider: 'gemini', keyEnv: 'GEMINI_API_KEY', modelEnv: 'GEMINI_MODEL', defaultModel: 'gemini-3.8-flash' },
   { id: 'claude-haiku', label: 'Claude Haiku', provider: 'anthropic', keyEnv: 'ANTHROPIC_API_KEY', modelEnv: 'ANTHROPIC_MODEL', defaultModel: 'claude-haiku-5-5' },
 ];
 
@@ -84,31 +80,6 @@ const providers = {
       if (msg.type === 'error' || msg.type === 'response.failed') return { error: true };
       if (msg.type === 'response.completed' || msg.type === 'response.incomplete') return { done: true };
       return null;
-    },
-  },
-  gemini: {
-    request: (model, key, system, user) => ({
-      url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:streamGenerateContent?alt=sse`,
-      headers: { 'x-goog-api-key': key, 'Content-Type': 'application/json' },
-      body: {
-        systemInstruction: { parts: [{ text: system }] },
-        contents: [{ role: 'user', parts: [{ text: user }] }],
-        // Gemini 3 Flash thinks by default (gemini-3.8-flash: medium), thought tokens count
-        // against maxOutputTokens and no text arrives until thinking ends. LOW is the lowest
-        // level gemini-3.8-flash accepts (https://aistudio.google.com/docs/thinking).
-        generationConfig: { maxOutputTokens: MAX_OUTPUT_TOKENS, thinkingConfig: { thinkingLevel: 'LOW' } },
-      },
-    }),
-    read(msg) {
-      if (!msg) return null;
-      if (msg.error) return { error: true };
-      const candidate = msg.candidates?.[0];
-      const parts = candidate?.content?.parts || [];
-      const text = parts.filter(p => typeof p.text === 'string' && !p.thought).map(p => p.text).join('');
-      // A finishReason marks the last chunk; it can carry the final text too.
-      const done = Boolean(candidate?.finishReason);
-      if (!text && !done) return null;
-      return { ...(text ? { text } : {}), ...(done ? { done: true } : {}) };
     },
   },
   anthropic: {
