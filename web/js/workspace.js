@@ -38,35 +38,136 @@ let confirmTimer = null;
 
 // ---------------------------------------------------------------- frames
 
+// A frame takes all the space of its slot: the page is scaled to fit the viewport inside the slot
+// (never smaller), shown from the top, and the iframe is as tall as the slot so a tall page scrolls
+// inside it at that readable scale. Phones: full width, viewport height.
+const phoneMq = window.matchMedia('(max-width:760px)');
 function fitFrame(frameEl) {
   const vp = S.ch ? S.ch.viewport : { width: 1280, height: 800 };
   const f = frameEl.querySelector(':scope > iframe');
-  if (!f || !frameEl.clientWidth) return;
+  const slot = frameEl.parentElement;
+  if (!f || !slot || !slot.clientWidth) return;
+  const B = 2; // frame border
+  const w = slot.clientWidth - B;
+  let scale = w / vp.width;
+  let h = vp.height * scale;
+  if (!phoneMq.matches) {
+    const sh = slot.clientHeight - B;
+    if (sh <= 0) return;
+    scale = Math.min(scale, sh / vp.height);
+    h = sh;
+  }
+  frameEl.style.aspectRatio = 'auto';
+  frameEl.style.width = Math.floor(vp.width * scale + B) + 'px';
+  frameEl.style.height = Math.floor(h + B) + 'px';
   f.style.width = vp.width + 'px';
-  f.style.height = vp.height + 'px';
-  f.style.transform = `scale(${frameEl.clientWidth / vp.width})`;
+  f.style.height = Math.ceil(h / scale) + 'px';
+  f.style.transform = `scale(${scale})`;
+  if (frameEl.id === 'goalFrame') updateHint();
+}
+
+// "Scroll to see the whole page" shows only when the goal is taller than its frame.
+function updateHint() {
+  const f = $('goalFrame').querySelector('iframe');
+  let tall = false;
+  try {
+    const d = f.contentDocument;
+    tall = !!(d && d.documentElement && d.documentElement.scrollHeight > parseFloat(f.style.height || '0') + 4);
+  } catch { tall = false; }
+  const hint = $('goalHint');
+  if (hint.hidden === tall) hint.hidden = !tall;
 }
 
 function setupFrames() {
   const vp = S.ch.viewport;
   $('page').style.setProperty('--vw', vp.width);
   $('page').style.setProperty('--vh', vp.height);
-  const ro = new ResizeObserver((es) => es.forEach((e) => fitFrame(e.target)));
-  ['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'].forEach((id) => {
+  const ids = ['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'];
+  const ro = new ResizeObserver((es) => es.forEach((e) => { const fr = e.target.querySelector(':scope > .frame'); if (fr) fitFrame(fr); }));
+  ids.forEach((id) => {
     const fr = $(id);
-    fr.style.aspectRatio = `${vp.width} / ${vp.height}`;
-    ro.observe(fr);
+    ro.observe(fr.parentElement);
     fitFrame(fr);
     layers[id] = tools.attach(fr, vp);
   });
   tools.link(layers.goalSmall, layers.mineSmall);
   document.querySelectorAll('.tools').forEach((g) => tools.bind(g));
-  frameViewer(['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'].map($));
+  frameViewer(ids.map($));
+  $('goalFrame').querySelector('iframe').addEventListener('load', updateHint);
   if (S.ch.goalUrl) {
     $('goalFrame').querySelector('iframe').src = S.ch.goalUrl;
     $('goalSmall').querySelector('iframe').src = S.ch.goalUrl;
   }
+  document.querySelectorAll('[data-big]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); openBig(b.dataset.big, b); }));
 }
+
+// Full-size view over the workspace: matte backdrop, Close, Esc and backdrop click close it, focus goes
+// back to the button. After scoring a Goal / Your page switch flips the two in place.
+function openBig(which, btn) {
+  const vp = S.ch.viewport;
+  const canMine = !$('comparePanel').hidden && !isDoc();
+  const LBL = { goal: 'Goal page', mine: 'Your page' };
+  const box = document.createElement('div');
+  box.className = 'ws-big';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.setAttribute('aria-label', 'Page at full size');
+  box.innerHTML = `<div class="ws-big-box"><div class="ws-big-bar"><h2 class="h ws-big-t"></h2>` +
+    (canMine ? '<div class="ws-big-sw" role="group" aria-label="Page on show"><button type="button" class="btn sm" data-w="goal">Goal</button><button type="button" class="btn sm" data-w="mine">Your page</button></div>' : '') +
+    '<button type="button" class="btn btn-secondary sm ws-big-close">Close</button></div><div class="ws-big-body"><div class="ws-big-frame"><iframe sandbox="allow-same-origin"></iframe></div></div></div>';
+  const fr = box.querySelector('iframe');
+  const body = box.querySelector('.ws-big-body');
+  const holder = box.querySelector('.ws-big-frame');
+  const fit = () => {
+    const w = body.clientWidth;
+    const h = body.clientHeight;
+    if (!w || !h) return;
+    const scale = phoneMq.matches ? w / vp.width : Math.min(w / vp.width, h / vp.height);
+    holder.style.width = Math.floor(vp.width * scale) + 'px';
+    holder.style.height = h + 'px';
+    fr.style.width = vp.width + 'px';
+    fr.style.height = Math.ceil(h / scale) + 'px';
+    fr.style.transform = `scale(${scale})`;
+  };
+  const showPage = (w) => {
+    which = w;
+    box.querySelector('.ws-big-t').textContent = LBL[w];
+    fr.title = LBL[w] + ' at full size';
+    fr.removeAttribute('src');
+    fr.removeAttribute('srcdoc');
+    if (w === 'goal') fr.src = S.ch.goalUrl || 'about:blank';
+    else fr.srcdoc = $('mineSmall').querySelector('iframe').getAttribute('srcdoc') || '';
+    box.querySelectorAll('[data-w]').forEach((b) => {
+      const on = b.dataset.w === w;
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('btn-primary', on);
+      b.classList.toggle('btn-secondary', !on);
+    });
+  };
+  const close = () => {
+    box.remove();
+    document.removeEventListener('keydown', onKey, true);
+    window.removeEventListener('resize', fit);
+    if (btn && btn.focus) btn.focus();
+  };
+  const onKey = (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); } };
+  box.addEventListener('click', (e) => { if (e.target === box) close(); });
+  box.querySelector('.ws-big-close').addEventListener('click', close);
+  box.querySelectorAll('[data-w]').forEach((b) => b.addEventListener('click', () => showPage(b.dataset.w)));
+  document.addEventListener('keydown', onKey, true);
+  window.addEventListener('resize', fit);
+  document.body.appendChild(box);
+  showPage(which === 'mine' && canMine ? 'mine' : 'goal');
+  fit();
+  box.querySelector('.ws-big-close').focus();
+}
+
+// The brief (or instructions) must be read: until it has been opened once for this challenge the
+// button is the red primary one and a hint points at it. Remembered per challenge.
+const seenKey = () => 'promptdyno:briefSeen:' + slug;
+function readSeen() { try { return localStorage.getItem(seenKey()) === '1'; } catch { return false; } }
+function markSeen() { S.seen = true; try { localStorage.setItem(seenKey(), '1'); } catch { /* storage blocked */ } }
+const briefWord = () => (isBrief() ? 'brief' : 'instructions');
 
 // ---------------------------------------------------------------- doc challenges
 // A doc challenge has no goal page: the left panel shows the brief and what the grader looks for,
@@ -74,6 +175,7 @@ function setupFrames() {
 const isDoc = () => !!(S.ch && S.ch.kind === 'doc');
 function setupDoc() {
   ['goalFrame', 'mineFrame'].forEach((id) => { $(id).hidden = true; });
+  $('goalBig').hidden = true;
   document.querySelectorAll('#goalPanel .tools, #minePanel .tools, #comparePanel .tools').forEach((t) => { t.hidden = true; });
   $('cmpPair').hidden = true;
   ['goalDoc', 'mineDoc', 'cmpDoc'].forEach((id) => { $(id).hidden = false; });
@@ -162,7 +264,8 @@ async function renderBoard() {
 const isBrief = () => !!(S.ch && S.ch.format === 'brief' && !isDoc());
 function closeIns() { if (S.ins) { S.ins = false; render(); } }
 function renderInstructions() {
-  $('insBtn').addEventListener('click', () => { S.ins = !S.ins; render(); });
+  $('insBtn').addEventListener('click', () => { S.ins = !S.ins; if (S.ins) markSeen(); render(); });
+  $('startHint').addEventListener('click', (e) => { e.stopPropagation(); S.ins = true; markSeen(); render(); });
   document.addEventListener('click', (e) => {
     if (!S.ins || !e.target.isConnected) return;
     if (e.target.closest('.tool') || !e.target.closest('#insMenu, #insDd')) closeIns();
@@ -175,8 +278,6 @@ function renderInstructions() {
 }
 
 function setupBrief() {
-  const label = [...$('insBtn').childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
-  if (label) label.textContent = 'Brief';
   $('insMenu').setAttribute('aria-label', 'Brief');
   $('insMenu').classList.add('ws-brief');
   $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-goal-cap">Scored on how close you get to this</span>');
@@ -240,12 +341,6 @@ function renderCompare(run) {
   const checks = (run.result.checks || []).slice().sort((a, b) => Number(a.passed) - Number(b.passed));
   $('checkList').innerHTML = checks.map((c) =>
     `<li class="${c.passed ? 'ok' : 'no'}"><span class="m">${c.passed ? OK_SVG : NO_SVG}</span>${esc(c.label)}</li>`).join('');
-}
-
-// The prompt that produced the run on show, beside its score (workspace view only).
-function renderRunPrompt(run) {
-  $('runPrompt').innerHTML = String(run.prompt || '').split('\n').map((l) => `<div class="l">${esc(l) || '&nbsp;'}</div>`).join('');
-  show('editKeepBtn', S.mode === 'scored' && S.view === 'workspace');
 }
 
 const GROUPS = [['works', 'It works'], ['looks', 'Looks like the goal'], ['engineering', 'Well engineered']];
@@ -389,7 +484,9 @@ function render() {
   show('stagePanel', ws && live);
   show('comparePanel', compare);
   const promptWasHidden = $('promptPanel').hidden;
-  show('promptPanel', ws && m !== 'scored');
+  // After scoring the editor stays on screen under the score, holding the submitted prompt.
+  show('promptPanel', ws);
+  $('promptPanel').classList.toggle('ws-after', ws && m === 'scored');
   // The editor sizes itself from scrollHeight, which is 0 while hidden: resize it once it shows.
   if (promptWasHidden && !$('promptPanel').hidden) ta.dispatchEvent(new Event('input'));
   show('scorePanel', ws && m === 'scored');
@@ -411,18 +508,25 @@ function render() {
   });
   if (isBrief() && S.ins) renderBrief();
   $('insBtn').setAttribute('aria-expanded', String(S.ins));
+  // Not opened yet for this challenge: red button, "Read the brief", and the start hint.
+  const unread = !S.seen && !isDoc();
+  $('insBtn').classList.toggle('btn-primary', unread);
+  $('insBtn').classList.toggle('btn-secondary', !unread);
+  $('insLabel').textContent = unread ? 'Read the ' + briefWord() : isBrief() ? 'Brief' : 'Instructions';
+  $('startHint').textContent = 'Start here: read the ' + briefWord();
+  show('startHint', unread && !!host && ws && !busy);
 
   const used = S.attempt ? S.attempt.promptCount ?? runs.length : 0; // an unscored saved page counts too
   $('runCount').textContent = used;
   $('usedA').textContent = used;
-  $('usedB').textContent = used;
 
   // prompt panel
   $('mineNote').textContent = 'Run ' + S.runN;
   $('runBtn').disabled = busy || (S.ch && S.ch.available === false);
   $('runBtn').classList.toggle('busy', busy);
-  $('runLabel').innerHTML = busy ? 'Running' : S.attempt && S.attempt.pending ? 'Score this page' : last ? 'Run prompt<small>adds 1 prompt</small>' : 'Run prompt';
+  $('runLabel').innerHTML = busy ? 'Running' : S.attempt && S.attempt.pending ? 'Score this page' : last ? 'Run again<small>adds 1 prompt</small>' : 'Run prompt';
   show('cancelBtn', busy);
+  show('overBtn', !busy && m === 'scored' && !!last);
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
   st.textContent = S.status;
@@ -455,13 +559,12 @@ function render() {
   $('stageList').innerHTML = api.STAGES.map((s, i) =>
     `<li class="${i < S.stage ? 'done' : i === S.stage && m === 'grading' ? 'on' : ''}">${esc(s.label)}</li>`).join('');
 
-  if (ws && compare && base) { renderCompare(base); renderRunPrompt(base); }
-  show('runPromptBox', ws ? compare && !!last : runs.length > 0);
+  if (ws && compare && base) renderCompare(base);
   if (ws && m === 'scored' && last) renderScore(last);
   if (!ws) {
     renderRuns();
     const run = runs.find((r) => r.n === S.sel);
-    if (run) { renderCompare(run); renderRunPrompt(run); }
+    if (run) renderCompare(run);
   }
   resetConfirm(false);
 }
@@ -490,6 +593,8 @@ async function doRun() {
   S.ins = false;
   tools.setMode(null);
   setStatus('');
+  // Never blocks the run; says it once.
+  if (!S.seen && !isDoc() && !S.briefWarned) { S.briefWarned = true; setStatus('You have not read the ' + briefWord()); }
   pending = null;
   showMine(unscored ? outputOf(unscored) : '');
   render();
@@ -503,6 +608,8 @@ async function doRun() {
     flush();
     S.attempt = attempt;
     S.mode = 'scored';
+    setStatus('');
+    delete ta.dataset.ended;
     S.stage = api.STAGES.length;
     renderSim(api.isSimulated('run'));
     S.ch = { ...S.ch, ...(await api.getChallenge(slug)) };
@@ -583,16 +690,12 @@ function wire() {
     saveTimer = setTimeout(() => store.setDraft(slug, ta.value), 300);
   });
   $('runBtn').addEventListener('click', doRun);
-  const keepPrompting = () => {
-    S.mode = 'refine';
-    S.useRun = null;
-    setStatus('');
-    render();
-    ta.focus();
-    ta.setSelectionRange(ta.value.length, ta.value.length);
-  };
-  $('keepBtn').addEventListener('click', keepPrompting);
-  $('editKeepBtn').addEventListener('click', keepPrompting);
+  // After scoring, the first click into the editor puts the cursor at the end of the submitted prompt.
+  ta.addEventListener('mouseup', () => {
+    if (S.mode !== 'scored' || ta.dataset.ended) return;
+    ta.dataset.ended = '1';
+    if (ta.selectionStart === ta.selectionEnd) ta.setSelectionRange(ta.value.length, ta.value.length);
+  });
   $('backBtn').addEventListener('click', () => { S.mode = 'scored'; setStatus(''); render(); });
   $('cancelBtn').addEventListener('click', cancel);
   $('overBtn').addEventListener('click', startOver);
@@ -617,7 +720,7 @@ function wire() {
       e.preventDefault();
       doRun();
     } else if (e.key === 'Escape') {
-      if (document.querySelector('.dd-menu:not([hidden])') || document.querySelector('.fv')) return;
+      if (document.querySelector('.dd-menu:not([hidden])') || document.querySelector('.fv, .ws-big')) return;
       if (S.ins) { closeIns(); $('insBtn').focus(); return; }
       if (S.ctrl) { cancel(); return; }
       tools.escape();
@@ -663,6 +766,7 @@ async function main() {
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
+  S.seen = readSeen();
   // The dropdown starts closed. ?brief=open opens it on load, for review screenshots only.
   if (new URLSearchParams(location.search).get('brief') === 'open') S.ins = true;
   if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('Page saved, score it to see the result'); }
