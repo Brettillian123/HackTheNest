@@ -187,11 +187,18 @@ function setupDoc() {
     (crit.length ? `<h3 class="h">What the grader looks for</h3><ul class="ws-doc-crit">${crit.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : '');
 }
 // The model output on show while running: a page in the frame, or Markdown for a doc.
+// A 3D challenge: the model writes code, shown as text; after scoring the grader's four views replace it.
+const isScene = () => !!(S.ch && S.ch.kind === 'scene');
+function codePage(code) {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>body{margin:0;padding:20px;background:#15171c;color:#d7dae0;font:15px/1.5 "Courier New",monospace}pre{margin:0;white-space:pre-wrap;word-break:break-word}p{color:#8b90a0;font-family:Arial,sans-serif;margin:0 0 14px}</style></head><body><p>The model's code. Score it to see the 3D model.</p><pre>${esc(code || '')}</pre></body></html>`;
+}
 function showMine(text) {
-  if (isDoc()) renderMarkdown($('mineDoc'), text || '');
+  if (isScene()) setDoc('mineFrame', /^<!doctype html>/i.test(text || '') ? text : codePage(text));
+  else if (isDoc()) renderMarkdown($('mineDoc'), text || '');
   else setDoc('mineFrame', text || '');
 }
 function outputOf(run) {
+  if (isScene()) return (run.result && run.result.viewsHtml) || run.markdown || '';
   return isDoc() ? run.markdown || '' : run.html || '';
 }
 
@@ -207,7 +214,7 @@ let flushTimer = null;
 let lastFlush = 0;
 function pushHtml(h) {
   // Keep the neutral placeholder until the page's styles are in, so the frame never flashes white.
-  if (!isDoc() && !/<body[\s>]/i.test(h)) return;
+  if (!isDoc() && !isScene() && !/<body[\s>]/i.test(h)) return;
   pending = h;
   const wait = 200 - (performance.now() - lastFlush);
   if (wait <= 0) flush();
@@ -331,7 +338,7 @@ function renderCompare(run) {
   $('cmpNote').textContent = 'Run ' + run.n;
   $('cmpTag').textContent = run.n;
   if (isDoc()) renderMarkdown($('cmpDoc'), run.markdown || 'This answer was not kept on this device');
-  else setDoc('mineSmall', run.html || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device</p>');
+  else setDoc('mineSmall', (isScene() ? (run.result && run.result.viewsHtml) || codePage(run.markdown) : run.html) || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device</p>');
   // The grader's report card says what to change in the prompt; older results keep the checks list.
   const crit = run.result.criteria;
   $('checksTitle').textContent = crit && crit.length ? 'Report card' : 'Checks';

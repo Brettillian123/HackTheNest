@@ -153,6 +153,19 @@ function workflowInstruction(challenge) {
   ].join('\n');
 }
 
+function sceneInstruction(challenge) {
+  return [
+    'You write Three.js code for one 3D model. Reply with JavaScript only and nothing else: no prose, no Markdown, and do not wrap the reply in a code fence.',
+    'Define exactly one function, function buildScene(THREE) { ... }, that builds the model from Three.js meshes and returns one THREE.Group. THREE is passed in: do not import, require or load anything.',
+    'Use only basic geometries (box, sphere, cylinder, cone, torus, plane and the like) with MeshStandardMaterial colours. Give each mesh a short name. The model stands on the ground at y = 0, centred on the origin, with y up.',
+    'No renderer, camera, lights, animation, textures, DOM, timers, network or randomness.',
+    "Build only what the player's request describes: do not add parts, colours or details the request does not ask for, and do not guess at a fuller model. A short or vague request gets a simple result. If the request describes something else entirely, build that.",
+    ...guardRules('JavaScript function', challenge?.maxOutputTokens || 3000),
+  ].join('\n');
+}
+
+const sceneMessage = (prompt, previous, challenge) => untrustedMessage({ task: 'Build this 3D model.', revise: 'Revise it as the player asks below and reply with the complete revised code.', noun: 'code' }, prompt, previous);
+
 const workflowMessage = (prompt, previous) => untrustedMessage({ task: 'Plan this job.', revise: 'Revise it as the player asks below and reply with the complete revised plan as JSON only.', noun: 'plan' }, prompt, previous);
 
 // ------------------------------------------------------------------ checks on the model's reply
@@ -308,7 +321,24 @@ export const KINDS = {
   site: { available: false, notBuilt: 'Multi-page site challenges are not playable yet.' },
   // scene: add here a loader for the goal's buildScene(THREE) code, an output parser for JavaScript,
   // and graderRoute '/v1/grade/scene' with { goal, candidate } as code strings.
-  scene: { available: false, notBuilt: '3D scene challenges are not playable yet.' },
+  // The model writes buildScene(THREE); the grader builds it, scores it and draws four views.
+  // The code is stored as text and never run by the site or the player's browser.
+  scene: {
+    available: true,
+    loadGoal(dirs, slug) {
+      const goalCode = readFirst(dirs, join('goals', `${slug}.js`));
+      if (goalCode == null || !goalCode.trim()) throw goalError(`goals/${slug}.js is missing.`, 'The reference model for this challenge is not ready yet.');
+      return { goalCode };
+    },
+    instruction: sceneInstruction,
+    userMessage: sceneMessage,
+    streamType: 'text/plain; charset=utf-8',
+    cleaner: () => new MarkdownCleaner({ fences: ['javascript', 'js'] }),
+    outputField: 'markdown',
+    graderRoute: '/v1/grade/scene',
+    gradeBody: (challenge, output) => ({ goal: challenge.goalCode, candidate: output, views: true }),
+    standin: null,
+  },
   // POST /v1/grade/workflow { rubric, candidate } (grader/service/README.md). The plan is stored as
   // text in the `markdown` field (the client shows non-page output as text) and must parse as JSON.
   workflow: {
