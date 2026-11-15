@@ -536,6 +536,7 @@ function render() {
   show('cancelBtn', busy);
   // Start over is there whenever the attempt has used a prompt, not only right after a score.
   show('overBtn', !busy && ((m === 'scored' && !!last) || !!(S.attempt && (S.attempt.promptCount > 0 || S.attempt.pending))));
+  show('adjustBtn', !busy && m === 'scored' && !!last);
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
   st.textContent = S.status;
@@ -708,6 +709,15 @@ function wire() {
   $('backBtn').addEventListener('click', () => { S.mode = 'scored'; setStatus(''); render(); });
   $('cancelBtn').addEventListener('click', cancel);
   $('overBtn').addEventListener('click', startOver);
+  // Adjust this build: empty the editor for a short change request; the next run revises the current build.
+  $('adjustBtn').addEventListener('click', () => {
+    const ta = $('prompt');
+    ta.value = '';
+    ta.placeholder = 'Describe what to change in your current build';
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    ta.focus();
+    setStatus('Your build is kept: describe the change, then run');
+  });
   $('useBtn').addEventListener('click', () => {
     const run = S.attempt && S.attempt.runs.find((r) => r.n === S.sel);
     if (!run) return;
