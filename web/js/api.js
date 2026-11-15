@@ -821,6 +821,17 @@ function fromServerResult(r) {
       points: Number(c.points) > 0 ? Number(c.points) : 0,
     }));
   }
+  // The grader gives points per criterion, not per problem: share each criterion's points across
+  // its problems (they start with the criterion's name), so the problem list shows what was lost.
+  if (out.criteria && out.costs.every((c) => !c.points)) {
+    for (const cr of out.criteria.filter((c) => c.points > 0)) {
+      const key = cr.name.toLowerCase();
+      const mine = out.costs.filter((c) => !c.points && c.message.toLowerCase().startsWith(key));
+      if (mine.length) mine.forEach((c) => { c.points = round1(cr.points / mine.length); });
+      else out.costs.push({ points: round1(cr.points), message: cr.notes[0] ? `${cr.name}: ${cr.notes[0]}` : cr.name });
+    }
+    out.costs.sort((a, b) => b.points - a.points);
+  }
   if (r.rejectedReason) out.rejectedReason = String(r.rejectedReason);
   if (r.viewsHtml) out.viewsHtml = String(r.viewsHtml);
   if (r.intentGraded != null) out.intentGraded = !!r.intentGraded;
