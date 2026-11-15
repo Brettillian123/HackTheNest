@@ -532,7 +532,7 @@ function youName() {
 // ---------------------------------------------------------------- challenges
 
 // Challenge categories, in filter order. A challenge with no category is "classic" in the list filter.
-export const CATEGORIES = ["components", "marketing", "apps", "forms"];
+export const CATEGORIES = ["components", "marketing", "apps", "forms", "3d"];
 export const CATEGORY_FILTERS = ["all", ...CATEGORIES, "classic"];
 export const REQUIREMENT_KINDS = ["content", "structure", "behaviour", "style", "engineering"];
 // Category ids; long labels ("Marketing and content", "App screens and data") map by their first word.
@@ -648,6 +648,7 @@ function summary(data, c, others, best) {
     yourBestPrompts: best ? best.promptCount : null,
     kind: c.kind || "page",
     available: c.available !== false,
+    unavailableReason: c.available === false ? (c.unavailableReason || "This challenge is not playable yet.") : null,
     cost: mockCost(c),
     maxPromptChars: Number(c.maxPromptChars) || 2500,
   };
@@ -675,6 +676,7 @@ function fromServerSummary(s) {
     yourBestPrompts: s.yourBestPrompts ?? null,
     kind: s.kind || "page",
     available: s.available !== false,
+    unavailableReason: s.unavailableReason || null,
     cost: costOf(s.cost),
     ...(Number(s.maxPromptChars) > 0 ? { maxPromptChars: Number(s.maxPromptChars) } : {}),
     ...(s.lesson ? { lesson: s.lesson } : {}),
@@ -706,7 +708,7 @@ async function mockChallenge(slug) {
     ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
     goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
     criteria: Array.isArray(c.criteria) ? c.criteria.slice() : [],
-    unavailableReason: null,
+    unavailableReason: c.unavailableReason || (c.available === false ? "This challenge is not playable yet." : null),
     maxPromptChars: Number(c.maxPromptChars) || 2500,
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),

@@ -77,7 +77,7 @@
     {
       "slug": "tutorial-shapes",
       "title": "Tutorial 2: Circle and square",
-      "level": 2,
+      "level": 1,
       "category": "Components",
       "brief": "Now arrange two simple shapes together: a blue circle on the left and a red square on the right. Keep them the same size and give them a clear, even gap. The shapes should sit together in the middle of an otherwise quiet page.",
       "acceptance": [
@@ -136,7 +136,7 @@
     {
       "slug": "tutorial-green-button",
       "title": "Tutorial 3: Green button in a card",
-      "level": 3,
+      "level": 1,
       "category": "Components",
       "brief": "For the final tutorial, place a single green Continue button inside a simple white card. Center the card on the page and give it a little depth and soft rounded corners. The button is the only content inside; keep the rest of the page uncluttered.",
       "acceptance": [
@@ -8063,6 +8063,3825 @@
         "quiet small print footer"
       ],
       "maxPromptChars": 4000
+    },
+    {
+      "slug": "mug-3d",
+      "title": "Mug on a saucer",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "Our café client needs a hero prop for their online menu: a mug of coffee resting on its saucer. Build it as a single Three.js object that stands on the ground at the origin with Y pointing up. The attached reference views are the exact target, so match them as closely as you can: the blue mug's gentle taper, how it sits on the saucer, the coffee just below the rim and the handle on the correct side all have to read at a glance from every angle. Keep it smooth and economical. Done means it could stand in for the reference without anyone noticing.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The mug sits on the saucer, the coffee shows just below the rim and the handle is on the same side as in the reference.",
+        "Round parts look round, without visible facets, and nothing floats or pokes through anything else.",
+        "It uses about as many triangles as the reference, not many times more."
+      ],
+      "content": "Three-dimensional scene target: A mug on a saucer with a coffee surface showing at the top and a handle on the +x side",
+      "requirements": [
+        {
+          "id": "saucer",
+          "text": "A flat, wide saucer on the ground, a little narrower at its foot than at its top, the widest part of the model.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "body",
+          "text": "A mug body standing on the saucer, about two thirds of the saucer's width, taller than it is wide and slightly wider at the top than at the bottom.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "coffee",
+          "text": "A thin coffee surface just inside and just below the mug's rim.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "handle",
+          "text": "A half-ring handle on the right (+x) side of the mug at about mid-height, opening towards the body.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "The body and handle are the same mid blue, the saucer white and the coffee dark brown.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "placement",
+          "text": "Y is up; the saucer rests on y = 0, centred on the origin.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Round parts use sensible segment counts (tens around, not hundreds).",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "shared-material",
+          "text": "The body and the handle share one material.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names-group",
+          "text": "Each mesh is named and all four are in one returned Group.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Mug on a saucer",
+        "A mug on a saucer with a coffee surface showing at the top and a handle on the +x side"
+      ],
+      "designNotes": [
+        "café menu hero prop",
+        "tapered blue mug on a white saucer",
+        "handle on the right",
+        "smooth, economical curves"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A mug on a saucer with a coffee surface showing at the top and a handle on the +x side"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Standing on the ground (y = 0), centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "1.6 across (the saucer), handle reaching x = 0.84, top of the coffee at y = 1.175"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "saucer",
+              "value": "Cylinder, top radius 0.8, bottom radius 0.7, height 0.06, centre (0, 0.03, 0)"
+            },
+            {
+              "label": "body",
+              "value": "Cylinder, top radius 0.5, bottom radius 0.45, height 1.1, centre (0, 0.61, 0): it sits on the saucer"
+            },
+            {
+              "label": "coffee",
+              "value": "Cylinder, radius 0.46, height 0.02, centre (0, 1.165, 0), just inside the rim"
+            },
+            {
+              "label": "handle",
+              "value": "Half torus: ring radius 0.3, tube radius 0.07, arc of pi (180 degrees); rotated -pi/2 about z so the half ring opens towards the body; centre (0.47, 0.62, 0)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "saucer",
+              "value": "#f2f2ee"
+            },
+            {
+              "label": "body and handle",
+              "value": "#2f6db5"
+            },
+            {
+              "label": "coffee",
+              "value": "#4a2c1a"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "48 around for the saucer, body and coffee; the torus uses 16 radial and 32 tubular segments"
+            },
+            {
+              "label": "Shared material",
+              "value": "The body and handle share one blue MeshStandardMaterial"
+            },
+            {
+              "label": "Names",
+              "value": "Each mesh's name is set: saucer, body, coffee, handle"
+            },
+            {
+              "label": "Structure",
+              "value": "All four meshes in one Group, which is returned"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "house-3d",
+      "title": "Little house",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "For the opening level of a kids' town-builder game, I need a little house prop the player will see from every direction. Build it as one Three.js object sitting on its own square of grass at the origin, with Y up and the front door facing forward along +z. The reference views attached are the exact goal; match them as closely as you can, from the shape of the gable roof to where every opening and the chimney sit. Keep it low-poly and tidy, with no gaps and nothing floating. It is done when it cannot be told apart from the reference in any of the four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The roof is a gable with its ridge running side to side, and the door faces forward as in the reference.",
+        "Nothing floats or pokes through anything else, apart from the chimney rising through the roof as in the reference.",
+        "It stays low-poly: about as many triangles as the reference, not many times more."
+      ],
+      "content": "Three-dimensional scene target: A house on a green ground slab; the front, with the door, faces +z; the roof ridge runs along x",
+      "requirements": [
+        {
+          "id": "ground",
+          "text": "A thin square grass slab on the ground, much wider than the house.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "walls",
+          "text": "Box walls in the middle of the slab, a little wider than deep and less tall than wide.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "roof",
+          "text": "A gable roof overhanging the walls, ridge along x, built as a custom triangle shape; its ridge is level with the chimney top.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "door",
+          "text": "A door on the front (+z) wall, right of centre, from near the ground to about half the wall's height.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "windows",
+          "text": "A square window on the front wall left of the door, and a second one on the right (+x) side wall.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "chimney",
+          "text": "A chimney rising through the back slope of the roof, right of centre.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Grass green slab, cream walls, dark red roof, brown door, pale blue windows, grey chimney.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "placement",
+          "text": "Y is up; the slab rests on y = 0, centred on the origin, front facing +z.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "low-poly",
+          "text": "Plain boxes for every part except the roof; no subdivided boxes, triangles close to the reference.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "All seven meshes in one returned Group.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Little house",
+        "A house on a green ground slab; the front, with the door, faces +z; the roof ridge runs along x"
+      ],
+      "designNotes": [
+        "kids' game town prop",
+        "cream house, red gable roof",
+        "door faces +z",
+        "low-poly and tidy"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A house on a green ground slab; the front, with the door, faces +z; the roof ridge runs along x"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "The ground slab sits on y = 0, centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "4 x 4 footprint (the slab); the roof ridge and the chimney top are both at y = 2.6"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "ground",
+              "value": "Box 4 x 0.1 x 4, centre (0, 0.05, 0)"
+            },
+            {
+              "label": "walls",
+              "value": "Box 2.4 x 1.6 x 2.0 (x, y, z), centre (0, 0.9, 0)"
+            },
+            {
+              "label": "roof",
+              "value": "Custom BufferGeometry, positioned at y = 1.7. Six corners: v0 (-1.4, 0, -1.2), v1 (1.4, 0, -1.2), v2 (1.4, 0, 1.2), v3 (-1.4, 0, 1.2), v4 (-1.4, 0.9, 0), v5 (1.4, 0.9, 0). Eight triangles: front slope 3-2-5 and 3-5-4, back slope 1-0-4 and 1-4-5, right gable 2-1-5, left gable 0-3-4, underside 0-1-2 and 0-2-3. Normals computed with computeVertexNormals"
+            },
+            {
+              "label": "door",
+              "value": "Box 0.4 x 0.8 x 0.05, centre (0.5, 0.5, 1.025), on the front wall"
+            },
+            {
+              "label": "frontWindow",
+              "value": "Box 0.4 x 0.4 x 0.04, centre (-0.55, 1.05, 1.02), on the front wall"
+            },
+            {
+              "label": "sideWindow",
+              "value": "Box 0.04 x 0.4 x 0.4, centre (1.22, 1.05, 0), on the right (+x) wall"
+            },
+            {
+              "label": "chimney",
+              "value": "Box 0.3 x 0.7 x 0.3, centre (0.7, 2.25, -0.5), through the back slope"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "ground",
+              "value": "#6ab04c"
+            },
+            {
+              "label": "walls",
+              "value": "#f5e6c8"
+            },
+            {
+              "label": "roof",
+              "value": "#8e2c1d"
+            },
+            {
+              "label": "door",
+              "value": "#6b3e26"
+            },
+            {
+              "label": "frontWindow and sideWindow",
+              "value": "#9fd8ef"
+            },
+            {
+              "label": "chimney",
+              "value": "#777777"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Shapes",
+              "value": "All boxes except the roof, which is the custom triangle geometry above"
+            },
+            {
+              "label": "Materials",
+              "value": "One MeshStandardMaterial per part"
+            },
+            {
+              "label": "Names",
+              "value": "The goal does not set mesh names; the part names above are its variable names"
+            },
+            {
+              "label": "Structure",
+              "value": "All seven meshes in one Group, which is returned"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "chair-3d",
+      "title": "Chair",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "We are putting together a furniture product page and need a simple dining chair model to sit alongside the photos. Make it one Three.js object with Y up, its legs on the ground and centred on the origin, and the backrest at the back. The attached reference views are the exact target: match the proportions of the seat, legs and back as closely as you can so it reads as the same chair from every side, red cushion included. Keep the legs round but light on geometry, and reuse whatever repeats. Done means it lines up with the reference in all four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "Four legs reach the ground under the seat's corners, and the backrest sits between two posts on the back edge.",
+        "Nothing floats or pokes through anything else.",
+        "The repeated legs and posts share their material, and the triangle count is close to the reference's."
+      ],
+      "content": "Three-dimensional scene target: A chair; the back is on the -z side",
+      "requirements": [
+        {
+          "id": "seat",
+          "text": "A square seat slab at a little over half the chair's height.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "legs",
+          "text": "Four thin round legs, one under each corner of the seat, from the ground up to the seat.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "posts",
+          "text": "Two thin square posts rising from the back corners of the seat, about as tall again as the legs.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "back",
+          "text": "A dark backrest panel between the posts near their top, at the back (-z).",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Red seat, mid brown wooden legs and posts, very dark brown backrest.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "placement",
+          "text": "Y is up; legs on y = 0, centred on the origin, back at -z.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Legs use a modest segment count.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "materials",
+          "text": "Legs and posts share one wood material: three materials in all.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Eight meshes in one returned Group.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Chair",
+        "A chair; the back is on the -z side"
+      ],
+      "designNotes": [
+        "product-page dining chair",
+        "red seat on round wooden legs",
+        "dark backrest between two posts",
+        "shared wood material"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A chair; the back is on the -z side"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Legs on the ground (y = 0), centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "1 x 1 seat, total height 1.92 (top of the back posts)"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "seat",
+              "value": "Box 1 x 0.12 x 1, centre (0, 0.96, 0)"
+            },
+            {
+              "label": "leg (four)",
+              "value": "Cylinder, radius 0.05, height 0.9, centres (-0.42, 0.45, -0.42), (0.42, 0.45, -0.42), (-0.42, 0.45, 0.42), (0.42, 0.45, 0.42)"
+            },
+            {
+              "label": "post (two)",
+              "value": "Box 0.08 x 0.9 x 0.08, centres (-0.42, 1.47, -0.44) and (0.42, 1.47, -0.44)"
+            },
+            {
+              "label": "back",
+              "value": "Box 0.9 x 0.4 x 0.06, centre (0, 1.65, -0.44), between the posts"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "seat",
+              "value": "#c0392b"
+            },
+            {
+              "label": "legs and posts",
+              "value": "#8b5a2b"
+            },
+            {
+              "label": "back",
+              "value": "#3e2a1c"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "12 around for each leg"
+            },
+            {
+              "label": "Shared materials",
+              "value": "Three MeshStandardMaterials: wood (legs and posts), cushion (seat), dark (back)"
+            },
+            {
+              "label": "Names",
+              "value": "The goal does not set mesh names; the part names above are its variable names"
+            },
+            {
+              "label": "Structure",
+              "value": "Eight meshes in one Group, which is returned"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "desk-lamp-3d",
+      "title": "Desk lamp",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "For a lesson on scene graphs, I want a desk lamp model the class can take apart, so build it with each joint as a real pivot. It should be one Three.js object with Y up, its heavy base on the ground at the origin, the arm leaning out and folding back at an elbow, and the shade hanging straight down over the bulb. The attached reference views are the exact target; match the angles and proportions as closely as you can so it reads correctly from every side. Keep the geometry economical. Done means it matches the reference in all four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The arm leans and folds at the same angles as the reference, and the shade hangs straight down with the bulb inside it.",
+        "Every piece connects: the arm rises from the base, the elbow joins both arm halves and the shade hangs from the arm's end.",
+        "The pivots are nested groups, and the triangle count is close to the reference's."
+      ],
+      "content": "Three-dimensional scene target: A desk lamp: the lower arm leans towards +x, the upper arm folds back towards -x, and the shade hangs straight down",
+      "requirements": [
+        {
+          "id": "base",
+          "text": "A flat round base on the ground, the widest part of the lamp.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "lower-arm",
+          "text": "A thin lower arm rising from the centre of the base, leaning out towards +x.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "elbow-upper",
+          "text": "A small ball elbow at the top of the lower arm, and a thin upper arm, a little shorter, folding back up towards -x.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "shade",
+          "text": "A cone shade, point up and open at the bottom, hanging level from the end of the upper arm, beyond the base on the -x side.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "bulb",
+          "text": "A small pale bulb just inside the opening of the shade.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Dark grey base, silver arms and elbow, blue shade, pale yellow bulb.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "groups",
+          "text": "Nested groups carry the rotations (lamp > lower > upper > head), each part placed inside its group.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "materials",
+          "text": "Both arms and the elbow share one metal material; the shade's material draws both sides.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Modest segment counts throughout.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "placement",
+          "text": "Y is up; the base rests on y = 0, centred on the origin.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Desk lamp",
+        "A desk lamp: the lower arm leans towards +x, the upper arm folds back towards -x, and the shade hangs straight down"
+      ],
+      "designNotes": [
+        "scene-graph teaching example",
+        "joints as nested pivots",
+        "shade hangs straight down",
+        "economical geometry"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A desk lamp: the lower arm leans towards +x, the upper arm folds back towards -x, and the shade hangs straight down"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Base on the ground (y = 0), centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "Base 1.0 across; working the rotations through, the elbow is at about (0.39, 1.02, 0) and the shade's top at about (-0.32, 1.38, 0)"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "base",
+              "value": "Cylinder, radius 0.5, height 0.1, centre (0, 0.05, 0)"
+            },
+            {
+              "label": "lower (group)",
+              "value": "Group at (0, 0.1, 0), rotation z = -0.4, holding arm1 and the upper group"
+            },
+            {
+              "label": "arm1",
+              "value": "Cylinder, radius 0.04, height 1, at y = 0.5 inside the lower group"
+            },
+            {
+              "label": "upper (group)",
+              "value": "Group at y = 1 inside the lower group, rotation z = 1.5, holding the elbow, arm2 and the head group"
+            },
+            {
+              "label": "elbow",
+              "value": "Sphere, radius 0.06, at the upper group's origin"
+            },
+            {
+              "label": "arm2",
+              "value": "Cylinder, radius 0.04, height 0.8, at y = 0.4 inside the upper group"
+            },
+            {
+              "label": "head (group)",
+              "value": "Group at y = 0.8 inside the upper group, rotation z = -1.1 (so the head ends level), holding the shade and the bulb"
+            },
+            {
+              "label": "shade",
+              "value": "Cone, radius 0.3, height 0.4, open-ended (no base), drawn on both sides, at y = -0.2 inside the head group: point up, opening down"
+            },
+            {
+              "label": "bulb",
+              "value": "Sphere, radius 0.1, at y = -0.36 inside the head group"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "base",
+              "value": "#333333"
+            },
+            {
+              "label": "arm1, elbow and arm2",
+              "value": "#bbbbbb"
+            },
+            {
+              "label": "shade",
+              "value": "#2e86c1"
+            },
+            {
+              "label": "bulb",
+              "value": "#fff3b0"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "Base 32 around; arms 12 around; elbow sphere 12 x 8; shade cone 32 around, 1 height segment, openEnded true; bulb sphere 16 x 12"
+            },
+            {
+              "label": "Shared material",
+              "value": "arm1, the elbow and arm2 share one metal MeshStandardMaterial; the shade's material has side THREE.DoubleSide"
+            },
+            {
+              "label": "Groups",
+              "value": "Nested groups lamp > lower > upper > head carry the rotations; each part is positioned inside its group"
+            },
+            {
+              "label": "Names",
+              "value": "The goal does not set mesh names; the part names above are its variable names"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "car-3d",
+      "title": "Toy car",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "Our racing game needs a chunky toy car as a placeholder vehicle the artists can copy from. Build it as one Three.js object, wheels on the ground and centred on the origin, Y up, nose pointing along +x. Use the attached reference views as the exact target and match them as closely as you can: the cabin's position, the headlights and how the wheels sit must read correctly from every side. A car repeats its wheels, so build one and reuse it rather than writing four by hand. Done means it lines up with the reference in all four views and stays light.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The cabin is set back from the front, the headlights are on the front face and all four wheels touch the ground.",
+        "Nothing floats or pokes through anything else.",
+        "The wheels are built once and reused, and the triangle count is close to the reference's."
+      ],
+      "content": "Three-dimensional scene target: A simple car with its front at +x",
+      "requirements": [
+        {
+          "id": "body",
+          "text": "A long box body, about twice as long as it is wide, lifted off the ground by the wheels.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "cabin",
+          "text": "A smaller cabin box on top, set back towards the rear, nearly as wide as the body.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "lights",
+          "text": "Two small headlights on the front (+x) face, either side of centre.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "wheels",
+          "text": "Four wheels, each a tyre with a hub showing, at the body's corners, axles along z, touching the ground.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Red body, very dark blue-grey cabin, pale yellow headlights, black tyres, grey hubs.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "placement",
+          "text": "Y is up; wheels on y = 0, centred on the origin, front at +x.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "groups",
+          "text": "Body, cabin and lights in one chassis group; each wheel its own group, made by one function.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "shared",
+          "text": "All tyres share one material and all hubs another; modest segment counts.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Toy car",
+        "A simple car with its front at +x"
+      ],
+      "designNotes": [
+        "racing-game placeholder",
+        "chunky red toy car",
+        "nose along +x",
+        "one wheel, reused four times"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A simple car with its front at +x"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Wheels on the ground (y = 0), centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "About 2.06 long (x), 1.22 wide (z, to the hub faces), 1.1 tall (top of the cabin)"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "chassis (group)",
+              "value": "Group at y = 0.2 holding the body, cabin and headlights"
+            },
+            {
+              "label": "body",
+              "value": "Box 2 x 0.5 x 1.0, at y = 0.25 inside the chassis (world y 0.2 to 0.7)"
+            },
+            {
+              "label": "cabin",
+              "value": "Box 1.1 x 0.4 x 0.9, at (-0.1, 0.7, 0) inside the chassis (world y 0.7 to 1.1), set back from the front"
+            },
+            {
+              "label": "light (two)",
+              "value": "Box 0.06 x 0.12 x 0.2, at (1.03, 0.3, -0.3) and (1.03, 0.3, 0.3) inside the chassis, on the front face"
+            },
+            {
+              "label": "wheel (four groups)",
+              "value": "Each a group at y = 0.25 holding a tyre and a hub; wheel centres (-0.65, 0.25, -0.5), (0.65, 0.25, -0.5), (-0.65, 0.25, 0.5), (0.65, 0.25, 0.5)"
+            },
+            {
+              "label": "t (the tyre)",
+              "value": "Cylinder, radius 0.25, length 0.2, rotated pi/2 about x so its axis runs along z"
+            },
+            {
+              "label": "h (the hub)",
+              "value": "Cylinder, radius 0.12, length 0.22, rotated pi/2 about x"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "body",
+              "value": "#d62828"
+            },
+            {
+              "label": "cabin",
+              "value": "#223344"
+            },
+            {
+              "label": "headlights",
+              "value": "#ffee88"
+            },
+            {
+              "label": "tyres",
+              "value": "#111111"
+            },
+            {
+              "label": "hubs",
+              "value": "#aaaaaa"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "Tyres 20 around, hubs 12 around"
+            },
+            {
+              "label": "Shared materials",
+              "value": "All four tyres share one material and all four hubs share another; each box part has its own"
+            },
+            {
+              "label": "Groups",
+              "value": "car > chassis (body, cabin, lights) and car > four wheel groups (built by one wheel() function)"
+            },
+            {
+              "label": "Names",
+              "value": "The goal does not set mesh names; the part names above are its variable names"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "rocket-3d",
+      "title": "Rocket",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "For a space-themed science lesson, I need a classic toy rocket the students can orbit around on screen. Build it as one Three.js object standing upright on its fins, centred on the Y axis with Y up and its round window facing the front. The attached reference views are the exact goal; match them as closely as you can, from the body's proportions to the evenly spaced fins and the nozzle underneath. Keep it smooth and economical, and make anything that repeats in a loop. Done means it matches the reference from every side.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "Four fins are evenly spaced around the base, and the window faces the front as in the reference.",
+        "The nose, band and nozzle sit flush on the body; nothing floats or pokes through.",
+        "It uses about as many triangles as the reference, with the fins sharing one material."
+      ],
+      "content": "Three-dimensional scene target: A rocket standing upright; the window faces +z",
+      "requirements": [
+        {
+          "id": "body",
+          "text": "A tall white cylinder body, about three times as tall as it is wide.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "nose",
+          "text": "A cone nose on top, about a third of the body's length and the same width.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "band",
+          "text": "A thin band slightly wider than the body, a little below the nose.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "window",
+          "text": "A small round window on the front (+z) of the upper body, below the band.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "nozzle",
+          "text": "A flared nozzle under the body, narrower at the top, its bottom just above the ground.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "fins",
+          "text": "Four flat fins evenly spaced around the lower body, sticking straight out, reaching lower than the body.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "White body; red nose, band and fins; light blue window; dark grey nozzle.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "shared-loop",
+          "text": "Nose, band and fins share one red material; the fins are made in a loop.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Round parts use sensible segment counts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names-group",
+          "text": "Every mesh is named, all in one returned Group; Y up, centred on the Y axis.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Rocket",
+        "A rocket standing upright; the window faces +z"
+      ],
+      "designNotes": [
+        "science-lesson toy rocket",
+        "white body, red trim",
+        "window faces front",
+        "fins made in a loop"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A rocket standing upright; the window faces +z"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Centred on the y axis; the nozzle's bottom is at y = 0.05 and the fins' bottoms at y = 0.25"
+            },
+            {
+              "label": "Overall size",
+              "value": "1.2 across the fins, 2.95 tall (y = 0.05 to the nose tip at y = 3.0)"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "body",
+              "value": "Cylinder, radius 0.3, height 2.0, centre (0, 1.3, 0)"
+            },
+            {
+              "label": "nose",
+              "value": "Cone, radius 0.3, height 0.7, centre (0, 2.65, 0), point up"
+            },
+            {
+              "label": "band",
+              "value": "Cylinder, radius 0.31, height 0.12, centre (0, 2.0, 0)"
+            },
+            {
+              "label": "window",
+              "value": "Cylinder, radius 0.1, height 0.06, rotated pi/2 about x, centre (0, 1.7, 0.29)"
+            },
+            {
+              "label": "nozzle",
+              "value": "Cylinder, top radius 0.18, bottom radius 0.25, height 0.25, centre (0, 0.175, 0)"
+            },
+            {
+              "label": "fin0 to fin3",
+              "value": "Box 0.3 x 0.6 x 0.04. For fin i, a = i x pi/2: rotation y = -a, centre (0.45 cos a, 0.55, 0.45 sin a). So fin0 at (0.45, 0.55, 0), fin1 at (0, 0.55, 0.45), fin2 at (-0.45, 0.55, 0), fin3 at (0, 0.55, -0.45)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "body",
+              "value": "#e8e8e8"
+            },
+            {
+              "label": "nose, band and fins",
+              "value": "#d62828"
+            },
+            {
+              "label": "window",
+              "value": "#4ea8de"
+            },
+            {
+              "label": "nozzle",
+              "value": "#555555"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "32 around for the body, nose and band; 24 for the window and nozzle"
+            },
+            {
+              "label": "Shared material",
+              "value": "The nose, band and four fins share one red material"
+            },
+            {
+              "label": "Names",
+              "value": "Each mesh's name is set: body, nose, band, window, nozzle, fin0, fin1, fin2, fin3"
+            },
+            {
+              "label": "Structure",
+              "value": "Nine meshes in one Group, which is returned; the fins are made in a loop"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "snowman-3d",
+      "title": "Snowman",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "We are making a winter holiday card scene and need the snowman, our main character, as a single Three.js object. He stands on the ground at the origin with Y up and faces the front, and he has to read as the same snowman from every angle the camera takes. The attached reference views are the exact target: match the sizes of the snowballs, his hat, his face and his raised stick arms as closely as you can. Keep the build tidy: name the parts and reuse materials where pieces share a look. Done means he matches the reference in all four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The three snowballs stack, each resting on the one below and smaller towards the top, and the hat sits on the head.",
+        "The eyes, nose and buttons are on the front, and both arms rise outwards at the same angle as the reference.",
+        "Pieces that share a look share a material, and the triangle count is close to the reference's."
+      ],
+      "content": "Three-dimensional scene target: A snowman facing +z",
+      "requirements": [
+        {
+          "id": "balls",
+          "text": "Three stacked snowballs, each smaller than the one below, the base ball resting on the ground.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "hat",
+          "text": "A top hat on the head: a wide thin brim with a narrower, taller crown on it.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "nose",
+          "text": "A carrot nose pointing forward (+z) from the middle of the head.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "eyes",
+          "text": "Two small coal eyes on the front of the head, above the nose.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "buttons",
+          "text": "Three small coal buttons down the front of the middle ball.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "arms",
+          "text": "Two thin stick arms from the middle ball, one each side, rising outwards about 30 degrees above level.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "White snow; near-black hat, eyes and buttons; orange nose; brown arms.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "materials",
+          "text": "Shared materials: one for snow, one for coal, one for wood; the nose has its own.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Sensible segment counts for the balls and the small spheres.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names-group",
+          "text": "Every mesh is named, all in one returned Group; Y up, base ball on y = 0, facing +z.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Snowman",
+        "A snowman facing +z"
+      ],
+      "designNotes": [
+        "holiday card main character",
+        "three-ball snowman in a top hat",
+        "faces the front, arms raised",
+        "named parts, shared materials"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A snowman facing +z"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Base ball resting on the ground (y = 0), centred on the y axis"
+            },
+            {
+              "label": "Overall size",
+              "value": "2.67 tall (top of the hat); arm tips at about x = -1.1 and x = 1.1, y = 1.85"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "base",
+              "value": "Sphere, radius 0.6, centre (0, 0.6, 0)"
+            },
+            {
+              "label": "middle",
+              "value": "Sphere, radius 0.42, centre (0, 1.45, 0)"
+            },
+            {
+              "label": "head",
+              "value": "Sphere, radius 0.3, centre (0, 2.05, 0)"
+            },
+            {
+              "label": "brim",
+              "value": "Cylinder, radius 0.34, height 0.04, centre (0, 2.3, 0)"
+            },
+            {
+              "label": "crown",
+              "value": "Cylinder, radius 0.22, height 0.35, centre (0, 2.495, 0), sitting on the brim"
+            },
+            {
+              "label": "nose",
+              "value": "Cone, radius 0.05, height 0.25, rotated pi/2 about x so it points forward (+z), centre (0, 2.05, 0.4)"
+            },
+            {
+              "label": "armL",
+              "value": "Cylinder, radius 0.025, length 0.8, centre (-0.75, 1.65, 0), rotation z = pi/3 (leaning out and up to the left)"
+            },
+            {
+              "label": "armR",
+              "value": "Cylinder, radius 0.025, length 0.8, centre (0.75, 1.65, 0), rotation z = -pi/3"
+            },
+            {
+              "label": "button1 to button3",
+              "value": "Spheres, radius 0.04, centres (0, 1.62, 0.39), (0, 1.45, 0.42), (0, 1.28, 0.39)"
+            },
+            {
+              "label": "eyeL and eyeR",
+              "value": "Spheres, radius 0.035, centres (-0.1, 2.13, 0.27) and (0.1, 2.13, 0.27)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "base, middle and head",
+              "value": "#f4f6f8"
+            },
+            {
+              "label": "brim, crown, buttons and eyes",
+              "value": "#1b1b1b"
+            },
+            {
+              "label": "nose",
+              "value": "#f77f00"
+            },
+            {
+              "label": "arms",
+              "value": "#6b4423"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "Snow balls 32 x 16; brim and crown 32 around; nose 16 around; arms 8 around; buttons and eyes 12 x 8"
+            },
+            {
+              "label": "Shared materials",
+              "value": "Three shared materials: snow (the balls), coal (hat, buttons, eyes), wood (arms); the nose has its own"
+            },
+            {
+              "label": "Names",
+              "value": "Each mesh's name is set: base, middle, head, brim, crown, nose, armL, armR, button1, button2, button3, eyeL, eyeR"
+            },
+            {
+              "label": "Structure",
+              "value": "Thirteen meshes in one Group, which is returned; the goal uses a part(name, geometry, material, x, y, z) helper"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "bookshelf-3d",
+      "title": "Bookshelf",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "The interior design studio wants a bookshelf model for their room planner, so customers can place it against a wall and look at it from any side. Build it as one Three.js object standing on the floor at the origin with Y up, its open front facing forward and the back panel behind. The attached reference views are the exact target; match the frame, the shelf heights and where each book stands, and how tall it is, as closely as you can. The boards and books repeat, so build them economically with a helper. Done means it matches the reference in all four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "The books stand on the same shelves, in the same places and order as the reference, each a slightly different height.",
+        "Boards meet without gaps, and nothing floats or pokes through anything else.",
+        "The frame boards share one material, and the triangle count is close to the reference's."
+      ],
+      "content": "Three-dimensional scene target: An open-fronted bookshelf facing +z, back panel at -z",
+      "requirements": [
+        {
+          "id": "frame",
+          "text": "A tall open box frame: two sides, a top and a bottom board; taller than wide and shallow in depth.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "shelves",
+          "text": "Two inner shelves dividing the height into three about equal bays.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "back",
+          "text": "A thin back panel closing the back (-z).",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "bottom-books",
+          "text": "Five books standing upright side by side on the bottom board, starting near the left side.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "shelf-books",
+          "text": "Three books standing upright on the first shelf, in its right half.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "book-shape",
+          "text": "Every book is a thin upright box, a little shallower than the shelf, about two thirds of the bay's height.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Mid brown wooden frame, darker brown back, each book a different colour (red, green, blue, yellow, purple, teal, orange, slate).",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "shared",
+          "text": "The six frame boards share one wood material; boxes only, no rotations.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names-group",
+          "text": "Every mesh is named, all in one returned Group; Y up, standing on y = 0, centred in x, front facing +z.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Bookshelf",
+        "An open-fronted bookshelf facing +z, back panel at -z"
+      ],
+      "designNotes": [
+        "room-planner furniture",
+        "open wooden bookshelf",
+        "books in set places and heights",
+        "board helper, shared wood"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "An open-fronted bookshelf facing +z, back panel at -z"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Standing on the ground (y = 0), centred on the origin in x"
+            },
+            {
+              "label": "Overall size",
+              "value": "1.2 wide, 1.84 tall, from z = -0.195 (back panel) to z = 0.175 (front of the sides)"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "sideL",
+              "value": "Box 0.04 x 1.8 x 0.35, centre (-0.58, 0.9, 0)"
+            },
+            {
+              "label": "sideR",
+              "value": "Box 0.04 x 1.8 x 0.35, centre (0.58, 0.9, 0)"
+            },
+            {
+              "label": "top",
+              "value": "Box 1.2 x 0.04 x 0.35, centre (0, 1.82, 0)"
+            },
+            {
+              "label": "bottom",
+              "value": "Box 1.12 x 0.04 x 0.35, centre (0, 0.02, 0)"
+            },
+            {
+              "label": "shelf1",
+              "value": "Box 1.12 x 0.04 x 0.33, centre (0, 0.62, 0.01)"
+            },
+            {
+              "label": "shelf2",
+              "value": "Box 1.12 x 0.04 x 0.33, centre (0, 1.22, 0.01)"
+            },
+            {
+              "label": "back",
+              "value": "Box 1.2 x 1.84 x 0.02, centre (0, 0.92, -0.185)"
+            },
+            {
+              "label": "book1 to book8 (shape)",
+              "value": "Each a box 0.08 wide x its height x 0.26 deep, centre (x, base + height / 2, 0.02)"
+            },
+            {
+              "label": "book1 to book5 (bottom, base 0.04)",
+              "value": "book1 x -0.48 height 0.42; book2 x -0.38 height 0.46; book3 x -0.28 height 0.40; book4 x -0.18 height 0.44; book5 x -0.08 height 0.38"
+            },
+            {
+              "label": "book6 to book8 (on shelf1, base 0.64)",
+              "value": "book6 x 0.20 height 0.45; book7 x 0.30 height 0.40; book8 x 0.40 height 0.48"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "sides, top, bottom and shelves",
+              "value": "#8b5a2b"
+            },
+            {
+              "label": "back",
+              "value": "#6f4520"
+            },
+            {
+              "label": "book1 to book4",
+              "value": "#c0392b, #27ae60, #2e86de, #f1c40f"
+            },
+            {
+              "label": "book5 to book8",
+              "value": "#8e44ad, #16a085, #e67e22, #34495e"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Shapes",
+              "value": "Fifteen boxes, no rotations"
+            },
+            {
+              "label": "Shared material",
+              "value": "The six frame boards share one wood material; the back and each book have their own"
+            },
+            {
+              "label": "Names",
+              "value": "Each mesh's name is set: sideL, sideR, top, bottom, shelf1, shelf2, back, book1 to book8"
+            },
+            {
+              "label": "Structure",
+              "value": "One Group, returned; the goal uses a board(name, w, h, d, x, y, z, material) helper and a loop over a book table"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "bicycle-3d",
+      "title": "Bicycle",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "For a bike shop's homepage, I need a clean, stylised bicycle model seen mostly side-on but solid enough to turn around. Build it as one Three.js object with Y up, both wheels on the ground, centred on the origin and the front wheel towards +x. The attached reference views are the exact target: match the angles of the frame tubes and the fork, where the seat and handlebar sit, and the thin ring wheels as closely as you can. Thin tubes between two points come up again and again here, so solve that once and reuse it. Done means it matches the reference in all four views.",
+      "acceptance": [
+        "Seen from the front, the top and both three-quarter views, it matches the reference.",
+        "Both wheels touch the ground, and the frame tubes meet at the same joints and angles as the reference.",
+        "The handlebar runs across the bike, the seat sits on the seat tube and nothing floats.",
+        "Thin parts stay thin and light: about as many triangles as the reference, with shared materials."
+      ],
+      "content": "Three-dimensional scene target: A bicycle in the x-y plane, front wheel at +x, handlebar across z",
+      "requirements": [
+        {
+          "id": "wheels",
+          "text": "Two thin upright ring wheels of the same size in the side plane, front at +x, with a gap of about half a wheel between them.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "frame",
+          "text": "A diamond frame of thin tubes: chain stay and seat stay from the rear hub, a seat tube, a level top tube and a down tube to the front.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "fork-stem",
+          "text": "A fork from the front of the top tube down to the front hub, and a short stem rising to the handlebar.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "handlebar",
+          "text": "A handlebar across the bike (along z), above the front of the frame and the highest point.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "seat",
+          "text": "A small seat on top of the seat tube at the back.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "chainring",
+          "text": "A small chainring disc where the tubes meet at the bottom, on the near (+z) side.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Red frame tubes; silver fork, stem, handlebar and chainring; black wheels and seat.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "materials-helper",
+          "text": "Three shared materials (red, steel, black); one helper builds every tube between two points.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "segments",
+          "text": "Modest segment counts for the tubes and wheels.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names-group",
+          "text": "Every mesh is named, all in one returned Group; Y up, wheels on y = 0, centred on the origin.",
+          "kind": "structure",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Bicycle",
+        "A bicycle in the x-y plane, front wheel at +x, handlebar across z"
+      ],
+      "designNotes": [
+        "bike shop homepage model",
+        "side-on stylised bicycle",
+        "thin ring wheels, diamond frame",
+        "one tube helper, reused"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A bicycle in the x-y plane, front wheel at +x, handlebar across z"
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Wheels touching the ground (y = 0), centred on the origin"
+            },
+            {
+              "label": "Overall size",
+              "value": "1.85 long (x = -0.925 to 0.925), about 1.0 tall (handlebar at y = 0.98), 0.44 across the handlebar"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "rearWheel and frontWheel",
+              "value": "Torus, ring radius 0.35, tube radius 0.025, not rotated (it stands upright in the x-y plane); centres (-0.55, 0.375, 0) and (0.55, 0.375, 0)"
+            },
+            {
+              "label": "tube (how each is made)",
+              "value": "Each tube is a cylinder from point A to point B: length = distance A to B, centred at the midpoint, turned so its axis (local +y) points from A to B"
+            },
+            {
+              "label": "chainStay",
+              "value": "(-0.55, 0.375, 0) to (-0.05, 0.3, 0), radius 0.018"
+            },
+            {
+              "label": "seatStay",
+              "value": "(-0.55, 0.375, 0) to (-0.2, 0.85, 0), radius 0.018"
+            },
+            {
+              "label": "seatTube",
+              "value": "(-0.05, 0.3, 0) to (-0.22, 0.9, 0), radius 0.022"
+            },
+            {
+              "label": "topTube",
+              "value": "(-0.2, 0.85, 0) to (0.4, 0.85, 0), radius 0.022"
+            },
+            {
+              "label": "downTube",
+              "value": "(-0.05, 0.3, 0) to (0.42, 0.75, 0), radius 0.025"
+            },
+            {
+              "label": "fork",
+              "value": "(0.4, 0.85, 0) to (0.55, 0.375, 0), radius 0.02"
+            },
+            {
+              "label": "stem",
+              "value": "(0.4, 0.85, 0) to (0.37, 0.98, 0), radius 0.018"
+            },
+            {
+              "label": "handlebar",
+              "value": "(0.37, 0.98, -0.22) to (0.37, 0.98, 0.22), radius 0.016"
+            },
+            {
+              "label": "seat",
+              "value": "Box 0.22 x 0.04 x 0.1, centre (-0.23, 0.92, 0)"
+            },
+            {
+              "label": "chainring",
+              "value": "Cylinder, radius 0.08, height 0.02, rotated pi/2 about x, centre (-0.05, 0.3, 0.03)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "chainStay, seatStay, seatTube, topTube, downTube",
+              "value": "#c1121f"
+            },
+            {
+              "label": "fork, stem, handlebar, chainring",
+              "value": "#aaaaaa"
+            },
+            {
+              "label": "wheels and seat",
+              "value": "#222222"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Segments",
+              "value": "Wheels: torus 12 radial, 48 tubular; tubes 12 around; chainring 24 around"
+            },
+            {
+              "label": "Shared materials",
+              "value": "Three shared materials: red (frame tubes), steel (fork, stem, handlebar, chainring), black (wheels, seat)"
+            },
+            {
+              "label": "Names",
+              "value": "Each mesh's name is set: rearWheel, frontWheel, chainStay, seatStay, seatTube, topTube, downTube, fork, stem, handlebar, seat, chainring"
+            },
+            {
+              "label": "Structure",
+              "value": "Twelve meshes in one Group, returned; the goal uses a tube(name, a, b, radius, material) helper that sets the quaternion from the up vector to the tube direction"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "tutorial-first-shape-3d",
+      "title": "Tutorial: First 3D shape",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "Start with one simple object. Make a smooth blue sphere that stands on the ground, centered in an otherwise empty scene. This first exercise is about returning a named mesh inside a group and keeping the model upright. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "One blue sphere is the only visible object.",
+        "The sphere is centered and touches the ground.",
+        "Its smooth shape is easy to read from every view.",
+        "The model follows the attached reference closely."
+      ],
+      "content": "Three-dimensional scene target: A single blue sphere standing upright on the ground.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: sphere.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "scene-only",
+          "text": "Return the model without adding a camera or lights.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Tutorial: First 3D shape",
+        "A single blue sphere standing upright on the ground."
+      ],
+      "designNotes": [
+        "one blue sphere",
+        "centered on the ground",
+        "single object and material"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A single blue sphere standing upright on the ground."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "sphere",
+              "value": "Sphere, radius 0.45, 24 width segments and 16 height segments, centre (0, 0.45, 0)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "sphere",
+              "value": "#3478f6"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "SphereGeometry with 24 by 16 segments; one MeshStandardMaterial."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "traffic-cone-3d",
+      "title": "Roadside traffic cone",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "Create a familiar safety cone for a street works scene. It has a broad dark base, a bright orange tapered body and one pale reflective band. Keep its silhouette clear from every angle. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The cone has a broad square base and tapered body.",
+        "One pale band wraps around the orange cone.",
+        "The model stands upright with no loose or floating parts.",
+        "Its familiar safety-cone silhouette matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A traffic cone with a square dark base, orange tapered body and one white band.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: base.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: cone.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: stripe.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "scene-only",
+          "text": "Return the model without adding a camera or lights.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Roadside traffic cone",
+        "A traffic cone with a square dark base, orange tapered body and one white band."
+      ],
+      "designNotes": [
+        "square rubber base",
+        "orange tapered cone",
+        "single white reflective band"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A traffic cone with a square dark base, orange tapered body and one white band."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "base",
+              "value": "Box 0.92 x 0.08 x 0.92, centre (0, 0.04, 0)"
+            },
+            {
+              "label": "cone",
+              "value": "Cylinder, top radius 0.035, bottom radius 0.29, height 0.82, centre (0, 0.49, 0)"
+            },
+            {
+              "label": "stripe",
+              "value": "Cylinder, top radius 0.176, bottom radius 0.208, height 0.09, centre (0, 0.48, 0)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "base",
+              "value": "#292d32"
+            },
+            {
+              "label": "cone",
+              "value": "#f47721"
+            },
+            {
+              "label": "stripe",
+              "value": "#f5f3ed"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "Three simple meshes; 32 radial segments for round parts."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "cactus-pot-3d",
+      "title": "Small potted cactus",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "Make a small desk plant with a warm clay pot and a green cactus with two short arms. The pot is tapered, the soil is visible at the top and the cactus sits firmly inside it. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The pot, soil and cactus form one clear plant.",
+        "The cactus stands inside the pot and has two short arms.",
+        "The warm pot and green plant are easy to distinguish.",
+        "The complete model matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A small potted cactus with a tapered terracotta pot, visible soil and two short arms.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: pot.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: soil.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: cactus.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: armLeftStem and armLeftTip.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: armRightStem and armRightTip.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Small potted cactus",
+        "A small potted cactus with a tapered terracotta pot, visible soil and two short arms."
+      ],
+      "designNotes": [
+        "terracotta tapered pot",
+        "dark soil surface",
+        "upright cactus body with two arms"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A small potted cactus with a tapered terracotta pot, visible soil and two short arms."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "pot",
+              "value": "Cylinder, top radius 0.32, bottom radius 0.25, height 0.44, centre (0, 0.22, 0)"
+            },
+            {
+              "label": "soil",
+              "value": "Cylinder, radius 0.29, height 0.035, centre (0, 0.45, 0)"
+            },
+            {
+              "label": "cactus",
+              "value": "Cylinder, top radius 0.13, bottom radius 0.16, height 0.95, centre (0, 0.94, 0)"
+            },
+            {
+              "label": "armLeftStem and armLeftTip",
+              "value": "Two short attached cylinders forming the left arm, near x = -0.2"
+            },
+            {
+              "label": "armRightStem and armRightTip",
+              "value": "Two short attached cylinders forming the right arm, near x = 0.2"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "pot",
+              "value": "#b85c38"
+            },
+            {
+              "label": "soil",
+              "value": "#493522"
+            },
+            {
+              "label": "cactus and both arms",
+              "value": "#3f8b51"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "32 segments around the pot and soil; 20 around the main cactus; 12 on the small arms."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "wooden-stool-3d",
+      "title": "Four-legged wooden stool",
+      "kind": "scene",
+      "level": 1,
+      "category": "3D models",
+      "brief": "Build a plain wooden stool with a broad square seat, four straight legs and low rails joining the legs. Its shape should read clearly as a sturdy piece of furniture from the front and at an angle. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The broad seat sits above four straight legs.",
+        "Low rails connect the legs around the stool.",
+        "The parts read as one stable wooden stool.",
+        "Its proportions and overall silhouette match the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A compact four-legged stool with a square seat and low connecting rails.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: seat.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: leg0 to leg3.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: railFront and railBack.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: railLeft and railRight.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "scene-only",
+          "text": "Return the model without adding a camera or lights.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Four-legged wooden stool",
+        "A compact four-legged stool with a square seat and low connecting rails."
+      ],
+      "designNotes": [
+        "square wooden seat",
+        "four straight legs",
+        "low rails on all four sides"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A compact four-legged stool with a square seat and low connecting rails."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "seat",
+              "value": "Box 0.9 x 0.14 x 0.82, centre (0, 0.91, 0)"
+            },
+            {
+              "label": "leg0 to leg3",
+              "value": "Four Box legs, each 0.12 x 0.82 x 0.12, centers at x +/-0.31 and z +/-0.27"
+            },
+            {
+              "label": "railFront and railBack",
+              "value": "Two low rails, 0.58 x 0.09 x 0.08"
+            },
+            {
+              "label": "railLeft and railRight",
+              "value": "Two low rails, 0.08 x 0.09 x 0.48"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "seat",
+              "value": "#a66a3f"
+            },
+            {
+              "label": "legs",
+              "value": "#754728"
+            },
+            {
+              "label": "rails",
+              "value": "#a66a3f"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "BoxGeometry parts; four legs and four rails, all meshes named."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "lighthouse-3d",
+      "title": "Striped coastal lighthouse",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "Create a small coastal lighthouse with a tapered tower, two red bands, a stone foot and a lantern room below its pointed roof. A small entrance and a front window complete the silhouette. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The tower is tapered and has two red bands.",
+        "A balcony, lantern and pointed roof finish the top.",
+        "The small door and window face the same side.",
+        "The full lighthouse matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A tapered coastal lighthouse with a striped tower, stone base and balcony, glazed lantern, pointed roof, door and front window.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: base.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: tower.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: redBand1 and redBand2.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: balcony.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: lantern.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-6",
+          "text": "Include and arrange these model parts as described: roof.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-7",
+          "text": "Include and arrange these model parts as described: door and window.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Striped coastal lighthouse",
+        "A tapered coastal lighthouse with a striped tower, stone base and balcony, glazed lantern, pointed roof, door and front window."
+      ],
+      "designNotes": [
+        "tapered ivory tower with two red bands",
+        "stone base and balcony",
+        "blue lantern room under a red cone roof",
+        "front door and window"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A tapered coastal lighthouse with a striped tower, stone base and balcony, glazed lantern, pointed roof, door and front window."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "base",
+              "value": "Cylinder, radius 0.52, height 0.12, centre y=0.06"
+            },
+            {
+              "label": "tower",
+              "value": "Cylinder, top radius 0.35, bottom radius 0.46, height 1.75, centre y=0.995"
+            },
+            {
+              "label": "redBand1 and redBand2",
+              "value": "Two thin red rings around the tower"
+            },
+            {
+              "label": "balcony",
+              "value": "Cylinder, radius 0.48, height 0.08, centre y=1.91"
+            },
+            {
+              "label": "lantern",
+              "value": "Cylinder, radius 0.25, height 0.34, centre y=2.12"
+            },
+            {
+              "label": "roof",
+              "value": "Cone, radius 0.34, height 0.3, centre y=2.44"
+            },
+            {
+              "label": "door and window",
+              "value": "Small details on the front (+z) side"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "tower",
+              "value": "#f2eee2"
+            },
+            {
+              "label": "bands and roof",
+              "value": "#c84b42"
+            },
+            {
+              "label": "base and balcony",
+              "value": "#686d70"
+            },
+            {
+              "label": "lantern and window",
+              "value": "#8bc4d6"
+            },
+            {
+              "label": "door",
+              "value": "#654736"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "32 segments around the tower and rings; 24 around the lantern and roof."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "treasure-chest-3d",
+      "title": "Brass-bound treasure chest",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "Make a compact wooden treasure chest with a heavy lid, two brass bands, a front lock plate and short feet. The chest should feel sturdy, with the small lock easy to spot from the front. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The chest has a distinct body and lid.",
+        "Two brass straps cross the chest and lid.",
+        "The front lock and feet are visible.",
+        "The model reads as a single chest and matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A small wooden chest with a separate lid, two brass straps, a front lock and two feet.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: chest.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: lid.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: strapLeft and strapRight.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: lockPlate.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: keyhole.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-6",
+          "text": "Include and arrange these model parts as described: footLeft and footRight.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Brass-bound treasure chest",
+        "A small wooden chest with a separate lid, two brass straps, a front lock and two feet."
+      ],
+      "designNotes": [
+        "dark wood chest body and lid",
+        "two brass straps running over the lid and front",
+        "front lock plate with keyhole",
+        "two short feet"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A small wooden chest with a separate lid, two brass straps, a front lock and two feet."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "chest",
+              "value": "Box 0.96 x 0.55 x 0.62, centre y=0.34"
+            },
+            {
+              "label": "lid",
+              "value": "Box 1.02 x 0.2 x 0.68, centre y=0.72"
+            },
+            {
+              "label": "strapLeft and strapRight",
+              "value": "Two brass straps, each 0.12 x 0.76 x 0.7"
+            },
+            {
+              "label": "lockPlate",
+              "value": "Brass plate, 0.2 x 0.22 x 0.045, on the front (+z)"
+            },
+            {
+              "label": "keyhole",
+              "value": "Small dark cylinder set into the lock plate"
+            },
+            {
+              "label": "footLeft and footRight",
+              "value": "Two dark wooden feet"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "chest",
+              "value": "#8a512e"
+            },
+            {
+              "label": "lid and feet",
+              "value": "#55331f"
+            },
+            {
+              "label": "straps and lock",
+              "value": "#d5a642"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "BoxGeometry for the panels and straps; 16 segments for the keyhole cylinder."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "windmill-3d",
+      "title": "Four-sail windmill",
+      "kind": "scene",
+      "level": 2,
+      "category": "3D models",
+      "brief": "Build a small traditional windmill with a tapered plaster tower, a red roof and four pale sails arranged as a cross around a central hub. Add a plain door at the front. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The tapered tower supports a pointed roof.",
+        "Four sails meet at one central hub.",
+        "The door and sails are attached to the same model.",
+        "The windmill matches the attached reference from multiple views."
+      ],
+      "content": "Three-dimensional scene target: A small tapered windmill tower with a conical roof, four cross-shaped sails, central hub and front door.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: tower.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: roof.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: door.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: hub.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: blade0 to blade3.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Four-sail windmill",
+        "A small tapered windmill tower with a conical roof, four cross-shaped sails, central hub and front door."
+      ],
+      "designNotes": [
+        "tapered cream tower",
+        "red pointed roof",
+        "four pale rectangular sails and central hub",
+        "small front door"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A small tapered windmill tower with a conical roof, four cross-shaped sails, central hub and front door."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "tower",
+              "value": "Cylinder, top radius 0.2, bottom radius 0.36, height 1.35, centre y=0.675"
+            },
+            {
+              "label": "roof",
+              "value": "Cone, radius 0.3, height 0.34, centre y=1.52"
+            },
+            {
+              "label": "door",
+              "value": "Box 0.22 x 0.42 x 0.04 at front"
+            },
+            {
+              "label": "hub",
+              "value": "Sphere radius 0.1 at (0, 1.3, 0.25)"
+            },
+            {
+              "label": "blade0 to blade3",
+              "value": "Four rectangular sails arranged at right angles around the hub"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "tower",
+              "value": "#efe3c5"
+            },
+            {
+              "label": "roof",
+              "value": "#a54436"
+            },
+            {
+              "label": "sails",
+              "value": "#f6f0df"
+            },
+            {
+              "label": "door and hub",
+              "value": "#67422c"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "24 segments on the tower and roof; four named BoxGeometry sails."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "sailing-boat-3d",
+      "title": "Small sailing boat",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "Create a little sailboat with a pointed blue hull, a warm timber deck and cabin, a tall mast and two triangular sails. The larger cream sail sits behind the mast and a smaller red sail sits forward. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The hull has a pointed bow and supports the deck.",
+        "The mast holds two differently coloured triangular sails.",
+        "The cabin sits toward the rear of the boat.",
+        "The complete boat matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A small sailboat with a pointed blue hull, timber deck and cabin, upright mast, large cream sail and smaller red sail.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: hull.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: deck.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: mast.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: mainSail.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: frontSail.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-6",
+          "text": "Include and arrange these model parts as described: cabin.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Small sailing boat",
+        "A small sailboat with a pointed blue hull, timber deck and cabin, upright mast, large cream sail and smaller red sail."
+      ],
+      "designNotes": [
+        "long pointed blue hull",
+        "timber deck and small cabin",
+        "upright mast",
+        "large cream mainsail and smaller red front sail"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A small sailboat with a pointed blue hull, timber deck and cabin, upright mast, large cream sail and smaller red sail."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "hull",
+              "value": "Extruded polygon with a pointed bow, width about 1.8 and depth 0.24, centered at the origin"
+            },
+            {
+              "label": "deck",
+              "value": "Box 1.2 x 0.06 x 0.34"
+            },
+            {
+              "label": "mast",
+              "value": "Cylinder, height 1.65, centre (0.08, 1.28, 0)"
+            },
+            {
+              "label": "mainSail",
+              "value": "Large triangular cream sail behind the mast"
+            },
+            {
+              "label": "frontSail",
+              "value": "Smaller triangular red sail in front of the mast"
+            },
+            {
+              "label": "cabin",
+              "value": "Box 0.38 x 0.2 x 0.3 toward the rear"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "hull",
+              "value": "#24577a"
+            },
+            {
+              "label": "deck and cabin",
+              "value": "#d3a66d"
+            },
+            {
+              "label": "mainSail",
+              "value": "#f4f1e8"
+            },
+            {
+              "label": "frontSail",
+              "value": "#c95849"
+            },
+            {
+              "label": "mast",
+              "value": "#63482f"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "ExtrudeGeometry for the hull; ShapeGeometry for both triangular sails; no bevel."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "robot-3d",
+      "title": "Friendly service robot",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "Build a friendly upright service robot with a silver body, dark blue head and limbs, glowing cyan eyes and chest light, and a short antenna with an orange tip. Keep the arms, hands, legs and feet clearly separated. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The head and torso form a clear upright figure.",
+        "The eyes, mouth and chest detail face forward.",
+        "Both arms, hands, legs and feet are distinct.",
+        "The robot matches the attached reference from multiple views."
+      ],
+      "content": "Three-dimensional scene target: An upright friendly robot with a silver torso, dark blue head and limbs, cyan eyes, chest details, articulated hands and feet, and a tipped antenna.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: torso, head.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: eyeLeft and eyeRight, mouth.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: chestPanel and chestLight, armLeft and armRight.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: handLeft and handRight, legLeft and legRight.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: footLeft and footRight, antenna and antennaTip.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Friendly service robot",
+        "An upright friendly robot with a silver torso, dark blue head and limbs, cyan eyes, chest details, articulated hands and feet, and a tipped antenna."
+      ],
+      "designNotes": [
+        "silver torso and dark blue head",
+        "two cyan eyes and a simple mouth",
+        "chest panel with orange light",
+        "separate arms, hands, legs and feet",
+        "antenna with orange tip"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "An upright friendly robot with a silver torso, dark blue head and limbs, cyan eyes, chest details, articulated hands and feet, and a tipped antenna."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "torso",
+              "value": "Box 0.62 x 0.68 x 0.34, centre y=1.05"
+            },
+            {
+              "label": "head",
+              "value": "Box 0.52 x 0.42 x 0.38, centre y=1.77"
+            },
+            {
+              "label": "eyeLeft and eyeRight",
+              "value": "Two cyan spheres on the front of the head"
+            },
+            {
+              "label": "mouth",
+              "value": "Short horizontal silver box below the eyes"
+            },
+            {
+              "label": "chestPanel and chestLight",
+              "value": "Dark chest panel with one orange sphere"
+            },
+            {
+              "label": "armLeft and armRight",
+              "value": "Two dark cylindrical arms"
+            },
+            {
+              "label": "handLeft and handRight",
+              "value": "Two silver spherical hands"
+            },
+            {
+              "label": "legLeft and legRight",
+              "value": "Two dark rectangular legs"
+            },
+            {
+              "label": "footLeft and footRight",
+              "value": "Two broad silver feet"
+            },
+            {
+              "label": "antenna and antennaTip",
+              "value": "Short silver antenna with an orange sphere at its tip"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "torso, hands and feet",
+              "value": "#b9c4cc"
+            },
+            {
+              "label": "head, chest panel, arms and legs",
+              "value": "#304b67"
+            },
+            {
+              "label": "eyes",
+              "value": "#37bfd0"
+            },
+            {
+              "label": "chest light and antenna tip",
+              "value": "#ef8b3a"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "Named box, cylinder and sphere meshes; shared materials for each colour."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "castle-3d",
+      "title": "Small stone castle",
+      "kind": "scene",
+      "level": 3,
+      "category": "3D models",
+      "brief": "Create a compact stone castle with a central gatehouse, a taller keep, four roofed corner towers and a row of battlements. Add a small banner above the keep. Make the main shapes distinct and balanced as a single model. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
+      "acceptance": [
+        "The wall and gatehouse sit in front of the taller keep.",
+        "Four roofed towers and a row of battlements are visible.",
+        "The banner rises above the keep.",
+        "The castle forms one balanced model that matches the attached reference."
+      ],
+      "content": "Three-dimensional scene target: A small stone castle with a curtain wall and gatehouse, taller rear keep, four roofed corner towers, battlements and a small banner.",
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: wall.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-2",
+          "text": "Include and arrange these model parts as described: gatehouse and gateDoor.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-3",
+          "text": "Include and arrange these model parts as described: keep and keepRoof.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-4",
+          "text": "Include and arrange these model parts as described: tower0 to tower3.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-5",
+          "text": "Include and arrange these model parts as described: turret0 to turret3.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-6",
+          "text": "Include and arrange these model parts as described: crenel0 to crenel4.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "parts-7",
+          "text": "Include and arrange these model parts as described: bannerPole and banner.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Small stone castle",
+        "A small stone castle with a curtain wall and gatehouse, taller rear keep, four roofed corner towers, battlements and a small banner."
+      ],
+      "designNotes": [
+        "stone curtain wall and central gatehouse",
+        "dark front gate and taller keep behind the wall",
+        "four corner towers with red conical roofs",
+        "five battlements along the wall",
+        "small gold pole and red banner"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A small stone castle with a curtain wall and gatehouse, taller rear keep, four roofed corner towers, battlements and a small banner."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "wall",
+              "value": "Box 1.45 x 0.9 x 0.24"
+            },
+            {
+              "label": "gatehouse and gateDoor",
+              "value": "Central stone block with a dark front door"
+            },
+            {
+              "label": "keep and keepRoof",
+              "value": "Tall rear keep with red pointed roof"
+            },
+            {
+              "label": "tower0 to tower3",
+              "value": "Four round corner towers"
+            },
+            {
+              "label": "turret0 to turret3",
+              "value": "Four red conical tower roofs"
+            },
+            {
+              "label": "crenel0 to crenel4",
+              "value": "Five stone battlements along the wall"
+            },
+            {
+              "label": "bannerPole and banner",
+              "value": "Small gold pole and red banner above the keep"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "wall, gatehouse, keep and towers",
+              "value": "#b7b0a2"
+            },
+            {
+              "label": "keep and tower roofs, banner",
+              "value": "#7d3440"
+            },
+            {
+              "label": "gateDoor",
+              "value": "#493b36"
+            },
+            {
+              "label": "bannerPole",
+              "value": "#d5a642"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "BoxGeometry for masonry; cylinders and cones for towers and roofs; five crenellations."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "available": false,
+      "unavailableReason": "3D scene challenges are not playable yet."
     }
   ]
 }
