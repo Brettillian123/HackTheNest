@@ -86,6 +86,29 @@ export class GraderMissing extends Error {
   constructor(message) { super(message); this.name = 'GraderMissing'; }
 }
 
+// One self-contained page showing a 3D model's four views (PNG data from the grader) in a 2 x 2 grid.
+export function viewsPage(views) {
+  const cells = views.slice(0, 4).filter(v => v && typeof v.png === 'string' && /^[A-Za-z0-9+/=]+$/.test(v.png))
+    .map(v => `<figure><img alt="${String(v.name || 'view').replace(/[^a-z0-9 -]/gi, '')}" src="data:image/png;base64,${v.png}"><figcaption>${String(v.name || '').replace(/[^a-z0-9 -]/gi, '').replace(/-/g, ' ')}</figcaption></figure>`).join('');
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>3D model views</title><style>html,body{height:100%}body{margin:0;background:#eef0f3;font:14px Arial,sans-serif;color:#4b5563;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;padding:12px;box-sizing:border-box}figure{margin:0;background:#ffffff;border:1px solid #d7dbe0;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;overflow:hidden}img{max-width:100%;max-height:calc(100% - 28px);object-fit:contain}figcaption{padding:4px 0 6px;text-transform:capitalize}</style></head><body>${cells || '<p>The model could not be drawn.</p>'}</body></html>`;
+}
+
+// The reference pictures for a 3D challenge, drawn by the grader and kept per instance.
+const sceneViews = new Map();
+export async function goalViewsPage({ challenge, env, fetch }) {
+  if (sceneViews.has(challenge.slug)) return sceneViews.get(challenge.slug);
+  const res = await fetch(`${baseUrl(env)}/v1/render/scene`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.GRADER_API_KEY}` },
+    body: JSON.stringify({ code: challenge.goalCode }),
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!res.ok) throw new GraderUnavailable(`The grader could not draw the reference (${res.status}).`, res.status);
+  const page = viewsPage((await res.json()).views || []);
+  sceneViews.set(challenge.slug, page);
+  return page;
+}
+
 const baseUrl = env => String(env.GRADER_URL).replace(/\/+$/, '');
 
 async function callService({ route, body, env, fetch, now }) {
@@ -128,7 +151,9 @@ async function callService({ route, body, env, fetch, now }) {
       console.error('Grader service sent no total');
       throw new GraderRejected('The grader could not score this page.');
     }
-    return { ...mapServiceResult(result), raw: result };
+    const mapped = { ...mapServiceResult(result), raw: result };
+    if (Array.isArray(parsed.views) && parsed.views.length) mapped.viewsHtml = viewsPage(parsed.views);
+    return mapped;
   }
   throw new GraderUnavailable('The grader did not answer in time.');
 }

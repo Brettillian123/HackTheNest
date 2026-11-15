@@ -759,7 +759,7 @@ export async function getChallenge(slug) {
     cost: costOf(sc.cost),
     maxPromptChars: Number(sc.maxPromptChars) > 0 ? Number(sc.maxPromptChars) : 2000,
     criteria: Array.isArray(sc.criteria) ? sc.criteria.map((c) => (typeof c === "string" ? c : c && (c.name || c.text || c.label) || "")).filter(Boolean) : [],
-    goalUrl: kind === "page" ? goalUrlFor(slug) : null,
+    goalUrl: kind === "page" ? goalUrlFor(slug) : kind === "scene" ? `/api/challenges/${slug}/goal` : null,
     viewport: sc.viewport ? { width: sc.viewport.width, height: sc.viewport.height } : { width: 1280, height: 800 },
     models: fromServerModels(sc.models),
     spec: (sc.spec || []).map((g) => ({ group: g.group, items: (g.items || []).map((i) => ({ ...i })) })),
@@ -821,6 +821,7 @@ function fromServerResult(r) {
     }));
   }
   if (r.rejectedReason) out.rejectedReason = String(r.rejectedReason);
+  if (r.viewsHtml) out.viewsHtml = String(r.viewsHtml);
   if (r.intentGraded != null) out.intentGraded = !!r.intentGraded;
   const reqs = requirementResults(r.requirements);
   if (reqs) out.requirements = reqs;
@@ -836,12 +837,14 @@ export function requirementResults(list) {
   return out.length ? out : null;
 }
 
+// Kinds whose output is text kept in `markdown` (a doc, or the code of a 3D model).
+const isTextKind = (kind) => kind === "doc" || kind === "scene";
 // A run: page runs keep the page in html; doc runs keep the answer in markdown (html stays "").
 function fromServerRun(r, output) {
   const kind = r.kind || "page";
-  const text = output ?? (kind === "doc" ? r.markdown : r.html) ?? "";
+  const text = output ?? (isTextKind(kind) ? r.markdown : r.html) ?? "";
   const run = { n: r.n, kind, prompt: r.prompt, model: r.model, html: kind === "doc" ? "" : text, result: fromServerResult(r.result), at: r.at, serverId: r.id };
-  if (kind === "doc") run.markdown = text;
+  if (isTextKind(kind)) run.markdown = text;
   return run;
 }
 
@@ -1293,7 +1296,7 @@ async function liveRun(args) {
     ? { ...prev, runs: prev.runs.slice() }
     : { id: header.attemptId, serverId: header.attemptId, promptCount: 0, best: null, runs: [], startedAt: new Date().toISOString() };
   const kind = args.kind || "page";
-  attempt.pending = { n, kind, prompt, model, html: kind === "doc" ? "" : html, markdown: kind === "doc" ? html : "", at: new Date().toISOString(), serverId: header.runId };
+  attempt.pending = { n, kind, prompt, model, html: isTextKind(kind) ? "" : html, markdown: isTextKind(kind) ? html : "", at: new Date().toISOString(), serverId: header.runId };
   attempt.promptCount = n;
   liveAttempts.set(slug, attempt);
   return liveScore(slug, attempt, { signal, onStage });
@@ -1308,7 +1311,7 @@ async function liveScore(slug, attempt, { signal, onStage }) {
   } catch (e) {
     throw unscored(e, attempt);
   }
-  const run = fromServerRun({ kind: p.kind, ...scored.run }, (p.kind === "doc" ? p.markdown : p.html) || undefined);
+  const run = fromServerRun({ kind: p.kind, ...scored.run }, (isTextKind(p.kind) ? p.markdown : p.html) || undefined);
   provisionalSeen = !!(run.result && run.result.provisional);
   dropPlayerData();
   const next = await attemptAfter(slug, scored.attempt, run, { attemptId: attempt.id, promptCount: attempt.promptCount });

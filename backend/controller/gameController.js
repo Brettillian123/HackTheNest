@@ -5,7 +5,7 @@ import { getDeps } from '../services/deps.js';
 import { challengeData, getChallengeFile, getLesson, listChallengeFiles, listLessons, PROMPT_LIMITS, SLUG_RE, publicChallenge } from '../services/challengeStore.js';
 import { KINDS, NO_PAGE, isRefusal, leakChecker } from '../services/kinds.js';
 import { MODELS, availableModels, findModel, generate, ModelError, GENERATION_TIMEOUT_MS } from '../services/models/index.js';
-import { checkPromptCopy, graderMode, liveGraderVersion } from '../services/grader/index.js';
+import { checkPromptCopy, goalViewsPage, graderMode, liveGraderVersion } from '../services/grader/index.js';
 import { checkDailyCap, optionalPlayer, requirePlayer, resolvePlayer, sessionUser, validAnonId } from '../services/playerService.js';
 import { ID_RE, PASTED_CODE, beginRun, claim, currentAttempt, finishRun, newId, previousOutput, promptHasCode, scoreRun, startOver } from '../services/gameService.js';
 import { BRACKETS, challengeStats, leaderboard, playerSummary, profile } from '../services/boardService.js';
@@ -64,6 +64,16 @@ const listChallenges = guarded('List challenges', async (request, response) => {
   sendJson(response, 200, { challenges: list.map(c => summary(c, stats, costFor(c, free, deps.env))), statsAvailable: Boolean(stats) });
 });
 
+// The reference pictures of a 3D challenge as one page (drawn by the grader, cached at the edge).
+const getGoalViews = guarded('Get goal views', async (request, response, [slug]) => {
+  const deps = getDeps();
+  const challenge = requireSlug(slug);
+  if (challenge.kind !== 'scene' || !challenge.goalCode) throw new HttpError(404, 'This challenge has no reference pictures.');
+  const page = await goalViewsPage({ challenge, env: deps.env, fetch: deps.fetch });
+  response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400, max-age=3600', 'Content-Security-Policy': "default-src 'none'; img-src data:; style-src 'unsafe-inline'" });
+  response.end(page);
+});
+
 const getChallenge = guarded('Get challenge', async (request, response, [slug]) => {
   const deps = getDeps();
   const challenge = requireSlug(slug);
@@ -72,7 +82,7 @@ const getChallenge = guarded('Get challenge', async (request, response, [slug]) 
   const models = modelList(deps.env);
   const detail = {
     ...summary(challenge, stats, costFor(challenge, free, deps.env)),
-    goalUrl: challenge.kind === 'page' ? `/data/goals/${challenge.slug}.html` : null,
+    goalUrl: challenge.kind === 'page' ? `/data/goals/${challenge.slug}.html` : challenge.kind === 'scene' ? `/api/challenges/${challenge.slug}/goal` : null,
     viewport: { ...challenge.viewport },
     models,
     simulated: !models.some(m => m.available),
@@ -324,6 +334,6 @@ const health = guarded('Health', async (_request, response) => {
 });
 
 export const gameHandlers = {
-  health, listChallenges, getChallenge, lessons, lesson, createRun, scoreRun: scoreRunHandler,
+  health, listChallenges, getChallenge, getGoalViews, lessons, lesson, createRun, scoreRun: scoreRunHandler,
   getCurrentAttempt, startOver: startOverHandler, claim: claimHandler, leaderboards, userProfile, playersMe,
 };

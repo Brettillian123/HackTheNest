@@ -97,7 +97,7 @@ export function computedPromptLimit(brief, spec = [], criteria = []) {
 // provider as its max output setting. Defaults per kind below; the stored size is capped as well
 // (300 KB, models/sanitize.js and kinds.js).
 export const OUTPUT_TOKEN_LIMITS = { min: 500, max: 16000 };
-export const DEFAULT_OUTPUT_TOKENS = { page: 6000, doc: 3000, workflow: 2000 };
+export const DEFAULT_OUTPUT_TOKENS = { page: 6000, doc: 3000, workflow: 2000, scene: 4000 };
 
 function readJson(path) {
   try { return { value: JSON.parse(readFileSync(path, 'utf8')) }; }
