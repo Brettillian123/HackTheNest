@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { colorDistance, deltaE00, rgbToLab } from '../src/color';
+import { colorDistance, colorName, deltaE00, rgbToLab } from '../src/color';
 import { dominantColor } from '../src/render';
-import { fallingCredit, median, risingCredit, round1, wordOverlap, words } from '../src/util';
+import { fallingCredit, median, risingCredit, round1, wordOverlap, wordPairs, words } from '../src/util';
 
 describe('colour difference (CIEDE2000)', () => {
   // Reference pairs published with the formula (Sharma, Wu, Dalal 2005).
@@ -34,6 +34,15 @@ describe('text helpers', () => {
     expect(words('Ship FASTER, today! 24/7')).toEqual(['ship', 'faster', 'today', '24', '7']);
   });
 
+  it('counts each character of a script without spaces, each emoji, and keeps vowel signs in their word', () => {
+    expect(words('我们的花园')).toEqual(['我', '们', '的', '花', '园']);
+    expect(words('Launch 🚀 day')).toEqual(['launch', '🚀', 'day']);
+    expect(words('Tokyo東京2026')).toEqual(['tokyo', '東', '京', '2026']);
+    // Thai vowel signs are marks (\p{M}); they stay with their letter.
+    expect(words('สวัสดี')).toEqual(['ส', 'วั', 'ส', 'ดี']);
+    expect(words('नमस्ते दुनिया')).toEqual(['नमस्ते', 'दुनिया']);
+  });
+
   it('scores word overlap, charging for both missing and extra words', () => {
     expect(wordOverlap(['a', 'b', 'c'], ['a', 'b', 'c'])).toBe(1);
     expect(wordOverlap(['a', 'b', 'c'], ['c', 'a', 'b'])).toBe(1);
@@ -43,6 +52,18 @@ describe('text helpers', () => {
     expect(wordOverlap(['a'], ['b'])).toBe(0);
     expect(wordOverlap([], [])).toBe(1);
     expect(wordOverlap(['a'], [])).toBe(0);
+  });
+
+  it('pairs neighbouring words inside each block only, never across blocks', () => {
+    expect(wordPairs([['dog', 'bites', 'man']])).toEqual(['dog bites', 'bites man']);
+    expect(wordPairs([['a', 'b'], ['c', 'd']])).toEqual(['a b', 'c d']);
+    expect(wordPairs([['solo'], []])).toEqual([]);
+    expect(wordPairs([])).toEqual([]);
+    // Same words, different order: the single words agree, the pairs do not.
+    const a = wordPairs([['dog', 'bites', 'man']]);
+    const b = wordPairs([['man', 'bites', 'dog']]);
+    expect(wordOverlap(['dog', 'bites', 'man'], ['man', 'bites', 'dog'])).toBe(1);
+    expect(wordOverlap(a, b)).toBe(0);
   });
 });
 
@@ -88,5 +109,30 @@ describe('dominant colour of a screenshot region', () => {
 
   it('finds the colour around a rectangle, ignoring what is in it', () => {
     expect(dominantColor(pixels, size, size, square, 'around')).toEqual([0, 0, 200]);
+  });
+
+  it('gives the average of a gradient, which barely moves when the gradient barely changes', () => {
+    const grad = (start: number) => {
+      const w = 200;
+      const p = new Uint8Array(w * 4 * 4);
+      for (let y = 0; y < 4; y++) for (let x = 0; x < w; x++) p.set([Math.round(start + x), 0, 0, 255], (y * w + x) * 4);
+      return dominantColor(p, w, 4, { x: 0, y: 0, w, h: 4 });
+    };
+    const a = grad(20);
+    const b = grad(21);
+    expect(Math.abs(a[0] - 120)).toBeLessThanOrEqual(1);
+    expect(Math.abs(a[0] - b[0])).toBeLessThanOrEqual(1);
+  });
+});
+
+describe('colour names', () => {
+  it('names colours the way a person would', () => {
+    expect(colorName([255, 255, 255])).toBe('white');
+    expect(colorName([0, 0, 0])).toBe('black');
+    expect(colorName([234, 88, 12])).toBe('orange');
+    expect(colorName([22, 163, 74])).toBe('green');
+    expect(colorName([29, 78, 216])).toBe('blue');
+    expect(colorName([220, 38, 38])).toBe('red');
+    expect(colorName([128, 128, 128])).toBe('grey');
   });
 });

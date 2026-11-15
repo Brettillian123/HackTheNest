@@ -1,121 +1,180 @@
 # Grader
 
-Scores a generated web site against a goal site, 0 to 100. Same input, same score, every time. No AI is involved in grading.
+Scores what a player's prompt produced against a goal: a web page, a multi-page site, or a 3D model. Same input, same score, every time. No AI is involved in grading.
 
-> **Status, 2026-11-14: this is version 0.2.0, a first working form.**
-> - It is not wired into the app yet, and it cannot run on Vercel: it drives a real headless browser, which does not fit in a Vercel function. It needs its own small server that the app calls.
-> - Version 0.3.0 is in progress and changes how the total is weighted: a site has to work and be well engineered before it has to look right, heavy bloat is marked down harder, and a pixel-exact site that beats the goal on size and speed can score above 100. `result.fidelity` will be replaced by `result.pillars` (`works`, `engineering`, `looks`). The `Grader` calls below stay the same.
-> - To see it work: `cd grader`, `npm install`, `npx playwright install chromium`, then `npm run calibrate:sites` and open `calibration/out/site-report.html`.
+> Version 0.6.0. Pages, sites and 3D scenes are all graded, and every result says in plain words what cost points.
+> The app calls it through the HTTP service in `service/` (see `service/README.md`); it cannot run inside a Vercel function because it drives a headless browser.
 
-## Use it from the app
+## What it grades
 
-A site is an object of file path to file text. A one-page challenge is a site with one file.
+| Kind | Goal and submission are | Call | Total |
+|---|---|---|---|
+| Page | one self-contained HTML string | `grader.grade(goal, html)` | 0 to 100 |
+| Site | files: `{ 'index.html': '...', 'site.css': '...' }` | `grader.gradeSite(goal, files)` | 0 to 100, up to 120 with the bonus |
+| 3D model | JavaScript defining `buildScene(THREE)` | `sceneGrader.grade(goal, code)` | 0 to 100, up to 120 with the bonus |
+
+A one-page challenge can be graded either as a page or as a site with one file. The site grader is the fuller one: it adds links, size, speed, accessibility and clean code.
+
+First-time setup on a machine: `npm install`, then `npx playwright install chromium`.
+
+## The calls
+
+Everything is exported from `src/index.ts`. Importing it starts nothing; each grader starts its own browser on first use. Make one of each per server, reuse it, and close it on shutdown.
+
+### Sites
 
 ```ts
 import { Grader } from '../grader/src/index';
 
-const grader = new Grader();                           // one per server; holds one headless browser
-const goal = await grader.prepareSite({                // once per challenge; keep the result
-  'index.html': '...', 'about.html': '...', 'site.css': '...',
-});
+const grader = new Grader();
+const goal = await grader.prepareSite({ 'index.html': '...', 'about.html': '...', 'site.css': '...' }); // once per challenge
 const { result, candidate } = await grader.gradeSite(goal, submittedFiles);
-
-result.total          // 0 to 100, one decimal: the leaderboard score
-result.fidelity       // 0 to 100: how well pages and links match the goal
-result.efficiency     // size and load time against the goal: { score, space, time: { checks } }
-result.pages          // per goal page: which submitted page it was compared with, and its breakdown
-result.links          // { score, expected, found, missing, broken }
-result.error          // set only if the submission could not be graded (total is then 0)
-result.version        // version of the grading rules; store it with every score
-goal.page('index.html')!.snapshot.png        // PNG of a goal page: the picture to show players
-candidate?.page('index.html')?.snapshot.png  // PNG of a submitted page as the grader saw it
-
-await grader.close();                                  // on server shutdown
+result.total;     // 87.5
+result.feedback;  // [{ message: 'On the about page: an image has no text description ...', points: 2.1 }, ...]
+goal.page('index.html')!.snapshot.png;  // PNG of a goal page, to show players
+await grader.close();
 ```
 
-`gradeSite` never throws for a bad submission; it returns a total of 0 with `error`. `prepareSite` does throw if the goal itself is not a valid site.
+### Pages
 
-`grader.grade(goalHtml, submittedHtml)` still grades one self-contained page on fidelity alone, with no efficiency score.
-
-First-time setup on a machine: `npm install`, then `npx playwright install chromium`.
-
-## How the total is worked out
-
-```
-total = fidelity x (0.8 + 0.2 x efficiency)
+```ts
+const goal = await grader.render(goalHtml);               // once per challenge
+const { result, candidate } = await grader.grade(goal, submittedHtml);
+result.total;     // 0 to 100
+result.feedback;  // [{ message: "The heading 'Pricing' is missing", points: 12.4 }, ...]
+candidate?.png;   // the submission as the grader saw it
 ```
 
-Efficiency can only take marks off, up to 20%. Like a coding judge, speed and size count for nothing unless the answer is right: a blank site is tiny and fast and still scores 0.
+### 3D models
 
-### Fidelity: does it match the goal?
+```ts
+import { SceneGrader } from '../grader/src/index';
 
-Each goal page is compared with the submitted page of the same name, or, failing that, the submitted page that looks most like it. A missing page scores 0. Each page is scored on four parts:
+const scenes = new SceneGrader();
+const goal = await scenes.prepare(goalCode);              // once per challenge; goal.views are the four pictures
+const { result, candidate } = await scenes.grade(goal, submittedCode);
+result.total;     // 0 to 100, up to 120
+result.feedback;  // ['The model is about 20% bigger than the goal: ...', ...]  (plain strings)
+candidate?.views; // [{ name, png, width, height }, ...] lined up with the goal
+await scenes.close();
+```
 
-| Part | Question it answers | Share of a page |
-|---|---|---|
-| content | Is the right text there, and nothing extra? | 25% |
-| layout | Is everything in the right place, at the right size? | 30% |
-| style | Are colours, fonts, borders and corners right? | 20% |
-| visual | At a glance, does the screenshot look like the goal? | 25% |
+None of the `grade` calls throws for a bad submission: it scores 0, with the reason in `result.error` and as the only line of `result.feedback`. Preparing a goal does throw if the goal itself is broken (that is a broken challenge, not a bad answer).
 
-If the goal's pages link to each other, 15% of fidelity is whether the submission has the same links between the same pages. Only links a visitor could see count: an empty or invisible link is not a way to reach a page. Links that lead to a file the submission does not contain are listed in `links.broken` and cost marks.
+## What comes back
 
-It grades what is rendered, not which tags or file names were used. Differences a person would not notice (a few pixels, a barely different shade) cost nothing.
+Every result has `version` (store it with the score), `total` (one decimal), `feedback` and, when the submission could not be graded, `error`.
 
-### Efficiency: space and time
-
-The goal site is the reference solution. The submission is compared with it as a ratio: up to 1.15 times the goal is full marks, 3 times or more is none.
-
-- **Space** is the size of everything submitted, in bytes.
-- **Time** is the estimated load time of each page on four simulated devices. Each device is one check, like a test case, and each punishes different waste:
-
-| Device | Download | Round trip | Processor |
+| Field | Page | Site | 3D |
 |---|---|---|---|
-| Budget phone on slow 3G | 400 kbps | 400 ms | 6x slower |
-| Mid-range phone on 4G | 4 Mbps | 150 ms | 4x slower |
-| Old laptop on home Wi-Fi | 20 Mbps | 40 ms | 2.5x slower |
-| Desktop on fibre | 100 Mbps | 10 ms | reference |
+| `feedback` | `{ message, points }[]`, at most 6 | `{ message, points }[]`, at most 8 | `string[]`, at most 6 |
+| parts of the total | `breakdown`: content, layout, style, visual | `pillars`: works, looks, engineering | `pillars`: works, looks, engineering |
+| engineering detail | none | `engineering`: `{ efficiency, accessibility, cleanCode, decidedBy }` and `efficiency` (size and device checks) | `details.engineering`: triangles, meshes, code size |
+| other | `details` (missing and extra text, offsets) | `pages`, `links`, `bonus`, `exactMatch` | `details` (shape, parts, placement, views), `bonus`, `exactMatch` |
 
-Nothing is timed with a stopwatch, because that gives a different answer every run. Load time is worked out from counts: files requested, bytes, elements, nesting depth, CSS rules and page height. A request to an outside address (a font or a CDN) is refused but still counted as a round trip. The device constants are stand-ins, chosen to be plausible, not measured.
+`feedback` is what to show the player: what cost points, most costly first. For pages and sites, `points` is roughly what the total would gain if that one thing were put right, worked out with the same arithmetic as the total. A perfect result has empty feedback.
 
-Every tunable number is in `src/config.ts`; change one and bump `GRADER_VERSION`.
+Site `engineering` example, each value x100 with one decimal:
 
-## Rules for goal sites
+```json
+{ "efficiency": 96.2, "accessibility": 81.9, "cleanCode": 100, "decidedBy": "accessibility" }
+```
 
-- HTML and CSS only (`.html`, `.css`, and `.svg` files). Scripts never run and nothing loads from the network, in goals or in submissions.
-- Up to 40 files and 1.5 MB in total; up to 12 pages are graded.
-- Pages are never loaded into frames: an `<iframe>` of another page renders empty.
-- A submission gets 45 seconds of rendering in all; pages it does not reach count as missing. A normal page takes under a second.
-- Use fonts installed on the grading machine (Arial, Georgia, Courier New and the generic families). Web fonts do not load.
-- Pages render 1280 px wide. Anything below 2400 px tall is not graded.
-- Animations are graded in their end state.
-- Keep the goal lean: it sets the bar for efficiency.
+`pillars.engineering` is the lowest of the three (here 81.9). `result.efficiency` is unchanged from earlier versions: the size and load-time report.
+
+## How each total is worked out
+
+### Sites
+
+```
+total = 100 x (0.40 works + 0.25 looks + 0.35 engineering x works) x deadLinkFactor + bonus
+```
+
+- **works** (0 to 1): the right text, in the right places, with the right links between pages. Each page counts content 45% and layout 55%; if the goal's pages link to each other, those links are 25% of works.
+- **looks** (0 to 1): each page's style (colours, fonts, borders) 45% and how the screenshot looks 55%.
+- **engineering** (-1 to 1): the worst of three credits, each judged against the goal ("worst measure wins"):
+
+| Credit | Range | What it measures |
+|---|---|---|
+| efficiency | -1 to 1 | Total size and estimated load time on four simulated devices, as a ratio to the goal. Up to 1.15x the goal is full credit; 3x is 0; 10x or more is -1 |
+| accessibility | 0 to 1 | Images without a description, form fields without a label, buttons and links with no name, text too faint to read, no page language or title, missing or skipped headings |
+| cleanCode | 0 to 1 | Parse errors (unclosed, misnested or stray tags), duplicate ids, obsolete tags like `font` and `center`, piles of inline styles, heavy `!important`, no doctype |
+
+Accessibility and clean code are worked out for each pair of compared pages and averaged over the pages. A submission is only charged for problems the goal does not have too. Engineering counts only as far as the site works, so a blank site does not score on being small.
+
+What one problem costs: one image with no description makes that page's accessibility credit 0.82. On a one-page site that costs about 6 points of the total (35 x 0.18 = 6.3). On a three-page site it is averaged over three pages, so about 2 points. It costs nothing if another engineering credit is already lower.
+
+- **Pages are paired** by name, or else with the submitted page that looks most like the goal page. A missing page scores 0.
+- **Orphaned pages:** a page a visitor cannot reach from the home page by following visible links keeps half its works and looks, its links count for nothing, and it is left out of the engineering comparison. It is listed in `links.orphaned`.
+- **Dead links:** links on reachable pages to files the submission does not have multiply the total by `1 - 0.4 x (dead links / links on the goal's reachable pages)`, at most 40% off. Shown as `links.deadLinkFactor`.
+- **Bonus** (up to 20): only for an exact match (every page 100 and reachable, every goal link there, no dead links) with accessibility and clean code both at full credit, no bigger than the goal and no slower on any device. It grows with how far under the goal it comes.
+- **The goal is the reference:** a goal graded against itself always scores exactly 100, whatever is wrong with it.
+
+Load times are estimated from counts (files, bytes, elements, CSS rules, page height), never timed, so they never vary. The device numbers are plausible stand-ins, not measurements.
+
+### Pages
+
+```
+total = 25% content + 30% layout + 20% style + 25% visual
+```
+
+Content: is the right text there, in order, with nothing extra. Layout: is everything in the right place and size. Style: colours, fonts, borders, corners. Visual: does the screenshot look like the goal. A page grade has no engineering part. Small differences a person would not notice cost nothing.
+
+### 3D models
+
+```
+total = placement x 100 x (0.40 works + 0.25 looks + 0.35 engineering x works) + bonus
+```
+
+- **Lining up first.** Players only see pictures of the goal, so the submission is moved and uniformly scaled to match the goal's bounding box (centre and diagonal, no rotation) before anything is compared. How far off size and position were is charged through **placement**: 1 when close, down to 0.7 when far off.
+- **works** (0 to 1): shape agreement (surfaces compared on voxel grids at three sizes) times the **parts credit**. Parts are the separate connected pieces of the goal (a chair's four legs are four parts). Parts credit = parts present / (goal parts + 0.5 x extra parts), so a missing leg and a stray box both cost.
+- **looks** (0 to 1): the four views compared as pictures.
+- **engineering** (-1 to 1): the worst of three ratios to the goal: triangles, meshes, and code size (comments and spacing not counted).
+- **Bonus** (up to 20): works and looks exact, size and position right, and leaner than the goal.
+
+## Writing a goal
+
+### Sites and pages
+
+- HTML and CSS only (`.html`, `.css`, `.svg`). Scripts never run and nothing loads from the network.
+- Up to 40 files, 1.5 MB in all, 300 KB per file; up to 12 pages are graded.
+- Pages render 1280 px wide; anything below 2400 px is not graded. Animations are graded in their end state.
+- Use installed fonts (Arial, Georgia, Courier New, the generic families). Web fonts do not load.
+- Pages are never loaded into frames.
+- Keep the goal lean, accessible and well written: it sets the bar. Anything wrong with the goal is excused in every submission.
+
+### 3D models
+
+- JavaScript defining `function buildScene(THREE) { ...; return object; }` (`export function buildScene` also works). `THREE` is three.js 0.187. Return a mesh, group or scene.
+- **Up is +y.** The front faces +z (towards the default camera). The views are three-quarter front, front, top and three-quarter back.
+- Colour comes from each material's `color` and `opacity`. Lights, textures and the camera in the code are ignored.
+- Randomness and time are fixed, so `Math.random()` gives the same numbers every run.
+- Limits: 200 KB of code, 100,000 triangles, 2,000 meshes, 8 seconds to run.
 
 ## Commands
 
-```bash
-npm test
-```
-```bash
-npm run calibrate
-```
-```bash
-npm run grade -- goal.html candidate.html
-```
+| Command | What it does |
+|---|---|
+| `npm test` | Unit, page, site, quality, 3D and service tests (about 3 minutes) |
+| `npm run test:properties:page` / `:site` | Rules that must hold for any page or site, over generated inputs (minutes each) |
+| `npm run typecheck` | Type-checks `src`, `test` and `service` |
+| `npm run calibrate` | Grades `calibration/sets/` (single pages) and writes `calibration/out/report.html` |
+| `npm run calibrate:sites` | Grades `calibration/sites/` and writes `calibration/out/site-report.html`, with the three engineering credits per attempt |
+| `npm run calibrate:scenes` | Grades the 3D calibration set and writes its report |
+| `npm run grade -- goal.html candidate.html` | Grades one page from the command line |
+| `npm start` | Runs the HTTP service (needs `GRADER_API_KEY`) |
 
-```bash
-npm run calibrate:sites
-```
+The service, its routes, environment variables and Docker setup are in `service/README.md`.
 
-`npm run calibrate` grades every single-page attempt in `calibration/sets/` and writes `calibration/out/report.html`: each attempt's screenshot beside the goal with its score, for checking by eye. The scores a person expects are in `calibration/expected.json`; `npm test` fails if the grader disagrees with them.
-
-`npm run calibrate:sites` does the same for multi-page sites in `calibration/sites/<name>/` (a `goal/` folder and one folder per attempt under `attempts/`) and writes `calibration/out/site-report.html`: each attempt's pages, links, size and device checks. No expected scores are set for sites yet.
-
-The `grade` command covers single pages only.
+Every tunable number is in `src/config.ts`, `src/site-config.ts`, `src/quality/config.ts` and `src/scene3d/config.ts`. Change one and bump `GRADER_VERSION` in `src/config.ts` (the 3D grader reports the same version).
 
 ## Known limits
 
-- Scores are identical on one machine. A different operating system draws fonts slightly differently, so grade everything on the one server.
-- CSS animations and animated SVG are frozen before grading. An animated GIF or a video embedded as a `data:` URI is not, so a page containing one can score slightly differently between runs.
-- Chromium's process sandbox is on. If the server's container cannot support it, set `GRADER_CHROMIUM_SANDBOX=0` and lock the container down instead.
-- The expected bands in `calibration/expected.json` were set by one person's eye and should be re-ranked by the team. No multi-page site has been ranked by eye yet.
+- Scores are identical on one machine. Another operating system draws fonts slightly differently, so grade everything on the one server.
+- An animated GIF or a video in a `data:` URI is not frozen, so such a page can score slightly differently between runs.
+- Load times are a model, not measurements.
+- Accessibility checks are automatic and partial: they cannot tell whether a description is a good one, only whether there is one.
+- 3D submissions are compared without rotation: a model built facing the wrong way loses marks.
+- 3D feedback lines are plain strings with no points attached.
+- Chromium's sandbox is on. If the server cannot support it, set `GRADER_CHROMIUM_SANDBOX=0` and lock the container down instead.
+- The expected bands in `calibration/expected.json` were set by one person's eye. No site or 3D attempt has been ranked by the team yet.

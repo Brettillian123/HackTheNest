@@ -26,6 +26,10 @@ export interface RawBlock {
     sampleBackground: boolean;
     hasBorder: boolean;
     borderColor: RGB | null;
+    /** Width of the widest visible border side, in px. */
+    borderWidth: number;
+    /** Share of the box's area painted by its visible borders, 0 to 1. */
+    borderShare: number;
     radius: number;
     shadow: boolean;
   };
@@ -82,6 +86,38 @@ class ColorTally {
     }
     return best ? [Math.round(best.r / best.n), Math.round(best.g / best.n), Math.round(best.b / best.n)] : null;
   }
+
+  /**
+   * The colour a person would name for the area. Where one paint clearly
+   * covers it, that paint. Where none does (a gradient, a photo), the average
+   * colour: otherwise a change too small to see could swing the answer from
+   * one end of a gradient to the other. Between the two it blends smoothly.
+   */
+  typical(): RGB | null {
+    const top = this.dominant();
+    if (!top) return null;
+    let n = 0;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let topN = 0;
+    const topKey = ((top[0] >> 3) << 10) | ((top[1] >> 3) << 5) | (top[2] >> 3);
+    for (const [key, bin] of this.bins) {
+      n += bin.n;
+      r += bin.r;
+      g += bin.g;
+      b += bin.b;
+      if (key === topKey) topN = bin.n;
+    }
+    const share = topN / n;
+    const k = share >= 0.6 ? 1 : share <= 0.25 ? 0 : (share - 0.25) / 0.35;
+    if (k === 1) return top;
+    return [
+      Math.round(k * top[0] + (1 - k) * (r / n)),
+      Math.round(k * top[1] + (1 - k) * (g / n)),
+      Math.round(k * top[2] + (1 - k) * (b / n)),
+    ];
+  }
 }
 
 /**
@@ -111,7 +147,7 @@ export function dominantColor(
       tally.add(pixels[i], pixels[i + 1], pixels[i + 2]);
     }
   }
-  return tally.dominant() ?? [255, 255, 255];
+  return tally.typical() ?? [255, 255, 255];
 }
 
 /**
@@ -311,6 +347,8 @@ export function refineBlocks(raw: RawBlock[], pixels: Uint8Array, width: number,
           background: b.box.sampleBackground ? dominantColor(pixels, width, height, b.rect) : b.box.background,
           hasBorder: b.box.hasBorder,
           borderColor: b.box.borderColor,
+          borderWidth: b.box.borderWidth ?? 0,
+          borderShare: b.box.borderShare ?? 0,
           radius: b.box.radius,
           shadow: b.box.shadow,
         },

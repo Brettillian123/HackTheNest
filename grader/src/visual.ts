@@ -1,4 +1,4 @@
-import { deltaE00, rgbToLab, type Lab } from './color';
+import { deltaE00, labOf, type Lab } from './color';
 import { TOL, VISUAL } from './config';
 import type { PageSnapshot, RGB } from './types';
 import { clamp01, fallingCredit } from './util';
@@ -19,75 +19,130 @@ interface Gray {
 }
 
 /**
- * Reads one pixel of a page as if the page were shifted by (dx, dy) and
- * continued forever in its background colour.
+ * Shrinks a page shifted by (dx, dy), and continued forever in its
+ * background colour, two ways in one pass over its pixels:
+ *   gray  - brightness averaged over grayScale x grayScale squares. A mild
+ *           blur: small shifts stop mattering.
+ *   cells - mean colour of each colorScale x colorScale cell.
+ * Every square is summed row by row, left to right, so the sums are exactly
+ * those of adding up each square on its own.
  */
-function makeReader(snap: PageSnapshot, dx: number, dy: number) {
-  const { pixels, width, height, pageBackground } = snap;
-  return (x: number, y: number, out: Float32Array | number[]): void => {
-    const px = x + dx;
+function shrink(
+  snap: PageSnapshot,
+  width: number,
+  height: number,
+  grayScale: number,
+  colorScale: number,
+  dx: number,
+  dy: number,
+): { gray: Gray; cells: RGB[] } {
+  const gw = Math.floor(width / grayScale);
+  const gh = Math.floor(height / grayScale);
+  const cw = Math.floor(width / colorScale);
+  const chh = Math.floor(height / colorScale);
+  const graySum = new Float64Array(gw * gh);
+  const r = new Float64Array(cw * chh);
+  const g = new Float64Array(cw * chh);
+  const b = new Float64Array(cw * chh);
+  const { pixels, width: pw, height: ph, pageBackground: bg } = snap;
+  const bgGray = 0.299 * bg[0] + 0.587 * bg[1] + 0.114 * bg[2];
+  // Every colour cell is whole gray squares (colorScale is a multiple of
+  // grayScale), and the colour grid never reaches past the gray grid.
+  for (let y = 0; y < gh * grayScale; y++) {
     const py = y + dy;
-    if (px < 0 || py < 0 || px >= width || py >= height) {
-      out[0] = pageBackground[0];
-      out[1] = pageBackground[1];
-      out[2] = pageBackground[2];
-      return;
-    }
-    const i = (py * width + px) * 4;
-    out[0] = pixels[i];
-    out[1] = pixels[i + 1];
-    out[2] = pixels[i + 2];
-  };
-}
-
-/** Brightness, averaged over scale x scale squares. A mild blur: small shifts stop mattering. */
-function shrinkGray(snap: PageSnapshot, width: number, height: number, scale: number, dx: number, dy: number): Gray {
-  const w = Math.floor(width / scale);
-  const h = Math.floor(height / scale);
-  const data = new Float32Array(w * h);
-  const read = makeReader(snap, dx, dy);
-  const rgb = [0, 0, 0];
-  const n = scale * scale;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      let sum = 0;
-      for (let j = 0; j < scale; j++) {
-        for (let i = 0; i < scale; i++) {
-          read(x * scale + i, y * scale + j, rgb);
-          sum += 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+    const rowIn = py >= 0 && py < ph;
+    const grayRow = Math.floor(y / grayScale) * gw;
+    const cy = Math.floor(y / colorScale);
+    const colorRow = cy < chh ? cy * cw : -1;
+    const rowBase = py * pw;
+    for (let gx = 0; gx < gw; gx++) {
+      const x0 = gx * grayScale;
+      let acc = graySum[grayRow + gx];
+      let sr = 0;
+      let sg = 0;
+      let sb = 0;
+      const first = x0 + dx;
+      if (rowIn && first >= 0 && first + grayScale <= pw) {
+        // The whole square is on the page: no edge checks needed.
+        for (let k = (rowBase + first) * 4, end = k + grayScale * 4; k < end; k += 4) {
+          const pr = pixels[k];
+          const pg = pixels[k + 1];
+          const pb = pixels[k + 2];
+          acc += 0.299 * pr + 0.587 * pg + 0.114 * pb;
+          sr += pr;
+          sg += pg;
+          sb += pb;
+        }
+      } else for (let i = 0; i < grayScale; i++) {
+        const px = x0 + i + dx;
+        if (!rowIn || px < 0 || px >= pw) {
+          acc += bgGray;
+          sr += bg[0];
+          sg += bg[1];
+          sb += bg[2];
+        } else {
+          const k = (rowBase + px) * 4;
+          const pr = pixels[k];
+          const pg = pixels[k + 1];
+          const pb = pixels[k + 2];
+          acc += 0.299 * pr + 0.587 * pg + 0.114 * pb;
+          sr += pr;
+          sg += pg;
+          sb += pb;
         }
       }
-      data[y * w + x] = sum / n;
-    }
-  }
-  return { data, w, h };
-}
-
-/** Mean colour of each scale x scale cell. */
-function shrinkColor(snap: PageSnapshot, width: number, height: number, scale: number, dx: number, dy: number): RGB[] {
-  const w = Math.floor(width / scale);
-  const h = Math.floor(height / scale);
-  const cells: RGB[] = new Array(w * h);
-  const read = makeReader(snap, dx, dy);
-  const rgb = [0, 0, 0];
-  const n = scale * scale;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      for (let j = 0; j < scale; j++) {
-        for (let i = 0; i < scale; i++) {
-          read(x * scale + i, y * scale + j, rgb);
-          r += rgb[0];
-          g += rgb[1];
-          b += rgb[2];
+      graySum[grayRow + gx] = acc;
+      if (colorRow >= 0) {
+        const cx = Math.floor(x0 / colorScale);
+        if (cx < cw) {
+          r[colorRow + cx] += sr;
+          g[colorRow + cx] += sg;
+          b[colorRow + cx] += sb;
         }
       }
-      cells[y * w + x] = [Math.round(r / n), Math.round(g / n), Math.round(b / n)];
     }
   }
-  return cells;
+  const gn = grayScale * grayScale;
+  const data = new Float32Array(gw * gh);
+  for (let i = 0; i < data.length; i++) data[i] = graySum[i] / gn;
+  const cn = colorScale * colorScale;
+  const cells: RGB[] = new Array(cw * chh);
+  for (let i = 0; i < cells.length; i++) cells[i] = [Math.round(r[i] / cn), Math.round(g[i] / cn), Math.round(b[i] / cn)];
+  return { gray: { data, w: gw, h: gh }, cells };
+}
+
+interface Prepared {
+  gray: Gray;
+  stats: WindowStats;
+  cells: RGB[];
+  labs: Lab[];
+  /** Whether each colour cell stands out from the page's own background. */
+  foreground: Uint8Array;
+}
+
+/**
+ * Everything worked out from one screenshot at one size and shift. A goal is
+ * graded against many submissions, so its share is kept with the snapshot
+ * and worked out once. Pure: the same inputs always give the same arrays.
+ */
+const preparedCache = new WeakMap<PageSnapshot, Map<string, Prepared>>();
+function prepare(snap: PageSnapshot, width: number, height: number, dx: number, dy: number): Prepared {
+  const key = `${width}x${height}@${dx},${dy}`;
+  let byKey = preparedCache.get(snap);
+  const hit = byKey?.get(key);
+  if (hit) return hit;
+  const { gray, cells } = shrink(snap, width, height, VISUAL.structureScale, VISUAL.colorScale, dx, dy);
+  const labs = cells.map(labOf);
+  const bg = labOf(snap.pageBackground);
+  const foreground = Uint8Array.from(labs, (l) => (deltaE00(l, bg) > VISUAL.foregroundDelta ? 1 : 0));
+  const prepared: Prepared = { gray, stats: windowStats(gray, VISUAL.window), cells, labs, foreground };
+  if (!byKey) {
+    byKey = new Map();
+    preparedCache.set(snap, byKey);
+  }
+  if (byKey.size >= 6) byKey.delete(byKey.keys().next().value!);
+  byKey.set(key, prepared);
+  return prepared;
 }
 
 // SSIM's two stabilising constants. The second is the standard value for
@@ -173,10 +228,8 @@ function ssimAt(
  * Each window may slide a few pixels to find its match, because a person
  * does not notice a few pixels.
  */
-function structureScore(a: Gray, b: Gray): number {
+function structureScore(a: Gray, sa: WindowStats, b: Gray, sb: WindowStats): number {
   const { window: win, step, shift, activeVariance } = VISUAL;
-  const sa = windowStats(a, win);
-  const sb = windowStats(b, win);
   if (sa.cols === 0 || sa.rows === 0) return 1;
 
   let total = 0;
@@ -232,29 +285,15 @@ function structureScore(a: Gray, b: Gray): number {
  * that are plain background in both pages count for little, so a page is
  * not rewarded for being mostly empty in the same colour.
  */
-function colorScore(a: RGB[], aBackground: RGB, b: RGB[], bBackground: RGB): number {
-  const cache = new Map<number, Lab>();
-  const lab = (c: RGB): Lab => {
-    const key = (c[0] << 16) | (c[1] << 8) | c[2];
-    let v = cache.get(key);
-    if (!v) {
-      v = rgbToLab(c);
-      cache.set(key, v);
-    }
-    return v;
-  };
-  const bgA = lab(aBackground);
-  const bgB = lab(bBackground);
+function colorScore(a: Prepared, b: Prepared): number {
   let total = 0;
   let weight = 0;
-  for (let i = 0; i < a.length; i++) {
-    const la = lab(a[i]);
-    const lb = lab(b[i]);
-    const same = a[i][0] === b[i][0] && a[i][1] === b[i][1] && a[i][2] === b[i][2];
-    const credit = same ? 1 : fallingCredit(deltaE00(la, lb), TOL.color.full, TOL.color.zero);
-    const foreground =
-      deltaE00(la, bgA) > VISUAL.foregroundDelta || deltaE00(lb, bgB) > VISUAL.foregroundDelta;
-    const w = foreground ? 1 : VISUAL.backgroundWeight;
+  for (let i = 0; i < a.cells.length; i++) {
+    const ca = a.cells[i];
+    const cb = b.cells[i];
+    const same = ca[0] === cb[0] && ca[1] === cb[1] && ca[2] === cb[2];
+    const credit = same ? 1 : fallingCredit(deltaE00(a.labs[i], b.labs[i]), TOL.color.full, TOL.color.zero);
+    const w = a.foreground[i] || b.foreground[i] ? 1 : VISUAL.backgroundWeight;
     total += w * credit;
     weight += w;
   }
@@ -270,16 +309,37 @@ function colorScore(a: RGB[], aBackground: RGB, b: RGB[], bBackground: RGB): num
 export function compareVisual(goal: PageSnapshot, candidate: PageSnapshot, dx = 0, dy = 0): VisualResult {
   const width = Math.min(goal.width, candidate.width);
   const height = Math.max(goal.height, candidate.height);
-
-  const grayGoal = shrinkGray(goal, width, height, VISUAL.structureScale, 0, 0);
-  const grayCand = shrinkGray(candidate, width, height, VISUAL.structureScale, dx, dy);
-  const structure = structureScore(grayGoal, grayCand);
-
-  const cellsGoal = shrinkColor(goal, width, height, VISUAL.colorScale, 0, 0);
-  const cellsCand = shrinkColor(candidate, width, height, VISUAL.colorScale, dx, dy);
-  const color = colorScore(cellsGoal, goal.pageBackground, cellsCand, candidate.pageBackground);
+  const g = prepare(goal, width, height, 0, 0);
+  const c = prepare(candidate, width, height, dx, dy);
+  const structure = structureScore(g.gray, g.stats, c.gray, c.stats);
+  const color = colorScore(g, c);
 
   // Both must hold: right shapes in wrong colours, or right colours in
   // wrong shapes, do not look like the goal.
   return { score: Math.sqrt(structure * color), structure, color };
+}
+
+/**
+ * Where on the goal page the two screenshots differ most, as the centre of
+ * the cells whose colour differs visibly (weighted by how much), in page
+ * pixels. Null when nothing differs visibly. Used only to tell the player
+ * where to look; it does not affect the score.
+ */
+export function differenceCentre(goal: PageSnapshot, candidate: PageSnapshot, dx = 0, dy = 0): { x: number; y: number } | null {
+  const width = Math.min(goal.width, candidate.width);
+  const height = Math.max(goal.height, candidate.height);
+  const g = prepare(goal, width, height, 0, 0);
+  const c = prepare(candidate, width, height, dx, dy);
+  const cols = Math.floor(width / VISUAL.colorScale);
+  let sx = 0;
+  let sy = 0;
+  let sw = 0;
+  for (let i = 0; i < g.cells.length; i++) {
+    const d = deltaE00(g.labs[i], c.labs[i]);
+    if (d <= TOL.color.full) continue;
+    sx += d * ((i % cols) + 0.5) * VISUAL.colorScale;
+    sy += d * (Math.floor(i / cols) + 0.5) * VISUAL.colorScale;
+    sw += d;
+  }
+  return sw === 0 ? null : { x: sx / sw, y: sy / sw };
 }

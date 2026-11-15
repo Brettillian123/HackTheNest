@@ -133,6 +133,52 @@ describe('fairness', () => {
     );
     expect((await grader.grade(stripes, swapped)).result.total).toBeLessThan(60);
   });
+
+  it('charges for words in the wrong order inside a sentence', async () => {
+    const goal = page('<main><p>The quick brown fox jumps over the lazy dog.</p><p>Sales rose four percent this week.</p></main>');
+    const scrambled = page('<main><p>Dog lazy the over jumps fox brown quick the.</p><p>Week this percent four rose sales.</p></main>');
+    const { result } = await grader.grade(goal, scrambled);
+    expect(result.breakdown.content).toBeLessThan(100);
+    expect(result.breakdown.content).toBeGreaterThan(0);
+  });
+
+  it('leaves the position of whole paragraphs to layout, not content', async () => {
+    const goal = page('<main><p>The quick brown fox jumps over the lazy dog.</p><p>Sales rose four percent this week.</p></main>');
+    const swapped = page('<main><p>Sales rose four percent this week.</p><p>The quick brown fox jumps over the lazy dog.</p></main>');
+    const { result } = await grader.grade(goal, swapped);
+    expect(result.breakdown.content).toBe(100);
+  });
+
+  // A section 4 RGB units off the page colour is a "box" to the extractor
+  // but invisible to a person; it must not cost more than a point.
+  const SECTION_CSS = 'section{padding:40px;margin:20px}h1{margin:0;font-size:32px}';
+  const plain = page('<section style="background:#fff"><h1>Weekly report</h1></section>', SECTION_CSS);
+  const faint = page('<section style="background:#fbfbfb"><h1>Weekly report</h1></section>', SECTION_CSS);
+
+  it('charges at most 1 point for a section background nobody can see (candidate has it)', async () => {
+    const { result } = await grader.grade(plain, faint);
+    expect(result.total).toBeGreaterThanOrEqual(99);
+  });
+
+  it('charges at most 1 point for a section background nobody can see (goal has it)', async () => {
+    const { result } = await grader.grade(faint, plain);
+    expect(result.total).toBeGreaterThanOrEqual(99);
+  });
+
+  it('does not let a barely visible goal box hide a bold colour in its place', async () => {
+    const bold = page('<section style="background:#dc2626"><h1>Weekly report</h1></section>', SECTION_CSS);
+    const { result } = await grader.grade(faint, bold);
+    expect(result.total).toBeLessThanOrEqual(95);
+  });
+
+  it('scores a page made only of boxes too faint to count 100 against itself', async () => {
+    const ghosts = page(
+      '<div style="height:200px;margin:20px;background:#fbfbfb"></div><div style="height:120px;margin:20px;background:#fdfdfd"></div>',
+    );
+    const { result } = await grader.grade(ghosts, ghosts);
+    expect(result.total).toBe(100);
+    expect(result.breakdown.layout).toBe(100);
+  });
 });
 
 describe('findings from the review, each fixed at its cause', () => {
@@ -232,6 +278,149 @@ describe('findings from the review, each fixed at its cause', () => {
     const { result } = await grader.grade(panel, dot);
     expect(result.details.matchedBlocks).toBe(0);
     expect(result.total).toBeLessThan(5);
+  });
+});
+
+describe('findings from the property hunt, each fixed at its cause', () => {
+  it('judges Chinese one character at a time: one changed character is a small mistake', async () => {
+    const goal = page('<h1>我们的花园很美丽</h1><p>今天天气很好，我们一起去公园散步吧。</p>');
+    const one = page('<h1>我们的花园很漂亮</h1><p>今天天气很好，我们一起去公园散步吧。</p>');
+    const { result } = await grader.grade(goal, one);
+    expect(result.details.matchedBlocks).toBe(2); // was 1: the whole heading counted as one wrong word
+    expect(result.total).toBeGreaterThanOrEqual(95); // was 62.8
+  });
+
+  it('reads emoji as words', async () => {
+    const goal = page('<h1 style="margin:40px">Launch day 🚀</h1>');
+    const { result } = await grader.grade(goal, page('<h1 style="margin:40px">Launch day 🐢</h1>'));
+    expect(result.breakdown.content).toBeLessThan(100); // was 100: emoji were invisible to content
+  });
+
+  it('does not charge for a gradient stop moved by one unit', async () => {
+    const grad = (a: string) =>
+      page(`<div style="margin:40px;height:200px;width:600px;background:linear-gradient(90deg,${a},#9333ea)"></div><p style="margin:40px">Caption</p>`);
+    const { result } = await grader.grade(grad('#1d4ed8'), grad('#1e4fd9'));
+    expect(result.total).toBeGreaterThanOrEqual(99.5); // was 98.7: the sampled colour jumped across the gradient
+  });
+
+  const card = (b: string) =>
+    page(`<div style="margin:40px;padding:24px;width:400px;background:#e5e7eb;${b}"><h2>Plan</h2><p>Simple pricing for teams.</p></div>`);
+
+  it('does not charge for a border nobody can see against its own card', async () => {
+    const { result } = await grader.grade(card(''), card('border:2px solid #e9ebef'));
+    expect(result.total).toBeGreaterThanOrEqual(99.5); // was 98.1
+  });
+
+  it('charges for a border much thicker than the goal\'s', async () => {
+    const { result } = await grader.grade(card('border:1px solid #374151'), card('border:16px solid #374151'));
+    expect(result.breakdown.style).toBeLessThan(97); // was 100: style ignored border width
+  });
+
+  it('sees the colour of a shape drawn with borders', async () => {
+    const tri = (c: string) =>
+      page(`<div style="margin:40px;width:0;height:0;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:100px solid ${c}"></div>`);
+    const { result } = await grader.grade(tri('#dc2626'), tri('#1d4ed8'));
+    expect(result.breakdown.style).toBeLessThan(80); // was 95.6: only the border's half-weight saw it
+  });
+
+  it('still recognises a paragraph cut short, so its font and place keep their credit', async () => {
+    const long =
+      'The quick brown fox jumps over the lazy dog while the market opens early and the river runs past the old stone mill near the village square every single morning.';
+    const goal = page(`<h1 style="margin:40px">Title</h1><p style="margin:40px">${long}</p>`);
+    const cut = page(`<h1 style="margin:40px">Title</h1><p style="margin:40px">The quick brown fox jumps over the lazy dog.</p>`);
+    const { result } = await grader.grade(goal, cut);
+    expect(result.details.matchedBlocks).toBe(2); // was 1
+    expect(result.breakdown.style).toBe(100); // was 25.9
+    expect(result.breakdown.content).toBeLessThan(60);
+  });
+
+  it('scores a form field and a look-alike box with the same text the same', async () => {
+    const field = page('<input placeholder="Email address" style="margin:40px;padding:10px;width:300px;font-size:16px;border:1px solid #9ca3af">');
+    const fake = page(
+      '<div style="margin:40px;padding:10px;width:300px;font-size:16px;border:1px solid #9ca3af;color:#757575;display:inline-block;box-sizing:content-box">Email address</div>',
+    );
+    expect((await grader.grade(field, fake)).result.total).toBeGreaterThanOrEqual(99); // was 81.6
+  });
+
+  it('on an empty goal, one stray word costs less than painting the whole page', async () => {
+    const dark = page('', 'body{background:#0f172a}');
+    const word = (await grader.grade(dark, page('<p style="color:#fff">hello</p>', 'body{background:#0f172a}'))).result;
+    const white = (await grader.grade(dark, page(''))).result;
+    expect(word.total).toBeGreaterThan(white.total); // was 29.7 against 40
+  });
+});
+
+describe('feedback', () => {
+  const FB_CSS =
+    '.top{height:90px;margin:0 40px}h1{margin:0;padding-top:24px;font-size:40px;color:#111827}' +
+    'p{margin:0 40px 24px;font-size:16px;color:#374151;width:600px}' +
+    '.buy{display:inline-block;margin:0 40px 32px;padding:12px 24px;background:#ea580c;color:#fff;font-weight:700}' +
+    '.row{display:flex;gap:24px;margin:0 40px}.card{flex:1;height:140px;padding:16px;background:#dbeafe;color:#1e3a8a}';
+  const body = (o: { heading?: string; text?: string; cardsTop?: number; tail?: string } = {}) =>
+    `<div class="top">${o.heading ?? '<h1>Pricing</h1>'}</div>` +
+    `<p>${o.text ?? 'Pick the plan that suits your team. Every plan includes support and updates.'}</p>` +
+    '<a class="buy">Buy now</a>' +
+    `<div class="row" style="margin-top:${o.cardsTop ?? 0}px"><div class="card">Starter</div><div class="card">Team</div><div class="card">Business</div></div>` +
+    (o.tail ?? '');
+  const GOAL = page(body(), FB_CSS);
+  let goalSnap: Awaited<ReturnType<Grader['render']>>;
+  beforeAll(async () => {
+    goalSnap = await grader.render(GOAL);
+  });
+  const top = async (html: string) => (await grader.grade(goalSnap, html)).result;
+  const lost = (r: { total: number }) => 100 - r.total;
+  const sum = (r: { feedback?: { points: number }[] }) => r.feedback!.reduce((s, f) => s + f.points, 0);
+
+  it('is empty for a perfect page', async () => {
+    const r = await top(GOAL);
+    expect(r.total).toBe(100);
+    expect(r.feedback).toEqual([]);
+  });
+
+  it('names a missing heading first, and its points add up', async () => {
+    const r = await top(page(body({ heading: '' }), FB_CSS));
+    expect(r.feedback![0].message).toBe("The heading 'Pricing' is missing");
+    expect(Math.abs(sum(r) - lost(r))).toBeLessThanOrEqual(2);
+  });
+
+  it('names extra text first', async () => {
+    const r = await top(page(body({ tail: '<p>Sign up now</p>' }), FB_CSS));
+    expect(r.feedback![0].message).toBe("Extra text the goal does not have: 'Sign up now'");
+    expect(Math.abs(sum(r) - lost(r))).toBeLessThanOrEqual(2);
+  });
+
+  it('names a button in the wrong colour first', async () => {
+    const r = await top(page(body(), FB_CSS.replace('#ea580c', '#16a34a')));
+    expect(r.feedback![0].message).toBe("The button 'Buy now' is green where the goal's is orange");
+    expect(Math.abs(sum(r) - lost(r))).toBeLessThanOrEqual(2);
+  });
+
+  it('reports cards that sit too low together', async () => {
+    const r = await top(page(body({ cardsTop: 40 }), FB_CSS));
+    expect(r.feedback![0].message).toMatch(/^3 (boxes|things) sit about 40 pixels too low$/);
+  });
+
+  it('says when the body text is smaller', async () => {
+    const r = await top(page(body(), FB_CSS.replace('font-size:16px', 'font-size:12px')));
+    expect(r.feedback!.map((f) => f.message)).toContain(
+      "The text 'Pick the plan that suits your team. E...' is noticeably smaller than the goal's (12 px text instead of 16 px)",
+    );
+  });
+
+  it('says when the page background is dark instead of light', async () => {
+    // Text kept light so it stays readable: dark text on the dark page would rightly count as missing.
+    const r = await top(page(body(), FB_CSS + 'body{background:#1f2937}h1,p{color:#f9fafb !important}'));
+    expect(r.feedback![0].message).toBe("The page background is dark where the goal's is light");
+  });
+
+  it('is identical on every run, most costly first, at most six', async () => {
+    const html = page(body({ heading: '<h1>Prices</h1>', cardsTop: 20, tail: '<p>Sign up now</p>' }), FB_CSS.replace('#ea580c', '#16a34a'));
+    const a = await top(html);
+    const b = await top(html);
+    expect(JSON.stringify(b.feedback)).toBe(JSON.stringify(a.feedback));
+    expect(a.feedback!.length).toBeLessThanOrEqual(6);
+    const points = a.feedback!.map((f) => f.points);
+    expect([...points].sort((x, y) => y - x)).toEqual(points);
   });
 });
 
