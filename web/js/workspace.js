@@ -183,6 +183,7 @@ function setupDoc() {
   ['goalDoc', 'mineDoc', 'cmpDoc'].forEach((id) => { $(id).hidden = false; });
   $('goalTitle').textContent = 'The task';
   $('mineTitle').textContent = 'Your answer';
+  $('prompt').placeholder = 'Describe what the model should write to meet the task';
   $('hViewportTag').hidden = true;
   const crit = S.ch.criteria || [];
   $('goalDoc').innerHTML = `<p class="ws-doc-brief">${esc(S.ch.brief)}</p>` +
