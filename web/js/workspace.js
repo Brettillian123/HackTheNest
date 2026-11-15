@@ -156,12 +156,17 @@ async function renderBoard() {
   }
 }
 
-// Instructions: a column docked inside the page panel on show; the button opens and closes it.
-// A brief-format challenge docks the Brief instead: the brief, requirements, key facts and design notes,
-// and its goal page is labelled as one example of a good result.
+// Instructions: a dropdown under the page panel's header button, overlaying the panel without moving
+// the goal frame. Closed on load; closes on outside click, Esc, a run, or the ruler or magnifier.
+// A brief-format challenge shows the Brief in it: the brief, requirements, key facts and design notes.
 const isBrief = () => !!(S.ch && S.ch.format === 'brief' && !isDoc());
+function closeIns() { if (S.ins) { S.ins = false; render(); } }
 function renderInstructions() {
   $('insBtn').addEventListener('click', () => { S.ins = !S.ins; render(); });
+  document.addEventListener('click', (e) => {
+    if (!S.ins || !e.target.isConnected) return;
+    if (e.target.closest('.tool') || !e.target.closest('#insMenu, #insDd')) closeIns();
+  });
   if (isBrief()) { setupBrief(); return; }
   const groups = S.ch.spec.map((g) =>
     `<h4 class="ws-ins-group">${esc(g.group)}</h4><dl>` +
@@ -176,11 +181,7 @@ function setupBrief() {
   if (label) label.textContent = 'Brief';
   $('insMenu').setAttribute('aria-label', 'Brief');
   $('insMenu').classList.add('ws-brief');
-  $('goalTitle').textContent = 'Example result';
-  $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-ex-note">One good answer, not a target to copy</span>');
-  const g = document.querySelector('#cmpPair .frame-lbl');
-  if (g && g.lastChild) g.lastChild.textContent = 'Example result';
-  $('goalFrame').querySelector('iframe').title = 'Example result';
+  $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-goal-cap">Be close, not identical</span>');
   ta.placeholder = 'Describe the page that meets the brief';
   // One listener for every copy button in the column.
   $('insMenu').addEventListener('click', (e) => {
@@ -337,7 +338,7 @@ function renderScore(run) {
     : r.intentGraded
     ? 'Marked on meeting the brief, not on matching the picture'
     : isBrief()
-    ? 'Marked against the example for now'
+    ? '80 to 90 is a solid score'
     : bonus
     ? `<b>A perfect match, leaner than the goal: +${fmtScore(bonus)} bonus</b>`
     : r.total >= 100
@@ -436,8 +437,6 @@ function render() {
   });
   if (isBrief() && S.ins) renderBrief();
   $('insBtn').setAttribute('aria-expanded', String(S.ins));
-  // The docked column needs the height: the leaderboard strip steps aside while it is open.
-  if (S.ins && host === $('goalPanel')) show('lbPanel', false);
 
   const used = S.attempt ? S.attempt.promptCount ?? runs.length : 0; // an unscored saved page counts too
   $('runCount').textContent = used;
@@ -645,9 +644,9 @@ function wire() {
       doRun();
     } else if (e.key === 'Escape') {
       if (document.querySelector('.dd-menu:not([hidden])') || document.querySelector('.fv')) return;
+      if (S.ins) { closeIns(); $('insBtn').focus(); return; }
       if (S.ctrl) { cancel(); return; }
-      if (tools.escape()) return;
-      if (S.ins) { S.ins = false; render(); $('insBtn').focus(); }
+      tools.escape();
     }
   });
 }
@@ -690,8 +689,8 @@ async function main() {
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
-  // Before the first run of a brief challenge, the Brief is what the player needs most: open it.
-  if (isBrief() && !runs.length && !(S.attempt && S.attempt.pending)) S.ins = true;
+  // The dropdown starts closed. ?brief=open opens it on load, for review screenshots only.
+  if (new URLSearchParams(location.search).get('brief') === 'open') S.ins = true;
   if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('Page saved, score it to see the result'); }
   if (S.ch.available === false) setStatus(S.ch.unavailableReason || 'This challenge is not playable yet');
   render();
