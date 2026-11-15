@@ -33,6 +33,8 @@ const WEBHOOK_BODY_LIMIT = 1_000_000;
 export const limitsOn = env => env.BILLING_LIMITS !== 'off';
 export const isLessonChallenge = challenge => challenge.lesson !== undefined;
 export const runCost = challenge => (isLessonChallenge(challenge) ? COSTS.lesson : COSTS.standard);
+// Tutorials are always free and never count against the day's free challenges.
+export const isTutorial = challenge => /^tutorial-/.test(challenge.slug || '');
 export const freeEligible = challenge => challenge.level === FREE.level && !isLessonChallenge(challenge);
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
@@ -79,7 +81,7 @@ export function publicFree(status) {
 // The credits the next run on this challenge would cost the player right now (0 when free).
 // `status` is freeStatus() or null when it could not be read.
 export function costFor(challenge, status, env) {
-  if (!limitsOn(env)) return 0;
+  if (!limitsOn(env) || isTutorial(challenge)) return 0;
   if (freeEligible(challenge) && status) {
     const fits = status.docs.every(d => (Object.hasOwn(d.s, challenge.slug) ? d.s[challenge.slug] < d.maxPrompts : d.n < d.maxChallenges));
     if (fits) return 0;
@@ -97,6 +99,7 @@ export async function reserveRun(request, player, challenge, runId, deps) {
   const { store, env, now } = deps;
   const none = async () => {};
   if (!limitsOn(env)) return { kind: 'off', cost: 0, release: none };
+  if (isTutorial(challenge)) return { kind: 'free', cost: 0, release: none };
   const at = now();
   if (freeEligible(challenge)) {
     const { day, expiresAt } = dayOf(at);

@@ -49,7 +49,7 @@ test('real file: 50 entries load with acceptance and content; no response carrie
   assert.ok(listed.every(c => c.brief && c.acceptance.length >= 3 && c.acceptance.length <= 5 && c.content));
   const detail = responses[2].body.challenge;
   assert.deepEqual(Object.keys(detail).filter(k => k !== 'cost').sort(), ['acceptance', 'available', 'brief', 'category', 'content', 'format', 'goalUrl', 'kind', 'level', 'levelLabel', 'maxOutputTokens', 'maxPromptChars', 'models', 'simulated', 'slug', 'solvedCount', 'title', 'topScore', 'viewport', 'yourBest', 'yourBestPrompts']);
-  assert.ok(getChallengeFile(FILE[0].slug).keyFacts.length > 0, 'kept on the server for intent grading');
+  assert.ok(getChallengeFile('login-card').keyFacts.length > 0, 'kept on the server for intent grading');
 });
 
 test('the content block follows the prompt on first and follow-up runs; challengeTexts never holds it', async () => {

@@ -38,7 +38,7 @@ test('anonymous run, score, continue, start over', async () => {
   assert.ok(r1.text.startsWith('<!doctype html>'));
   assert.doesNotMatch(r1.text, /<script|onload|```|Here you go/);
   assert.match(calls.model[0].body.system, /one complete HTML document/);
-  assert.equal(calls.model[0].body.model, 'claude-haiku-5-5');
+  assert.equal(calls.model[0].body.model, 'claude-sonnet-5-5');
   assert.equal(calls.model[0].headers['x-api-key'], 'test-model-key');
 
   const s1 = await score(r1.headers['x-run-id']);

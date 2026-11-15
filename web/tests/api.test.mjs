@@ -35,6 +35,7 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
     assert.equal(c.slug, slug);
     assert.deepEqual(c.viewport, { width: 1280, height: 800 });
     assert.ok(c.models.length >= 1 && c.models.every((m) => m.id && m.label));
+    if ((c.kind || "page") !== "page") continue; // a 3D challenge has no goal page file
     const goalPath = fileURLToPath(c.goalUrl);
     assert.ok(existsSync(goalPath), `goal file for ${slug}`);
     const goal = readFileSync(goalPath, "utf8");

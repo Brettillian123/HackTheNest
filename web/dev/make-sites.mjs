@@ -6,7 +6,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 
 const SITES = [
   { slug: 'tutorial-two-pages', title: 'Tutorial 4: Two pages', level: 1, brand: 'Pebble', bg: '#f4f6f8', ink: '#1f2933', accent: '#2563eb', font: 'Arial, sans-serif',
-    brief: 'For your first multi-page practice, make a tiny two-page site for Pebble, a note-taking app. The Home page says what it is and the About page says who makes it. The menu at the top switches between the two pages.',
+    brief: 'Tutorial 4 of 5. Now more than one page: a tiny two-page site for Pebble, a note-taking app. Home says what it is and About says who makes it, with a menu at the top that switches between them. Describe what is shared by both pages (header, menu, footer) first, then each page in turn. Tip: the exact wording is in the content list under the brief; say which text goes where.',
     footer: 'Pebble, made in Lisbon.',
     pages: [
       ['home', 'Home', [['hero', 'Notes that stay out of your way', 'Pebble is a quiet place to write things down.', 'Read about us']]],
@@ -188,7 +188,7 @@ ${sections}
       slug: site.slug,
       title: site.title,
       level: site.level,
-      category: 'Sites with several pages',
+      category: site.slug.startsWith('tutorial-') ? 'Tutorials' : 'Sites with several pages',
       brief: site.brief,
       acceptance: [
         `The site has ${n} pages (${pageNames.join(', ')}) and the menu switches between them`,
