@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=.env dev-server.mjs"
+    "dev": "node --env-file=.env dev-server.mjs",
+    "dev:web": "node --env-file-if-exists=.env dev-web.mjs",
+    "test": "node --test \"backend/tests/*.test.mjs\""
   },
   "dependencies": {
     "mongodb": "^7.9.0"
