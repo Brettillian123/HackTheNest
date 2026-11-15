@@ -71,10 +71,10 @@ function table(board) {
     '</tbody></table>';
 }
 
-async function renderSide(kind, signedIn) {
+async function renderSide(kind, signedIn, waitingP = loadWaiting()) {
   const side = $('authSide');
   const stats = $('headStats');
-  const { list, waiting } = await loadWaiting();
+  const { list, waiting } = await waitingP;
   const verb = kind === 'signup' ? 'Sign up' : 'Log in';
 
   if (stats) {
@@ -86,7 +86,6 @@ async function renderSide(kind, signedIn) {
 
   if (waiting.length && !signedIn) {
     const top = waiting.reduce((a, b) => (b.best > a.best ? b : a));
-    const names = waiting.map((w) => `${w.title} ${fmtScore(w.best)}`).join(', ');
     let board = null;
     try { board = await api.getLeaderboard(top.slug); } catch { board = null; }
     const you = board && board.you;
@@ -99,7 +98,7 @@ async function renderSide(kind, signedIn) {
           <div class="info"><div class="gain">${n} ${n === 1 ? 'score' : 'scores'} waiting</div>
           <div class="rk">Best on ${esc(top.title)}${you ? `, would rank #${esc(you.rank)}` : ''}</div></div>
         </div>
-        <p class="callout">${ICON_INFO}<span>You have ${n} ${n === 1 ? 'score' : 'scores'} waiting: ${esc(names)}. <b>${verb} to keep them and join the leaderboard.</b></span></p>
+        <p class="callout">${ICON_INFO}<span><b>${verb} to keep ${n === 1 ? 'it' : 'them'} and join the leaderboard</b></span></p>
         <div class="wait">${waiting.map((w) =>
           `<a href="workspace.html?c=${encodeURIComponent(w.slug)}"><span class="lvl ${levelClass(w.level)} sm">Lv ${esc(w.level)}</span><span class="t">${esc(w.title)}</span><span class="p">${esc(w.prompts)} ${w.prompts === 1 ? 'prompt' : 'prompts'}</span><span class="s">${esc(w.best)}</span></a>`,
         ).join('')}</div>
@@ -128,8 +127,8 @@ async function renderSide(kind, signedIn) {
         <div class="rk">${lead ? `${esc(lead.promptCount)} ${lead.promptCount === 1 ? 'prompt' : 'prompts'}, rank #1` : ''}</div></div>
       </div>
       <p class="callout">${ICON_INFO}<span>${signedIn
-        ? 'Your runs now count toward this board.'
-        : 'Every score you earn with an account goes on this board under your name.'}</span></p>
+        ? 'Your runs now count toward this board'
+        : 'Account scores go on this board under your name'}</span></p>
     </section>` +
     (rows.length
       ? `<section class="panel grow">
@@ -142,13 +141,13 @@ async function renderSide(kind, signedIn) {
 // ------------------------------------------------------------ form
 
 const MSG = {
-  usernameEmpty: 'Enter a username.',
-  usernameBad: 'Use 3 to 20 letters, numbers or underscores.',
-  emailEmpty: 'Enter your email.',
-  emailBad: 'Enter an email like name@example.com.',
-  passwordEmpty: 'Enter your password.',
-  passwordShort: 'Use 8 or more characters.',
-  passwordLong: 'Use 128 characters or fewer.',
+  usernameEmpty: 'Enter a username',
+  usernameBad: 'Use 3 to 20 letters, numbers or underscores',
+  emailEmpty: 'Enter your email',
+  emailBad: 'Enter an email like name@example.com',
+  passwordEmpty: 'Enter your password',
+  passwordShort: 'Use 8 or more characters',
+  passwordLong: 'Use 128 characters or fewer',
 };
 
 function validators(kind) {
@@ -234,7 +233,7 @@ function wireForm(kind, onDone) {
     errs.forEach(([n, m]) => setErr(n, m));
     const bad = errs.filter(([, m]) => m);
     if (bad.length) {
-      $('announce').textContent = bad.map(([, m]) => m).join(' ');
+      $('announce').textContent = bad.map(([, m]) => m).join(', ');
       $(bad[0][0]).focus();
       return;
     }
@@ -253,11 +252,11 @@ function wireForm(kind, onDone) {
         user = await api.login({ email, password });
         try { await api.claimAttempts(); } catch { /* scores stay on this browser */ }
       }
-      $('announce').textContent = kind === 'signup' ? 'Account created.' : 'Logged in.';
+      $('announce').textContent = kind === 'signup' ? 'Account created' : 'Logged in';
       try { sessionStorage.setItem(WELCOME_KEY, (user && user.username) || ''); } catch { /* the note is optional */ }
       onDone(user);
     } catch (e) {
-      const msg = (e && e.message) || 'Something went wrong. Try again.';
+      const msg = (e && e.message) || 'Something went wrong, try again';
       const field = fieldFor(e, kind);
       if (field) { setErr(field, msg); $(field).focus(); } else { setAlert(msg); $(names[0]).focus(); }
       $('announce').textContent = msg;
@@ -279,14 +278,14 @@ function renderSignedIn(kind, user) {
     `<div class="panel-head"><h2 class="h" id="authTitle">Signed in</h2><span class="note">${esc(user.email || '')}</span></div>
     <div class="auth-in">
       <div class="auth-who"><span class="avatar lg">${esc(initials)}</span>
-        <div><p class="title">You are signed in as ${esc(name)}</p><p class="small">Your runs now save to your account.</p></div></div>
+        <div><p class="title">You are signed in as ${esc(name)}</p><p class="small">Your runs now save to your account</p></div></div>
       <div class="auth-acts">
         <a class="btn btn-primary" href="challenges.html" id="goBtn">Go to challenges</a>
         <button class="btn btn-secondary" type="button" id="logoutBtn">Log out</button>
       </div>
       <dl class="kv"><div><dt>Leaderboard name</dt><dd>${esc(name)}</dd></div><div><dt>Email</dt><dd>${esc(user.email || '-')}</dd></div></dl>
     </div>
-    <p class="callout auth-bottom">${ICON_INFO}<span>To use a different account, log out first.</span></p>`;
+    <p class="callout auth-bottom">${ICON_INFO}<span>Log out first to use a different account</span></p>`;
   $('logoutBtn').addEventListener('click', async () => {
     const b = $('logoutBtn');
     b.disabled = true;
@@ -299,10 +298,12 @@ function renderSignedIn(kind, user) {
 
 export async function initAuthPage(kind) {
   // Log in and sign up share the rail's log-in icon.
+  // The shell paints at once; the account check and the side panel's data load together.
   const active = 'login';
-  let user = null;
-  try { user = await api.me(); } catch { user = null; }
-  mount(active, user);
+  mount(active, null);
+  const waitingP = loadWaiting();
+  const user = await api.me().catch(() => null);
+  if (user) mount(active, user);
 
   // Keep ?next= when switching between log in and sign up.
   const next = nextParam();
@@ -313,20 +314,19 @@ export async function initAuthPage(kind) {
 
   if (user) {
     renderSignedIn(kind, user);
-    renderSide(kind, true);
+    renderSide(kind, true, waitingP);
     return;
   }
   wireToggle();
   wireForm(kind, () => location.assign(safeNext(nextParam())));
-  renderSide(kind, false);
+  renderSide(kind, false, waitingP);
 }
 
 // ------------------------------------------------------------ 404
 
 export async function initNotFound() {
-  let user = null;
-  try { user = await api.me(); } catch { user = null; }
-  mount('home', user);
+  mount('home', null);
+  api.me().then((u) => { if (u) mount('home', u); }).catch(() => {});
   const p = $('nfPath');
   if (p) { if (/\/404(\.html)?$/.test(location.pathname)) p.remove(); else p.textContent = location.pathname + location.search; }
 }

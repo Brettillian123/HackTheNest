@@ -182,7 +182,7 @@ export function frameViewer(frameEls) {
     const src = f.querySelector(':scope > iframe');
     if (!src) return;
     const panel = f.closest('.panel');
-    const prev = f.previousElementSibling;
+    const prev = f.previousElementSibling || (f.parentElement && f.parentElement.previousElementSibling);
     let lbl = 'Page';
     if (prev && prev.classList.contains('frame-lbl')) {
       const c = prev.cloneNode(true);
@@ -208,26 +208,26 @@ export function frameViewer(frameEls) {
 }
 
 // Simulated data labels. One wording for the whole site; show them only when api.isSimulated() says so.
-export const SIM_NOTE = 'Preview build: page generation and scoring are simulated until the server is connected.';
+export const SIM_NOTE = 'Preview build: generation and scoring are simulated';
 export const DEMO_TAG = 'Demo data';
 // Small tag for a panel header: "Demo data".
 export function demoTag() {
-  return `<span class="demo-tag" title="These players and scores are made up for the preview build.">${DEMO_TAG}</span>`;
+  return `<span class="demo-tag" title="Made-up players and scores for the preview build">${DEMO_TAG}</span>`;
 }
 // Quiet one-line note: the preview-build sentence.
 export function simNote() {
   return `<p class="sim-note">${SIM_NOTE}</p>`;
 }
 // Same quiet note while real results come from the stand-in scorer (api.isProvisional()).
-export const PROVISIONAL_NOTE = 'Provisional scoring: the full grader is not connected yet.';
+export const PROVISIONAL_NOTE = 'Provisional scoring until the full grader is connected';
 export function provisionalNote() {
   return `<p class="sim-note">${PROVISIONAL_NOTE}</p>`;
 }
 // Board panel header tag while boards use stand-in scores (api.isProvisional('boards')); '' otherwise.
 // mixed: the board's rows come from more than one grader version (api.isProvisional('versions')).
 export function provisionalTag(on, mixed = false) {
-  return (on ? `<span class="demo-tag" title="Scored by the stand-in scorer until the full grader is connected.">Provisional scores</span>` : '') +
-    (mixed ? `<span class="demo-tag" title="Some rows were scored by an older grader.">Scores from more than one grader version</span>` : '');
+  return (on ? `<span class="demo-tag" title="Scored by the stand-in until the full grader is connected">Provisional scores</span>` : '') +
+    (mixed ? `<span class="demo-tag" title="Some rows were scored by an older grader">Scores from more than one grader version</span>` : '');
 }
 
 // Scores go from 0 to 120 with one decimal: "92", "112.5". Shows a decimal only when there is one.

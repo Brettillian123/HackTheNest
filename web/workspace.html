@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="frame" id="goalFrame"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div>
+        <div class="ws-slot"><div class="frame" id="goalFrame"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div>
         <div class="ws-doc" id="goalDoc" hidden></div>
       </section>
 
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="frame" id="mineFrame"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div>
+        <div class="ws-slot"><div class="frame" id="mineFrame"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div>
         <div class="ws-doc md" id="mineDoc" hidden></div>
       </section>
 
@@ -97,8 +97,8 @@
           </div>
         </div>
         <div class="pair" id="cmpPair">
-          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div>
-          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page</div><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div>
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="ws-slot"><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div></div>
+          <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page</div><div class="ws-slot"><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div></div>
         </div>
         <div class="ws-doc md ws-cmp-doc" id="cmpDoc" hidden></div>
         <div class="checks-wrap">
@@ -120,6 +120,7 @@
           <h2 class="h">Prompt</h2>
           <div class="right">
             <button class="btn btn-ghost sm" id="backBtn" hidden>Back to score</button>
+            <span class="note ws-cap" id="charCount" title="Characters used of the prompt limit">0 / 2,000</span>
             <div class="dd">
               <button class="btn btn-secondary sm dd-btn" id="modelBtn" aria-label="Model"><span id="modelLabel"></span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
               <div class="dd-menu end ws-model-menu" id="modelMenu" role="menu"></div>
@@ -127,12 +128,12 @@
           </div>
         </div>
         <div class="ws-last" id="lastBox" hidden>
-          <div class="ws-last-top"><span id="lastLbl">Last run</span> <b id="lastScore">0</b><span>/100. Fix these first:</span></div>
+          <div class="ws-last-top"><span id="lastLbl">Last run</span> <b id="lastScore">0</b><span>/100, fix these first</span></div>
           <div id="lastCosts"></div>
         </div>
         <div class="editor editable" id="editor">
           <div class="gutter" aria-hidden="true"></div>
-          <textarea id="prompt" aria-label="Your prompt" spellcheck="false" placeholder="Describe the goal page: layout, sizes, colours and text."></textarea>
+          <textarea id="prompt" aria-label="Your prompt" spellcheck="false" placeholder="Describe the goal page: layout, sizes, colours and text"></textarea>
         </div>
         <p class="ws-status" id="status" role="status" hidden></p>
         <div class="ws-sim" id="simRun" hidden></div>
@@ -175,7 +176,7 @@
         <div class="empty" id="runsEmpty">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>
           <p class="title">No runs yet</p>
-          <p class="small">Write a prompt and run it. Every run of this attempt shows up here.</p>
+          <p class="small">Every run of this attempt shows up here</p>
         </div>
       </section>
     </div>

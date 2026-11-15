@@ -76,7 +76,7 @@ function render() {
       '<section class="panel"><div class="empty">' +
       '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg>' +
       `<p class="title">No challenges at level ${esc(state.level)} yet</p>` +
-      '<p class="small">Try another level or show them all.</p>' +
+      '<p class="small">Try another level</p>' +
       '<button class="btn btn-secondary" type="button" data-level="all">Show all levels</button></div></section>';
     listEl.querySelector('button').addEventListener('click', () => setState({ level: 'all' }));
     return;
@@ -115,7 +115,7 @@ async function load() {
   } catch {
     all = null;
     document.getElementById('count').textContent = 'Challenges did not load';
-    listEl.innerHTML = '<section class="panel list-err"><span class="small">The challenge list did not load. Check your connection and try again.</span><button class="btn btn-secondary" type="button">Try again</button></section>';
+    listEl.innerHTML = '<section class="panel list-err"><span class="small">The challenge list did not load, check your connection and try again</span><button class="btn btn-secondary" type="button">Try again</button></section>';
     listEl.querySelector('button').addEventListener('click', load);
   }
 }

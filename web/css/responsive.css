@@ -133,4 +133,10 @@
   .panel.ins-open > .ws-ins{order:-1;padding:0 0 var(--s-5);margin-bottom:var(--s-5);border-left:0;border-bottom:1px solid var(--line);overflow:visible}
   .ws-ins-cols{columns:1}
   .ws .frame{cursor:zoom-in}
+  /* frames take the column width and their own height */
+  .ws-page .col > #goalPanel{flex:none}
+  .ws-slot{flex:none;display:block;container-type:normal}
+  .ws-slot > .frame{width:100%}
+  .ws-compare{container-type:normal}
+  .ws-compare > .pair{flex:none;max-height:none}
 }

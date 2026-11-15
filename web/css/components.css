@@ -371,7 +371,9 @@ button.cost:hover .w{text-decoration:underline;text-decoration-color:var(--red-b
 
 /* ---------- shared footer (shell.js fills <footer id="foot">) ---------- */
 .foot{display:flex;align-items:center;gap:var(--s-8);margin-top:28px;padding:var(--s-8) var(--s-2) 0;border-top:1px solid var(--line-soft);font-size:var(--fs-13);color:var(--text-3)}
-.foot .word{margin-top:0}
+/* footer wordmark: the nav lockup at 18px */
+.foot .brand{margin-top:0;height:18px}
+.foot .brand-svg{height:18px}
 .foot nav{display:flex;gap:var(--s-7)}
 .foot nav a:hover{color:var(--text)}
 .foot .end{margin-left:auto;color:var(--text-4)}

@@ -119,7 +119,7 @@ function mountFoot(user) {
     ? '<a href="profile.html">Profile</a>'
     : '<a href="login.html">Log in</a><a href="signup.html">Sign up</a>';
   foot.innerHTML =
-    '<a class="word" href="index.html">prompt<i>dyno</i></a>' +
+    '<a class="brand" href="index.html" aria-label="promptdyno home">' + BRAND + '</a>' +
     '<nav aria-label="Footer"><a href="challenges.html">Challenges</a><a href="lessons.html">Lessons</a><a href="leaderboard.html">Leaderboard</a>' + acct + '</nav>' +
     '<span class="end">Built at Hack The Nest 2026</span>';
 }

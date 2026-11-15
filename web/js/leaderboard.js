@@ -169,11 +169,11 @@ function emptyHtml() {
   const when = state.p === 'week' ? ' this week' : '';
   const phrase = state.b === 'all' ? '' : ' ' + BRACKET_PHRASE[state.b];
   const what = c ? 'this' : 'a challenge';
-  const title = `No one has finished ${what}${phrase}${when} yet. Be the first.`;
+  const title = `No one has finished ${what}${phrase}${when} yet`;
   const btn = c
     ? `<a class="btn btn-secondary" href="workspace.html?c=${encodeURIComponent(c.slug)}">Open the challenge</a>`
     : '<a class="btn btn-secondary" href="challenges.html">Browse challenges</a>';
-  return `<div class="empty">${ICON.target}<p class="title">${esc(title)}</p><p class="small">Try another prompt filter or period to see more players.</p>${btn}</div>`;
+  return `<div class="empty">${ICON.target}<p class="title">${esc(title)}</p><p class="small">Try another prompt filter or period</p>${btn}</div>`;
 }
 
 function pinYou(you) {
@@ -188,11 +188,12 @@ function pinYou(you) {
   youObserver.observe(row);
 }
 
+// Each bar's fill is its share of all players; with no players every bar is empty.
 function renderBars(counts) {
-  const max = Math.max(1, ...BRACKETS.filter((b) => b !== 'all').map((b) => counts[b] || 0));
+  const total = counts.all ?? BRACKETS.filter((b) => b !== 'all').reduce((s, b) => s + (counts[b] || 0), 0);
   $('bars').innerHTML = BRACKETS.map((b) => {
     const n = counts[b];
-    const w = b === 'all' ? 100 : Math.round(((n || 0) / max) * 100);
+    const w = total > 0 ? Math.min(100, Math.round(((n || 0) / total) * 100)) : 0;
     return `<button type="button" class="bd-bar" data-b="${b}" aria-pressed="${b === state.b}"><span>${BRACKET_LABEL[b]}</span><span class="track"><span class="fill" style="width:${n == null ? 0 : w}%"></span></span><span class="c">${n == null ? '0' : n.toLocaleString('en-US')}</span></button>`;
   }).join('');
 }
@@ -204,7 +205,7 @@ function renderAct() {
        <div class="t">${esc(c.title)}</div><p>${esc(c.brief || '')}</p>
        <a class="btn btn-secondary block" href="workspace.html?c=${encodeURIComponent(c.slug)}">${c.yourBest != null ? 'Improve your score' : 'Try this challenge'}${ICON.arrow}</a>`
     : `<div class="panel-head"><h2 class="h">All challenges</h2><span class="note">${challenges.length} open</span></div>
-       <p>Points add up each player's best score on every challenge. Prompts show their average per challenge.</p>
+       <p>Points are your best scores added up</p>
        <a class="btn btn-secondary block" href="challenges.html">Browse challenges${ICON.arrow}</a>`;
 }
 
@@ -213,7 +214,7 @@ function renderError(err, id) {
   $('podium').innerHTML = [1, 2, 3].map((n) => `<div class="bd-top open${n === 1 ? ' first' : ''}"></div>`).join('');
   $('table').hidden = true;
   $('pin').hidden = true;
-  $('state').innerHTML = `<p class="bd-err" role="alert"><span>${esc((err && err.message) || 'The leaderboard did not load.')}</span><button type="button" class="btn btn-secondary sm" id="retry">Try again</button></p>`;
+  $('state').innerHTML = `<p class="bd-err" role="alert"><span>${esc((err && err.message) || 'The leaderboard did not load, try again')}</span><button type="button" class="btn btn-secondary sm" id="retry">Try again</button></p>`;
   $('retry').addEventListener('click', load);
 }
 
@@ -241,19 +242,23 @@ async function load() {
   }
 }
 
-async function start() {
-  let user = null;
-  try {
-    user = shellUser(await me());
-  } catch { /* anonymous */ }
-  try {
-    challenges = await listChallenges();
-  } catch { challenges = []; }
-  mountShell({ active: 'leaderboard', user, crumb: [{ label: 'Leaderboard' }] });
-  buildPicker();
+// The shell, the challenge list and the board load together; each paints when its data arrives.
+function start() {
+  const shell = (user) => mountShell({ active: 'leaderboard', user, crumb: [{ label: 'Leaderboard' }] });
+  shell(null);
+  me().then((u) => { if (u) shell(shellUser(u)); }).catch(() => {});
   wireFilters();
   renderBars({});
+  const hadSlug = !!state.c;
   load();
+  listChallenges().catch(() => []).then((list) => {
+    challenges = list;
+    buildPicker();
+    // A slug that is not a challenge falls back to the overall board.
+    if (hadSlug && challenges.length && !current()) { state.c = null; load(); return; }
+    syncControls();
+    renderAct();
+  });
 }
 
 start();
