@@ -1,0 +1,25 @@
+{
+  "frontMatter": [
+    { "key": "name", "required": true, "maxLength": 64, "pattern": "^deploy-staging$" },
+    { "key": "description", "required": true, "maxLength": 1024, "pattern": "Use when", "mustMention": ["staging"] },
+    { "key": "disable-model-invocation", "required": true, "pattern": "^true$" }
+  ],
+  "sections": [
+    { "name": "Steps", "aliases": ["Instructions", "Workflow", "Process", "Procedure", "How to deploy"], "importance": "critical", "mustContain": ["smoke"] },
+    { "name": "Rules", "aliases": ["Guidelines", "Constraints", "Guardrails", "Do not"], "importance": "major", "mustContain": ["never", "production"] },
+    { "name": "If something fails", "aliases": ["Rollback", "Rolling back", "On failure", "When it fails", "If it fails", "Failure", "Failures"], "importance": "major" }
+  ],
+  "keyFacts": [
+    { "label": "the clean-tree check git status --porcelain", "anyOf": ["git status --porcelain"], "inCode": true, "section": "Steps" },
+    { "label": "the build command", "anyOf": ["npm run build"], "inCode": true, "section": "Steps" },
+    { "label": "the deploy command", "anyOf": ["npm run deploy:staging"], "importance": "critical", "inCode": true, "section": "Steps" },
+    { "label": "the smoke-test command", "anyOf": ["npm run smoke:staging"], "importance": "critical", "inCode": true, "section": "Steps" },
+    { "label": "the rollback file references/rollback.md", "anyOf": ["references/rollback.md"], "importance": "major", "section": "If something fails" }
+  ],
+  "forbidden": [
+    { "label": "a production deploy command to run", "pattern": "^\\s*(\\d+\\.\\s*|[-*]\\s*)?(run\\s+)?`?npm run deploy:prod" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 500, "minWords": 60 },
+  "order": ["Steps", "Rules"]
+}

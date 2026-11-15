@@ -2,8 +2,9 @@
 //
 // Rules (backend/README.md "Credits and payments"):
 // - Free tier: each player may play up to FREE.challengesPerDay distinct Level 1 non-lesson challenges
-//   per UTC day, with up to FREE.promptsPerChallenge prompts on each. Anonymous players are also
-//   counted by network (hashed IP), so a new anonymous id does not reset the day.
+//   per UTC day, with up to FREE.promptsPerChallenge prompts on each. Every player is also counted by
+//   network (IP) against FREE x FREE_PER_IP_MULTIPLIER (default 50), which bounds farming with new ids
+//   or accounts without locking out a venue that shares one network.
 // - Any other run costs COSTS.standard credit, or COSTS.lesson for a lesson bonus challenge. Only
 //   signed-in players hold credits.
 // - A run's free prompt or credits are reserved before the model is called and given back if the run
@@ -42,21 +43,33 @@ function dayOf(at) {
   return { day, resetsAt: new Date(resetsAt), expiresAt: new Date(resetsAt + 86_400_000) };
 }
 
-// The free-tier counters a run is checked against: the player's, and for an anonymous player (or a
-// visitor with no id) the network's too.
-function freeKeys(request, player, day) {
-  const keys = [];
-  if (player) keys.push(`free:${player.kind}:${player.id}:${day}`);
-  if (!player || player.kind === 'anon') keys.push(`free:ip:${clientIp(request)}:${day}`);
-  return keys;
+// FREE_PER_IP_MULTIPLIER (default 50, minimum 1): the network's free limits are this many times the
+// player's, so a venue full of players on one network is not locked out.
+export function freePerIpMultiplier(env) {
+  const n = Number.parseInt(env?.FREE_PER_IP_MULTIPLIER, 10);
+  return Number.isFinite(n) ? Math.max(1, n) : 50;
+}
+
+// The free-tier counters a run is checked against, each with its limits: the player's own (FREE), and
+// for every player, signed in or anonymous, the network's (FREE x FREE_PER_IP_MULTIPLIER), so new
+// accounts or anonymous ids on one network cannot farm free runs without bound.
+function freeCounters(request, player, day, env) {
+  const counters = [];
+  if (player) counters.push({ key: `free:${player.kind}:${player.id}:${day}`, maxChallenges: FREE.challengesPerDay, maxPrompts: FREE.promptsPerChallenge });
+  const m = freePerIpMultiplier(env);
+  counters.push({ key: `free:ip:${clientIp(request)}:${day}`, maxChallenges: FREE.challengesPerDay * m, maxPrompts: FREE.promptsPerChallenge * m });
+  return counters;
 }
 
 // Today's free-tier counters for this player: { docs, challengesLeft, promptsPerChallenge, resetsAt }.
-export async function freeStatus(request, player, { store, now }) {
+// Each doc is { n, s, maxChallenges, maxPrompts }.
+export async function freeStatus(request, player, { store, now, env }) {
   const { day, resetsAt } = dayOf(now());
-  const docs = (await Promise.all(freeKeys(request, player, day).map(key => store.getFreeUse(key)))).map(d => d || { n: 0, s: {} });
-  const used = Math.max(0, ...docs.map(d => d.n));
-  return { docs, challengesLeft: Math.max(0, FREE.challengesPerDay - used), promptsPerChallenge: FREE.promptsPerChallenge, resetsAt: resetsAt.toISOString() };
+  const counters = freeCounters(request, player, day, env);
+  const docs = (await Promise.all(counters.map(c => store.getFreeUse(c.key))))
+    .map((d, i) => ({ ...(d || { n: 0, s: {} }), maxChallenges: counters[i].maxChallenges, maxPrompts: counters[i].maxPrompts }));
+  const left = Math.min(...docs.map(d => d.maxChallenges - d.n));
+  return { docs, challengesLeft: Math.max(0, Math.min(FREE.challengesPerDay, left)), promptsPerChallenge: FREE.promptsPerChallenge, resetsAt: resetsAt.toISOString() };
 }
 
 export function publicFree(status) {
@@ -68,7 +81,7 @@ export function publicFree(status) {
 export function costFor(challenge, status, env) {
   if (!limitsOn(env)) return 0;
   if (freeEligible(challenge) && status) {
-    const fits = status.docs.every(d => (Object.hasOwn(d.s, challenge.slug) ? d.s[challenge.slug] < FREE.promptsPerChallenge : d.n < FREE.challengesPerDay));
+    const fits = status.docs.every(d => (Object.hasOwn(d.s, challenge.slug) ? d.s[challenge.slug] < d.maxPrompts : d.n < d.maxChallenges));
     if (fits) return 0;
   }
   return runCost(challenge);
@@ -89,8 +102,8 @@ export async function reserveRun(request, player, challenge, runId, deps) {
     const { day, expiresAt } = dayOf(at);
     const claimed = [];
     let fits = true;
-    for (const key of freeKeys(request, player, day)) {
-      if (await store.claimFreeUse(key, challenge.slug, { maxChallenges: FREE.challengesPerDay, maxPrompts: FREE.promptsPerChallenge, expiresAt })) claimed.push(key);
+    for (const { key, maxChallenges, maxPrompts } of freeCounters(request, player, day, env)) {
+      if (await store.claimFreeUse(key, challenge.slug, { maxChallenges, maxPrompts, expiresAt })) claimed.push(key);
       else { fits = false; break; }
     }
     const giveBack = async () => { for (const key of claimed) await store.releaseFreeUse(key, challenge.slug); };

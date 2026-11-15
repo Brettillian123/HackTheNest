@@ -173,15 +173,47 @@ test('free tier: two Level 1 challenges a day, five prompts each; Level 2 and a 
   assert.equal(me.credits, null);
   assert.deepEqual([me.free.challengesLeft, me.free.promptsPerChallenge], [0, 5]);
 
-  // Same network, new anonymous id: the day is not reset.
-  assert.equal((await run('profile-card', 'A profile card', { headers: anon(ANON2) })).status, 402);
+  // Same network, another player: their own free tier (the network bound is 50x larger).
+  assert.equal((await run('profile-card', 'A profile card', { headers: anon(ANON2) })).status, 200);
   assert.equal((await run('nav-hero', 'A nav bar with a hero', { headers: anon('anon_test_player_0003') })).status, 402, 'Level 2 is never free');
 
   for (let i = 2; i <= 5; i += 1) assert.equal((await run('login-card', `Login card try ${i}`)).status, 200);
   const sixth = await run('login-card', 'Login card try 6');
   assert.equal(sixth.status, 402);
-  assert.equal(calls.model.length, 6, 'the model is never called for a refused run');
+  assert.equal(calls.model.length, 7, 'the model is never called for a refused run');
   assert.equal((await list())['login-card'], 1);
+});
+
+test('free tier per network: ten anonymous players on one IP each get two free challenges', async () => {
+  start();
+  const venue = i => ({ ...anon(`anon_venue_player_${String(i).padStart(4, '0')}`), 'x-test-ip': '203.0.113.7' });
+  for (let i = 0; i < 10; i += 1) {
+    assert.equal((await run('login-card', 'A centred login card', { headers: venue(i) })).status, 200, `player ${i} first`);
+    assert.equal((await run('footer-columns', 'A footer with columns', { headers: venue(i) })).status, 200, `player ${i} second`);
+  }
+  const third = await run('profile-card', 'A profile card', { headers: venue(3) });
+  assert.equal(third.status, 402, 'a third challenge for one player still needs credits');
+  assert.equal(third.body.code, 'credits_required');
+});
+
+test('free tier per network: bound is FREE x FREE_PER_IP_MULTIPLIER and counts new accounts too', async () => {
+  start({ env: { ...ENV, FREE_PER_IP_MULTIPLIER: '2' } });
+  const ip = { 'x-test-ip': '198.51.100.9' };
+  const player = i => ({ ...anon(`anon_bound_player_${String(i).padStart(4, '0')}`), ...ip });
+  // Network limit with multiplier 2: 4 challenges, 10 prompts per challenge.
+  for (const i of [0, 1]) {
+    for (let p = 1; p <= 5; p += 1) assert.equal((await run('login-card', `Try ${p}`, { headers: player(i) })).status, 200, `player ${i} prompt ${p}`);
+  }
+  assert.equal((await run('login-card', 'Try 1', { headers: player(2) })).status, 402, 'network prompts used at 10, not 5');
+  assert.equal((await run('footer-columns', 'A footer', { headers: player(2) })).status, 200, 'other challenges still free');
+  assert.equal((await run('profile-card', 'A profile card', { headers: player(3) })).status, 200);
+  assert.equal((await run('footer-columns', 'A footer', { headers: player(4) })).status, 200);
+  // A new account on the same network meets the same used-up network prompts for login-card.
+  assert.equal((await run('profile-card', 'A profile card', { headers: player(4) })).status, 200);
+  const fresh = await signUp('newbie_same_ip');
+  const blocked = await run('login-card', 'A login card', { cookie: fresh.cookie, headers: ip });
+  assert.equal(blocked.status, 402, 'a new account on the same network counts against the network bound');
+  assert.equal((await run('login-card', 'A login card', { cookie: fresh.cookie, headers: { 'x-test-ip': '192.0.2.44' } })).status, 200, 'the same account on another network is free');
 });
 
 test('paid runs: deducted exactly once, failed generation costs nothing, scoring is free, lesson costs 2', async () => {

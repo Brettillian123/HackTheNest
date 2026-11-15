@@ -9,6 +9,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { KINDS, KIND_NAMES } from './kinds.js';
+import { runCost } from './billingService.js';
 
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DEFAULT_VIEWPORT = { width: 1280, height: 800 };
@@ -32,17 +33,20 @@ function validSpec(spec) {
 
 const intIn = (n, min, max) => Number.isInteger(n) && n >= min && n <= max;
 
-// Prompt limits per challenge. An entry may set `maxPromptChars` (500 to 12000); without it the
-// grader session's rule applies: characters of the brief plus every spec group name, label and
-// value, x 1.2 + 500, rounded up to the next 500, never under 1500 and never over 12000.
-export const PROMPT_LIMITS = { min: 500, max: 12000, ruleMin: 1500, ruleMax: 12000 };
-export function computedPromptLimit(brief, spec) {
+// Prompt limits per challenge. The rule: characters of the brief plus every spec group name, label
+// and value (plus the criteria list, for doc and workflow kinds), x 1.5 + 1000, rounded up to the
+// next 500, never under 2000 and never over 12000. An entry may also set `maxPromptChars` (500 to
+// 12000); the effective limit is the larger of the two, so entries written under an older, tighter
+// rule are not tight.
+export const PROMPT_LIMITS = { min: 500, max: 12000, ruleMin: 2000, ruleMax: 12000 };
+export function computedPromptLimit(brief, spec = [], criteria = []) {
   let count = brief.length;
   for (const g of spec) {
     count += g.group.length;
     for (const i of g.items) count += i.label.length + i.value.length;
   }
-  const limit = Math.ceil((count * 1.2 + 500) / 500) * 500;
+  for (const c of criteria) count += c.length;
+  const limit = Math.ceil((count * 1.5 + 1000) / 500) * 500;
   return Math.min(PROMPT_LIMITS.ruleMax, Math.max(PROMPT_LIMITS.ruleMin, limit));
 }
 
@@ -55,6 +59,12 @@ export const DEFAULT_OUTPUT_TOKENS = { page: 6000, doc: 3000, workflow: 2000 };
 function readJson(path) {
   try { return { value: JSON.parse(readFileSync(path, 'utf8')) }; }
   catch (error) { return { error: error.code === 'ENOENT' ? 'missing' : 'invalid' }; }
+}
+
+// The larger of the rule's limit and any explicit `maxPromptChars` on the entry.
+export function effectivePromptLimit(c, kind = c.kind || 'page') {
+  const criteria = (kind === 'doc' || kind === 'workflow') && Array.isArray(c.criteria) ? c.criteria : [];
+  return Math.max(computedPromptLimit(c.brief, c.spec || [], criteria), c.maxPromptChars ?? 0);
 }
 
 // Validates one entry; returns the challenge or pushes a problem and returns null.
@@ -84,7 +94,7 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
     spec: c.spec || [],
     available: KINDS[kind].available,
     unavailableReason: KINDS[kind].notBuilt || null,
-    maxPromptChars: c.maxPromptChars ?? computedPromptLimit(c.brief, c.spec || []),
+    maxPromptChars: effectivePromptLimit(c, kind),
     maxOutputTokens: c.maxOutputTokens ?? DEFAULT_OUTPUT_TOKENS[kind] ?? DEFAULT_OUTPUT_TOKENS.page,
   };
   if (c.criteria) challenge.criteria = c.criteria.slice();
@@ -146,6 +156,7 @@ function loadLessons(problems, dataDir) {
       summary: typeof l.summary === 'string' ? l.summary : '',
       file: l.file,
       bonusChallenge: typeof l.bonusChallenge === 'string' && SLUG_RE.test(l.bonusChallenge) ? l.bonusChallenge : null,
+      bonusSlugs: Array.isArray(l.bonusChallenges) ? l.bonusChallenges.filter(x => typeof x === 'string' && SLUG_RE.test(x)) : [],
       grader: typeof l.grader === 'string' ? l.grader : null,
       order: Number.isFinite(l.order) ? l.order : i + 1,
     });
@@ -190,6 +201,17 @@ function load() {
   }
   for (const l of lessons) {
     if (l.bonusChallenge && !lessonChallenges.some(c => c.slug === l.bonusChallenge)) problems.push(`Lesson "${l.slug}": bonus challenge "${l.bonusChallenge}" is not in lessons/challenges.json.`);
+    // bonusChallenges: the lesson's listed slugs (else every challenge tagged with the lesson), in level order.
+    const slugs = l.bonusSlugs.length ? l.bonusSlugs : lessonChallenges.filter(c => c.lesson === l.slug).map(c => c.slug);
+    delete l.bonusSlugs;
+    l.bonusChallenges = [...new Set(slugs)].map((slug, i) => {
+      const c = lessonChallenges.find(x => x.slug === slug);
+      if (!c) {
+        problems.push(`Lesson "${l.slug}": bonus challenge "${slug}" is not in lessons/challenges.json.`);
+        return { slug, title: slug, level: null, kind: null, cost: null, available: false, unavailableReason: 'This challenge is not ready yet.', i };
+      }
+      return { slug, title: c.title, level: c.level, kind: c.kind, cost: runCost(c), available: c.available, unavailableReason: c.unavailableReason, i };
+    }).sort((a, b) => (a.level ?? 99) - (b.level ?? 99) || a.i - b.i).map(({ i, ...rest }) => rest);
   }
   return { challenges, lessonChallenges, bySlug, levels, models, viewport, lessons, lessonsDir, problems };
 }

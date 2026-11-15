@@ -1,0 +1,45 @@
+{
+  "sections": [],
+  "tools": [
+    {
+      "name": "calendar_find_slots",
+      "mustDescribe": ["use", "slot"],
+      "params": [
+        { "name": "attendees", "type": "array", "required": true },
+        { "name": "duration_minutes", "type": "integer", "required": true },
+        { "name": "earliest_date", "type": "string", "required": true },
+        { "name": "latest_date", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "calendar_hold_slot",
+      "mustDescribe": ["use", "expire"],
+      "params": [{ "name": "slot_id", "type": "string", "required": true }]
+    },
+    {
+      "name": "calendar_confirm_booking",
+      "mustDescribe": ["use", "hold"],
+      "params": [
+        { "name": "hold_id", "type": "string", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "notify", "type": "boolean", "required": false }
+      ]
+    },
+    {
+      "name": "calendar_cancel_booking",
+      "mustDescribe": ["use", "attendee"],
+      "params": [
+        { "name": "booking_id", "type": "string", "required": true },
+        { "name": "reason", "type": "string", "required": false }
+      ]
+    }
+  ],
+  "keyFacts": [
+    { "label": "the date format YYYY-MM-DD", "anyOf": ["YYYY-MM-DD"], "importance": "major", "section": "calendar_find_slots" },
+    { "label": "how long a hold lasts", "anyOf": ["10 minutes", "ten minutes"], "importance": "major", "section": "calendar_hold_slot" },
+    { "label": "the hold id prefix", "anyOf": ["hold_"], "section": "calendar_confirm_booking" },
+    { "label": "the booking id prefix", "anyOf": ["evt_"], "section": "calendar_cancel_booking" },
+    { "label": "the warning that cancelling cannot be undone", "anyOf": ["cannot be undone", "can't be undone", "can not be undone"], "importance": "major", "section": "calendar_cancel_booking" }
+  ],
+  "limits": { "maxWords": 500 }
+}

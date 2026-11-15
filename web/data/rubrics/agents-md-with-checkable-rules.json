@@ -1,0 +1,33 @@
+{
+  "sections": [
+    { "name": "Overview", "aliases": ["About", "Project overview", "What this is", "Introduction"], "importance": "normal" },
+    { "name": "Commands", "aliases": ["Common commands", "Everyday commands", "Development commands", "Scripts", "Setup"], "importance": "critical" },
+    { "name": "Layout", "aliases": ["Project layout", "Structure", "Project structure", "Where things live", "Folders", "Code layout"], "importance": "normal" },
+    { "name": "Rules", "aliases": ["Conventions", "Guidelines", "Ground rules", "Working rules", "Constraints"], "importance": "major", "mustContain": ["never"] },
+    { "name": "Ask first", "aliases": ["Ask before", "Ask a person first", "Needs approval", "Approval needed", "Check first", "Get approval"], "importance": "major" },
+    { "name": "Done means", "aliases": ["Definition of done", "Done", "Before you finish", "Before finishing", "Finishing", "Checks"], "importance": "major" }
+  ],
+  "keyFacts": [
+    { "label": "the build command", "anyOf": ["go build ./..."], "inCode": true },
+    { "label": "the test command", "anyOf": ["go test ./..."], "importance": "critical", "inCode": true },
+    { "label": "the lint command", "anyOf": ["golangci-lint run"], "inCode": true },
+    { "label": "the entry-point folder", "anyOf": ["cmd/parcel-tracker/", "cmd/parcel-tracker"], "section": "Layout" },
+    { "label": "the service code folder", "anyOf": ["internal/"], "section": "Layout" },
+    { "label": "the rule to ask before changing api/openapi.yaml", "anyOf": ["api/openapi.yaml"], "importance": "major", "section": "Ask first" },
+    { "label": "the rule to ask before adding to go.mod", "anyOf": ["go.mod"], "importance": "major", "section": "Ask first" },
+    { "label": "the rule never to run make deploy", "anyOf": ["make deploy"], "importance": "major", "section": "Rules" },
+    { "label": "the rule never to commit to main", "anyOf": ["main"], "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "the vague phrase \"as needed\"", "pattern": "\\bas needed\\b" },
+    { "label": "the vague phrase \"when appropriate\"", "pattern": "\\bwhen appropriate\\b" },
+    { "label": "the vague phrase \"if necessary\"", "pattern": "\\bif necessary\\b" },
+    { "label": "the vague phrase \"best practices\"", "pattern": "\\bbest practices?\\b" },
+    { "label": "the vague phrase \"be careful\"", "pattern": "\\bbe careful\\b" },
+    { "label": "the vague phrase \"clean code\"", "pattern": "\\bclean code\\b" },
+    { "label": "an open-ended \"etc.\" or \"and so on\"", "pattern": "\\betc\\.|\\band so on\\b" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 300, "minWords": 80 },
+  "order": ["Commands", "Layout", "Rules", "Ask first", "Done means"]
+}
