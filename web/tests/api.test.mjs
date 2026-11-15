@@ -42,19 +42,24 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
     if (c.format === "brief") {
       // A brief challenge has no spec; every key fact is an exact text on the example page.
       assert.equal(c.spec, undefined, `${slug}: no spec on a brief challenge`);
+      assert.equal("exactSpec" in c, false, `${slug}: the grader-only spec never reaches the page`);
       assert.ok(c.brief.trim() && c.requirements.length >= 6 && c.designNotes.length >= 3, `${slug}: brief fields`);
+      assert.ok(c.requirements.every((r) => api.REQUIREMENT_KINDS.includes(r.kind)), `${slug}: requirement kinds`);
+      if (ORIGINAL.includes(slug)) assert.ok(c.keyFacts.length > 0, `${slug}: rewritten original has key facts`);
       // Compared with the page's text: entities decoded, runs of white space as one space.
       const NAMED = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", copy: "©", rsquo: "’", lsquo: "‘", ldquo: "“", rdquo: "”", mdash: "—", ndash: "–", hellip: "…", middot: "·", times: "×", pound: "£", euro: "€" };
       const flat = (t) => t.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
         .replace(/&([a-z]+);/gi, (m, n) => NAMED[n.toLowerCase()] ?? m).replace(/\s+/g, " ");
-      const text = flat(goal);
+      // The page text: tags removed (a line break counts as a space), so a fact split by <br> or <em> still counts.
+      // Text a player sees in attributes (placeholder, value, alt, aria-label, title) counts too.
+      const attrText = [...goal.matchAll(/\s(?:placeholder|value|alt|aria-label|title)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].map((m) => m[1] ?? m[2]);
+      const text = flat([goal.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, ""), ...attrText].join(" \n "));
       for (const k of c.keyFacts) assert.ok(text.includes(flat(k)), `${slug}: key fact "${k}" not in example`);
       for (const f of faults.challenges[slug] || []) assert.ok(goal.includes(f.find), `${slug}: fault "${f.check}" does not match`);
       continue;
     }
     assert.equal(c.format, "spec");
     const groups = c.spec.map((g) => g.group);
-    if (ORIGINAL.includes(slug)) assert.deepEqual(groups, ["Page", "Type", "Layout", "Output"]);
     assert.ok(groups.length >= 2, `${slug}: at least two spec groups`);
     assert.ok(groups.every((g) => typeof g === "string" && g.trim()), `${slug}: group names`);
     assert.equal(new Set(groups).size, groups.length, `${slug}: unique group names`);

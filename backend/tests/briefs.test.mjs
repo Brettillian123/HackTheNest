@@ -38,10 +38,13 @@ test('real file: every entry loads, category filter, brief and spec detail shape
   assert.deepEqual(detail.keyFacts, entry.keyFacts);
   assert.deepEqual(detail.designNotes, entry.designNotes);
   assert.equal('spec' in detail, false);
-  const old = FILE.find(c => !c.requirements);
-  const oldDetail = (await call('GET', `/api/challenges/${old.slug}`)).body.challenge;
-  assert.equal(oldDetail.format, 'spec');
-  assert.deepEqual(oldDetail.spec, old.spec);
+  // The rewritten originals are briefs; their grader-only exactSpec stays on the server.
+  // (The spec format is covered by the fixture test below.)
+  const orig = (await call('GET', '/api/challenges/login-card')).body.challenge;
+  assert.equal(orig.format, 'brief');
+  assert.ok(orig.requirements.length > 0);
+  assert.equal('exactSpec' in orig, false);
+  assert.equal('spec' in orig, false);
 });
 
 test('both shapes load from one file; exactSpec never appears; bad entries are reported; the limit rule', async () => {

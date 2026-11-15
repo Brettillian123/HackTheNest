@@ -87,7 +87,7 @@ test('mapping: totals keep one decimal up to 120; new fields are read defensivel
 test('scores above 100 with decimals: stored, delta, boards, points and tie-breaks have no float noise', async () => {
   const totals = [112.34, 101.2, 100.1, 0.2, 100.3];
   let i = 0;
-  setup({ model: PAGE, env: { ANTHROPIC_API_KEY: 'k', GRADER_URL: 'http://grader.test:8080', GRADER_API_KEY: 'k' }, grader: () => Response.json({ result: fullResult(totals[i++]) }) });
+  setup({ model: PAGE, env: { ANTHROPIC_API_KEY: 'k', GRADER_URL: 'http://grader.test:8080', GRADER_API_KEY: 'k' }, grader: (url) => url.endsWith('/health') ? Response.json({ ok: true, version: '0.7.0' }) : Response.json({ result: fullResult(totals[i++]) }) });
   const amy = await signUp('dec_amy');
   const bob = await signUp('dec_bob');
   const r1 = await run('one', { cookie: amy.cookie, headers: {} });

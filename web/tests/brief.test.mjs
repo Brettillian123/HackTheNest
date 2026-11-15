@@ -52,11 +52,26 @@ test("mock list carries format and category; two challenges use the brief format
   assert.ok(["harbor-landing", "split-signup"].every((s) => briefs.includes(s)), "the two mock brief challenges");
   assert.ok(list.every((c) => c.category === undefined || api.CATEGORIES.includes(c.category)));
   const c = await api.getChallenge("split-signup");
-  assert.ok(c.requirements.length >= 6 && c.requirements.length <= 8);
-  assert.ok(c.keyFacts.length >= 4 && c.keyFacts.length <= 6);
-  assert.equal(c.designNotes.length, 3);
+  assert.ok(c.requirements.length >= 6 && c.requirements.every((r) => api.REQUIREMENT_KINDS.includes(r.kind)));
+  assert.ok(c.keyFacts.length >= 4 && c.designNotes.length >= 3);
   assert.ok(new Set(c.requirements.map((r) => r.kind)).size >= 4, "requirements across the kinds");
-  assert.ok(Array.isArray((await api.getChallenge("login-card")).spec), "spec challenges keep their spec");
+  // The rewritten originals are briefs too, and the grader-only pixel spec never reaches the page.
+  for (const { slug } of list) {
+    const d = await api.getChallenge(slug);
+    assert.equal("exactSpec" in d, false, `${slug}: no exactSpec`);
+  }
+  assert.equal((await api.getChallenge("login-card")).format, "brief");
+});
+
+test("mockDetailFields keeps the spec path for entries that still have one (fixture)", () => {
+  const spec = [{ group: "Page", items: [{ label: "Background", value: "#F3F4F6" }] }];
+  const s = api.mockDetailFields({ slug: "fixture-spec", spec, exactSpec: spec });
+  assert.deepEqual(s, { spec });
+  assert.notEqual(s.spec[0], spec[0], "a copy, not the same object");
+  const b = api.mockDetailFields({ slug: "fixture-brief", brief: "A card", requirements: [{ id: "r1", text: "A heading", kind: "content" }], keyFacts: ["Hi"], designNotes: ["Calm"], exactSpec: spec });
+  assert.equal(b.format, "brief");
+  assert.equal("exactSpec" in b, false);
+  assert.equal("spec" in b, false);
 });
 
 test("a brief challenge marked on the brief returns per-requirement results; the other does not", async () => {
@@ -69,7 +84,7 @@ test("a brief challenge marked on the brief returns per-requirement results; the
   assert.equal(b.intentGraded, false);
   assert.equal(b.requirements, undefined);
   const s = (await api.run({ slug: "login-card", prompt: "A card" })).run.result;
-  assert.equal(s.intentGraded, undefined, "spec challenges carry no intent flag");
+  assert.equal(s.intentGraded, false, "a rewritten original is marked against the example in mock mode");
 });
 
 test("filterByCategory: all, one category, and classic for entries with none", () => {

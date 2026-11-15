@@ -681,9 +681,15 @@ async function mockListChallenges() {
   return Promise.all(data.challenges.map(async (c) => summary(data, c, await mockBoard(c.slug), store.getBest(c.slug))));
 }
 
+// A mock entry's page-facing fields: the brief fields, or a copy of the spec for an entry that still has one.
+// Picks fields one by one, so exactSpec (the pixel spec kept for the grader) never reaches a page.
+export function mockDetailFields(c) {
+  const brief = briefFields(formatOf(c) === "brief" ? c : { ...c, ...(MOCK_META[c.slug] || {}) });
+  return brief.format ? brief : { spec: (c.spec || []).map((g) => ({ group: g.group, items: (g.items || []).map((i) => ({ ...i })) })) };
+}
+
 async function mockChallenge(slug) {
   const { data, c } = await findChallenge(slug);
-  const brief = briefFields(formatOf(c) === "brief" ? c : { ...c, ...(MOCK_META[slug] || {}) });
   return {
     ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
     goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
@@ -692,7 +698,7 @@ async function mockChallenge(slug) {
     maxPromptChars: Number(c.maxPromptChars) || 2500,
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
-    ...(brief.format ? brief : { spec: (c.spec || []).map((g) => ({ group: g.group, items: g.items.map((i) => ({ ...i })) })) }),
+    ...mockDetailFields(c),
   };
 }
 
@@ -987,15 +993,17 @@ async function mockGrade(slug, n, prompt) {
       { id: "looks", label: "Looks like the goal", value: Math.max(0, 100 - lost) },
     ],
     engineering: { efficiency: 0.9, accessibility: 0.85, cleanCode: 0.8, decidedBy: "cleanCode" },
-    ...mockBriefGrade(slug, prompt),
+    ...mockBriefGrade(c, prompt),
     activeFaults: split.map((s) => s.fault),
   };
 }
 
 // Brief-format mock challenges: one is marked on the brief (with per-requirement results), the other is not.
-function mockBriefGrade(slug, prompt) {
-  const meta = MOCK_META[slug];
-  if (!meta || meta.format !== "brief" || !meta.requirements) return {};
+// The requirement ids come from the same fields the page shows (mockDetailFields).
+function mockBriefGrade(c, prompt) {
+  const slug = c.slug;
+  const meta = mockDetailFields(c);
+  if (meta.format !== "brief" || !meta.requirements.length) return {};
   if (!MOCK_INTENT.has(slug)) return { intentGraded: false };
   return { intentGraded: true, requirements: meta.requirements.map((q) => ({ id: q.id, met: hash(`${prompt}|${q.id}`) % 4 !== 0 })) };
 }

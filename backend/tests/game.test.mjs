@@ -176,7 +176,7 @@ test('challenge detail lists models and which are available', async () => {
   const c = res.body.challenge;
   assert.equal(c.goalUrl, '/data/goals/login-card.html');
   assert.deepEqual(c.viewport, { width: 1280, height: 800 });
-  assert.ok(c.spec.length > 0);
+  assert.ok(c.requirements.length > 0 && !("exactSpec" in c));
   assert.deepEqual(c.models.map(m => [m.id, m.available]), [['openai-mini', true], ['claude-haiku', false]]);
   assert.equal(c.simulated, false);
   assert.equal((await call('GET', '/api/challenges/no-such-thing')).status, 404);

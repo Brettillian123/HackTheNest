@@ -28,7 +28,6 @@
 .ws-page .col > #lbPanel{flex:none}
 .ws-compare{container-type:inline-size}
 .ws-compare > .pair{flex:4 1 auto;min-height:0;grid-auto-rows:minmax(0,1fr);max-height:calc((100cqw - var(--s-5)) / 2 * var(--vh) / var(--vw) + var(--fs-11) + var(--s-3))}
-.panel.ins-open > .ws-slot,.panel.ins-open > .pair{align-self:stretch}
 
 /* prompt length counter beside the model picker; red in the last 5 percent */
 .ws-cap{font-family:var(--mono);white-space:nowrap}
@@ -37,14 +36,15 @@
 /* tab counter */
 .ws-count{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
 
-/* instructions: a column docked beside the goal inside its panel; the page frames shrink to make room */
+/* instructions / brief: a dropdown panel under the header button, overlaying the right of the page
+   panel; it never takes layout space, so the page frames keep their full size */
 .ws-ins{display:none}
-.ws-page .col > .panel.ins-open{flex:1 1 0;display:grid;grid-template-columns:minmax(0,34fr) minmax(0,66fr);grid-template-rows:auto minmax(0,1fr);column-gap:var(--s-6);align-content:stretch}
-.panel.ins-open > .panel-head{grid-column:1 / -1}
-.panel.ins-open > :not(.panel-head):not(.ws-ins){grid-column:1;grid-row:2;align-self:start}
-.panel.ins-open > .ws-ins{display:block;grid-column:2;grid-row:2;min-height:0;overflow:auto;padding-left:var(--s-6);border-left:1px solid var(--line)}
-.panel.ins-open > .checks-wrap,.panel.ins-open > .ws-run-prompt{display:none}
-.panel.ins-open .pair{grid-template-columns:minmax(0,1fr);gap:var(--s-4)}
+.ws-page .col > .panel.ws-dd-host{position:relative}
+.ws-page .col > .panel.ins-open > .ws-ins{display:block;position:absolute;z-index:30;top:calc(var(--s-7) + 34px + var(--s-2));right:var(--s-7);bottom:var(--s-7);width:min(400px, calc(100% - 2 * var(--s-7)));overflow:auto;padding:var(--s-6);background:var(--overlay);border:1px solid var(--line);border-radius:var(--r-panel)}
+@media (max-width:760px){
+  /* phones: a full-width sheet right under the panel header */
+  .ws-page .col > .panel.ins-open > .ws-ins{order:0;left:0;right:0;bottom:auto;width:auto;max-height:70vh;margin:0;border-left:1px solid var(--line);border-bottom:1px solid var(--line);overflow:auto}
+}
 .ws-ins > .h{margin-bottom:var(--s-1)}
 .ws-ins-cols{columns:2;column-gap:var(--s-6)}
 .ws-ins-group{break-after:avoid;padding:var(--s-2) 0 2px;font:var(--w-bold) var(--fs-11)/16px var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-4)}
@@ -164,9 +164,8 @@
 .used .v.is-word{font-family:var(--ui);font-weight:var(--w-bold);white-space:nowrap}
 .ws-status-link{color:var(--red);font-weight:var(--w-semi);text-decoration:underline;text-underline-offset:2px;margin-left:var(--s-1)}
 
-/* ---------- brief-format challenges: the Brief column beside the example ---------- */
-.ws-page .col > .panel.ins-open.ins-brief{grid-template-columns:minmax(0,40fr) minmax(0,60fr)}
-.ws-ex-note{margin:0 auto 0 var(--s-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+/* ---------- brief-format challenges: the Brief dropdown content ---------- */
+.ws-goal-cap{margin:0 auto 0 var(--s-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .ws-brief-p{font-size:var(--fs-13);line-height:19px;color:var(--text)}
 .ws-brief .ws-brief-h{margin:var(--s-6) 0 0}
 .ws-brief .ws-ins-group{padding-top:var(--s-3)}
@@ -184,6 +183,3 @@
 .ws-copy[data-state="no"]{color:var(--text-fail)}
 .ws-notes{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-3);padding-bottom:var(--s-2)}
 .ws-notes li{padding:3px var(--s-4);border-radius:var(--r-control);background:var(--sunk);font-size:var(--fs-12);line-height:18px;color:var(--text-2)}
-/* the example keeps its own height in the docked layout: the slot fills the row, the frame sits at the top */
-.ws-page .col > .panel.ins-open > .ws-slot{align-self:stretch;align-items:flex-start}
-.ws-page .col > .panel.ins-open > .pair{align-self:stretch}

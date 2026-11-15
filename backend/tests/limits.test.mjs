@@ -26,7 +26,7 @@ test('maxPromptChars: the fallback rule, enforced on runs and sent by the API wi
   assert.equal(effectivePromptLimit({ brief: 'x'.repeat(600), criteria: ['y'.repeat(100)] }, 'page'), 2000, 'criteria count only for doc and workflow');
   const c = getChallengeFile('login-card');
   assert.equal(c.maxPromptChars, effectivePromptLimit(c, 'page'));
-  assert.ok(c.maxPromptChars >= computedPromptLimit(c.brief, c.spec));
+  assert.ok(c.maxPromptChars >= computedPromptLimit(c.brief, c.spec || []));
   assert.equal(c.maxOutputTokens, 6000);
 
   const { calls } = setup({ model: GOAL });
