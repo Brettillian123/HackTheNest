@@ -9,14 +9,30 @@
 .ws-page .col{min-height:0}
 .ws-page .col > .panel{min-height:0;overflow:hidden}
 .ws-page .col > .panel.grow{flex:1 1 0}
-.ws-page .col > .panel.ws-dd-host{overflow:visible}
+.ws-page .col > .panel.ws-dd-host{overflow:visible;display:flex;flex-direction:column}
 /* every panel head is as tall as the tool group, so all head labels share one baseline */
 .ws-page .panel > .panel-head{min-height:34px}
 
 /* frames hold the page at its real viewport, scaled by workspace.js */
 .ws .frame > iframe{width:1280px;height:800px}
 .ws-flex{display:flex;flex-direction:column}
-.ws-pair-box{min-width:0}
+.ws-pair-box{min-width:0;display:flex;flex-direction:column;min-height:0}
+
+/* frames fit their panel in both directions: the slot takes the free space and the frame is the
+   largest box of the page's ratio inside it, centred (--vw / --vh set from the viewport by workspace.js) */
+.ws-page{--vw:1280;--vh:800}
+.ws-slot{flex:1 1 0;min-height:0;min-width:0;container-type:size;display:flex;align-items:center;justify-content:center}
+.ws-slot:has(> .frame[hidden]){display:none}
+.ws-slot > .frame{flex:none;width:min(100cqw, 100cqh * var(--vw) / var(--vh))}
+.ws-page .col > #goalPanel{flex:1 1 0}
+.ws-page .col > #lbPanel{flex:none}
+.ws-compare{container-type:inline-size}
+.ws-compare > .pair{flex:4 1 auto;min-height:0;grid-auto-rows:minmax(0,1fr);max-height:calc((100cqw - var(--s-5)) / 2 * var(--vh) / var(--vw) + var(--fs-11) + var(--s-3))}
+.panel.ins-open > .ws-slot,.panel.ins-open > .pair{align-self:stretch}
+
+/* prompt length counter beside the model picker; red in the last 5 percent */
+.ws-cap{font-family:var(--mono);white-space:nowrap}
+.ws-cap.near{color:var(--text-fail)}
 
 /* tab counter */
 .ws-count{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
@@ -72,7 +88,7 @@
 
 /* compare panel: the prompt that produced this score fills the space under the checks */
 .ws-compare{display:flex;flex-direction:column}
-.ws-compare > .pair,.ws-compare > .checks-wrap,.ws-compare > .panel-head{flex:none}
+.ws-compare > .checks-wrap,.ws-compare > .panel-head{flex:none}
 .ws-run-prompt{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin-top:var(--s-3);border-top:1px solid var(--line);padding-top:var(--s-3)}
 .ws-compare .checks-wrap{margin-top:var(--s-4);padding-top:var(--s-3)}
 .ws-compare .checks li{padding:4px 0}
@@ -94,7 +110,6 @@
 
 /* while running: the page panel takes the height, scoring is one tight row */
 #minePanel{display:flex;flex-direction:column}
-#minePanel .frame{margin:auto 0}
 .ws #mineFrame{background:var(--editor)}
 .ws-stages{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-3) var(--s-8);padding-top:var(--s-5);padding-bottom:var(--s-5)}
 .ws-page .panel.ws-stages > .panel-head{margin:0;min-height:0;gap:var(--s-5)}

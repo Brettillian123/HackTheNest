@@ -34,7 +34,7 @@ async function loadBoard() {
     const top = (rows || []).slice(0, 5);
     document.getElementById('boardDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'), isProvisional('versions'));
     if (!top.length) {
-      host.innerHTML = '<div class="empty"><p class="title">No scores yet</p><p class="small">Be the first on the board.</p><a class="btn btn-secondary" href="workspace.html?c=login-card">Try the first challenge</a></div>';
+      host.innerHTML = '<div class="empty"><p class="title">No scores yet</p><p class="small">Be the first on the board</p><a class="btn btn-secondary" href="workspace.html?c=login-card">Try the first challenge</a></div>';
       return;
     }
     host.innerHTML =
@@ -46,7 +46,7 @@ async function loadBoard() {
         `<td class="r sc-cell">${esc(fmtScore(r.score))}</td></tr>`).join('') +
       '</tbody></table>';
   } catch {
-    host.innerHTML = '<div class="list-err"><span class="small">The leaderboard did not load.</span><button class="btn btn-secondary sm" type="button">Try again</button></div>';
+    host.innerHTML = '<div class="list-err"><span class="small">The leaderboard did not load</span><button class="btn btn-secondary sm" type="button">Try again</button></div>';
     host.querySelector('button').addEventListener('click', () => {
       host.innerHTML = '<div class="skel"><i></i><i></i><i></i><i></i><i></i></div>';
       loadBoard();

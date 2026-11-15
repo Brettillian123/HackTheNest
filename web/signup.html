@@ -31,13 +31,13 @@
   <div class="auth-grid gap-t">
     <section class="panel auth-card" id="authCard" aria-labelledby="authTitle">
       <div class="panel-head"><h2 class="h" id="authTitle">Sign up</h2><span class="note">Takes under a minute</span></div>
-      <p class="auth-lead">Pick a name for the leaderboard. You can play without an account, but your scores then live only in this browser.</p>
+      <p class="auth-lead">Pick a name for the leaderboard</p>
       <p class="callout bad auth-alert" id="formAlert" role="alert" hidden></p>
       <form id="authForm" novalidate>
         <div class="field" data-for="username">
           <label class="field-lbl" for="username">Username</label>
           <input class="input" id="username" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" aria-describedby="usernameHint usernameErr" required>
-          <span class="field-hint" id="usernameHint">3 to 20 letters, numbers or underscores. Shown on the leaderboard.</span>
+          <span class="field-hint" id="usernameHint">3 to 20 letters, numbers or underscores</span>
           <span class="field-err" id="usernameErr" aria-live="polite"></span>
         </div>
         <div class="field" data-for="email">
@@ -51,13 +51,13 @@
             <input class="input" id="password" name="password" type="password" autocomplete="new-password" maxlength="128" aria-describedby="passwordHint passwordErr" required>
             <button class="pw-tog" type="button" aria-controls="password" aria-pressed="false" aria-label="Show password">Show</button>
           </div>
-          <span class="field-hint" id="passwordHint">8 or more characters.</span>
+          <span class="field-hint" id="passwordHint">8 or more characters</span>
           <span class="field-err" id="passwordErr" aria-live="polite"></span>
         </div>
         <button class="btn btn-primary block" type="submit" id="submitBtn" data-busy="Creating account">Create account</button>
       </form>
       <p class="auth-foot">Already have an account? <a href="login.html" id="switchLink">Log in</a></p>
-      <p class="callout auth-bottom" id="bottomNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span>Signing up moves the runs from this browser onto your account.</span></p>
+      <p class="callout auth-bottom" id="bottomNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span>Runs from this browser move onto your account</span></p>
     </section>
     <div class="col auth-side" id="authSide" aria-live="polite"></div>
   </div>

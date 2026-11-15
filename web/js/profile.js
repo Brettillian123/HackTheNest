@@ -105,7 +105,7 @@ function headHtml(p, { self, local, rank }) {
   const name = local ? 'Your runs on this browser' : p.username;
   const joined = fullDate(p.joined);
   const sub = local
-    ? `<span class="pf-local">${ICON.info}These scores live only in this browser. <a class="link" href="signup.html">Sign up to keep these scores</a></span>`
+    ? `<span class="pf-local">${ICON.info}Scores live only in this browser,&nbsp;<a class="link" href="signup.html">sign up to keep them</a></span>`
     : `${joined ? `<span class="meta">${ICON.cal}Joined ${joined}</span>` : ''}${self ? '<span class="meta">This is you</span><button type="button" class="btn btn-ghost sm" id="logoutBtn">Log out</button>' : ''}`;
   const avg = p.totals.solved ? Number(p.totals.averagePrompts).toFixed(1) : 'None yet';
   const v = (t) => `<div class="v${/\d/.test(String(t)) ? '' : ' is-word'}">${esc(t)}</div>`;
@@ -148,7 +148,7 @@ function solvedHtml(p, challenges, { self, local, demo }) {
       <span class="chal-cell"><span class="k">Status</span><span class="v quiet">${mine ? 'Not tried' : 'Not solved'}</span></span>
       ${ICON.arrow}</a>`).join('');
   const who = mine ? 'You have' : `${esc(p.username)} has`;
-  const none = list.length ? '' : `<p class="pf-none">${who} not solved a challenge yet. A solved challenge shows here with its best score and the prompts it took.</p>`;
+  const none = list.length ? '' : `<p class="pf-none">${who} not solved a challenge yet</p>`;
   const openHead = open.length ? `<div class="panel-head pf-sub"><h3 class="h">${mine ? 'Not tried yet' : 'Not solved yet'}</h3><span class="note">${open.length} open</span></div>` : '';
   return `<section class="panel grow"><div class="panel-head"><div class="ph-l"><h2 class="h">Solved challenges</h2>${demo ? demoTag() : ''}</div><span class="note">${note}</span></div>
     ${none}<div class="pf-list">${rows}</div>${openHead}<div class="pf-list">${openRows}</div></section>`;
@@ -160,7 +160,7 @@ function bucketsHtml(p) {
   const bars = BUCKETS.map((b, i) => `<div class="bd-bar"><span>${b.label}</span><span class="track"><span class="fill" style="width:${Math.round((counts[i] / max) * 100)}%"></span></span><span class="c">${counts[i]}</span></div>`).join('');
   return `<section class="panel"><div class="panel-head"><h2 class="h">Prompts per solve</h2><span class="note">Best attempt on each</span></div>
     <div class="bd-bars">${bars}</div>
-    <p class="callout">${ICON.info}<span>A perfect 100 is rare. Scores in the <b>high 80s and 90s</b> are strong prompting, and a score under 100 does not make a weak prompter.</span></p></section>`;
+    <p class="callout">${ICON.info}<span>A perfect 100 is rare, <b>the high 80s and 90s</b> are strong</span></p></section>`;
 }
 
 function nextHtml(next, detail, other) {
@@ -192,26 +192,30 @@ function notFound(name) {
   $('head').outerHTML = '';
   $('body').innerHTML = `<section class="panel pf-missing" style="grid-column:1 / -1"><div class="empty">${ICON.user}
     <h1 class="title">There is no player called ${esc(name)}</h1>
-    <p class="small">Check the spelling or pick a player from the board.</p>
+    <p class="small">Check the spelling or pick a player from the board</p>
     <a class="btn btn-secondary" href="leaderboard.html">Open the leaderboard</a></div></section>`;
 }
 
 function errorView(message) {
-  $('head').innerHTML = `<p class="bd-err" role="alert"><span>${esc(message || 'This profile did not load.')}</span><button type="button" class="btn btn-secondary sm" id="retry">Try again</button></p>`;
+  $('head').innerHTML = `<p class="bd-err" role="alert"><span>${esc(message || 'This profile did not load, try again')}</span><button type="button" class="btn btn-secondary sm" id="retry">Try again</button></p>`;
   $('body').innerHTML = '';
   $('retry').addEventListener('click', () => location.reload());
 }
 
 // ---------------------------------------------------------------- start
 
+// Independent calls start together; the head, the list and the side panel each paint when their data arrives.
 async function start() {
   const u = new URLSearchParams(location.search).get('u');
-  let viewer = null;
-  try { viewer = await me(); } catch { viewer = null; }
-  let challenges = [];
-  try { challenges = await listChallenges(); } catch { challenges = []; }
+  const asked = u ? u.trim() : null;
+  mountShell(asked
+    ? { active: 'leaderboard', user: null, crumb: [{ label: 'Leaderboard', href: 'leaderboard.html' }, { label: asked }] }
+    : { active: 'profile', user: null, crumb: [{ label: 'Profile' }] });
+  const profileP = asked ? getProfile(asked) : null;
+  if (profileP) profileP.catch(() => {}); // handled below
+  const [viewer, challenges] = await Promise.all([me().catch(() => null), listChallenges().catch(() => [])]);
 
-  const name = u ? u.trim() : viewer ? viewer.username : null;
+  const name = asked || (viewer ? viewer.username : null);
   const self = !!(viewer && name && viewer.username === name);
   const local = !name;
   mountShell({
@@ -222,7 +226,7 @@ async function start() {
 
   let p;
   try {
-    p = local ? await localProfile(challenges) : await getProfile(name);
+    p = local ? await localProfile(challenges) : await (profileP || getProfile(name));
   } catch (err) {
     if (err && err.status === 404) notFound(name);
     else errorView(err && err.message);
@@ -234,24 +238,27 @@ async function start() {
   const solvedSlugs = new Set(p.solved.map((s) => s.slug));
   const other = !(self || local);
   const notSolved = challenges.slice().sort((a, b) => a.level - b.level).find((c) => !solvedSlugs.has(c.slug));
-  const [rank, next] = await Promise.all([
-    overallRank(p.username, local),
-    Promise.resolve(other ? (notSolved ? { c: notSolved, fresh: true } : null) : pickNext(challenges, new Set())),
-  ]);
-  let detail = null;
-  if (next) { try { detail = await getChallenge(next.c.slug); } catch { detail = null; } }
+  const next = other ? (notSolved ? { c: notSolved, fresh: true } : null) : pickNext(challenges, new Set());
+  const rankP = overallRank(p.username, local);
+  const detailP = next ? getChallenge(next.c.slug).catch(() => null) : Promise.resolve(null);
 
-  $('head').innerHTML = headHtml(p, { self, local, rank });
-  const out = $('logoutBtn');
-  if (out) out.addEventListener('click', async () => {
-    out.disabled = true;
-    try { await logout(); } catch { /* the landing page shows the true state */ }
-    location.assign('index.html');
-  });
   $('body').innerHTML =
     `<div class="pf-main">${solvedHtml(p, challenges, { self, local, demo: !self && !local && isSimulated('profile') })}</div>` +
-    `<aside class="bd-side">${nextHtml(next, detail, self || local ? null : p.username)}${bucketsHtml(p)}</aside>`;
-  fitFrames($('body'));
+    `<aside class="bd-side" id="pfSide"><section class="panel grow"><div class="skel"><i></i><i></i><i class="line"></i></div></section>${bucketsHtml(p)}</aside>`;
+
+  rankP.then((rank) => {
+    $('head').innerHTML = headHtml(p, { self, local, rank });
+    const out = $('logoutBtn');
+    if (out) out.addEventListener('click', async () => {
+      out.disabled = true;
+      try { await logout(); } catch { /* the landing page shows the true state */ }
+      location.assign('index.html');
+    });
+  });
+  detailP.then((detail) => {
+    $('pfSide').firstElementChild.outerHTML = nextHtml(next, detail, self || local ? null : p.username);
+    fitFrames($('pfSide'));
+  });
 }
 
 start();

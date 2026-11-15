@@ -47,6 +47,8 @@ function fitFrame(frameEl) {
 
 function setupFrames() {
   const vp = S.ch.viewport;
+  $('page').style.setProperty('--vw', vp.width);
+  $('page').style.setProperty('--vh', vp.height);
   const ro = new ResizeObserver((es) => es.forEach((e) => fitFrame(e.target)));
   ['goalFrame', 'mineFrame', 'goalSmall', 'mineSmall'].forEach((id) => {
     const fr = $(id);
@@ -146,9 +148,9 @@ async function renderBoard() {
     const gap = (r, i) => i > 0 && r.rank > rows[i - 1].rank + 1;
     list.innerHTML = rows.length
       ? rows.map((r, i) => `<li class="${r.isYou ? 'you' : ''}${gap(r, i) ? ' gap' : ''}"><span class="pos">#${r.rank}</span><span class="nm">${esc(r.username)}</span><span class="s">${fmtScore(r.score)}</span></li>`).join('')
-      : '<li><span class="nm">No scores yet. Yours can be first.</span></li>';
+      : '<li><span class="nm">No scores yet, yours can be first</span></li>';
   } catch {
-    list.innerHTML = '<li><span class="nm">The leaderboard could not load. Reload the page to try again.</span></li>';
+    list.innerHTML = '<li><span class="nm">Leaderboard did not load, reload the page to try again</span></li>';
   }
 }
 
@@ -189,14 +191,14 @@ function miniCosts(r) {
   const cs = topCosts(r);
   return cs.length
     ? cs.map((c) => `<div class="ws-mini"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span>${esc(c.message)}</span></div>`).join('')
-    : '<div class="ws-mini none">No points lost on this run.</div>';
+    : '<div class="ws-mini none">No points lost on this run</div>';
 }
 
 function renderCompare(run) {
   $('cmpNote').textContent = 'Run ' + run.n;
   $('cmpTag').textContent = run.n;
-  if (isDoc()) renderMarkdown($('cmpDoc'), run.markdown || 'This answer was not kept on this device.');
-  else setDoc('mineSmall', run.html || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device.</p>');
+  if (isDoc()) renderMarkdown($('cmpDoc'), run.markdown || 'This answer was not kept on this device');
+  else setDoc('mineSmall', run.html || '<p style="font:14px sans-serif;padding:24px">This run\'s page was not kept on this device</p>');
   // The grader's report card says what to change in the prompt; older results keep the checks list.
   const crit = run.result.criteria;
   $('checksTitle').textContent = crit && crit.length ? 'Report card' : 'Checks';
@@ -270,16 +272,16 @@ function renderScore(run) {
   $('scCosts').innerHTML = all.length
     ? shown.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
       (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${MINUS}${fmtScore(restPts)}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
-    : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
+    : '<div class="cost"><span class="w">No points lost on this run</span></div>';
   const more = $('moreCosts');
   if (more) more.addEventListener('click', () => { S.sel = run.n; viewTabs.select(1); });
   $('scNoteText').innerHTML = rejected
     ? `<b>The grader could not mark this page:</b> ${esc(r.rejectedReason)}`
     : bonus
-    ? `<b>A perfect score, plus a bonus.</b> Your page matched the goal and came out leaner, which earned +${fmtScore(bonus)}.`
+    ? `<b>A perfect match, leaner than the goal: +${fmtScore(bonus)} bonus</b>`
     : r.total >= 100
-    ? '<b>A perfect 100.</b> Very few prompts get every check right. This one is worth keeping.'
-    : '<b>A perfect 100 is rare.</b> Small models drift on spacing and sizes, so a score in the 80s or 90s means a strong prompt.';
+    ? '<b>A perfect 100, worth keeping</b>'
+    : '<b>A perfect 100 is rare</b>, the 80s and 90s mean a strong prompt';
 }
 
 function renderRuns() {
@@ -303,10 +305,34 @@ function renderRuns() {
   const all = (run.result.costs || []).slice().sort((a, b) => b.points - a.points);
   $('rdCosts').innerHTML = all.length
     ? all.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('')
-    : '<div class="cost"><span class="w">No points lost on this run.</span></div>';
+    : '<div class="cost"><span class="w">No points lost on this run</span></div>';
 }
 
 function setStatus(text, bad = false) { S.status = text || ''; S.statusBad = !!(text && bad); }
+
+// ---------------------------------------------------------------- prompt length limit
+// maxPromptChars comes with the challenge; 2000 when the server does not send it.
+const LIMIT_MSG = 'Prompt limit reached';
+function promptLimit() {
+  const n = Number(S.ch && S.ch.maxPromptChars);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 2000;
+}
+function renderCount() {
+  const max = promptLimit();
+  const n = ta.value.length;
+  const el = $('charCount');
+  el.textContent = `${n.toLocaleString('en-US')} / ${max.toLocaleString('en-US')}`;
+  el.classList.toggle('near', n >= max * 0.95);
+}
+// Clips a value set from code (draft, saved run), shows the limit line on a clip, clears it below the limit.
+function enforceLimit(clipped = false) {
+  const max = promptLimit();
+  ta.maxLength = max;
+  if (ta.value.length > max) { ta.value = ta.value.slice(0, max); clipped = true; }
+  renderCount();
+  if (clipped && S.status !== LIMIT_MSG) { setStatus(LIMIT_MSG); render(); }
+  else if (!clipped && S.status === LIMIT_MSG && ta.value.length < max) { setStatus(''); render(); }
+}
 
 // ---------------------------------------------------------------- render
 
@@ -399,7 +425,7 @@ async function doRun() {
   const unscored = S.attempt && S.attempt.pending; // a saved page with no score: score it, do not generate again
   if (!unscored && !prompt.trim()) {
     if (S.mode === 'scored') S.mode = 'refine';
-    setStatus('Write a prompt first, then run it.', true);
+    setStatus('Write a prompt first', true);
     render();
     ta.focus();
     return;
@@ -441,8 +467,8 @@ async function doRun() {
     S.mode = S.attempt && S.attempt.pending ? 'stopped' : runs.length ? 'refine' : 'idle';
     const aborted = e && e.name === 'AbortError';
     if (e && e.userMessage) setStatus(e.userMessage, !aborted);
-    else if (aborted) setStatus('Run cancelled. Your prompt count did not change.');
-    else setStatus(`The run did not finish: ${(e && e.message) || 'unknown error'} Your prompt is kept, so run it again.`, true);
+    else if (aborted) setStatus('Run cancelled, your prompt count did not change');
+    else setStatus(`The run did not finish (${String((e && e.message) || 'unknown error').replace(/\.$/, '')}), your prompt is kept so run it again`, true);
   } finally {
     S.ctrl = null;
     render();
@@ -490,6 +516,13 @@ function setPrompt(text) {
 let viewTabs = { select() {} };
 
 function wire() {
+  // The limit check runs before the line numbers re-measure, so a clipped value is what they count.
+  ta.addEventListener('input', () => enforceLimit());
+  ta.addEventListener('paste', (e) => {
+    const add = (e.clipboardData && e.clipboardData.getData('text')) || '';
+    const room = promptLimit() - (ta.value.length - (ta.selectionEnd - ta.selectionStart));
+    if (add.length > room) setTimeout(() => enforceLimit(true), 0); // the browser pastes only what fits
+  });
   lineNumbers($('editor'));
   let saveTimer = null;
   ta.addEventListener('input', () => {
@@ -518,7 +551,7 @@ function wire() {
     viewTabs.select(0, false);
     if (S.mode === 'scored' || S.mode === 'idle') S.mode = 'refine';
     S.useRun = run.n;
-    setStatus(`Prompt ${run.n} is in the editor. Edit it, then run it.`);
+    setStatus(`Prompt ${run.n} is in the editor`);
     render();
     ta.focus();
   });
@@ -540,21 +573,28 @@ function wire() {
 }
 
 async function main() {
-  const user = await api.me().catch(() => null);
+  // Independent calls start together; each part paints when its own data arrives.
+  let user = null;
+  const shell = () => mountShell({
+    active: 'challenges',
+    user: shellUser(user),
+    crumb: [{ label: 'Challenges', href: 'challenges.html' }].concat(S.ch ? [{ label: S.ch.title }] : []),
+  });
+  shell();
+  api.me().then((u) => { user = u; shell(); }).catch(() => {});
+  const attemptP = api.getAttempt(slug);
+  attemptP.catch(() => {}); // awaited below once the challenge is in
+  const probeP = api.probeRun().catch(() => true);
+  renderBoard();
   try {
     S.ch = await api.getChallenge(slug);
   } catch (e) {
-    mountShell({ active: 'challenges', user: shellUser(user), crumb: [{ label: 'Challenges', href: 'challenges.html' }] });
-    $('split').innerHTML = `<section class="panel grow"><div class="empty"><p class="title">That challenge could not be found</p><p class="small">${esc((e && e.message) || '')} Pick one from the list.</p><a class="btn btn-secondary" href="challenges.html">Browse challenges</a></div></section>`;
+    $('split').innerHTML = `<section class="panel grow"><div class="empty"><p class="title">That challenge could not be found</p><p class="small">${esc((e && e.message) || 'Pick one from the challenge list')}</p><a class="btn btn-secondary" href="challenges.html">Browse challenges</a></div></section>`;
     $('phead').hidden = true;
     $('tabs').hidden = true;
     return;
   }
-  mountShell({
-    active: 'challenges',
-    user: shellUser(user),
-    crumb: [{ label: 'Challenges', href: 'challenges.html' }, { label: S.ch.title }],
-  });
+  shell();
   const saved = store.read('model', null);
   S.model = S.ch.models.some((m) => m.id === saved) ? saved : S.ch.models[0].id;
   renderHeader();
@@ -564,17 +604,16 @@ async function main() {
   if (isDoc()) setupDoc();
   wire();
 
-  S.attempt = await api.getAttempt(slug);
+  S.attempt = await attemptP;
   const runs = S.attempt ? S.attempt.runs : [];
   const draft = store.getDraft(slug);
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
-  if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('This page is saved but not scored yet. Score it to see the result.'); }
-  if (S.ch.available === false) setStatus(S.ch.unavailableReason || 'This challenge is not playable yet. Check back soon.');
+  if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('Page saved, score it to see the result'); }
+  if (S.ch.available === false) setStatus(S.ch.unavailableReason || 'This challenge is not playable yet');
   render();
-  renderBoard();
-  renderSim(await api.probeRun().catch(() => true));
+  renderSim(await probeP);
 }
 
 // The preview-build note sits by the run button and in the scored state while runs are simulated.

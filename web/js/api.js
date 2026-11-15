@@ -586,6 +586,7 @@ async function mockChallenge(slug) {
     goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
     criteria: Array.isArray(c.criteria) ? c.criteria.slice() : [],
     unavailableReason: null,
+    maxPromptChars: Number(c.maxPromptChars) || 2500,
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
     spec: c.spec.map((g) => ({ group: g.group, items: g.items.map((i) => ({ ...i })) })),
