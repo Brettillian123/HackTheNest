@@ -56,7 +56,7 @@ test('anonymous run, score, continue, start over', async () => {
   const r2 = await run('login-card', 'Make it rough');
   assert.equal(r2.headers['x-prompt-count'], '2');
   assert.equal(r2.headers['x-attempt-id'], r1.headers['x-attempt-id']);
-  assert.match(calls.model[1].body.messages[0].content, /Here is the current page:[\s\S]*Welcome back[\s\S]*Instruction:\nMake it rough/);
+  assert.match(calls.model[1].body.messages[0].content, /Here is the current page[\s\S]*<<<PREVIOUS_OUTPUT>>>\n[\s\S]*Welcome back[\s\S]*<<<END_PREVIOUS_OUTPUT>>>[\s\S]*<<<PLAYER_PROMPT>>>\nMake it rough\n<<<END_PLAYER_PROMPT>>>$/);
   const s2 = await score(r2.headers['x-run-id']);
   const res2 = s2.body.run.result;
   assert.ok(res2.total < 100);

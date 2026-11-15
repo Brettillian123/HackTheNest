@@ -236,7 +236,7 @@ test('doc kind: Markdown stream, stored as text, graded at /v1/grade/doc with th
   assert.deepEqual([current.runs[0].kind, current.runs[0].markdown, current.runs[0].html], ['doc', r.text, undefined]);
   // A follow-up includes the previous document.
   await run('Add a usage section', { slug: 'readme-doc' });
-  assert.match(calls.model[1].body.messages[0].content, /Here is the current document:\n\n# Install/);
+  assert.match(calls.model[1].body.messages[0].content, /Here is the current document[\s\S]*<<<PREVIOUS_OUTPUT>>>\n# Install/);
 });
 
 test('doc kind without a grader service cannot be scored (503 no_grader); marks go next to the goal', async () => {

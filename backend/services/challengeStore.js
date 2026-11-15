@@ -30,6 +30,28 @@ function validSpec(spec) {
     && g.items.every(i => i && typeof i.label === 'string' && typeof i.value === 'string'));
 }
 
+const intIn = (n, min, max) => Number.isInteger(n) && n >= min && n <= max;
+
+// Prompt limits per challenge. An entry may set `maxPromptChars` (500 to 12000); without it the
+// grader session's rule applies: characters of the brief plus every spec group name, label and
+// value, x 1.2 + 500, rounded up to the next 500, never under 1500 and never over 12000.
+export const PROMPT_LIMITS = { min: 500, max: 12000, ruleMin: 1500, ruleMax: 12000 };
+export function computedPromptLimit(brief, spec) {
+  let count = brief.length;
+  for (const g of spec) {
+    count += g.group.length;
+    for (const i of g.items) count += i.label.length + i.value.length;
+  }
+  const limit = Math.ceil((count * 1.2 + 500) / 500) * 500;
+  return Math.min(PROMPT_LIMITS.ruleMax, Math.max(PROMPT_LIMITS.ruleMin, limit));
+}
+
+// Output limits per challenge ("api send limits"): `maxOutputTokens` (500 to 16000) is sent to the
+// provider as its max output setting. Defaults per kind below; the stored size is capped as well
+// (300 KB, models/sanitize.js and kinds.js).
+export const OUTPUT_TOKEN_LIMITS = { min: 500, max: 16000 };
+export const DEFAULT_OUTPUT_TOKENS = { page: 6000, doc: 3000, workflow: 2000 };
+
 function readJson(path) {
   try { return { value: JSON.parse(readFileSync(path, 'utf8')) }; }
   catch (error) { return { error: error.code === 'ENOENT' ? 'missing' : 'invalid' }; }
@@ -49,6 +71,8 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
   const kind = c.kind === undefined ? 'page' : c.kind;
   if (!KIND_NAMES.includes(kind)) return fail(`kind must be one of ${KIND_NAMES.join(', ')}.`);
   if (c.criteria !== undefined && !(Array.isArray(c.criteria) && c.criteria.every(x => typeof x === 'string'))) return fail('criteria must be a list of sentences.');
+  if (c.maxPromptChars !== undefined && !intIn(c.maxPromptChars, PROMPT_LIMITS.min, PROMPT_LIMITS.max)) return fail(`maxPromptChars must be a whole number from ${PROMPT_LIMITS.min} to ${PROMPT_LIMITS.max}.`);
+  if (c.maxOutputTokens !== undefined && !intIn(c.maxOutputTokens, OUTPUT_TOKEN_LIMITS.min, OUTPUT_TOKEN_LIMITS.max)) return fail(`maxOutputTokens must be a whole number from ${OUTPUT_TOKEN_LIMITS.min} to ${OUTPUT_TOKEN_LIMITS.max}.`);
   const challenge = {
     slug: c.slug,
     title: c.title.trim(),
@@ -60,6 +84,8 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
     spec: c.spec || [],
     available: KINDS[kind].available,
     unavailableReason: KINDS[kind].notBuilt || null,
+    maxPromptChars: c.maxPromptChars ?? computedPromptLimit(c.brief, c.spec || []),
+    maxOutputTokens: c.maxOutputTokens ?? DEFAULT_OUTPUT_TOKENS[kind] ?? DEFAULT_OUTPUT_TOKENS.page,
   };
   if (c.criteria) challenge.criteria = c.criteria.slice();
   if (c.marks !== undefined) challenge.marks = c.marks; // reserved: sent next to the goal when present
