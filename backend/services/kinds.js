@@ -5,6 +5,7 @@
 //   streamType    Content-Type of the run stream
 //   cleaner       makes the streaming output cleaner ({ push(chunk) -> text, finish() -> { rest, html } })
 //   outputField   where the finished output is stored on the run ('html' or 'markdown')
+//   validate      optional: output -> null, or a plain reason it cannot be graded (scored 0, no grader call)
 //   graderRoute   grader service route; gradeBody(challenge, output) its JSON body
 //   standin       stand-in scorer when no grader service is configured (null: none)
 // See grader/INTEGRATION.md (section 5) for the kinds the grader supports.
@@ -35,7 +36,13 @@ function pageMessage(prompt, previous) {
   return `Here is the current page:\n\n${previous}\n\nRevise it according to the instruction below and reply with the complete revised document.\n\nInstruction:\n${prompt}`;
 }
 
-function docInstruction() {
+function docInstruction(challenge) {
+  if (challenge?.docKind === 'mcp-tools') {
+    return [
+      'You are a technical writer. Reply with one JSON document and nothing else: no prose, no Markdown, and do not wrap the reply in a code fence.',
+      'It must parse as JSON exactly as written.',
+    ].join('\n');
+  }
   return [
     'You are a technical writer. Reply with one Markdown document and nothing else: no preamble, no closing remarks, and do not wrap the whole reply in a code fence.',
     'Use headings, lists, tables and code fences where they help. Keep it specific and checkable.',
@@ -47,17 +54,60 @@ function docMessage(prompt, previous) {
   return `Here is the current document:\n\n${previous}\n\nRevise it according to the instruction below and reply with the complete revised document.\n\nInstruction:\n${prompt}`;
 }
 
-// Streams Markdown through unchanged apart from an outer code fence, and caps its size.
+// The plan shape is the one in grader/src/workflow/README.md ("The plan").
+function workflowInstruction() {
+  return [
+    'You are a planner for a team of AI agents. Reply with the plan as one JSON object and nothing else: no prose, no Markdown, and do not wrap the reply in a code fence. It must parse as JSON exactly as written.',
+    'Shape: { "goal": string, "steps": [ { "id", "title", "owner", "dependsOn": [step ids], "changes": [file paths or globs; [] when it changes nothing], "reads": [optional], "proof": string, "budget": { "toolCalls"?, "minutes"? }, "kind": "work" | "review" | "research" | "decision" } ], "loops": [ { "id", "steps": [step ids], "until": string, "maxRounds": number, "heldOut": optional string } ] }.',
+    'Use exactly these field names.',
+  ].join('\n');
+}
+
+function workflowMessage(prompt, previous) {
+  if (!previous) return `Plan this job:\n\n${prompt}`;
+  return `Here is the current plan:\n\n${previous}\n\nRevise it according to the instruction below and reply with the complete revised plan as JSON only.\n\nInstruction:\n${prompt}`;
+}
+
+// The grader's document kinds (grader/service/README.md, POST /v1/grade/doc).
+export const DOC_GRADER_KINDS = ['instructions', 'readme', 'skill', 'mcp-tools'];
+// Which grader document kind each bonus challenge is. lessons/challenges.json says only `kind: "doc"`;
+// a `docKind` field on the challenge or a string `kind` in its rubric overrides this table.
+const DOC_KIND_BY_SLUG = {
+  'agents-md-for-a-repo': 'instructions',
+  'readme-for-a-cli': 'readme',
+  'release-notes-skill': 'skill',
+  'library-tools': 'mcp-tools',
+};
+
+// A goal problem the player sees as the unavailable reason (the full message goes to /api/health).
+function goalError(message, playerReason) {
+  const error = new Error(message);
+  if (playerReason) error.playerReason = playerReason;
+  return error;
+}
+
+function loadRubric(dirs, slug) {
+  const text = readFirst(dirs, join('rubrics', `${slug}.json`));
+  if (text == null) throw goalError(`rubrics/${slug}.json is missing.`, 'The grader rubric for this challenge has not been written yet.');
+  if (Buffer.byteLength(text) > MAX_RUBRIC_BYTES) throw new Error(`rubrics/${slug}.json is over 200 KB.`);
+  let rubric;
+  try { rubric = JSON.parse(text); } catch { throw new Error(`rubrics/${slug}.json is not valid JSON.`); }
+  if (!rubric || typeof rubric !== 'object') throw new Error(`rubrics/${slug}.json must be a JSON object or list.`);
+  return rubric;
+}
+
+// Streams Markdown (or JSON) through unchanged apart from an outer code fence, and caps its size.
 // The text is stored as Markdown: the client must render it safely (no raw HTML).
 export class MarkdownCleaner {
-  constructor() {
+  constructor({ fences = ['markdown', 'md'] } = {}) {
     this.raw = '';
     this.sent = '';
+    this.fenceRe = new RegExp(`^\\s*\`\`\`(?:${fences.join('|')})?[ \\t]*\\r?\\n`, 'i');
   }
 
   clean(final) {
     let text = this.raw.replace(/^﻿/, '');
-    const fenced = /^\s*```(?:markdown|md)?[ \t]*\r?\n/i.exec(text);
+    const fenced = this.fenceRe.exec(text);
     if (fenced) text = text.slice(fenced[0].length);
     else if (!final && /^\s*`{0,3}$/.test(text)) return '';
     if (fenced && final) text = text.replace(/\r?\n?```\s*$/, '');
@@ -115,25 +165,22 @@ export const KINDS = {
     gradeBody: (challenge, output) => withMarks(challenge, { goal: { 'index.html': challenge.goalHtml }, candidate: { 'index.html': output } }),
     standin: (challenge, output) => standinScore(challenge.goalHtml, output),
   },
-  // Built from INTEGRATION.md section 5; the grader's /v1/grade/doc route is not live yet.
+  // POST /v1/grade/doc { kind, rubric, candidate } (grader/service/README.md); kind is the document kind.
   doc: {
     available: true,
-    loadGoal(dirs, slug) {
-      const text = readFirst(dirs, join('rubrics', `${slug}.json`));
-      if (text == null) throw new Error(`rubrics/${slug}.json is missing.`);
-      if (Buffer.byteLength(text) > MAX_RUBRIC_BYTES) throw new Error(`rubrics/${slug}.json is over 200 KB.`);
-      let rubric;
-      try { rubric = JSON.parse(text); } catch { throw new Error(`rubrics/${slug}.json is not valid JSON.`); }
-      if (!rubric || typeof rubric !== 'object') throw new Error(`rubrics/${slug}.json must be a JSON object or list.`);
-      return { rubric };
+    loadGoal(dirs, slug, entry = {}) {
+      const rubric = loadRubric(dirs, slug);
+      const docKind = [entry.docKind, rubric.kind, DOC_KIND_BY_SLUG[slug]].find(k => DOC_GRADER_KINDS.includes(k));
+      if (!docKind) throw goalError(`no grader document kind for "${slug}" (set docKind to one of ${DOC_GRADER_KINDS.join(', ')}).`, 'This challenge is not ready yet: its grader document kind is not set.');
+      return { rubric, docKind };
     },
     instruction: docInstruction,
     userMessage: docMessage,
     streamType: 'text/markdown; charset=utf-8',
-    cleaner: () => new MarkdownCleaner(),
+    cleaner: challenge => new MarkdownCleaner({ fences: challenge?.docKind === 'mcp-tools' ? ['json'] : ['markdown', 'md'] }),
     outputField: 'markdown',
     graderRoute: '/v1/grade/doc',
-    gradeBody: (challenge, output) => withMarks(challenge, { kind: 'doc', rubric: challenge.rubric, candidate: output }),
+    gradeBody: (challenge, output) => withMarks(challenge, { kind: challenge.docKind, rubric: challenge.rubric, candidate: output }),
     standin: null,
   },
   // site: add here a goal loader for a folder of files, a parser that splits the model's reply into
@@ -142,6 +189,21 @@ export const KINDS = {
   // scene: add here a loader for the goal's buildScene(THREE) code, an output parser for JavaScript,
   // and graderRoute '/v1/grade/scene' with { goal, candidate } as code strings.
   scene: { available: false, notBuilt: '3D scene challenges are not playable yet.' },
-  // workflow: add here a rubric loader (like doc), a JSON plan parser, and graderRoute '/v1/grade/workflow'.
-  workflow: { available: false, notBuilt: 'Workflow challenges are not playable yet.' },
+  // POST /v1/grade/workflow { rubric, candidate } (grader/service/README.md). The plan is stored as
+  // text in the `markdown` field (the client shows non-page output as text) and must parse as JSON.
+  workflow: {
+    available: true,
+    loadGoal: (dirs, slug) => ({ rubric: loadRubric(dirs, slug) }),
+    instruction: workflowInstruction,
+    userMessage: workflowMessage,
+    streamType: 'text/plain; charset=utf-8',
+    cleaner: () => new MarkdownCleaner({ fences: ['json'] }),
+    outputField: 'markdown',
+    validate(output) {
+      try { JSON.parse(output); return null; } catch { return 'The model did not reply with valid JSON, so the plan cannot be graded. Ask for the plan as JSON only.'; }
+    },
+    graderRoute: '/v1/grade/workflow',
+    gradeBody: (challenge, output) => ({ rubric: challenge.rubric, candidate: output }),
+    standin: null,
+  },
 };

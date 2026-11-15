@@ -27,7 +27,7 @@ mkdirSync(join(dataDir, 'rubrics'), { recursive: true });
 writeFileSync(join(dataDir, 'rubrics', 'readme-doc.json'), JSON.stringify({ criteria: [{ id: 'install', must: 'Says how to install' }] }));
 writeFileSync(join(dataDir, 'goals', 'marked-page.html'), '<!doctype html><html><body><h1>Marked</h1></body></html>');
 realData.challenges.push(
-  { slug: 'readme-doc', title: 'A README', level: 1, brief: 'Write a README.', kind: 'doc' },
+  { slug: 'readme-doc', title: 'A README', level: 1, brief: 'Write a README.', kind: 'doc', docKind: 'readme' },
   { slug: 'nodoc-yet', title: 'Missing rubric', level: 1, brief: 'x', kind: 'doc' },
   { slug: 'three-pages', title: 'Small site', level: 2, brief: 'Three pages.', kind: 'site' },
   { slug: 'marked-page', title: 'Marked page', level: 1, brief: 'x', marks: { exact: ['Marked'] } },
@@ -231,7 +231,7 @@ test('doc kind: Markdown stream, stored as text, graded at /v1/grade/doc with th
   const s = await score(r.headers['x-run-id']);
   assert.equal(s.body.run.result.total, 88.8);
   assert.equal(graded[0].url, 'https://grader.test/v1/grade/doc');
-  assert.deepEqual(graded[0].body, { kind: 'doc', rubric: { criteria: [{ id: 'install', must: 'Says how to install' }] }, candidate: r.text });
+  assert.deepEqual(graded[0].body, { kind: 'readme', rubric: { criteria: [{ id: 'install', must: 'Says how to install' }] }, candidate: r.text });
   const current = (await call('GET', '/api/attempts/current?slug=readme-doc', { headers: anon })).body.attempt;
   assert.deepEqual([current.runs[0].kind, current.runs[0].markdown, current.runs[0].html], ['doc', r.text, undefined]);
   // A follow-up includes the previous document.
