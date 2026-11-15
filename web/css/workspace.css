@@ -219,3 +219,5 @@
   .ws .lb-strip .nm{white-space:normal}
   .ws-prompt .editor{min-height:200px}
 }
+
+.ws-built{margin:var(--s-3) 0 0}

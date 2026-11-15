@@ -300,6 +300,7 @@ function renderBrief() {
   $('insMenu').innerHTML =
     (c.brief ? `<h3 class="h">The brief</h3><p class="ws-brief-p">${esc(c.brief)}</p>` : '') +
     (done.length ? `<h3 class="h ws-brief-h">Done when</h3><ul class="ws-done">${done.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : '') +
+    `<p class="note ws-built">${isScene() ? 'Keep the model light: no more detail than the shape needs' : 'We care how it is built, not only how it looks: it should work on a phone, be usable with a keyboard and a screen reader, and carry nothing it does not need'}</p>` +
     (content ? `<h3 class="h ws-brief-h">The model is given this content</h3><p class="note ws-content-note">You do not need to repeat it in your prompt</p><pre class="ws-content" tabindex="0" aria-label="Content the model is given">${esc(content)}</pre>` : '');
 }
 
