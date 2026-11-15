@@ -1,0 +1,23 @@
+{
+  "frontMatter": [
+    { "key": "name", "required": true, "maxLength": 64, "pattern": "^pr-description$" },
+    { "key": "description", "required": true, "maxLength": 1024, "pattern": "Use when", "mustMention": ["pull"] }
+  ],
+  "sections": [
+    { "name": "Steps", "aliases": ["Instructions", "Workflow", "Process", "Procedure", "How to"], "importance": "critical" },
+    { "name": "Rules", "aliases": ["Guidelines", "Constraints", "Guardrails", "Do not"], "importance": "normal", "mustContain": ["test"] }
+  ],
+  "keyFacts": [
+    { "label": "the commit-list command", "anyOf": ["git log --oneline main..HEAD"], "importance": "critical", "inCode": true, "section": "Steps" },
+    { "label": "the diff command", "anyOf": ["git diff --stat main...HEAD"], "importance": "critical", "inCode": true, "section": "Steps" },
+    { "label": "the Summary heading", "anyOf": ["Summary"], "importance": "normal", "section": "Steps" },
+    { "label": "the Changes heading", "anyOf": ["Changes"], "importance": "normal", "section": "Steps" },
+    { "label": "the Testing heading", "anyOf": ["Testing"], "importance": "normal", "section": "Steps" },
+    { "label": "the rule not to open the pull request", "anyOf": ["pull request"], "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 400, "minWords": 50 },
+  "order": ["Steps", "Rules"]
+}

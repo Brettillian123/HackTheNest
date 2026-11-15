@@ -1,0 +1,27 @@
+{
+  "sections": [],
+  "tools": [
+    {
+      "name": "weather_current",
+      "mustDescribe": ["use", "current"],
+      "params": [
+        { "name": "city", "type": "string", "required": true },
+        { "name": "units", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "weather_forecast",
+      "mustDescribe": ["use", "forecast"],
+      "params": [
+        { "name": "city", "type": "string", "required": true },
+        { "name": "days", "type": "integer", "required": true },
+        { "name": "units", "type": "string", "required": false }
+      ]
+    }
+  ],
+  "keyFacts": [
+    { "label": "the default unit, celsius", "anyOf": ["celsius", "Celsius"], "section": "weather_current" },
+    { "label": "the allowed number of days", "anyOf": ["1 to 7", "1-7", "between 1 and 7", "from 1 to 7"], "importance": "major", "section": "weather_forecast" }
+  ],
+  "limits": { "maxWords": 250 }
+}

@@ -1,0 +1,22 @@
+{
+  "stages": [
+    { "name": "backup", "match": { "titleAny": ["backup", "back", "snapshot", "dump"], "changesAny": ["backups/**"] }, "importance": "critical" },
+    { "name": "up-migration", "match": { "changesAny": ["migrations/0007_split_name.up.sql"] }, "importance": "critical" },
+    { "name": "rollback", "match": { "changesAny": ["migrations/0007_split_name.down.sql"] }, "importance": "critical" },
+    { "name": "review", "match": { "kind": "review" }, "importance": "major" },
+    { "name": "rehearse", "match": { "titleAny": ["rehears", "dry", "staging", "trial"], "changesAny": ["reports/rehearsal.md"] }, "importance": "major" },
+    { "name": "apply", "match": { "changesAny": ["reports/apply.md"] }, "importance": "critical" },
+    { "name": "verify", "match": { "changesAny": ["reports/verify.md"] }, "importance": "major" }
+  ],
+  "before": [
+    ["up-migration", "review"],
+    ["rollback", "review"],
+    ["review", "rehearse"],
+    ["rehearse", "apply"],
+    ["backup", "apply"],
+    ["apply", "verify"]
+  ],
+  "parallel": [["up-migration", "rollback"]],
+  "reviewOf": ["up-migration", "rollback"],
+  "limits": { "maxSteps": 8, "maxOwners": 5 }
+}

@@ -1,0 +1,27 @@
+{
+  "sections": [
+    { "name": "Question", "aliases": ["The question", "Question asked"], "importance": "normal" },
+    { "name": "Sources compared", "aliases": ["Sources", "Source comparison", "What each source says", "Evidence"], "importance": "major" },
+    { "name": "Conflict", "aliases": ["The conflict", "Disagreement", "Where they differ", "Differences"], "importance": "normal" },
+    { "name": "Decision", "aliases": ["Recommendation", "What we use", "Answer", "Verdict"], "importance": "critical" },
+    { "name": "Not verified", "aliases": ["Unverified", "Not checked", "Open questions", "Unknowns", "Gaps"], "importance": "normal", "mustContain": ["test"] },
+    { "name": "How to confirm", "aliases": ["Next steps", "How to check", "Confirmation", "To confirm", "Cross-check"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the wiki page wiki/ledger-api.md", "anyOf": ["wiki/ledger-api.md"], "section": "Sources compared" },
+    { "label": "the owners' docs docs/ledger-api/limits.md", "anyOf": ["docs/ledger-api/limits.md"], "importance": "major", "section": "Sources compared" },
+    { "label": "the changelog CHANGELOG.md", "anyOf": ["CHANGELOG.md"], "section": "Sources compared" },
+    { "label": "the wiki's date 2025-03-02", "anyOf": ["2025-03-02"], "section": "Sources compared" },
+    { "label": "the docs' date 2026-09-10", "anyOf": ["2026-09-10"], "section": "Sources compared" },
+    { "label": "the wiki's figure, 100 requests per minute", "anyOf": ["100 requests per minute"] },
+    { "label": "the planned figure, 120 requests per minute", "anyOf": ["120 requests per minute"] },
+    { "label": "the word Unreleased", "anyOf": ["Unreleased"] },
+    { "label": "the limit to use, 60 requests per minute", "anyOf": ["60 requests per minute"], "importance": "critical", "section": "Decision" },
+    { "label": "the HTTP 429 response", "anyOf": ["429"], "section": "How to confirm" }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" },
+    { "label": "an instruction to use 100 or 120 requests per minute", "pattern": "\\buse (100|120) requests per minute" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 150 }
+}

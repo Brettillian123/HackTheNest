@@ -1,0 +1,27 @@
+{
+  "sections": [
+    { "name": "Install", "aliases": ["Installation", "Installing", "Getting started", "Setup"], "importance": "critical" },
+    { "name": "Configuration", "aliases": ["Config", "Settings", "Environment variables", "Environment"], "importance": "critical", "mustContain": ["required"] },
+    { "name": "Run", "aliases": ["Use", "Usage", "Running", "Start", "Starting the service"], "importance": "normal" },
+    { "name": "Test", "aliases": ["Tests", "Testing", "Running tests"], "importance": "normal" },
+    { "name": "Limits", "aliases": ["Limitations", "Known limitations", "Known issues", "Not supported"], "importance": "normal", "mustContain": ["rate"] }
+  ],
+  "keyFacts": [
+    { "label": "the Node.js version", "anyOf": ["Node.js 20", "Node 20"], "importance": "normal", "section": "Install" },
+    { "label": "the install command", "anyOf": ["npm ci"], "importance": "critical", "inCode": true, "section": "Install" },
+    { "label": "the start command", "anyOf": ["npm start"], "importance": "critical", "inCode": true },
+    { "label": "the health check command", "anyOf": ["curl http://localhost:8080/health"], "importance": "major", "inCode": true },
+    { "label": "the WEATHER_API_KEY setting", "anyOf": ["WEATHER_API_KEY"], "importance": "critical", "section": "Configuration" },
+    { "label": "the CACHE_TTL_SECONDS setting", "anyOf": ["CACHE_TTL_SECONDS"], "importance": "major", "section": "Configuration" },
+    { "label": "the cache default of 600", "anyOf": ["600"], "section": "Configuration" },
+    { "label": "the PORT setting", "anyOf": ["PORT"], "section": "Configuration" },
+    { "label": "the port default of 8080", "anyOf": ["8080"], "section": "Configuration" },
+    { "label": "the test command", "anyOf": ["npm test"], "inCode": true, "section": "Test" }
+  ],
+  "forbidden": [
+    { "label": "a key placeholder", "pattern": "your[-_ ]?(api[-_ ]?)?key([-_ ]?here)?\\b" },
+    { "label": "a placeholder repository link", "pattern": "example\\.com/your|your[-_](repo|project|username)" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 80 }
+}

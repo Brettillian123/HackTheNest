@@ -216,7 +216,7 @@ test('bad input on every route answers 400', async () => {
     ['POST', '/api/runs', { body: { slug: 'login-card', prompt: 'x' }, headers: { 'X-Anon-Id': 'short' } }],
     ['POST', '/api/runs', { body: { slug: { $ne: null }, prompt: 'x' }, headers: anon() }],
     ['POST', '/api/runs', { body: { slug: 'login-card', prompt: '' }, headers: anon() }],
-    ['POST', '/api/runs', { body: { slug: 'login-card', prompt: 'x'.repeat(2001) }, headers: anon() }],
+    ['POST', '/api/runs', { body: { slug: 'login-card', prompt: 'x'.repeat(12001) }, headers: anon() }], // over every prompt limit
     ['POST', '/api/runs', { body: { slug: 'login-card', prompt: { $gt: '' } }, headers: anon() }],
     ['POST', '/api/runs', { body: { slug: 'login-card', prompt: 'x', model: 'gpt-huge' }, headers: anon() }],
     ['POST', '/api/runs', { body: { slug: 'login-card', prompt: 'x', model: ['a'] }, headers: anon() }],
@@ -239,7 +239,7 @@ test('bad input on every route answers 400', async () => {
     assert.equal(res.status, 400, `${method} ${path} ${JSON.stringify(options)} -> ${res.status} ${res.text}`);
     assert.equal(typeof res.body.error, 'string');
   }
-  const huge = await call('POST', '/api/runs', { rawBody: JSON.stringify({ slug: 'login-card', prompt: 'x'.repeat(20000) }), headers: anon() });
+  const huge = await call('POST', '/api/runs', { rawBody: JSON.stringify({ slug: 'login-card', prompt: 'x'.repeat(40000) }), headers: anon() }); // over the body cap (largest limit x 3 + 1000) for any limit up to 12000
   assert.equal(huge.status, 413);
   const unknownRun = await call('POST', '/api/runs/run_aaaaaaaaaaaaaaaa/score', { headers: anon() });
   assert.equal(unknownRun.status, 404);

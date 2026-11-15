@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { ANON, call, setup } from './helpers.mjs';
-import { computedPromptLimit, getChallengeFile } from '../services/challengeStore.js';
+import { computedPromptLimit, effectivePromptLimit, getChallengeFile } from '../services/challengeStore.js';
 import { MARKERS, MAX_MODEL_INPUT_CHARS, NO_PAGE, neutralise, pageInstruction, untrustedMessage } from '../services/kinds.js';
 
 process.env.AUTH_SECRET = 'test-secret-for-sessions-only';
@@ -14,12 +14,19 @@ const run = (prompt, slug = 'login-card') => call('POST', '/api/runs', { body: {
 const count = (text, part) => text.split(part).length - 1;
 
 test('maxPromptChars: the fallback rule, enforced on runs and sent by the API with maxOutputTokens', async () => {
-  // brief + group names + labels + values, x 1.2 + 500, up to the next 500, within 1500..12000.
-  assert.equal(computedPromptLimit('short', []), 1500);
-  assert.equal(computedPromptLimit('x'.repeat(1000), [{ group: 'abcd', items: [{ label: 'ab', value: 'cdef' }] }]), 2000); // 1010 x 1.2 + 500 = 1712
+  // brief + group names + labels + values (+ criteria), x 1.5 + 1000, up to the next 500, within 2000..12000.
+  assert.equal(computedPromptLimit('short', []), 2000);
+  assert.equal(computedPromptLimit('x'.repeat(1000), [{ group: 'abcd', items: [{ label: 'ab', value: 'cdef' }] }]), 3000); // 1010 x 1.5 + 1000 = 2515
   assert.equal(computedPromptLimit('x'.repeat(20000), []), 12000);
+  assert.equal(computedPromptLimit('x'.repeat(600), [], ['y'.repeat(100)]), 2500); // 700 x 1.5 + 1000 = 2050
+  // The larger of the computed and the explicit limit wins.
+  assert.equal(effectivePromptLimit({ brief: 'short', maxPromptChars: 1500 }), 2000);
+  assert.equal(effectivePromptLimit({ brief: 'short', maxPromptChars: 5000 }), 5000);
+  assert.equal(effectivePromptLimit({ brief: 'x'.repeat(600), kind: 'doc', criteria: ['y'.repeat(100)], maxPromptChars: 2000 }), 2500);
+  assert.equal(effectivePromptLimit({ brief: 'x'.repeat(600), criteria: ['y'.repeat(100)] }, 'page'), 2000, 'criteria count only for doc and workflow');
   const c = getChallengeFile('login-card');
-  assert.equal(c.maxPromptChars, computedPromptLimit(c.brief, c.spec));
+  assert.equal(c.maxPromptChars, effectivePromptLimit(c, 'page'));
+  assert.ok(c.maxPromptChars >= computedPromptLimit(c.brief, c.spec));
   assert.equal(c.maxOutputTokens, 6000);
 
   const { calls } = setup({ model: GOAL });

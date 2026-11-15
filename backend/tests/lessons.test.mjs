@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { ANON, call, setup } from './helpers.mjs';
-import { reloadChallenges } from '../services/challengeStore.js';
+import { getChallengeFile, reloadChallenges } from '../services/challengeStore.js';
 
 process.env.AUTH_SECRET = 'test-secret-for-sessions-only';
 const dataDir = fileURLToPath(new URL('../../web/data', import.meta.url));
@@ -26,7 +26,7 @@ test('real lessons: 8 load in order, each with its bonus challenge linked and th
   assert.deepEqual(lessons.map(l => l.order), [1, 2, 3, 4, 5, 6, 7, 8]);
   const all = (await call('GET', '/api/challenges?include=lessons')).body.challenges;
   const bonus = all.filter(c => c.lesson);
-  assert.equal(bonus.length, 8);
+  assert.equal(bonus.length, 24);
   for (const l of lessons) {
     const c = bonus.find(b => b.slug === l.bonusChallenge);
     assert.ok(c, `${l.slug} links to ${l.bonusChallenge}`);
@@ -34,8 +34,19 @@ test('real lessons: 8 load in order, each with its bonus challenge linked and th
     const one = (await call('GET', `/api/lessons/${l.slug}`)).body.lesson;
     assert.equal(one.fields.bonusChallenge, l.bonusChallenge);
     assert.ok(one.markdown.startsWith('# '));
+    // Three bonus challenges per lesson, in level order, resolved from the challenge list.
+    assert.equal(l.bonusChallenges.length, 3, `${l.slug} has three bonus challenges`);
+    assert.deepEqual(l.bonusChallenges.map(b => b.level), [1, 2, 3]);
+    assert.deepEqual(one.bonusChallenges, l.bonusChallenges);
+    for (const b of l.bonusChallenges) {
+      const listed = bonus.find(x => x.slug === b.slug);
+      assert.ok(listed, `${b.slug} is listed`);
+      assert.deepEqual([b.title, b.level, b.kind, b.available, listed.lesson], [listed.title, listed.level, listed.kind, true, l.slug]);
+      assert.ok(Number.isInteger(b.cost));
+    }
   }
-  assert.deepEqual(bonus.filter(c => c.kind === 'workflow').map(c => c.slug).sort(), ['fix-loop-plan', 'three-page-site-plan']);
+  assert.equal(new Set(lessons.flatMap(l => l.bonusChallenges.map(b => b.slug))).size, 24);
+  assert.equal(bonus.filter(c => c.kind === 'workflow').length, 6);
   assert.deepEqual(bonus.filter(c => !c.available).map(c => c.slug), []);
   assert.deepEqual((await call('GET', '/api/health')).body.problems, []);
   const problems = (await call('GET', '/api/health')).body.problems;
@@ -105,4 +116,21 @@ test('workflow: the plan streams as text, is stored in markdown, and is graded a
   assert.match(bad.body.error, /not.*valid JSON/);
   assert.equal(bad.headers['x-run-id'], undefined);
   assert.equal((await call('GET', '/api/attempts/current?slug=three-page-site-plan', { headers: anon })).body.attempt, null);
+});
+
+test('doc: the grader document kind comes from the docKind on each challenge', async () => {
+  const file = JSON.parse(readFileSync(`${dataDir}/lessons/challenges.json`, 'utf8')).challenges;
+  const docs = file.filter(c => c.kind === 'doc');
+  assert.equal(docs.length, 18);
+  for (const d of docs) assert.equal(getChallengeFile(d.slug).docKind, d.docKind, d.slug);
+  const graded = [];
+  setup({
+    model: '{ "tools": [] }',
+    service: true,
+    grader: (url, init) => { graded.push(JSON.parse(init.body)); return Response.json({ result: { version: '1.0.0', kind: 'mcp-tools', total: 50, pillars: { works: 50, looks: 50, engineering: 50 }, criteria: [], feedback: [] } }); },
+  });
+  const r = await run('weather-tool-repair', 'Fix the weather tool');
+  assert.equal(r.status, 200);
+  await score(r.headers['x-run-id']);
+  assert.equal(graded[0].kind, 'mcp-tools');
 });

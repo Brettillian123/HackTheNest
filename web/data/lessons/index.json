@@ -8,7 +8,12 @@
     "summary": "Write a short, checkable instructions file (CLAUDE.md, AGENTS.md and the like) that a coding model reads at the start of every session.",
     "file": "01-project-instructions.md",
     "bonusChallenge": "agents-md-for-a-repo",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "agents-md-for-a-repo",
+      "claude-md-for-a-monorepo",
+      "agents-md-with-checkable-rules"
+    ]
   },
   {
     "order": 2,
@@ -19,7 +24,12 @@
     "summary": "Write READMEs and specs that a model or a new teammate can act on without asking a single question.",
     "file": "02-documentation-as-a-prompt.md",
     "bonusChallenge": "readme-for-a-cli",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "readme-for-a-cli",
+      "readme-for-a-web-service",
+      "spec-for-a-feature"
+    ]
   },
   {
     "order": 3,
@@ -30,7 +40,12 @@
     "summary": "Package a task you repeat into a skill folder with a SKILL.md file, so a model loads it only when the task comes up.",
     "file": "03-skills.md",
     "bonusChallenge": "release-notes-skill",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "pr-description-skill",
+      "release-notes-skill",
+      "deploy-staging-skill"
+    ]
   },
   {
     "order": 4,
@@ -41,7 +56,12 @@
     "summary": "Learn what the Model Context Protocol is, how a client talks to a server, and what to check before you trust one.",
     "file": "04-mcp-using-servers.md",
     "bonusChallenge": "mcp-server-trust-note",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "mcp-local-server-setup",
+      "mcp-server-trust-note",
+      "mcp-tool-allowlist"
+    ]
   },
   {
     "order": 5,
@@ -52,7 +72,12 @@
     "summary": "Define MCP tools a model can choose and call correctly, with clear names, useful descriptions, strict input schemas and errors it can recover from.",
     "file": "05-mcp-defining-tools.md",
     "bonusChallenge": "library-tools",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "weather-tool-repair",
+      "library-tools",
+      "calendar-booking-tools"
+    ]
   },
   {
     "order": 6,
@@ -63,7 +88,12 @@
     "summary": "Split a job between a coordinator and scoped workers, write briefs they can act on alone, and plan the job so no two workers collide.",
     "file": "06-agent-workflows.md",
     "bonusChallenge": "three-page-site-plan",
-    "grader": "workflow"
+    "grader": "workflow",
+    "bonusChallenges": [
+      "docs-refresh-plan",
+      "data-migration-plan",
+      "three-page-site-plan"
+    ]
   },
   {
     "order": 7,
@@ -74,7 +104,12 @@
     "summary": "Run a model in a loop against a test with a fixed exit and a cap, and plan a job as a graph so you know what can run at once and what sets the finish time.",
     "file": "07-loops-and-graphs.md",
     "bonusChallenge": "fix-loop-plan",
-    "grader": "workflow"
+    "grader": "workflow",
+    "bonusChallenges": [
+      "release-pipeline-plan",
+      "benchmark-tuning-loop",
+      "fix-loop-plan"
+    ]
   },
   {
     "order": 8,
@@ -85,6 +120,11 @@
     "summary": "Get a model to check its own claims, by finding sources before stating facts, proving things once with real output, naming what it did not verify, and cross-checking with a fresh second pass.",
     "file": "08-self-research-and-verification.md",
     "bonusChallenge": "findings-report",
-    "grader": "doc"
+    "grader": "doc",
+    "bonusChallenges": [
+      "claim-check-sorting",
+      "findings-report",
+      "source-conflict-report"
+    ]
   }
 ]
