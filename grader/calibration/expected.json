@@ -1,0 +1,32 @@
+{
+  "landing": {
+    "bands": {
+      "same-look-other-markup": [95, 100],
+      "near": [92, 100],
+      "good": [72, 92],
+      "wrong-theme": [45, 75],
+      "partial": [30, 60],
+      "text-only": [15, 45],
+      "wrong": [0, 20],
+      "blank": [0, 5]
+    },
+    "order": [
+      ["near", "good", "partial", "wrong", "blank"],
+      ["good", "wrong-theme", "wrong"],
+      ["good", "text-only", "wrong"]
+    ]
+  },
+  "profile": {
+    "bands": {
+      "near": [92, 100],
+      "shifted": [85, 97],
+      "left-aligned": [55, 85],
+      "partial": [40, 70],
+      "blank": [0, 5]
+    },
+    "order": [
+      ["near", "shifted", "left-aligned", "blank"],
+      ["near", "partial", "blank"]
+    ]
+  }
+}
