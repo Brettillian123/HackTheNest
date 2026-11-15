@@ -43,9 +43,13 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
       // A brief challenge has no spec; every key fact is an exact text on the example page.
       assert.equal(c.spec, undefined, `${slug}: no spec on a brief challenge`);
       assert.equal("exactSpec" in c, false, `${slug}: the grader-only spec never reaches the page`);
-      assert.ok(c.brief.trim() && c.requirements.length >= 6 && c.designNotes.length >= 3, `${slug}: brief fields`);
-      assert.ok(c.requirements.every((r) => api.REQUIREMENT_KINDS.includes(r.kind)), `${slug}: requirement kinds`);
-      if (ORIGINAL.includes(slug)) assert.ok(c.keyFacts.length > 0, `${slug}: rewritten original has key facts`);
+      // The page sees the brief, acceptance and content; the grader-only fields are checked on the raw data entry.
+      for (const k of api.HIDDEN_FIELDS) assert.equal(k in c, false, `${slug}: ${k} never reaches the page`);
+      assert.ok(c.brief.trim() && Array.isArray(c.acceptance) && typeof c.content === "string", `${slug}: brief fields`);
+      const raw = JSON.parse(readFileSync(new URL("../data/challenges.json", import.meta.url), "utf8")).challenges.find((e) => e.slug === slug) || {};
+      const keyFacts = Array.isArray(raw.keyFacts) ? raw.keyFacts : [];
+      if (raw.requirements) assert.ok(raw.requirements.length >= 6 && (raw.designNotes || []).length >= 3, `${slug}: grader fields`);
+      if (ORIGINAL.includes(slug)) assert.ok(keyFacts.length > 0, `${slug}: rewritten original has key facts`);
       // Compared with the page's text: entities decoded, runs of white space as one space.
       const NAMED = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", copy: "©", rsquo: "’", lsquo: "‘", ldquo: "“", rdquo: "”", mdash: "—", ndash: "–", hellip: "…", middot: "·", times: "×", pound: "£", euro: "€" };
       const flat = (t) => t.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
@@ -54,7 +58,7 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
       // Text a player sees in attributes (placeholder, value, alt, aria-label, title) counts too.
       const attrText = [...goal.matchAll(/\s(?:placeholder|value|alt|aria-label|title)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].map((m) => m[1] ?? m[2]);
       const text = flat([goal.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, ""), ...attrText].join(" \n "));
-      for (const k of c.keyFacts) assert.ok(text.includes(flat(k)), `${slug}: key fact "${k}" not in example`);
+      for (const k of keyFacts) assert.ok(text.includes(flat(k)), `${slug}: key fact "${k}" not in example`);
       for (const f of faults.challenges[slug] || []) assert.ok(goal.includes(f.find), `${slug}: fault "${f.check}" does not match`);
       continue;
     }

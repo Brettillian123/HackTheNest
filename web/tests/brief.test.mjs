@@ -9,31 +9,24 @@ beforeEach(() => {
   api.configure({ mode: "mock", fetch: null, timing: { streamMs: 0, stageMs: 0, pollMs: 0 }, reset: true });
 });
 
-test("briefFields maps a brief challenge and ignores a spec one", () => {
+test("briefFields passes brief, acceptance and content and strips the grader-only fields", () => {
   assert.deepEqual(api.briefFields({ format: "spec", spec: [] }), {});
   assert.deepEqual(api.briefFields(null), {});
   const b = api.briefFields({
     format: "brief",
     brief: "A page",
-    requirements: [
-      { id: "a", text: "Has a title", kind: "content", exact: true },
-      { id: "b", text: "Works with keys", kind: "behavior" },
-      { text: "Odd kind", kind: "weird", exact: "yes" },
-      null,
-      {},
-    ],
-    keyFacts: ["Sign in", "", null, " Join "],
+    acceptance: ["Has a title", "", null, " Works with keys "],
+    content: "  Sign in\nJoin  ",
+    requirements: [{ id: "a", text: "Has a title", kind: "content", exact: true }],
+    keyFacts: ["Sign in"],
     designNotes: ["Calm"],
+    exactSpec: [{ group: "Page", items: [] }],
   });
-  assert.equal(b.format, "brief");
-  assert.equal(b.brief, "A page");
-  assert.deepEqual(b.requirements, [
-    { id: "a", text: "Has a title", kind: "content", exact: true },
-    { id: "b", text: "Works with keys", kind: "behaviour", exact: false },
-    { id: "r3", text: "Odd kind", kind: "content", exact: false },
-  ]);
-  assert.deepEqual(b.keyFacts, ["Sign in", "Join"]);
-  assert.deepEqual(b.designNotes, ["Calm"]);
+  assert.deepEqual(b, { format: "brief", brief: "A page", acceptance: ["Has a title", "Works with keys"], content: "Sign in\nJoin" });
+  // Older data with no acceptance or content still maps, with the missing sections empty.
+  assert.deepEqual(api.briefFields({ format: "brief", brief: "Old", requirements: [] }), { format: "brief", brief: "Old", acceptance: [], content: "" });
+  assert.equal(api.formatOf({ acceptance: ["x"] }), "brief");
+  assert.equal(api.formatOf({ content: "x" }), "brief");
 });
 
 test("requirementResults keeps only results with an id and a yes or no", () => {
@@ -52,13 +45,11 @@ test("mock list carries format and category; two challenges use the brief format
   assert.ok(["harbor-landing", "split-signup"].every((s) => briefs.includes(s)), "the two mock brief challenges");
   assert.ok(list.every((c) => c.category === undefined || api.CATEGORIES.includes(c.category)));
   const c = await api.getChallenge("split-signup");
-  assert.ok(c.requirements.length >= 6 && c.requirements.every((r) => api.REQUIREMENT_KINDS.includes(r.kind)));
-  assert.ok(c.keyFacts.length >= 4 && c.designNotes.length >= 3);
-  assert.ok(new Set(c.requirements.map((r) => r.kind)).size >= 4, "requirements across the kinds");
-  // The rewritten originals are briefs too, and the grader-only pixel spec never reaches the page.
+  assert.ok(c.acceptance.length >= 3 && c.content.includes("Create your account"));
+  // The rewritten originals are briefs too, and no grader-only field ever reaches the page.
   for (const { slug } of list) {
     const d = await api.getChallenge(slug);
-    assert.equal("exactSpec" in d, false, `${slug}: no exactSpec`);
+    for (const k of api.HIDDEN_FIELDS) assert.equal(k in d, false, `${slug}: no ${k}`);
   }
   assert.equal((await api.getChallenge("login-card")).format, "brief");
 });
@@ -70,15 +61,14 @@ test("mockDetailFields keeps the spec path for entries that still have one (fixt
   assert.notEqual(s.spec[0], spec[0], "a copy, not the same object");
   const b = api.mockDetailFields({ slug: "fixture-brief", brief: "A card", requirements: [{ id: "r1", text: "A heading", kind: "content" }], keyFacts: ["Hi"], designNotes: ["Calm"], exactSpec: spec });
   assert.equal(b.format, "brief");
-  assert.equal("exactSpec" in b, false);
-  assert.equal("spec" in b, false);
+  for (const k of [...api.HIDDEN_FIELDS, "spec"]) assert.equal(k in b, false, `no ${k}`);
 });
 
 test("a brief challenge marked on the brief returns per-requirement results; the other does not", async () => {
   const a = (await api.run({ slug: "harbor-landing", prompt: "A calm landing page for Harbor" })).run.result;
   assert.equal(a.intentGraded, true);
-  const ids = (await api.getChallenge("harbor-landing")).requirements.map((r) => r.id);
-  assert.deepEqual(a.requirements.map((r) => r.id), ids);
+  assert.equal((await api.getChallenge("harbor-landing")).requirements, undefined, "requirements stay grader-only");
+  assert.ok(a.requirements.length >= 1);
   assert.ok(a.requirements.every((r) => typeof r.met === "boolean"));
   const b = (await api.run({ slug: "split-signup", prompt: "A sign-up page" })).run.result;
   assert.equal(b.intentGraded, false);

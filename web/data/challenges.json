@@ -24,7 +24,15 @@
       "title": "Login card",
       "level": 1,
       "category": "Components",
-      "brief": "We need the sign-in page for Fernway, our project planning app. Returning customers land here, so it should be one simple card in the middle of a warm off-white page, with nothing else competing for attention. At the top of the card put the small uppercase Fernway brand line, then the heading Welcome back and a short line saying Sign in to pick up where you left off. Then an Email field and a Password field, each with its label above, a row with a Remember me option on the left and a Forgot password? link on the right, and a full-width Sign in button in our brand green, #2F5D50. Under the button, a centred line for new people: New to Fernway? Create an account. It should feel quiet and trustworthy, with soft rounded edges.",
+      "brief": "I'd like you to build the sign-in page for Fernway, our project planning app. The people landing here are returning customers who just want to get back to work, so signing in should take seconds and nothing on the page should compete with the form. Keep it calm and warm, in line with the rest of Fernway. All the wording is supplied, and the attached reference is exactly what we want: match it as closely as you can. It needs to work with a keyboard and a screen reader. It's done when a returning customer can sign in, reset a forgotten password or find their way to creating an account without having to think about it.",
+      "acceptance": [
+        "A returning customer can see straight away where to type and what to press to sign in",
+        "Every field has a visible name, so it works with a screen reader and a keyboard",
+        "Forgetting a password or being new to Fernway each has an obvious way forward",
+        "Nothing on the page distracts from signing in",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Company: Fernway (project planning app)\nPage: sign-in for returning customers\nHeading: Welcome back\nSubheading: Sign in to pick up where you left off.\nFields:\n- Email; placeholder: you@example.com\n- Password; placeholder: At least 8 characters\nOption: Remember me\nLink: Forgot password?\nMain button: Sign in\nNew customer prompt: New to Fernway?; link: Create an account",
       "requirements": [
         {
           "id": "r1",
@@ -194,7 +202,14 @@
       "title": "Footer with columns",
       "level": 1,
       "category": "Components",
-      "brief": "Harbor makes release planning software for small product teams, and our marketing site needs a proper ending. Above the footer, add a light call-to-action band with the heading Ready to ship faster?, the line Join 4,000 teams who plan their releases with Harbor. and an amber Start free trial button. The footer itself is dark navy (our brand navy is #14213D). On the left it shows the Harbor name with a short description, and beside it three link columns, Product, Company and Resources, each with four links. A thin line separates a bottom bar with the copyright on the left and Privacy, Terms and Cookies on the right. It should feel confident and tidy, with the brand column clearly wider than the link columns.",
+      "brief": "Our marketing site for Harbor stops abruptly, and I need you to give it a proper ending. Visitors who scroll this far are interested, so give them one last confident nudge to start a trial, then a footer that helps anyone looking for something specific find it quickly: product pages, company information, help and the legal bits. You have all the copy, and the reference design is the target; the closer your page gets to it, the better. Keep it tidy and quiet so the nudge stands out. It's done when a visitor can either start a trial or find any link they need within a few seconds.",
+      "acceptance": [
+        "The invitation to start a free trial is the first thing I notice",
+        "I can find any footer link quickly because related links sit together under a clear name",
+        "The legal and copyright details are present but stay out of the way",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Company: Harbor (Harbor Software Inc.)\nCall to action:\n- Heading: Ready to ship faster?\n- Line: Join 4,000 teams who plan their releases with Harbor.\n- Button: Start free trial\nAbout: Harbor; Release planning for small product teams. Built in Halifax, used around the world.\nLink groups (group name: links, in order):\n- Product: Roadmaps, Changelog, Integrations, Pricing\n- Company: About, Careers, Press, Contact\n- Resources: Docs, Guides, Status, Help center\nCopyright: © 2026 Harbor Software Inc.\nLegal links: Privacy · Terms · Cookies",
       "requirements": [
         {
           "id": "r1",
@@ -369,14 +384,22 @@
           ]
         }
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "nav-hero",
       "title": "Nav bar with hero",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Northwind is a product analytics tool, and we need the top of our homepage: the navigation bar and the hero beneath it. The white bar holds the Northwind name on the left, the links Product, Solutions, Pricing and Docs in the middle, and a Get started button on the right. Below it, on a very pale blue page, centre a small pill reading New: live dashboards, the big bold headline Analytics your whole team can read, and one sentence explaining that Northwind turns raw product data into clear weekly reports. Under that, two buttons side by side, a solid indigo Start for free (our brand colour is #4F46E5) and a white Book a demo with a thin grey outline, followed by a small note that no credit card is needed. It should feel modern and confident, with the headline doing most of the work.",
+      "brief": "Northwind needs the first screen of its homepage, the part every visitor sees before they decide whether to stay. In a few seconds they should know what Northwind is, why it helps their team, and what to do next, with one main action clearly ahead of the alternative. Give them a simple way to move around the site as well, and make sure our new feature announcement gets noticed. The copy is supplied, and the attached reference shows the finished screen exactly, so match it as closely as you can. It's done when a first-time visitor can explain what we do and knows exactly where to click to get started.",
+      "acceptance": [
+        "A first-time visitor can tell what Northwind does within a few seconds",
+        "Starting for free is clearly the main action, with booking a demo as the alternative",
+        "The new feature announcement is noticeable without shouting",
+        "Site navigation is easy to find and to use with a keyboard",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Company: Northwind (analytics product)\nNavigation links: Product, Solutions, Pricing, Docs\nNavigation button: Get started\nAnnouncement: New: live dashboards\nHeadline: Analytics your whole team can read\nSubheadline: Northwind turns raw product data into clear weekly reports, so everyone sees the same numbers.\nMain button: Start for free\nSecond button: Book a demo\nNote: No credit card needed. Free for teams up to 5.",
       "requirements": [
         {
           "id": "r1",
@@ -562,7 +585,14 @@
       "title": "Blog post header",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "We are redesigning the article pages on our design blog, starting with the top of a post. Use our current feature as the example: a small amber uppercase category tag, Design, then the title Why slow design wins in a fast market set in a classic serif, then a two-sentence standfirst that sums up the piece. Below that comes the byline: a round avatar with Maya Robles's initials, her name, and the date and reading time, with a thin line under the byline. Finish with a wide cover image area; we do not have the photo yet, so use a warm gradient from pale yellow through amber to burnt orange with rounded corners. Keep it all in one centred reading column on a warm, almost-white page; it should feel editorial and unhurried.",
+      "brief": "We're redesigning the article pages on our design blog, and I want you to start with the opening of a post: the part that convinces someone to keep reading. Use our current feature as the example; the text is supplied, and the reference design is precisely what we want this to look like. It should read like a thoughtful magazine, not a tech blog, with the title doing the real work and the author information easy to find without crowding it. Readers must be able to tell what the piece is about and how long it will take before they scroll. It's done when it reads like a page you'd want to finish.",
+      "acceptance": [
+        "The title is the first thing I read, and it feels like a considered publication",
+        "I can tell the topic, the author and the reading time before scrolling",
+        "The supporting details never compete with the title",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Article\nCategory: Design\nTitle: Why slow design wins in a fast market\nStandfirst: Teams that spend an extra week on research ship fewer features, and keep more customers. Here is what we learned from twelve launches.\nAuthor: Maya Robles; initials: MR\nDate and reading time: March 4, 2026 · 8 min read",
       "requirements": [
         {
           "id": "r1",
@@ -734,7 +764,15 @@
       "title": "Pricing with three plans",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "Fernway needs a pricing page that makes our three plans easy to compare at a glance. At the top, centre the heading Simple pricing for every team with the line Start free. Upgrade when you need more seats. Below it, three cards in a row: Starter at $0, Team at $24 and Business at $79, each per month, with a one-line description, three features with check marks and a button. Highlight the middle Team plan with a stronger border in our brand green (#2F5D50), a Most popular badge on its top edge and a filled button, while the other two plans have outlined buttons. Use the exact plan details listed. The page should feel calm and honest, on a warm off-white background, with no sales clutter.",
+      "brief": "Fernway needs a pricing page. Visitors should be able to compare our plans at a glance and pick the plan that suits them without reading everything twice, and we want most people steered toward the plan most teams choose. All the plan details are supplied, and the attached reference is the page we want: we'll judge it on how close you get. It must be accessible and hold up on a phone. Done means a visitor can say which plan suits them and take the next step in under a minute.",
+      "acceptance": [
+        "I can compare what each plan costs and includes at a glance",
+        "It is obvious which plan most teams pick",
+        "Every plan has a clear next step",
+        "It works on a phone without losing the comparison",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Company: Fernway\nHeading: Simple pricing for every team\nSubheading: Start free. Upgrade when you need more seats.\nPrices are per month, written as the amount followed by \"/ month\".\nPlans (name; tagline; price; included; button):\n- Starter; For solo makers.; $0 / month; 1 project, Basic reports, Community support; Get started\n- Team; For growing teams.; $24 / month; Unlimited projects, Shared dashboards, Priority email support; Start free trial\n- Business; For larger companies.; $79 / month; Single sign-on, Audit log, Dedicated manager; Contact sales\nMost popular plan: Team (label text: Most popular)",
       "requirements": [
         {
           "id": "r1",
@@ -914,14 +952,22 @@
           ]
         }
       ],
-      "maxPromptChars": 4000
+      "maxPromptChars": 3500
     },
     {
       "slug": "product-grid",
       "title": "Product card grid",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "Oak and Clay is a small homeware shop, and we want a New arrivals section for the homepage. Put the heading New arrivals on the left and a View all link on the right of the same row. Below, show eight products in a grid of four across and two down. Each card has a picture area on top (we have no photos yet, so a flat block of a soft colour that suits the product is fine), then the product name, its category in small grey text, and the price. Two items are on sale, the Clay planter and the Rattan basket: show the sale price in burnt orange with the old price struck through beside it, while other prices are in our deep green. Keep it clean and airy on a near-white page, with white rounded cards and thin borders.",
+      "brief": "Oak and Clay wants a new-arrivals section for the homepage. Shoppers should be able to scan the latest pieces quickly, see what each costs, and spot the bargains, with an easy way to see the whole range. Product details are supplied, and the reference design is the exact target, so match it as faithfully as you can. Keep it warm and uncluttered, like the shop itself, and make it hold up on smaller screens. Done means a shopper finds something they like and knows its price without hunting.",
+      "acceptance": [
+        "I can scan every new product and its price quickly",
+        "Items on sale stand out, and I can see both the sale and the regular price",
+        "There is an obvious way to see the full range",
+        "It stays tidy and readable on a small screen",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Shop: Oak and Clay\nSection title: New arrivals\nLink: View all\nProducts (name; category; price):\n1. Stoneware mug; Kitchen; $18\n2. Linen throw; Living; $64\n3. Clay planter; Garden; on sale for $28, was $36\n4. Oak side table; Furniture; $149\n5. Wool cushion; Living; $42\n6. Glass carafe; Kitchen; $26\n7. Rattan basket; Storage; on sale for $31, was $39\n8. Brass lamp; Lighting; $118",
       "requirements": [
         {
           "id": "r1",
@@ -1099,7 +1145,14 @@
       "title": "Profile card",
       "level": 1,
       "category": "Components",
-      "brief": "We need a profile card for the people directory in our design community app. Show it as a single white card near the top of a soft lavender page. At the top, a round avatar; we do not use photos, so draw a simple person silhouette, a head and shoulders in indigo on a pale indigo circle, with CSS. Below it, the name Maya Renner and her role, Senior Product Designer, then a row of three stats in equal columns with thin lines above and below: 248 Posts, 12.4k Followers and 310 Following. At the bottom, a full-width indigo Follow button. Everything is centred, and it should feel friendly and light, with rounded corners and a soft shadow.",
+      "brief": "I need a profile for the people directory in our design community app. Someone browsing the directory should be able to see who this person is, what they do and how active they are in one glance, and follow them with a single click. We don't use photos, so you'll need a simple stand-in for the picture. Their details are supplied, and the attached reference is exactly what I want, so get as close to it as you can. Keep it friendly and compact so it would work alongside many others. It's done when a visitor can size someone up and follow them within a couple of seconds.",
+      "acceptance": [
+        "I can see who the person is and what they do at a glance",
+        "Their activity figures are easy to read and each is clearly labelled",
+        "Following them is one obvious action that works with a keyboard",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Person: Maya Renner\nJob title: Senior Product Designer\nStats (figure; label):\n- 248; Posts\n- 12.4k; Followers\n- 310; Following\nProfile in: the people directory of a design community app\nPicture: none supplied (the community does not use photos)\nAction button: Follow",
       "requirements": [
         {
           "id": "r1",
@@ -1283,7 +1336,15 @@
       "title": "Harbor landing page",
       "level": 1,
       "category": "Marketing and content",
-      "brief": "Harbor is a shared inbox for small teams, and we need a simple one-screen landing page. Across the top, a white header with the Harbor name on the left and links to Features, Pricing, Customers and Sign in on the right. Then a centred hero with the headline One calm inbox for your whole team, a sentence explaining that Harbor gathers email, chat and support requests into one shared view, and a bright blue Start free trial button. Below the hero, three feature cards side by side, Shared inbox, Smart sorting and Weekly reports, each with a short description. Close with a dark footer carrying our copyright line, so that the whole page fits on the first screen. It should feel calm and uncluttered, on a light grey page.",
+      "brief": "Harbor is a shared inbox for small teams, and we need a simple one-screen landing page for it. A visitor should understand what Harbor does from the first line, see the three reasons it helps, and know how to start a trial or sign in. The copy is all supplied, and the attached reference is the finished page: match it as closely as possible. Keep it light and calm, because calm is the whole promise of the product, and make sure it reads well on a phone. It's done when a visitor can explain Harbor in a sentence and start a trial without scrolling around looking for the button.",
+      "acceptance": [
+        "I understand what Harbor does from the first line",
+        "The benefits are easy to scan and each is clearly named",
+        "Starting a free trial is the obvious next step, and signing in is easy to find",
+        "The page feels calm and uncluttered, and works on a phone",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Company: Harbor (Harbor Labs, Inc.)\nNavigation links: Features, Pricing, Customers\nNavigation action: Sign in\nHeadline: One calm inbox for your whole team\nSubheadline: Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.\nMain button: Start free trial\nFeatures (name: description):\n- Shared inbox: Assign every message to a teammate and see who is replying.\n- Smart sorting: Urgent requests rise to the top while newsletters wait quietly.\n- Weekly reports: Track reply times and workload with a clear summary each Monday.\nFooter text: © 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.",
       "requirements": [
         {
           "id": "r1",
@@ -1483,14 +1544,22 @@
           ]
         }
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "release-changelog",
       "title": "Release changelog",
       "level": 1,
       "category": "App screens and data",
-      "brief": "Brightleaf, our calendar and task app, needs a public changelog page. Put a navy title bar across the top with Brightleaf changelog in white, centred. Below it, one centred column of twelve release cards, newest first, from Version 4.11, released Nov 2026, down to Version 4.0, which is dated Dec 2026. Every card has the same layout and the same height: the version as a heading, the release month, a paragraph about the release that ends by thanking people who reported issues in that release number, and three highlights shown as a bulleted list in a single row: Faster sync, Bug fixes and Shortcuts. The paragraph is the same on every card except for the release number at the end. It should feel orderly and easy to scan, with white cards on a very light grey page.",
+      "brief": "Brightleaf, our calendar and task app, needs a public changelog. Customers come here to see what changed and when, usually looking for the latest release first, so make it easy to scan down through versions and spot what each one brought. All release notes are supplied, and the reference design, in our navy, is exactly the page we want; match it closely. Keep it clean and on brand, with our navy as the main colour, and make it readable on a phone. It's done when a customer can find any release and its date quickly and tell at a glance what kind of changes it contained.",
+      "acceptance": [
+        "The newest release is the first one I see",
+        "I can scan from one release to the next without losing my place",
+        "Each release's version, date and kind of change are easy to pick out",
+        "It reads comfortably on a phone",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Product: Brightleaf\nPage title: Brightleaf changelog\nEvery release has the same three labels: Faster sync, Bug fixes, Shortcuts\nEvery release has the same notes, ending with its own release number N: \"This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release N.\"\nReleases, newest first (version; date; N):\n- Version 4.11; Released Nov 2026; 11\n- Version 4.10; Released Oct 2026; 10\n- Version 4.9; Released Sep 2026; 9\n- Version 4.8; Released Aug 2026; 8\n- Version 4.7; Released Jul 2026; 7\n- Version 4.6; Released Jun 2026; 6\n- Version 4.5; Released May 2026; 5\n- Version 4.4; Released Apr 2026; 4\n- Version 4.3; Released Mar 2026; 3\n- Version 4.2; Released Feb 2026; 2\n- Version 4.1; Released Jan 2026; 1\n- Version 4.0; Released Dec 2026; 0\nNotes for Version 4.11 in full: This release improves sync speed for large calendars, fixes a bug where recurring tasks lost their colour after editing, and adds keyboard shortcuts for moving tasks between days. Thanks to everyone who reported issues in release 11.",
       "requirements": [
         {
           "id": "r1",
@@ -1660,14 +1729,22 @@
           ]
         }
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "split-signup",
       "title": "Split-screen sign-up",
       "level": 1,
       "category": "Forms, commerce and documents",
-      "brief": "Ledgerly is bookkeeping software for small businesses, and we need a sign-up page that sells while it asks. Split the screen: on the left, a tall panel with a deep blue gradient carrying our small square L logo and the name Ledgerly, the headline Bookkeeping that does itself., three benefits with tick marks, and a short customer quote pinned at the bottom. On the right, centred in the white space, put the form: the heading Create your account, a line about the 14-day free trial, then Full name, Work email, Password (with a hint about the rules underneath) and a Company size dropdown, a checkbox to agree to the Terms of Service and Privacy Policy, and a blue Create account button (#2563eb). Below that come an or divider, a white Continue with Google button, and a sign-in link for people who already have an account. It should feel trustworthy and professional, not salesy.",
+      "brief": "Ledgerly is bookkeeping software for small businesses, and we need a sign-up page that sells while it asks. Someone arriving here is close to deciding, so remind them why Ledgerly is worth it while making the form itself feel short and easy to finish. They should also be able to sign up with Google or go to sign-in if they already have an account. All the wording is supplied, and the attached reference, in our deep blue brand, is exactly the page we want: match it as closely as you can. It must be accessible and work on a phone. It's done when a visitor feels reassured and can create an account in under a minute.",
+      "acceptance": [
+        "The reasons to choose Ledgerly are visible while I fill in the form",
+        "Every field has a clear name and helpful hint, so it works with a screen reader",
+        "Creating an account is the obvious main action, with Google sign-up as an alternative",
+        "On a phone the form stays easy to complete",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Company: Ledgerly (bookkeeping); logo letter: L\nTagline: Bookkeeping that does itself.\nBenefits:\n- Connect your bank in two minutes\n- Receipts matched automatically\n- Tax-ready reports every quarter\nTestimonial: “We closed our books in a day instead of a week.” — Priya N., Fernway Studio\nSign-up form:\n- Heading: Create your account\n- Subheading: Start your 14-day free trial. No credit card required.\n- Full name; placeholder: Jane Cooper\n- Work email; placeholder: jane@company.com\n- Password; hint: At least 8 characters, with one number and one symbol.\n- Company size; chosen option: 1–10 employees\n- Agreement: I agree to the Terms of Service and Privacy Policy (both are links)\n- Button: Create account\n- Alternative, after the word \"or\": Continue with Google\n- Existing customer prompt: Already have an account?; link: Sign in",
       "requirements": [
         {
           "id": "r1",
@@ -1895,14 +1972,22 @@
           ]
         }
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4500
     },
     {
       "slug": "restaurant-menu",
       "title": "Restaurant menu",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Osteria Lume is an Italian restaurant in Portland, Maine, and we want our menu online looking like the printed one. At the top, centre the name Osteria Lume in a large serif, the tagline Cucina di stagione · Est. 2011 in italics, and a small uppercase navigation row of Menu, Wine, Reservations and Visit, with Menu underlined as the current page. Then the four courses in order, Antipasti, Primi, Secondi and Dolci, each with a centred heading flanked by thin lines. Each dish shows its name on the left, a dotted line leading to the price on the right, and an italic description underneath; use the dishes and prices exactly as listed. After the courses, add the note about the service charge and allergies, then a deep green footer with three columns: Find us, Hours and Book. It should feel warm and old-world, on a cream page with forest green and terracotta accents.",
+      "brief": "Osteria Lume wants its menu online, and it should feel like the printed one guests hold at the table: elegant, unhurried and easy to read. Diners need to browse by course, find a dish and its price quickly, and see how to find us and book. The full menu and our details are supplied, and the reference design is the exact target; I'll judge it on how close it gets. It has to work on a phone, since most people will read it on the way over. It's done when it feels like our restaurant and nobody has to squint to find a price.",
+      "acceptance": [
+        "It feels like a printed menu from an elegant Italian restaurant",
+        "I can browse by course and find any dish and its price quickly",
+        "How to find us, our hours and how to book are easy to spot",
+        "It reads comfortably on a phone without zooming",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Restaurant: Osteria Lume\nTagline: Cucina di stagione · Est. 2011\nSite sections: Menu, Wine, Reservations, Visit (current section: Menu)\nMenu, by course (dish; price in dollars; description):\nAntipasti\n- Burrata con pesche; 16; Burrata, grilled peaches, basil oil, toasted hazelnuts\n- Carpaccio di manzo; 18; Thin-sliced beef, rocket, aged parmesan, lemon\n- Arancini al tartufo; 14; Three crisp risotto balls, black truffle, fontina\n- Zuppa di ceci; 11; Chickpea soup, rosemary, olive oil crouton\nPrimi\n- Tagliatelle al ragù; 24; Hand-cut egg pasta, slow-cooked beef and pork ragù\n- Cacio e pepe; 21; Tonnarelli, pecorino romano, cracked black pepper\n- Risotto ai funghi; 26; Carnaroli rice, wild mushrooms, thyme, mascarpone\n- Ravioli di zucca; 23; Roasted squash ravioli, brown butter, sage, amaretti\nSecondi\n- Branzino al forno; 34; Whole roasted sea bass, fennel, capers, salsa verde\n- Pollo alla diavola; 29; Spatchcocked chicken, chili, garlic, charred lemon\n- Bistecca alla fiorentina; 92; 900 g T-bone for two, rosemary potatoes\n- Melanzane alla parmigiana; 25; Layered aubergine, tomato, basil, mozzarella\nDolci\n- Tiramisù; 12; Espresso-soaked savoiardi, mascarpone, cocoa\n- Panna cotta; 11; Vanilla cream, blood orange, pistachio crumble\n- Affogato; 9; Fior di latte gelato drowned in espresso\nNote: A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.\nPractical details:\n- Find us: 214 Harbour Street, Portland, ME 04101\n- Hours: Tuesday – Sunday, 5:00 pm – 11:00 pm\n- Book: (207) 555-0148, hello@osterialume.com",
       "requirements": [
         {
           "id": "r1",
@@ -2200,14 +2285,22 @@
           ]
         }
       ],
-      "maxPromptChars": 6500
+      "maxPromptChars": 4000
     },
     {
       "slug": "field-notes-post",
       "title": "Field Notes blog post",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "The Field Notes is our company blog, and this post reports on a year of four-day weeks. Lay it out as a classic, readable article in one centred column: a small brown masthead reading THE FIELD NOTES, then the headline, a byline with the author, date and reading time, and the text as given. Set the support lead's line as a pull quote in italics with an amber bar down its left side, and make the sentence Nobody wanted to go back. bold. Under the subheading The numbers, add a simple bar chart, drawn inline, of projects shipped per month from January to June, with six amber bars that rise overall and a short caption, then a table of the ten teams with their hours per week and output change. End with the closing paragraph and a small copyright footer. Use a serif for the article and a plain sans-serif for the byline and table; it should feel thoughtful and uncluttered.",
+      "brief": "The Field Notes is our company blog, and this post reports on our year of four-day weeks. I want it to read like a well-made long-form article: comfortable to read from start to finish, with the quote and the key sentence given the weight they deserve, and the numbers easy to understand in both the chart and the table. The full text and figures are supplied, and the attached reference is the finished article, so match it as closely as you can. It must be accessible and readable on a phone. It's done when a reader can get through it without effort and come away remembering the results.",
+      "acceptance": [
+        "It is comfortable to read from start to finish, like a good magazine article",
+        "The quote and the key sentence stand out from the body text",
+        "I can read the chart and the table easily and understand the results",
+        "The table is marked up so a screen reader can follow it",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Publication: THE FIELD NOTES\nTitle: What we learned from a year of four-day weeks\nByline: By Maya Ortiz · March 4, 2026 · 7 min read\nBody, in order:\n1. Last March we tried something our board called “brave” and our accountant called “unwise”: every team would work Monday to Thursday, with Friday off and no cut in pay. We promised to measure everything and to stop if it didn’t work.\n2. We expected output to fall. Instead, most teams shipped slightly more, and the number of late projects dropped by a third. The biggest change was not speed but focus: people stopped filling Fridays with meetings that could have been an email.\n3. Pull quote: “I get more done in four focused days than I used to in five scattered ones.”\n4. That line came from our support lead, and it summed up the survey.\n5. Key sentence (the one to stress): Nobody wanted to go back.\n6. Even the two teams whose numbers dipped asked to keep the schedule and fix the problems instead.\nSection: The numbers\nChart: months Jan, Feb, Mar, Apr, May, Jun; caption: Projects shipped per month, January to June.\nTable (Team | Hours per week | Output change):\nDesign | 32 | +6%\nEngineering | 32 | +4%\nSupport | 34 | +2%\nSales | 33 | +5%\nMarketing | 32 | +3%\nFinance | 32 | +1%\nPeople | 32 | +7%\nLegal | 33 | +2%\nOperations | 34 | +3%\nResearch | 32 | +8%\nClosing: We’re keeping it. Next year we’ll publish the full data set, including the parts that didn’t go well.\nFooter: © 2026 The Field Notes",
       "requirements": [
         {
           "id": "r1",
@@ -2440,14 +2533,22 @@
           ]
         }
       ],
-      "maxPromptChars": 6000
+      "maxPromptChars": 4500
     },
     {
       "slug": "pricing-compare-signup",
       "title": "Pricing, compare and sign up",
       "level": 2,
       "category": "Forms, commerce and documents",
-      "brief": "Fernway needs a full pricing page that takes a visitor from choosing a plan to starting a trial. Start with a white navigation bar holding Fernway, Product, Pricing, Customers, Docs and a Start free button, then a teal-to-blue gradient hero with the heading Simple pricing for growing teams and a line about the free 14-day trial. Three plan cards, Starter, Team and Business, should overlap the bottom of the hero, with the middle Team card raised, outlined in our teal (#0d9488) and marked Most popular. Under them, a Compare plans table with a row for each feature and a tick, cross or value per plan, then a Create your account form showing Jordan Lee choosing the Team plan. Finish with a dark footer. Use the exact names, prices and features listed; it should feel bright, modern and trustworthy.",
+      "brief": "Fernway needs a full pricing page that takes a visitor from choosing a plan to starting a trial. They should be able to compare plans quickly, check the finer details when they need to, and sign up without leaving the page, with the plan most teams choose clearly recommended. All plan details and form content are supplied, and the reference design is exactly what we want; the closer the match, the better. It must be accessible and hold up on a phone. Done means a visitor can choose, compare and start their trial in one smooth pass.",
+      "acceptance": [
+        "I can compare plans at a glance and see which one is recommended",
+        "The detailed comparison is easy to read, and a screen reader can follow it",
+        "The sign-up form is clear, labelled and ready to submit",
+        "It holds up on a phone without losing anything important",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Company: Fernway\nNavigation links: Product, Pricing, Customers, Docs; navigation button: Start free\nHeading: Simple pricing for growing teams\nSubheading: Start free for 14 days. No credit card needed. Cancel any time.\nPlans (name; price per month; tagline; included; button):\n- Starter; $12 / month; For freelancers and side projects.; 3 projects, 5 GB storage, Email support; Choose Starter\n- Team; $39 / month; For small teams shipping every week.; Unlimited projects, 100 GB storage, Priority support; Choose Team\n- Business; $99 / month; For companies with many teams.; Unlimited projects, 1 TB storage, Dedicated manager; Choose Business\nMost popular plan: Team (label text: Most popular)\nCompare plans (Feature | Starter | Team | Business; yes = included, no = not included):\nCustom domains | yes | yes | yes\nTeam members | 1 | 10 | Unlimited\nVersion history | no | yes | yes\nSingle sign-on | no | no | yes\nAudit log | no | no | yes\nUptime guarantee | 99.5% | 99.9% | 99.99%\nSign-up form: Create your account\n- Full name: Jordan Lee (filled in)\n- Work email: jordan@example.com (filled in)\n- Plan: Team - $39 / month (chosen)\n- Checkbox, ticked: I agree to the terms of service\n- Button: Start my free trial\nFooter: Fernway; © 2026 Fernway Inc.; links: Privacy, Terms, Status, Contact",
       "requirements": [
         {
           "id": "r1",
@@ -2751,14 +2852,22 @@
           ]
         }
       ],
-      "maxPromptChars": 5500
+      "maxPromptChars": 4500
     },
     {
       "slug": "planner-landing",
       "title": "Planner landing page",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Brightleaf helps teams plan their week, and we need a full marketing landing page. Start with a white header (the Brightleaf name in green and links to Features, Pricing, Customers, Blog and Contact), then a hero on a soft green gradient: the headline Plan your week in five minutes, a supporting sentence and a Start free trial button on the left, and on the right a simple drawn landscape of sky, sun and two green hills, with a white chip reading ★ 4.9 from 2,000 teams overlapping its corner. Next, a Features section titled Why teams choose Brightleaf with six cards in three columns, each with a small round green icon. Then Simple pricing with three tiers, the middle one marked Most popular, then What customers say with two quotes, and finally a Get early access form with Name, Work email, Company and Team size in two columns and a Request access button. Close with a dark green footer, and use the copy listed exactly; it should feel fresh, optimistic and well organised.",
+      "brief": "Brightleaf helps teams plan their week, and we need a full marketing landing page. A visitor should grasp the promise straight away, see why teams choose us, compare plans, read what customers say, and request early access, all without feeling overwhelmed. Copy, plans and quotes are supplied, and the attached reference, built around our green, is the exact page we want: match it. It must be accessible and work on a phone. Done means a visitor scrolling once can explain what Brightleaf does and knows how to get in.",
+      "acceptance": [
+        "I grasp the promise and the main action from the first screen",
+        "Features, plans and customer quotes are each easy to scan",
+        "The recommended plan is obvious",
+        "The early access form is clear and every field is labelled",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Company: Brightleaf (team planner)\nNavigation links: Features, Pricing, Customers, Blog, Contact\nHeadline: Plan your week in five minutes\nSubheadline: Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.\nMain button: Start free trial\nRating: ★ 4.9 from 2,000 teams\nFeatures section (label: Features; heading: Why teams choose Brightleaf), name: description:\n- Shared calendars: See every project, meeting and deadline on one calendar your whole team can edit.\n- Smart reminders: Get a nudge before a task slips, not after the deadline has passed.\n- Weekly reviews: A five-minute summary every Friday shows what got done and what moved.\n- Time blocking: Drag tasks onto your week and protect time for deep, focused work.\n- Integrations: Connect Slack, Gmail and GitHub so tasks arrive where you already plan.\n- Reports: Spot overloaded teammates early with simple charts of planned hours.\nPricing section heading: Simple pricing\nPlans (name; price; included; button), prices per month written as \"/month\":\n- Starter; $19 /month; Up to 5 people, 3 projects, Email support; Choose Starter\n- Team; $49 /month; Up to 25 people, Unlimited projects, Priority support; Choose Team\n- Business; $99 /month; Unlimited people, SSO and audit log, Dedicated manager; Choose Business\nMost popular plan: Team (label text: Most popular)\nTestimonials (heading: What customers say):\n- “Brightleaf cut our Monday planning meeting from an hour to ten minutes.” — Priya Shah, Head of Operations, Northwind\n- “The Friday review alone is worth the price.” — Tom Becker, Engineering Lead, Lumen Labs\nEarly access form (heading: Get early access): fields Name, Work email, Company, Team size; button: Request access\nFooter: © 2026 Brightleaf Inc.; links: Privacy, Terms",
       "requirements": [
         {
           "id": "r1",
@@ -3112,14 +3221,22 @@
           ]
         }
       ],
-      "maxPromptChars": 7000
+      "maxPromptChars": 4500
     },
     {
       "slug": "analytics-dashboard",
       "title": "Analytics dashboard",
       "level": 3,
       "category": "App screens and data",
-      "brief": "Orbit Analytics is an admin tool for online shops, and we need its Overview screen. On the left, a dark slate sidebar running the full height with the Orbit Analytics name and the menu: Overview (highlighted in indigo as the current page), Orders, Customers, Products, Reports, then a small Account label above Team, Billing and Settings. Across the top of the main area, a white bar with a search box and, on the right, the signed-in user, Maya Chen, with an amber circle showing her initials. The main area has the heading Overview, four stat cards (Revenue, Orders, New customers and Refund rate, each with a value and its change this month, the refund change in red because it is bad news), a Monthly revenue bar chart for January to December, and a Recent orders table of the last ten orders with coloured status pills. Use the figures listed exactly; it should feel clean, calm and data-first.",
+      "brief": "Orbit Analytics needs its Overview screen. Shop owners open it every morning to check how the business is doing and whether any orders need attention. Key figures, the revenue trend and recent orders are supplied; the reference is the exact target, so match it closely. Make the important numbers readable in seconds and problem orders impossible to miss. Done means an owner can answer \"how are we doing?\" in five seconds.",
+      "acceptance": [
+        "I can read the key figures and their changes in seconds",
+        "Failed and pending orders are impossible to miss",
+        "I always know where I am and how to reach other sections",
+        "The orders table is real table markup a screen reader can follow",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Product: Orbit Analytics\nNavigation: Overview, Orders, Customers, Products, Reports\nNavigation group \"Account\": Team, Billing, Settings\nCurrent section: Overview\nSearch placeholder: Search orders, customers...\nSigned-in user: Maya Chen; initials: MC\nPage title: Overview\nKey figures (label; value; change):\n- Revenue; $48,250; +12.4% this month\n- Orders; 1,284; +8.1% this month\n- New customers; 312; +4.6% this month\n- Refund rate; 2.3%; +0.4% this month\nChart: Monthly revenue; months Jan to Dec; scale marks 0, 25k, 50k\nRecent orders (Order | Customer | Date | Amount | Status):\n#10241 | Liam Patel | Nov 12, 2026 | $320.00 | Paid\n#10240 | Sofia Garcia | Nov 12, 2026 | $89.50 | Pending\n#10239 | Noah Kim | Nov 11, 2026 | $1,240.00 | Paid\n#10238 | Emma Rossi | Nov 11, 2026 | $56.20 | Failed\n#10237 | Oliver Brown | Nov 10, 2026 | $410.75 | Paid\n#10236 | Ava Johnson | Nov 10, 2026 | $215.00 | Pending\n#10235 | Lucas Martin | Nov 9, 2026 | $78.40 | Paid\n#10234 | Mia Dubois | Nov 9, 2026 | $642.10 | Paid\n#10233 | Ethan Novak | Nov 8, 2026 | $33.00 | Failed\n#10232 | Chloe Silva | Nov 8, 2026 | $905.60 | Paid",
       "requirements": [
         {
           "id": "r1",
@@ -3429,14 +3546,22 @@
           ]
         }
       ],
-      "maxPromptChars": 5500
+      "maxPromptChars": 4500
     },
     {
       "slug": "night-train-article",
       "title": "Long-form news article",
       "level": 3,
       "category": "Marketing and content",
-      "brief": "The Ledger is an online newspaper, and this feature, The Quiet Return of the Night Train, needs a proper long-form layout. Across the top, a white header with The Ledger logo in a bold serif (Ledger in our red, #b91c1c) and links to World, Travel, Climate, Culture and Subscribe. The article sits in one centred reading column: a red uppercase Travel kicker, the headline, the byline with Hannah Okafor's name in bold, then the text. It includes a pull quote with a red bar on its left, a line chart of night train routes in Europe from 2020 to 2026 that rises year on year with a dot on each year and a source caption, a table of four new routes, a dark code block with a short timetable query, and a numbered list of booking tips, each part under its own subheading. End with a warm, light footer of three link columns: Sections, The Ledger and Follow. Use the copy listed exactly; it should feel like a serious, well-made newspaper.",
+      "brief": "The Ledger needs a proper long-form layout for this travel feature. Readers should enjoy it like a quality newspaper piece, and the chart, route table, code sample and tips must each be easy to use. Text and data are supplied, and the reference design, with our red as the brand colour, is exactly the page we want: match it. It must be accessible and read well on a phone. Done means it feels like The Ledger and nothing interrupts the reading.",
+      "acceptance": [
+        "It reads like a quality newspaper feature",
+        "The chart, table, code and tips are each easy to use",
+        "The code sample stays readable and is marked up as code",
+        "It reads comfortably on a phone without zooming",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Publication: The Ledger\nSections: World, Travel, Climate, Culture; action: Subscribe\nArticle category: Travel\nTitle: The Quiet Return of the Night Train\nByline: By Hannah Okafor · November 9, 2026 · 8 min read\nBody:\n1. Ten years ago, the sleeper train looked finished. Budget airlines had taken the routes, the carriages were old, and operators were cutting services every winter. Today new lines open every season, and many of them sell out weeks in advance.\n2. What changed was not the trains themselves but the travellers. Families, remote workers and people avoiding short flights now treat a night on the rails as part of the trip rather than a cost of it.\nPull quote: \"You go to sleep in one country and wake up in another. No airport has ever given me that.\"\nFigure: years 2020, 2021, 2022, 2023, 2024, 2025, 2026; caption: Figure 1. Night train routes in Europe, 2020 to 2026. Source: Rail Europe Watch.\nSection: Where the new lines run\nTable (Route | Operator | Hours | From):\nParis to Berlin | Nightjet | 14 | €79\nAmsterdam to Prague | European Sleeper | 15 | €69\nStockholm to Hamburg | SJ Euronight | 12 | €59\nRome to Munich | Nightjet | 13 | €89\nSection: Checking the timetable yourself\nText: Most operators publish their timetables as open data. A short query is enough to find every overnight departure:\nCode (SQL):\nSELECT route, depart, arrive\nFROM departures\nWHERE depart >= '20:00'\nAND overnight = true\nORDER BY depart;\nSection: How to book a good berth\nTips:\n- Book as soon as the season opens, usually ninety days ahead.\n- Choose a lower berth if you want an easy climb at night.\n- Bring a small bag; there is little room for suitcases.\n- Check whether breakfast is included before you pay extra.\nFooter link groups:\n- Sections: World, Travel, Climate, Culture\n- The Ledger: About us, Careers, Contact, Press\n- Follow: Newsletter, Podcast, RSS feed, Archive",
       "requirements": [
         {
           "id": "r1",
@@ -3762,14 +3887,22 @@
           ]
         }
       ],
-      "maxPromptChars": 7500
+      "maxPromptChars": 5000
     },
     {
       "slug": "print-invoice",
       "title": "Print invoice",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "Northwind Print Co. needs a clean invoice template that looks good on screen and on paper; use invoice INV-2026-0418 to Harbourlight Events as the example. Show it as a single white sheet centred on a light grey background, with a teal band along its top edge (our brand teal is #0f766e). The top row has our round N logo, company name, address and VAT number on the left and a large, widely spaced INVOICE title with the invoice number on the right. Under that, three blocks side by side: Bill to, Ship to, and the dates with the PO number and an amber Awaiting payment badge. Then the eight line items in a table with description, code, quantity, unit price and amount, a totals box on the right ending with Total due in bold teal, the payment and terms notes, and a thank-you line at the bottom. It should feel precise, professional and easy to scan.",
+      "brief": "Northwind Print Co. needs an invoice template that looks good on screen and on paper; use the supplied invoice as the example. Clients must find what they owe, when and how to pay at a glance, and the line items must add up clearly. The attached reference, with teal as our brand colour, is exactly what we want; match it as closely as you can. Done means it prints cleanly on one page and a client never has to ask what to pay.",
+      "acceptance": [
+        "I can find the total due, the due date and how to pay at a glance",
+        "The line items and totals are easy to check",
+        "I can tell straight away whether it has been paid",
+        "It prints cleanly on paper without anything cut off",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Seller: Northwind Print Co.; logo letter: N\nSeller address: 88 Mill Lane, Leeds LS1 4BX · VAT GB 284 1193 56\nDocument: INVOICE; No. INV-2026-0418\nStatus: Awaiting payment\nBill to: Harbourlight Events Ltd; Attn: Marcus Ode; 12 Quayside Walk; Newcastle NE1 3DX\nShip to: Harbourlight Events Ltd; Unit 4, Baltic Works; Gateshead NE8 2BA\nIssued: 3 November 2026\nDue: 3 December 2026\nPO number: HL-7731\nLine items (Description | Code | Qty | Unit price | Amount):\nBusiness cards, 16pt matte, double-sided | BC-216 | 2,000 | $0.09 | $180.00\nTri-fold brochure, A4, 150gsm gloss | BR-310 | 1,500 | $0.62 | $930.00\nPull-up banner, 850 × 2000 mm, with stand | PB-085 | 4 | $145.00 | $580.00\nLetterhead, 120gsm uncoated | LH-120 | 2,500 | $0.11 | $275.00\nPresentation folder with pocket | PF-400 | 600 | $1.35 | $810.00\nVinyl window decal, custom cut | VD-022 | 6 | $68.00 | $408.00\nDesign proof revisions (hours) | SV-001 | 5 | $75.00 | $375.00\nCourier delivery, next day | SH-NXT | 1 | $42.00 | $42.00\nTotals:\n- Subtotal: $3,600.00\n- Loyalty discount (5%): −$180.00\n- VAT (5%): $171.00\n- Total due: $3,591.00\nPayment: Bank transfer to Northwind Print Co.; Sort code 40-12-76 · Account 31926819; Reference: INV-2026-0418\nTerms: Payment due within 30 days. A late fee of 2% per month applies to overdue balances.\nClosing line: Thank you for your business — questions? accounts@northwindprint.co.uk · 0113 496 0021",
       "requirements": [
         {
           "id": "r1",
@@ -4034,14 +4167,22 @@
           ]
         }
       ],
-      "maxPromptChars": 6500
+      "maxPromptChars": 5000
     },
     {
       "slug": "product-detail",
       "title": "Product detail page",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "Fernpeak Outfitters sells outdoor gear, and we need the product page for the Alder 28L Roll-Top Pack. At the top, a navigation bar with the Fernpeak Outfitters name in a serif, links to Packs, Tents, Clothing and Sale, and Cart (0) on the right, with a breadcrumb underneath. The main row has a large light grey picture panel on the left with a simple drawn backpack in burnt orange (we have no photo yet), and the buying column on the right: name, a five-star rating with the review count, the price, a short description, four colour swatches with Ember selected, the sizes S/M and M/L with M/L selected, a deep green Add to cart button (#14532d) with a heart button beside it, the stock line and our two perks. Below come tabs for Description, Specifications and Reviews (312) with Description open, showing two paragraphs beside a specifications table, then three customer reviews and four related products under You may also like. Use the copy listed exactly; it should feel outdoorsy, honest and premium without fuss.",
+      "brief": "Fernpeak Outfitters needs the product page for its Alder pack. Shoppers should decide quickly: see the pack, its price and rating, choose a size, add it to the cart, then dig into details, specs and reviews if they want. Content is supplied, and the reference design is the exact target; it will be judged on how closely you match it. It must be accessible and work on a phone. Done means a shopper can buy it with confidence or find any detail they need.",
+      "acceptance": [
+        "I can see the price, rating and stock status at a glance",
+        "Choosing a size and adding to the cart is obvious and keyboard friendly",
+        "Details, specifications and reviews are easy to find",
+        "It works on a phone without losing anything important",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Shop: Fernpeak Outfitters\nShop sections: Packs, Tents, Clothing, Sale; basket link: Cart (0)\nBreadcrumb: Home / Packs / Daypacks / Alder 28L Roll-Top Pack\nProduct: Alder 28L Roll-Top Pack\nRating: 5 of 5 stars; 4.8 · 312 reviews\nPrice: $149.00\nSummary: A waterproof roll-top pack with a padded 16-inch laptop sleeve, quick-access side pockets and a removable hip belt. Built from recycled 420D nylon.\nColour: Ember (chosen colour; written \"Colour: Ember\")\nSize options: S/M, M/L\nButtons: Add to cart; save to wishlist\nAssurances:\n- In stock — ships in 1–2 business days\n- Free returns within 60 days\n- Lifetime repair guarantee\nInformation sections: Description, Specifications, Reviews (312); current section: Description\nDescription:\nThe Alder is our everyday pack for people who don't stop at the city limits. The roll-top closure expands from 24 to 28 litres, and welded seams keep rain out.\nInside, a suspended laptop sleeve keeps your machine off the ground when you set the pack down, and a zip pocket holds keys and passport.\nSpecifications:\n- Volume: 24–28 litres\n- Weight: 1.1 kg\n- Material: Recycled 420D nylon, TPU coated\n- Laptop sleeve: Fits up to 16 inches\n- Dimensions: 52 × 30 × 17 cm\nReviews (heading: What customers say), reviewer; stars out of 5; text:\n- Daniel K.; 5; Took it on a 9-day trek in the Dolomites. The hip belt carried everything and the roll-top kept my gear dry through two storms.\n- Sofia M.; 4; Great daily bag. Laptop sleeve fits a 16-inch machine. Wish the side pockets were a little deeper for my bottle.\n- Ravi P.; 5; Third year using it for my commute and it still looks new. The orange is brighter in person.\nRelated products (heading: You may also like):\n- Ridge 18 Daypack; $89\n- Summit Hip Pack; $45\n- Trailhead Duffel 40L; $129\n- Stormproof Pack Cover; $24\nFooter: © 2026 Fernpeak Outfitters; links: Shipping · Returns · Contact",
       "requirements": [
         {
           "id": "r1",
@@ -4372,14 +4513,22 @@
           ]
         }
       ],
-      "maxPromptChars": 7500
+      "maxPromptChars": 5000
     },
     {
       "slug": "alert-stack",
       "title": "Alert stack",
       "level": 1,
       "category": "Components",
-      "brief": "We need a notifications page for our billing app that shows the four kinds of message our product sends: success, info, warning and error. Put a page heading, Notifications, with a short line under it saying these are four messages from the last 24 hours. Below that, stack the four messages as banners, one per kind, each tinted in its own colour family (green, blue, amber, red) with a stronger stripe down its left edge. Every banner needs a round icon that matches its kind, a bold title, one sentence of detail and a small underlined text button on the right. Keep it calm and readable on a soft grey-blue page; the colours should tell you the kind of message at a glance without shouting.",
+      "brief": "Our billing app sends four kinds of message, good news, information, warnings and errors, and I'd like you to build a notifications page that shows them together. Someone glancing at the page should be able to tell immediately which message is good news and which needs action, and each message should offer one clear thing to do next. All the wording is supplied, and the attached reference is exactly the page we want, so match it as closely as you can. Colour alone mustn't carry the meaning, because some of our users can't rely on it, and it has to work with a screen reader. It's done when a user can tell what each message is about and what to do without reading every word.",
+      "acceptance": [
+        "I can tell at a glance which message is good news and which needs action",
+        "The kind of each message is clear even without colour",
+        "Each message offers one clear next step",
+        "A screen reader announces each message sensibly",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Page title: Notifications\nSubtitle: Four messages from the last 24 hours\nMessages, newest first (kind; title; text; action):\n1. Success; Payment received; Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.; View invoice\n2. Information; New version available; Version 4.2 adds shared workspaces and faster PDF exports.; See what's new\n3. Warning; Storage almost full; You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.; Upgrade plan\n4. Error; Sync failed; We could not reach Google Drive. Your last 3 changes are saved on this device.; Try again",
       "requirements": [
         {
           "id": "r1",
@@ -4465,7 +4614,15 @@
       "title": "Empty state",
       "level": 1,
       "category": "Components",
-      "brief": "When a new customer opens Lumen for the first time, their projects screen is empty, and right now it just looks broken. Design the empty state for it. Centre everything on the page: a small friendly illustration of a folder with a sheet of paper sticking out and a plus sign on its front, then the heading No projects yet, then one sentence explaining that projects keep files, tasks and teammates in one place and inviting them to create their first one. Under that, two buttons side by side: a solid indigo Create project button as the main action and a quieter outlined Import from Trello button. It should feel welcoming and uncluttered, with plenty of white space around it.",
+      "brief": "When a new customer opens Lumen for the first time, their projects screen is empty, and at the moment it just looks broken. I'd like you to design the empty state for it. A new customer should understand straight away that nothing is wrong, why projects are useful, and what to do next, with creating a project as the main path and importing as the alternative. Add a small, friendly picture so the page feels welcoming. The text is supplied, and the attached reference shows exactly what we're after: get as close to it as you can. It's done when a first-time customer feels invited, not stuck, and knows exactly which button to press.",
+      "acceptance": [
+        "A first-time customer can tell that the page is empty on purpose, not broken",
+        "Creating a project is clearly the main next step, and importing is the alternative",
+        "The page feels friendly and welcoming",
+        "Both actions work with a keyboard and have clear names",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Product: Lumen (team workspace app)\nPage: Projects (the account has no projects yet)\nHeading: No projects yet\nMessage: Projects keep your files, tasks and teammates in one place. Create your first one to get started.\nMain action: Create project\nSecond action: Import from Trello",
       "requirements": [
         {
           "id": "r1",
@@ -4528,14 +4685,22 @@
         "one indigo accent, used for the main action and the illustration",
         "secondary action visibly quieter than the primary"
       ],
-      "maxPromptChars": 3500
+      "maxPromptChars": 4000
     },
     {
       "slug": "checkout-steps",
       "title": "Checkout steps",
       "level": 1,
       "category": "Components",
-      "brief": "Our checkout needs a progress indicator so shoppers know where they are. Show four steps in a row, Cart, Shipping, Payment and Review, as numbered circles joined by a line, with the step name under each circle. The shopper has finished Cart and Shipping, so those circles are filled indigo with a white tick, and the line up to Payment is indigo too. Payment is the current step: an indigo ring with its number and a bold indigo label. Review is still to come and stays grey. Under the steps, put a white Order summary card listing the subtotal for 3 items, shipping, tax and a bold total, with a full-width Continue to review button at the bottom. Keep it clean and trustworthy.",
+      "brief": "Shoppers in our checkout keep asking where they are and how much remains, so I'd like you to build a progress indicator for the payment step, along with the order summary. At a glance a shopper should see which steps they've finished, which step they're on and what's still to come, and they should be able to check what they're paying before moving on. The figures are supplied, and the attached reference is the exact target; I'll judge your page by how closely it matches. Progress mustn't be shown by colour alone, and a screen reader should announce the current step. It's done when a shopper knows where they are and what they owe without thinking.",
+      "acceptance": [
+        "I can tell which steps are finished, which one I'm on and what is left",
+        "The current step is announced to a screen reader, not shown by colour alone",
+        "The order total and how it adds up are easy to check",
+        "Moving on to the next step is one obvious action",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Page: Checkout\nSteps, in order: 1 Cart, 2 Shipping, 3 Payment, 4 Review\nCompleted steps: Cart, Shipping\nCurrent step: Payment (step 3)\nOrder summary:\n- Subtotal (3 items): $184.00\n- Shipping: $9.50\n- Tax: $15.48\n- Total: $208.98\nButton: Continue to review",
       "requirements": [
         {
           "id": "r1",
@@ -4615,7 +4780,15 @@
       "title": "Tabbed panel",
       "level": 2,
       "category": "Components",
-      "brief": "Build the Billing tab of the account settings for our customer Atlas Logistics. The page heading is the company name with a line under it saying these are the account settings for the Business workspace. Below sits a white card with a row of five tabs across its top: Overview, Billing, Team, Integrations and Security. Billing is selected, so it should be bold, in our indigo accent and underlined, while the others stay plain grey. The panel under the tabs has a Billing heading, a sentence about automatic renewal, then a light grey box with four details in two columns: plan, billing contact, next invoice and payment method. Finish with a Recent invoices table of three paid invoices with amounts lined up on the right. Tidy and businesslike.",
+      "brief": "Atlas Logistics needs the Billing page of its account settings. The billing contact comes here to check their plan, when the next payment is due and what they've paid recently, and should be able to move to the other settings sections easily. The details are supplied, and the reference design is exactly what we want; match it closely. The section switcher must work properly with a keyboard and a screen reader. It's done when the billing contact can answer \"what do we pay and when?\" in a few seconds.",
+      "acceptance": [
+        "I can tell which settings section I am in",
+        "The plan, next invoice and payment method are easy to find",
+        "Recent invoices are easy to read and marked up as a table",
+        "The section switcher works with a keyboard and a screen reader",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Company: Atlas Logistics\nPage subtitle: Account settings for the Business workspace\nSettings sections: Overview, Billing, Team, Integrations, Security\nCurrent section: Billing\nBilling:\n- Intro: Your plan renews automatically. Invoices are emailed to the billing contact.\n- Plan: Business, billed yearly\n- Billing contact: Priya Shah, priya.shah@atlaslogistics.com\n- Next invoice: 1 December 2026, $2,400.00\n- Payment method: Mastercard ending 8831\nRecent invoices (Invoice | Date | Amount | Status):\nINV-3108 | 1 Nov 2026 | $2,400.00 | Paid\nINV-2987 | 1 Oct 2026 | $2,400.00 | Paid\nINV-2861 | 1 Sep 2026 | $2,150.00 | Paid",
       "requirements": [
         {
           "id": "r1",
@@ -4701,14 +4874,22 @@
         "indigo only on the selected tab",
         "quiet grey labels above dark values"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "settings-toggles",
       "title": "Settings toggles",
       "level": 2,
       "category": "Components",
-      "brief": "Harbor Studio needs a notification settings screen. Title it Settings, with a section menu down the left (Profile, Account, Notifications, Privacy, Billing) where Notifications is highlighted as the current section in a pale indigo pill. On the right, three white cards group the switches: Email, Push notifications and Workspace. Each setting is a row with a bold name, a line of grey helper text explaining it, and a switch on the far right. Switches that are on are indigo with the knob to the right; switches that are off are light grey with the knob to the left. Draw the switches with styles rather than images. Weekly summary, Mentions, Direct messages, Task reminders and Billing alerts are on; the rest are off. It should feel orderly and easy to scan.",
+      "brief": "Harbor Studio needs its notification settings screen. People come here to switch particular notifications on or off, so they must see the current state of every setting at a glance and change it with one action. Settings are grouped by kind; all of them, and their current states, are supplied. The reference design is the exact target; match it as closely as you can. Every switch must be a real, labelled control that works with a keyboard and a screen reader. It's done when a user can find and change any setting in seconds.",
+      "acceptance": [
+        "I can tell at a glance which notifications are on and which are off",
+        "I can always see which settings section I am in",
+        "Every switch has a clear name, so it works with a screen reader and a keyboard",
+        "Related settings are easy to find together",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Workspace: Harbor Studio\nPage: Settings\nSettings sections: Profile, Account, Notifications, Privacy, Billing\nCurrent section: Notifications\nNotification settings by group (name; description; on or off):\nEmail\n- Weekly summary; A digest of activity across your projects, sent every Monday at 8:00.; on\n- Product updates; News about features and improvements, about once a month.; off\n- Mentions; An email when someone mentions you in a comment.; on\nPush notifications\n- Direct messages; Notify me when a teammate sends me a message.; on\n- Task reminders; Remind me 1 hour before a task is due.; on\n- Quiet hours; Pause push notifications from 22:00 to 07:00.; off\nWorkspace\n- New members; Tell me when someone joins the Harbor Studio workspace.; off\n- Billing alerts; Warn me 7 days before the card on file is charged.; on",
       "requirements": [
         {
           "id": "r1",
@@ -4798,14 +4979,22 @@
         "white cards with soft borders on an off-white page",
         "indigo marks what is on or current"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     },
     {
       "slug": "comment-thread",
       "title": "Comment thread",
       "level": 2,
       "category": "Components",
-      "brief": "Our team discussion tool needs a thread view. The thread belongs to the Growth team (show that as a small uppercase label in the accent colour) and asks: Should we switch onboarding emails to a weekly digest? Under a 5 comments heading, show the comments as white cards. Each has a round avatar with the person's initials in white on their own strong colour, their name in bold, a grey relative timestamp next to it, the comment text and a small Reply action. Dana opens the thread; Marcus and Sofia reply to her, and their cards are indented under hers. Priya and Tom then comment at the top level. End the page with a reply box: a labelled text area and a Post reply button. Friendly but focused, like a good team chat.",
+      "brief": "Our team discussion tool needs a thread view. Readers should follow the conversation in order, see who said what and when, reply to any comment, and add their own reply at the end. The thread itself is supplied, and the attached reference is exactly what we want, so match it as closely as you can. Keep it calm and readable even when a thread gets long, and make sure the reply box and buttons work with a keyboard and a screen reader. It's done when someone can catch up on the whole discussion in a minute and join in.",
+      "acceptance": [
+        "I can follow the conversation in order and see who said what and when",
+        "Each comment's author is easy to recognise",
+        "Replying is easy to find, both per comment and at the end",
+        "The reply box has a clear name for screen readers",
+        "Next to the reference, nothing important is missing or out of place"
+      ],
+      "content": "Team: Growth team\nDiscussion title: Should we switch onboarding emails to a weekly digest?\nComment count: 5 comments\nComments, oldest first (author; initials; posted; text):\n1. Dana Whitfield; DW; 2 hours ago; New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.\n2. Marcus Lee; ML; 1 hour ago; Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?\n3. Sofia Alvarez; SA; 45 minutes ago; Keeping day 1 makes sense. I can have the digest template ready by Thursday.\n4. Priya Nair; PN; 30 minutes ago; Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.\n5. Tom Okafor; TO; 12 minutes ago; I'll set up the test cohort in the email tool today and share the dashboard link here.\nAction on each comment: Reply\nNew reply: placeholder: Write a reply; button: Post reply",
       "requirements": [
         {
           "id": "r1",
@@ -4885,14 +5074,22 @@
         "comments as rounded white cards with soft borders",
         "colour only in the avatars and the indigo actions"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "data-table-paged",
       "title": "Paged data table",
       "level": 3,
       "category": "Components",
-      "brief": "Ledgerly's finance team lives in the invoices list, so it has to be dense but easy to read. Title the page Invoices with a summary line of 142 invoices and $318,420.00 outstanding. Put everything else in one white card: a toolbar with a labelled search field on the left and Export CSV and New invoice buttons on the right; then a table of the twelve newest invoices with columns Invoice, Customer, Issued, Due, Amount and Status. The table is sorted by Issued, newest first, so that header is indigo with a small down arrow. Amounts line up on the right and statuses are rounded pills: green Paid, amber Pending, red Overdue, grey Draft. The row for INV-2410 is selected and highlighted in pale indigo with an accent bar on its left. Under the table, show which rows are visible and page controls for 12 pages, with page 1 current.",
+      "brief": "Ledgerly's finance team lives in the invoices list, so it has to be dense yet easy to read. They need to scan invoices, spot what's overdue, search, export and move through pages. Data is supplied; the reference is the exact target, so match it. It must be real, accessible table markup. Done means the team finds any invoice and its status in seconds.",
+      "acceptance": [
+        "I can spot overdue and pending invoices immediately",
+        "Dense rows stay easy to read and amounts are easy to compare",
+        "Searching, exporting, creating and paging are obvious",
+        "It is real table markup a screen reader can follow",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Product: Ledgerly\nPage title: Invoices\nSummary: 142 invoices, $318,420.00 outstanding\nSearch: label: Search; placeholder: Customer or invoice number\nActions: Export CSV, New invoice\nInvoices (Invoice | Customer | Issued | Due | Amount | Status):\nINV-2412 | Northwind Traders | 14 Nov 2026 | 14 Dec 2026 | $4,250.00 | Pending\nINV-2411 | Bluebird Dental | 13 Nov 2026 | 13 Dec 2026 | $1,180.00 | Paid\nINV-2410 | Halcyon Studio | 12 Nov 2026 | 27 Nov 2026 | $2,940.50 | Pending\nINV-2409 | Ferro & Sons | 10 Nov 2026 | 10 Dec 2026 | $760.00 | Draft\nINV-2408 | Cedar Ridge Farms | 7 Nov 2026 | 7 Dec 2026 | $12,400.00 | Paid\nINV-2407 | Oakline Legal | 5 Nov 2026 | 5 Dec 2026 | $3,615.00 | Paid\nINV-2406 | Meridian Health | 1 Nov 2026 | 15 Nov 2026 | $8,020.00 | Overdue\nINV-2405 | Polar Freight | 30 Oct 2026 | 29 Nov 2026 | $5,300.00 | Pending\nINV-2404 | Juniper Books | 28 Oct 2026 | 11 Nov 2026 | $420.00 | Overdue\nINV-2403 | Tidewater Marine | 24 Oct 2026 | 23 Nov 2026 | $9,875.00 | Paid\nINV-2402 | Lark Coffee Co. | 21 Oct 2026 | 20 Nov 2026 | $1,045.75 | Paid\nINV-2401 | Granite Peak Gym | 17 Oct 2026 | 16 Nov 2026 | $2,200.00 | Paid\nSelected invoice: INV-2410\nPaging: Showing 1 to 12 of 142 invoices; pages 1, 2, 3, ..., 12; current page: 1; Previous (unavailable on page 1), Next",
       "requirements": [
         {
           "id": "r1",
@@ -5042,14 +5239,22 @@
         "small uppercase grey column headers",
         "colour reserved for status pills, the sort, the selection and the primary action"
       ],
-      "maxPromptChars": 5500
+      "maxPromptChars": 4000
     },
     {
       "slug": "modal-over-page",
       "title": "Modal over page",
       "level": 3,
       "category": "Components",
-      "brief": "In Fieldnote, deleting a project opens a confirmation dialog over the projects page, and we want that moment captured. Behind the dialog is the normal page: a white top bar with the Fieldnote name on the left and Projects, Reports and Settings links on the right, then a Projects heading and three project cards in a row (Spring campaign, Customer interviews, Brand refresh), each with a short description and a file count. The whole page is dimmed by a half-transparent black overlay. Centred on top sits a white dialog titled Delete project, warning that Spring campaign and its 48 files will be removed for good. It has two labelled fields, a confirmation box for the 12 linked reports, and two buttons on the right: Cancel, and a red Delete project button. It should feel serious without being alarming.",
+      "brief": "In Fieldnote, deleting a project opens a confirmation dialog over the projects page, and we want that moment captured. The user must understand exactly what will be lost and that it can't be undone, and cancelling should feel safe. Content is supplied; the reference design is exactly what we want, so match it closely. The dialog must be accessible. Done means nobody deletes a project by accident.",
+      "acceptance": [
+        "It is clear what will be deleted and that it cannot be undone",
+        "The destructive action is clearly distinct from cancelling",
+        "The page behind is visible but clearly inactive",
+        "The dialog and its fields are accessible to keyboard and screen reader users",
+        "It matches the reference design closely in structure and look"
+      ],
+      "content": "Product: Fieldnote\nNavigation: Projects, Reports, Settings (current: Projects)\nProjects (name; description; file count):\n- Spring campaign; Launch plan, ad copy and landing pages for the April release.; 48 files\n- Customer interviews; Notes and recordings from 14 interviews with clinic managers.; 31 files\n- Brand refresh; Logo options, colour studies and the updated style guide.; 22 files\nOpen dialog: deleting the project Spring campaign\n- Title: Delete project\n- Warning: This permanently removes Spring campaign and its 48 files. It cannot be undone.\n- Field: Type the project name to confirm; placeholder: Spring campaign\n- Field: Reason for deleting; filled in: Campaign has ended\n- Checkbox: Also delete the 12 linked reports\n- Buttons: Cancel; Delete project (the destructive action)",
       "requirements": [
         {
           "id": "r1",
@@ -5139,14 +5344,21 @@
         "red used only for the destructive button",
         "dialog compact and focused, about a third of the window wide"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     },
     {
       "slug": "not-found-page",
       "title": "Friendly 404 page",
       "level": 1,
       "category": "Marketing and content",
-      "brief": "Fieldnote is a note-taking app, and people keep landing on dead links from old blog posts. We need a 404 page that tells them plainly what happened and gets them moving again instead of leaving. Keep our usual thin white header with the Fieldnote name on the left and a 'Back to home' link on the right. The centre of the page should lead with a very large '404' in our indigo, then a short heading and one calm sentence. Under that, give them a labelled search box for the help centre with a Search button, and below it three helpful links shown as small cards: Getting started, Pricing and plans, and Contact support, each with a one-line description. Finish with a quiet copyright line. It should feel friendly and uncluttered, not like an error screen.",
+      "brief": "People keep hitting dead links in the Fieldnote help site, and at the moment they land on a bare error. I'd like you to build our proper 'page not found' screen. Someone who arrives here is a little lost and possibly annoyed, so within a second they should know what happened and see an easy way forward: searching, jumping to a popular page, or going home. Keep it calm and uncluttered, with our indigo as the brand colour and one clear focal point. The content is supplied. The attached reference is exactly what we want, so match it as closely as you can. Done means a lost visitor finds their way on without thinking.",
+      "acceptance": [
+        "A lost visitor understands straight away that the page they wanted is missing",
+        "I can search or reach a popular page without hunting for it",
+        "The screen feels calm and friendly rather than like a crash",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Company: Fieldnote\nLink back: Back to home\nError code: 404\nHeading: We couldn't find that page\nMessage: The link may be broken, or the page may have moved. Try a search, or start from one of the pages below.\nSearch field label: Search the help centre\nSearch button: Search\nPopular pages (heading: Popular pages), each with its description:\n- Getting started: Set up your first notebook in five minutes\n- Pricing and plans: Compare Free, Team and Business\n- Contact support: We reply within one business day\nLegal line: © 2026 Fieldnote Labs, Inc.",
       "requirements": [
         {
           "id": "r1",
@@ -5229,7 +5441,15 @@
       "title": "Newsletter sign-up band",
       "level": 1,
       "category": "Marketing and content",
-      "brief": "Harbor & Pine is a small coffee roaster in Portland, and we want more people on our fortnightly newsletter, The Roast Report. Build the bottom of our site: a warm, full-width sign-up band and the footer under it. On the left of the band put a small envelope icon, the newsletter name as a little label, a big serif headline and one sentence saying what subscribers get. On the right, a white sign-up card with a labelled email field, a Subscribe button in our rust brown and a short privacy reassurance. Under the band, a dark footer in two rows: our name and five links on top, and the copyright line with Privacy policy and Terms of sale underneath. It should feel cosy and trustworthy, like the inside of a good café.",
+      "brief": "We're relaunching The Roast Report, our coffee newsletter, and I need the sign-up section that sits just above the Harbor & Pine site footer, plus that footer. Visitors should want to subscribe after a few seconds of reading: they need to get what they'll receive, how often, and that we won't misuse their email. Signing up has to feel like one easy step. The brand is warm and crafted, with rust brown as our accent. The content is supplied. The reference design is the finished section: get yours as close to it as possible. Done means it looks like part of our shop and the form is properly labelled.",
+      "acceptance": [
+        "I can tell what the newsletter is and how often it arrives without reading everything",
+        "Subscribing feels like a single obvious step",
+        "The email field is properly labelled so it works with a screen reader",
+        "The footer links are easy to find",
+        "It matches the reference design closely"
+      ],
+      "content": "Brand: Harbor & Pine\nNewsletter\nName: The Roast Report\nTagline: Fresh lots, brewed better\nDescription: One email every other Thursday: new single-origin lots, brewing guides from our roasters and subscriber-only prices.\nSignup field label: Email address\nSignup button: Subscribe\nPrivacy note: We only use your email to send the newsletter. Unsubscribe in one click, any time.\nSite links: Shop coffee, Subscriptions, Wholesale, Brewing guides, Contact\nLegal line: © 2026 Harbor & Pine Coffee Roasters, Portland, Oregon\nLegal links: Privacy policy, Terms of sale",
       "requirements": [
         {
           "id": "r1",
@@ -5314,7 +5534,15 @@
       "title": "Feature grid",
       "level": 1,
       "category": "Marketing and content",
-      "brief": "Ledgerly is accounting software for small businesses, and our features page needs a clean overview section. At the top, a simple header: the Ledgerly name on the left, links to Features, Pricing and Customers, and a solid 'Start free trial' link in our teal. Below, a centred introduction: a small 'Features' label, the heading 'Everything your books need, in one place' and one sentence about closing the month faster. Then six feature cards in a grid of three across and two down. Each card gets a simple line icon on a soft teal tile, a short title and about two lines of description. The six features are Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready and Team access. It should feel tidy, light and trustworthy.",
+      "brief": "I need the Features page for Ledgerly, our accounting app for small businesses. The people reading it are busy owners deciding whether to try us, so they should be able to skim it in half a minute and come away knowing what Ledgerly does for them, then find the trial easily. Every feature should get equal weight; none is the star. Keep it light and spacious, with teal as our accent and used sparingly. The content is supplied. The attached reference is the target, and I will judge the work on how closely it matches. Done means a skimmer can name three things we do and knows how to start a trial.",
+      "acceptance": [
+        "I can skim the page and quickly see what each feature does",
+        "No feature looks more important than the others",
+        "Starting a free trial is easy to find",
+        "It stays tidy and readable on a phone as well as a laptop",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Product: Ledgerly\nSite links: Features, Pricing, Customers\nMain action: Start free trial\nPage label: Features\nHeading: Everything your books need, in one place\nIntro: Ledgerly handles the busywork of small-business accounting, so you can close the month in an afternoon instead of a week.\nFeatures (name: description), six in all:\n- Smart invoicing: Send branded invoices in seconds and get paid by card or bank transfer.\n- Bank sync: Connect over 12,000 banks and see every transaction matched overnight.\n- Receipt capture: Snap a photo of any receipt and Ledgerly files it against the right expense.\n- Live reports: Profit and loss, cash flow and balance sheet, updated as money moves.\n- Tax ready: Sales tax is worked out on every invoice and filed reports export in one click.\n- Team access: Invite your accountant and staff with roles that show only what they need.",
       "requirements": [
         {
           "id": "r1",
@@ -5399,7 +5627,15 @@
       "title": "Testimonial wall",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Tandem is a team planning tool, and we want a customer stories page that feels like a wall of real voices rather than a tidy carousel. Keep a simple header with our name and four links. Under a centred intro (a 'Customer stories' label, the heading 'Teams that plan together, ship together' and one sentence), show six testimonial cards in three columns. The quotes are different lengths, so let the cards be different heights and stack naturally like a masonry wall, not forced into equal rows. Each card has the quote, then a round avatar with the person's initials in its own colour, their name and their role and company. Make the Elena Marquez card stand out: deep indigo with white text and a slightly larger quote. Soft lavender page, white cards, friendly but grown-up.",
+      "brief": "Sales wants a customer stories page for Tandem, our planning tool. Prospects should land on it and feel that real, credible teams love us. The stories differ a lot in length, and the page should make that feel natural rather than awkward, with one short quote standing out as the star. Each quote must clearly belong to a named person and company. Keep it friendly but grown-up. The content is supplied. Treat the reference design as the final page and match it closely. Done means it is pleasant to browse and convincing at a glance.",
+      "acceptance": [
+        "Every quote clearly belongs to a named person and their company",
+        "One story clearly stands out from the rest",
+        "Quotes of different lengths sit together without awkward gaps",
+        "The page still reads comfortably on a phone",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "Company: Tandem\nSite links: Product, Customers, Pricing, Sign in\nPage label: Customer stories\nHeading: Teams that plan together, ship together\nIntro: More than 4,000 teams use Tandem to plan their week. Here is what a few of them say.\nTestimonials (quote / person / role and company / initials):\n1. \"We used to lose an hour every Monday working out who was doing what. Now the plan is just there when we open our laptops.\" / Priya Natarajan / Head of Operations, Kestrel Freight / PN\n2. \"Setup took one afternoon.\" / Tomas Oyelaran / CTO, Brightline Health / TO\n3. \"Tandem replaced three tools and a spreadsheet nobody trusted. Our delivery dates went from guesses to promises, and our clients noticed within a month.\" / Elena Marquez / Managing Director, Northfold Studio / EM\n4. \"The workload view is the first thing I check each morning. It tells me who needs help before they have to ask for it.\" / James Whitlock / Engineering Manager, Quarry Labs / JW\n5. \"Our remote team spans nine time zones. Tandem is the one place where everyone agrees on what this week looks like.\" / Aiko Kobayashi / Product Lead, Driftwood / AK\n6. \"Honest, simple, fast. Exactly what planning software should be.\" / Sam Becker / Founder, Lumen Coffee Co. / SB",
       "requirements": [
         {
           "id": "r1",
@@ -5487,14 +5723,22 @@
         "colourful initials avatars",
         "friendly but grown-up"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "faq-page",
       "title": "FAQ page",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Parcelwise sells shipping software, and our support team answers the same billing questions every day. We want a proper FAQ page in our help centre. A thin header with 'Parcelwise Help' and a 'Contact support' link, then a light grey banner with the heading 'Frequently asked questions' and one line under it. Below, two columns: on the left, a narrow category list (Getting started, Billing, Shipping and labels, Account and security, Integrations) that stays in view as you scroll, with Billing marked as the current one. On the right, the Billing section with eight questions that open and close. Show the first and third open with their answers; the rest closed. Each question has a plus icon on the right that becomes a minus when it is open. Clean, calm, very readable, with blue as the only accent.",
+      "brief": "Our support inbox is full of billing questions, so I want the Parcelwise Help billing FAQ live this week. Customers arrive with one question and want its answer fast: they should see the topics we cover, know they are in the billing section, and spot their question without wading through text. Answers must stay readable, and anyone using a keyboard or screen reader must get the same experience. Calm, lots of breathing room, blue as our only accent. The content is supplied. The reference is exactly the page we signed off, so copy it as faithfully as you can. Done means a customer finds their answer in seconds.",
+      "acceptance": [
+        "I can tell which help topic I am looking at",
+        "I can scan the questions and find mine quickly",
+        "Answers are comfortable to read",
+        "It works properly with a keyboard and a screen reader",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Site name: Parcelwise Help\nSupport link: Contact support\nHeading: Frequently asked questions\nIntro: Quick answers about shipping, billing and your Parcelwise account.\nCategories (label: Categories): Getting started, Billing, Shipping and labels, Account and security, Integrations\nCurrent category: Billing\nCategory heading: Billing\nCategory intro: Eight questions about plans, invoices and payments.\nQuestions and answers:\nQ: When will I be charged?\nA: Your card is charged on the same day each month as the day you upgraded. Label postage is charged separately, at the moment you buy each label.\nQ: Can I switch between monthly and yearly billing?\nA: Yes. Switch in Settings, then Billing. Moving to yearly takes effect at once and credits any unused days of your monthly plan.\nQ: Where do I find my invoices?\nA: Every invoice is listed under Settings, then Billing, then Invoice history, and a PDF copy is emailed to your billing contact on the day it is issued.\nQ: Which payment methods do you accept?\nA: Visa, Mastercard and American Express, plus ACH bank transfer on yearly plans.\nQ: Do you offer refunds?\nA: Yearly plans can be refunded in full within 30 days of purchase.\nQ: How do I add a tax ID to my invoices?\nA: Enter it under Settings, then Billing, then Company details.\nQ: What happens if a payment fails?\nA: We retry three times over seven days and email you before each attempt.\nQ: Can I cancel at any time?\nA: Yes. Your plan stays active until the end of the current billing period.",
       "requirements": [
         {
           "id": "r1",
@@ -5582,14 +5826,22 @@
         "thin divider lines between questions",
         "narrow category column, wide answer column"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "team-page",
       "title": "Team page",
       "level": 2,
       "category": "Marketing and content",
-      "brief": "Orbital Analytics turns satellite data into crop forecasts, and we are growing, so we want a team page that feels human and helps hiring. Simple header with our name and links to Product, Customers, Team (marked current) and Careers. A centred page header: a small 'Our team' label, the heading 'The people behind Orbital' and one sentence about who we are. Then eight people in a grid of four across and two down. Each card has a round avatar with initials, the person's name, their job title in our teal, a one-line bio and two small text links, LinkedIn and Email. Alternate the avatar colours between teal and slate. Finish with a wide teal 'We're hiring' band with a sentence about open roles and a white 'See open roles' button on the right. Bright, open and professional.",
+      "brief": "Investors and job candidates keep asking who is behind Orbital Analytics, so we need a team page. Visitors should come away feeling we are a credible, friendly group of experts, able to see each person's name and role at a glance and reach them easily. Nobody should look more important than anyone else. Finish the page with a clear nudge towards our open roles, because hiring is the real goal. The brand is teal with slate. The content is supplied. The attached reference design is the goal: the closer your page is to it, the better. Done means it looks professional and every contact link is usable.",
+      "acceptance": [
+        "I can see each person's name and role at a glance",
+        "Everyone is presented as equally important",
+        "The contact links are clearly named so they work with a screen reader",
+        "The hiring message is hard to miss",
+        "It matches the reference design closely"
+      ],
+      "content": "Company: Orbital Analytics\nSite links: Product, Customers, Team, Careers\nPage label: Our team\nHeading: The people behind Orbital\nIntro: We are a team of 42 engineers, scientists and designers turning satellite data into crop forecasts farmers can act on.\nPeople (name / role / one-line bio / initials):\n- Nadia Okafor / Co-founder and CEO / Former NASA Earth science lead. / NA\n- Lars Henriksen / Co-founder and CTO / Built imaging pipelines at Planet. / LH\n- Maya Shapiro / Head of Data Science / Ten years modelling crop yields. / MS\n- Diego Ramos / Head of Design / Designs tools for people in fields. / DR\n- Amara Chen / Engineering Manager / Keeps our forecasts on schedule. / AC\n- Kwame Boateng / Remote Sensing Scientist / Reads soil moisture from orbit. / KB\n- Sofia Ferreira / Customer Success Lead / Grew up on a vineyard in Douro. / SF\n- Tom Whitaker / Senior Platform Engineer / Keeps our servers running. / TW\nContact links for every person: LinkedIn, Email\nHiring\nHeading: We're hiring\nText: Six open roles across engineering, science and support. Remote-first, with hubs in Lisbon and Toronto.\nButton: See open roles",
       "requirements": [
         {
           "id": "r1",
@@ -5683,14 +5935,22 @@
         "eight equal cards in a tidy grid",
         "a bold teal band to close the page"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "event-schedule",
       "title": "Conference schedule",
       "level": 3,
       "category": "Marketing and content",
-      "brief": "We run Frontier UX Summit, a one-day design and engineering conference in Glasgow, and we need the day one schedule page. Dark navy header and hero with an amber accent: the event name as the main heading, a small 'Day one schedule' label, and the date (Thursday 18 March 2027), the venue (Kelvin Hall, Glasgow) and '8 sessions, 3 tracks' in one row, then a 'Get your ticket' button. Next, a proper schedule table with columns Time, Session, Speaker, Room and Track: ten rows including registration and lunch, which should look quieter than the talks. Each talk shows its track as a coloured pill: Design, Engineering or Research, each with its own colour. Then a 'Featured speakers' row of three cards with initials avatars, and a dark ticket band with the early bird price of £249. Professional, energetic, easy to scan.",
+      "brief": "Build the day one page for Frontier UX Summit. Attendees will check it on their phones in the venue, so the schedule must answer 'what's on now, where, and which track' fast. Sell the day too: key details and booking up front, the headline speakers, a closing ticket pitch. Navy and amber are the brand. The content is supplied. The reference is the target; match it as closely as you can. Done means the timetable is easy to scan and stays usable on a small screen.",
+      "acceptance": [
+        "I can find what is on at a given time and where in seconds",
+        "Tracks are easy to tell apart without relying on colour alone",
+        "Booking a ticket is always easy to reach",
+        "The schedule stays usable on a phone",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Event: Frontier UX Summit 2027 (short name: Frontier UX Summit)\nSite links: Schedule, Speakers, Venue, Tickets\nPage heading: Day one schedule\nKey details:\nDate: Thursday 18 March 2027\nVenue: Kelvin Hall, Glasgow\nTalks: 8 sessions, 3 tracks\nMain action: Get your ticket\nSchedule (heading: Schedule)\nNote: All times are GMT. Rooms are on the ground floor unless marked.\nTime | Session | Speaker | Room | Track\n08:30 | Registration and coffee | - | Main foyer | -\n09:15 | Opening keynote: Designing for trust | Ingrid Solberg | Main hall | Design\n10:15 | Shipping accessible components at scale | Ravi Menon | Room A | Engineering\n11:00 | Interviewing users who don't want to talk | Grace Adeyemi | Room B | Research\n12:00 | Lunch | - | Main foyer | -\n13:00 | Motion that explains, not decorates | Luca Bianchi | Room A | Design\n13:45 | Measuring what onboarding really costs | Hannah Kerr | Room B | Research\n14:30 | Design tokens without the drama | Owen Fraser | Room A | Engineering\n15:30 | Panel: The future of product teams | Grace Adeyemi and guests | Main hall | Research\n16:30 | Closing keynote: Small screens, big decisions | Ravi Menon | Main hall | Engineering\nFeatured speakers (heading: Featured speakers; intro: Three of the people opening and closing the day.)\n- Ingrid Solberg (IS), VP of Design, Fjordbank: Ingrid led the redesign of Norway's most used banking app and now writes about trust in digital services.\n- Ravi Menon (RM), Principal Engineer, Canvasly: Ravi maintains a component library used by 900 product teams and talks about making accessibility the default.\n- Grace Adeyemi (GA), Research Director, Hearth Labs: Grace has run more than 2,000 user interviews across four continents and teaches research for hard-to-reach groups.\nTickets\nHeading: Join us in Glasgow\nText: Your ticket covers every talk, lunch, coffee and the evening reception.\nButton: Book your ticket\nPrice: £249\nPrice note: Early bird price until 31 January 2027\nLegal line: © 2027 Frontier UX Summit Ltd. Kelvin Hall, 1445 Argyle Street, Glasgow.",
       "requirements": [
         {
           "id": "r1",
@@ -5792,14 +6052,21 @@
         "soft coloured track pills",
         "a crisp white table that is easy to scan"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     },
     {
       "slug": "case-study",
       "title": "Editorial case study",
       "level": 3,
       "category": "Marketing and content",
-      "brief": "Stackwell is a digital agency, and this case study about rebuilding Greenleaf Grocers' online checkout is going to be our main sales piece, so it should read like a magazine article. Use a serif typeface for the reading text on a warm off-white page, with forest green (#166534) as the only accent. Header with our name and four links, Case studies marked current. Then the title 'How Greenleaf Grocers cut checkout drop-off by 38%' with a short summary, and a row of three big result figures: 38%, 2.4x and $1.2M, each with a short caption. The article has three sections (The challenge, What we changed, The results), a pull quote from Dana Whitfield, a bar chart of checkout completion from January to June 2026 with labelled axes and the post-launch months in green, and a before-and-after table. A simple footer closes it.",
+      "brief": "We need the Greenleaf Grocers case study for the Stackwell site. Prospective clients should grasp the result before reading a word, then be able to follow the story and trust the numbers. Make it read like a good magazine piece, with forest green as our only accent. The chart and table must make sense to someone who cannot see colour. The content is supplied. The reference design is the agreed final version, and yours should be indistinguishable from it. Done means a busy reader leaves knowing what we did and what it achieved.",
+      "acceptance": [
+        "The headline results land before I start reading",
+        "The story is comfortable to read from start to finish",
+        "The chart makes the before and after clear, even without colour",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "Agency: Stackwell\nSite links: Services, Case studies, About, Contact\nPage label: Case study · Retail (part of Case studies)\nHeading: How Greenleaf Grocers cut checkout drop-off by 38%\nIntro: A regional grocery chain was losing one in two online baskets at checkout. In twelve weeks we rebuilt the flow around speed and fewer decisions.\nHeadline results (figure: meaning):\n- 38%: fewer abandoned checkouts\n- 2.4x: faster checkout page loads\n- $1.2M: added yearly online revenue\nThe challenge: Greenleaf runs 46 stores across Oregon and Washington. Online orders had doubled since 2024, but almost half of the shoppers who reached checkout left before paying. The checkout asked for an account, five pages of details and a delivery slot chosen last.\nWhat we changed: We cut checkout to a single page, made guest checkout the default and moved the delivery slot to the start, so shoppers knew their time before they filled in anything else. Page weight fell from 3.1 MB to 1.2 MB.\nClient quote: \"For the first time, our online checkout feels as quick as our fastest till.\"\nQuote by: Dana Whitfield, Head of Digital, Greenleaf Grocers\nThe results: The new checkout launched on 1 April 2026. Completion rose in the first month and kept climbing as returning shoppers got used to it.\nChart data, title: Checkout completion; months axis label: Month, 2026; scale 0% to 80%\nJan 52% (old checkout), Feb 54% (old), Mar 53% (old), Apr 61% (new), May 68% (new), Jun 71% (new)\nComparison table, title: Before and after the new checkout\nMeasure | Before | After\nCheckout completion | 53% | 71%\nPages in checkout | 5 | 1\nMedian time to pay | 4 min 10 s | 1 min 35 s\nCheckout page weight | 3.1 MB | 1.2 MB\nClosing action: Start a project with us\nLegal line: © 2026 Stackwell Digital, Portland, Oregon",
       "requirements": [
         {
           "id": "r1",
@@ -5908,14 +6175,22 @@
         "big result figures as the visual hook",
         "a quiet, well-labelled chart"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4500
     },
     {
       "slug": "weather-card",
       "title": "Weather card",
       "level": 1,
       "category": "App screens and data",
-      "brief": "We need the current-weather card for our travel app, shown for Lisbon on Sunday 15 November at 14:00. Someone glancing at it should get the temperature first, then the sky, then the details. Put the city and the date and time at the top, then a big 18° next to a drawn sun-behind-a-cloud icon, with 'Partly cloudy' and 'Feels like 17°' beside it. Under that, three small boxes for humidity, wind and UV index. Finish with a five-day forecast row, Monday to Friday, each day with a little weather icon and its high and low. Keep it as one clean white card floating on a pale sky-blue page, friendly and calm rather than techy, with sunny yellow icons and soft grey clouds.",
+      "brief": "For our travel app I need the current-weather panel, showing Lisbon this Sunday afternoon. Travellers glance at it for a second, so the temperature has to come first, then what the sky is doing, then the finer details, and finally the next few days. Use simple weather pictures so it reads without words. Keep it light and friendly, with a sky-blue feel. The content is supplied. The attached reference is precisely what we want, so make yours match it. Done means someone can tell me today's weather and the week's trend after one look.",
+      "acceptance": [
+        "I can read the current temperature at a glance",
+        "The sky conditions are clear even before I read the label",
+        "The forecast for the coming days is easy to compare",
+        "The weather pictures have text alternatives for screen readers",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Location: Lisbon, Portugal\nDate and time: Sunday 15 November, 14:00\nCurrent conditions\nTemperature: 18°\nSky: Partly cloudy\nFeels like 17°\nDetails (label: value):\nHumidity: 72%\nWind: 14 km/h NW\nUV index: 3 Moderate\n5-day forecast (day: high / low):\nMon: 21° / 14°\nTue: 19° / 13°\nWed: 16° / 12°\nThu: 17° / 12°\nFri: 20° / 13°",
       "requirements": [
         {
           "id": "r1",
@@ -6013,7 +6288,15 @@
       "title": "Leaderboard table",
       "level": 1,
       "category": "App screens and data",
-      "brief": "Our players want to see this week's top ten. Build the weekly leaderboard for week 46 (9 to 15 November 2026). It is a table with rank, player, score and prompts used; each player has a round avatar with their initials in a strong colour. The top three ranks get gold, silver and bronze medal-style badges, and the viewer, Jordan Ellis in seventh place, must be able to spot their own row at a glance from a soft highlight. Numbers should line up on the right so scores are easy to compare. Add a short line under the title that says fewer prompts break a tie, and a note under the table that scores reset every Monday. It should feel competitive but tidy, like a sports results page, on a light grey background.",
+      "brief": "Our players want to see how they stack up this week, so build the weekly leaderboard. Anyone opening it should see who is leading, how the scores compare, and, most of all, where they themselves stand without searching. The tie-break rule and reset time need to be visible but quiet. It should be a proper data table that a screen reader can make sense of. Keep it light and clean. The content is supplied. The reference design is the finished screen; match it as closely as possible. Done means a player finds their own row in under a second.",
+      "acceptance": [
+        "I can find my own position immediately",
+        "The leading players clearly stand out from the rest",
+        "Scores and prompt counts are easy to compare",
+        "It is a real table that works with a screen reader",
+        "It matches the reference design closely"
+      ],
+      "content": "Title: Weekly leaderboard\nSubtitle: Week 46, 9 to 15 November 2026. Fewer prompts break a tie.\nTable header: Rank | Player | Score | Prompts used\n1 | Priya Nair (PN) | 9,840 | 31\n2 | Marcus Okafor (MO) | 9,615 | 28\n3 | Lena Brandt (LB) | 9,402 | 35\n4 | Daniel Kim (DK) | 9,118 | 33\n5 | Sofia Rossi (SR) | 8,977 | 40\n6 | Tom Whitfield (TW) | 8,730 | 37\n7 | Jordan Ellis (you) (JE) | 8,544 | 29\n8 | Aisha Haddad (AH) | 8,301 | 44\n9 | Rafael Costa (RC) | 8,066 | 39\n10 | Emma Visser (EV) | 7,912 | 42\n(Letters in brackets are each player's initials.)\nMedals: rank 1 gold, rank 2 silver, rank 3 bronze\nCurrent player: Jordan Ellis (you), rank 7\nNote: Scores reset every Monday at 00:00 UTC.",
       "requirements": [
         {
           "id": "r1",
@@ -6100,7 +6383,15 @@
       "title": "Now playing",
       "level": 1,
       "category": "App screens and data",
-      "brief": "Design the now-playing screen for our music app, as a single card in dark mode. The song is 'Harbour Lights' by The Wandering Pines, playing from the playlist Autumn Drive. The album art is a simple illustration: a moon over a harbour at night with a small lighthouse and reflections on the water. Under it, the title and artist, a progress bar about a third of the way along with 1:24 elapsed and 3:42 total, and the five usual controls: shuffle, previous, a big pause button, next and repeat. End with an 'Up next' list of three songs with a small coloured square, the title, the artist and the length. Night-time mood: deep navy and indigo with one soft periwinkle accent for the progress and the main button.",
+      "brief": "I'd like the now-playing screen for our music app. Someone glancing at their phone should know straight away what song is on, who it's by, how far through it is, and what is coming next. The playback controls must be easy to hit and clearly named for people using a screen reader. It's a dark screen, with a soft periwinkle accent and the album art doing most of the visual work. The content is supplied. The attached reference is the exact target, and closeness to it is how I will judge it. Done means it feels like a real player app.",
+      "acceptance": [
+        "I can tell what is playing and who it is by at a glance",
+        "I can see how far through the song I am",
+        "Every control has a clear name for screen readers",
+        "The queue of upcoming songs is easy to read",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Source: Playing from Autumn Drive (playlist: Autumn Drive)\nCurrent track: Harbour Lights\nArtist: The Wandering Pines\nAlbum art: a moon over a harbour at night\nPosition: 1:24 elapsed of 3:42\nState: playing (the play button currently offers Pause)\nControls: Shuffle, Previous track, Pause, Next track, Repeat\nUp next (title / artist / length):\n1. Slow Tide / The Wandering Pines / 4:05\n2. Neon Orchard / Mira Sol / 3:18\n3. Paper Kites / Juniper Lane / 3:51",
       "requirements": [
         {
           "id": "r1",
@@ -6173,14 +6464,22 @@
         "big art, compact controls",
         "quiet grey secondary text"
       ],
-      "maxPromptChars": 4000
+      "maxPromptChars": 3500
     },
     {
       "slug": "inbox-list",
       "title": "Inbox list",
       "level": 2,
       "category": "App screens and data",
-      "brief": "Build the desktop inbox screen for our mail app, filling the whole window. A slim top bar has the app name, Mail, and a Compose button. Below it, three panes side by side: a folder list on the left (Inbox, Starred, Sent, Drafts, Archive, Spam, each with a count), the Inbox message list in the middle, and a reading pane on the right. The list holds nine messages, newest first, each with sender, subject, a one-line preview cut off with an ellipsis, and a time. The first three are unread and must look clearly bolder; the first one is open, so it is highlighted with a blue bar on its left and shown in full in the reading pane with Reply, Reply all and Forward buttons. It should feel like a calm, professional work tool: white, thin grey dividers, a single blue accent.",
+      "brief": "We're building a mail app and I need the main inbox screen: folders, the message list and the open message, all at once. Someone starting their morning should see which mail is new, what each message is about, and read the selected one comfortably. Unread mail must stand out by more than colour alone. It's a work tool, so calm, dense but tidy, with one blue accent. The content is supplied. The reference is what we signed off: match it as faithfully as you can. Done means it feels like a real mail client you could work in all day.",
+      "acceptance": [
+        "I can see at a glance which messages I have not read",
+        "I can tell which message is open",
+        "Each folder shows how much is in it",
+        "The open message is comfortable to read",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "App: Mail\nAction: Compose\nFolders (name: count): Inbox: 3, Starred: 12, Sent: 248, Drafts: 2, Archive: 1,406, Spam: 7\nCurrent folder: Inbox\nMessages in Inbox, newest first (sender / time / subject / preview):\n1. Hannah Lee / 9:42 / Venue confirmed for the offsite / Great news: the Harbour Loft is booked for the 3rd and 4th of December.\n2. GitHub / 8:15 / [web-app] Pull request #482 approved / Marco approved your changes to the checkout form validation.\n3. Omar Farouk / 7:58 / Quick question about the Q4 budget / Do we still have room for the analytics licence, or should it wait?\n4. Grace Turner / Sat / Notes from Friday's design review / Attached are the notes and the three follow-ups we agreed on.\n5. Northwind Air / Sat / Your boarding pass for LIS to AMS / Flight NW 1184 departs Wednesday 18 November at 07:35 from gate B12.\n6. Lucas Moreau / Fri / Re: Onboarding checklist / Thanks, I've added the security training step to week one.\n7. Figma / Fri / Ines commented on Checkout v3 / \"Can we try the summary panel on the right instead of below?\"\n8. Priya Shah / Thu / Lunch on Tuesday? / The new ramen place on Rua Augusta opened, want to try it?\n9. Bank of Lisbon / Nov 11 / Your October statement is ready / Your statement for the account ending 4821 can now be viewed online.\nUnread: messages 1, 2 and 3\nSelected message: 1\nSelected message in full\nSubject: Venue confirmed for the offsite\nFrom: Hannah Lee <hannah.lee@brightlane.io>, to me\nDate: Sunday 15 November 2026, 9:42\nBody:\nHi all,\nGreat news: the Harbour Loft is booked for the 3rd and 4th of December. It holds up to 40 people, has two breakout rooms and is a ten-minute walk from Cais do Sodré station.\nLunch is included on both days. Please send me any dietary needs by Friday so I can pass them on to the caterers.\nI'll share the full agenda next week.\nThanks,\nHannah\nMessage actions: Reply, Reply all, Forward",
       "requirements": [
         {
           "id": "r1",
@@ -6283,14 +6582,22 @@
         "unread shown by weight, not colour alone",
         "dense but tidy list"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "transactions-list",
       "title": "Transactions list",
       "level": 2,
       "category": "App screens and data",
-      "brief": "This is the account screen of our banking app, for the Everyday Account ending 4821. At the top, a deep green header card shows the available balance, $4,286.52, large, with when it was updated and two buttons: Send money (the main action, in a bright mint green) and Add money. Below it, four filter chips: All (selected), Money in, Money out, Pending. Then twelve transactions grouped under three date headings: today, yesterday and Friday 13 November, four in each. Each row has a round initials badge, the merchant or person, a category underneath, and the amount on the right. Money coming in must be shown in green with a plus sign; spending stays dark with a minus. It should feel trustworthy and easy to scan.",
+      "brief": "I need the transactions screen for our banking app's everyday account. Customers open it to answer two things: how much do I have, and what just happened to my money. The balance must be unmistakable, recent activity should be grouped so it's easy to follow, and money in must be clearly different from money out, without relying on colour alone. The brand is a deep forest green with a fresh mint accent. The content is supplied. The reference design shows exactly the finished screen, so get as close to it as you can. Done means a customer can spot their last payment instantly.",
+      "acceptance": [
+        "I can see my balance immediately",
+        "I can tell money in from money out without relying on colour",
+        "Activity is easy to follow day by day",
+        "The main actions are easy to reach",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Account: Everyday Account, ending 4821\nBalance: $4,286.52\nBalance note: Available balance, updated 15 Nov at 14:02\nActions: Send money, Add money\nFilters: All, Money in, Money out, Pending\nSelected filter: All\nTransactions by day (initials / name / category / amount):\nToday, Sunday 15 November\nBB / Blue Bottle Coffee / Eating out / -$6.40\nUB / Uber / Transport / -$18.25\nAR / Alex Rivera / Transfer in, dinner split / +$42.00\nWF / Whole Foods Market / Groceries / -$87.13\nYesterday, Saturday 14 November\nNF / Netflix / Subscriptions / -$15.49\nSH / Shell / Fuel / -$54.60\nTJ / Trader Joe's / Groceries / -$63.82\nRF / Refund from REI / Shopping / +$129.95\nFriday 13 November\nNL / Northline Studio / Salary / +$3,850.00\nPG / Pacific Gas & Electric / Bills / -$112.37\nGR / Greenway Rentals / Rent / -$1,650.00\nCP / Chipotle / Eating out / -$13.75\nMoney in: amounts starting with +. Money out: amounts starting with -.",
       "requirements": [
         {
           "id": "r1",
@@ -6386,14 +6693,22 @@
         "white grouped lists on a light grey page",
         "small uppercase date headings"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "kanban-board",
       "title": "Kanban board",
       "level": 2,
       "category": "App screens and data",
-      "brief": "Make the task board for our 'Website relaunch' project, sprint 14 (9 to 27 November). A white top bar holds the project name, the sprint dates and a 'New card' button. Below it, four equal columns: Backlog, In progress, Review and Done, each with a count of its cards in a small pill in the header. There are eleven cards in all. Each card has a coloured label (Design, Frontend, Content or Bug, each with its own colour), a short title, the assignee's initials in a round avatar and a due date. One card in progress is overdue and its date should be red; the cards in Done have their titles struck through and show when they were finished. It should feel light and organised, like a modern project tool, with an indigo accent.",
+      "brief": "The web team needs its sprint board for the website relaunch. Anyone checking in should see where every task stands, who owns it and when it is due, and spot anything overdue. The kind of work each task is should be clear at a glance. Keep it light and organised, with indigo for the main action. The content is supplied. The attached reference is the target to match closely. Done means the board answers 'what's stuck and who has it' in seconds and still works on a phone.",
+      "acceptance": [
+        "I can see where every task stands at a glance",
+        "I can tell who owns each task and when it is due",
+        "Task types are easy to tell apart",
+        "The board is still usable on a phone screen",
+        "It matches the reference design closely"
+      ],
+      "content": "Board: Website relaunch\nSprint: Sprint 14, 9 to 27 November\nAction: New card\nPeople (initials): Nadia Haddad (NH), Tomás Silva (TS), Kai Becker (KB)\nTasks by status (tag / title / assignee / date):\nBacklog (3 tasks)\n- Content / Write FAQ answers for pricing / NH / Due Nov 25\n- Design / Empty states for the dashboard / TS / Due Nov 26\n- Frontend / Lazy-load case study images / KB / Due Nov 27\nIn progress (3 tasks)\n- Frontend / Build the new pricing table / KB / Due Nov 18\n- Bug / Menu closes on iOS scroll / TS / Due Nov 14\n- Design / Homepage hero illustration / NH / Due Nov 19\nReview (2 tasks)\n- Content / About page copy, second draft / NH / Due Nov 17\n- Frontend / Contact form validation / KB / Due Nov 16\nDone (3 tasks)\n- Design / New colour palette / TS / Done Nov 10\n- Bug / Broken link in footer / KB / Done Nov 11\n- Content / Team bios and photos / NH / Done Nov 12\nTags: Content, Design, Frontend, Bug",
       "requirements": [
         {
           "id": "r1",
@@ -6484,14 +6799,21 @@
         "one colour per label kind",
         "indigo accent for the main button"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 3500
     },
     {
       "slug": "calendar-month",
       "title": "Calendar month",
       "level": 3,
       "category": "App screens and data",
-      "brief": "Build the month view of our calendar app for November 2026, filling the whole window. The top bar has a Today button, previous and next month arrows, the month name as the heading, and a Month / Week / Day switch on the right with Month selected. Weeks start on Monday, so the grid shows six weeks from Monday 26 October to Sunday 6 December; the days outside November are greyed out but still readable. Today is Sunday 15 November and its date should sit in a filled blue circle. There are nine events, shown as small coloured chips inside their day, coloured by kind (work, health, personal, travel, deadline), and the Web Summit in Lisbon is one chip that stretches across Wednesday 11 to Friday 13. The dates must fall on the right weekdays. It should look like a mature calendar product: clean grid lines, quiet colours.",
+      "brief": "Build the month view for our calendar app, November 2026. People should be able to place their events in the month at a glance, see what today is, and tell kinds of event apart. A multi-day event must read as one stretch, not three. Clean, quiet lines; strong blue only for today and the active view. The content is supplied. The reference design is the exact goal, and I will compare your page with it. Done means it reads like a real calendar.",
+      "acceptance": [
+        "I can see which day is today immediately",
+        "I can tell which day each event falls on",
+        "A multi-day event reads as one",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Month shown: November 2026\nToday: Sunday 15 November 2026\nWeeks start on Monday. Weekday labels: Mon, Tue, Wed, Thu, Fri, Sat, Sun\nDays shown: Monday 26 October 2026 to Sunday 6 December 2026 (days outside November are from the neighbouring months)\nControls: Today, Previous month, Next month\nViews: Month, Week, Day (selected view: Month)\nEvents (date: event text, kind):\nTue 3 Nov: 10:00 Design review (work)\nThu 5 Nov: 15:30 Dentist (health)\nMon 9 Nov: 09:30 Sprint planning (work)\nWed 11 Nov to Fri 13 Nov, three days: Web Summit, Lisbon (travel)\nSat 14 Nov: Ana's birthday (personal)\nWed 18 Nov: 11:00 1:1 with Priya (work)\nFri 20 Nov: Quarterly report due (deadline)\nTue 24 Nov: 18:00 Yoga (health)\nThu 26 Nov: 19:30 Team dinner (personal)",
       "requirements": [
         {
           "id": "r1",
@@ -6583,14 +6905,22 @@
         "one strong blue for today and the selected view",
         "out-of-month days on a faint grey"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "fitness-dashboard",
       "title": "Fitness dashboard",
       "level": 3,
       "category": "App screens and data",
-      "brief": "Build the personal activity dashboard for Sam, as seen on Sunday 15 November 2026. Greet Sam at the top with the date. Then four stat tiles: steps today, active minutes, calories burned and resting heart rate, each with a small change note (green when it is good, red when it is not). Below, a bar chart of steps for the past seven days, Monday to Sunday, with each value written on its bar, a dashed line marking the 10,000-step goal and today's bar picked out in a darker shade; beside it, a progress ring showing 84% of the daily goal with the steps still to go. The bottom row has a table of the five most recent workouts and a list of three weekly goals with progress bars. Fresh and motivating: white panels on a light grey page, teal as the one accent.",
+      "brief": "I want Sam's activity dashboard for our fitness app. Sam should see in one look how today is going, how the week compares, and whether the weekly goals are on track. Good and bad changes must be obvious without relying on colour. Teal is the brand. The content is supplied. The reference is the final design, so match it closely. Done means it is useful at a glance, honest about the numbers and accessible.",
+      "acceptance": [
+        "I can tell how today is going in one look",
+        "I can compare this week's days easily",
+        "Progress towards each goal is clear",
+        "Charts have text alternatives for screen readers",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "User: Sam Okoro\nGreeting: Good afternoon, Sam\nDate: Sunday 15 November 2026\nToday's stats (label / value / change):\nSteps today / 8,432 / +6% on last Sunday\nActive minutes / 47 min / +12 on your average\nCalories burned / 612 kcal / +4% on last Sunday\nResting heart rate / 58 bpm / +2 on last week\nSteps this week (Goal 10,000):\nMon 7,240, Tue 9,815, Wed 6,120, Thu 11,032, Fri 8,904, Sat 12,460, Sun 8,432\nToday is Sunday. Highest day: Saturday, 12,460.\nDaily step goal: 84% of 10,000. 1,568 steps to go today.\nRecent workouts\nDate | Activity | Duration | Distance | Calories\nSun 15 Nov | Morning run | 32 min | 5.4 km | 348 kcal\nSat 14 Nov | Cycling | 1 h 05 min | 24.8 km | 612 kcal\nThu 12 Nov | Strength training | 45 min | - | 290 kcal\nWed 11 Nov | Easy run | 28 min | 4.6 km | 301 kcal\nMon 9 Nov | Strength training | 40 min | - | 262 kcal\nWeekly goals (goal: progress):\nRun 20 km: 14.2 / 20 km (71%)\nStrength sessions: 2 / 3 (67%)\nSleep 7 h a night: 6.6 / 7 h (94%)",
       "requirements": [
         {
           "id": "r1",
@@ -6694,14 +7024,21 @@
         "numbers big, labels small and grey",
         "good news green, bad news red"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     },
     {
       "slug": "contact-form",
       "title": "Contact page",
       "level": 1,
       "category": "Forms, commerce and documents",
-      "brief": "We are Northfield Studio, a small design studio in Manchester, and we need a contact page for people thinking of hiring us. On the left, a short friendly intro headed \"Let's talk about your project\" with our studio address, phone number and opening hours listed underneath. On the right, a simple form: full name and email side by side, a topic dropdown, a roomy message box, a consent checkbox and a send button. It should feel calm, clean and trustworthy, all sitting on one white card on a pale grey-blue page. Use a deep teal as the one accent, for the small 'Contact' label above the heading and the send button.",
+      "brief": "Northfield Studio needs a proper contact page. Prospective clients should feel they're dealing with a calm, trustworthy studio, see straight away how to reach us by phone or in person, and be able to send a message without any friction. Every field must be clearly labelled, and the form must work for someone using only a keyboard or a screen reader. Use teal as our accent, sparingly. The content is supplied. The attached reference is exactly the page we want; match it as closely as you can. Done means a visitor can contact us in under a minute.",
+      "acceptance": [
+        "I can find the studio's address, phone and hours straight away",
+        "Every field is clearly labelled and works with a screen reader",
+        "Sending a message feels simple",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Studio: Northfield Studio\nPage label: Contact\nHeading: Let's talk about your project\nIntro: Tell us what you are planning and we will reply within one working day. Prefer to talk? Call the studio during opening hours.\nStudio details (label: value):\nStudio: 24 Canal Street, Manchester M1 3HE\nPhone: 0161 496 0732\nHours: Monday to Friday, 9:00 to 17:30\nForm heading: Send us a message\nForm questions:\n- Full name (example answer: Jane Cooper)\n- Email (example answer: jane@example.com)\n- Topic, one choice from: New project enquiry, Existing project, Careers, Press\n- Message (hint: A few lines about your project, timeline and budget.)\n- Consent tick box: I agree to Northfield Studio keeping my details so it can reply to this message.\nSubmit button: Send message",
       "requirements": [
         {
           "id": "r1",
@@ -6784,7 +7121,14 @@
       "title": "Boarding pass",
       "level": 1,
       "category": "Forms, commerce and documents",
-      "brief": "Aurora Air needs a digital boarding pass that passengers can show at the gate. Make it look like a real paper pass: a wide white ticket with a tear-off stub on the right, separated by a dashed perforation line with half-circle notches at the top and bottom. Both parts have a royal blue header strip; the main part carries the airline name with a small round logo and the words 'Boarding pass'. The main part shows the passenger, the travel class, a big LIS to CPH route with a small plane icon on a dashed line between the airport codes, and a row with flight, date, gate, seat and boarding time. The stub repeats the passenger, route and seat and ends with a drawn barcode and the gate closing time. Everything should be readable at a glance.",
+      "brief": "Aurora Air wants a digital boarding pass that passengers can show at the gate. Staff and passengers both need to read the flight, gate, seat and boarding time in a heartbeat, so those details must jump out. It should feel like a real paper pass, including a tear-off stub, with royal blue as our brand colour. The content is supplied. The reference design is the finished pass, and yours should match it closely. Done means a gate agent could check it at arm's length.",
+      "acceptance": [
+        "I can read the flight, gate, seat and boarding time instantly",
+        "The route is clear from the airport codes",
+        "It feels like a real paper boarding pass",
+        "It matches the reference design closely"
+      ],
+      "content": "Airline: Aurora Air\nDocument: Boarding pass\nPassenger: Ms Elena Sousa\nClass: Economy\nFrom: LIS, Lisbon\nTo: CPH, Copenhagen\nFlight: AU 2471\nDate: 14 Mar 2027\nGate: B12\nSeat: 14C\nBoarding: 07:35\nTear-off stub:\nAU 2471 · 14 Mar\nPassenger: Elena Sousa\nRoute: LIS - CPH\nSeat: 14C\nNotice: Gate closes at 07:55",
       "requirements": [
         {
           "id": "r1",
@@ -6866,14 +7210,21 @@
         "dashed perforation with notches",
         "lots of white space"
       ],
-      "maxPromptChars": 4000
+      "maxPromptChars": 3500
     },
     {
       "slug": "recipe-card",
       "title": "Recipe card",
       "level": 1,
       "category": "Forms, commerce and documents",
-      "brief": "We publish home-cooking recipes and want a clean recipe page for our Lemon and Herb Roast Chicken. Readers glance at it while cooking, so it must be easy to scan. Start with a small 'Sunday dinner' label, the recipe name in a classic serif, and a one-line description. Then a boxed row of three quick facts: time, serves and difficulty. Below that, the nine ingredients in two columns, the six method steps with numbered circles, and a highlighted cook's tip at the end. The page should feel warm and homely: a cream page, a white card, burnt orange for the accents and a soft yellow tip box.",
+      "brief": "I'd like the recipe page for our Lemon and Herb Roast Chicken. Home cooks will glance at it with messy hands, so they need to see how long it takes and how many it serves, follow the ingredients and steps without losing their place, and notice the tip. It should feel warm and homely. The content is supplied. The reference shows exactly what we want, so match it as closely as possible. Done means someone could cook from it on a tablet propped up in the kitchen.",
+      "acceptance": [
+        "I can see the time, servings and difficulty at a glance",
+        "I can follow the steps without losing my place",
+        "The ingredients are easy to tick off mentally",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Category: Sunday dinner\nRecipe: Lemon and Herb Roast Chicken\nDescription: A whole chicken roasted over sliced lemons and garlic, with crisp golden skin and juices that make their own sauce.\nFacts (label: value):\nTime: 1 hr 30 min\nServes: 4\nDifficulty: Easy\nIngredients:\n- 1 whole chicken, about 1.6 kg\n- 2 unwaxed lemons\n- 1 head of garlic\n- 4 sprigs of thyme\n- 2 sprigs of rosemary\n- 40 g soft butter\n- 2 tbsp olive oil\n- 150 ml chicken stock\n- Sea salt and black pepper\nMethod:\n1. Heat the oven to 200°C (180°C fan). Take the chicken out of the fridge 30 minutes before cooking.\n2. Slice one lemon and halve the garlic head across. Lay them in a roasting tin with half the herbs.\n3. Mix the butter with the zest of the second lemon, the leaves from the remaining thyme and a good pinch of salt.\n4. Loosen the skin over the breast and push the butter underneath. Put the zested lemon inside the bird.\n5. Sit the chicken on the lemons, rub with olive oil and season. Roast for 1 hr 15 min, basting halfway.\n6. Rest the chicken for 15 minutes. Add the stock to the tin, scrape up the juices and simmer for 3 minutes.\nCook's tip: The chicken is done when the juices run clear from the thickest part of the thigh, or a probe reads 75°C.",
       "requirements": [
         {
           "id": "r1",
@@ -6964,7 +7315,15 @@
       "title": "Shopping cart",
       "level": 2,
       "category": "Forms, commerce and documents",
-      "brief": "Harbor & Pine sells clothing and accessories online, and we need the cart page shoppers see just before checkout. A simple white top bar holds our name in a serif and a 'Continue shopping' link. The page heading says how many items are in the cart. On the left, a list of the three items, each with a small drawn thumbnail, the product name, its variant, a remove link, a quantity stepper with minus and plus buttons, and the line price. On the right, a promo code box with an Apply button, and an order summary card with subtotal, shipping, tax and total, then a big Checkout button. The figures must add up. Keep it tidy and reassuring, with one strong royal blue for the main action.",
+      "brief": "We need the cart page for the Harbor & Pine shop. Shoppers should be reassured about exactly what they're buying and what it costs, be able to change quantities or remove things easily, and feel confident heading to checkout. Every control needs a clear name for screen readers. Keep it tidy, with royal blue reserved for the checkout action. The content is supplied. The attached reference design is the target: get your page as close to it as you can. Done means a shopper can check their order and pay without hesitation.",
+      "acceptance": [
+        "I can see what I am buying and what it costs",
+        "Changing quantities or removing items is easy",
+        "The total and the way to check out are obvious",
+        "Every control has a clear name for screen readers",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "Store: Harbor & Pine\nLink: Continue shopping\nHeading: Your cart (3 items)\nItems (name / options / quantity / line price):\n1. Linen Overshirt / Size M, Sand / Qty 1 / $68.00\n2. Merino Crew Socks / One size, Charcoal / Qty 2 / $24.00 ($12.00 each)\n3. Canvas Tote Bag / Natural / Qty 1 / $32.00\nEach item has: a Remove link and a Qty field that can go down (-) or up (+)\nPromo code field (label: Promo code, hint: Enter code), button: Apply\nOrder summary\nSubtotal: $124.00\nShipping: $6.00\nTax (8%): $9.92\nTotal: $139.92\nButton: Checkout\nNote: Free returns within 30 days",
       "requirements": [
         {
           "id": "r1",
@@ -7070,7 +7429,14 @@
       "title": "Table booking form",
       "level": 2,
       "category": "Forms, commerce and documents",
-      "brief": "Osteria Lume is an Italian restaurant in Bristol and we want guests to book a table online. The form sits in a white card on the left: party size as a row of six number buttons from 1 to 6, a date picker, and the evening's eight time slots from 18:00 to 21:30 in two rows of four. Two of the slots are already taken and must clearly look unavailable. Then the guest's name, phone and email, a box for special requests, and a Confirm booking button. On the right, a dark summary card repeats what has been picked so far and gives our address and cancellation note. The example shows a party of 2 at 19:00 on Friday 19 March 2027. It should feel warm and a little elegant: a warm off-white page, serif headings, and a deep wine red as the accent.",
+      "brief": "Osteria Lume wants online table booking. Guests should be able to pick party size, date and time quickly, add their details, and see a summary of the booking as they go. Choices must be obvious to mouse, keyboard and screen-reader users alike. Warm, a little elegant, with deep wine red as our accent. The content is supplied. The reference is the agreed design; match it closely. Done means booking takes under a minute and the summary matches the choices.",
+      "acceptance": [
+        "I can see which party size and time are chosen",
+        "Every field and option works with a keyboard and a screen reader",
+        "The booking summary is easy to check",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "content": "Restaurant: Osteria Lume, Bristol\nHeading: Book a table\nForm questions and current answers:\n- Party size, one of 1, 2, 3, 4, 5, 6 (chosen: 2)\n- Date (chosen: 2027-03-19)\n- Time, one of 18:00, 18:30, 19:00, 19:30, 20:00, 20:30, 21:00, 21:30 (chosen: 19:00)\n- Full name (example answer: Tom Hartley)\n- Phone (example answer: 07700 900418)\n- Email (example answer: tom@example.com)\n- Special requests (hint: Allergies, high chair, a quiet corner...)\nSubmit button: Confirm booking\nBooking summary (heading: Your booking):\nGuests: 2 people\nDate: Friday 19 March 2027\nTime: 19:00\nWhere: 12 Wapping Wharf, Bristol BS1 4RW\nNote: We hold tables for 15 minutes. To change or cancel, call 0117 496 0251.",
       "requirements": [
         {
           "id": "r1",
@@ -7166,14 +7532,22 @@
         "deep wine red accent for selections and the main button",
         "dark summary card beside a white form"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 3500
     },
     {
       "slug": "order-tracking",
       "title": "Order tracking",
       "level": 2,
       "category": "Forms, commerce and documents",
-      "brief": "Brightwell Home sells homewares, and customers keep emailing us to ask where their order is. We need an order status page that answers that at a glance. Under a simple white top bar with our name and links to Shop, Orders and Help, show the order number, when it was placed, and a green pill with the expected arrival day. Then a five-stage progress tracker across the page: Ordered, Packed, Shipped, Out for delivery, Delivered, with the first two done, Shipped as the current stage and the last two still to come. Below, on the left, the delivery address and the three items in the order with small drawn thumbnails and prices; on the right, a timeline of the four latest shipping updates, newest first. It should feel calm and reassuring, with green meaning progress.",
+      "brief": "Customers keep emailing to ask where their order is, so I need a proper order tracking page for Brightwell Home. A worried customer should see at a glance when it will arrive and how far along it is, then be able to check the address, the items and the latest movements. Make progress feel calm and reassuring, with green meaning progress. The content is supplied. The attached reference is exactly what the page should look like, so match it closely. Done means nobody needs to email us to know where their parcel is.",
+      "acceptance": [
+        "I can see when my order will arrive at a glance",
+        "I can tell which stage the order has reached",
+        "The address and items are easy to check",
+        "The shipping updates read clearly in time order",
+        "It matches the reference design closely"
+      ],
+      "content": "Store: Brightwell Home\nSite links: Shop, Orders, Help\nOrder: Order #48213\nOrder line: Placed on 3 March 2027 · 3 items · $187.00\nDelivery estimate: Arriving Monday 8 March\nProgress stages: 1 Ordered, 2 Packed, 3 Shipped, 4 Out for delivery, 5 Delivered\nCompleted stages: Ordered, Packed\nCurrent stage: Shipped\nDelivery address:\nDaniel Okafor\n48 Larchmont Avenue, Apt 3B\nPortland, OR 97214\nUnited States\nItems in this order (name / options / price):\n- Arc Table Lamp / Brass, qty 1 / $89.00\n- Waffle Knit Throw / Indigo, qty 1 / $64.00\n- Stoneware Mug / Sage, qty 2 / $34.00\nShipping updates, newest first (time / event / place):\n5 Mar, 14:12 / Departed sorting centre / Reno, NV\n5 Mar, 06:40 / Arrived at sorting centre / Reno, NV\n4 Mar, 17:25 / Picked up by carrier / Sacramento, CA\n4 Mar, 09:03 / Packed and ready to ship / Brightwell warehouse, Sacramento, CA",
       "requirements": [
         {
           "id": "r1",
@@ -7272,14 +7646,21 @@
         "white cards on a very light grey page",
         "numbered circles joined by a line"
       ],
-      "maxPromptChars": 4500
+      "maxPromptChars": 4000
     },
     {
       "slug": "resume-page",
       "title": "One-page CV",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "I'm Priya Natarajan, a senior data engineer in Edinburgh, and I want my CV as a single web page that looks like a polished printed resume. Put my name in a large serif and my job title in a dark slate header band, with my email, phone, city and GitHub on one line beneath. Below, two columns: a narrow, lightly shaded left column with my skills as rounded tags, my two degrees, and my three languages with level bars; and a wider right column with a short summary, my three jobs (each with dates, location and three achievements) and two side projects. Section titles should be small, spaced-out capitals in teal with a thin line under them. It must look professional and easy for a recruiter to skim in thirty seconds.",
+      "brief": "Turn Priya's CV into a polished one-page resume for the web. A recruiter has seconds: they must catch who she is, what she does and her strongest experience, then skim the rest. It should look as good printed as on screen. Slate and teal, restrained. The content is supplied. The reference is the target: match it closely. Done means it is easy to skim and could be sent to an employer today.",
+      "acceptance": [
+        "I can tell who she is and what she does in seconds",
+        "The experience is easy to skim",
+        "It prints cleanly on paper without losing anything",
+        "Next to the reference, the two look like the same page"
+      ],
+      "content": "Name: Priya Natarajan\nTitle: Senior Data Engineer\nContact: priya.natarajan@example.com | +44 7700 900 512 | Edinburgh, UK | github.com/priyanat\nSummary: Data engineer with nine years of experience building reliable batch and streaming pipelines. I like turning messy sources into clean, well-tested models that analysts trust, and I enjoy mentoring engineers who are new to data.\nSkills: Python, SQL, Apache Spark, Airflow, dbt, Kafka, AWS, Terraform, Data modelling\nExperience (role / dates / place / achievements):\nSenior Data Engineer, Northwind Travel / 2021 - present / Edinburgh\n- Led the move of 140 nightly batch jobs from cron to Airflow, cutting failed runs by 70%.\n- Designed a Kafka event pipeline that handles 30,000 search events a second.\n- Mentored four engineers and ran the team's fortnightly design reviews.\nData Engineer, Lumen Analytics / 2018 - 2021 / Edinburgh\n- Built the dbt models behind the company's revenue and retention dashboards.\n- Introduced data tests that caught 25 schema breaks before they reached reports.\n- Reduced the monthly Redshift bill by 35% by reworking the largest queries.\nData Analyst, Brightline Media / 2016 - 2018 / Leeds\n- Automated weekly churn reports that had taken two analysts a full day.\n- Wrote the team's first shared SQL style guide and query library.\n- Presented customer insight findings to the retention leadership team.\nProjects:\n- tidetables: An open-source Python library for loading UK tide data, with 1,200 stars on GitHub.\n- Edinburgh Bike Map: A weekend project mapping city bike-share journeys with Spark and a small web front end.\nEducation:\n- MSc Data Science, University of Edinburgh, 2015 - 2016\n- BSc Mathematics, University of Leeds, 2012 - 2015\nLanguages (language: level): English: Native; Tamil: Fluent; German: Intermediate",
       "requirements": [
         {
           "id": "r1",
@@ -7390,14 +7771,21 @@
         "skills as rounded tags",
         "easy to skim"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     },
     {
       "slug": "receipt-email",
       "title": "Order confirmation email",
       "level": 3,
       "category": "Forms, commerce and documents",
-      "brief": "Fernleaf is an online plant shop, and we need the order confirmation email customers get after buying. Build it the way emails are laid out: a single white column about 640 pixels wide, centred on a light grey background. At the top, our leaf logo and name on the left and the order number and date on the right. Then a friendly 'Thanks for your order, Sam!' heading with a short line about what happens next, a table of the four items with quantity and price, and a totals block on the right with subtotal, shipping, tax and a bold total that all add up. Show the shipping and billing addresses side by side in a soft grey panel, then a centred 'View your order' button. Underneath the white column, small print explaining why they got the email, with Help centre, Returns policy and Unsubscribe links. Our brand green is #166534.",
+      "brief": "Write the order confirmation email for Fernleaf. Customers should instantly know their order went through and what they paid, and be able to check items and addresses. It must render reliably in real email clients, so keep the engineering simple and robust. Brand green for the logo and main button only. The content is supplied. The reference design is the goal, so match it as closely as you can. Done means it reads well in any inbox.",
+      "acceptance": [
+        "I can tell at once that my order is confirmed",
+        "The items and total are easy to check",
+        "It would hold up in a real email client",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "content": "Shop: Fernleaf (Fernleaf Plants Co.)\nEmail subject: Your Fernleaf order FL-20931 is confirmed\nOrder: Order FL-20931, placed 9 March 2027\nGreeting: Thanks for your order, Sam!\nMessage: We have received your order and are getting it ready. We will email you again with tracking details as soon as it ships.\nOrder details (heading: Order details)\nItem | Qty | Price\nMonstera Deliciosa, 30 cm pot | 1 | $42.00\nTerracotta Planter, 18 cm | 2 | $36.00\nOrganic Potting Mix, 10 L | 1 | $14.50\nBrass Plant Mister | 1 | $22.00\nSubtotal: $114.50\nShipping: $7.50\nTax: $9.16\nTotal: $131.16\nShipping to: Sam Whitaker, 17 Orchard Lane, Asheville, NC 28801, United States\nBilling address: Sam Whitaker, 17 Orchard Lane, Asheville, NC 28801\nPayment: Visa ending 4417\nButton: View your order\nSmall print: You are receiving this email because you placed an order at Fernleaf. Fernleaf Plants Co., 220 Wall Street, Asheville, NC 28801.\nLinks: Help centre, Returns policy, Unsubscribe",
       "requirements": [
         {
           "id": "r1",
@@ -7502,7 +7890,7 @@
         "brand green for the logo and button only",
         "quiet small print footer"
       ],
-      "maxPromptChars": 5000
+      "maxPromptChars": 4000
     }
   ]
 }

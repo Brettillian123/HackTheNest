@@ -158,7 +158,7 @@ async function renderBoard() {
 
 // Instructions: a dropdown under the page panel's header button, overlaying the panel without moving
 // the goal frame. Closed on load; closes on outside click, Esc, a run, or the ruler or magnifier.
-// A brief-format challenge shows the Brief in it: the brief, requirements, key facts and design notes.
+// A brief-format challenge shows the Brief in it: the brief, the acceptance statements and the given content.
 const isBrief = () => !!(S.ch && S.ch.format === 'brief' && !isDoc());
 function closeIns() { if (S.ins) { S.ins = false; render(); } }
 function renderInstructions() {
@@ -174,51 +174,25 @@ function renderInstructions() {
   $('insMenu').innerHTML = `<h3 class="h">Match these exactly</h3><div class="ws-ins-cols">${groups}</div>`;
 }
 
-const KIND_NAME = { content: 'Content', structure: 'Structure', behaviour: 'Behaviour', style: 'Style', engineering: 'Engineering' };
-const COPY_SVG = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.2"/><path d="M9.5 2H3.2C2.5 2 2 2.5 2 3.2v6.3"/></svg>';
 function setupBrief() {
   const label = [...$('insBtn').childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
   if (label) label.textContent = 'Brief';
   $('insMenu').setAttribute('aria-label', 'Brief');
   $('insMenu').classList.add('ws-brief');
-  $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-goal-cap">Be close, not identical</span>');
-  ta.placeholder = 'Describe the page that meets the brief';
-  // One listener for every copy button in the column.
-  $('insMenu').addEventListener('click', (e) => {
-    const b = e.target.closest('.ws-copy');
-    if (!b) return;
-    const done = (ok) => { b.dataset.state = ok ? 'ok' : 'no'; b.lastChild.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(() => { delete b.dataset.state; b.lastChild.textContent = 'Copy'; }, 1400); };
-    const text = (S.ch.keyFacts || [])[Number(b.dataset.i)] || '';
-    if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => done(true), () => done(false)); else done(false);
-  });
+  $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-goal-cap">Scored on how close you get to this</span>');
+  ta.placeholder = 'Describe how to build the goal page with the given content';
 }
 
-// The Brief column; requirements are ticked or crossed only when the last result maps them by id.
+// The Brief column: the brief, what done looks like, and the content the model is given (read-only).
+// A section with nothing in it (older or lesson data) is left out.
 function renderBrief() {
   const c = S.ch;
-  const runs = S.attempt ? S.attempt.runs : [];
-  const last = runs[runs.length - 1];
-  const res = new Map(((last && last.result.requirements) || []).map((r) => [r.id, r.met]));
-  const reqs = c.requirements || [];
-  const groups = api.REQUIREMENT_KINDS.map((k) => {
-    const items = reqs.filter((r) => r.kind === k);
-    if (!items.length) return '';
-    return `<h4 class="ws-ins-group">${KIND_NAME[k]}</h4><ul class="checks one ws-reqs">` + items.map((r) => {
-      const met = res.get(r.id);
-      const cls = met === true ? 'ok' : met === false ? 'no' : 'todo';
-      const mark = met === true ? OK_SVG : met === false ? NO_SVG : '';
-      const say = met === true ? 'Met: ' : met === false ? 'Not met: ' : '';
-      return `<li class="${cls}"><span class="m" aria-hidden="true">${mark}</span><span class="ws-req-t"><span class="sr-only">${say}</span>${esc(r.text)}</span>${r.exact ? '<span class="ws-exact" title="Must match exactly">Exact</span>' : ''}</li>`;
-    }).join('') + '</ul>';
-  }).join('');
-  const facts = (c.keyFacts || []).map((f, i) =>
-    `<li><code>${esc(f)}</code><button type="button" class="btn btn-ghost sm ws-copy" data-i="${i}" aria-label="Copy: ${esc(f)}">${COPY_SVG}<span>Copy</span></button></li>`).join('');
-  const notes = (c.designNotes || []).map((n) => `<li>${esc(n)}</li>`).join('');
+  const done = (Array.isArray(c.acceptance) ? c.acceptance : []).filter(Boolean);
+  const content = typeof c.content === 'string' ? c.content.trim() : '';
   $('insMenu').innerHTML =
-    `<h3 class="h">The brief</h3><p class="ws-brief-p">${esc(c.brief)}</p>` +
-    (groups ? `<h3 class="h ws-brief-h">Requirements</h3>${groups}` : '') +
-    (facts ? `<h3 class="h ws-brief-h">Key facts</h3><ul class="ws-facts">${facts}</ul>` : '') +
-    (notes ? `<h3 class="h ws-brief-h">Design notes</h3><ul class="ws-notes">${notes}</ul>` : '');
+    (c.brief ? `<h3 class="h">The brief</h3><p class="ws-brief-p">${esc(c.brief)}</p>` : '') +
+    (done.length ? `<h3 class="h ws-brief-h">Done when</h3><ul class="ws-done">${done.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : '') +
+    (content ? `<h3 class="h ws-brief-h">The model is given this content</h3><p class="note ws-content-note">You do not need to repeat it in your prompt</p><pre class="ws-content" tabindex="0" aria-label="Content the model is given">${esc(content)}</pre>` : '');
 }
 
 function renderModels() {

@@ -34,15 +34,15 @@ test('real file: every entry loads, category filter, brief and spec detail shape
   const detail = (await call('GET', '/api/challenges/contact-form')).body.challenge;
   const entry = FILE.find(c => c.slug === 'contact-form');
   assert.equal(detail.brief, entry.brief);
-  assert.deepEqual(detail.requirements, entry.requirements);
-  assert.deepEqual(detail.keyFacts, entry.keyFacts);
-  assert.deepEqual(detail.designNotes, entry.designNotes);
+  assert.deepEqual(detail.acceptance, entry.acceptance);
+  assert.equal(detail.content, entry.content);
+  for (const key of ['requirements', 'keyFacts', 'designNotes', 'exactSpec']) assert.equal(key in detail, false, key);
   assert.equal('spec' in detail, false);
   // The rewritten originals are briefs; their grader-only exactSpec stays on the server.
   // (The spec format is covered by the fixture test below.)
   const orig = (await call('GET', '/api/challenges/login-card')).body.challenge;
   assert.equal(orig.format, 'brief');
-  assert.ok(orig.requirements.length > 0);
+  assert.ok(orig.acceptance.length >= 3 && getChallengeFile('login-card').requirements.length > 0, 'requirements kept on the server');
   assert.equal('exactSpec' in orig, false);
   assert.equal('spec' in orig, false);
 });

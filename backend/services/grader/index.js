@@ -13,6 +13,8 @@ import { standinScore } from './standin.js';
 const BUDGET_MS = 45_000;
 const HEALTH_TIMEOUT_MS = 2_000;
 const HEALTH_TTL_MS = 60_000;
+const PROMPT_CHECK_TIMEOUT_MS = 5_000;
+export const PROMPT_CHECK_FALLBACK = 'Write the prompt in your own words.';
 
 export const round1 = n => Math.round(Number(n) * 10) / 10;
 
@@ -192,23 +194,24 @@ export function gradePage({ goalHtml, html, env, fetch, now = Date.now }) {
 
 export { standinScore };
 
-// The live grader's /health (no key), cached per instance for 60 s: { version, intent }. version is
-// null and intent false when unreachable or not configured; both are read defensively.
+// The live grader's /health (no key), cached per instance for 60 s: { version, intent, promptCheck }.
+// version is null and the flags false when unreachable or not configured; all read defensively.
 const healthCache = new WeakMap();
 export async function liveGraderHealth({ env, fetch, now = Date.now }) {
-  if (graderMode(env) !== 'service') return { version: null, intent: false };
+  if (graderMode(env) !== 'service') return { version: null, intent: false, promptCheck: false };
   const url = `${baseUrl(env)}/health`;
   const perFetch = healthCache.get(fetch) || new Map();
   healthCache.set(fetch, perFetch);
   const hit = perFetch.get(url);
   if (hit && now() - hit.at < HEALTH_TTL_MS) return hit.info;
-  const info = { version: null, intent: false };
+  const info = { version: null, intent: false, promptCheck: false };
   try {
     const res = await fetch(url, { method: 'GET', signal: AbortSignal.timeout(HEALTH_TIMEOUT_MS) });
     if (res.ok) {
       const body = await res.json();
       info.version = str(body?.version, 50);
       info.intent = body?.intent === true || (Array.isArray(body?.features) && body.features.includes('intent'));
+      info.promptCheck = body?.promptCheck === true || (Array.isArray(body?.features) && body.features.includes('promptCheck'));
     }
   } catch { /* unreachable: defaults */ }
   perFetch.set(url, { at: now(), info });
@@ -217,4 +220,36 @@ export async function liveGraderHealth({ env, fetch, now = Date.now }) {
 
 export async function liveGraderVersion(deps) {
   return (await liveGraderHealth(deps)).version;
+}
+
+// Copy check (prepared, gated): before a run, POST /v1/check/prompt { prompt, challengeTexts } asks the
+// grader whether the prompt mostly copies the challenge's brief or acceptance statements (never the
+// content, which the model gets anyway). Sent only with GRADER_PROMPT_CHECK=on, or when the grader's
+// /health reports `promptCheck: true` or a `features` list with "promptCheck" (off never sends it).
+// Returns the refusal message when the grader says `ok: false`, else null. Any error, timeout or
+// unreadable answer lets the run go ahead.
+const promptCheckSetting = env => String(env.GRADER_PROMPT_CHECK || '').trim().toLowerCase();
+
+export function challengeTexts(challenge) {
+  return [challenge.brief, ...(challenge.acceptance || [])].filter(t => typeof t === 'string' && t.trim());
+}
+
+export async function checkPromptCopy({ prompt, challenge, env, fetch, now = Date.now }) {
+  if (graderMode(env) !== 'service' || promptCheckSetting(env) === 'off') return null;
+  try {
+    if (promptCheckSetting(env) !== 'on' && !(await liveGraderHealth({ env, fetch, now })).promptCheck) return null;
+    const res = await fetch(`${baseUrl(env)}/v1/check/prompt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.GRADER_API_KEY}` },
+      body: JSON.stringify({ prompt, challengeTexts: challengeTexts(challenge) }),
+      signal: AbortSignal.timeout(PROMPT_CHECK_TIMEOUT_MS),
+    });
+    if (!res.ok) return null;
+    const result = (await res.json())?.result;
+    if (result?.ok !== false) return null;
+    return str(result.message, 500)?.trim() || PROMPT_CHECK_FALLBACK;
+  } catch (error) {
+    console.error(`Prompt copy check skipped: ${error?.name || 'error'}`);
+    return null;
+  }
 }
