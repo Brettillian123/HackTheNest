@@ -2,7 +2,7 @@
 import * as api from './api.js';
 import * as store from './store.js';
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer } from './ui.js';
+import { dropdown, tabs, esc, levelClass, lineNumbers, demoTag, simNote, setStat, frameViewer, provisionalNote, provisionalTag } from './ui.js';
 import { createTools } from './tools.js';
 
 const slug = new URLSearchParams(location.search).get('c') || 'login-card';
@@ -110,7 +110,7 @@ async function renderBoard() {
     // The same all-time board the score panel's rank comes from, so the two always agree.
     const lb = await api.getLeaderboard(slug, { period: 'all' });
     $('lbNote').textContent = 'All time';
-    $('lbDemo').innerHTML = api.isSimulated('boards') ? demoTag() : '';
+    $('lbDemo').innerHTML = api.isSimulated('boards') ? demoTag() : provisionalTag(api.isProvisional('boards'));
     let rows = lb.rows.slice(0, 4);
     const you = lb.rows.find((r) => r.isYou);
     if (you && !rows.includes(you)) rows = rows.slice(0, 3).concat(you);
@@ -277,15 +277,16 @@ function render() {
   // The docked column needs the height: the leaderboard strip steps aside while it is open.
   if (S.ins && host === $('goalPanel')) show('lbPanel', false);
 
-  $('runCount').textContent = runs.length;
-  $('usedA').textContent = runs.length;
-  $('usedB').textContent = runs.length;
+  const used = S.attempt ? S.attempt.promptCount ?? runs.length : 0; // an unscored saved page counts too
+  $('runCount').textContent = used;
+  $('usedA').textContent = used;
+  $('usedB').textContent = used;
 
   // prompt panel
   $('mineNote').textContent = 'Run ' + S.runN;
   $('runBtn').disabled = busy;
   $('runBtn').classList.toggle('busy', busy);
-  $('runLabel').innerHTML = busy ? 'Running' : last ? 'Run prompt<small>adds 1 prompt</small>' : 'Run prompt';
+  $('runLabel').innerHTML = busy ? 'Running' : S.attempt && S.attempt.pending ? 'Score this page' : last ? 'Run prompt<small>adds 1 prompt</small>' : 'Run prompt';
   show('cancelBtn', busy);
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
@@ -304,7 +305,7 @@ function render() {
 
   // stages
   // One tight row: what is happening now, then the four scoring steps.
-  $('stageNote').textContent = m === 'grading' ? 'Grading run ' + S.runN : 'Writing your page';
+  $('stageNote').textContent = m === 'grading' ? 'Grading run ' + S.runN : m === 'stopped' ? 'Page saved, not scored yet' : 'Writing your page';
   $('stageList').innerHTML = api.STAGES.map((s, i) =>
     `<li class="${i < S.stage ? 'done' : i === S.stage && m === 'grading' ? 'on' : ''}">${esc(s.label)}</li>`).join('');
 
@@ -324,7 +325,8 @@ function render() {
 async function doRun() {
   if (S.ctrl) return;
   const prompt = ta.value;
-  if (!prompt.trim()) {
+  const unscored = S.attempt && S.attempt.pending; // a saved page with no score: score it, do not generate again
+  if (!unscored && !prompt.trim()) {
     if (S.mode === 'scored') S.mode = 'refine';
     setStatus('Write a prompt first, then run it.', true);
     render();
@@ -337,20 +339,21 @@ async function doRun() {
   S.view = 'workspace';
   viewTabs.select(0, false);
   S.stage = -1;
-  S.runN = runs.length + 1;
+  S.runN = unscored ? unscored.n : (S.attempt ? S.attempt.promptCount ?? runs.length : 0) + 1;
   S.useRun = null;
   S.ins = false;
   tools.setMode(null);
   setStatus('');
   pending = null;
-  setDoc('mineFrame', '');
+  setDoc('mineFrame', unscored ? unscored.html : '');
   render();
   try {
-    const { attempt } = await api.run({
+    const onStage = (s) => { flush(); S.mode = 'grading'; S.stage = s.index; render(); };
+    const { attempt } = await (unscored ? api.scoreRun({ slug, signal: S.ctrl.signal, onStage }) : api.run({
       slug, prompt, model: S.model, signal: S.ctrl.signal,
       onHtml: (h) => pushHtml(h),
-      onStage: (s) => { flush(); S.mode = 'grading'; S.stage = s.index; render(); },
-    });
+      onStage,
+    }));
     flush();
     S.attempt = attempt;
     S.mode = 'scored';
@@ -362,9 +365,12 @@ async function doRun() {
     renderBoard();
   } catch (e) {
     flush();
-    // Back to where the run started: the goal page, or the last run's compare view.
-    S.mode = runs.length ? 'refine' : 'idle';
-    if (e && e.name === 'AbortError') setStatus('Run cancelled. Nothing was scored and your prompt count did not change.');
+    if (e && e.attempt) S.attempt = e.attempt; // the page is saved but unscored: show it with "Score this page"
+    // Otherwise back to where the run started: the goal page, or the last run's compare view.
+    S.mode = S.attempt && S.attempt.pending ? 'stopped' : runs.length ? 'refine' : 'idle';
+    const aborted = e && e.name === 'AbortError';
+    if (e && e.userMessage) setStatus(e.userMessage, !aborted);
+    else if (aborted) setStatus('Run cancelled. Your prompt count did not change.');
     else setStatus(`The run did not finish: ${(e && e.message) || 'unknown error'} Your prompt is kept, so run it again.`, true);
   } finally {
     S.ctrl = null;
@@ -492,6 +498,7 @@ async function main() {
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
+  if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; setDoc('mineFrame', S.attempt.pending.html); setStatus('This page is saved but not scored yet. Score it to see the result.'); }
   render();
   renderBoard();
   renderSim(await api.probeRun().catch(() => true));
@@ -499,10 +506,11 @@ async function main() {
 
 // The preview-build note sits by the run button and in the scored state while runs are simulated.
 function renderSim(sim) {
-  S.sim = !!sim;
+  const note = sim ? simNote() : api.isProvisional() ? provisionalNote() : '';
+  S.sim = !!note;
   ['simRun', 'simScore'].forEach((id) => {
-    $(id).innerHTML = sim ? simNote() : '';
-    $(id).hidden = !sim || (id === 'simRun' && !!S.status);
+    $(id).innerHTML = note;
+    $(id).hidden = !note || (id === 'simRun' && !!S.status);
   });
 }
 

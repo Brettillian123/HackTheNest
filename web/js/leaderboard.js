@@ -1,7 +1,7 @@
 // Leaderboard page: leaderboard.html?c=<slug>&b=<bracket>&p=<period>
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, esc, levelClass, demoTag, setStat } from './ui.js';
-import { getLeaderboard, listChallenges, me, BRACKETS, isSimulated } from './api.js';
+import { dropdown, esc, levelClass, demoTag, setStat, provisionalTag } from './ui.js';
+import { getLeaderboard, listChallenges, me, BRACKETS, isSimulated, isProvisional } from './api.js';
 
 const $ = (id) => document.getElementById(id);
 const BRACKET_LABEL = { all: 'All', '1': '1 prompt', '2': '2 prompts', '3-5': '3 to 5', '6-10': '6 to 10', '11+': '11 or more' };
@@ -135,7 +135,7 @@ function nameHtml(r) {
 
 function renderBoard(data) {
   const { rows, you } = data;
-  $('bdDemo').innerHTML = isSimulated('boards') ? demoTag() : '';
+  $('bdDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'));
   const top = rows.length ? rows[0].score : null;
   setStat($('stPlayers'), rows.length.toLocaleString('en-US'));
   setStat($('stTop'), top == null ? 'None yet' : String(top));

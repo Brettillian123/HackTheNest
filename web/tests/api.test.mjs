@@ -213,50 +213,13 @@ test("live mode falls back to mock when endpoints are missing, and warns once", 
     await api.run({ slug: "login-card", prompt: PROMPT + " more" });
     assert.ok((await api.getLeaderboard("login-card")).rows.length > 0);
     assert.equal(await api.me(), null);
-    assert.ok(calls.some((c) => c.includes("/api/generate")));
-    assert.equal(warns.filter((w) => w.includes("generate")).length, 1);
+    // Real contract: one /api/health call decides; no run is sent to a server that is not there.
+    assert.equal(calls.filter((c) => c.includes("/api/health")).length, 1);
+    assert.ok(!calls.some((c) => c.includes("/api/runs")));
+    assert.equal(warns.filter((w) => w.includes("not reachable")).length, 1);
   } finally {
     console.warn = orig;
   }
-});
-
-test("live mode streams generate, polls the job and maps the grader result", async () => {
-  let polls = 0;
-  const enc = new TextEncoder();
-  const fake = async (url, init = {}) => {
-    const u = String(url);
-    if (u.endsWith("/api/generate")) {
-      const body = JSON.parse(init.body);
-      assert.equal(body.challenge, "nav-hero");
-      assert.equal(init.credentials, "include");
-      const stream = new ReadableStream({
-        start(c) {
-          c.enqueue(enc.encode("<!doctype html><html><body>"));
-          c.enqueue(enc.encode("<h1>Hi</h1></body></html>"));
-          c.close();
-        },
-      });
-      return new Response(stream, { status: 200, headers: { "X-Attempt-Id": "srv_a1", "X-Run-Id": "srv_r1", "X-Prompt-Count": "1" } });
-    }
-    if (u.includes("/api/runs/srv_r1/score")) return Response.json({ jobId: "j1" }, { status: 202 });
-    if (u.includes("/api/jobs/j1")) {
-      polls++;
-      if (polls < 3) return Response.json({ status: "grading" });
-      return Response.json({ status: "done", result: { total: 77, pillars: { works: 100, engineering: 92, looks: 60 }, feedback: [{ message: "Headline too small", points: 4 }, { message: "Wrong colours", points: 9 }] } });
-    }
-    return new Response("missing", { status: 404 });
-  };
-  api.configure({ mode: "live", fetch: fake });
-  const html = [];
-  const stages = [];
-  const { attempt, run } = await api.run({ slug: "nav-hero", prompt: PROMPT, onHtml: (h) => html.push(h), onStage: (s) => stages.push(s.label) });
-  assert.equal(html.at(-1), "<!doctype html><html><body><h1>Hi</h1></body></html>");
-  assert.equal(stages.at(-1), "Scoring");
-  assert.equal(run.result.total, 77);
-  assert.deepEqual(run.result.costs.map((c) => c.points), [9, 4]);
-  assert.equal(run.result.passedCount, 2);
-  assert.equal(attempt.serverId, "srv_a1");
-  assert.equal(polls, 3);
 });
 
 test("usernames are 3 to 20 characters, the same rule as the sign-up form", async () => {
@@ -391,19 +354,22 @@ test("live me(): 401 is signed out, asked once per page; logout clears the playe
 
 test("simulated data is flagged in mock mode and after a live fallback, not when real", async () => {
   assert.equal(api.isSimulated("run"), true);
+  // Real contract: health says the database is up but no model key is set.
   const fetch = fakeServer({
-    "GET /api/leaderboards/login-card": () => Response.json({ rows: [{ rank: 1, username: "real_one", promptCount: 1, score: 90 }], me: null }),
+    "GET /api/health": () => Response.json({ ok: true, db: true, models: [], grader: "standin", challenges: 6, problems: [] }),
+    "GET /api/leaderboards": () => Response.json({ rows: [{ rank: 1, username: "real_one", promptCount: 1, score: 90, isYou: false }], you: null, counts: { all: 1 }, kind: "score" }),
+    "GET /api/users/someone_real": () => Response.json({ error: "Could not reach the database." }, { status: 503 }),
   });
   api.configure({ mode: "live", fetch, reset: true });
   assert.equal(api.isSimulated("boards"), false);
   const lb = await api.getLeaderboard("login-card");
   assert.equal(lb.rows[0].username, "real_one");
   assert.equal(api.isSimulated("boards"), false, "real board data");
-  assert.equal(await api.probeRun(), true, "no generate endpoint: runs are simulated");
+  assert.equal(await api.probeRun(), true, "no model: runs are simulated");
   assert.equal(api.isSimulated("run"), true);
   await api.getProfile("someone_real").catch(() => {});
-  assert.equal(api.isSimulated("profile"), true);
-  const before = fetch.calls.filter((c) => c.path === "/api/generate").length;
+  assert.equal(api.isSimulated("profile"), true, "a server error falls back to labelled demo data");
   await api.run({ slug: "login-card", prompt: PROMPT });
-  assert.equal(fetch.calls.filter((c) => c.path === "/api/generate").length, before, "a known missing route is not asked again");
+  assert.equal(fetch.calls.filter((c) => c.path === "/api/runs").length, 0, "no run is sent while no model is set up");
+  assert.equal(fetch.calls.filter((c) => c.path === "/api/health").length, 1, "health is asked once");
 });

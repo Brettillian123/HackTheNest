@@ -11,7 +11,8 @@ const options = {
   mode: API_MODE,
   base: API_BASE,
   fetch: null,
-  timing: { streamMs: 3000, stageMs: 3000, pollMs: 1000, jobTimeoutMs: 90000 },
+  // scoreStageMs: when each stage label shows while the server scores (it reports no stages).
+  timing: { streamMs: 3000, stageMs: 3000, scoreStageMs: [0, 2000, 6000, 12000] },
 };
 
 // Change mode, base URL, fetch function or mock timings (used by tests).
@@ -22,9 +23,17 @@ export function configure(next = {}) {
   if (next.timing) options.timing = { ...options.timing, ...next.timing };
   if (next.reset) {
     meCache = undefined;
+    statsCache = undefined;
     warned.clear();
-    routes.clear();
     simulated.clear();
+    healthPromise = null;
+    healthNow = null;
+    provisionalSeen = false;
+    boardsProvisional = false;
+    rescored.clear();
+    liveAttempts.clear();
+    realSlugs.clear();
+    try { globalThis.sessionStorage && globalThis.sessionStorage.removeItem(HEALTH_KEY); } catch { /* storage blocked */ }
   }
   return { mode: options.mode, base: options.base, timing: { ...options.timing } };
 }
@@ -123,7 +132,6 @@ function goalUrlFor(slug) {
 
 // Which kinds of data on screen were simulated (mock) rather than real.
 // Kinds: "run" (generation and scoring), "boards" (leaderboards and challenge stats), "profile".
-const SIM_KIND = { generate: "run", score: "run", leaderboards: "boards", users: "profile" };
 const simulated = new Set();
 
 // true when data of this kind came, or will come, from the mock.
@@ -131,24 +139,58 @@ export function isSimulated(kind) {
   return options.mode !== "live" || simulated.has(kind);
 }
 
+// isProvisional() / isProvisional("run"): real results come from the stand-in scorer (or the
+// latest result said so). isProvisional("boards"): the boards on this page use stand-in scores.
+let provisionalSeen = false;
+let boardsProvisional = false;
+export function isProvisional(kind = "run") {
+  if (options.mode !== "live") return false;
+  if (kind === "boards") return boardsProvisional && !simulated.has("boards");
+  if (simulated.has("run")) return false;
+  return provisionalSeen || !!(healthNow && healthNow.reachable && healthNow.grader === "standin");
+}
+
+// Messages for a run that stopped, by how far it got (the same in mock and live mode).
+// A run counts as a prompt only once its page is fully generated and saved.
+const CANCEL_WRITING = "Run cancelled. Your prompt count did not change.";
+const CANCEL_SCORING = "Scoring cancelled. The page is saved and counts as a prompt; score it to see the result.";
+const SCORE_FAILED = "Scoring failed. Your page is saved; score it again.";
+
+function cancelledWriting() {
+  const e = abortError();
+  e.userMessage = CANCEL_WRITING;
+  return e;
+}
+
+// The page is saved but has no score: e.attempt carries it as attempt.pending, for "Score this page".
+function unscored(e, attempt) {
+  const out = isAbort(e) ? abortError() : e;
+  if (isAbort(e)) out.userMessage = CANCEL_SCORING;
+  else if (e.status === 502) {
+    out.message = SCORE_FAILED;
+    out.userMessage = SCORE_FAILED;
+  } else out.userMessage = `${e.message} Your page is saved; score it again.`;
+  out.attempt = attempt;
+  out.unscored = true;
+  return out;
+}
+
 const warned = new Set();
-function warnOnce(name) {
-  if (SIM_KIND[name]) simulated.add(SIM_KIND[name]);
-  if (warned.has(name) || tabMissing().has(name)) return;
-  warned.add(name);
+function warnOnce(key, message) {
+  if (warned.has(key)) return;
+  warned.add(key);
   try {
-    console.warn(`promptdyno: live endpoint for ${name} is not available, using mock data.`);
+    console.warn(`promptdyno: ${message}`);
   } catch {
     // No console.
   }
 }
 
-class Fallback extends Error {}
-
+// Every request carries the session cookie and, for anonymous play, the browser's anonymous id.
 async function apiFetch(path, init = {}) {
   const f = options.fetch || globalThis.fetch;
   if (!f) throw new TypeError("fetch is not available");
-  const headers = { ...(init.headers || {}) };
+  const headers = { "X-Anon-Id": store.getAnonId(), ...(init.headers || {}) };
   if (init.body && !headers["Content-Type"]) headers["Content-Type"] = "application/json";
   return f(options.base + path, { credentials: "include", ...init, headers });
 }
@@ -166,91 +208,139 @@ async function isMissingRoute(res) {
   }
 }
 
-async function readError(res) {
+async function readBody(res) {
   try {
-    const body = await res.clone().json();
-    if (body && typeof body.error === "string") return body.error;
+    return await res.clone().json();
   } catch {
-    // Not JSON.
+    return null;
   }
-  return "";
+}
+
+async function readError(res) {
+  const body = await readBody(res);
+  return body && typeof body.error === "string" ? body.error : "";
 }
 
 async function httpError(res) {
   const text = await readError(res);
-  const byStatus = {
-    429: "You have used your free runs. Sign up to keep playing.",
-    503: "The grader is busy. Run again in 5 s.",
-    504: "Grading took too long. Run again.",
-    413: "The page is too large to grade. Ask the model for a smaller page.",
-  };
-  const message = byStatus[res.status] || text || `The server could not finish the request (${res.status}). Try again in a moment.`;
-  return apiError(message, { status: res.status });
+  return apiError(text || `The server could not finish the request (${res.status}). Try again in a moment.`, { status: res.status });
 }
 
-// name -> Promise<boolean>: true once the route is known to be missing (or the server unreachable)
-// on this page, so later calls go straight to the mock instead of making another failing request.
-const routes = new Map();
+const NETWORK_DOWN = "Could not reach the server. Check your connection and try again.";
 
-// Routes found missing (a 404 from the server's router) are remembered for the browser tab,
-// so each missing endpoint costs one failed request per visit, not one per page.
-function tabMissing() {
+// GET (or init) a JSON endpoint. Throws AbortError, a network error (status 0) or the server's error.
+async function getJson(path, init = { method: "GET" }) {
+  let res;
+  try {
+    res = await apiFetch(path, init);
+  } catch (e) {
+    if (isAbort(e) || (init.signal && init.signal.aborted)) throw abortError();
+    throw apiError(NETWORK_DOWN, { status: 0 });
+  }
+  if (!res.ok) throw await httpError(res);
+  return res.json();
+}
+
+const enc = encodeURIComponent;
+
+// ---------------------------------------------------------------- server health
+// One cheap call decides, for the tab, what is real: no server or no database means stored data
+// (boards, profiles, attempts) comes from the mock; no model means runs are simulated.
+
+const HEALTH_KEY = "pd.health";
+const HEALTH_TTL_MS = 5 * 60 * 1000;
+const NO_SERVER = Object.freeze({ reachable: false, db: false, models: [], grader: "standin" });
+let healthPromise = null;
+let healthNow = null;
+
+function readHealthCache() {
   try {
     const ss = globalThis.sessionStorage;
-    return ss ? new Set(JSON.parse(ss.getItem("pd.missing") || "[]")) : new Set();
+    const v = ss && JSON.parse(ss.getItem(HEALTH_KEY) || "null");
+    if (!v || v.base !== options.base || !(Date.now() - v.at < HEALTH_TTL_MS)) return null;
+    return v.health;
   } catch {
-    return new Set();
+    return null;
   }
 }
-function rememberMissing(name) {
+
+function writeHealthCache(health) {
   try {
     const ss = globalThis.sessionStorage;
-    if (!ss) return;
-    const set = tabMissing();
-    set.add(name);
-    ss.setItem("pd.missing", JSON.stringify([...set]));
+    if (ss) ss.setItem(HEALTH_KEY, JSON.stringify({ at: Date.now(), base: options.base, health }));
   } catch {
     // Storage blocked: the page-level memory still applies.
   }
 }
 
-// Calls a live endpoint; falls back to mockFn when the route is missing or the network fails.
-async function live(name, path, init, mockFn, onResponse) {
-  let settle = null;
-  if (!routes.has(name) && tabMissing().has(name)) routes.set(name, Promise.resolve(true));
-  if (routes.has(name)) {
-    if (await routes.get(name)) {
-      warnOnce(name);
-      return mockFn();
-    }
-  } else {
-    routes.set(name, new Promise((r) => { settle = r; }));
-  }
-  const known = (missing) => { if (settle) { settle(missing); settle = null; } };
-  let res;
+async function fetchHealth() {
   try {
-    res = await apiFetch(path, init);
-  } catch (e) {
-    if (isAbort(e)) { known(false); routes.delete(name); throw abortError(); }
-    known(true);
-    warnOnce(name);
-    return mockFn();
+    const res = await apiFetch("/api/health", { method: "GET" });
+    if (!res.ok) return NO_SERVER;
+    const body = await res.json();
+    if (!body || typeof body !== "object" || typeof body.db !== "boolean") return NO_SERVER;
+    return {
+      reachable: true,
+      db: body.db === true,
+      models: Array.isArray(body.models) ? body.models.filter((m) => typeof m === "string") : [],
+      grader: body.grader === "service" ? "service" : "standin",
+    };
+  } catch {
+    return NO_SERVER;
   }
-  if (await isMissingRoute(res)) {
-    known(true);
-    warnOnce(name);
-    rememberMissing(name);
-    return mockFn();
+}
+
+function applyHealth(h) {
+  healthNow = h;
+  if (!h.reachable || !h.db) {
+    ["run", "boards", "profile"].forEach((k) => simulated.add(k));
+    warnOnce("health", h.reachable ? "the server has no database, using demo data." : "the server is not reachable, using demo data.");
+  } else if (!h.models.length) {
+    simulated.add("run");
+    warnOnce("models", "no model is set up on the server, runs are simulated.");
   }
-  known(false);
-  return onResponse(res);
+  return h;
+}
+
+function getHealth() {
+  if (!healthPromise) {
+    const cached = readHealthCache();
+    healthPromise = cached
+      ? Promise.resolve(applyHealth(cached))
+      : fetchHealth().then((h) => {
+        writeHealthCache(h);
+        return applyHealth(h);
+      });
+  }
+  return healthPromise;
+}
+
+// true when stored things (attempts, boards, profiles, points) come from the server.
+async function storedLive() {
+  if (options.mode !== "live") return false;
+  const h = await getHealth();
+  return h.reachable && h.db;
+}
+
+// true when runs are generated and scored by the server.
+async function runsLive() {
+  if (!(await storedLive())) return false;
+  return healthNow.models.length > 0;
+}
+
+// A run was refused with no_model: runs are simulated from now on in this tab.
+function markNoModels() {
+  if (!healthNow) return;
+  healthNow = { ...healthNow, models: [] };
+  healthPromise = Promise.resolve(healthNow);
+  writeHealthCache(healthNow);
+  applyHealth(healthNow);
 }
 
 // Live mode: asks once whether the server can generate pages. Returns true when runs are simulated.
 export async function probeRun() {
   if (options.mode !== "live") return true;
-  if (simulated.has("run")) return true;
-  return live("generate", "/api/generate", { method: "GET" }, () => true, async () => false);
+  return !(await runsLive());
 }
 
 // ---------------------------------------------------------------- deterministic mock data
@@ -371,40 +461,37 @@ function summary(data, c, others, best) {
   };
 }
 
-async function liveStats(slug) {
-  // Live stats come from the leaderboard endpoint; null means use mock.
-  return live(
-    "leaderboards",
-    `/api/leaderboards/${encodeURIComponent(slug)}?b=all`,
-    { method: "GET" },
-    () => null,
-    async (res) => {
-      if (!res.ok) { simulated.add("boards"); return null; }
-      const body = await res.json();
-      return (body.rows || []).map((r) => ({ username: r.username, promptCount: r.promptCount, score: r.score }));
-    },
-  );
-}
-
-export async function listChallenges() {
-  const data = await challengeData();
-  return Promise.all(
-    data.challenges.map(async (c) => {
-      let others = null;
-      if (options.mode === "live") others = await liveStats(c.slug);
-      if (!others) others = await mockBoard(c.slug);
-      return summary(data, c, others, store.getBest(c.slug));
-    }),
-  );
-}
-
-export async function getChallenge(slug) {
-  const { data, c } = await findChallenge(slug);
-  let others = null;
-  if (options.mode === "live") others = await liveStats(slug);
-  if (!others) others = await mockBoard(slug);
+// Server summary -> client summary (same fields; stats can be null when nobody has played).
+function fromServerSummary(s) {
   return {
-    ...summary(data, c, others, store.getBest(slug)),
+    slug: s.slug,
+    title: s.title,
+    level: s.level,
+    levelLabel: s.levelLabel,
+    brief: s.brief,
+    solvedCount: s.solvedCount ?? 0,
+    topScore: s.topScore ?? null,
+    yourBest: s.yourBest ?? null,
+    yourBestPrompts: s.yourBestPrompts ?? null,
+  };
+}
+
+// Models that can run come first; unavailable ones are listed only when none can run.
+function fromServerModels(models) {
+  const list = (Array.isArray(models) ? models : []).filter((m) => m && m.id).map((m) => ({ id: m.id, label: m.label || m.id, available: m.available !== false }));
+  const ready = list.filter((m) => m.available);
+  return ready.length ? ready : list;
+}
+
+async function mockListChallenges() {
+  const data = await challengeData();
+  return Promise.all(data.challenges.map(async (c) => summary(data, c, await mockBoard(c.slug), store.getBest(c.slug))));
+}
+
+async function mockChallenge(slug) {
+  const { data, c } = await findChallenge(slug);
+  return {
+    ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
     goalUrl: goalUrlFor(slug),
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
@@ -412,14 +499,148 @@ export async function getChallenge(slug) {
   };
 }
 
+export async function listChallenges() {
+  if (await storedLive()) {
+    try {
+      const body = await getJson("/api/challenges");
+      if (body && Array.isArray(body.challenges) && body.statsAvailable) return body.challenges.map(fromServerSummary);
+    } catch {
+      // Falls back to demo stats below.
+    }
+    simulated.add("boards");
+  }
+  return mockListChallenges();
+}
+
+export async function getChallenge(slug) {
+  if (!(await storedLive())) return mockChallenge(slug);
+  let body = null;
+  try {
+    body = await getJson(`/api/challenges/${enc(slug)}`);
+  } catch (e) {
+    if ((e.status === 404 && e.message !== "API route not found.") || e.status === 400) throw apiError(`There is no challenge called "${slug}". Pick one from the challenge list.`, { status: 404 });
+  }
+  const sc = body && body.challenge;
+  if (!sc) {
+    simulated.add("boards");
+    return mockChallenge(slug);
+  }
+  const details = {
+    goalUrl: goalUrlFor(slug),
+    viewport: sc.viewport ? { width: sc.viewport.width, height: sc.viewport.height } : { width: 1280, height: 800 },
+    models: fromServerModels(sc.models),
+    spec: (sc.spec || []).map((g) => ({ group: g.group, items: (g.items || []).map((i) => ({ ...i })) })),
+  };
+  if (body.statsAvailable) return { ...fromServerSummary(sc), ...details };
+  simulated.add("boards");
+  const mock = await mockChallenge(slug).catch(() => null);
+  return { ...(mock || fromServerSummary(sc)), ...details };
+}
+
 // ---------------------------------------------------------------- attempts
+// Mock mode, or live with no database: attempts live in this browser (store.js).
+// Live with a database: the server is the source of truth. Once a challenge has real server runs,
+// nothing is simulated for it.
+
+const liveAttempts = new Map(); // slug -> the client attempt last read from the server
+const realSlugs = new Set(); // challenges with real server runs in the open attempt
+
+// Server result -> client result. Costs largest first, as the pages show them.
+function fromServerResult(r) {
+  if (!r) return null;
+  const checks = (r.checks || []).map((x) => ({ label: String(x.label), passed: !!x.passed }));
+  const out = {
+    total: Math.round(Number(r.total) || 0),
+    delta: r.delta ?? null,
+    checks,
+    passedCount: r.passedCount ?? checks.filter((x) => x.passed).length,
+    totalChecks: r.totalChecks ?? checks.length,
+    costs: (r.costs || []).map((c) => ({ points: Math.round(Number(c.points) || 0), message: String(c.message || "") })).sort((a, b) => b.points - a.points),
+    rank: r.rank && typeof r.rank === "object" ? { before: r.rank.before ?? null, after: r.rank.after ?? null } : null,
+    provisional: !!r.provisional,
+  };
+  if (r.notice) out.notice = String(r.notice);
+  return out;
+}
+
+function fromServerRun(r, html) {
+  return { n: r.n, prompt: r.prompt, model: r.model, html: html ?? r.html ?? "", result: fromServerResult(r.result), at: r.at, serverId: r.id };
+}
+
+// attempt.runs holds scored runs only. attempt.pending is the latest saved page that has no score
+// yet ({ n, prompt, model, html, at, serverId }) or null; it counts as a prompt.
+function fromServerAttempt(a, runs, pending = null) {
+  return { id: a.id, serverId: a.id, promptCount: a.promptCount, best: a.best ?? null, runs, pending, startedAt: a.startedAt };
+}
+
+async function readServerAttempt(slug) {
+  const body = await getJson(`/api/attempts/current?slug=${enc(slug)}`);
+  const a = body && body.attempt;
+  if (!a) {
+    liveAttempts.delete(slug);
+    realSlugs.delete(slug);
+    return null;
+  }
+  const saved = (a.runs || []).filter((r) => r.status === "done" || r.result).sort((x, y) => x.n - y.n);
+  const runs = saved.filter((r) => r.result).map((r) => fromServerRun(r));
+  const last = saved[saved.length - 1];
+  const pending = last && !last.result ? { n: last.n, prompt: last.prompt, model: last.model, html: last.html || "", at: last.at, serverId: last.id } : null;
+  const attempt = fromServerAttempt(a, runs, pending);
+  if (runs.length) provisionalSeen = runs[runs.length - 1].result.provisional;
+  realSlugs.add(slug);
+  liveAttempts.set(slug, attempt);
+  rescoreProvisional(attempt);
+  return attempt;
+}
+
+// With the grader service connected, provisional results are graded again once, quietly, and
+// replaced in place (the page shows the new result on its next render).
+const rescored = new Set();
+function rescoreProvisional(attempt) {
+  if (!healthNow || healthNow.grader !== "service") return null;
+  const todo = attempt.runs.filter((r) => r.result && r.result.provisional && r.serverId && !rescored.has(r.serverId));
+  if (!todo.length) return null;
+  todo.forEach((r) => rescored.add(r.serverId));
+  return (async () => {
+    for (const r of todo) {
+      try {
+        const body = await getJson(`/api/runs/${enc(r.serverId)}/score`, { method: "POST" });
+        if (!body || !body.run || !body.run.result) continue;
+        r.result = fromServerResult(body.run.result);
+        if (body.attempt && body.attempt.best != null) attempt.best = body.attempt.best;
+      } catch {
+        // Keeps the provisional result; the server can grade it again later.
+      }
+    }
+    provisionalSeen = attempt.runs.length ? attempt.runs[attempt.runs.length - 1].result.provisional : false;
+  })();
+}
 
 export async function getAttempt(slug) {
-  return store.getAttempt(slug);
+  if (!(await storedLive())) return store.getAttempt(slug);
+  let attempt = null;
+  try {
+    attempt = await readServerAttempt(slug);
+  } catch {
+    warnOnce("attempt." + slug, `could not read the current attempt for ${slug}.`);
+    attempt = null;
+  }
+  if (attempt) return attempt;
+  // No real attempt: simulated runs (no model yet) stay on this browser.
+  return (await runsLive()) ? null : store.getAttempt(slug);
 }
 
 export async function startOver(slug) {
   store.clearAttempt(slug);
+  liveAttempts.delete(slug);
+  if (await storedLive()) {
+    try {
+      await getJson("/api/attempts/start-over", { method: "POST", body: JSON.stringify({ slug }) });
+    } catch (e) {
+      throw apiError(e.status === 0 ? NETWORK_DOWN : "Could not start over on the server. Try again.", { status: e.status });
+    }
+    realSlugs.delete(slug);
+  }
   return null;
 }
 
@@ -483,12 +704,13 @@ async function mockGrade(slug, n, prompt) {
 }
 
 // Saves a finished run into the current attempt and the best record; returns { attempt, run }.
-async function commitRun(slug, prev, { prompt, model, html, result, serverIds }) {
+async function commitRun(slug, prev, { prompt, model, html, result, serverIds, n: given }) {
   const attempt = prev
     ? { ...prev, runs: prev.runs.slice() }
     : { id: store.randomId("att_"), promptCount: 0, best: null, runs: [], startedAt: new Date().toISOString() };
   if (serverIds && serverIds.attemptId) attempt.serverId = serverIds.attemptId;
-  const n = attempt.runs.length + 1;
+  const n = given || attempt.runs.length + 1;
+  attempt.pending = null;
   const last = attempt.runs[attempt.runs.length - 1];
   result.delta = last && last.result ? result.total - last.result.total : null;
 
@@ -516,36 +738,72 @@ async function commitRun(slug, prev, { prompt, model, html, result, serverIds })
   const run = { n, prompt, model, html, result, at: new Date().toISOString() };
   if (serverIds && serverIds.runId) run.serverId = serverIds.runId;
   attempt.runs.push(run);
-  attempt.promptCount = attempt.runs.length;
+  attempt.promptCount = Math.max(attempt.promptCount || 0, n);
   attempt.best = Math.max(attempt.best == null ? -Infinity : attempt.best, result.total);
   store.setAttempt(slug, attempt);
   return { attempt, run };
 }
 
+function promptCountOf(a) {
+  return a ? a.promptCount ?? a.runs.length : 0;
+}
+
+// Same rule as the server: the run counts once its page is fully generated and saved.
 async function mockRun({ slug, prompt, model, signal, onStage, onHtml }) {
   const prev = store.getAttempt(slug);
+  // Prompt count (server rule): this run is prompt n once its page is generated and saved.
+  const n = promptCountOf(prev) + 1;
   // Version of the prompt: running the same prompt again builds the same page and scores the same.
   const prompts = (prev ? prev.runs.map((r) => r.prompt) : []).concat(prompt).map((t) => String(t).trim());
-  const n = prompts.filter((t, i) => i === 0 || t !== prompts[i - 1]).length;
+  const v = prompts.filter((t, i) => i === 0 || t !== prompts[i - 1]).length;
   const goal = await loadText(`data/goals/${slug}.html`);
-  const grade = await mockGrade(slug, n, prompt);
+  const grade = await mockGrade(slug, v, prompt);
   const html = applyFaults(goal, grade.activeFaults);
-  await streamHtml(html, onHtml, signal, options.timing.streamMs);
-  await walkStages(onStage, signal, options.timing.stageMs);
-  throwIfAborted(signal);
-  const { activeFaults, ...result } = grade;
-  return commitRun(slug, prev, { prompt, model, html, result });
+  try {
+    await streamHtml(html, onHtml, signal, options.timing.streamMs);
+  } catch (e) {
+    throw isAbort(e) ? cancelledWriting() : e;
+  }
+  const attempt = prev
+    ? { ...prev, runs: prev.runs.slice() }
+    : { id: store.randomId("att_"), promptCount: 0, best: null, runs: [], startedAt: new Date().toISOString() };
+  attempt.pending = { n, v, prompt, model, html, at: new Date().toISOString() };
+  attempt.promptCount = n;
+  store.setAttempt(slug, attempt);
+  return mockScore(slug, attempt, { signal, onStage });
+}
+
+async function mockScore(slug, attempt, { signal, onStage }) {
+  const p = attempt.pending;
+  try {
+    await walkStages(onStage, signal, options.timing.stageMs);
+    throwIfAborted(signal);
+  } catch (e) {
+    throw unscored(e, attempt);
+  }
+  const { activeFaults, ...result } = await mockGrade(slug, p.v || p.n, p.prompt);
+  return commitRun(slug, attempt, { prompt: p.prompt, model: p.model, html: p.html, result, n: p.n });
 }
 
 async function readHtmlStream(res, onHtml, signal) {
   if (!res.body || !res.body.getReader) {
     const text = await res.text();
+    throwIfAborted(signal);
     if (onHtml) onHtml(text);
     return text;
   }
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let html = "";
+  // Cancel ends a stalled read at once.
+  const onAbort = () => {
+    try {
+      reader.cancel().catch(() => {});
+    } catch {
+      // Already closed.
+    }
+  };
+  if (signal) signal.addEventListener("abort", onAbort, { once: true });
   try {
     for (;;) {
       throwIfAborted(signal);
@@ -554,128 +812,186 @@ async function readHtmlStream(res, onHtml, signal) {
       html += decoder.decode(value, { stream: true });
       if (onHtml) onHtml(html);
     }
+    throwIfAborted(signal);
     html += decoder.decode();
   } catch (e) {
-    try {
-      reader.cancel();
-    } catch {
-      // Already closed.
-    }
-    if (isAbort(e) || (signal && signal.aborted)) throw abortError();
-    throw apiError("The page stopped streaming before it finished. Run again.");
+    onAbort();
+    if (isAbort(e) || (signal && signal.aborted)) throw cancelledWriting();
+    const msg = "The page stopped streaming before it finished. Your prompt count did not change, so run it again.";
+    throw apiError(msg, { userMessage: msg });
+  } finally {
+    if (signal) signal.removeEventListener("abort", onAbort);
   }
   return html;
 }
 
-function mapGraderResult(r) {
-  const costs = (r.feedback || [])
-    .map((f) => (typeof f === "string" ? { points: 0, message: f } : { points: Math.round(Number(f.points) || 0), message: String(f.message || "") }))
-    .filter((f) => f.message)
-    .sort((a, b) => b.points - a.points);
-  let checks;
-  if (Array.isArray(r.checks)) {
-    checks = r.checks.map((x) => ({ label: String(x.label), passed: !!x.passed }));
-  } else {
-    const names = { works: "Page works", engineering: "Clean code", looks: "Looks like the goal" };
-    checks = Object.entries(names)
-      .filter(([k]) => r.pillars && typeof r.pillars[k] === "number")
-      .map(([k, label]) => ({ label, passed: r.pillars[k] >= 90 }));
-  }
-  return {
-    total: Math.round(Number(r.total) || 0),
-    checks,
-    passedCount: checks.filter((x) => x.passed).length,
-    totalChecks: checks.length,
-    costs,
-    rank: r.rank && typeof r.rank === "object" ? { before: r.rank.before ?? null, after: r.rank.after ?? null } : undefined,
-  };
+const NO_MODEL = "No model is set up on the server yet, so pages cannot be generated. Try again later.";
+const SCORER_BUSY = "The scorer is busy. Run again in a minute.";
+const MODEL_BUSY = "The model is busy. Run again in a moment.";
+
+function resetText(seconds) {
+  const s = Number(seconds);
+  if (!Number.isFinite(s) || s <= 0) return "Your runs reset at midnight UTC.";
+  const minutes = Math.max(1, Math.ceil(s / 60));
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  if (!h) return `Your runs reset in ${m} min.`;
+  return m ? `Your runs reset in ${h} h ${m} min.` : `Your runs reset in ${h} h.`;
 }
 
-async function pollJob(jobId, onStage, signal) {
-  const started = Date.now();
-  const thresholds = [0, 2000, 6000, 12000];
+// Errors from POST /api/runs, in plain words.
+async function runError(res) {
+  const body = await readBody(res);
+  const text = body && typeof body.error === "string" ? body.error : "";
+  if (res.status === 429) {
+    const lead = text || "You have used today's runs.";
+    return apiError(`${lead} ${resetText(res.headers.get("Retry-After"))}`, { status: 429 });
+  }
+  if (res.status === 400 && text) return apiError(text, { status: 400, userMessage: `${text} Your prompt is kept and your prompt count did not change.` });
+  if (res.status === 503 && body && body.code === "no_model") return apiError(NO_MODEL, { status: 503, code: "no_model" });
+  if (res.status >= 500) return apiError(text || MODEL_BUSY, { status: res.status });
+  return apiError(text || `The server could not start the run (${res.status}). Try again in a moment.`, { status: res.status });
+}
+
+// Errors from POST /api/runs/:id/score.
+async function scoreError(res) {
+  const text = await readError(res);
+  if (res.status === 502 || res.status === 503 || res.status === 504) return apiError(SCORER_BUSY, { status: res.status });
+  return apiError(text || `Scoring did not finish (${res.status}). Run again.`, { status: res.status });
+}
+
+// Scores one run. The server reports no stages, so the labels move on a timer and hold on the
+// last one until the answer arrives.
+async function scoreLive(runId, onStage, signal) {
+  const marks = options.timing.scoreStageMs || [0];
   let shown = -1;
   const show = (i) => {
-    while (shown < i) {
+    while (shown < i && shown < STAGES.length - 1) {
       shown++;
       if (onStage) onStage({ ...STAGES[shown], index: shown, total: STAGES.length });
     }
   };
+  show(0);
+  const timers = [];
+  for (let i = 1; i < STAGES.length; i++) timers.push(setTimeout(() => show(i), marks[Math.min(i, marks.length - 1)] || 0));
   try {
-    for (;;) {
-      const elapsed = Date.now() - started;
-      show(Math.min(2, thresholds.filter((t) => elapsed >= t).length - 1));
-      if (elapsed > options.timing.jobTimeoutMs) throw apiError("Grading took too long. Run again.");
-      const res = await apiFetch(`/api/jobs/${encodeURIComponent(jobId)}`, { method: "GET", signal });
-      if (!res.ok) throw await httpError(res);
-      const job = await res.json();
-      if (job.status === "done" && job.result) {
-        show(3);
-        return job.result;
-      }
-      if (job.status === "error") throw apiError(job.error || "Grading failed. Run again.");
-      if (job.status === "cancelled") throw abortError();
-      await sleep(options.timing.pollMs, signal);
+    let res;
+    try {
+      res = await apiFetch(`/api/runs/${enc(runId)}/score`, { method: "POST", signal });
+    } catch (e) {
+      if (isAbort(e) || (signal && signal.aborted)) throw abortError();
+      throw apiError("Lost the connection while scoring. Check your network and run again.", { status: 0 });
     }
-  } catch (e) {
-    if (isAbort(e) || (signal && signal.aborted)) {
-      apiFetch(`/api/jobs/${encodeURIComponent(jobId)}`, { method: "DELETE" }).catch(() => {});
-      throw abortError();
+    if (!res.ok) throw await scoreError(res);
+    let body;
+    try {
+      body = await res.json();
+    } catch (e) {
+      if (isAbort(e) || (signal && signal.aborted)) throw abortError();
+      throw apiError("The scorer sent back an answer that could not be read. Run again.");
     }
-    if (e instanceof TypeError) throw apiError("Lost the connection while grading. Check your network and run again.");
-    throw e;
+    throwIfAborted(signal);
+    if (!body || !body.run || !body.run.result) throw apiError("The scorer sent back no result. Run again.");
+    show(STAGES.length - 1);
+    return body;
+  } finally {
+    timers.forEach(clearTimeout);
   }
+}
+
+// The attempt after a scored run: the known runs plus this one (read again when runs are missing).
+async function attemptAfter(slug, serverAttempt, run, header) {
+  const prev = liveAttempts.get(slug);
+  const id = (serverAttempt && serverAttempt.id) || header.attemptId || (prev && prev.id);
+  let runs = null;
+  if (prev && prev.id === id) runs = prev.runs.filter((r) => r.n !== run.n).concat(run);
+  else if (run.n === 1) runs = [run];
+  else {
+    try {
+      const fresh = await readServerAttempt(slug);
+      if (fresh && fresh.id === id) runs = fresh.runs.filter((r) => r.n !== run.n).concat(run);
+    } catch {
+      runs = null;
+    }
+  }
+  if (!runs) runs = [run];
+  runs.sort((a, b) => a.n - b.n);
+  const base = serverAttempt
+    ? fromServerAttempt(serverAttempt, runs)
+    : { id, serverId: id, promptCount: header.promptCount || run.n, best: Math.max(prev && prev.best != null ? prev.best : -Infinity, run.result.total), runs, pending: null, startedAt: prev ? prev.startedAt : run.at };
+  liveAttempts.set(slug, base);
+  realSlugs.add(slug);
+  return base;
 }
 
 async function liveRun(args) {
   const { slug, prompt, model, signal, onStage, onHtml } = args;
-  if (routes.has("generate") && (await routes.get("generate"))) {
-    warnOnce("generate");
-    throw new Fallback();
-  }
-  const prev = store.getAttempt(slug);
-  const body = { challenge: slug, prompt, model, anonId: store.getAnonId() };
-  if (prev) body.attemptId = prev.serverId || prev.id;
-
   let res;
   try {
-    res = await apiFetch("/api/generate", { method: "POST", body: JSON.stringify(body), signal });
+    res = await apiFetch("/api/runs", { method: "POST", body: JSON.stringify({ slug, prompt, model }), signal });
   } catch (e) {
     if (isAbort(e) || (signal && signal.aborted)) throw abortError();
-    warnOnce("generate");
-    throw new Fallback();
+    throw apiError("Could not reach the server. Check your connection and run again.", { status: 0 });
   }
-  if (await isMissingRoute(res)) {
-    warnOnce("generate");
-    throw new Fallback();
+  if (!res.ok) {
+    const err = await runError(res);
+    if (err.code === "no_model") {
+      markNoModels();
+      // Nothing real yet for this challenge: simulate, labelled, instead of failing.
+      if (!realSlugs.has(slug)) return mockRun(args);
+    }
+    throw err;
   }
-  if (!res.ok) throw await httpError(res);
-  const attemptId = res.headers.get("X-Attempt-Id");
-  const runId = res.headers.get("X-Run-Id");
+  realSlugs.add(slug);
+  const header = {
+    runId: res.headers.get("X-Run-Id"),
+    attemptId: res.headers.get("X-Attempt-Id"),
+    promptCount: Number(res.headers.get("X-Prompt-Count")) || null,
+  };
   const html = await readHtmlStream(res, onHtml, signal);
-  throwIfAborted(signal);
+  if (signal && signal.aborted) throw cancelledWriting();
+  if (!header.runId) throw apiError("The server did not say which run this was. Run again.");
+  // The page is generated and saved: it counts as a prompt from here, scored or not.
+  const prev = liveAttempts.get(slug);
+  const n = header.promptCount || promptCountOf(prev) + 1;
+  const attempt = prev && prev.id === header.attemptId
+    ? { ...prev, runs: prev.runs.slice() }
+    : { id: header.attemptId, serverId: header.attemptId, promptCount: 0, best: null, runs: [], startedAt: new Date().toISOString() };
+  attempt.pending = { n, prompt, model, html, at: new Date().toISOString(), serverId: header.runId };
+  attempt.promptCount = n;
+  liveAttempts.set(slug, attempt);
+  return liveScore(slug, attempt, { signal, onStage });
+}
 
-  const n = (prev ? prev.runs.length : 0) + 1;
-  let result;
-  let scoreRes = null;
+// Scores attempt.pending on the server; on failure the page stays saved and unscored.
+async function liveScore(slug, attempt, { signal, onStage }) {
+  const p = attempt.pending;
+  let scored;
   try {
-    scoreRes = runId ? await apiFetch(`/api/runs/${encodeURIComponent(runId)}/score`, { method: "POST", signal }) : null;
+    scored = await scoreLive(p.serverId, onStage, signal);
   } catch (e) {
-    if (isAbort(e) || (signal && signal.aborted)) throw abortError();
-    scoreRes = null;
+    throw unscored(e, attempt);
   }
-  if (!scoreRes || (await isMissingRoute(scoreRes))) {
-    warnOnce("score");
-    await walkStages(onStage, signal, options.timing.stageMs);
-    const { activeFaults, ...grade } = await mockGrade(slug, n, prompt);
-    result = grade;
-  } else {
-    if (!scoreRes.ok) throw await httpError(scoreRes);
-    const { jobId } = await scoreRes.json();
-    result = mapGraderResult(await pollJob(jobId, onStage, signal));
-  }
+  const run = fromServerRun(scored.run, p.html || undefined);
+  provisionalSeen = !!(run.result && run.result.provisional);
+  statsCache = undefined;
+  const next = await attemptAfter(slug, scored.attempt, run, { attemptId: attempt.id, promptCount: attempt.promptCount });
+  return { attempt: next, run };
+}
+
+// "Score this page": scores the current attempt's saved, unscored page (attempt.pending) with the
+// usual stages. Returns { attempt, run } like run().
+export async function scoreRun({ slug, signal, onStage } = {}) {
   throwIfAborted(signal);
-  return commitRun(slug, prev, { prompt, model, html, result, serverIds: { attemptId, runId } });
+  if (await storedLive()) {
+    let a = liveAttempts.get(slug);
+    if (!a || !a.pending) a = await readServerAttempt(slug).catch(() => null);
+    if (a && a.pending) return liveScore(slug, a, { signal, onStage });
+    if (realSlugs.has(slug) || (await runsLive())) throw apiError("There is no unscored page to score. Run a prompt first.");
+  }
+  const local = store.getAttempt(slug);
+  if (!local || !local.pending) throw apiError("There is no unscored page to score. Run a prompt first.");
+  return mockScore(slug, local, { signal, onStage });
 }
 
 export async function run({ slug, prompt, model, signal, onStage, onHtml } = {}) {
@@ -684,12 +1000,13 @@ export async function run({ slug, prompt, model, signal, onStage, onHtml } = {})
   if (!text.trim()) throw apiError("Write a prompt first, then run it.");
   const ch = await getChallenge(slug);
   const args = { slug, prompt: text, model: model || ch.models[0].id, signal, onStage, onHtml };
-  if (options.mode === "live") {
-    try {
-      return await liveRun(args);
-    } catch (e) {
-      if (!(e instanceof Fallback)) throw e;
+  if (await storedLive()) {
+    if (await runsLive()) {
+      if (model && !ch.models.some((m) => m.id === model)) args.model = ch.models[0].id;
+      return liveRun(args);
     }
+    // Never mix a real attempt with simulated runs.
+    if (realSlugs.has(slug)) throw apiError(NO_MODEL, { status: 503, code: "no_model" });
   }
   return mockRun(args);
 }
@@ -752,21 +1069,33 @@ export async function getLeaderboard(slug = null, { bracket = "all", period = "a
   if (period !== "week" && period !== "all") throw apiError(`Unknown period "${period}". Use week or all.`);
   if (slug) await findChallenge(slug);
   const mock = () => mockLeaderboard(slug, bracket, period);
-  if (options.mode !== "live") return mock();
-  const q = new URLSearchParams({ b: bracket, period, anonId: store.getAnonId() });
-  return live("leaderboards", `/api/leaderboards/${encodeURIComponent(slug || "overall")}?${q}`, { method: "GET" }, mock, async (res) => {
-    if (!res.ok) throw await httpError(res);
-    const body = await res.json();
-    const meRow = body.me || null;
-    const rows = (body.rows || []).map((r) => ({
-      rank: r.rank,
-      username: r.username,
-      promptCount: r.promptCount,
-      score: r.score,
-      isYou: !!(r.isYou || (meRow && meRow.rank === r.rank)),
-    }));
-    return { rows, you: meRow ? { rank: meRow.rank, score: meRow.score, promptCount: meRow.promptCount ?? null } : null };
-  });
+  if (!(await storedLive())) return mock();
+  const q = new URLSearchParams({ bracket, period });
+  if (slug) q.set("slug", slug);
+  let body;
+  try {
+    body = await getJson(`/api/leaderboards?${q}`);
+  } catch (e) {
+    if (e.status >= 400 && e.status < 500) throw e;
+    simulated.add("boards");
+    return mock();
+  }
+  const you = body.you || null;
+  if (body.provisional) boardsProvisional = true;
+  const rows = (body.rows || []).map((r) => ({
+    rank: r.rank,
+    username: r.username,
+    promptCount: r.promptCount,
+    score: r.score,
+    isYou: !!r.isYou,
+  }));
+  return {
+    rows,
+    you: you ? { rank: you.rank, score: you.score, promptCount: you.promptCount ?? null } : null,
+    counts: body.counts || {},
+    kind: body.kind || (slug ? "score" : "points"),
+    provisional: !!body.provisional,
+  };
 }
 
 // ---------------------------------------------------------------- profiles
@@ -808,30 +1137,34 @@ export async function getProfile(username) {
   const name = String(username || "").trim();
   if (!name) throw apiError("No player name given. Open a profile from the leaderboard.");
   const mock = () => mockProfile(name);
-  if (options.mode !== "live") return mock();
-  const data = await challengeData();
-  return live("users", `/api/users/${encodeURIComponent(name)}`, { method: "GET" }, mock, async (res) => {
-    if (res.status === 404) throw apiError(`There is no player called "${name}". Check the spelling.`, { status: 404 });
-    if (!res.ok) throw await httpError(res);
-    const body = await res.json();
-    const solved = (body.solved || []).map((s) => {
-      const c = data.challenges.find((x) => x.slug === s.slug);
-      return { slug: s.slug, title: s.title || (c ? c.title : s.slug), best: s.best, promptCount: s.promptCount, when: s.when || null };
-    });
-    const t = body.totals || {};
-    const computed = profileTotals(solved);
-    return {
-      username: body.username || name,
-      joined: body.joined || null,
-      totals: { solved: t.solved ?? computed.solved, best: t.best ?? computed.best, averagePrompts: t.averagePrompts ?? computed.averagePrompts },
-      solved,
-    };
+  if (!(await storedLive())) return mock();
+  let body;
+  try {
+    body = await getJson(`/api/users/${enc(name)}`);
+  } catch (e) {
+    if (e.status === 404) throw apiError(`There is no player called "${name}". Check the spelling.`, { status: 404 });
+    if (e.status >= 400 && e.status < 500) throw e;
+    simulated.add("profile");
+    return mock();
+  }
+  const data = await challengeData().catch(() => ({ challenges: [] }));
+  const solved = (body.solved || []).map((s) => {
+    const c = data.challenges.find((x) => x.slug === s.slug);
+    return { slug: s.slug, title: s.title || (c ? c.title : s.slug), best: s.best, promptCount: s.promptCount, when: s.when ? String(s.when).slice(0, 10) : null };
   });
+  const t = body.totals || {};
+  const computed = profileTotals(solved);
+  const totals = { solved: t.solved ?? computed.solved, best: t.best ?? computed.best, averagePrompts: t.averagePrompts ?? computed.averagePrompts };
+  if (Number.isFinite(t.points)) totals.points = t.points;
+  if (Number.isFinite(t.level)) totals.level = t.level;
+  return { username: body.username || name, joined: body.joined ? String(body.joined).slice(0, 10) : null, totals, solved };
 }
 
 // ---------------------------------------------------------------- auth
 
 let meCache;
+// Live points and level from /api/players/me for the signed-in player; cleared after a run or claim.
+let statsCache;
 
 // Usernames: 3 to 20 letters, digits or underscores (the sign-up form uses the same rule).
 export const USERNAME_RE = /^[A-Za-z0-9_]{3,20}$/;
@@ -956,29 +1289,53 @@ async function liveAuth(path, init, mockFn, onResponse) {
     throw apiError(AUTH_UNREACHABLE, { status: 0 });
   }
   if (await isMissingRoute(res)) {
-    warnOnce("auth");
+    warnOnce("auth", "the accounts endpoint is not available, using local accounts.");
     return mockFn();
   }
   return onResponse(res);
 }
 
+// Points and level for the signed-in player from /api/players/me (live with a database), or null.
+async function liveStats() {
+  if (statsCache !== undefined) return statsCache;
+  if (!(await storedLive())) return null;
+  try {
+    const body = await getJson("/api/players/me");
+    statsCache = body && Number.isFinite(body.points) ? { points: body.points, level: Number.isFinite(body.level) ? body.level : levelFor(body.points) } : null;
+  } catch {
+    statsCache = null;
+  }
+  return statsCache;
+}
+
 // Returns { id, username, email, points, level } or null when not logged in.
-// A 401 is the normal signed-out answer; the result is kept for the life of the page.
+// A 401 is the normal signed-out answer; the user is kept for the life of the page.
 export async function me() {
   if (options.mode !== "live") return withStats(adopt(mockAuth.me()));
-  if (meCache !== undefined) return withStats(meCache);
-  if (tabFlag("pd.signedOut")) return withStats(adopt(null));
-  let u = null;
-  try {
-    u = await live("auth", "/api/auth/me", { method: "GET" }, () => mockAuth.me(), async (res) => {
-      if (res.status === 401) tabFlag("pd.signedOut", true);
-      if (!res.ok) return null;
-      return userFrom(res);
-    });
-  } catch {
-    u = null;
+  if (meCache === undefined) {
+    const before = store.getPlayer();
+    let u = null;
+    if (!tabFlag("pd.signedOut")) {
+      try {
+        const res = await apiFetch("/api/auth/me", { method: "GET" });
+        if (await isMissingRoute(res)) {
+          warnOnce("auth", "the accounts endpoint is not available, using local accounts.");
+          u = mockAuth.me();
+        } else {
+          if (res.status === 401) tabFlag("pd.signedOut", true);
+          u = res.ok ? await userFrom(res) : null;
+        }
+      } catch {
+        u = null;
+      }
+    }
+    adopt(u);
+    // Signed in since this browser last looked (another tab, or a cookie): move anonymous runs over.
+    if (u && (!before || before.id !== u.id)) claimAttempts().catch(() => {});
   }
-  return withStats(adopt(u));
+  if (!meCache) return null;
+  const stats = await liveStats();
+  return withStats(stats ? { ...meCache, ...stats } : meCache);
 }
 
 export async function login({ email, password } = {}) {
@@ -987,6 +1344,8 @@ export async function login({ email, password } = {}) {
   if (options.mode !== "live") return adopt(mockAuth.login(input));
   const user = await liveAuth("/api/auth/login", { method: "POST", body: JSON.stringify(input) }, () => mockAuth.login(input), userFrom);
   tabFlag("pd.signedOut", false);
+  statsCache = undefined;
+  liveAttempts.clear();
   return adopt(user);
 }
 
@@ -996,6 +1355,8 @@ export async function signup({ username, email, password } = {}) {
   if (options.mode !== "live") return adopt(mockAuth.signup(input), { isNew: true });
   const user = await liveAuth("/api/auth/signup", { method: "POST", body: JSON.stringify(input) }, () => mockAuth.signup(input), userFrom);
   tabFlag("pd.signedOut", false);
+  statsCache = undefined;
+  liveAttempts.clear();
   return adopt(user, { isNew: true });
 }
 
@@ -1003,31 +1364,37 @@ export async function logout() {
   const wasLive = options.mode === "live";
   adopt(null);
   meCache = wasLive ? null : undefined;
+  statsCache = undefined;
+  liveAttempts.clear();
+  realSlugs.clear();
   if (!wasLive) return mockAuth.logout();
   tabFlag("pd.signedOut", true);
   try {
-    return await live("auth", "/api/auth/logout", { method: "POST" }, () => mockAuth.logout(), async (res) => {
-      if (!res.ok) throw await authError(res);
-      return { ok: true };
-    });
+    const res = await apiFetch("/api/auth/logout", { method: "POST" });
+    if (await isMissingRoute(res)) return mockAuth.logout();
   } catch {
     // The player is signed out on this browser either way.
-    return { ok: true };
   }
+  return { ok: true };
 }
 
-// Moves this browser's anonymous runs onto the signed-in account (in this browser; the
-// server has no claim endpoint yet, so a missing one is not an error). Returns { moved }.
+// Moves this browser's anonymous runs onto the signed-in account: on the server (live with a
+// database, POST /api/attempts/claim with the X-Anon-Id header) and in this browser. Returns { moved }.
 export async function claimAttempts() {
   const u = store.getPlayer();
   if (!u) throw apiError("Log in first, then claim your runs.", { status: 401 });
   const pending = Number(store.read("claim.pending." + u.id, 0)) || 0;
   store.remove("claim.pending." + u.id);
   const moved = pending + store.moveAnonTo(u.id);
-  if (options.mode !== "live") return { moved };
-  return live("attempts/claim", "/api/attempts/claim", { method: "POST", body: JSON.stringify({ anonId: store.getAnonId() }) }, () => ({ moved }), async (res) => {
+  if (!(await storedLive())) return { moved };
+  try {
+    const res = await apiFetch("/api/attempts/claim", { method: "POST", body: JSON.stringify({ anonId: store.getAnonId() }) });
     if (!res.ok) return { moved };
     const body = await res.json().catch(() => ({}));
+    statsCache = undefined;
+    liveAttempts.clear();
     return { moved: Math.max(moved, Number(body.moved) || 0) };
-  }).catch(() => ({ moved }));
+  } catch {
+    return { moved };
+  }
 }

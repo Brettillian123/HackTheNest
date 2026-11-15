@@ -218,3 +218,12 @@ export function demoTag() {
 export function simNote() {
   return `<p class="sim-note">${SIM_NOTE}</p>`;
 }
+// Same quiet note while real results come from the stand-in scorer (api.isProvisional()).
+export const PROVISIONAL_NOTE = 'Provisional scoring: the full grader is not connected yet.';
+export function provisionalNote() {
+  return `<p class="sim-note">${PROVISIONAL_NOTE}</p>`;
+}
+// Board panel header tag while boards use stand-in scores (api.isProvisional('boards')); '' otherwise.
+export function provisionalTag(on) {
+  return on ? `<span class="demo-tag" title="Scored by the stand-in scorer until the full grader is connected.">Provisional scores</span>` : '';
+}
