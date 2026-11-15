@@ -6,7 +6,9 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run --exclude test/properties.test.ts",
+    "test:properties": "vitest run test/properties.test.ts",
+    "test:all": "vitest run",
     "typecheck": "tsc --noEmit",
     "grade": "tsx src/cli.ts",
     "calibrate": "tsx src/calibrate.ts",

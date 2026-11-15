@@ -1,5 +1,5 @@
 import { PERF } from './config';
-import { fallingCredit, round1 } from './util';
+import { round1 } from './util';
 
 /** What loading one page costs, counted from the page itself. Nothing here is timed. */
 export interface PageStats {
@@ -19,7 +19,7 @@ export interface PageStats {
   cssRules: number;
   /** Rendered page height in pixels. */
   height: number;
-  /** Raw link addresses found on the page. */
+  /** Addresses of the links on the page that a visitor could see. */
   links: string[];
 }
 
@@ -49,43 +49,91 @@ export function estimateLoadMs(stats: PageStats, width: number, device: Device):
   return network + cpu;
 }
 
+/**
+ * Credit for a submission / goal ratio, from 1 down to -1.
+ *
+ *   up to `full`      1      as good as the goal, give or take
+ *   `full` to `zero`  1 to 0 a straight line
+ *   `zero` to `worst` 0 to -1 on a log scale: 3x, 5.5x and 10x are evenly spaced
+ *   past `worst`      -1
+ *
+ * A negative credit takes marks away from the rest of the score.
+ */
+export function ratioCredit(ratio: number): number {
+  const { full, zero, worst } = PERF.ratio;
+  if (!(ratio > full)) return 1; // also covers NaN, which cannot arise from valid counts
+  if (ratio <= zero) return 1 - (ratio - full) / (zero - full);
+  if (ratio >= worst) return -1;
+  return -Math.log(ratio / zero) / Math.log(worst / zero);
+}
+
+/** How far under the goal a ratio is: 0.3 means 30% smaller or faster. 0 at or above the goal. */
+export function ratioSaving(ratio: number): number {
+  return ratio < 1 ? 1 - Math.max(0, ratio) : 0;
+}
+
+function ratioOf(value: number, reference: number, slack = 0): number {
+  const bottom = reference + slack;
+  if (bottom <= 0) return value + slack <= 0 ? 1 : Number.POSITIVE_INFINITY;
+  return (value + slack) / bottom;
+}
+
 export interface DeviceCheck {
   device: string;
   /** Estimated load time of the submission's pages, in milliseconds. */
   estimatedMs: number;
   /** The same for the goal's pages: the reference solution. */
   referenceMs: number;
-  /** 0 to 100. */
+  /** estimatedMs / referenceMs, to two decimals. */
+  ratio: number;
+  /** -100 to 100. */
   credit: number;
   /** Within the allowed factor of the reference. */
   passed: boolean;
 }
 
 export interface Efficiency {
-  /** 0 to 100: half space, half time. */
+  /** -100 to 100: half space, half time. Negative means far heavier than the goal. */
   score: number;
-  space: { bytes: number; referenceBytes: number; credit: number };
+  /** 0 to 100: how far under the goal the site comes, on average. Earns the bonus. */
+  saving: number;
+  /** True when no check is worse than the goal: size and every device at or under it, one at least under. Needed for the bonus. */
+  beatsGoal: boolean;
+  space: { bytes: number; referenceBytes: number; ratio: number; credit: number };
   time: { credit: number; checks: DeviceCheck[] };
 }
 
-function ratioCredit(value: number, reference: number): number {
-  if (reference <= 0) return value <= 0 ? 1 : 0;
-  return fallingCredit(value / reference, PERF.ratio.full, PERF.ratio.zero);
+export interface EfficiencyScore {
+  /** Rounded, for showing to people. */
+  report: Efficiency;
+  /** -1 to 1, unrounded, for the total. */
+  credit: number;
+  /** 0 to 1, unrounded, for the bonus. */
+  saving: number;
+  /** Smaller and faster than the goal: no check worse, at least one better. */
+  beatsGoal: boolean;
 }
+
+const round2 = (value: number) => (Number.isFinite(value) ? Math.round(value * 100) / 100 : value);
 
 /**
  * Scores a submission's size and estimated load times against the goal's.
  * `pairs` are the pages being compared (submission page, goal page);
  * `bytes` and `referenceBytes` are the whole submitted site and the goal
- * files those pages use. Doing as well as the goal, or better, is full marks.
+ * files those pages use.
  */
 export function scoreEfficiency(
   pairs: { candidate: PageStats; goal: PageStats }[],
   width: number,
   bytes: number,
   referenceBytes: number,
-): Efficiency {
-  const spaceCredit = ratioCredit(bytes, referenceBytes);
+): EfficiencyScore {
+  const spaceRatio = ratioOf(bytes, referenceBytes, PERF.slackBytes);
+  const spaceCredit = ratioCredit(spaceRatio);
+
+  let timeCredit = 0;
+  let timeSaving = 0;
+  let noneWorse = spaceRatio <= 1;
   const checks: DeviceCheck[] = PERF.devices.map((device) => {
     let estimated = 0;
     let reference = 0;
@@ -93,19 +141,42 @@ export function scoreEfficiency(
       estimated += estimateLoadMs(pair.candidate, width, device);
       reference += estimateLoadMs(pair.goal, width, device);
     }
+    const ratio = ratioOf(estimated, reference);
+    const credit = ratioCredit(ratio);
+    timeCredit += credit;
+    timeSaving += ratioSaving(ratio);
+    if (!(ratio <= 1)) noneWorse = false;
     return {
       device: device.name,
       estimatedMs: round1(estimated),
       referenceMs: round1(reference),
-      credit: round1(ratioCredit(estimated, reference) * 100),
-      passed: reference > 0 && estimated <= reference * PERF.passRatio,
+      ratio: round2(ratio),
+      credit: round1(credit * 100),
+      passed: ratio <= PERF.passRatio,
     };
   });
-  const timeCredit =
-    checks.length === 0 ? 1 : checks.reduce((sum, c) => sum + c.credit, 0) / checks.length / 100;
+  if (checks.length > 0) {
+    timeCredit /= checks.length;
+    timeSaving /= checks.length;
+  } else {
+    timeCredit = 1;
+  }
+
+  const credit = 0.5 * spaceCredit + 0.5 * timeCredit;
+  const saving = 0.5 * ratioSaving(spaceRatio) + 0.5 * timeSaving;
+  // "Better on size and speed" means both: a site that is faster but bigger
+  // (or smaller but slower) has not beaten the goal.
+  const beatsGoal = noneWorse && saving > 0;
   return {
-    score: round1((0.5 * spaceCredit + 0.5 * timeCredit) * 100),
-    space: { bytes, referenceBytes, credit: round1(spaceCredit * 100) },
-    time: { credit: round1(timeCredit * 100), checks },
+    credit,
+    saving,
+    beatsGoal,
+    report: {
+      score: round1(credit * 100),
+      saving: round1(saving * 100),
+      beatsGoal,
+      space: { bytes, referenceBytes, ratio: round2(spaceRatio), credit: round1(spaceCredit * 100) },
+      time: { credit: round1(timeCredit * 100), checks },
+    },
   };
 }

@@ -1,5 +1,5 @@
-import { GRADER_VERSION, PERF, SITE, VIEWPORT } from './config';
-import { scoreEfficiency, type Efficiency, type PageStats } from './performance';
+import { GRADER_VERSION, PAGE_PILLARS, PERF, SITE, SITE_WEIGHTS, VIEWPORT } from './config';
+import { scoreEfficiency, type Efficiency, type EfficiencyScore, type PageStats } from './performance';
 import { isTimeout, type Renderer } from './render';
 import { score } from './score';
 import { linkTarget, normalizeFiles, pagesOf, type SiteFiles } from './site';
@@ -10,12 +10,16 @@ import { round1 } from './util';
  * Grades a whole site: every page against the goal's page, the links
  * between pages, and how heavy the site is.
  *
- *   fidelity   = how well the pages and links match the goal (0 to 100)
- *   efficiency = size and estimated load time against the goal's (0 to 100)
- *   total      = fidelity x (1 - share + share x efficiency)
+ *   works        = right content, right structure, working links   (0 to 1)
+ *   looks        = colours, fonts, the look of the screenshots       (0 to 1)
+ *   engineering  = size and estimated load time against the goal's  (-1 to 1)
  *
- * Efficiency only ever takes marks off: like a coding judge, speed and size
- * count for nothing unless the answer is right.
+ *   total = 100 x (0.40 works + 0.25 looks + 0.35 engineering x works) + bonus
+ *
+ * Like a coding judge, speed and size count for nothing unless the answer
+ * is right, and an answer far over the limits is marked down hard. A site
+ * that matches the goal exactly and beats it on size and speed scores
+ * above 100. The weights are SITE_WEIGHTS in config.ts.
  */
 
 export interface RenderedPage {
@@ -60,12 +64,32 @@ export interface SiteLinks {
   broken: string[];
 }
 
+export interface SitePillars {
+  /** 0 to 100: the right content, in the right structure, with working links. */
+  works: number;
+  /** -100 to 100: size and load time against the goal. Negative means far heavier than the goal. */
+  engineering: number;
+  /** 0 to 100: colours, fonts and the look of the screenshots. */
+  looks: number;
+}
+
 export interface SiteGradeResult {
   version: string;
-  /** 0 to 100, one decimal place. */
+  /**
+   * The leaderboard score, one decimal place. 0 to 100 for most sites; up
+   * to 100 + the bonus for a site that matches the goal exactly and is
+   * smaller and faster than it.
+   */
   total: number;
-  /** How well the pages and links match the goal, before efficiency. */
-  fidelity: number;
+  pillars: SitePillars;
+  /**
+   * Points earned above 100 for beating the goal on size and speed, both.
+   * 0 unless every page and link matches exactly and the site is no bigger
+   * than the goal and no slower on any device.
+   */
+  bonus: number;
+  /** True when every page scores 100 and every link is present: the condition for the bonus. */
+  exactMatch: boolean;
   /** Size and estimated load time against the goal; null when no page could be compared. */
   efficiency: Efficiency | null;
   pages: SitePageResult[];
@@ -128,7 +152,9 @@ function failed(goal: PreparedSite, reason: string): SiteGradeResult {
   return {
     version: GRADER_VERSION,
     total: 0,
-    fidelity: 0,
+    pillars: { works: 0, engineering: 0, looks: 0 },
+    bonus: 0,
+    exactMatch: false,
     efficiency: null,
     pages: goal.pages.map((p) => ({ goal: p.path, candidate: null, total: 0, result: null })),
     links: { score: null, expected: 0, found: 0, missing: [], broken: [] },
@@ -177,7 +203,19 @@ export function scoreSite(goal: PreparedSite, candidate: PreparedSite): SiteGrad
       ? { goal: g.path, candidate: match.page.path, total: match.result.total, result: match.result }
       : { goal: g.path, candidate: null, total: 0, result: null };
   });
-  const pageMean = pages.length === 0 ? 0 : pages.reduce((sum, p) => sum + p.total, 0) / pages.length;
+  // Each page's four parts, regrouped: does it work (content, layout) and
+  // does it look right (style, visual). A missing page scores 0 on both.
+  let worksSum = 0;
+  let looksSum = 0;
+  for (const p of pages) {
+    const b = p.result?.breakdown;
+    if (!b) continue;
+    const { works, looks } = PAGE_PILLARS;
+    worksSum += b.content === null ? b.layout : works.content * b.content + works.layout * b.layout;
+    looksSum += looks.style * b.style + looks.visual * b.visual;
+  }
+  const pagesWork = pages.length === 0 ? 0 : worksSum / pages.length / 100;
+  const looksCredit = pages.length === 0 ? 0 : looksSum / pages.length / 100;
 
   // ---- links between pages ----
   const goalPaths = new Set(goal.pages.map((p) => p.path));
@@ -206,11 +244,12 @@ export function scoreSite(goal: PreparedSite, candidate: PreparedSite): SiteGrad
   const linkCredit =
     expected === 0 ? null : Math.max(0, found / expected - 0.5 * (broken.length / Math.max(1, submittedLinks)));
 
-  const fidelity =
-    linkCredit === null ? pageMean : (1 - SITE.linkShare) * pageMean + SITE.linkShare * linkCredit * 100;
+  // A site whose links do not work does not work, however good each page is.
+  const worksCredit =
+    linkCredit === null ? pagesWork : (1 - SITE.linkShare) * pagesWork + SITE.linkShare * linkCredit;
 
-  // ---- efficiency: size and estimated load time, against the goal ----
-  let efficiency: Efficiency | null = null;
+  // ---- engineering: size and estimated load time, against the goal ----
+  let efficiency: EfficiencyScore | null = null;
   if (paired.size > 0) {
     const pairs: { candidate: PageStats; goal: PageStats }[] = [];
     const goalFilesUsed = new Set<string>();
@@ -227,14 +266,37 @@ export function scoreSite(goal: PreparedSite, candidate: PreparedSite): SiteGrad
     efficiency = scoreEfficiency(pairs, VIEWPORT.width, bytes, referenceBytes);
   }
 
-  const share = PERF.qualityShare;
-  const total = fidelity * (1 - share + share * ((efficiency?.score ?? 0) / 100));
+  const engineeringCredit = efficiency?.credit ?? 0;
+
+  // ---- total ----
+  // Engineering marks are earned only as far as the site works: being small
+  // and fast is worth nothing if it is not the site that was asked for. A
+  // negative engineering credit (a site several times too heavy) takes
+  // marks away, again in proportion.
+  const base =
+    100 *
+    (SITE_WEIGHTS.works * worksCredit +
+      SITE_WEIGHTS.looks * looksCredit +
+      SITE_WEIGHTS.engineering * engineeringCredit * worksCredit);
+
+  // Above 100: only for a site that matches the goal exactly and is no
+  // worse than it on size or on any device, then in proportion to how far
+  // under the goal's size and load times it comes.
+  const exactMatch =
+    pages.length > 0 && pages.every((p) => p.total === 100) && (linkCredit === null || linkCredit === 1);
+  const bonus = exactMatch && efficiency?.beatsGoal ? PERF.bonusMax * efficiency.saving : 0;
 
   return {
     version: GRADER_VERSION,
-    total: round1(total),
-    fidelity: round1(fidelity),
-    efficiency,
+    total: round1(Math.max(0, base) + bonus),
+    pillars: {
+      works: round1(worksCredit * 100),
+      engineering: round1(engineeringCredit * 100),
+      looks: round1(looksCredit * 100),
+    },
+    bonus: round1(bonus),
+    exactMatch,
+    efficiency: efficiency ? efficiency.report : null,
     pages,
     links: {
       score: linkCredit === null ? null : round1(linkCredit * 100),

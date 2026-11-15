@@ -3,7 +3,7 @@
  * rankings changes one file. Changing any value changes scores: bump
  * GRADER_VERSION when you do, so stored scores can be told apart.
  */
-export const GRADER_VERSION = '0.2.0';
+export const GRADER_VERSION = '0.3.0';
 
 /** Every page is rendered at exactly this size. */
 export const VIEWPORT = { width: 1280, height: 800 } as const;
@@ -41,6 +41,16 @@ export const TOL = {
   radius: { full: 0.1, zero: 0.6 },
 } as const;
 
+/**
+ * Content: single words say whether the right words are there; pairs of
+ * neighbouring words say whether they are in the right order. Without the
+ * pairs, "dog bites man" and "man bites dog" would score the same.
+ */
+export const CONTENT = {
+  words: 0.6,
+  wordPairs: 0.4,
+} as const;
+
 export const MATCH = {
   /** Two text blocks are "the same text" only above this word overlap. */
   minTextSimilarity: 0.5,
@@ -54,11 +64,19 @@ export const MATCH = {
 } as const;
 
 /**
- * How much a block's contrast with what is behind it changes its weight.
- * A block that blends in counts `base` times its size; one whose colour
- * difference reaches `fullAt` (CIEDE2000) counts 2 - `base` times.
+ * How much a block's contrast with what is behind it (CIEDE2000) changes
+ * its weight, as a multiple of its size. A block nobody can see counts
+ * nothing, so there is no cliff where an invisible box suddenly counts:
+ *   contrast <= `invisible`             -> 0
+ *   `invisible` to `baseAt`             -> rises in a straight line to `base`
+ *   `baseAt` to `fullAt`                -> rises in a straight line to 2 - `base`
+ *   contrast >= `fullAt`                -> 2 - `base`
+ * A box with a shadow counts as at least `baseAt`: the shadow shows even
+ * when the fill does not. Images always count 2 - `base`.
  */
 export const SALIENCE = {
+  invisible: 2,
+  baseAt: 6,
   base: 0.5,
   fullAt: 50,
 } as const;
@@ -77,6 +95,34 @@ export const STYLE = {
   box: { background: 0.5, border: 0.2, radius: 0.2, shadow: 0.1 },
 } as const;
 
+/**
+ * What a site's total is made of. A site has to work and be well built
+ * before it has to be pretty: something good-looking that does not work is
+ * useless.
+ *
+ *   works        - the right content, in the right structure, with working links
+ *   engineering  - size and load time against the goal
+ *   looks        - colours, fonts and the look of the screenshot
+ *
+ *   total = 100 x (works x W + looks x L + engineering x E x works) + bonus
+ *
+ * Engineering marks are earned only as far as the site works, so a blank
+ * page gets nothing for being small and fast. `works` must stay at least
+ * as large as `engineering`, or a negative engineering credit could push a
+ * total below zero.
+ */
+export const SITE_WEIGHTS = {
+  works: 0.4,
+  engineering: 0.35,
+  looks: 0.25,
+} as const;
+
+/** Within one page: how "works" and "looks" are built from the four parts. */
+export const PAGE_PILLARS = {
+  works: { content: 0.45, layout: 0.55 },
+  looks: { style: 0.45, visual: 0.55 },
+} as const;
+
 /** Multi-page sites. */
 export const SITE = {
   maxFiles: 40,
@@ -85,8 +131,8 @@ export const SITE = {
   maxPages: 12,
   /** Total rendering time one submission may use, in milliseconds. A normal page takes under one second. */
   renderBudgetMs: 45_000,
-  /** Share of a site's fidelity given to the links between its pages. */
-  linkShare: 0.15,
+  /** Share of the "works" score given to the links between pages, when the goal has any. */
+  linkShare: 0.25,
   /**
    * A goal page with no same-named page in the submission is paired with
    * the submitted page that looks most like it, if that page scores at
@@ -105,16 +151,27 @@ export const SITE = {
  */
 export const PERF = {
   /**
-   * How much efficiency can take off a score. The total is
-   * fidelity x (1 - share + share x efficiency): a perfect-looking site that
-   * is badly bloated keeps 1 - share of its marks, and efficiency can never
-   * rescue a site that does not look right.
+   * Submission / goal ratio, for size and for each device's load time.
+   * Full credit up to `full`; none at `zero`; past that the credit goes
+   * negative and takes marks from the rest of the score, reaching -1 at
+   * `worst`. A site several times heavier than it needs to be is not a
+   * slightly worse answer, it is a bad one.
    */
-  qualityShare: 0.2,
-  /** Candidate / goal ratio: full credit up to `full`, none from `zero`. */
-  ratio: { full: 1.15, zero: 3 },
-  /** A device check "passes" when the candidate is within this factor of the goal. */
+  ratio: { full: 1.15, zero: 3, worst: 10 },
+  /**
+   * Bytes added to both sides before sizes are compared, so that on a tiny
+   * site a few hundred bytes either way is not a large ratio.
+   */
+  slackBytes: 2048,
+  /** A device check "passes" when the submission is within this factor of the goal. */
   passRatio: 2,
+  /**
+   * Most points a site can earn above 100. Only a site that matches the
+   * goal exactly on every page and link, and is no bigger than the goal and
+   * no slower on any device, can earn them, in proportion to how far under
+   * the goal's size and load times it comes.
+   */
+  bonusMax: 20,
   /** Work a reference desktop does, before a device's slowdown is applied. */
   cost: {
     parseMsPerKb: 0.1,

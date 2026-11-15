@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { colorDistance, deltaE00, rgbToLab } from '../src/color';
 import { dominantColor } from '../src/render';
-import { fallingCredit, median, risingCredit, round1, wordOverlap, words } from '../src/util';
+import { fallingCredit, median, risingCredit, round1, wordOverlap, wordPairs, words } from '../src/util';
 
 describe('colour difference (CIEDE2000)', () => {
   // Reference pairs published with the formula (Sharma, Wu, Dalal 2005).
@@ -43,6 +43,18 @@ describe('text helpers', () => {
     expect(wordOverlap(['a'], ['b'])).toBe(0);
     expect(wordOverlap([], [])).toBe(1);
     expect(wordOverlap(['a'], [])).toBe(0);
+  });
+
+  it('pairs neighbouring words inside each block only, never across blocks', () => {
+    expect(wordPairs([['dog', 'bites', 'man']])).toEqual(['dog bites', 'bites man']);
+    expect(wordPairs([['a', 'b'], ['c', 'd']])).toEqual(['a b', 'c d']);
+    expect(wordPairs([['solo'], []])).toEqual([]);
+    expect(wordPairs([])).toEqual([]);
+    // Same words, different order: the single words agree, the pairs do not.
+    const a = wordPairs([['dog', 'bites', 'man']]);
+    const b = wordPairs([['man', 'bites', 'dog']]);
+    expect(wordOverlap(['dog', 'bites', 'man'], ['man', 'bites', 'dog'])).toBe(1);
+    expect(wordOverlap(a, b)).toBe(0);
   });
 });
 

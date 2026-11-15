@@ -12,7 +12,7 @@
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { GRADER_VERSION, PERF } from './config';
+import { GRADER_VERSION, SITE_WEIGHTS } from './config';
 import { Grader, type PreparedSite, type SiteFiles, type SiteGradeResult } from './index';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -96,19 +96,22 @@ function attemptHtml(goal: PreparedSite, a: AttemptReport): string {
       .map(
         (c) =>
           `<tr class="${c.passed ? '' : 'fail'}"><td>${esc(c.device)}</td><td>${seconds(c.estimatedMs)}</td><td>${seconds(c.referenceMs)}</td>` +
-          `<td>${c.referenceMs > 0 ? (c.estimatedMs / c.referenceMs).toFixed(2) : 'n/a'}x</td><td>${c.credit.toFixed(1)}</td><td>${c.passed ? 'pass' : 'FAIL'}</td></tr>`,
+          `<td>${c.ratio.toFixed(2)}x</td><td>${c.credit.toFixed(1)}</td><td>${c.passed ? 'pass' : 'FAIL'}</td></tr>`,
       )
       .join('');
     efficiency =
-      `<table><thead><tr><th>Check</th><th>This site</th><th>Goal</th><th>Ratio</th><th>Credit</th><th></th></tr></thead><tbody>` +
-      `<tr><td>Space: total size</td><td>${kb(e.space.bytes)}</td><td>${kb(e.space.referenceBytes)}</td>` +
-      `<td>${e.space.referenceBytes > 0 ? (e.space.bytes / e.space.referenceBytes).toFixed(2) : 'n/a'}x</td><td>${e.space.credit.toFixed(1)}</td><td></td></tr>` +
+      `<table><thead><tr><th>Engineering check</th><th>This site</th><th>Goal</th><th>Ratio</th><th>Credit (-100 to 100)</th><th></th></tr></thead><tbody>` +
+      `<tr class="${e.space.credit < 0 ? 'fail' : ''}"><td>Space: total size</td><td>${kb(e.space.bytes)}</td><td>${kb(e.space.referenceBytes)}</td>` +
+      `<td>${e.space.ratio.toFixed(2)}x</td><td>${e.space.credit.toFixed(1)}</td><td></td></tr>` +
       `${rows}</tbody></table>`;
   }
 
+  const p = r.pillars;
+  const w = SITE_WEIGHTS;
+  const bonus = r.bonus > 0 ? ` <b class="good">+ ${r.bonus.toFixed(1)} bonus for beating the goal</b>` : '';
   return `<article>
-<header><h3>${esc(a.name)}</h3><div class="total">${r.total.toFixed(1)}</div></header>
-<p class="formula">fidelity ${r.fidelity.toFixed(1)} × (${(1 - PERF.qualityShare).toFixed(1)} + ${PERF.qualityShare.toFixed(1)} × efficiency ${r.efficiency ? r.efficiency.score.toFixed(1) : '0.0'}%)${r.error ? ` <span class="bad">${esc(r.error)}</span>` : ''}</p>
+<header><h3>${esc(a.name)}</h3><div class="total${r.total > 100 ? ' over' : ''}">${r.total.toFixed(1)}</div></header>
+<p class="formula">works <b>${p.works.toFixed(1)}</b> (${Math.round(w.works * 100)}%) · engineering <b class="${p.engineering < 0 ? 'bad' : ''}">${p.engineering.toFixed(1)}</b> (${Math.round(w.engineering * 100)}%, earned only as far as the site works) · looks <b>${p.looks.toFixed(1)}</b> (${Math.round(w.looks * 100)}%)${bonus}${r.error ? ` <span class="bad">${esc(r.error)}</span>` : ''}</p>
 <div class="pages">${pages}</div>
 <p class="links">${links}</p>
 ${efficiency}
@@ -149,7 +152,7 @@ figcaption{padding:8px 10px;font-size:13px;display:grid;grid-template-columns:1f
 table{border-collapse:collapse;font-size:13px;width:100%}
 th,td{text-align:left;padding:5px 10px;border-bottom:1px solid #e5e7eb}
 th{color:#6b7280;font-weight:400}tr.fail td{color:#b91c1c;font-weight:700}
-.bad{color:#b91c1c}
+.bad{color:#b91c1c}.good{color:#047857}.total.over{color:#047857}
 @media (max-width:800px){.pages{grid-template-columns:1fr}}
 </style></head><body><h1>Site grading report</h1>
 <p>Grading rules version ${GRADER_VERSION}. Attempts are sorted best first. For each: the total, how it is made up, every page as the grader saw it, the links between pages, and the size and load-time checks against the goal. Load times are estimates from a model, not measurements. Check by eye: does each total match how good the attempt is?</p>
@@ -163,15 +166,17 @@ async function main(): Promise<void> {
     const reports = await gradeSiteSets(grader);
     for (const set of reports) {
       console.log(`\n${set.name}`);
-      console.log('  attempt                   total  fidelity  efficiency  links  device checks');
+      console.log('  attempt                   total  works  engineering  looks  bonus  links  device checks');
       for (const a of set.attempts) {
         const r = a.result;
         const checks = r.efficiency ? r.efficiency.time.checks.map((c) => (c.passed ? 'pass' : 'FAIL')).join(' ') : '-';
         console.log(
-          `  ${a.name.padEnd(25)} ${r.total.toFixed(1).padStart(5)}  ${r.fidelity.toFixed(1).padStart(8)}  ${(r.efficiency
-            ? r.efficiency.score.toFixed(1)
-            : '-'
-          ).padStart(10)}  ${(r.links.score === null ? 'n/a' : r.links.score.toFixed(1)).padStart(5)}  ${checks}`,
+          `  ${a.name.padEnd(25)} ${r.total.toFixed(1).padStart(5)}  ${r.pillars.works.toFixed(1).padStart(5)}  ${r.pillars.engineering
+            .toFixed(1)
+            .padStart(11)}  ${r.pillars.looks.toFixed(1).padStart(5)}  ${r.bonus.toFixed(1).padStart(5)}  ${(r.links.score === null
+            ? 'n/a'
+            : r.links.score.toFixed(1)
+          ).padStart(5)}  ${checks}`,
         );
       }
     }

@@ -133,6 +133,52 @@ describe('fairness', () => {
     );
     expect((await grader.grade(stripes, swapped)).result.total).toBeLessThan(60);
   });
+
+  it('charges for words in the wrong order inside a sentence', async () => {
+    const goal = page('<main><p>The quick brown fox jumps over the lazy dog.</p><p>Sales rose four percent this week.</p></main>');
+    const scrambled = page('<main><p>Dog lazy the over jumps fox brown quick the.</p><p>Week this percent four rose sales.</p></main>');
+    const { result } = await grader.grade(goal, scrambled);
+    expect(result.breakdown.content).toBeLessThan(100);
+    expect(result.breakdown.content).toBeGreaterThan(0);
+  });
+
+  it('leaves the position of whole paragraphs to layout, not content', async () => {
+    const goal = page('<main><p>The quick brown fox jumps over the lazy dog.</p><p>Sales rose four percent this week.</p></main>');
+    const swapped = page('<main><p>Sales rose four percent this week.</p><p>The quick brown fox jumps over the lazy dog.</p></main>');
+    const { result } = await grader.grade(goal, swapped);
+    expect(result.breakdown.content).toBe(100);
+  });
+
+  // A section 4 RGB units off the page colour is a "box" to the extractor
+  // but invisible to a person; it must not cost more than a point.
+  const SECTION_CSS = 'section{padding:40px;margin:20px}h1{margin:0;font-size:32px}';
+  const plain = page('<section style="background:#fff"><h1>Weekly report</h1></section>', SECTION_CSS);
+  const faint = page('<section style="background:#fbfbfb"><h1>Weekly report</h1></section>', SECTION_CSS);
+
+  it('charges at most 1 point for a section background nobody can see (candidate has it)', async () => {
+    const { result } = await grader.grade(plain, faint);
+    expect(result.total).toBeGreaterThanOrEqual(99);
+  });
+
+  it('charges at most 1 point for a section background nobody can see (goal has it)', async () => {
+    const { result } = await grader.grade(faint, plain);
+    expect(result.total).toBeGreaterThanOrEqual(99);
+  });
+
+  it('does not let a barely visible goal box hide a bold colour in its place', async () => {
+    const bold = page('<section style="background:#dc2626"><h1>Weekly report</h1></section>', SECTION_CSS);
+    const { result } = await grader.grade(faint, bold);
+    expect(result.total).toBeLessThanOrEqual(95);
+  });
+
+  it('scores a page made only of boxes too faint to count 100 against itself', async () => {
+    const ghosts = page(
+      '<div style="height:200px;margin:20px;background:#fbfbfb"></div><div style="height:120px;margin:20px;background:#fdfdfd"></div>',
+    );
+    const { result } = await grader.grade(ghosts, ghosts);
+    expect(result.total).toBe(100);
+    expect(result.breakdown.layout).toBe(100);
+  });
 });
 
 describe('findings from the review, each fixed at its cause', () => {

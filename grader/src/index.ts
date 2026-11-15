@@ -5,14 +5,21 @@ import type { SiteFiles } from './site';
 import { gradeSite, prepareSite, type PreparedSite, type SiteGradeOutput } from './site-grade';
 import { GraderInputError, type GradeResult, type PageSnapshot } from './types';
 
-export { GRADER_VERSION, PERF, VIEWPORT, WEIGHTS } from './config';
+export { GRADER_VERSION, PERF, SITE_WEIGHTS, VIEWPORT, WEIGHTS } from './config';
 export { Renderer } from './render';
 export { score } from './score';
 export { PreparedSite, scoreSite } from './site-grade';
 export { GraderInputError } from './types';
 export type { DeviceCheck, Efficiency, PageStats } from './performance';
 export type { SiteFiles } from './site';
-export type { RenderedPage, SiteGradeOutput, SiteGradeResult, SiteLinks, SitePageResult } from './site-grade';
+export type {
+  RenderedPage,
+  SiteGradeOutput,
+  SiteGradeResult,
+  SiteLinks,
+  SitePageResult,
+  SitePillars,
+} from './site-grade';
 export type { Block, Breakdown, GradeDetails, GradeResult, PageSnapshot } from './types';
 
 export interface GradeOutput {

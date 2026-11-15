@@ -1,7 +1,7 @@
 import { colorDistance } from './color';
-import { GRADER_VERSION, LAYOUT, MATCH, MAX_PAGE_HEIGHT, SALIENCE, STYLE, TOL, WEIGHTS } from './config';
+import { CONTENT, GRADER_VERSION, LAYOUT, MATCH, MAX_PAGE_HEIGHT, SALIENCE, STYLE, TOL, WEIGHTS } from './config';
 import type { Block, Breakdown, GradeResult, PageSnapshot, RGB, Rect } from './types';
-import { fallingCredit, median, risingCredit, round1, wordOverlap, words } from './util';
+import { fallingCredit, median, risingCredit, round1, wordOverlap, wordPairs, words } from './util';
 import { compareVisual } from './visual';
 
 /**
@@ -25,7 +25,9 @@ interface Pair {
  * How much a block counts. Bigger blocks matter more, but not in proportion:
  * a headline should not drown out a button. And things that stand out from
  * what is behind them matter more than things that blend in: a bright
- * button is noticed before a faint card outline.
+ * button is noticed before a faint card outline. A block nobody can see
+ * counts nothing, and its weight fades in smoothly (see SALIENCE), so a
+ * colour change too small to see never makes a block suddenly count.
  */
 function importance(block: Block, pageWidth: number): number {
   const w = Math.max(0, Math.min(block.rect.w, pageWidth));
@@ -36,9 +38,18 @@ function importance(block: Block, pageWidth: number): number {
     const box = block.boxStyle!;
     contrast = colorDistance(box.background, block.behind);
     if (box.hasBorder && box.borderColor) contrast = Math.max(contrast, colorDistance(box.borderColor, block.behind));
+    if (box.shadow) contrast = Math.max(contrast, SALIENCE.baseAt);
   }
-  const standsOut = SALIENCE.base + (1 - SALIENCE.base) * 2 * Math.min(1, contrast / SALIENCE.fullAt);
-  return Math.sqrt(w * h) * standsOut;
+  return Math.sqrt(w * h) * standsOut(contrast);
+}
+
+/** Weight multiplier for a contrast: 0 when invisible, `base` at `baseAt`, 2 - `base` from `fullAt`. */
+function standsOut(contrast: number): number {
+  const { invisible, baseAt, base, fullAt } = SALIENCE;
+  if (contrast <= invisible) return 0;
+  if (contrast < baseAt) return (base * (contrast - invisible)) / (baseAt - invisible);
+  const top = 2 - base;
+  return base + (top - base) * Math.min(1, (contrast - baseAt) / (fullAt - baseAt));
 }
 
 function sizeRatio(a: number, b: number): number {
@@ -186,6 +197,7 @@ export function score(goal: PageSnapshot, candidate: PageSnapshot): GradeResult 
   const goalWeights = goal.blocks.map((b) => importance(b, goal.width));
   const candidateWeights = candidate.blocks.map((b) => importance(b, candidate.width));
   const goalTotal = goalWeights.reduce((sum, w) => sum + w, 0);
+  const candidateTotal = candidateWeights.reduce((sum, w) => sum + w, 0);
 
   // How far the whole candidate page sits from the goal: the middle value
   // of every matched block's shift, in whole pixels.
@@ -209,15 +221,20 @@ export function score(goal: PageSnapshot, candidate: PageSnapshot): GradeResult 
   );
 
   // ---- layout and style, block by block ----
+  // A matched pair counts at the larger of its two weights, so a faint goal
+  // block matched by a bold candidate block (or the reverse) cannot hide a
+  // difference anyone can see. Against itself both weights are equal.
   let layoutSum = 0;
   let styleSum = 0;
   let matchedWeight = 0;
+  let matchedGoalWeight = 0;
   const goalMatched = new Set<number>();
   const candidateMatched = new Set<number>();
   for (const pair of pairs) {
     const g = goal.blocks[pair.goal];
     const c = candidate.blocks[pair.candidate];
-    const w = goalWeights[pair.goal];
+    const w = Math.max(goalWeights[pair.goal], candidateWeights[pair.candidate]);
+    matchedGoalWeight += goalWeights[pair.goal];
     const absolute = geometryCredit(g.rect, c.rect);
     const relative = geometryCredit(g.rect, c.rect, dx, dy);
     layoutSum += w * (LAYOUT.absoluteShare * absolute + (1 - LAYOUT.absoluteShare) * relative);
@@ -234,24 +251,40 @@ export function score(goal: PageSnapshot, candidate: PageSnapshot): GradeResult 
   const pageBackground = colorCredit(goal.pageBackground, candidate.pageBackground);
   let layout: number;
   let style: number;
+  // What the page should have: every matched pair at its pair weight, plus
+  // every goal block that found no match at its own weight.
+  const expectedTotal = matchedWeight + (goalTotal - matchedGoalWeight);
   if (goalTotal === 0) {
-    // The goal is an empty page: anything on the candidate is wrong.
-    layout = candidate.blocks.length === 0 ? 1 : 0;
+    // Nothing visible on the goal: anything visible on the candidate is wrong.
+    layout = candidateTotal === 0 ? 1 : 0;
     style = pageBackground;
   } else {
-    layout = layoutSum / (goalTotal + MATCH.extraPenalty * extraWeight);
+    layout = layoutSum / (expectedTotal + MATCH.extraPenalty * extraWeight);
     // Credit for the page background is earned only as far as the page's
     // content is there, so an empty page gets nothing for being white.
-    const coverage = matchedWeight / goalTotal;
+    const coverage = matchedWeight / expectedTotal;
     style =
-      (1 - STYLE.pageBackgroundShare) * (styleSum / goalTotal) +
+      (1 - STYLE.pageBackgroundShare) * (styleSum / expectedTotal) +
       STYLE.pageBackgroundShare * pageBackground * coverage;
   }
 
-  // ---- content: every word on the page, as a bag ----
-  const goalWords = goal.blocks.flatMap((b) => (b.kind === 'text' ? words(b.text ?? '') : []));
-  const candidateWords = candidate.blocks.flatMap((b) => (b.kind === 'text' ? words(b.text ?? '') : []));
-  const content = goalWords.length === 0 ? null : wordOverlap(goalWords, candidateWords);
+  // ---- content: are the right words there, in the right order? ----
+  // Single words are counted across the whole page. Pairs of neighbouring
+  // words are counted inside each piece of text, so scrambled sentences
+  // lose marks but the order of separate blocks on the page (which layout
+  // already judges) does not matter here.
+  const goalTexts = goal.blocks.filter((b) => b.kind === 'text').map((b) => words(b.text ?? ''));
+  const candidateTexts = candidate.blocks.filter((b) => b.kind === 'text').map((b) => words(b.text ?? ''));
+  const goalWords = goalTexts.flat();
+  let content: number | null = null;
+  if (goalWords.length > 0) {
+    const single = wordOverlap(goalWords, candidateTexts.flat());
+    const goalPairs = wordPairs(goalTexts);
+    content =
+      goalPairs.length === 0
+        ? single
+        : CONTENT.words * single + CONTENT.wordPairs * wordOverlap(goalPairs, wordPairs(candidateTexts));
+  }
 
   // ---- visual: the screenshots ----
   // A page that is right but sits a little low still looks right, so the

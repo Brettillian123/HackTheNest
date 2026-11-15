@@ -1,9 +1,10 @@
 import { createServer, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { gradeSiteSets } from '../src/calibrate-sites';
 import { PERF, SITE } from '../src/config';
 import { Grader, type SiteFiles } from '../src/index';
-import { estimateLoadMs, type PageStats } from '../src/performance';
+import { estimateLoadMs, ratioCredit, ratioSaving, type PageStats } from '../src/performance';
 import { linkTarget, normalizeFiles, pagesOf, pathOfUrl } from '../src/site';
 
 // ---- a three-page site with a shared stylesheet ----
@@ -158,7 +159,8 @@ describe('findings from the site review, each fixed at its cause', () => {
     };
     const { result, candidate } = await grader.gradeSite(GOAL, odd);
     expect(result.error).toBeUndefined();
-    expect(result.fidelity).toBe(100);
+    expect(result.pillars.works).toBe(100);
+    expect(result.pillars.looks).toBe(100);
     expect(candidate!.page('index.html')!.stats.files).toEqual(['index.html', 'site.css']);
     expect(candidate!.page('index.html')!.stats.blockedRequests).toBe(3);
   });
@@ -219,8 +221,11 @@ describe('grading a site', () => {
   it('scores a site against itself as 100 on everything', async () => {
     const { result } = await grader.gradeSite(GOAL, GOAL);
     expect(result.total).toBe(100);
-    expect(result.fidelity).toBe(100);
+    expect(result.pillars).toEqual({ works: 100, engineering: 100, looks: 100 });
+    expect(result.bonus).toBe(0);
+    expect(result.exactMatch).toBe(true);
     expect(result.efficiency!.score).toBe(100);
+    expect(result.efficiency!.beatsGoal).toBe(false);
     expect(result.pages.map((p) => [p.goal, p.candidate, p.total])).toEqual([
       ['index.html', 'index.html', 100],
       ['about.html', 'about.html', 100],
@@ -252,7 +257,8 @@ describe('grading a site', () => {
     };
     const { result } = await grader.gradeSite(GOAL, renamed);
     expect(result.pages.map((p) => p.candidate)).toEqual(['index.html', 'about-us.html', 'plans.html']);
-    expect(result.fidelity).toBe(100);
+    expect(result.pillars.works).toBe(100);
+    expect(result.pillars.looks).toBe(100);
     expect(result.links.found).toBe(6);
   });
 
@@ -264,10 +270,18 @@ describe('grading a site', () => {
       'pricing.html': inline('Pricing', nav() + PRICING),
     };
     const { result } = await grader.gradeSite(GOAL, inlined);
-    expect(result.fidelity).toBe(100);
+    expect(result.pillars.works).toBe(100);
+    expect(result.pillars.looks).toBe(100);
     // Three copies of the CSS is a bigger site than one shared file, but well inside the allowance.
     expect(result.efficiency!.space.bytes).toBeGreaterThan(result.efficiency!.space.referenceBytes);
-    expect(result.total).toBeGreaterThan(97);
+    expect(result.efficiency!.space.ratio).toBeGreaterThan(1);
+    // Fewer files per page makes it faster, but faster and bigger is not "better on size and speed".
+    expect(result.exactMatch).toBe(true);
+    expect(result.efficiency!.time.checks.every((c) => c.ratio < 1)).toBe(true);
+    expect(result.efficiency!.beatsGoal).toBe(false);
+    expect(result.bonus).toBe(0);
+    expect(result.total).toBeLessThan(100);
+    expect(result.total).toBeGreaterThan(95);
   });
 
   it('charges for a missing page and for the links that went with it', async () => {
@@ -316,13 +330,16 @@ describe('grading a site', () => {
       'site.css': CSS + junkCss,
     };
     const { result } = await grader.gradeSite(GOAL, bloated);
-    expect(result.fidelity).toBe(100);
-    expect(result.efficiency!.space.credit).toBe(0);
+    expect(result.pillars.works).toBe(100);
+    expect(result.pillars.looks).toBe(100);
+    // Over ten times the goal's size: the worst space credit, which takes marks away.
+    expect(result.efficiency!.space.credit).toBe(-100);
     expect(result.efficiency!.time.checks.some((c) => !c.passed)).toBe(true);
     expect(result.efficiency!.score).toBeLessThan(40);
-    // The most efficiency can take off is its share of the total.
-    expect(result.total).toBeGreaterThanOrEqual(100 * (1 - PERF.qualityShare));
-    expect(result.total).toBeLessThan(90);
+    expect(result.pillars.engineering).toBeLessThan(0);
+    // The most engineering can take off is its weight: 100 x (0.40 + 0.25 - 0.35) = 30.
+    expect(result.total).toBeGreaterThanOrEqual(30);
+    expect(result.total).toBeLessThan(60);
     for (const check of result.efficiency!.time.checks) expect(check.estimatedMs).toBeGreaterThan(check.referenceMs);
   });
 
@@ -360,6 +377,122 @@ describe('grading a site', () => {
   it('throws for a goal that is not a valid site', async () => {
     await expect(grader.prepareSite({ 'site.css': 'p{}' })).rejects.toThrow(/no \.html page/);
   });
+});
+
+describe('ratio credit and saving', () => {
+  it('gives the intended values at the corners of the curve', () => {
+    expect(ratioCredit(0.5)).toBe(1);
+    expect(ratioCredit(1)).toBe(1);
+    expect(ratioCredit(1.15)).toBe(1);
+    expect(ratioCredit(2.075)).toBeCloseTo(0.5, 10);
+    expect(ratioCredit(3)).toBe(0);
+    expect(ratioCredit(10)).toBe(-1);
+    expect(ratioCredit(50)).toBe(-1);
+    // Log scale between 3x and 10x: their geometric mean is half way.
+    expect(ratioCredit(Math.sqrt(30))).toBeCloseTo(-0.5, 6);
+
+    expect(ratioSaving(0.5)).toBe(0.5);
+    expect(ratioSaving(1)).toBe(0);
+    expect(ratioSaving(1.15)).toBe(0);
+    expect(ratioSaving(2.075)).toBe(0);
+    expect(ratioSaving(3)).toBe(0);
+    expect(ratioSaving(10)).toBe(0);
+    expect(ratioSaving(50)).toBe(0);
+  });
+
+  it('never gives more credit for a bigger ratio', () => {
+    let previous = Number.POSITIVE_INFINITY;
+    for (let ratio = 0.1; ratio <= 60; ratio += 0.01) {
+      const credit = ratioCredit(ratio);
+      expect(credit).toBeLessThanOrEqual(previous);
+      previous = credit;
+    }
+  });
+});
+
+describe('what the owner asked for', () => {
+  // The goal with spare bytes that change nothing on screen: comments in the
+  // CSS and in each page. GOAL itself is then the same site, only leaner.
+  const spareComment = `<!-- ${'notes for the designer '.repeat(40)} -->`;
+  const PADDED_GOAL: SiteFiles = {
+    'index.html': doc('Home', nav() + HOME + spareComment),
+    'about.html': doc('About', nav() + ABOUT + spareComment),
+    'pricing.html': doc('Pricing', nav() + PRICING + spareComment),
+    'site.css': `/* ${'old rules kept for reference '.repeat(40)} */\n` + CSS,
+  };
+
+  it('scores a bloated site that looks perfect below a lean one whose colours and spacing are off', async () => {
+    const junkCss = Array.from({ length: 1500 }, (_, i) => `.unused-${i} .x-${i} > p{color:#${(i % 900) + 100};margin:${i % 7}px}`).join('');
+    const padding = `<!-- ${'padding '.repeat(15000)} -->`;
+    const bloated: SiteFiles = {
+      'index.html': doc('Home', nav() + HOME + padding),
+      'about.html': doc('About', nav() + ABOUT + padding),
+      'pricing.html': doc('Pricing', nav() + PRICING + padding),
+      'site.css': CSS + junkCss,
+    };
+    const offCss = CSS.replace('#f3f4f6', '#fdf6e3')
+      .replace('nav{background:#111827;padding:16px 40px}', 'nav{background:#7c2d12;padding:22px 48px}')
+      .replace('main{padding:40px}', 'main{padding:52px}')
+      .replace('color:#1d4ed8', 'color:#15803d');
+    const offSite: SiteFiles = { ...GOAL, 'site.css': offCss };
+    const bloatedResult = (await grader.gradeSite(GOAL, bloated)).result;
+    const offResult = (await grader.gradeSite(GOAL, offSite)).result;
+    expect(offResult.pillars.looks).toBeLessThan(100);
+    expect(bloatedResult.pillars.looks).toBe(100);
+    expect(bloatedResult.total).toBeLessThan(offResult.total);
+  });
+
+  it('lets a pixel-exact site that is smaller and faster than the goal score above 100', async () => {
+    const { result } = await grader.gradeSite(PADDED_GOAL, GOAL);
+    expect(result.exactMatch).toBe(true);
+    expect(result.efficiency!.space.ratio).toBeLessThan(1);
+    expect(result.efficiency!.time.checks.every((c) => c.ratio <= 1)).toBe(true);
+    expect(result.efficiency!.beatsGoal).toBe(true);
+    expect(result.bonus).toBeGreaterThan(0);
+    expect(result.total).toBeGreaterThan(100);
+    expect(result.total).toBeLessThanOrEqual(100 + PERF.bonusMax);
+  });
+
+  it('gives no bonus to a leaner site that is not an exact match', async () => {
+    const recoloured: SiteFiles = { ...GOAL, 'site.css': CSS.replace('color:#1d4ed8', 'color:#dc2626') };
+    const { result } = await grader.gradeSite(PADDED_GOAL, recoloured);
+    expect(result.efficiency!.space.ratio).toBeLessThan(1);
+    expect(result.exactMatch).toBe(false);
+    expect(result.bonus).toBe(0);
+    expect(result.total).toBeLessThanOrEqual(100);
+  });
+
+  it('never goes below 0, even for a correct-looking site over ten times too heavy everywhere', async () => {
+    // Unused stylesheets that are not in the site: invisible, but each one is
+    // a request every device has to wait for.
+    const missing = Array.from({ length: 100 }, (_, i) => `<link rel="stylesheet" href="gone-${i}.css">`).join('');
+    const padding = `<!-- ${'padding '.repeat(15000)} -->`;
+    const head = '<link rel="stylesheet" href="site.css">' + missing;
+    const heavy: SiteFiles = {
+      'index.html': doc('Home', nav() + HOME + padding, head),
+      'about.html': doc('About', nav() + ABOUT + padding, head),
+      'pricing.html': doc('Pricing', nav() + PRICING + padding, head),
+      'site.css': CSS,
+    };
+    const { result } = await grader.gradeSite(GOAL, heavy);
+    expect(result.pillars.works).toBe(100);
+    expect(result.efficiency!.space.ratio).toBeGreaterThan(10);
+    for (const check of result.efficiency!.time.checks) expect(check.ratio).toBeGreaterThan(10);
+    expect(result.pillars.engineering).toBe(-100);
+    expect(result.total).toBeGreaterThanOrEqual(0);
+    expect(result.total).toBeLessThanOrEqual(35);
+  });
+
+  it('ranks the bikes calibration site set as intended', async () => {
+    const sets = await gradeSiteSets(grader);
+    const bikes = sets.find((s) => s.name === 'bikes')!;
+    const total = (name: string) => bikes.attempts.find((a) => a.name === name)!.result.total;
+    expect(total('bloated')).toBeLessThan(total('slightly-off'));
+    expect(total('lean-exact')).toBeGreaterThan(100);
+    expect(total('same-site-other-names')).toBe(100);
+    expect(total('blank')).toBeLessThan(3);
+    expect(total('inline-css')).toBeLessThan(100);
+  }, 240_000);
 });
 
 describe('site safety', () => {
@@ -421,6 +554,7 @@ describe('site safety', () => {
     expect(candidate!.page('index.html')!.stats.blockedRequests).toBe(2);
     const checks = result.efficiency!.time.checks;
     expect(checks.every((c) => c.estimatedMs > c.referenceMs)).toBe(true);
-    expect(result.fidelity).toBe(100);
+    expect(result.pillars.works).toBe(100);
+    expect(result.pillars.looks).toBe(100);
   });
 });

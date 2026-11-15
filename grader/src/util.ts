@@ -49,6 +49,18 @@ export function wordOverlap(a: string[], b: string[]): number {
   return (2 * precision * recall) / (precision + recall);
 }
 
+/**
+ * Every pair of neighbouring words, taken within each list separately:
+ * [['a','b','c'], ['d','e']] gives ['a b', 'b c', 'd e'].
+ */
+export function wordPairs(lists: string[][]): string[] {
+  const pairs: string[] = [];
+  for (const list of lists) {
+    for (let i = 0; i + 1 < list.length; i++) pairs.push(`${list[i]} ${list[i + 1]}`);
+  }
+  return pairs;
+}
+
 /** Median of a list; 0 for an empty list. Does not change the input. */
 export function median(values: number[]): number {
   if (values.length === 0) return 0;
