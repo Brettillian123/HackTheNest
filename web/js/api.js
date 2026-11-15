@@ -850,12 +850,12 @@ export function requirementResults(list) {
 }
 
 // Kinds whose output is text kept in `markdown` (a doc, or the code of a 3D model).
-const isTextKind = (kind) => kind === "doc" || kind === "scene";
+const isTextKind = (kind) => kind === "doc" || kind === "scene" || kind === "workflow";
 // A run: page runs keep the page in html; doc runs keep the answer in markdown (html stays "").
 function fromServerRun(r, output) {
   const kind = r.kind || "page";
   const text = output ?? (isTextKind(kind) ? r.markdown : r.html) ?? "";
-  const run = { n: r.n, kind, prompt: r.prompt, model: r.model, html: kind === "doc" ? "" : text, result: fromServerResult(r.result), at: r.at, serverId: r.id };
+  const run = { n: r.n, kind, prompt: r.prompt, model: r.model, html: isTextKind(kind) ? "" : text, result: fromServerResult(r.result), at: r.at, serverId: r.id };
   if (isTextKind(kind)) run.markdown = text;
   return run;
 }
