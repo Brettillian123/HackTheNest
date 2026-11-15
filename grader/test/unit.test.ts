@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { colorDistance, deltaE00, rgbToLab } from '../src/color';
+import * as colorHelpers from '../src/color';
+import { colorDistance, colorName, deltaE00, rgbToLab } from '../src/color';
 import { dominantColor } from '../src/render';
-import { fallingCredit, median, risingCredit, round1, wordOverlap, words } from '../src/util';
+import { fallingCredit, median, risingCredit, round1, wordOverlap, wordPairs, words } from '../src/util';
+import type { PageSnapshot } from '../src/types';
+import { regionShapeSimilarity } from '../src/visual';
 
 describe('colour difference (CIEDE2000)', () => {
   // Reference pairs published with the formula (Sharma, Wu, Dalal 2005).
@@ -34,6 +37,15 @@ describe('text helpers', () => {
     expect(words('Ship FASTER, today! 24/7')).toEqual(['ship', 'faster', 'today', '24', '7']);
   });
 
+  it('counts each character of a script without spaces, each emoji, and keeps vowel signs in their word', () => {
+    expect(words('我们的花园')).toEqual(['我', '们', '的', '花', '园']);
+    expect(words('Launch 🚀 day')).toEqual(['launch', '🚀', 'day']);
+    expect(words('Tokyo東京2026')).toEqual(['tokyo', '東', '京', '2026']);
+    // Thai vowel signs are marks (\p{M}); they stay with their letter.
+    expect(words('สวัสดี')).toEqual(['ส', 'วั', 'ส', 'ดี']);
+    expect(words('नमस्ते दुनिया')).toEqual(['नमस्ते', 'दुनिया']);
+  });
+
   it('scores word overlap, charging for both missing and extra words', () => {
     expect(wordOverlap(['a', 'b', 'c'], ['a', 'b', 'c'])).toBe(1);
     expect(wordOverlap(['a', 'b', 'c'], ['c', 'a', 'b'])).toBe(1);
@@ -43,6 +55,18 @@ describe('text helpers', () => {
     expect(wordOverlap(['a'], ['b'])).toBe(0);
     expect(wordOverlap([], [])).toBe(1);
     expect(wordOverlap(['a'], [])).toBe(0);
+  });
+
+  it('pairs neighbouring words inside each block only, never across blocks', () => {
+    expect(wordPairs([['dog', 'bites', 'man']])).toEqual(['dog bites', 'bites man']);
+    expect(wordPairs([['a', 'b'], ['c', 'd']])).toEqual(['a b', 'c d']);
+    expect(wordPairs([['solo'], []])).toEqual([]);
+    expect(wordPairs([])).toEqual([]);
+    // Same words, different order: the single words agree, the pairs do not.
+    const a = wordPairs([['dog', 'bites', 'man']]);
+    const b = wordPairs([['man', 'bites', 'dog']]);
+    expect(wordOverlap(['dog', 'bites', 'man'], ['man', 'bites', 'dog'])).toBe(1);
+    expect(wordOverlap(a, b)).toBe(0);
   });
 });
 
@@ -88,5 +112,69 @@ describe('dominant colour of a screenshot region', () => {
 
   it('finds the colour around a rectangle, ignoring what is in it', () => {
     expect(dominantColor(pixels, size, size, square, 'around')).toEqual([0, 0, 200]);
+  });
+
+  it('gives the average of a gradient, which barely moves when the gradient barely changes', () => {
+    const grad = (start: number) => {
+      const w = 200;
+      const p = new Uint8Array(w * 4 * 4);
+      for (let y = 0; y < 4; y++) for (let x = 0; x < w; x++) p.set([Math.round(start + x), 0, 0, 255], (y * w + x) * 4);
+      return dominantColor(p, w, 4, { x: 0, y: 0, w, h: 4 });
+    };
+    const a = grad(20);
+    const b = grad(21);
+    expect(Math.abs(a[0] - 120)).toBeLessThanOrEqual(1);
+    expect(Math.abs(a[0] - b[0])).toBeLessThanOrEqual(1);
+  });
+});
+
+describe('contrast and colourfulness', () => {
+  it('gives the WCAG contrast ratio: 21 for black on white, 1 for the same colour', () => {
+    const { contrastRatio, chroma } = colorHelpers;
+    expect(contrastRatio([0, 0, 0], [255, 255, 255])).toBeCloseTo(21, 5);
+    expect(contrastRatio([120, 30, 200], [120, 30, 200])).toBe(1);
+    // Pale grey on white is hard to read; dark grey is fine.
+    expect(contrastRatio([200, 204, 210], [255, 255, 255])).toBeLessThan(2);
+    expect(contrastRatio([31, 41, 55], [255, 255, 255])).toBeGreaterThan(10);
+    expect(chroma([128, 128, 128])).toBeLessThan(1);
+    expect(chroma([22, 163, 74])).toBeGreaterThan(40);
+  });
+});
+
+describe('colour names', () => {
+  it('names colours the way a person would', () => {
+    expect(colorName([255, 255, 255])).toBe('white');
+    expect(colorName([0, 0, 0])).toBe('black');
+    expect(colorName([234, 88, 12])).toBe('orange');
+    expect(colorName([22, 163, 74])).toBe('green');
+    expect(colorName([29, 78, 216])).toBe('blue');
+    expect(colorName([220, 38, 38])).toBe('red');
+    expect(colorName([128, 128, 128])).toBe('grey');
+  });
+});
+
+describe('picture shapes', () => {
+  // A 120 x 120 page: a dark shape on white, drawn by a function of (x, y).
+  const snap = (dark: (x: number, y: number) => boolean, invert = false) => {
+    const w = 120;
+    const h = 120;
+    const pixels = new Uint8Array(w * h * 4);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const v = dark(x, y) !== invert ? 40 : 240;
+        pixels.set([v, v, v, 255], (y * w + x) * 4);
+      }
+    }
+    return { width: w, height: h, pageBackground: [255, 255, 255], blocks: [], pixels, png: Buffer.alloc(0) } as unknown as PageSnapshot;
+  };
+  const r = { x: 0, y: 0, w: 120, h: 120 };
+  const disc = (x: number, y: number) => (x - 60) ** 2 + (y - 60) ** 2 < 900;
+  const bar = (x: number, y: number) => y > 80 && x < 100;
+  it('sees the same drawing as the same, even in light on dark', () => {
+    expect(regionShapeSimilarity(snap(disc), r, snap(disc), r)).toBeCloseTo(1, 5);
+    expect(regionShapeSimilarity(snap(disc), r, snap(disc, true), r)).toBeGreaterThan(0.95);
+  });
+  it('sees a different drawing in the same colours as different', () => {
+    expect(regionShapeSimilarity(snap(disc), r, snap(bar), r)).toBeLessThan(0.5);
   });
 });

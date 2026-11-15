@@ -1,0 +1,98 @@
+{
+  "goal": "A published FINDINGS.md where each claim about instruction files has a verified source and unverified points are listed",
+  "steps": [
+    {
+      "id": "frame-question",
+      "title": "Frame the question",
+      "owner": "lead",
+      "dependsOn": [],
+      "changes": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/QUESTION.md lists three sub-questions, one per tool",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "gather-claude-codex",
+      "title": "Gather Claude Code and Codex sources",
+      "owner": "scout-1",
+      "dependsOn": [
+        "frame-question"
+      ],
+      "changes": [
+        "notes/sources-a.md"
+      ],
+      "kind": "research",
+      "proof": "notes/sources-a.md has a link and quote per sub-question",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "gather-gemini",
+      "title": "Gather Gemini CLI sources",
+      "owner": "scout-2",
+      "dependsOn": [
+        "frame-question"
+      ],
+      "changes": [
+        "notes/sources-b.md"
+      ],
+      "kind": "research",
+      "proof": "notes/sources-b.md has a link and quote per sub-question",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "compose-draft",
+      "title": "Compose the draft report",
+      "owner": "author",
+      "dependsOn": [
+        "gather-claude-codex",
+        "gather-gemini"
+      ],
+      "changes": [
+        "report/draft.md"
+      ],
+      "proof": "report/draft.md cites a source link for every claim",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "fact-check",
+      "title": "Fact-check each claim",
+      "owner": "checker",
+      "dependsOn": [
+        "compose-draft"
+      ],
+      "changes": [
+        "notes/checks.md"
+      ],
+      "kind": "review",
+      "proof": "notes/checks.md marks each claim confirmed, wrong or unverified with its link",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "correct-and-publish",
+      "title": "Apply corrections and publish the report",
+      "owner": "author",
+      "dependsOn": [
+        "fact-check"
+      ],
+      "changes": [
+        "report/draft.md",
+        "report/FINDINGS.md"
+      ],
+      "proof": "report/FINDINGS.md exists with every wrong claim from notes/checks.md corrected",
+      "budget": {
+        "minutes": 10
+      }
+    }
+  ]
+}

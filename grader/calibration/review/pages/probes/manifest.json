@@ -1,0 +1,194 @@
+[
+ {
+  "group": "length:one wrong price",
+  "goal": "probes/menu_short_goal.html",
+  "attempt": "probes/menu_short_price.html",
+  "label": "short menu (2 courses)"
+ },
+ {
+  "group": "length:one wrong price",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_full_price.html",
+  "label": "full menu (4 courses)"
+ },
+ {
+  "group": "length:one wrong price",
+  "goal": "probes/menu_long_goal.html",
+  "attempt": "probes/menu_long_price.html",
+  "label": "long menu (8 courses)"
+ },
+ {
+  "group": "length:one missing dish",
+  "goal": "probes/menu_short_goal.html",
+  "attempt": "probes/menu_short_nodish.html",
+  "label": "short menu"
+ },
+ {
+  "group": "length:one missing dish",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_full_nodish.html",
+  "label": "full menu"
+ },
+ {
+  "group": "length:one missing dish",
+  "goal": "probes/menu_long_goal.html",
+  "attempt": "probes/menu_long_nodish.html",
+  "label": "long menu"
+ },
+ {
+  "group": "length:missing Add to cart",
+  "goal": "probes/product_short_goal.html",
+  "attempt": "probes/product_short_nocart.html",
+  "label": "short product page"
+ },
+ {
+  "group": "length:missing Add to cart",
+  "goal": "probes/product_full_goal.html",
+  "attempt": "probes/product_full_nocart.html",
+  "label": "full product page"
+ },
+ {
+  "group": "count:wrong prices",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_prices_1.html",
+  "label": "1 wrong price(s)"
+ },
+ {
+  "group": "count:wrong prices",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_prices_2.html",
+  "label": "2 wrong price(s)"
+ },
+ {
+  "group": "count:wrong prices",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_prices_4.html",
+  "label": "4 wrong price(s)"
+ },
+ {
+  "group": "count:wrong prices",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_prices_8.html",
+  "label": "8 wrong price(s)"
+ },
+ {
+  "group": "count:name typos",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_typos_1.html",
+  "label": "1 typo(s) in dish names"
+ },
+ {
+  "group": "count:name typos",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_typos_2.html",
+  "label": "2 typo(s) in dish names"
+ },
+ {
+  "group": "count:name typos",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_typos_4.html",
+  "label": "4 typo(s) in dish names"
+ },
+ {
+  "group": "count:name typos",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_typos_8.html",
+  "label": "8 typo(s) in dish names"
+ },
+ {
+  "group": "count:font slips",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_font_1.html",
+  "label": "1 dish name(s) in Arial"
+ },
+ {
+  "group": "count:font slips",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_font_2.html",
+  "label": "2 dish name(s) in Arial"
+ },
+ {
+  "group": "count:font slips",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_font_4.html",
+  "label": "4 dish name(s) in Arial"
+ },
+ {
+  "group": "count:font slips",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/menu_font_8.html",
+  "label": "8 dish name(s) in Arial"
+ },
+ {
+  "group": "chain:menu",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/chain_menu_1.html",
+  "label": "1 wrong price"
+ },
+ {
+  "group": "chain:menu",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/chain_menu_2.html",
+  "label": "+ missing dish"
+ },
+ {
+  "group": "chain:menu",
+  "goal": "probes/menu_full_goal.html",
+  "attempt": "probes/chain_menu_3.html",
+  "label": "+ footer gone"
+ },
+ {
+  "group": "chain:invoice",
+  "goal": "probes/invoice_goal.html",
+  "attempt": "probes/chain_inv_1.html",
+  "label": "roomy rows"
+ },
+ {
+  "group": "chain:invoice",
+  "goal": "probes/invoice_goal.html",
+  "attempt": "probes/chain_inv_2.html",
+  "label": "+ total due wrong"
+ },
+ {
+  "group": "chain:invoice",
+  "goal": "probes/invoice_goal.html",
+  "attempt": "probes/chain_inv_3.html",
+  "label": "+ one line item gone"
+ },
+ {
+  "group": "chain:product",
+  "goal": "probes/product_full_goal.html",
+  "attempt": "probes/chain_prod_1.html",
+  "label": "mirrored"
+ },
+ {
+  "group": "chain:product",
+  "goal": "probes/product_full_goal.html",
+  "attempt": "probes/chain_prod_2.html",
+  "label": "+ price wrong"
+ },
+ {
+  "group": "chain:product",
+  "goal": "probes/product_full_goal.html",
+  "attempt": "probes/chain_prod_3.html",
+  "label": "+ related products gone"
+ },
+ {
+  "group": "chain:signup",
+  "goal": "probes/signup_goal.html",
+  "attempt": "probes/chain_sig_1.html",
+  "label": "s_good"
+ },
+ {
+  "group": "chain:signup",
+  "goal": "probes/signup_goal.html",
+  "attempt": "probes/chain_sig_2.html",
+  "label": "+ password field gone"
+ },
+ {
+  "group": "chain:signup",
+  "goal": "probes/signup_goal.html",
+  "attempt": "probes/chain_sig_3.html",
+  "label": "+ Google button gone"
+ }
+]

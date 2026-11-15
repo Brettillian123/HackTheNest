@@ -1,0 +1,38 @@
+{
+  "_note": "Human bands written after looking at the screenshots and before any grading. order: each pair [a, b] means a must score above b.",
+  "dashboard": {
+    "rebuild-detailed": { "band": [87, 96], "why": "Same screen in every detail except the sidebar is 34 px wider, which pushes the main area right and makes the stat cards a little narrower." },
+    "rebuild-vague": { "band": [35, 50], "why": "Still a sidebar-plus-stats-plus-chart-plus-table dashboard, but a white sidebar, blue theme, three cards, a line chart and entirely different words and data." },
+    "near": { "band": [90, 98], "why": "Two card headings are regular weight instead of bold, card gap is 4 px wider and the bars are a hair lighter; you only spot it flipping between them." },
+    "wrong-data": { "band": [70, 82], "why": "Looks identical but two of four stats, five customers or amounts and the user name are wrong, which a boss checking the data would flag at once." },
+    "missing-section": { "band": [55, 70], "why": "The revenue chart, one of the four main pieces, is gone and the page is much shorter; the rest is right." },
+    "restyled": { "band": [68, 80], "why": "Right screen and words, but serif type throughout, a red accent instead of indigo and square corners everywhere." },
+    "rearranged": { "band": [60, 74], "why": "Everything is right except the sidebar sits on the right, an obvious layout change on an app screen." },
+    "lorem": { "band": [45, 60], "why": "Layout, numbers and colours are right, but nav items, stat labels, headings, customer names and dates are placeholder Latin." }
+  },
+  "article": {
+    "rebuild-detailed": { "band": [90, 98], "why": "Practically the same page; everything sits 4 px higher and the table's columns are spaced slightly differently." },
+    "rebuild-vague": { "band": [25, 42], "why": "Same subject (night trains) and the same kinds of parts, but navy header, centred headline, different title, text, table, code and footer; does not look like the goal." },
+    "near": { "band": [88, 97], "why": "The three section headings are regular weight instead of bold, the quote bar is a slightly different red and a couple of gaps moved 4 px." },
+    "wrong-data": { "band": [68, 82], "why": "Looks identical but the author, date, read time, chart years, caption source, two table rows and two figures in the text are wrong." },
+    "missing-section": { "band": [60, 74], "why": "The figure with its chart and caption is gone; all text sections are right." },
+    "restyled": { "band": [65, 78], "why": "Same structure and words, but sans-serif body text (a big change for a long read), blue accent instead of red, rounder corners." },
+    "rearranged": { "band": [62, 76], "why": "All parts present and styled right, but the numbered list jumped up under the quote and the figure moved to the end." },
+    "lorem": { "band": [35, 52], "why": "Headings, table, code and footer are right, but every paragraph, the quote, the caption and the list are placeholder Latin, which is most of what an article is." }
+  },
+  "checkout": {
+    "rebuild-detailed": { "band": [85, 95], "why": "Same page; the highlighted card is 14 px taller so everything below sits about 30 px lower, and the checkbox and select arrow are drawn differently." },
+    "rebuild-vague": { "band": [28, 45], "why": "A pricing page for Fernway with plans, a feature table and a form in the same order, but purple and pink, different plan names, prices, features and wording." },
+    "near": { "band": [90, 98], "why": "Plan names are regular weight, hero 4 px taller, cards 4 px further apart and the badge a slightly lighter teal." },
+    "wrong-data": { "band": [65, 80], "why": "Looks identical but all three prices, the trial length, storage figures, table values and the form's sample name are wrong; on a pricing page the prices are the point." },
+    "missing-section": { "band": [55, 70], "why": "The comparison table is gone, one of the four main sections; the rest is right." },
+    "restyled": { "band": [66, 80], "why": "Same structure and words, but Georgia instead of Verdana, orange and pink instead of teal and blue, and square corners throughout." },
+    "rearranged": { "band": [62, 76], "why": "Every section present and styled right, but the sign-up form comes before the comparison table." },
+    "lorem": { "band": [45, 60], "why": "Headings, prices, buttons and the form are right, but the hero subtitle, plan descriptions, plan features and table row labels are placeholder Latin." }
+  },
+  "order": {
+    "dashboard": [["near", "restyled"], ["near", "missing-section"], ["near", "lorem"], ["rebuild-detailed", "rebuild-vague"], ["rebuild-detailed", "missing-section"], ["missing-section", "rebuild-vague"], ["lorem", "rebuild-vague"], ["wrong-data", "lorem"]],
+    "article": [["near", "restyled"], ["near", "missing-section"], ["near", "lorem"], ["rebuild-detailed", "rebuild-vague"], ["rebuild-detailed", "missing-section"], ["missing-section", "rebuild-vague"], ["lorem", "rebuild-vague"], ["wrong-data", "lorem"]],
+    "checkout": [["near", "restyled"], ["near", "missing-section"], ["near", "lorem"], ["rebuild-detailed", "rebuild-vague"], ["rebuild-detailed", "missing-section"], ["missing-section", "rebuild-vague"], ["lorem", "rebuild-vague"]]
+  }
+}

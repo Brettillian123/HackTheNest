@@ -1,0 +1,140 @@
+{
+  "about": "Constants for combine() (src/criteria/combine.ts). Each number has value, bounds (min, max), neutral (the starting point the fit is pulled back towards) and fixed (true = the owner's choice, never fitted). Fitted by `npm run fit`; see calibration/FIT.md.",
+  "pages": {
+    "about": "One web page. The total is combine() over the four sub-scores (content, layout, style, visual; each already the lower of the averaged and the noticed-faults reading). The twelve criteria are measured and shown to the player (criteria, criteriaFeedback) but do not set the total: on the human bands they track judgement less well than the sub-scores (calibration/fit/pages-diagnosis.md, pages-variants.md).",
+    "inputs": "breakdown",
+    "groups": {
+      "content": {
+        "meaning": "Does the page say the right things.",
+        "weight": {
+          "value": 0.35,
+          "fixed": true,
+          "meaning": "Share of the score for content (owner's choice)."
+        }
+      },
+      "layout": {
+        "meaning": "Is it built and arranged like the goal.",
+        "weight": {
+          "value": 0.3,
+          "fixed": true,
+          "meaning": "Share of the score for layout (owner's choice)."
+        }
+      },
+      "style": {
+        "meaning": "Colours, type and shapes.",
+        "weight": {
+          "value": 0.15,
+          "fixed": true,
+          "meaning": "Share of the score for style (owner's choice)."
+        }
+      },
+      "visual": {
+        "meaning": "Pictures and overall look.",
+        "weight": {
+          "value": 0.2,
+          "fixed": true,
+          "meaning": "Share of the score for the visual match (owner's choice)."
+        }
+      }
+    },
+    "criteria": {
+      "content": {
+        "group": "content",
+        "meaning": "Content sub-score: the right words, facts and sections, nothing extra.",
+        "share": {
+          "value": 1,
+          "fixed": true,
+          "meaning": "Only criterion in its group."
+        },
+        "gamma": {
+          "value": 1,
+          "min": 0.4,
+          "max": 3,
+          "neutral": 1,
+          "meaning": "Curve on value**gamma: above 1 every slip costs more, the first ones most; below 1 small slips cost less and big ones more; 1 = straight line."
+        }
+      },
+      "layout": {
+        "group": "layout",
+        "meaning": "Layout sub-score: built and arranged like the goal.",
+        "share": {
+          "value": 1,
+          "fixed": true,
+          "meaning": "Only criterion in its group."
+        },
+        "gamma": {
+          "value": 1,
+          "min": 0.4,
+          "max": 3,
+          "neutral": 1,
+          "meaning": "Curve on value**gamma: above 1 every slip costs more, the first ones most; below 1 small slips cost less and big ones more; 1 = straight line."
+        }
+      },
+      "style": {
+        "group": "style",
+        "meaning": "Style sub-score: colours, fonts, corners and borders.",
+        "share": {
+          "value": 1,
+          "fixed": true,
+          "meaning": "Only criterion in its group."
+        },
+        "gamma": {
+          "value": 1,
+          "min": 0.4,
+          "max": 3,
+          "neutral": 1,
+          "meaning": "Curve on value**gamma: above 1 every slip costs more, the first ones most; below 1 small slips cost less and big ones more; 1 = straight line."
+        }
+      },
+      "visual": {
+        "group": "visual",
+        "meaning": "Visual sub-score: side by side, it looks like the goal.",
+        "share": {
+          "value": 1,
+          "fixed": true,
+          "meaning": "Only criterion in its group."
+        },
+        "gamma": {
+          "value": 1,
+          "min": 0.4,
+          "max": 3,
+          "neutral": 1,
+          "meaning": "Curve on value**gamma: above 1 every slip costs more, the first ones most; below 1 small slips cost less and big ones more; 1 = straight line."
+        }
+      }
+    },
+    "limiters": [],
+    "gate": {
+      "groups": [
+        "style",
+        "visual"
+      ],
+      "by": "content",
+      "meaning": "Something pretty that does not work is useless: looks count for less when the content is not there. `by` is the content criterion, or the content group when that criterion is absent.",
+      "floor": {
+        "value": 1,
+        "min": 0.2,
+        "max": 1,
+        "neutral": 1,
+        "meaning": "Least share of looks credit kept when content is zero (1 = gate off)."
+      },
+      "knee": {
+        "value": 1,
+        "min": 0.3,
+        "max": 1,
+        "neutral": 1,
+        "meaning": "Content level from which looks get full credit."
+      }
+    },
+    "fit": null,
+    "status": "Not adopted (2026-11-15): best variant passes leave-one-set-out but breaks 4 page tests; see calibration/fit/pages-variants.md. Values are neutral; grading does not read this file yet."
+  },
+  "sites": {
+    "stub": true,
+    "about": "Stub. Groups will be the pillars works 0.40, engineering 0.35, looks 0.25 (fixed by the owner), and the engineering pillar is the weakest of its measures (min, not a weighted mean); that rule stays in the site grader, not here. Fill in criteria when the site criteria list exists."
+  },
+  "scenes": {
+    "stub": true,
+    "about": "Stub. Same pillars as sites (works 0.40, engineering 0.35, looks 0.25, fixed; weakest engineering measure decides). Fill in criteria when the scene criteria list exists."
+  }
+}

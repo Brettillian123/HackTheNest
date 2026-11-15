@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit Analytics - Overview</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1f2937;background:#f4f5f9;display:flex;min-height:800px}
+.side{width:205px;flex:0 0 205px;background:#14163a;color:#fff;padding:22px 14px;display:flex;flex-direction:column}
+.brand{font-weight:bold;font-size:18px;color:#fff;margin:0 0 24px 8px}
+.side nav ul{list-style:none;margin:0;padding:0}
+.side nav li{margin-bottom:4px}
+.side nav a{display:block;padding:8px 12px;border-radius:999px;color:#c7cbd9;text-decoration:none;font-size:14px}
+.side nav a.active{background:#4f46e5;color:#fff;font-weight:bold}
+.group{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#8a8fa8;margin:22px 0 8px 12px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+header{background:#fff;height:60px;border-bottom:1px solid #e3e6ee;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.search{width:360px;height:36px;border:1px solid #d6dae5;border-radius:999px;padding:0 16px;display:flex;align-items:center;color:#8a90a2;font-size:13px}
+.user{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:14px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#f97316;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}
+main{padding:26px 28px}
+h1{font-size:24px;margin:0 0 18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #e0e4ec;border-radius:12px;padding:16px 18px}
+.label{font-size:13px;color:#6b7280}
+.value{font-size:26px;font-weight:bold;margin:6px 0 4px}
+.good{color:#15803d;font-size:13px}
+.bad{color:#dc2626;font-size:13px}
+.chart h2,.tbl h2{font-size:16px;margin:0 0 12px}
+.chart svg{width:100%;height:auto;display:block}
+.tbl{padding:16px 18px 6px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:#6b7280;font-weight:bold;padding:10px 12px;border-bottom:1px solid #e0e4ec}
+td{padding:11px 12px;border-bottom:1px solid #eef0f5}
+tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:bold}
+.paid{background:#dcfce7;color:#166534}
+.pending{background:#fef3c7;color:#92400e}
+.failed{background:#fee2e2;color:#991b1b}
+</style>
+</head>
+<body>
+<aside class="side">
+<p class="brand">Orbit Analytics</p>
+<nav>
+<ul>
+<li><a class="active" href="#">Overview</a></li>
+<li><a href="#">Orders</a></li>
+<li><a href="#">Customers</a></li>
+<li><a href="#">Products</a></li>
+<li><a href="#">Reports</a></li>
+</ul>
+<p class="group">Account</p>
+<ul>
+<li><a href="#">Team</a></li>
+<li><a href="#">Billing</a></li>
+<li><a href="#">Settings</a></li>
+</ul>
+</nav>
+</aside>
+<div class="main">
+<header>
+<div class="search">Search orders, customers...</div>
+<div class="user"><span class="avatar">MC</span><span>Maya Chen</span></div>
+</header>
+<main>
+<h1>Overview</h1>
+<section class="cards">
+<div class="card"><div class="label">Revenue</div><div class="value">$48,250</div><div class="good">+12.4% this month</div></div>
+<div class="card"><div class="label">Orders</div><div class="value">1,284</div><div class="good">+8.1% this month</div></div>
+<div class="card"><div class="label">New customers</div><div class="value">312</div><div class="good">+4.6% this month</div></div>
+<div class="card"><div class="label">Refund rate</div><div class="value">2.3%</div><div class="bad">+0.4% this month</div></div>
+</section>
+<section class="card chart" style="margin-bottom:20px">
+<h2>Monthly revenue</h2>
+<svg viewbox="0 0 940 232" role="img" aria-label="Monthly revenue bar chart, January to December">
+<g stroke="#e3e6ee" stroke-width="1">
+<line x1="30" y1="20" x2="930" y2="20" />
+<line x1="30" y1="110" x2="930" y2="110" />
+<line x1="30" y1="200" x2="930" y2="200" />
+</g>
+<g font-size="12" fill="#8a90a2" font-family="Arial,sans-serif">
+<text x="0" y="24">50k</text>
+<text x="0" y="114">25k</text>
+<text x="0" y="204">0</text>
+</g>
+<g fill="#4f46e5">
+<rect x="50" y="120.8" width="44" height="79.2" rx="6" />
+<rect x="125" y="99.2" width="44" height="100.8" rx="6" />
+<rect x="200" y="88.4" width="44" height="111.6" rx="6" />
+<rect x="275" y="102.8" width="44" height="97.2" rx="6" />
+<rect x="350" y="70.4" width="44" height="129.6" rx="6" />
+<rect x="425" y="56" width="44" height="144" rx="6" />
+<rect x="500" y="63.2" width="44" height="136.8" rx="6" />
+<rect x="575" y="41.6" width="44" height="158.4" rx="6" />
+<rect x="650" y="48.8" width="44" height="151.2" rx="6" />
+<rect x="725" y="23.6" width="44" height="176.4" rx="6" />
+<rect x="800" y="34.4" width="44" height="165.6" rx="6" />
+<rect x="875" y="27.2" width="44" height="172.8" rx="6" />
+</g>
+<g font-size="12" fill="#6b7280" text-anchor="middle" font-family="Arial,sans-serif">
+<text x="72" y="222">Jan</text>
+<text x="147" y="222">Feb</text>
+<text x="222" y="222">Mar</text>
+<text x="297" y="222">Apr</text>
+<text x="372" y="222">May</text>
+<text x="447" y="222">Jun</text>
+<text x="522" y="222">Jul</text>
+<text x="597" y="222">Aug</text>
+<text x="672" y="222">Sep</text>
+<text x="747" y="222">Oct</text>
+<text x="822" y="222">Nov</text>
+<text x="897" y="222">Dec</text>
+</g>
+</svg>
+</section>
+<section class="card tbl">
+<h2>Recent orders</h2>
+<table>
+<thead>
+<tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col">Status</th></tr>
+</thead>
+<tbody>
+<tr><td>#10241</td><td>Liam Patel</td><td>Nov 12, 2026</td><td>$320.00</td><td><span class="pill paid">Paid</span></td></tr>
+<tr><td>#10240</td><td>Sofia Garcia</td><td>Nov 12, 2026</td><td>$89.50</td><td><span class="pill pending">Pending</span></td></tr>
+<tr><td>#10239</td><td>Noah Kim</td><td>Nov 11, 2026</td><td>$1,240.00</td><td><span class="pill paid">Paid</span></td></tr>
+<tr><td>#10238</td><td>Emma Rossi</td><td>Nov 11, 2026</td><td>$56.20</td><td><span class="pill failed">Failed</span></td></tr>
+<tr><td>#10237</td><td>Oliver Brown</td><td>Nov 10, 2026</td><td>$410.75</td><td><span class="pill paid">Paid</span></td></tr>
+<tr><td>#10236</td><td>Ava Johnson</td><td>Nov 10, 2026</td><td>$215.00</td><td><span class="pill pending">Pending</span></td></tr>
+<tr><td>#10235</td><td>Lucas Martin</td><td>Nov 9, 2026</td><td>$78.40</td><td><span class="pill paid">Paid</span></td></tr>
+<tr><td>#10234</td><td>Mia Dubois</td><td>Nov 9, 2026</td><td>$642.10</td><td><span class="pill paid">Paid</span></td></tr>
+<tr><td>#10233</td><td>Ethan Novak</td><td>Nov 8, 2026</td><td>$33.00</td><td><span class="pill failed">Failed</span></td></tr>
+<tr><td>#10232</td><td>Chloe Silva</td><td>Nov 8, 2026</td><td>$905.60</td><td><span class="pill paid">Paid</span></td></tr>
+</tbody>
+</table>
+</section>
+</main>
+</div>
+</body>
+</html>

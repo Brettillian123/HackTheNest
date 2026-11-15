@@ -1,0 +1,21 @@
+{
+  "sections": [],
+  "tools": [
+    { "name": "get_order", "mustDescribe": ["status", "items"], "params": [{ "name": "order_id", "type": "string", "required": true }] },
+    {
+      "name": "search_orders",
+      "mustDescribe": ["email", "newest"],
+      "params": [
+        { "name": "customer_email", "type": "string", "required": true },
+        { "name": "status", "type": "string", "required": false },
+        { "name": "limit", "type": "integer", "required": false }
+      ]
+    },
+    { "name": "track_shipment", "mustDescribe": ["carrier", "tracking"], "params": [{ "name": "order_id", "type": "string", "required": true }] }
+  ],
+  "keyFacts": [
+    { "label": "the order ID format", "anyOf": ["ORD-"], "section": "get_order" },
+    { "label": "the search limit", "anyOf": ["50"], "section": "search_orders" }
+  ],
+  "limits": { "maxWords": 250 }
+}

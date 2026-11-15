@@ -1,0 +1,18 @@
+[
+  {
+    "name": "get_order",
+    "inputSchema": { "type": "object", "properties": { "order_id": { "type": "string" } }, "required": ["order_id"] }
+  },
+  {
+    "name": "search_orders",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "customer_email": { "type": "string" }, "status": { "type": "string" }, "limit": { "type": "integer" } },
+      "required": ["customer_email"]
+    }
+  },
+  {
+    "name": "track_shipment",
+    "inputSchema": { "type": "object", "properties": { "order_id": { "type": "string" } }, "required": ["order_id"] }
+  }
+]

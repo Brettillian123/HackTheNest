@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notifications</title>
+<style>
+body{margin:0;background:#eef2f7;font-family:Arial,Helvetica,sans-serif;color:#1e293b;padding-top:40px}
+main{width:640px;margin:0 auto}
+h1{font-size:28px;margin:0 0 4px;color:#0f172a}
+.sub{font-size:14px;color:#64748b;margin:0 0 24px}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:flex-start;gap:14px;border:1px solid;border-left-width:6px;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+li.ok{background:#ecfdf3;border-color:#86d9a6;border-left-color:#16a34a}
+li.info{background:#eff6ff;border-color:#93c5fd;border-left-color:#2563eb}
+li.warn{background:#fffbeb;border-color:#fcd34d;border-left-color:#d97706}
+li.err{background:#fef2f2;border-color:#fca5a5;border-left-color:#dc2626}
+svg{flex:none;width:28px;height:28px;margin-top:1px}
+.body{flex:1}
+.title{font-weight:bold;font-size:16px;margin:0 0 4px}
+.ok .title{color:#14532d}
+.info .title{color:#1e3a8a}
+.warn .title{color:#78350f}
+.err .title{color:#7f1d1d}
+.text{font-size:14px;margin:0;color:#1e293b}
+.action{font-weight:bold;font-size:14px;white-space:nowrap;margin-top:2px}
+.ok .action{color:#14532d}
+.info .action{color:#1e3a8a}
+.warn .action{color:#78350f}
+.err .action{color:#7f1d1d}
+a{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+<h1>Notifications</h1>
+<p class="sub">Four messages from the last 24 hours</p>
+<ul>
+<li class="ok">
+<svg viewbox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#16a34a" /><path d="M8 14.5l4 4 8-8.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+<div class="body"><p class="title">Payment received</p><p class="text">Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</p></div>
+<a class="action" href="#invoice">View invoice</a>
+</li>
+<li class="info">
+<svg viewbox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#2563eb" /><circle cx="14" cy="8" r="1.8" fill="#fff" /><rect x="12.6" y="11.5" width="2.8" height="9.5" rx="1" fill="#fff" /></svg>
+<div class="body"><p class="title">New version available</p><p class="text">Version 4.2 adds shared workspaces and faster PDF exports.</p></div>
+<a class="action" href="#whats-new">See what's new</a>
+</li>
+<li class="warn">
+<svg viewbox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#d97706" /><rect x="12.6" y="6.5" width="2.8" height="10" rx="1" fill="#fff" /><circle cx="14" cy="20.2" r="1.8" fill="#fff" /></svg>
+<div class="body"><p class="title">Storage almost full</p><p class="text">You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</p></div>
+<a class="action" href="#upgrade">Upgrade plan</a>
+</li>
+<li class="err">
+<svg viewbox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#dc2626" /><path d="M9.5 9.5l9 9m0-9l-9 9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" /></svg>
+<div class="body"><p class="title">Sync failed</p><p class="text">We could not reach Google Drive. Your last 3 changes are saved on this device.</p></div>
+<a class="action" href="#retry">Try again</a>
+</li>
+</ul>
+</main>
+</body>
+</html>

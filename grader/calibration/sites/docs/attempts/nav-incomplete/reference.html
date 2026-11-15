@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference · Lumen Docs</title>
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<header class="topbar"><a href="index.html" class="brand"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28" alt="Lumen logo">Lumen Docs</a><span class="version">v2.4</span></header>
+<div class="layout">
+<nav class="sidebar" aria-label="Documentation">
+<form class="search" role="search"><label for="q" class="visually-hidden">Search the docs</label><input id="q" type="search" placeholder="Search the docs"></form>
+<p class="sidebar-title">Getting started</p>
+<ul>
+<li><a href="index.html">Overview</a></li>
+</ul>
+<p class="sidebar-title">Guide</p>
+<ul>
+<li><a href="guide/install.html">Install</a></li>
+<li><a href="guide/config.html">Configuration</a></li>
+</ul>
+<p class="sidebar-title">More</p>
+<ul>
+<li><a href="reference.html" class="current" aria-current="page">Reference</a></li>
+</ul>
+</nav>
+<main class="content">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> / Reference</nav>
+<h1>Reference</h1>
+<p class="lead">Every setting, command and environment variable Lumen understands.</p>
+<div class="toc"><strong>On this page</strong>
+<ul>
+<li><a href="#config-file">Configuration file</a></li>
+<li><a href="#cli">Command line</a></li>
+<li><a href="#environment">Environment variables</a></li>
+</ul></div>
+<h2 id="config-file">Configuration file</h2>
+<table>
+<thead><tr><th scope="col">Option</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>title</code></td><td>string</td><td><code>"Untitled"</code></td><td>Site name shown in the header and tab.</td></tr>
+<tr><td><code>theme</code></td><td>string</td><td><code>"paper"</code></td><td>One of paper, slate or mono.</td></tr>
+<tr><td><code>output</code></td><td>string</td><td><code>"dist"</code></td><td>Folder the built site is written to.</td></tr>
+<tr><td><code>baseUrl</code></td><td>string</td><td><code>"/"</code></td><td>Path the site is served from.</td></tr>
+<tr><td><code>drafts</code></td><td>boolean</td><td><code>false</code></td><td>Include pages marked as drafts.</td></tr>
+<tr><td><code>language</code></td><td>string</td><td><code>"en"</code></td><td>Language code set on every page.</td></tr>
+</tbody>
+</table>
+<h2 id="cli">Command line</h2>
+<pre><code>lumen new &lt;name&gt;    Create a new site
+lumen serve         Preview with live reload
+lumen build         Write the site to the output folder
+lumen deploy        Upload the output folder</code></pre>
+<h2 id="environment">Environment variables</h2>
+<table>
+<thead><tr><th scope="col">Variable</th><th scope="col">Effect</th></tr></thead>
+<tbody>
+<tr><td><code>LUMEN_PROFILE</code></td><td>Profile to use when none is given on the command line.</td></tr>
+<tr><td><code>LUMEN_CACHE_DIR</code></td><td>Where build caches are kept. Defaults to .lumen-cache.</td></tr>
+<tr><td><code>LUMEN_NO_COLOR</code></td><td>Set to 1 to turn off coloured output.</td></tr>
+</tbody>
+</table>
+<footer class="footer"><p>Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</p></footer>
+</main>
+</div>
+</body>
+</html>

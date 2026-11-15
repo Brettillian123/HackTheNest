@@ -1,0 +1,24 @@
+[
+  {
+    "name": "get_order",
+    "description": "Returns one order by its ID: status, items, totals and shipping address. Use when the user gives an order number such as ORD-10293.",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "order_id": { "type": "string", "description": "The order ID, for example ORD-10293." } },
+      "required": ["order_id"]
+    }
+  },
+  {
+    "name": "search_orders",
+    "description": "Finds a customer's orders by email address, newest first, at most 50. Use when the user does not know the order number.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "customer_email": { "type": "string", "description": "The email address the orders were placed with." },
+        "status": { "type": "string", "description": "Only return orders with this status." },
+        "limit": { "type": "integer", "description": "How many orders to return, 1 to 50." }
+      },
+      "required": ["customer_email"]
+    }
+  }
+]

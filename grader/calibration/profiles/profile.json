@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 800,
+  "components": [
+    {
+      "id": "c1",
+      "type": "card",
+      "name": "the 'Maya Renner' card",
+      "rect": {
+        "x": 440,
+        "y": 80,
+        "w": 400,
+        "h": 464
+      },
+      "blocks": [
+        0
+      ],
+      "children": [
+        {
+          "id": "c1.1",
+          "type": "other",
+          "name": "the section",
+          "rect": {
+            "x": 584,
+            "y": 120,
+            "w": 112,
+            "h": 112
+          },
+          "blocks": [
+            1,
+            2,
+            3
+          ],
+          "children": [],
+          "importance": "minor",
+          "keyTexts": []
+        },
+        {
+          "id": "c1.2",
+          "type": "heading",
+          "name": "the heading 'Maya Renner'",
+          "rect": {
+            "x": 552.8,
+            "y": 253,
+            "w": 174.29999999999995,
+            "h": 56
+          },
+          "blocks": [
+            6,
+            7
+          ],
+          "children": [],
+          "importance": "major",
+          "keyTexts": [
+            6
+          ]
+        },
+        {
+          "id": "c1.3",
+          "type": "stats",
+          "name": "the stats",
+          "rect": {
+            "x": 472,
+            "y": 340,
+            "w": 336,
+            "h": 84
+          },
+          "blocks": [
+            4,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "id": "c1.4",
+          "type": "other",
+          "name": "the 'Follow' button",
+          "rect": {
+            "x": 472,
+            "y": 452,
+            "w": 336,
+            "h": 52
+          },
+          "blocks": [
+            5,
+            14
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            14
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        6,
+        8,
+        9,
+        10,
+        14
+      ]
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

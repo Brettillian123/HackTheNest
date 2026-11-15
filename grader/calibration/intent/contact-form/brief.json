@@ -1,0 +1,83 @@
+{
+  "slug": "contact-form",
+  "title": "Contact page",
+  "level": 1,
+  "category": "Forms, commerce and documents",
+  "brief": "We are Northfield Studio, a small design studio in Manchester, and we need a contact page for people thinking of hiring us. On the left, a short friendly intro headed \"Let's talk about your project\" with our studio address, phone number and opening hours listed underneath. On the right, a simple form: full name and email side by side, a topic dropdown, a roomy message box, a consent checkbox and a send button. It should feel calm, clean and trustworthy, all sitting on one white card on a pale grey-blue page. Use a deep teal as the one accent, for the small 'Contact' label above the heading and the send button.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "The page has one main heading, \"Let's talk about your project\", with a short intro paragraph under it",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "The intro side lists the studio address, phone and hours, each under its own small label, in that order",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "The intro sits on the left and the form on the right, side by side on one white card",
+      "kind": "structure",
+      "exact": false
+    },
+    {
+      "id": "r4",
+      "text": "The form has, in order: full name and email in one row, a topic dropdown, a message box, a consent checkbox and a 'Send message' button",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "The topic dropdown offers New project enquiry, Existing project, Careers and Press, with the first one shown",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r6",
+      "text": "Every field has a visible label, the email field is an email input, and name, email, message and consent are required",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "The fields show example placeholder text rather than being blank",
+      "kind": "content",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "One teal accent colour is used for the small label and the button only",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r9",
+      "text": "Text is easy to read against its background",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Contact",
+    "Let's talk about your project",
+    "24 Canal Street, Manchester M1 3HE",
+    "0161 496 0732",
+    "Monday to Friday, 9:00 to 17:30",
+    "Send us a message",
+    "Full name",
+    "Email",
+    "Topic",
+    "Message",
+    "Send message"
+  ],
+  "designNotes": [
+    "calm and trustworthy",
+    "one white card on a pale page",
+    "teal accent used only for the label and the button",
+    "small uppercase labels above the contact details"
+  ],
+  "maxPromptChars": 4000
+}

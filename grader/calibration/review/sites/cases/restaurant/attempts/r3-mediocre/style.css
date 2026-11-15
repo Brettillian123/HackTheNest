@@ -1,0 +1,30 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial, Helvetica, sans-serif;background:#ffffff;color:#222222;line-height:1.5}
+.x-top{background:#55624f;color:#ffffff}
+.x-bar{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-direction:column;gap:10px}
+.x-brand{font-size:24px;font-weight:700;color:#ffffff;text-decoration:none}
+.x-nav{display:flex;gap:24px}
+.x-nav a{color:#ffffff;text-decoration:none;font-size:17px}
+.x-nav a[aria-current]{border-bottom:2px solid #c46b3c}
+main,.x-main{display:block;max-width:1080px;margin:0 auto;padding:40px 24px}
+h1{font-size:44px;margin:0 0 12px;color:#55624f}
+h2{font-size:26px;margin:28px 0 10px;color:#55624f}
+.x-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.x-btn{display:inline-block;background:#c46b3c;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700}
+.x-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.x-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.x-card h2{margin-top:8px}
+.x-dishes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+.x-dish{display:flex;justify-content:space-between;border-bottom:1px dotted #b9ad99;padding:6px 0}
+.x-dish small{display:block;color:#6b6257}
+.x-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px}
+.x-form label{display:flex;flex-direction:column;font-weight:700;gap:6px}
+.x-form input,.x-form select,.x-form textarea{font:inherit;padding:10px;border:1px solid #b9ad99;border-radius:6px;background:#fff}
+.x-wide{grid-column:1/-1}
+.x-form button{grid-column:1/-1;justify-self:start;font:inherit;font-weight:700;background:#c46b3c;color:#fff;border:0;border-radius:6px;padding:12px 22px}
+.x-two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:8px;border-bottom:1px solid #d8cfc0}
+footer{background:#55624f;color:#ffffff;margin-top:40px}
+footer nav{display:flex;gap:20px}
+footer a{color:#ffffff}

@@ -1,0 +1,130 @@
+{
+  "stages": [
+    {
+      "name": "question",
+      "match": {
+        "titleAny": [
+          "question",
+          "scope",
+          "plan",
+          "outline",
+          "frame"
+        ]
+      },
+      "importance": "minor"
+    },
+    {
+      "name": "research-a",
+      "match": {
+        "changesAny": [
+          "notes/sources-a.md"
+        ]
+      }
+    },
+    {
+      "name": "research-b",
+      "match": {
+        "changesAny": [
+          "notes/sources-b.md"
+        ]
+      }
+    },
+    {
+      "name": "draft",
+      "match": {
+        "changesAny": [
+          "report/draft.md"
+        ],
+        "titleAny": [
+          "draft",
+          "write",
+          "compose"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "verify",
+      "match": {
+        "titleAny": [
+          "verif",
+          "fact",
+          "check",
+          "review"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "revise",
+      "match": {
+        "changesAny": [
+          "report/draft.md"
+        ],
+        "titleAny": [
+          "revis",
+          "fix",
+          "correct",
+          "edit",
+          "apply"
+        ]
+      }
+    },
+    {
+      "name": "publish",
+      "match": {
+        "changesAny": [
+          "report/FINDINGS.md"
+        ]
+      },
+      "importance": "major"
+    }
+  ],
+  "before": [
+    [
+      "question",
+      "research-a"
+    ],
+    [
+      "question",
+      "research-b"
+    ],
+    [
+      "research-a",
+      "draft"
+    ],
+    [
+      "research-b",
+      "draft"
+    ],
+    [
+      "draft",
+      "verify"
+    ],
+    [
+      "verify",
+      "revise"
+    ],
+    [
+      "revise",
+      "publish"
+    ],
+    [
+      "verify",
+      "publish"
+    ]
+  ],
+  "parallel": [
+    [
+      "research-a",
+      "research-b"
+    ]
+  ],
+  "reviewOf": [
+    "draft"
+  ],
+  "limits": {
+    "maxSteps": 10,
+    "maxOwners": 6
+  }
+}

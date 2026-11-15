@@ -1,0 +1,87 @@
+{
+  "slug": "leaderboard-table",
+  "title": "Leaderboard table",
+  "level": 1,
+  "category": "App screens and data",
+  "brief": "Our players want to see this week's top ten. Build the weekly leaderboard for week 46 (9 to 15 November 2026). It is a table with rank, player, score and prompts used; each player has a round avatar with their initials in a strong colour. The top three ranks get gold, silver and bronze medal-style badges, and the viewer, Jordan Ellis in seventh place, must be able to spot their own row at a glance from a soft highlight. Numbers should line up on the right so scores are easy to compare. Add a short line under the title that says fewer prompts break a tie, and a note under the table that scores reset every Monday. It should feel competitive but tidy, like a sports results page, on a light grey background.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "Heading 'Weekly leaderboard' with the line 'Week 46, 9 to 15 November 2026. Fewer prompts break a tie.'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "A real table with column headers Rank, Player, Score, Prompts used",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Ten rows in this order: Priya Nair 9,840/31, Marcus Okafor 9,615/28, Lena Brandt 9,402/35, Daniel Kim 9,118/33, Sofia Rossi 8,977/40, Tom Whitfield 8,730/37, Jordan Ellis (you) 8,544/29, Aisha Haddad 8,301/44, Rafael Costa 8,066/39, Emma Visser 7,912/42",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Ranks 1, 2 and 3 sit in round gold, silver and bronze badges; ranks 4 to 10 are plain",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r5",
+      "text": "Every player has a round avatar with their initials",
+      "kind": "content",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "Jordan Ellis's row is highlighted so it stands out from the others",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "Score and Prompts used are right-aligned; scores are bold",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "Note under the table: 'Scores reset every Monday at 00:00 UTC.'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r9",
+      "text": "Text, including avatar initials and badge numbers, is easy to read against its background",
+      "kind": "style",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Weekly leaderboard",
+    "Week 46, 9 to 15 November 2026. Fewer prompts break a tie.",
+    "Rank",
+    "Player",
+    "Score",
+    "Prompts used",
+    "Priya Nair",
+    "9,840",
+    "Marcus Okafor",
+    "Lena Brandt",
+    "Jordan Ellis (you)",
+    "8,544",
+    "Emma Visser",
+    "7,912",
+    "Scores reset every Monday at 00:00 UTC."
+  ],
+  "designNotes": [
+    "light grey page, one white rounded table",
+    "medal colours only on the top three",
+    "soft indigo highlight for the viewer's row",
+    "thin dividers, generous row height"
+  ],
+  "maxPromptChars": 4000
+}

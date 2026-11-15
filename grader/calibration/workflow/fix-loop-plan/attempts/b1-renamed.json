@@ -1,0 +1,97 @@
+{
+  "goal": "A parse_price function that turns \"$1,299.00\" into 1299.0 and passes every visible test, confirmed once on the hidden tests",
+  "steps": [
+    {
+      "id": "spec",
+      "title": "Read the spec and the visible tests",
+      "owner": "lead",
+      "dependsOn": [],
+      "changes": [
+        "NOTES.md"
+      ],
+      "reads": [
+        "tests/visible/**"
+      ],
+      "proof": "NOTES.md lists the 20 visible cases and the input formats they cover",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "write-parser",
+      "title": "Implement parse_price",
+      "owner": "dev",
+      "dependsOn": [
+        "spec"
+      ],
+      "changes": [
+        "src/price.py"
+      ],
+      "proof": "src/price.py imports cleanly and parse_price(\"$1.00\") returns 1.0",
+      "budget": {
+        "toolCalls": 25
+      }
+    },
+    {
+      "id": "check-visible",
+      "title": "Run visible checks",
+      "owner": "dev",
+      "dependsOn": [
+        "write-parser",
+        "repair"
+      ],
+      "changes": [],
+      "reads": [
+        "tests/visible/**"
+      ],
+      "proof": "`pytest tests/visible -q` pass count logged per round",
+      "budget": {
+        "minutes": 2
+      }
+    },
+    {
+      "id": "repair",
+      "title": "Repair the failures",
+      "owner": "dev",
+      "dependsOn": [
+        "check-visible"
+      ],
+      "changes": [
+        "src/price.py"
+      ],
+      "proof": "The next visible run fails fewer tests",
+      "budget": {
+        "toolCalls": 15
+      }
+    },
+    {
+      "id": "hidden-check",
+      "title": "Final held-out run",
+      "owner": "lead",
+      "dependsOn": [
+        "check-visible",
+        "repair"
+      ],
+      "changes": [],
+      "reads": [
+        "tests/held_out/**"
+      ],
+      "proof": "`pytest tests/held_out -q` output with pass count",
+      "budget": {
+        "minutes": 3
+      }
+    }
+  ],
+  "loops": [
+    {
+      "id": "repair-loop",
+      "steps": [
+        "check-visible",
+        "repair"
+      ],
+      "until": "Every visible test passes, or no improvement in two rounds",
+      "maxRounds": 3,
+      "heldOut": "tests/held_out, run once by lead after the loop"
+    }
+  ]
+}

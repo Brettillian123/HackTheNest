@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<style>
+  body { background: #eef1f6; font-family: Verdana, sans-serif; margin: 20px 0 0 140px; }
+  h1 { font-size: 18px; margin: 0; font-weight: normal; }
+  .sub { font-size: 11px; color: #b4bac3; margin: 2px 0 6px; }
+  ul { list-style: none; padding: 0; width: 760px; }
+  li { border-left: 3px solid; padding: 6px 10px; margin-bottom: 4px; overflow: hidden; }
+  li:nth-child(2) { margin-left: 30px; padding: 16px 10px; margin-bottom: 20px; }
+  li:nth-child(3) { width: 600px; }
+  svg { width: 16px; height: 16px; float: left; margin: 6px 8px 0 0; }
+  li:nth-child(4) svg { width: 26px; height: 26px; }
+  .t { font-size: 13px; font-weight: 600; }
+  .x { font-size: 12px; color: #aab0b8; }
+  button { background: none; border: 0; text-decoration: underline; font-size: 11px; padding: 0 0 0 6px; color: #888; }
+  .s { background: #eaf7ee; border-color: #8fd4a6; }
+  .i { background: #e8f0fc; border-color: #9cbbe8; }
+  .w { background: #fff6e0; border-color: #f3c96a; }
+  .e { background: #fdeceb; border-color: #f0a19b; }
+</style>
+</head>
+<body>
+  <h1>Notifications</h1>
+  <p class="sub">Four messages from the last 24 hours</p>
+  <ul>
+    <li class="s"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#5cbf7f"/><path d="M7 12l3.5 3.5L17 9" stroke="#fff" stroke-width="2.5" fill="none"/></svg>
+      <span class="t">Payment received</span><br><span class="x">Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</span><button>View invoice</button></li>
+    <li class="i"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#6a9be0"/><rect x="11" y="10" width="2.4" height="8" fill="#fff"/><circle cx="12.2" cy="7" r="1.5" fill="#fff"/></svg>
+      <span class="t">New version available</span><br><span class="x">Version 4.2 adds shared workspaces and faster PDF exports.</span> <button>See what's new</button></li>
+    <li class="w"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#efb53c"/><rect x="10.8" y="5.5" width="2.4" height="9" fill="#fff"/><circle cx="12" cy="18" r="1.5" fill="#fff"/></svg>
+      <span class="t">Storage almost full</span> <span class="x">You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</span><button>Upgrade plan</button></li>
+    <li class="e"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#e57068"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.5"/></svg>
+      <span class="t">Sync failed</span><br><span class="x">We could not reach Google Drive. Your last 3 changes are saved on this device.</span><br><button>Try again</button></li>
+  </ul>
+</body>
+</html>

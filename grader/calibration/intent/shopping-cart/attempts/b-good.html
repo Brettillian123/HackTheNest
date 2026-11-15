@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your cart | Harbor &amp; Pine</title>
+<style>
+  :root { --accent: #1f4fd1; --page: #f5f6f8; --ink: #1a1f2b; --muted: #5f6878; --line: #e3e6eb; --danger: #c0262d; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font-family: Arial, sans-serif; }
+  .bar { background: #fff; border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; padding-bottom: 16px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+  .brand { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .bar a.back { color: var(--accent); font-size: 14px; }
+  h1 { font-size: 28px; margin: 36px 0 22px; }
+  .layout { display: grid; grid-template-columns: 1fr 330px; gap: 28px; align-items: start;  }
+  .items { list-style: none; margin: 0; padding: 0 24px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+  .item { display: grid; grid-template-columns: 72px 1fr auto 110px; gap: 20px; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); }
+  .item:first-child { border-top: 0; }
+  .item h2 { font-size: 16px; margin: 0 0 3px; }
+  .variant { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+  .remove { background: none; border: 0; padding: 0; color: var(--danger); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+  .qty label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .stepper { display: flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+  .stepper button { width: 32px; border: 0; background: #f4f5f7; font-size: 16px; cursor: pointer; }
+  .stepper input { width: 44px; border: 0; text-align: center; font: inherit; font-size: 14px; padding: 7px 0; }
+  .line { text-align: right; font-weight: 700; }
+  .line small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .side { display: grid; gap: 18px; }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .promo label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  .promo .row { display: flex; gap: 8px; }
+  .promo input { flex: 1; min-width: 0; padding: 9px 11px; border: 1px solid var(--line); border-radius: 7px; font: inherit; font-size: 14px; }
+  .promo button { padding: 9px 14px; border: 1px solid #c9ced6; background: #fff; border-radius: 7px; font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; }
+  .panel h2 { font-size: 18px; margin: 0 0 14px; }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr auto; row-gap: 1px; font-size: 14px; }
+  dt { color: var(--muted); } dd { margin: 0; text-align: right; }
+  dt.total, dd.total { color: var(--ink); font-weight: 700; font-size: 18px; }
+  .checkout { display: block; width: 100%; margin-top: 18px; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 13px; font: inherit; font-weight: 700; font-size: 16px; cursor: pointer; }
+  .note { text-align: center; color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap"><a class="brand" href="#">Harbor &amp; Pine</a><a class="back" href="#">Continue shopping</a></div></header>
+<main class="wrap">
+  <h1>Your cart (3 items)</h1>
+  <div class="layout">
+    <ul class="items" aria-label="Items in your cart">
+      <li class="item"><svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><rect width="64" height="64" rx="8" fill="#f1ebe0"/><path d="M22 16l-10 6 4 9 5-2v21h22V29l5 2 4-9-10-6c-2 4-5 6-10 6s-8-2-10-6z" fill="#d8c3a0"/></svg><div><h2>Linen Overshirt</h2><p class="variant">Size M, Sand</p><button class="remove" type="button">Remove</button></div><div class="qty"><label for="q0">Qty</label><div class="stepper"><button type="button" aria-label="Decrease quantity">&minus;</button><input id="q0" type="number" min="1" value="1"><button type="button" aria-label="Increase quantity">+</button></div></div><p class="line">$68.00</p></li>
+      <li class="item"><svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><rect width="64" height="64" rx="8" fill="#e9ebee"/><path d="M26 12h12v26l8 8c3 3 1 8-3 8H30c-3 0-6-3-6-6V12z" fill="#4b5563"/></svg><div><h2>Merino Crew Socks</h2><p class="variant">One size, Charcoal</p><button class="remove" type="button">Remove</button></div><div class="qty"><label for="q1">Qty</label><div class="stepper"><button type="button" aria-label="Decrease quantity">&minus;</button><input id="q1" type="number" min="1" value="2"><button type="button" aria-label="Increase quantity">+</button></div></div><p class="line">$24.00<small>$12 each</small></p></li>
+      <li class="item"><svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><rect width="64" height="64" rx="8" fill="#f3efe6"/><path d="M24 24c0-6 3-10 8-10s8 4 8 10" fill="none" stroke="#b9a77f" stroke-width="2.5"/><rect x="16" y="24" width="32" height="28" rx="2" fill="#e2d6bb"/></svg><div><h2>Canvas Tote Bag</h2><p class="variant">Natural</p><button class="remove" type="button">Remove</button></div><div class="qty"><label for="q2">Qty</label><div class="stepper"><button type="button" aria-label="Decrease quantity">&minus;</button><input id="q2" type="number" min="1" value="1"><button type="button" aria-label="Increase quantity">+</button></div></div><p class="line">$32.00</p></li>
+    </ul>
+    <aside class="side">
+      <form class="panel promo" action="#"><label for="promo">Promo code</label><div class="row"><input id="promo" name="promo" placeholder="Enter code"><button type="submit">Apply</button></div></form>
+      <section class="panel" aria-labelledby="sum-h">
+        <h2 id="sum-h">Order summary</h2>
+        <dl><dt>Subtotal</dt><dd>$124.00</dd><dt>Shipping</dt><dd>$6.00</dd><dt>Tax (8%)</dt><dd>$9.92</dd><dt class="total">Total</dt><dd class="total">$139.92</dd></dl>
+        <button class="checkout" type="button">Checkout</button>
+        <p class="note">Free returns within 30 days</p>
+      </section>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

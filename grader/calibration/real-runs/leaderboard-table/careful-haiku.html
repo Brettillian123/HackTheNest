@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly leaderboard</title>
+<style>
+  body {
+    margin: 0;
+    background: #e8edf4;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+    min-height: 100vh;
+  }
+  main {
+    width: 760px;
+    margin: 0 auto;
+    padding: 56px 0 40px;
+  }
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #111827;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 24px;
+  }
+  .card {
+    background: #ffffff;
+    border: 1px solid #d5dce6;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  thead th {
+    background: #f5f7fb;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6b7280;
+    text-align: left;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e3e8f0;
+  }
+  th.num, td.num { text-align: right; }
+  td {
+    padding: 14px 20px;
+    font-size: 15px;
+    border-bottom: 1px solid #eef1f6;
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  .rank {
+    width: 56px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .medal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-weight: 700;
+    color: #3b2f12;
+  }
+  .gold { background: #f6d45c; }
+  .silver { background: #d9dee6; color: #37404d; }
+  .bronze { background: #d9a277; color: #4a2a10; }
+  .player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #64748b;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    flex: none;
+  }
+  .score { font-weight: 700; color: #111827; }
+  .prompts { color: #6b7280; }
+  tr.me { background: #eef0ff; }
+  tr.me td { border-bottom-color: #dfe3fb; }
+  tr.me .player { color: #4338ca; }
+  .note {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 16px 0 0;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Weekly leaderboard</h1>
+  <p class="subtitle">Week 46, 9 to 15 November 2026. Fewer prompts break a tie.</p>
+
+  <div class="card">
+    <table>
+      <caption>Weekly leaderboard for Week 46, ranked by score</caption>
+      <thead>
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Player</th>
+          <th scope="col" class="num">Score</th>
+          <th scope="col" class="num">Prompts used</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank"><span class="medal gold">1</span></td>
+          <td><div class="player"><span class="avatar" style="background:#7c5cbf">PN</span>Priya Nair</div></td>
+          <td class="num score">9,840</td>
+          <td class="num prompts">31</td>
+        </tr>
+        <tr>
+          <td class="rank"><span class="medal silver">2</span></td>
+          <td><div class="player"><span class="avatar" style="background:#2e8b8b">MO</span>Marcus Okafor</div></td>
+          <td class="num score">9,615</td>
+          <td class="num prompts">28</td>
+        </tr>
+        <tr>
+          <td class="rank"><span class="medal bronze">3</span></td>
+          <td><div class="player"><span class="avatar" style="background:#c0634a">LB</span>Lena Brandt</div></td>
+          <td class="num score">9,402</td>
+          <td class="num prompts">35</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><div class="player"><span class="avatar" style="background:#4f7cac">DK</span>Daniel Kim</div></td>
+          <td class="num score">9,118</td>
+          <td class="num prompts">33</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td><div class="player"><span class="avatar" style="background:#8a6d3b">SR</span>Sofia Rossi</div></td>
+          <td class="num score">8,977</td>
+          <td class="num prompts">40</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td><div class="player"><span class="avatar" style="background:#5e8f4e">TW</span>Tom Whitfield</div></td>
+          <td class="num score">8,730</td>
+          <td class="num prompts">37</td>
+        </tr>
+        <tr class="me">
+          <td class="rank">7</td>
+          <td><div class="player"><span class="avatar" style="background:#4f46e5">JE</span>Jordan Ellis (you)</div></td>
+          <td class="num score">8,544</td>
+          <td class="num prompts">29</td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td><div class="player"><span class="avatar" style="background:#9b5d8c">AH</span>Aisha Haddad</div></td>
+          <td class="num score">8,301</td>
+          <td class="num prompts">44</td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td><div class="player"><span class="avatar" style="background:#6b7a8f">RC</span>Rafael Costa</div></td>
+          <td class="num score">8,066</td>
+          <td class="num prompts">39</td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td><div class="player"><span class="avatar" style="background:#a0803c">EV</span>Emma Visser</div></td>
+          <td class="num score">7,912</td>
+          <td class="num prompts">42</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">Scores reset every Monday at 00:00 UTC.</p>
+</main>
+</body>
+</html>

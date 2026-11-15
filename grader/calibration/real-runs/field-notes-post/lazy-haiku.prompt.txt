@@ -1,0 +1,1 @@
+blog article page with the title, text, a quote, a bar chart and a table of the numbers

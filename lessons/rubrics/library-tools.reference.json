@@ -1,0 +1,43 @@
+[
+  {
+    "name": "library_search",
+    "description": "Search the school library catalogue by title or author. Use this to find books before getting details or placing a hold. Returns matching books with their ids. Changes nothing.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": { "type": "string", "description": "Words to look for, such as part of a title or an author's name." },
+        "field": { "type": "string", "enum": ["title", "author"], "description": "Which field to search: title or author." }
+      },
+      "required": ["query", "field"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": true }
+  },
+  {
+    "name": "library_get_book",
+    "description": "Get one book's details by its id. Use this after a search, when the student wants to know more about one book. Returns the title, author and whether it is on the shelf. Changes nothing.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "book_id": { "type": "string", "pattern": "^bk_[0-9]+$", "description": "The book's id, such as bk_1234." }
+      },
+      "required": ["book_id"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": true }
+  },
+  {
+    "name": "library_place_hold",
+    "description": "Place a hold on a book for a student. Use this only when the student asks to reserve a book. Adds a hold record and returns its confirmation.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "book_id": { "type": "string", "pattern": "^bk_[0-9]+$", "description": "The id of the book to hold." },
+        "student_id": { "type": "string", "pattern": "^st_[0-9]+$", "description": "The student's id, such as st_5678." }
+      },
+      "required": ["book_id", "student_id"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": false, "destructiveHint": false }
+  }
+]

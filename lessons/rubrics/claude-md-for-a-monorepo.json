@@ -1,0 +1,27 @@
+{
+  "sections": [
+    { "name": "Overview", "aliases": ["About", "Project overview", "What this is", "Introduction"], "importance": "normal" },
+    { "name": "Commands", "aliases": ["Common commands", "Everyday commands", "Development commands", "Scripts", "Setup"], "importance": "critical" },
+    { "name": "Layout", "aliases": ["Project layout", "Structure", "Project structure", "Where things live", "Folders", "Workspace layout", "Packages"], "importance": "normal" },
+    { "name": "Rules", "aliases": ["Conventions", "Guidelines", "Ground rules", "Working rules", "Constraints"], "importance": "major", "mustContain": ["never", "generated"] },
+    { "name": "Done means", "aliases": ["Definition of done", "Done", "Before you finish", "Before finishing", "Finishing", "Checks"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the @AGENTS.md import line", "anyOf": ["@AGENTS.md"], "importance": "major" },
+    { "label": "the install command", "anyOf": ["pnpm install"], "importance": "critical", "inCode": true },
+    { "label": "the web test command", "anyOf": ["pnpm --filter web test"], "inCode": true },
+    { "label": "the API test command", "anyOf": ["pnpm --filter api test"], "inCode": true },
+    { "label": "the lint command", "anyOf": ["pnpm lint"], "inCode": true },
+    { "label": "the codegen command", "anyOf": ["pnpm codegen"], "importance": "major", "inCode": true },
+    { "label": "the web app folder", "anyOf": ["apps/web/", "apps/web"], "section": "Layout" },
+    { "label": "the API folder", "anyOf": ["apps/api/", "apps/api"], "section": "Layout" },
+    { "label": "the rule never to edit packages/client/src/generated/", "anyOf": ["packages/client/src/generated/", "packages/client/src/generated"], "importance": "major", "section": "Rules" },
+    { "label": "the lockfile pnpm-lock.yaml", "anyOf": ["pnpm-lock.yaml"], "importance": "normal" }
+  ],
+  "forbidden": [
+    { "label": "an npm or yarn command to run", "pattern": "^\\s*(npm|yarn)\\s+(install|i|ci|add|run|test)\\b" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" },
+    { "label": "a your-project placeholder", "pattern": "\\byour[-_](project|repo|name|package)\\b" }
+  ],
+  "limits": { "maxWords": 400, "minWords": 80 }
+}

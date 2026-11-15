@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Leaderboard</title>
+<style>
+  body { background: #f0f0f0; font-family: Tahoma, sans-serif; margin: 12px 0 0 90px; }
+  h1 { font-size: 17px; margin: 0; }
+  p.sub { font-size: 12px; color: #aaa; margin: 0 0 4px 20px; }
+  table { width: 900px; background: #fff; border-collapse: collapse; }
+  th { text-align: center; padding: 3px; font-size: 13px; background: #fafafa; }
+  td { padding: 3px 6px; font-size: 13px; border-top: 1px solid #eee; text-align: center; }
+  td:nth-child(2) { text-align: left; }
+  tr:nth-child(even) td { padding: 9px 6px; }
+  .badge { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; font-size: 11px; color: #fff; }
+  .av { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; color: #fff; font-size: 9px; margin-right: 4px; }
+  tr.you td { background: #f6f6ff; }
+  .score { font-weight: bold; }
+  .foot { font-size: 11px; color: #bbb; text-align: right; width: 900px; }
+</style>
+</head>
+<body>
+<h1>Weekly leaderboard</h1>
+<p class="sub">Week 46, 9 to 15 November 2026. Fewer prompts break a tie.</p>
+<table>
+  <thead><tr><th>Rank</th><th>Player</th><th>Score</th><th>Prompts used</th></tr></thead>
+  <tbody>
+  <tr><td><span class="badge" style="background:#f9e08a">1</span></td><td><span class="av" style="background:#fbcfe8">PN</span>Priya Nair</td><td class="score">9,840</td><td>31</td></tr>
+  <tr><td><span class="badge" style="background:#e4e7ea">2</span></td><td><span class="av" style="background:#bae6fd">MO</span>Marcus Okafor</td><td class="score">9,615</td><td>28</td></tr>
+  <tr><td><span class="badge" style="background:#efc9a4">3</span></td><td><span class="av" style="background:#fde68a">LB</span>Lena Brandt</td><td class="score">9,402</td><td>35</td></tr>
+  <tr><td>4</td><td><span class="av" style="background:#c7d2fe">DK</span>Daniel Kim</td><td class="score">9,118</td><td>33</td></tr>
+  <tr><td>5</td><td><span class="av" style="background:#bbf7d0">SR</span>Sofia Rossi</td><td class="score">8,977</td><td>40</td></tr>
+  <tr><td>6</td><td><span class="av" style="background:#fbcfe8">TW</span>Tom Whitfield</td><td class="score">8,730</td><td>37</td></tr>
+  <tr class="you"><td>7</td><td><span class="av" style="background:#bae6fd">JE</span>Jordan Ellis (you)</td><td class="score">8,544</td><td>29</td></tr>
+  <tr><td>8</td><td><span class="av" style="background:#fde68a">AH</span>Aisha Haddad</td><td class="score">8,301</td><td>44</td></tr>
+  <tr><td>9</td><td><span class="av" style="background:#c7d2fe">RC</span>Rafael Costa</td><td class="score">8,066</td><td>39</td></tr>
+  <tr><td>10</td><td><span class="av" style="background:#bbf7d0">EV</span>Emma Visser</td><td class="score">7,912</td><td>42</td></tr>
+  </tbody>
+</table>
+<p class="foot">Scores reset every Monday at 00:00 UTC.</p>
+</body>
+</html>

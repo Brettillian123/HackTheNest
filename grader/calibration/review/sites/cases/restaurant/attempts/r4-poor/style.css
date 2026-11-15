@@ -1,0 +1,30 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Verdana, sans-serif;background:#eef4fb;color:#10233a;line-height:1.5}
+.y-top{background:#1d4e89;color:#ffffff}
+.y-bar{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.y-brand{font-size:24px;font-weight:700;color:#ffffff;text-decoration:none}
+.y-nav{display:flex;gap:24px}
+.y-nav a{color:#ffffff;text-decoration:none;font-size:17px}
+.y-nav a[aria-current]{border-bottom:2px solid #2a7de1}
+main,.y-main{display:block;max-width:1080px;margin:0 auto;padding:40px 24px}
+h1{font-size:44px;margin:0 0 12px;color:#1d4e89}
+h2{font-size:26px;margin:28px 0 10px;color:#1d4e89}
+.y-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.y-btn{display:inline-block;background:#2a7de1;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700}
+.y-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.y-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.y-card h2{margin-top:8px}
+.y-dishes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+.y-dish{display:flex;justify-content:space-between;border-bottom:1px dotted #b9ad99;padding:6px 0}
+.y-dish small{display:block;color:#6b6257}
+.y-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px}
+.y-form label{display:flex;flex-direction:column;font-weight:700;gap:6px}
+.y-form input,.y-form select,.y-form textarea{font:inherit;padding:10px;border:1px solid #b9ad99;border-radius:6px;background:#fff}
+.y-wide{grid-column:1/-1}
+.y-form button{grid-column:1/-1;justify-self:start;font:inherit;font-weight:700;background:#2a7de1;color:#fff;border:0;border-radius:6px;padding:12px 22px}
+.y-two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:8px;border-bottom:1px solid #d8cfc0}
+footer{background:#1d4e89;color:#ffffff;margin-top:40px}
+footer nav{display:flex;gap:20px}
+footer a{color:#ffffff}

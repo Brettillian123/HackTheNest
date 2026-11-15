@@ -1,0 +1,121 @@
+{
+  "stages": [
+    {
+      "name": "baseline",
+      "match": {
+        "titleAny": [
+          "baseline"
+        ]
+      },
+      "importance": "major"
+    },
+    {
+      "name": "metric-check",
+      "match": {
+        "titleAny": [
+          "validat", "calibrat", "check"
+        ],
+        "changesAny": [
+          "reports/metric-check.md"
+        ]
+      },
+      "importance": "minor"
+    },
+    {
+      "name": "score",
+      "match": {
+        "titleAny": [
+          "score",
+          "evaluat",
+          "measure"]
+      },
+      "importance": "major"
+    },
+    {
+      "name": "tune",
+      "match": {
+        "titleAny": [
+          "tune",
+          "revise",
+          "improve",
+          "edit",
+          "fix"
+        ],
+        "changesAny": [
+          "prompts/summarize.txt"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "held-out-check",
+      "match": {
+        "titleAny": [
+          "held",
+          "holdout",
+          "hidden",
+          "final"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "report",
+      "match": {
+        "changesAny": [
+          "reports/benchmark.md"
+        ]
+      }
+    }
+  ],
+  "before": [
+    [
+      "baseline",
+      "score"
+    ],
+    [
+      "baseline",
+      "tune"
+    ],
+    [
+      "score",
+      "held-out-check"
+    ],
+    [
+      "tune",
+      "held-out-check"
+    ],
+    [
+      "held-out-check",
+      "report"
+    ],
+    [
+      "metric-check",
+      "score"
+    ]
+  ],
+  "loops": [
+    {
+      "name": "tuning-loop",
+      "stages": [
+        "score",
+        "tune"
+      ],
+      "maxRoundsAtMost": 5,
+      "needsHeldOut": true,
+      "heldOutPaths": [
+        "benchmarks/held_out/**"
+      ]
+    }
+  ],
+  "limits": {
+    "maxSteps": 7,
+    "maxOwners": 4
+  },
+  "parallel": [
+    [
+      "baseline",
+      "metric-check"
+    ]
+  ]
+}

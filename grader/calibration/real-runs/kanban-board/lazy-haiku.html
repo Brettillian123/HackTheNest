@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Website relaunch - Kanban board</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#eef1f5;color:#1d2433;height:800px;width:1280px;overflow:hidden}
+header{height:64px;background:#fff;border-bottom:1px solid #d9dee7;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.title h1{font-size:20px;font-weight:bold}
+.title p{font-size:13px;color:#5d6679;margin-top:3px}
+.right{display:flex;align-items:center;gap:16px}
+.avatars{display:flex}
+.av{width:32px;height:32px;border-radius:50%;color:#fff;font-size:12px;font-weight:bold;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px}
+.btn{background:#2563eb;color:#fff;border:none;border-radius:6px;padding:10px 16px;font-size:14px;font-weight:bold;font-family:Arial,sans-serif}
+.board{display:flex;gap:18px;padding:20px 28px;height:calc(800px - 64px)}
+.col{flex:1;background:#e2e7ef;border-radius:10px;padding:12px;display:flex;flex-direction:column;min-width:0}
+.col-head{display:flex;justify-content:space-between;align-items:center;padding:4px 4px 12px}
+.col-head h2{font-size:15px;font-weight:bold}
+.count{background:#fff;border-radius:11px;font-size:12px;padding:2px 9px;color:#4a5366;font-weight:bold}
+.cards{display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.card{background:#fff;border-radius:8px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.08);border-left:4px solid #999}
+.tag{display:inline-block;font-size:11px;font-weight:bold;padding:2px 7px;border-radius:4px;color:#fff;margin-bottom:8px}
+.t-Content{background:#0d9488}
+.t-Design{background:#8b5cf6}
+.t-Frontend{background:#2563eb}
+.t-Bug{background:#dc2626}
+.card h3{font-size:14px;font-weight:bold;line-height:1.35;margin-bottom:12px}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#5d6679}
+.mini{width:24px;height:24px;border-radius:50%;color:#fff;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.done{color:#15803d;font-weight:bold}
+.add{margin-top:10px;background:transparent;border:1px dashed #8a94a8;border-radius:8px;padding:9px;font-size:13px;color:#4a5366;text-align:center}
+.nh{background:#f59e0b}
+.ts{background:#0ea5e9}
+.kb{background:#10b981}
+</style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <h1>Website relaunch</h1>
+    <p>Sprint 14, 9 to 27 November</p>
+  </div>
+  <div class="right">
+    <div class="avatars">
+      <div class="av nh">NH</div>
+      <div class="av ts">TS</div>
+      <div class="av kb">KB</div>
+    </div>
+    <button class="btn">+ New card</button>
+  </div>
+</header>
+<main class="board">
+  <section class="col">
+    <div class="col-head"><h2>Backlog</h2><span class="count">3</span></div>
+    <div class="cards">
+      <div class="card"><span class="tag t-Content">Content</span><h3>Write FAQ answers for pricing</h3><div class="meta"><span>Due Nov 25</span><div class="mini nh">NH</div></div></div>
+      <div class="card"><span class="tag t-Design">Design</span><h3>Empty states for the dashboard</h3><div class="meta"><span>Due Nov 26</span><div class="mini ts">TS</div></div></div>
+      <div class="card"><span class="tag t-Frontend">Frontend</span><h3>Lazy-load case study images</h3><div class="meta"><span>Due Nov 27</span><div class="mini kb">KB</div></div></div>
+    </div>
+    <div class="add">+ Add a card</div>
+  </section>
+  <section class="col">
+    <div class="col-head"><h2>In progress</h2><span class="count">3</span></div>
+    <div class="cards">
+      <div class="card"><span class="tag t-Frontend">Frontend</span><h3>Build the new pricing table</h3><div class="meta"><span>Due Nov 18</span><div class="mini kb">KB</div></div></div>
+      <div class="card"><span class="tag t-Bug">Bug</span><h3>Menu closes on iOS scroll</h3><div class="meta"><span>Due Nov 14</span><div class="mini ts">TS</div></div></div>
+      <div class="card"><span class="tag t-Design">Design</span><h3>Homepage hero illustration</h3><div class="meta"><span>Due Nov 19</span><div class="mini nh">NH</div></div></div>
+    </div>
+    <div class="add">+ Add a card</div>
+  </section>
+  <section class="col">
+    <div class="col-head"><h2>Review</h2><span class="count">2</span></div>
+    <div class="cards">
+      <div class="card"><span class="tag t-Content">Content</span><h3>About page copy, second draft</h3><div class="meta"><span>Due Nov 17</span><div class="mini nh">NH</div></div></div>
+      <div class="card"><span class="tag t-Frontend">Frontend</span><h3>Contact form validation</h3><div class="meta"><span>Due Nov 16</span><div class="mini kb">KB</div></div></div>
+    </div>
+    <div class="add">+ Add a card</div>
+  </section>
+  <section class="col">
+    <div class="col-head"><h2>Done</h2><span class="count">3</span></div>
+    <div class="cards">
+      <div class="card"><span class="tag t-Design">Design</span><h3>New colour palette</h3><div class="meta"><span class="done">Done Nov 10</span><div class="mini ts">TS</div></div></div>
+      <div class="card"><span class="tag t-Bug">Bug</span><h3>Broken link in footer</h3><div class="meta"><span class="done">Done Nov 11</span><div class="mini kb">KB</div></div></div>
+      <div class="card"><span class="tag t-Content">Content</span><h3>Team bios and photos</h3><div class="meta"><span class="done">Done Nov 12</span><div class="mini nh">NH</div></div></div>
+    </div>
+    <div class="add">+ Add a card</div>
+  </section>
+</main>
+</body>
+</html>

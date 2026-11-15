@@ -1,0 +1,12 @@
+[
+  {
+    "name": "get_order",
+    "description": "Returns one order by its ID: status, items, totals and shipping address.",
+    "inputSchema": { "type": "object", "properties": { "order_id": { "type": "string", "description": "The order ID." } }, "required": ["order_id"] },
+  },
+  {
+    "name": "search_orders",
+    "description": "Finds a customer's orders by email, newest first, at most 50.",
+    "inputSchema": { "type": "object", "properties": { "customer_email": { "type": "string" }, "limit": { "type": "integer" } }, "required": ["customer_email"] }
+  }
+]

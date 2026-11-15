@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration · Lumen Docs</title>
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<header class="masthead"><a href="../index.html" class="logo-link"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28" alt="Lumen logo">Lumen Docs</a><small class="tag">v2.4</small></header>
+<div class="frame">
+<main class="doc">
+<nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="../index.html">Home</a></li><li>Guide</li><li>Configuration</li></ol></nav>
+<h1>Configuration</h1>
+<p class="intro">Every Lumen site has one settings file, <code>lumen.config.json</code>, in its root folder.</p>
+<h2>A starting file</h2>
+<pre><code>{
+  "title": "My site",
+  "theme": "paper",
+  "output": "dist",
+  "baseUrl": "/"
+}</code></pre>
+<h2>Options you will change most</h2>
+<p><code>title</code> appears in the browser tab and the header. <code>theme</code> picks one of the built-in looks: <code>paper</code>, <code>slate</code> or <code>mono</code>. The full list is in the <a href="../reference.html#config-file">reference</a>.</p>
+<h2>Profiles</h2>
+<p>Use a profile to change settings for one environment only, such as a staging server.</p>
+<pre><code>lumen build --profile staging</code></pre>
+<nav class="pager" aria-label="Previous and next"><a href="install.html" class="pager-link"><small>Previous</small>Install</a><a href="deploy.html" class="pager-link pager-next"><small>Next</small>Deploy</a></nav>
+<footer class="doc-foot">Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</footer>
+</main>
+<aside class="docs-nav"><nav aria-label="Documentation">
+<form class="find" role="search"><label for="search" class="sr-only">Search the docs</label><input id="search" type="search" placeholder="Search the docs"></form>
+<div class="nav-heading">Getting started</div>
+<ul>
+<li><a href="../index.html">Overview</a></li>
+</ul>
+<div class="nav-heading">Guide</div>
+<ul>
+<li><a href="install.html">Install</a></li>
+<li><a href="config.html" class="is-active" aria-current="page">Configuration</a></li>
+<li><a href="deploy.html">Deploy</a></li>
+</ul>
+<div class="nav-heading">More</div>
+<ul>
+<li><a href="../reference.html">Reference</a></li>
+<li><a href="../changelog.html">Changelog</a></li>
+</ul>
+</nav></aside>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{
+  "lamp": {
+    "rebuild-detailed": { "band": [86, 97], "why": "Same lamp from every angle; arms are square instead of round, only visible up close, and it is a little leaner." },
+    "rebuild-vague": { "band": [38, 52], "why": "A desk lamp, but a different design: straight post with one arm, small black closed shade, smaller base." },
+    "near": { "band": [85, 95], "why": "The right lamp; upper arm a bit long, bulb a touch high, shade a shade darker: nearly there." },
+    "missing-part": { "band": [55, 70], "why": "The shade, the lamp's biggest and most recognisable part, is gone; a bare bulb on an arm." },
+    "wrong-proportions": { "band": [60, 75], "why": "All parts there but the lower arm is clearly far too long, so the lamp is much taller: one obvious flaw, and a big one." },
+    "low-poly": { "band": [68, 82], "why": "Clearly the lamp, but hexagonal base, triangular arms and a pyramid shade are visibly crude; leaner though." },
+    "heavy": { "band": [50, 65], "why": "Looks identical but about 60 times the triangles: many times heavier than needed, which the owner wants docked hard." },
+    "recoloured": { "band": [70, 84], "why": "Exact shape, every colour wrong (white base, gold arm, red shade): wrong colours throughout." }
+  },
+  "car": {
+    "rebuild-detailed": { "band": [88, 98], "why": "Looks identical from every angle, built another way and a little leaner in code." },
+    "rebuild-vague": { "band": [45, 60], "why": "A recognisable car with the same layout, but blue, taller, cabin centred, no hubs, round lights: its own design." },
+    "near": { "band": [85, 95], "why": "The right car; cabin slightly long, lights a touch high, red a little darker." },
+    "missing-part": { "band": [62, 77], "why": "A car with only three wheels: one obvious missing part that anyone notices." },
+    "wrong-proportions": { "band": [58, 72], "why": "All parts there but the body is far too long, wheels bunched in the middle: obviously wrong proportions." },
+    "low-poly": { "band": [72, 85], "why": "The right car with pentagon wheels and triangle hubs: visibly crude wheels, everything else exact." },
+    "heavy": { "band": [50, 65], "why": "Looks identical but about 57 times the triangles from pointless subdivision." },
+    "recoloured": { "band": [70, 84], "why": "Exact shape, every colour different: wrong colours throughout." }
+  },
+  "house": {
+    "rebuild-detailed": { "band": [88, 98], "why": "Looks identical from outside; four wall panels and an extruded roof instead of one block and custom geometry." },
+    "rebuild-vague": { "band": [30, 45], "why": "A house, but pyramid roof, grey walls, no chimney, no ground slab, windows moved: a different design." },
+    "near": { "band": [86, 96], "why": "The right house; chimney slightly tall, door a little to the right, roof a shade lighter." },
+    "missing-part": { "band": [68, 82], "why": "No front door: one obvious missing part on the front face." },
+    "wrong-proportions": { "band": [58, 72], "why": "All parts there but walls far too tall, so door and windows sit low on a tower: obviously off." },
+    "low-poly": { "band": [45, 62], "why": "The gable roof, a big defining piece, is replaced by a flat slab." },
+    "heavy": { "band": [50, 65], "why": "Looks identical but about 95 times the triangles from subdividing boxes for nothing." },
+    "recoloured": { "band": [70, 84], "why": "Exact shape, every colour different: wrong colours throughout." }
+  },
+  "chair-orientation": {
+    "turn90": { "band": [70, 84], "why": "The exact chair, but facing sideways instead of forward: right object, one obvious flaw." },
+    "turn180": { "band": [70, 84], "why": "The exact chair facing backwards: right object, one obvious flaw." },
+    "turn15": { "band": [85, 96], "why": "The exact chair turned slightly: you notice only if you compare." }
+  },
+  "lamp-mirror": {
+    "mirrored": { "band": [80, 94], "why": "The same lamp with the shade leaning the other way: a mirror image most bosses would accept with a remark." }
+  },
+  "chair-placement": {
+    "scale100": { "band": [82, 95], "why": "The right chair at the wrong size: owner rule 'judge shape, charge a little'." },
+    "far-origin": { "band": [88, 99], "why": "The right chair in the wrong place: judge shape, charge a little." },
+    "scene-with-lights": { "band": [96, 101], "why": "The exact chair, wrapped in a Scene with lights and a camera; lights and camera are not part of the object." }
+  },
+  "chair-extras": {
+    "ground-plane": { "band": [58, 72], "why": "The right chair but on a big floor nobody asked for, which dominates every view." },
+    "stray-cube": { "band": [86, 97], "why": "The right chair plus a speck far away that a person barely notices; slight sloppiness." },
+    "lines-points": { "band": [85, 97], "why": "The right chair with a few stray lines and dots around it: small clutter." },
+    "copy-inside": { "band": [70, 84], "why": "Looks identical, but the whole chair is built twice: double the work for nothing." },
+    "hidden-extra": { "band": [88, 99], "why": "Looks exactly right; a hidden cube is dead code." },
+    "opacity-zero-extra": { "band": [86, 98], "why": "Looks exactly right in three.js; an invisible cube is dead code." }
+  },
+  "chair-visibility": {
+    "hidden-leg": { "band": [62, 76], "why": "In three.js the chair shows three legs: one obvious missing part." },
+    "wireframe": { "band": [55, 70], "why": "In three.js it is a see-through wire cage of the chair, not a solid chair: right shape, very wrong look." }
+  },
+  "blocks30": {
+    "merged": { "band": [94, 103], "why": "Identical blocks as one mesh: identical and leaner in meshes." },
+    "instanced": { "band": [94, 103], "why": "Identical blocks drawn as one InstancedMesh: identical and leaner." }
+  },
+  "box-surface": {
+    "hollow": { "band": [84, 96], "why": "Looks exactly like the cube; built from six slabs, a bit more work than one box." },
+    "thin-planes": { "band": [90, 100], "why": "Looks exactly like the cube; six planes instead of one box." },
+    "doubleside-flipped": { "band": [94, 100], "why": "Looks exactly like the cube in three.js; odd but harmless code." },
+    "flipped-winding": { "band": [80, 94], "why": "Same silhouette, but in three.js a single-sided inside-out cube shows its inner faces: a real rendering bug." },
+    "non-indexed": { "band": [96, 100], "why": "The same cube, stored another way." }
+  },
+  "chair-failures": {
+    "returns-nothing": { "band": [0, 5], "why": "Nothing comes out.", "expect": "Zero with a clear message that buildScene returned nothing; fast." },
+    "returns-number": { "band": [0, 5], "why": "Not an object.", "expect": "Zero with a clear message that it returned a number, not a 3D object." },
+    "throws": { "band": [0, 5], "why": "Does not run.", "expect": "Zero with the error text (RoundedBoxGeometry is not a constructor)." },
+    "infinite-loop": { "band": [0, 5], "why": "Never finishes.", "expect": "Zero with a time-out message; no hang; under 15 seconds." },
+    "zero-triangles": { "band": [0, 5], "why": "Empty.", "expect": "Zero with a message that the scene is empty." },
+    "async": { "band": [0, 5], "why": "Returns a Promise.", "expect": "Zero with a message that says buildScene must not be async (or the chair graded if the grader awaits it)." },
+    "fetch": { "band": [85, 98], "why": "Returns the right chair; the network call is junk.", "expect": "The request is blocked; the chair is graded normally or the code is refused with a clear message. No network access." },
+    "document": { "band": [85, 98], "why": "Returns the right chair; the page write is junk.", "expect": "The page write is harmless or refused with a clear message; never affects the views." },
+    "nan-vertices": { "band": [88, 100], "why": "The right chair; the NaN triangle is invisible junk.", "expect": "The bad triangle is dropped and the chair graded, or a clear message." },
+    "defined-twice": { "band": [88, 100], "why": "JavaScript keeps the second definition, which returns the right chair; sloppy code.", "expect": "The chair is graded (last definition wins)." },
+    "huge-400k": { "why": "The right chair at about 1,600 times the triangles.", "expect": "A clear size-limit refusal with zero is acceptable; if graded, a person would give 45-60. Must not hang." }
+  },
+  "order": [
+    ["lamp/near", "lamp/missing-part"], ["lamp/near", "lamp/wrong-proportions"], ["lamp/near", "lamp/heavy"], ["lamp/near", "lamp/recoloured"],
+    ["lamp/rebuild-detailed", "lamp/rebuild-vague"], ["lamp/low-poly", "lamp/heavy"], ["lamp/missing-part", "lamp/rebuild-vague"],
+    ["car/near", "car/missing-part"], ["car/near", "car/wrong-proportions"], ["car/near", "car/heavy"], ["car/near", "car/recoloured"],
+    ["car/rebuild-detailed", "car/rebuild-vague"], ["car/low-poly", "car/heavy"],
+    ["house/near", "house/missing-part"], ["house/near", "house/wrong-proportions"], ["house/near", "house/heavy"], ["house/near", "house/recoloured"],
+    ["house/rebuild-detailed", "house/rebuild-vague"], ["house/missing-part", "house/low-poly"], ["house/low-poly", "house/rebuild-vague"],
+    ["chair-orientation/turn15", "chair-orientation/turn90"], ["chair-extras/stray-cube", "chair-extras/ground-plane"],
+    ["chair-extras/hidden-extra", "chair-extras/copy-inside"], ["box-surface/non-indexed", "box-surface/hollow"],
+    ["chair-placement/scene-with-lights", "chair-placement/scale100"]
+  ]
+}

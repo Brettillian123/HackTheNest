@@ -1,0 +1,97 @@
+{
+  "slug": "settings-toggles",
+  "title": "Settings toggles",
+  "level": 2,
+  "category": "Components",
+  "brief": "Harbor Studio needs a notification settings screen. Title it Settings, with a section menu down the left (Profile, Account, Notifications, Privacy, Billing) where Notifications is highlighted as the current section in a pale indigo pill. On the right, three white cards group the switches: Email, Push notifications and Workspace. Each setting is a row with a bold name, a line of grey helper text explaining it, and a switch on the far right. Switches that are on are indigo with the knob to the right; switches that are off are light grey with the knob to the left. Draw the switches with styles rather than images. Weekly summary, Mentions, Direct messages, Task reminders and Billing alerts are on; the rest are off. It should feel orderly and easy to scan.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "The page heading reads Settings",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "A left menu with Profile, Account, Notifications, Privacy, Billing in that order, with Notifications highlighted as current",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Three groups in this order: Email (3 settings), Push notifications (3 settings), Workspace (2 settings)",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Each setting shows its name, helper text and a switch, with the names and helper texts in the key facts",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "On: Weekly summary, Mentions, Direct messages, Task reminders, Billing alerts. Off: Product updates, Quiet hours, New members",
+      "kind": "behaviour",
+      "exact": true
+    },
+    {
+      "id": "r6",
+      "text": "On and off switches are clearly different: accent colour with the knob right versus grey with the knob left",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "Rows inside a group are separated by thin lines",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "Each switch is a real checkbox with a visible label, and its helper text is linked to it",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r9",
+      "text": "The section menu is a list of links in a navigation landmark",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Settings",
+    "Profile",
+    "Account",
+    "Notifications",
+    "Privacy",
+    "Billing",
+    "Email",
+    "Weekly summary",
+    "A digest of activity across your projects, sent every Monday at 8:00.",
+    "Product updates",
+    "News about features and improvements, about once a month.",
+    "Mentions",
+    "An email when someone mentions you in a comment.",
+    "Push notifications",
+    "Direct messages",
+    "Notify me when a teammate sends me a message.",
+    "Task reminders",
+    "Remind me 1 hour before a task is due.",
+    "Quiet hours",
+    "Pause push notifications from 22:00 to 07:00.",
+    "Workspace",
+    "New members",
+    "Tell me when someone joins the Harbor Studio workspace.",
+    "Billing alerts",
+    "Warn me 7 days before the card on file is charged."
+  ],
+  "designNotes": [
+    "orderly and easy to scan",
+    "narrow menu column, wide content column",
+    "white cards with soft borders on an off-white page",
+    "indigo marks what is on or current"
+  ],
+  "maxPromptChars": 5000
+}

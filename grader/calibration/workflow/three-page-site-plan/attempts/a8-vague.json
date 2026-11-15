@@ -1,0 +1,108 @@
+{
+  "goal": "Three-page portfolio site (home, projects, contact) sharing one stylesheet, reviewed, fixed and merged, with every page checked by screenshot",
+  "steps": [
+    {
+      "id": "plan",
+      "title": "Step 1",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [
+        "PLAN.md"
+      ],
+      "proof": "Make sure it works"
+    },
+    {
+      "id": "styles",
+      "title": "Step 2",
+      "owner": "worker-styles",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/styles.css"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Looks good"
+    },
+    {
+      "id": "home",
+      "title": "Step 3",
+      "owner": "worker-home",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/index.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Done"
+    },
+    {
+      "id": "projects",
+      "title": "Step 4",
+      "owner": "worker-projects",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/projects.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "It is finished"
+    },
+    {
+      "id": "contact",
+      "title": "Step 5",
+      "owner": "worker-contact",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/contact.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Make sure it works"
+    },
+    {
+      "id": "review",
+      "title": "Step 6",
+      "owner": "reviewer",
+      "dependsOn": [
+        "styles",
+        "home",
+        "projects",
+        "contact"
+      ],
+      "changes": [],
+      "kind": "review",
+      "reads": [
+        "site/**"
+      ],
+      "proof": "Looks good"
+    },
+    {
+      "id": "fix",
+      "title": "Step 7",
+      "owner": "coordinator",
+      "dependsOn": [
+        "review"
+      ],
+      "changes": [
+        "site/styles.css",
+        "site/index.html",
+        "site/projects.html",
+        "site/contact.html"
+      ],
+      "proof": "Done"
+    }
+  ],
+  "loops": []
+}

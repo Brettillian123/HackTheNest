@@ -1,0 +1,78 @@
+{
+  "login-card": {
+    "careful-haiku": {
+      "band": [86, 94],
+      "why": "Almost the same card in the same place, same layout, cream background and dark green button; you have to compare to see the heading is a size smaller, the links lighter and the shadow flatter. Cleanly built with main, a real form, labels tied to inputs and a submit button.",
+      "differences": [
+        "Heading 'Welcome back' a size smaller and sits closer to the FERNWAY label",
+        "'Forgot password?' and 'Create an account' links are regular weight, not bold",
+        "Card has almost no drop shadow (reference has a soft visible shadow)",
+        "Sign in button a darker green shade; spacing slightly tighter throughout",
+        "Native checkbox instead of the reference's light rounded checkbox"
+      ]
+    },
+    "lazy-haiku": {
+      "band": [63, 72],
+      "why": "Same card in the same spot with all the parts, but the look has drifted: everything is centred, the heading is a serif, there is a bright green stripe across the top and a mint gradient background. Built well enough (main, labels), though the button is type=button rather than a submit.",
+      "differences": [
+        "Brand, heading and subtitle centred instead of left-aligned",
+        "Heading in a serif typeface (Georgia, normal weight) instead of bold sans-serif",
+        "Thick green accent bar added across the top of the card",
+        "Brighter, more saturated green for brand, links and button instead of deep forest green",
+        "Mint green gradient page background instead of flat warm off-white",
+        "Divider line added above 'New to Fernway?'; button has a glow shadow"
+      ]
+    }
+  },
+  "profile-card": {
+    "careful-haiku": {
+      "band": [80, 88],
+      "why": "Clearly the same card: lavender page, white card, silhouette avatar, name, title, three stats between rules, full-width Follow button. Visible slips: the card sits higher on the page, its corners are much rounder, and the indigo is a darker, duller shade.",
+      "differences": [
+        "Card starts about 40px from the top instead of about 80px, so it sits noticeably higher",
+        "Much rounder card corners (28px) than the reference",
+        "Avatar and Follow button a darker, duller indigo instead of the vivid violet-blue",
+        "Avatar silhouette drawn smaller inside the circle",
+        "Card slightly shorter overall; spacing a little tighter"
+      ]
+    },
+    "lazy-haiku": {
+      "band": [46, 56],
+      "why": "Same subject and same pieces of text, but a different design: a deep purple gradient page, a gradient banner across the top of the card, an 'MR' initials avatar, uppercase stat labels, a pill button and an extra line of text nobody asked for. Built with plain divs, no main landmark.",
+      "differences": [
+        "Dark purple gradient page background instead of pale lavender",
+        "Purple gradient banner added across the top of the card",
+        "Avatar is serif 'MR' initials overlapping the banner instead of a person silhouette",
+        "Extra visible line 'Profile in the people directory of a design community app' under the button",
+        "Stat labels uppercase with vertical dividers between columns; pill-shaped purple button",
+        "Purple colour family instead of indigo/blue-violet; card narrower (360px)",
+        "No main landmark; plain div structure"
+      ]
+    }
+  },
+  "harbor-landing": {
+    "careful-openai": {
+      "band": [83, 91],
+      "why": "Same page top to bottom: white nav bar, centred hero with blue button, three white feature cards, dark footer. Differences are of degree: the headline is noticeably smaller, the subtitle wraps to two lines, and the content column is a little narrower. Cleanly built with header, nav, main, sections, articles and footer.",
+      "differences": [
+        "Hero headline clearly smaller (48px vs about 60px), so the hero feels less bold",
+        "Subtitle constrained to a narrower width and wraps onto two lines",
+        "Content column narrower: logo, nav and cards inset about 24px further from the edges",
+        "Feature card headings and nav text a size smaller, nav text greyer",
+        "Footer a slightly bluer navy and a little taller"
+      ]
+    },
+    "lazy-openai": {
+      "band": [44, 54],
+      "why": "Same text and same overall sections, but a different page: the hero is left-aligned in two columns with a made-up inbox illustration, the colours are teal-green rather than blue, the cards gain icons, and the dark footer becomes a light one. Structurally sound HTML, but it is not the reference's look.",
+      "differences": [
+        "Hero left-aligned in two columns instead of centred, with the headline wrapping to two lines",
+        "Decorative inbox illustration added on the right that the reference does not have",
+        "Teal/green colour family (button, headings) instead of blue button and near-black text",
+        "Footer light with a thin rule instead of a dark navy band",
+        "Icon tiles added above each feature card heading; logo mark added beside 'Harbor'",
+        "Nav bar has no white band; background is warm off-white throughout"
+      ]
+    }
+  }
+}

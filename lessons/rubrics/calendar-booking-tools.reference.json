@@ -1,0 +1,64 @@
+[
+  {
+    "name": "calendar_find_slots",
+    "title": "Find free slots",
+    "description": "Find meeting slots when every attendee is free. Use this first, before holding a slot. Dates are YYYY-MM-DD. Returns up to 10 slots, each with a slot id, start time and end time. Changes nothing.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "attendees": { "type": "array", "items": { "type": "string", "format": "email" }, "minItems": 1, "description": "Email addresses of everyone who must attend." },
+        "duration_minutes": { "type": "integer", "minimum": 15, "maximum": 240, "description": "Length of the meeting in minutes." },
+        "earliest_date": { "type": "string", "format": "date", "description": "First day to search." },
+        "latest_date": { "type": "string", "format": "date", "description": "Last day to search. Defaults to seven days after earliest_date." }
+      },
+      "required": ["attendees", "duration_minutes", "earliest_date"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": true }
+  },
+  {
+    "name": "calendar_hold_slot",
+    "title": "Hold a slot",
+    "description": "Hold one slot from calendar_find_slots so nobody else can take it. Use this when the user has picked a slot but not yet confirmed. The hold lasts 10 minutes and then expires. Returns a hold id.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "slot_id": { "type": "string", "description": "A slot id returned by calendar_find_slots." }
+      },
+      "required": ["slot_id"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": false, "destructiveHint": false }
+  },
+  {
+    "name": "calendar_confirm_booking",
+    "title": "Confirm a booking",
+    "description": "Turn a hold into a booked meeting. Use this only after the user confirms the slot, and before the hold expires. Takes a hold id, which starts with hold_. If the hold has expired, find and hold a new slot. Returns the booking id.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "hold_id": { "type": "string", "pattern": "^hold_", "description": "The id from calendar_hold_slot." },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120, "description": "Meeting title shown to attendees." },
+        "notify": { "type": "boolean", "default": true, "description": "Whether to email the invitation to attendees." }
+      },
+      "required": ["hold_id", "title"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": false, "destructiveHint": false }
+  },
+  {
+    "name": "calendar_cancel_booking",
+    "title": "Cancel a booking",
+    "description": "Cancel a booked meeting and tell every attendee. Use this only when the user clearly asks to cancel. Takes a booking id, which starts with evt_. This cannot be undone. Returns a confirmation.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "booking_id": { "type": "string", "pattern": "^evt_", "description": "The booking id from calendar_confirm_booking." },
+        "reason": { "type": "string", "maxLength": 300, "description": "Short reason included in the message to attendees." }
+      },
+      "required": ["booking_id"],
+      "additionalProperties": false
+    },
+    "annotations": { "readOnlyHint": false, "destructiveHint": true }
+  }
+]

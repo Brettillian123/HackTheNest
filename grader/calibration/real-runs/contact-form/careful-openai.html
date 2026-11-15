@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | Northfield Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:56px 24px;background:#edf1f3;color:#19282b;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center}
+.card{width:min(1040px,100%);background:#fff;border-radius:22px;padding:62px 64px;display:grid;grid-template-columns: .78fr 1.22fr;gap:76px;box-shadow:0 12px 40px rgba(28,49,54,.06)}
+.label{margin:0 0 22px;color:#52706f;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+h1{margin:0 0 19px;color:#182326;font-size:38px;line-height:1.12;letter-spacing:-1.1px}
+.intro{margin:0;color:#667477;font-size:15px;line-height:1.75}
+a{color:#187c78;text-decoration:none;font-weight:600}
+.rule{height:1px;margin:29px 0 27px;background:#e3e8e8}
+.detail{margin:0 0 21px}
+.detail dt{margin-bottom:7px;color:#728080;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.detail dd{margin:0;color:#283537;font-size:14px;line-height:1.5}
+h2{margin:0 0 26px;color:#19282b;font-size:23px;letter-spacing:-.4px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:19px 16px}
+.field{min-width:0}
+.full{grid-column:1/-1}
+.field label{display:block;margin-bottom:8px;color:#293638;font-size:13px;font-weight:700}
+input,select,textarea{display:block;width:100%;border:1px solid #d5dddd;border-radius:7px;background:#fff;color:#263537;font:14px Arial,sans-serif;padding:12px 13px;outline:none}
+input,select{height:44px}
+input::placeholder,textarea::placeholder{color:#a0aaaa;opacity:1}
+textarea{height:112px;resize:vertical;line-height:1.5}
+.consent{display:flex;align-items:flex-start;gap:10px;color:#6b7779;font-size:12px;line-height:1.55}
+.consent input{width:16px;height:16px;flex:0 0 16px;margin:1px 0 0;accent-color:#176d69}
+button{grid-column:1/-1;justify-self:start;border:0;border-radius:7px;background:#145f5c;color:#fff;padding:13px 23px;font-size:14px;font-weight:700;cursor:pointer}
+@media(max-width:700px){body{padding:24px 16px;align-items:flex-start}.card{grid-template-columns:1fr;gap:42px;padding:36px 28px;border-radius:17px}h1{font-size:34px}.label{margin-bottom:17px}}
+@media(max-width:420px){form{grid-template-columns:1fr}.full,button{grid-column:1}.card{padding:30px 22px}}
+</style>
+</head>
+<body>
+<main class="card">
+<section aria-labelledby="page-heading">
+<p class="label">Contact</p>
+<h1 id="page-heading">Let's talk about your project</h1>
+<p class="intro">Tell us what you are planning and we will reply within one working day. Prefer to talk? <a href="#">Call the studio during opening hours.</a></p>
+<div class="rule"></div>
+<dl>
+<div class="detail"><dt>Studio</dt><dd>24 Canal Street, Manchester M1 3HE</dd></div>
+<div class="detail"><dt>Phone</dt><dd>0161 496 0732</dd></div>
+<div class="detail"><dt>Hours</dt><dd>Monday to Friday, 9:00 to 17:30</dd></div>
+</dl>
+</section>
+<section aria-labelledby="form-heading">
+<h2 id="form-heading">Send us a message</h2>
+<form>
+<div class="field">
+<label for="name">Full name</label>
+<input id="name" name="name" type="text" placeholder="Jane Cooper" required>
+</div>
+<div class="field">
+<label for="email">Email</label>
+<input id="email" name="email" type="email" placeholder="jane@example.com" required>
+</div>
+<div class="field full">
+<label for="topic">Topic</label>
+<select id="topic" name="topic">
+<option value="" selected disabled></option>
+<option>New project enquiry</option>
+<option>Existing project</option>
+<option>Careers</option>
+<option>Press</option>
+</select>
+</div>
+<div class="field full">
+<label for="message">Message</label>
+<textarea id="message" name="message" placeholder="A few lines about your project, timeline and budget."></textarea>
+</div>
+<label class="consent full"><input type="checkbox" name="consent" required><span>I agree to Northfield Studio keeping my details so it can reply to this message.</span></label>
+<button type="submit">Send message</button>
+</form>
+</section>
+</main>
+</body>
+</html>

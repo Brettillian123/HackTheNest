@@ -21,6 +21,12 @@ export interface Expected {
     bands: Record<string, [number, number]>;
     /** Each list must score in strictly falling order. */
     order: string[][];
+    /**
+     * Attempts the grader still puts outside a person's band. Their bands
+     * (and any ordering that names them) are reported, not enforced, until
+     * a general rule brings them in. A band is never edited to fit.
+     */
+    pending?: string[];
   };
 }
 
@@ -57,17 +63,25 @@ export async function gradeSets(grader: Grader): Promise<SetReport[]> {
   return reports;
 }
 
-/** Every way the scores disagree with what a person expects. Empty means they agree. */
-export function checkExpected(reports: SetReport[], expected: Expected): string[] {
+/**
+ * Every way the scores disagree with what a person expects. Empty means they
+ * agree. With `which: 'pending'`, only the disagreements that involve an
+ * attempt listed as pending (reported, not enforced); by default, only the
+ * enforced ones.
+ */
+export function checkExpected(reports: SetReport[], expected: Expected, which: 'enforced' | 'pending' = 'enforced'): string[] {
   const problems: string[] = [];
   for (const report of reports) {
     const rules = expected[report.name];
     if (!rules) continue;
+    const pending = new Set(rules.pending ?? []);
+    const keep = (...names: string[]) => (which === 'pending') === names.some((n) => pending.has(n));
     const totals = new Map(report.attempts.map((a) => [a.name, a.result.total]));
     for (const [attempt, [low, high]] of Object.entries(rules.bands)) {
       const total = totals.get(attempt);
-      if (total === undefined) problems.push(`${report.name}/${attempt}: no such attempt`);
-      else if (total < low || total > high) {
+      if (total === undefined) {
+        if (which === 'enforced') problems.push(`${report.name}/${attempt}: no such attempt`);
+      } else if ((total < low || total > high) && keep(attempt)) {
         problems.push(`${report.name}/${attempt}: scored ${total}, expected ${low} to ${high}`);
       }
     }
@@ -76,14 +90,26 @@ export function checkExpected(reports: SetReport[], expected: Expected): string[
         const a = totals.get(chain[i]);
         const b = totals.get(chain[i + 1]);
         if (a === undefined || b === undefined) {
-          problems.push(`${report.name}: order names a missing attempt (${chain[i]}, ${chain[i + 1]})`);
-        } else if (!(a > b)) {
+          if (which === 'enforced') problems.push(`${report.name}: order names a missing attempt (${chain[i]}, ${chain[i + 1]})`);
+        } else if (!(a > b) && keep(chain[i], chain[i + 1])) {
           problems.push(`${report.name}: ${chain[i]} (${a}) should score above ${chain[i + 1]} (${b})`);
         }
       }
     }
   }
   return problems;
+}
+
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/** What cost the attempt points, as a list for the report. */
+function feedbackList(result: GradeResult): string {
+  const items = result.feedback ?? [];
+  if (result.error) return `<ul class="fb"><li>${escapeHtml(result.error)}</li></ul>`;
+  if (items.length === 0) return '';
+  return `<ul class="fb">${items.map((f) => `<li><b>-${f.points.toFixed(1)}</b> ${escapeHtml(f.message)}</li>`).join('')}</ul>`;
 }
 
 function cell(value: number | null): string {
@@ -105,7 +131,7 @@ function toHtml(reports: SetReport[], expected: Expected, problems: string[]): s
 <span class="total">${a.result.total.toFixed(1)}</span>
 <span class="band">${band ? `expected ${band[0]} to ${band[1]}` : 'no expectation set'}</span>
 <span class="parts">content ${cell(b.content)} · layout ${cell(b.layout)} · style ${cell(b.style)} · visual ${cell(b.visual)}</span>
-</figcaption></figure>`;
+${feedbackList(a.result)}</figcaption></figure>`;
         })
         .join('\n');
       return `<section><h2>${report.name}</h2><div class="grid"><figure class="goal">${img(report.goalPng)}<figcaption><b>goal</b><span class="total">100.0</span><span class="band">the target</span></figcaption></figure>
@@ -130,6 +156,7 @@ figcaption{padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px
 .total{font-size:22px;font-weight:700;text-align:right}
 .band,.parts{grid-column:1 / -1;color:#4b5563;font-size:12px}
 .ok{color:#047857}.warn{color:#b91c1c}
+.fb{grid-column:1 / -1;margin:6px 0 0;padding-left:18px;font-size:12px;color:#374151}.fb b{color:#b91c1c}
 </style></head><body><h1>Grader calibration</h1>
 <p>Grading rules version ${GRADER_VERSION}. Attempts are sorted best first. Check by eye: does each score match how close the attempt looks to the goal? A red border means the score is outside the band a person set for it.</p>
 ${summary}
@@ -148,6 +175,7 @@ function printTable(reports: SetReport[]): void {
           b.layout,
         ).padStart(6)} ${cell(b.style).padStart(5)}  ${cell(b.visual).padStart(6)}`,
       );
+      for (const f of a.result.feedback ?? []) console.log(`      -${f.points.toFixed(1).padStart(4)}  ${f.message}`);
     }
   }
 }

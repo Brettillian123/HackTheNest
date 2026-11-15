@@ -1,0 +1,19 @@
+{
+  "sections": [
+    { "name": "Add", "aliases": ["How to add", "Add the server", "Adding the server", "Install", "Installation", "Setup", "Set up"], "importance": "major", "mustContain": ["local"] },
+    { "name": "Check", "aliases": ["Check it works", "Check the server", "Verify", "Confirm", "Test it"], "importance": "normal" },
+    { "name": "Remove", "aliases": ["Removing", "Remove the server", "Uninstall", "Clean up"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the command to add the server", "anyOf": ["claude mcp add --transport stdio issue-search -- node tools/issue-search/server.js"], "importance": "critical", "inCode": true, "section": "Add" },
+    { "label": "the list command", "anyOf": ["claude mcp list"], "inCode": true, "section": "Check" },
+    { "label": "the /mcp command", "anyOf": ["/mcp"], "section": "Check" },
+    { "label": "the remove command", "anyOf": ["claude mcp remove issue-search"], "importance": "major", "inCode": true, "section": "Remove" },
+    { "label": "the local config file ~/.claude.json", "anyOf": ["~/.claude.json"] }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" },
+    { "label": "project scope on the add command", "pattern": "claude mcp add[^\\n]*--scope project" }
+  ],
+  "limits": { "maxWords": 200, "minWords": 40 }
+}

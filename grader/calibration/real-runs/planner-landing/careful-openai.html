@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightleaf — team planner</title>
+<style>
+:root{--green:#347b53;--deep:#183b2a;--mint:#eaf5ec;--pale:#f6faf6;--text:#27352d;--muted:#65736a;--line:#e1e9e2}
+*{box-sizing:border-box}
+html{scroll-}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,calc(100% - 48px));margin:auto}
+header{height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;font-size:21px;color:var(--deep);letter-spacing:-.5px}
+.brand-mark{display:inline-block;width:11px;height:11px;border-radius:3px 8px 3px 8px;background:#62a673;margin-right:9px;transform:rotate(-25deg)}
+nav{display:flex;gap:32px;align-items:center;font-size:14px;color:#44564a}
+nav a:hover{color:var(--green)}
+.hero{background:linear-gradient(110deg,#f1f8f0,#e6f2e6);overflow:hidden}
+.hero-inner{min-height:480px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:55px;padding-top:28px;padding-bottom:40px}
+h1{font-size:54px;line-height:1.08;letter-spacing:-2px;color:var(--deep);max-width:520px;margin:0 0 20px}
+.hero p{font-size:18px;color:#526458;max-width:490px;margin:0 0 28px}
+.button{display:inline-block;border:0;border-radius:8px;background:var(--green);color:white;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer}
+.button:hover{background:#286544}
+.art{position:relative;max-width:505px;width:100%;justify-self:end}
+.art svg{width:100%;height:auto;display:block}
+.rating{position:absolute;right:-5px;bottom:28px;background:#fff;padding:11px 16px;border-radius:10px;box-shadow:0 8px 24px #21472c20;font-size:13px;font-weight:700;color:#3d4d42}
+.rating span{color:#e8a83d;margin-right:5px}
+section{padding:75px 0}
+.section-heading{text-align:center;margin:0 auto 38px}
+.eyebrow{color:var(--green);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 8px}
+h2{font-size:34px;letter-spacing:-1px;color:var(--deep);line-height:1.2;margin:0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature{border:1px solid var(--line);border-radius:12px;padding:24px 23px;min-height:164px;background:white}
+.icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e9f4eb;color:var(--green);font-size:17px;font-weight:700;margin-bottom:15px}
+.feature h3{font-size:17px;margin:0 0 6px;color:var(--deep)}
+.feature p{margin:0;color:var(--muted);font-size:14px}
+.pricing{background:var(--pale)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{position:relative;border:1px solid var(--line);border-radius:13px;background:white;padding:27px 27px 25px}
+.plan.popular{border:2px solid var(--green);box-shadow:0 10px 28px #21472c12}
+.popular-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);white-space:nowrap;border-radius:20px;background:var(--green);color:#fff;font-size:12px;font-weight:700;padding:5px 13px}
+.plan h3{font-size:19px;color:var(--deep);margin:0 0 10px}
+.price{font-size:32px;font-weight:700;color:var(--deep);letter-spacing:-1px}
+.price small{font-size:14px;letter-spacing:0;font-weight:400;color:var(--muted)}
+.plan ul{padding:0;margin:19px 0 24px;list-style:none;color:#56655b;font-size:14px}
+.plan li{padding:7px 0;border-bottom:1px solid #eff3ef}
+.plan li:before{content:"✓";color:var(--green);font-weight:700;margin-right:9px}
+.plan .button{width:100%;text-align:center}
+.button-outline{background:white;color:var(--green);border:1px solid #b9d1bf}
+.button-outline:hover{color:white}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.quote{border:1px solid var(--line);border-radius:12px;padding:27px;background:#fff}
+.quote blockquote{font-size:18px;line-height:1.5;color:var(--deep);margin:0 0 21px}
+.quote cite{font-style:normal;font-size:14px;color:var(--muted)}
+.access{background:#edf6ee}
+.access-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:55px;align-items:start}
+.access-copy h2{margin-bottom:12px}
+.access-copy p{color:var(--muted);margin:0}
+form{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:#405248}
+input{font:14px Arial,sans-serif;border:1px solid #cfddd1;border-radius:7px;padding:12px;background:white;color:var(--text);min-width:0}
+input:focus{outline:2px solid #8eb99a;outline-offset:1px}
+form .button{align-self:end;height:43px}
+footer{padding:23px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+.footer-links{display:flex;gap:23px}
+@media(max-width:760px){
+ .wrap{width:min(100% - 36px,560px)}
+ header{height:auto;min-height:68px;gap:12px;align-items:flex-start;padding:20px 0;flex-direction:column}
+ nav{width:100%;gap:17px;flex-wrap:wrap;font-size:13px}
+ .hero-inner{grid-template-columns:1fr;gap:12px;padding-top:54px;padding-bottom:45px}
+ h1{font-size:42px}
+ .hero p{font-size:16px}
+ .art{justify-self:center;width:min(100%,440px);margin-top:5px}
+ section{padding:56px 0}
+ h2{font-size:29px}
+ .features-grid{grid-template-columns:1fr 1fr}
+ .plans{grid-template-columns:1fr;gap:22px}
+ .plan{padding:25px}
+ .quotes{grid-template-columns:1fr}
+ .access-layout{grid-template-columns:1fr;gap:25px}
+}
+@media(max-width:480px){
+ .features-grid{grid-template-columns:1fr}
+ form{grid-template-columns:1fr}
+ form .button{width:100%}
+ .footer-inner{gap:14px;align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+<a class="brand" href="#top"><span class="brand-mark"></span>Brightleaf</a>
+<nav aria-label="Main navigation">
+<a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#customers">Customers</a><a href="#blog">Blog</a><a href="#contact">Contact</a>
+</nav>
+</header>
+<main id="top">
+<div class="hero">
+<div class="wrap hero-inner">
+<div>
+<h1>Plan your week in five minutes</h1>
+<p>Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.</p>
+<a class="button" href="#contact">Start free trial</a>
+</div>
+<div class="art">
+<svg viewbox="0 0 520 340" role="img" aria-label="A sun above soft green hills">
+<circle cx="385" cy="91" r="47" fill="#f4c86e" />
+<path d="M0 232c59-51 120-68 183-42 48 20 68 65 133 63 67-2 113-72 204-53v140H0z" fill="#b9d8b7" />
+<path d="M0 272c77-52 143-51 217-10 65 36 112 35 164 6 55-31 92-37 139-18v90H0z" fill="#78ad80" />
+<path d="M0 307c81-27 131-29 209-8 75 20 158 15 228-7 33-10 60-12 83-6v54H0z" fill="#4f8e64" />
+<path d="M72 230c28-20 59-30 91-31m-21 74c43-14 78-14 113-3m84 21c30-15 57-22 91-17" fill="none" stroke="#e7f3e5" stroke-width="4" stroke-linecap="round" />
+<path d="M385 28v-13m0 152v-13m63-63h13m-152 0h13m107-44 10-10m-108 108 10-10m88 0 10 10m-108-108 10 10" stroke="#e8bb62" stroke-width="4" stroke-linecap="round" />
+</svg>
+<div class="rating"><span>★</span>4.9 from 2,000 teams</div>
+</div>
+</div>
+</div>
+<section id="features">
+<div class="wrap">
+<div class="section-heading"><p class="eyebrow">Features</p><h2>Why teams choose Brightleaf</h2></div>
+<div class="features-grid">
+<article class="feature"><div class="icon">▦</div><h3>Shared calendars</h3><p>See every project, meeting and deadline on one calendar your whole team can edit.</p></article>
+<article class="feature"><div class="icon">◷</div><h3>Smart reminders</h3><p>Get a nudge before a task slips, not after the deadline has passed.</p></article>
+<article class="feature"><div class="icon">✓</div><h3>Weekly reviews</h3><p>A five-minute summary every Friday shows what got done and what moved.</p></article>
+<article class="feature"><div class="icon">↗</div><h3>Time blocking</h3><p>Drag tasks onto your week and protect time for deep, focused work.</p></article>
+<article class="feature"><div class="icon">⤳</div><h3>Integrations</h3><p>Connect Slack, Gmail and GitHub so tasks arrive where you already plan.</p></article>
+<article class="feature"><div class="icon">▥</div><h3>Reports</h3><p>Spot overloaded teammates early with simple charts of planned hours.</p></article>
+</div>
+</div>
+</section>
+<section class="pricing" id="pricing">
+<div class="wrap">
+<div class="section-heading"><h2>Simple pricing</h2></div>
+<div class="plans">
+<article class="plan"><h3>Starter</h3><div class="price">$19 <small>/month</small></div><ul><li>Up to 5 people</li><li>3 projects</li><li>Email support</li></ul><a class="button button-outline" href="#contact">Choose Starter</a></article>
+<article class="plan popular"><div class="popular-label">Most popular</div><h3>Team</h3><div class="price">$49 <small>/month</small></div><ul><li>Up to 25 people</li><li>Unlimited projects</li><li>Priority support</li></ul><a class="button" href="#contact">Choose Team</a></article>
+<article class="plan"><h3>Business</h3><div class="price">$99 <small>/month</small></div><ul><li>Unlimited people</li><li>SSO and audit log</li><li>Dedicated manager</li></ul><a class="button button-outline" href="#contact">Choose Business</a></article>
+</div>
+</div>
+</section>
+<section id="customers">
+<div class="wrap">
+<div class="section-heading"><h2>What customers say</h2></div>
+<div class="quotes">
+<article class="quote"><blockquote>“Brightleaf cut our Monday planning meeting from an hour to ten minutes.”</blockquote><cite>— Priya Shah, Head of Operations, Northwind</cite></article>
+<article class="quote"><blockquote>“The Friday review alone is worth the price.”</blockquote><cite>— Tom Becker, Engineering Lead, Lumen Labs</cite></article>
+</div>
+</div>
+</section>
+<section class="access" id="contact">
+<div class="wrap access-layout">
+<div class="access-copy"><h2>Get early access</h2></div>
+<form>
+<div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name"></div>
+<div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email"></div>
+<div class="field"><label for="company">Company</label><input id="company" name="company" autocomplete="organization"></div>
+<div class="field"><label for="team-size">Team size</label><input id="team-size" name="team-size"></div>
+<button class="button" type="submit">Request access</button>
+</form>
+</div>
+</section>
+</main>
+<footer id="blog"><div class="wrap footer-inner"><span>© 2026 Brightleaf Inc.</span><div class="footer-links"><a href="#privacy">Privacy</a><a href="#terms">Terms</a></div></div></footer>
+</body>
+</html>

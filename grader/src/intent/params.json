@@ -1,0 +1,457 @@
+{
+  "shareKeyFacts": {
+    "value": 0.3044,
+    "min": 0.15,
+    "max": 0.33,
+    "meaning": "Within content, the share for key facts; at most a third, so pasting the facts alone never scores well.",
+    "neutral": 0.3
+  },
+  "shareNoExtras": {
+    "value": 0.2485,
+    "min": 0.1,
+    "max": 0.4,
+    "meaning": "Within the rest of content, the share for not adding much beyond what was asked (the rest is completeness).",
+    "neutral": 0.25
+  },
+  "limitKeyFacts": {
+    "value": 1.5435,
+    "min": 0,
+    "max": 3,
+    "meaning": "Limiter: content and layout are multiplied by key facts ^ this (a missing fact holds the whole works mark back).",
+    "neutral": 0.5
+  },
+  "limitCompleteness": {
+    "value": 0,
+    "min": 0,
+    "max": 3,
+    "meaning": "Limiter: content and layout are multiplied by completeness ^ this.",
+    "neutral": 0.5
+  },
+  "gateFloor": {
+    "value": 0.7939,
+    "min": 0.2,
+    "max": 1,
+    "meaning": "Gate: share of the style and visual marks kept when none of the asked-for parts is there (1 = no gate).",
+    "neutral": 0.5
+  },
+  "gateKnee": {
+    "value": 0.7851,
+    "min": 0.5,
+    "max": 1,
+    "meaning": "Gate: completeness from which style and visual count in full.",
+    "neutral": 0.8
+  },
+  "shareStructure": {
+    "value": 0.4443,
+    "min": 0.2,
+    "max": 0.8,
+    "meaning": "Within layout, the share for counts and order (the rest is arrangement).",
+    "neutral": 0.5
+  },
+  "shareReadability": {
+    "value": 0.3248,
+    "min": 0.2,
+    "max": 0.8,
+    "meaning": "Within style, the share for readability (the rest is colour).",
+    "neutral": 0.5
+  },
+  "gammaKeyFacts": {
+    "value": 1.0536,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on key facts: credit = value ^ gamma; above 1 every slip costs more.",
+    "neutral": 1
+  },
+  "gammaCompleteness": {
+    "value": 0.5264,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on completeness.",
+    "neutral": 1
+  },
+  "gammaStructure": {
+    "value": 0.8399,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on structure.",
+    "neutral": 1
+  },
+  "gammaNoExtras": {
+    "value": 0.8935,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on no extras.",
+    "neutral": 1
+  },
+  "gammaArrangement": {
+    "value": 1.15,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on arrangement.",
+    "neutral": 1
+  },
+  "gammaReadability": {
+    "value": 0.9338,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on readability.",
+    "neutral": 1
+  },
+  "gammaConsistency": {
+    "value": 0.9553,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on consistency.",
+    "neutral": 1
+  },
+  "gammaColour": {
+    "value": 1.3446,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Curve on colour.",
+    "neutral": 1
+  },
+  "vicinityEdge": {
+    "value": 0.9805,
+    "min": 0.94,
+    "max": 1,
+    "meaning": "Credit left at the end of the vicinity, for every comparison (exact is 1; nothing short of exact is free).",
+    "neutral": 0.98
+  },
+  "wordVicinity": {
+    "value": 0.101,
+    "min": 0,
+    "max": 0.25,
+    "meaning": "Share of a component's words that may be missing at no cost (the vicinity).",
+    "neutral": 0.1
+  },
+  "placeVicinity": {
+    "value": 0.0098,
+    "min": 0.003,
+    "max": 0.03,
+    "meaning": "Distance of a component's centre, as a share of the page, that costs nothing (a few pixels).",
+    "neutral": 0.01
+  },
+  "sizeVicinity": {
+    "value": 0.0498,
+    "min": 0.02,
+    "max": 0.1,
+    "meaning": "Size difference (natural log of the ratio; 0.05 is about 5%) that costs nothing.",
+    "neutral": 0.05
+  },
+  "hueVicinity": {
+    "value": 8.0293,
+    "min": 3,
+    "max": 15,
+    "meaning": "Hue difference in degrees that costs nothing (a barely different shade).",
+    "neutral": 8
+  },
+  "lightVicinity": {
+    "value": 0.031,
+    "min": 0.01,
+    "max": 0.08,
+    "meaning": "Lightness difference (0 to 1) that costs nothing.",
+    "neutral": 0.03
+  },
+  "wordClose": {
+    "value": 0.4735,
+    "min": 0.3,
+    "max": 0.8,
+    "meaning": "Share of a component's words that may be missing (said in other words) and still count as 'close'; all missing is 0.",
+    "neutral": 0.5
+  },
+  "wordEdge": {
+    "value": 0.8404,
+    "min": 0.6,
+    "max": 1,
+    "meaning": "Credit left for a component at the edge of 'close' wording (exact words is 1).",
+    "neutral": 0.85
+  },
+  "farMult": {
+    "value": 3.1751,
+    "min": 2,
+    "max": 6,
+    "meaning": "For every looks comparison: credit reaches 0 at this multiple of where 'close' ends.",
+    "neutral": 3
+  },
+  "typeMismatchCredit": {
+    "value": 0.7613,
+    "min": 0.2,
+    "max": 1,
+    "meaning": "Credit kept when a component's words are there but as a different kind of thing.",
+    "neutral": 0.6
+  },
+  "countCost": {
+    "value": 0.9913,
+    "min": 0.5,
+    "max": 3,
+    "meaning": "Credit lost per item off, as a share of the asked-for count (one card off of three at 1 costs a third).",
+    "neutral": 1
+  },
+  "orderShare": {
+    "value": 0.5269,
+    "min": 0.2,
+    "max": 0.8,
+    "meaning": "Within structure, the share for the top-level order (the rest is counts).",
+    "neutral": 0.5
+  },
+  "extrasFull": {
+    "value": 1.5116,
+    "min": 1.1,
+    "max": 2.5,
+    "meaning": "Amount of text and components, as a multiple of the reference's, that still costs nothing.",
+    "neutral": 1.5
+  },
+  "extrasZero": {
+    "value": 3.1788,
+    "min": 2,
+    "max": 6,
+    "meaning": "Multiple of the reference's amount at which no-extras credit reaches 0.",
+    "neutral": 3
+  },
+  "relationShare": {
+    "value": 0.4513,
+    "min": 0.2,
+    "max": 0.8,
+    "meaning": "Within arrangement, the share for side-by-side and stacked relations (the rest is placement).",
+    "neutral": 0.5
+  },
+  "placeClose": {
+    "value": 0.0756,
+    "min": 0.02,
+    "max": 0.15,
+    "meaning": "Distance of a component's centre from the reference's, as a share of the page, where 'close' ends.",
+    "neutral": 0.06
+  },
+  "placeEdge": {
+    "value": 0.8863,
+    "min": 0.6,
+    "max": 1,
+    "meaning": "Placement credit left at the edge of 'close' (exact is 1).",
+    "neutral": 0.88
+  },
+  "sizeClose": {
+    "value": 0.3066,
+    "min": 0.1,
+    "max": 0.5,
+    "meaning": "Size difference (natural log of the width or height ratio; 0.3 is about 1.35x) where 'close' ends.",
+    "neutral": 0.3
+  },
+  "sizeEdge": {
+    "value": 0.872,
+    "min": 0.6,
+    "max": 1,
+    "meaning": "Size credit left at the edge of 'close'.",
+    "neutral": 0.88
+  },
+  "contrastZero": {
+    "value": 1.4873,
+    "min": 1.1,
+    "max": 2.5,
+    "meaning": "Contrast ratio at which a text block counts as one full readability fault (WCAG 4.5, or 3 for large text, is no fault).",
+    "neutral": 1.5
+  },
+  "sizeFull": {
+    "value": 12.2628,
+    "min": 10,
+    "max": 14,
+    "meaning": "Font size in px from which text is readable (no fault).",
+    "neutral": 12
+  },
+  "sizeZero": {
+    "value": 7.9979,
+    "min": 6,
+    "max": 10,
+    "meaning": "Font size in px at which a text block counts as one full fault.",
+    "neutral": 8
+  },
+  "faultCost": {
+    "value": 0.1311,
+    "min": 0.05,
+    "max": 0.4,
+    "meaning": "Readability credit lost per full fault beyond the reference's own (low contrast, tiny, off the page, overlapping).",
+    "neutral": 0.15
+  },
+  "cvZero": {
+    "value": 0.2543,
+    "min": 0.1,
+    "max": 0.5,
+    "meaning": "Spread of like items' sizes, gaps or edges (relative) at which a group counts as fully untidy.",
+    "neutral": 0.25
+  },
+  "consGroupShare": {
+    "value": 0.495,
+    "min": 0.2,
+    "max": 0.8,
+    "meaning": "Within consistency, the share for like items being alike (the rest is typography).",
+    "neutral": 0.5
+  },
+  "familiesFree": {
+    "value": 2,
+    "min": 1,
+    "max": 3,
+    "meaning": "Type families (serif, sans, mono) a page may use at no cost.",
+    "neutral": 2
+  },
+  "sizesFree": {
+    "value": 6,
+    "min": 4,
+    "max": 9,
+    "meaning": "Distinct font sizes a page may use at no cost.",
+    "neutral": 6
+  },
+  "sizesZero": {
+    "value": 12,
+    "min": 9,
+    "max": 20,
+    "meaning": "Distinct font sizes at which the font-size check gives no credit.",
+    "neutral": 12
+  },
+  "headingRatio": {
+    "value": 1.2,
+    "min": 1.05,
+    "max": 1.6,
+    "meaning": "How much larger than the body text the largest heading must be to read as a heading.",
+    "neutral": 1.2
+  },
+  "neutralChroma": {
+    "value": 0.06,
+    "min": 0.04,
+    "max": 0.2,
+    "fixed": true,
+    "meaning": "(Fixed: it also picks which colours are emphasis when measuring, which a fit cannot see.)Chroma (0 to 1) below which a colour counts as neutral (white, grey, black)."
+  },
+  "hueClose": {
+    "value": 30.0396,
+    "min": 15,
+    "max": 45,
+    "meaning": "Hue difference in degrees where 'same family' ends (another shade of blue is inside it).",
+    "neutral": 30
+  },
+  "hueEdge": {
+    "value": 0.8794,
+    "min": 0.6,
+    "max": 1,
+    "meaning": "Colour credit left at the edge of the same hue family.",
+    "neutral": 0.88
+  },
+  "lightClose": {
+    "value": 0.1532,
+    "min": 0.05,
+    "max": 0.3,
+    "meaning": "Lightness difference (0 to 1) where 'similar lightness' ends.",
+    "neutral": 0.15
+  },
+  "lightEdge": {
+    "value": 0.883,
+    "min": 0.6,
+    "max": 1,
+    "meaning": "Colour credit left at the edge of similar lightness.",
+    "neutral": 0.88
+  },
+  "typeClassCredit": {
+    "value": 0.5,
+    "min": 0,
+    "max": 0.9,
+    "meaning": "Credit for body or heading text in another broad class (serif, sans, mono) than the reference's.",
+    "neutral": 0.5
+  },
+  "colourPageWeight": {
+    "value": 0.5,
+    "min": 0.2,
+    "max": 1,
+    "meaning": "Weight of the page background in the colour check (bands weigh their share of the page).",
+    "neutral": 0.5
+  },
+  "colourEmphasisWeight": {
+    "value": 0.3,
+    "min": 0.1,
+    "max": 0.6,
+    "meaning": "Total weight of the emphasis colours (buttons, links, highlights) in the colour check.",
+    "neutral": 0.3
+  },
+  "fit": {
+    "date": "2026-11-15",
+    "from": "train.json",
+    "prior": 4,
+    "train": {
+      "n": 35,
+      "before": {
+        "inBand": 18,
+        "meanD": 2.983
+      },
+      "after": {
+        "inBand": 20,
+        "meanD": 1.097
+      }
+    },
+    "leaveOneSetOut": {
+      "n": 35,
+      "neutral": {
+        "inBand": 18,
+        "meanD": 2.983
+      },
+      "fitted": {
+        "inBand": 18,
+        "meanD": 2.42
+      },
+      "perSet": {
+        "alert-stack": {
+          "n": 7,
+          "neutral": {
+            "inBand": 3,
+            "meanD": 2.786
+          },
+          "fitted": {
+            "inBand": 4,
+            "meanD": 1.629
+          }
+        },
+        "contact-form": {
+          "n": 7,
+          "neutral": {
+            "inBand": 4,
+            "meanD": 1.914
+          },
+          "fitted": {
+            "inBand": 5,
+            "meanD": 1.2
+          }
+        },
+        "feature-grid": {
+          "n": 7,
+          "neutral": {
+            "inBand": 4,
+            "meanD": 2.329
+          },
+          "fitted": {
+            "inBand": 4,
+            "meanD": 1.5
+          }
+        },
+        "kanban-board": {
+          "n": 7,
+          "neutral": {
+            "inBand": 4,
+            "meanD": 3.157
+          },
+          "fitted": {
+            "inBand": 2,
+            "meanD": 3.529
+          }
+        },
+        "leaderboard-table": {
+          "n": 7,
+          "neutral": {
+            "inBand": 3,
+            "meanD": 4.729
+          },
+          "fitted": {
+            "inBand": 3,
+            "meanD": 4.243
+          }
+        }
+      }
+    }
+  }
+}

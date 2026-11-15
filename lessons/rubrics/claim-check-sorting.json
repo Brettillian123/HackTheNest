@@ -1,0 +1,20 @@
+{
+  "sections": [
+    { "name": "Answer checked", "aliases": ["The answer", "Answer", "Original answer", "Answer under review"], "importance": "normal" },
+    { "name": "Claims", "aliases": ["Claim check", "Claims checked", "Verdicts", "Claim by claim"], "importance": "critical" },
+    { "name": "Sources", "aliases": ["Source", "References", "Links"], "importance": "major" },
+    { "name": "Summary", "aliases": ["Result", "Conclusion", "Overall", "Bottom line"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the verdict Supported", "anyOf": ["Supported"], "section": "Claims" },
+    { "label": "the verdict Wrong", "anyOf": ["Wrong"], "section": "Claims" },
+    { "label": "the verdict Unconfirmed", "anyOf": ["Unconfirmed"], "section": "Claims" },
+    { "label": "what list.sort() returns", "anyOf": ["returns None", "returns `None`"], "importance": "major", "section": "Claims" },
+    { "label": "the memory claim", "anyOf": ["memory"], "section": "Claims" },
+    { "label": "the Sorting Techniques link", "anyOf": ["https://docs.python.org/3/howto/sorting.html"], "importance": "major", "section": "Sources" }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 350, "minWords": 80 }
+}

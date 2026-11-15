@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration · Lumen Docs</title>
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<header class="topbar"><a href="../index.html" class="brand"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28" alt="Lumen logo">Lumen Docs</a><span class="version">v2.4</span></header>
+<div class="layout">
+<nav class="sidebar" aria-label="Documentation">
+<form class="search" role="search"><label for="q" class="visually-hidden">Search the docs</label><input id="q" type="search" placeholder="Search the docs"></form>
+<p class="sidebar-title">Getting started</p>
+<ul>
+<li><a href="../index.html">Overview</a></li>
+</ul>
+<p class="sidebar-title">Guide</p>
+<ul>
+<li><a href="pages/install.html">Install</a></li>
+<li><a href="config.html" class="current" aria-current="page">Configuration</a></li>
+<li><a href="deploy.html">Deploy</a></li>
+</ul>
+<p class="sidebar-title">More</p>
+<ul>
+<li><a href="pages/../reference.html">Reference</a></li>
+<li><a href="../changelog.html">Changelog</a></li>
+</ul>
+</nav>
+<main class="content">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a> / Guide / Configuration</nav>
+<h1>Configuration</h1>
+<p class="lead">Every Lumen site has one settings file, <code>lumen.config.json</code>, in its root folder.</p>
+<h2>A starting file</h2>
+<pre><code>{
+  "title": "My site",
+  "theme": "paper",
+  "output": "dist",
+  "baseUrl": "/"
+}</code></pre>
+<h2>Options you will change most</h2>
+<p><code>title</code> appears in the browser tab and the header. <code>theme</code> picks one of the built-in looks: <code>paper</code>, <code>slate</code> or <code>mono</code>. The full list is in the <a href="pages/../reference.html#config-file">reference</a>.</p>
+<h2>Profiles</h2>
+<p>Use a profile to change settings for one environment only, such as a staging server.</p>
+<pre><code>lumen build --profile staging</code></pre>
+<nav class="prevnext" aria-label="Previous and next"><a href="pages/install.html"><span>Previous</span>Install</a><a href="deploy.html"><span>Next</span>Deploy</a></nav>
+<footer class="footer"><p>Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</p></footer>
+</main>
+</div>
+</body>
+</html>

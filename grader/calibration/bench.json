@@ -1,0 +1,71 @@
+{
+  "_note": "Benchmark registry for `npm run bench`. See calibration/BENCH.md. Paths are relative to the grader folder. In goal/attempt templates {group} is the part of a band key before the slash and {attempt} the part after it; when a list is given, the first path that exists is used.",
+  "sets": [
+    {
+      "name": "pages-advanced",
+      "domain": "pages",
+      "split": "train",
+      "bands": "calibration/audit/pages-advanced.json",
+      "layout": { "kind": "files", "goal": "calibration/sets/{group}/goal.html", "attempt": "calibration/sets/{group}/{attempt}.html" }
+    },
+    {
+      "name": "pages-edge",
+      "domain": "pages",
+      "split": "train",
+      "bands": "calibration/audit/pages-edge.json",
+      "layout": { "kind": "files", "goal": "calibration/edge/pages/{group}/goal.html", "attempt": "calibration/edge/pages/{group}/{attempt}.html" },
+      "order": [
+        ["content-cards/swapped-two", "content-cards/missing-one"],
+        ["own-whole/no-icons", "own-whole/no-pricing"],
+        ["own-whole/no-pricing", "own-whole/lorem"],
+        ["own-whole/no-pricing", "own-whole/unstyled"]
+      ]
+    },
+    {
+      "name": "pages-review",
+      "domain": "pages",
+      "split": "train",
+      "bands": "calibration/review/pages/bands.json",
+      "layout": { "kind": "files", "goal": "calibration/review/pages/{group}/goal.html", "attempt": "calibration/review/pages/{group}/{attempt}.html" }
+    },
+    {
+      "name": "sites-edge",
+      "domain": "sites",
+      "split": "train",
+      "bands": "calibration/audit/sites-edge.json",
+      "layout": { "kind": "files", "goal": "calibration/edge/sites/{group}/goal", "attempt": "calibration/edge/sites/{group}/{attempt}" }
+    },
+    {
+      "name": "sites-advanced",
+      "domain": "sites",
+      "split": "train",
+      "bands": "calibration/audit/sites-advanced.json",
+      "layout": { "kind": "files", "goal": "calibration/sites/{group}/goal", "attempt": "calibration/sites/{group}/attempts/{attempt}" }
+    },
+    {
+      "name": "sites-review",
+      "domain": "sites",
+      "split": "train",
+      "bands": "calibration/review/sites/bands.json",
+      "layout": { "kind": "files", "goal": "calibration/review/sites/cases/{group}/goal", "attempt": "calibration/review/sites/cases/{group}/attempts/{attempt}" }
+    },
+    {
+      "name": "scenes-audit",
+      "domain": "scenes",
+      "split": "train",
+      "bands": "calibration/audit/scenes.json",
+      "layout": {
+        "kind": "files",
+        "goal": ["calibration/scenes/{group}/goal.js", "calibration/edge/scenes/{group}/goal.js"],
+        "attempt": ["calibration/scenes/{group}/attempts/{attempt}.js", "calibration/edge/scenes/{group}/{attempt}.js"]
+      }
+    },
+    {
+      "name": "scenes-review",
+      "domain": "scenes",
+      "split": "train",
+      "bands": "calibration/review/scenes/bands.json",
+      "layout": { "kind": "module", "module": "calibration/review/scenes/cases/index.ts", "export": "SETS" }
+    }
+  ]
+}

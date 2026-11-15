@@ -1,0 +1,20 @@
+{
+  "goal": "The users table stores first_name and last_name instead of full_name; done when reports/verify.md shows every row converted and the rollback was rehearsed",
+  "steps": [
+    { "id": "backup", "title": "Back up the users table", "owner": "dba", "dependsOn": [], "changes": ["backups/**"],
+      "proof": "backups/users-before-0007.sql exists and its row count matches SELECT COUNT(*) FROM users", "budget": { "toolCalls": 10 } },
+    { "id": "write-up", "title": "Write the up migration that splits full_name", "owner": "worker-up", "dependsOn": [], "changes": ["migrations/0007_split_name.up.sql"],
+      "proof": "migrations/0007_split_name.up.sql runs on an empty test database with exit code 0", "budget": { "toolCalls": 25 } },
+    { "id": "write-down", "title": "Write the down migration that restores full_name", "owner": "worker-down", "dependsOn": [], "changes": ["migrations/0007_split_name.down.sql"],
+      "proof": "migrations/0007_split_name.down.sql runs after the up file on a test database with exit code 0", "budget": { "toolCalls": 25 } },
+    { "id": "review", "title": "Review the up and down migrations", "owner": "reviewer", "kind": "review", "dependsOn": ["write-up", "write-down"], "changes": [],
+      "reads": ["migrations/**"], "proof": "Review report lists each issue with file and line, or says none found", "budget": { "toolCalls": 15 } },
+    { "id": "rehearse", "title": "Rehearse up then down on a staging copy", "owner": "dba", "dependsOn": ["review"], "changes": ["reports/rehearsal.md"],
+      "reads": ["migrations/**"], "proof": "reports/rehearsal.md shows the row count and a checksum of full_name are the same before up and after down", "budget": { "toolCalls": 15 } },
+    { "id": "apply", "title": "Apply the up migration to production", "owner": "dba", "dependsOn": ["rehearse", "backup"], "changes": ["reports/apply.md"],
+      "reads": ["migrations/0007_split_name.up.sql"], "proof": "reports/apply.md holds the migration tool output with exit code 0 and the run time", "budget": { "toolCalls": 10 } },
+    { "id": "verify", "title": "Verify the converted rows", "owner": "coordinator", "dependsOn": ["apply"], "changes": ["reports/verify.md"],
+      "proof": "reports/verify.md shows SELECT COUNT(*) FROM users WHERE first_name IS NULL returns 0; if not, the down file is run and its output saved", "budget": { "toolCalls": 10 } }
+  ],
+  "loops": []
+}

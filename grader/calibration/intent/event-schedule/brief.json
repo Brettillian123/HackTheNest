@@ -1,0 +1,109 @@
+{
+  "slug": "event-schedule",
+  "title": "Conference schedule",
+  "level": 3,
+  "category": "Marketing and content",
+  "brief": "We run Frontier UX Summit, a one-day design and engineering conference in Glasgow, and we need the day one schedule page. Dark navy header and hero with an amber accent: the event name as the main heading, a small 'Day one schedule' label, and the date (Thursday 18 March 2027), the venue (Kelvin Hall, Glasgow) and '8 sessions, 3 tracks' in one row, then a 'Get your ticket' button. Next, a proper schedule table with columns Time, Session, Speaker, Room and Track: ten rows including registration and lunch, which should look quieter than the talks. Each talk shows its track as a coloured pill: Design, Engineering or Research, each with its own colour. Then a 'Featured speakers' row of three cards with initials avatars, and a dark ticket band with the early bird price of £249. Professional, energetic, easy to scan.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "A dark navy header and hero with the heading 'Frontier UX Summit 2027' and the label 'Day one schedule'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "The hero shows the date 'Thursday 18 March 2027', venue 'Kelvin Hall, Glasgow' and '8 sessions, 3 tracks', plus a 'Get your ticket' button",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "A schedule table with header cells Time, Session, Speaker, Room and Track",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Ten rows in time order from 08:30 to 16:30, with the sessions, speakers and rooms as given",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "Registration and lunch rows look quieter than talk rows; talk titles are bold",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "Each talk's track is a rounded pill, with a different colour for Design, Engineering and Research",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "A 'Featured speakers' row of three cards: Ingrid Solberg, Ravi Menon and Grace Adeyemi, each with an initials avatar, role and short bio",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r8",
+      "text": "A dark ticket band with 'Join us in Glasgow', a 'Book your ticket' button and the price £249 with 'Early bird price until 31 January 2027'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r9",
+      "text": "Amber is used for the label, buttons and price on the dark areas",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r10",
+      "text": "The page uses header, main and footer, and headings in order",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r11",
+      "text": "Text is easy to read against its background, including inside the pills",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Frontier UX Summit 2027",
+    "Day one schedule",
+    "Thursday 18 March 2027",
+    "Kelvin Hall, Glasgow",
+    "8 sessions, 3 tracks",
+    "Get your ticket",
+    "Schedule",
+    "Registration and coffee",
+    "Opening keynote: Designing for trust",
+    "Shipping accessible components at scale",
+    "Interviewing users who don't want to talk",
+    "Lunch",
+    "Motion that explains, not decorates",
+    "Measuring what onboarding really costs",
+    "Design tokens without the drama",
+    "Panel: The future of product teams",
+    "Closing keynote: Small screens, big decisions",
+    "Featured speakers",
+    "Ingrid Solberg",
+    "Ravi Menon",
+    "Grace Adeyemi",
+    "Join us in Glasgow",
+    "Book your ticket",
+    "£249",
+    "Early bird price until 31 January 2027"
+  ],
+  "designNotes": [
+    "dark navy bands at the top and the ticket section",
+    "amber accent only on dark areas",
+    "soft coloured track pills",
+    "a crisp white table that is easy to scan"
+  ],
+  "maxPromptChars": 5000
+}

@@ -1,0 +1,18 @@
+{
+  "goal": "Version 2.4.0 of the package is published to npm; done when reports/publish.txt shows the published version and the approval is on file",
+  "steps": [
+    { "id": "version", "title": "Bump the version and write the changelog", "owner": "coordinator", "dependsOn": [], "changes": ["package.json", "CHANGELOG.md"],
+      "proof": "package.json says 2.4.0 and CHANGELOG.md has a 2.4.0 section listing every merged change", "budget": { "toolCalls": 10 } },
+    { "id": "tests", "title": "Run the full test suite", "owner": "worker-tests", "dependsOn": ["version"], "changes": ["reports/tests.txt"],
+      "proof": "reports/tests.txt holds the npm test output with 0 failures", "budget": { "minutes": 15 } },
+    { "id": "docs", "title": "Update the docs for 2.4.0", "owner": "worker-docs", "dependsOn": ["version"], "changes": ["docs/**"], "reads": ["CHANGELOG.md"],
+      "proof": "npm run docs:build succeeds and every new option in CHANGELOG.md appears in docs/", "budget": { "minutes": 20 } },
+    { "id": "build", "title": "Build the package", "owner": "worker-build", "dependsOn": ["version"], "changes": ["dist/**"],
+      "proof": "npm run build exits 0 and npm pack --dry-run lists dist/index.js", "budget": { "minutes": 5 } },
+    { "id": "approve", "title": "Approve the release", "owner": "maintainer", "kind": "decision", "dependsOn": ["tests", "docs", "build"], "changes": ["reports/approval.md"],
+      "reads": ["reports/tests.txt", "docs/**", "dist/**"], "proof": "reports/approval.md records yes or no, the approver and the date", "budget": { "minutes": 10 } },
+    { "id": "publish", "title": "Publish to npm", "owner": "coordinator", "dependsOn": ["approve"], "changes": ["reports/publish.txt"],
+      "proof": "reports/publish.txt holds the npm publish output and npm view shows version 2.4.0", "budget": { "minutes": 5 } }
+  ],
+  "loops": []
+}

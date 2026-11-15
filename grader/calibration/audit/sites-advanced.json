@@ -1,0 +1,50 @@
+{
+  "docs": {
+    "rebuild-detailed": { "band": [92, 100], "why": "Rebuilt from scratch with other class names, a grid layout and css/main.css, but to the eye the same six pages with every link working and the same weight." },
+    "rebuild-vague": { "band": [35, 50], "why": "A docs site for Lumen with the six pages and working links, but its own green top-nav look, no sidebar, breadcrumbs or prev/next, thinner content and pages at the root instead of guide/." },
+    "near": { "band": [90, 99], "why": "The goal with a sidebar 12 px wider, headings 1 px bigger, a slightly different highlight and two changed words: you only notice by flipping." },
+    "one-page-wrong": { "band": [72, 85], "why": "Five pages perfect; the Configuration page has its sidebar dropped under the content, one obvious layout bug." },
+    "nav-incomplete": { "band": [50, 65], "why": "All six pages built, but nothing links to Deploy or Changelog, so a third of the docs cannot be reached." },
+    "links-rotten": { "band": [50, 65], "why": "Looks perfect, but about 28% of internal links (17 of 60) go to files that do not exist; every page is still reachable some way." },
+    "heavy": { "band": [55, 70], "why": "Looks and works perfectly, but every page inlines its own CSS plus an unused framework and a big bitmap: ten times the goal's size." },
+    "sloppy": { "band": [60, 75], "why": "Looks perfect and works, but no lang, no alt, unlabelled search box, h1 to h4 skips, center and font tags, duplicate ids, inline styles and unclosed tags." },
+    "half-built": { "band": [25, 40], "why": "Only the home and Install pages exist (right as far as they go); four of six pages missing and their nav links dead." }
+  },
+  "shop": {
+    "rebuild-detailed": { "band": [88, 97], "why": "Rebuilt from scratch with other names and flexbox; same shop to the eye, but the buttons are a few px shorter and the menu sits slightly higher, visible when flipping." },
+    "rebuild-vague": { "band": [35, 50], "why": "A tea shop with five working pages, but an orange theme, circles for pictures, four-column grids, no filters, no basket table or opening hours, own wording and other file names." },
+    "near": { "band": [90, 98], "why": "The goal with a slightly wider grid gap, a shorter hero, rounder buttons and two changed words." },
+    "one-page-wrong": { "band": [72, 85], "why": "Four pages perfect; the catalogue grid collapsed to one column of huge cards, one obvious layout bug." },
+    "nav-incomplete": { "band": [48, 62], "why": "All five pages built, but nothing links to Basket or Contact, so a shopper can never reach checkout." },
+    "links-rotten": { "band": [45, 62], "why": "Looks perfect, but about 31% of internal links are dead, including every product card on the catalogue page." },
+    "heavy": { "band": [55, 70], "why": "Looks and works perfectly, but each page inlines both stylesheets plus an unused framework and a big bitmap: ten times the goal's size." },
+    "sloppy": { "band": [60, 75], "why": "Looks perfect and works, but no lang, no alt, form fields with no labels, h1 to h4 skips, center and font tags, duplicate ids, inline styles and unclosed tags." },
+    "half-built": { "band": [25, 40], "why": "Only the home page and catalogue exist; product, basket and contact are missing and every card and nav link to them is dead." }
+  },
+  "order": {
+    "docs": [
+      ["rebuild-detailed", "one-page-wrong"],
+      ["near", "one-page-wrong"],
+      ["near", "heavy"],
+      ["near", "sloppy"],
+      ["one-page-wrong", "nav-incomplete"],
+      ["one-page-wrong", "links-rotten"],
+      ["nav-incomplete", "half-built"],
+      ["links-rotten", "half-built"],
+      ["heavy", "half-built"],
+      ["sloppy", "half-built"]
+    ],
+    "shop": [
+      ["rebuild-detailed", "one-page-wrong"],
+      ["near", "one-page-wrong"],
+      ["near", "heavy"],
+      ["near", "sloppy"],
+      ["one-page-wrong", "nav-incomplete"],
+      ["one-page-wrong", "links-rotten"],
+      ["nav-incomplete", "half-built"],
+      ["links-rotten", "half-built"],
+      ["heavy", "half-built"],
+      ["sloppy", "half-built"]
+    ]
+  }
+}

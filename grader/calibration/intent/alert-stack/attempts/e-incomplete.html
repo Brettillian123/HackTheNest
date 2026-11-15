@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<style>
+  body { margin: 0; background: #edf1f6; font-family: system-ui, sans-serif; color: #1e293b; }
+  main { max-width: 640px; margin: 60px auto; padding: 0 20px; }
+  h1 { font-size: 28px; margin: 0 0 6px; }
+  .sub { margin: 0 0 26px; color: #556070; }
+  ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  li { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 10px; border-left: 5px solid; }
+  li div { flex: 1; }
+  h2 { font-size: 15px; margin: 0 0 3px; }
+  p.t { margin: 0; font-size: 14px; }
+  button { background: none; border: 0; text-decoration: underline; color: inherit; font-size: 13px; cursor: pointer; }
+  .s { background: #e7f6ec; border-color: #22a35a; color: #155c33; }
+  .i { background: #e6f0fd; border-color: #2b74d8; color: #1a4280; }
+  .w { background: #fff4dc; border-color: #e09a12; color: #6b4708; }
+  .e { background: #fde8e7; border-color: #d93a30; color: #7a1d17; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Notifications</h1>
+  <p class="sub">4 new messages</p>
+  <ul>
+    <li class="e"><div><h2>Sync failed</h2><p class="t">We could not reach Google Drive. Your last 3 changes are saved on this device.</p></div><button type="button">Retry</button></li>
+    <li class="w"><div><h2>Storage almost full</h2><p class="t">You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</p></div><button type="button">Upgrade plan</button></li>
+    <li class="i"><div><h2>New version available</h2><p class="t">Version 4.2 adds shared workspaces and faster PDF exports.</p></div><button type="button">See what's new</button></li>
+    <li class="s"><div><h2>Payment successful</h2><p class="t">Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</p></div><button type="button">View invoice</button></li>
+  </ul>
+</main>
+</body>
+</html>

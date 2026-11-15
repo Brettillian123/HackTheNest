@@ -1,0 +1,97 @@
+{
+  "goal": "parse_price in src/price.py passes all 20 visible tests within 4 fix rounds, then is checked once on the 8 held-out tests",
+  "steps": [
+    {
+      "id": "load-tests",
+      "title": "Load and list the visible tests",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [],
+      "reads": [
+        "tests/visible/**"
+      ],
+      "proof": "`pytest tests/visible --collect-only` lists 20 tests",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "build",
+      "title": "Write the first parse_price",
+      "owner": "builder",
+      "dependsOn": [
+        "load-tests"
+      ],
+      "changes": [
+        "src/price.py"
+      ],
+      "reads": [
+        "tests/visible/**"
+      ],
+      "proof": "`python -c \"from src.price import parse_price\"` runs without error",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "grade",
+      "title": "Run the visible tests",
+      "owner": "builder",
+      "dependsOn": [
+        "build",
+        "fix"
+      ],
+      "changes": [],
+      "reads": [
+        "tests/visible/**"
+      ],
+      "proof": "`pytest tests/visible` output saved with the round number and pass count",
+      "budget": {
+        "minutes": 2
+      }
+    },
+    {
+      "id": "fix",
+      "title": "Fix the failing cases",
+      "owner": "builder",
+      "dependsOn": [
+        "grade"
+      ],
+      "changes": [
+        "src/price.py"
+      ],
+      "proof": "Fewer visible tests fail than in the previous round",
+      "budget": {
+        "toolCalls": 20
+      }
+    },
+    {
+      "id": "held-out-check",
+      "title": "Run the held-out tests once",
+      "owner": "coordinator",
+      "dependsOn": [
+        "grade",
+        "fix"
+      ],
+      "changes": [],
+      "reads": [
+        "tests/held_out/**"
+      ],
+      "proof": "`pytest tests/held_out` output with the pass count out of 8",
+      "budget": {
+        "minutes": 5
+      }
+    }
+  ],
+  "loops": [
+    {
+      "id": "fix-loop",
+      "steps": [
+        "grade",
+        "fix"
+      ],
+      "until": "All 20 visible tests pass, or the pass count has not risen for two rounds",
+      "heldOut": "The 8 tests in tests/held_out/, run once after the loop by the coordinator"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 920,
+  "components": [
+    {
+      "id": "c1",
+      "type": "hero",
+      "name": "the hero",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 520,
+        "h": 920
+      },
+      "blocks": [
+        0,
+        1,
+        11,
+        12,
+        15,
+        19,
+        21,
+        22,
+        23,
+        25,
+        26,
+        37
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": [
+        15
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "form",
+      "name": "the sign-up form",
+      "rect": {
+        "x": 700,
+        "y": 134,
+        "w": 400,
+        "h": 652
+      },
+      "blocks": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        16,
+        17,
+        18,
+        20,
+        24,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "children": [],
+      "importance": "critical",
+      "keyTexts": [
+        33,
+        35
+      ]
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "scale": "100 identical in effect; 85-95 right, one or two small things; 70-85 right with several flaws or one obvious one; 50-70 recognisably the document asked for with a big piece wrong or missing; 25-50 some of it; 5-25 little; 0-5 empty or unrelated.",
+  "written": "Before grading. Each band is a human reader's judgement of the attempt against the brief.",
+  "bands": [
+    { "challenge": "agent-instructions", "attempt": "excellent-reworded.md", "band": [90, 100], "why": "Every fact, folder and rule is there under different headings and with a code block instead of a table; an agent would work exactly the same." },
+    { "challenge": "agent-instructions", "attempt": "good-two-slips.md", "band": [82, 94], "why": "Complete and well laid out, but it never says Node 20 and the build command is written as plain text, not code." },
+    { "challenge": "agent-instructions", "attempt": "thin.md", "band": [20, 38], "why": "Only install, dev and test; no layout, rules, lint, build or testing routine, and no real description." },
+    { "challenge": "agent-instructions", "attempt": "long-winded.md", "band": [58, 72], "why": "All the content is right, but it is about twice the word budget, repeats one sentence five times and is padded with filler." },
+    { "challenge": "agent-instructions", "attempt": "wrong-commands.md", "band": [28, 42], "why": "The right shape, but every command is yarn, the folders and Node version are wrong; an agent following it would break the project." },
+    { "challenge": "agent-instructions", "attempt": "placeholders.md", "band": [18, 32], "why": "Install, dev and test are there, but the description, layout, rules, lint and build are TODO/TBD placeholders, plus a fake API key line." },
+    { "challenge": "agent-instructions", "attempt": "missing-rules.md", "band": [70, 82], "why": "Good everywhere else, but the whole Rules section is missing: nothing about dist/, dependencies or .env, which is one obvious flaw for agent instructions." },
+
+    { "challenge": "release-notes-skill", "attempt": "excellent-reworded.md", "band": [90, 100], "why": "Same procedure, format and guardrails in other words; front matter valid; the skill would behave the same." },
+    { "challenge": "release-notes-skill", "attempt": "good-two-slips.md", "band": [80, 92], "why": "Right throughout, but the description is over the 300-character limit and it never gives the command to find the last tag." },
+    { "challenge": "release-notes-skill", "attempt": "no-front-matter.md", "band": [50, 66], "why": "The body is fine but there is no front matter at all, so the skill has no name or description and would never be picked up." },
+    { "challenge": "release-notes-skill", "attempt": "thin.md", "band": [12, 28], "why": "Valid front matter but the body is one sentence: no tag command, no format, no categories, no rules." },
+    { "challenge": "release-notes-skill", "attempt": "placeholders.md", "band": [5, 20], "why": "Invalid name, a TODO description, and the steps and format are placeholders; only a heading skeleton and one rule are real." },
+    { "challenge": "release-notes-skill", "attempt": "missing-output-format.md", "band": [64, 78], "why": "Front matter and steps are right, but the entry format (version heading and category headings) is missing, which is a big part of the skill." },
+    { "challenge": "release-notes-skill", "attempt": "wrong-commands.md", "band": [22, 38], "why": "Recognisably a release-notes skill, but the commands, file, categories and format are all wrong and it tells the agent to push tags." },
+
+    { "challenge": "order-lookup-tools", "attempt": "excellent-reworded.json", "band": [90, 100], "why": "All three tools and parameters with the right types and flags and good descriptions; wrapped in a tools object with input_schema, which is equivalent." },
+    { "challenge": "order-lookup-tools", "attempt": "wrong-types.json", "band": [60, 75], "why": "All tools present and described, but limit is a string, track_shipment's order_id is a number and not required, and status is wrongly required." },
+    { "challenge": "order-lookup-tools", "attempt": "missing-descriptions.json", "band": [42, 58], "why": "Names, parameters and types are right but there is not one description, so a model cannot tell when to use which tool." },
+    { "challenge": "order-lookup-tools", "attempt": "missing-tool.json", "band": [55, 68], "why": "Two tools are exactly right but track_shipment is missing entirely: a third of the server." },
+    { "challenge": "order-lookup-tools", "attempt": "fenced-camel-case.json", "band": [62, 76], "why": "The content is right, but every tool and parameter name is camelCase instead of the names asked for, and it is wrapped in a code fence." },
+    { "challenge": "order-lookup-tools", "attempt": "invalid-json.json", "band": [0, 10], "why": "A trailing comma makes the JSON unreadable, so no client could load any tool; it is also missing track_shipment." },
+    { "challenge": "order-lookup-tools", "attempt": "placeholders.json", "band": [20, 38], "why": "Tool names and most parameters are right, but every description is TODO, TBD or an insert-here placeholder, and status is missing." }
+  ]
+}

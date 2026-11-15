@@ -1,0 +1,17 @@
+# Only package files, tsconfig.json, src/ and service/ go into the image.
+**/node_modules
+.git
+.gitignore
+.env
+.env.*
+**/.env
+**/.env.*
+*.log
+test
+calibration
+README.md
+Dockerfile
+.dockerignore
+.vscode
+.idea
+coverage

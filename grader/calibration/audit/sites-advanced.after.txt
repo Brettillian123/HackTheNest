@@ -1,0 +1,116 @@
+
+docs  (goal prepared in 1602 ms)
+  goal vs itself: 100.0 ok  (1348 ms)
+  half-built        band  25-40  total  28.3  w/e/l 26.7 / 100.0 / 33.3  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  ok  (496 ms)
+      links: 2/30 found, score 6.7, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, changelog.html 0, guide/config.html 0, guide/deploy.html 0, guide/install.html 100, reference.html 0
+      - 17.9  The changelog page was never made
+      - 17.9  The config page was never made
+      - 17.9  The deploy page was never made
+      - 17.9  The reference page was never made
+  heavy             band  55-70  total  66.4  w/e/l 100.0 / 3.9 / 100.0  eng: eff 3.9 a11y 100.0 clean 100.0 by efficiency  ok  (1925 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, changelog.html 100, guide/config.html 100, guide/deploy.html 100, guide/install.html 100, reference.html 100
+      - 33.6  The site is 10 times the size of the goal
+  links-rotten      band  50-65  total  68.4  w/e/l 91.7 / 100.0 / 100.0  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 3.4  (1114 ms)
+      links: 20/30 found, score 66.7, broken 17, orphaned [], dead factor 0.729  pages: index.html 100, changelog.html 100, guide/config.html 100, guide/deploy.html 100, guide/install.html 100, reference.html 100
+      - 31.6  17 links are broken: the home page's "Deploy" link leads to guide/deploy.htm, which is not in the site; the home page's "Deploy Build your site and ..." link leads to guide/deploy.htm, which is not in the site; the changelog page's "Install" link leads to guides/install.html, which is not in the site; ...
+  nav-incomplete    band  50-65  total  69.4  w/e/l 67.1 / 100.0 / 76.3  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 4.4  (1134 ms)
+      links: 12/30 found, score 40.0, broken 0, orphaned [changelog.html, guide/deploy.html], dead factor 1.000  pages: index.html 99, changelog.html 33, guide/config.html 98, guide/deploy.html 34, guide/install.html 98, reference.html 99
+      - 14.1  Nothing links to the deploy page, so visitors cannot reach it
+      - 14.0  Nothing links to the changelog page, so visitors cannot reach it
+      -  0.2  On the changelog page: the link 'Changelog' is missing
+      -  0.1  On the changelog page: the text 'Deploy' is missing
+  near              band  90-99  total  98.8  w/e/l 99.6 / 100.0 / 96.5  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  ok  (1378 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 98, changelog.html 98, guide/config.html 98, guide/deploy.html 99, guide/install.html 99, reference.html 98
+      -  0.1  On the changelog page: 8 things sit about 10 pixels too far right
+  one-page-wrong    band  72-85  total  93.0  w/e/l 93.5 / 100.0 / 91.6  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 8.0  (1271 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, changelog.html 100, guide/config.html 79, guide/deploy.html 100, guide/install.html 100, reference.html 100
+      -  3.7  On the config page: 12 things sit about 240 pixels too far left
+      -  2.1  On the config page: 1 boxes sit about 930 pixels too low
+      -  0.4  On the config page: the dark blue section near the top is slightly out of place
+      -  0.1  On the config page: the text 'Deploy' sits about 430 pixels too low and about 930 pixels too far left
+  rebuild-detailed  band  92-100 total  99.2  w/e/l 99.0 / 100.0 / 100.0  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  ok  (1103 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, changelog.html 99, guide/config.html 99, guide/deploy.html 99, guide/install.html 99, reference.html 100
+  rebuild-vague     band  35-50  total  35.3  w/e/l 38.9 / 100.0 / 24.6  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  ok  (1401 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 24, changelog.html 24, guide/config.html=configuration.html 20, guide/deploy.html=deploy.html 22, guide/install.html=install.html 20, reference.html 20
+      -  1.0  On the config page: the box with '{ "title": "My site", "theme": "paper...' is missing
+      -  1.0  On the config page: the text 'title appears in the browser tab and ...' is missing
+      -  0.9  On the changelog page: the text 'Added deploy profiles. The serve comm...' is missing
+      -  0.9  On the deploy page: the text 'Copy the dist folder to your host. Wi...' is missing
+  sloppy            band  60-75  total  80.4  w/e/l 98.8 / 46.6 / 99.2  eng: eff 100.0 a11y 55.0 clean 46.6 by cleanCode  LENIENT by 5.4  (1131 ms)
+      links: 30/30 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 99, changelog.html 99, guide/config.html 99, guide/deploy.html 99, guide/install.html 99, reference.html 99
+      -  1.1  On the changelog page: 11 ids are used on more than one element; each id must be unique ("item")
+      -  1.1  On the install page: 8 ids are used on more than one element; each id must be unique ("item")
+      -  1.1  On the reference page: 8 ids are used on more than one element; each id must be unique ("item")
+      -  1.0  On the config page: 5 ids are used on more than one element; each id must be unique ("item")
+
+shop  (goal prepared in 839 ms)
+  goal vs itself: 100.0 ok  (1096 ms)
+  half-built        band  25-40  total  34.4  w/e/l 32.5 / 100.0 / 40.0  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  ok  (508 ms)
+      links: 2/20 found, score 10.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, basket.html 0, catalogue.html 100, contact.html 0, product.html 0
+      - 21.9  The basket page was never made
+      - 21.9  The contact page was never made
+      - 21.9  The product page was never made
+  heavy             band  55-70  total  65.9  w/e/l 100.0 / 2.7 / 100.0  eng: eff 2.7 a11y 100.0 clean 100.0 by efficiency  ok  (1060 ms)
+      links: 20/20 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, basket.html 100, catalogue.html 100, contact.html 100, product.html 100
+      - 33.9  The site is 10 times the size of the goal
+      -  0.2  Pages load about 1.2 times slower than the goal's on a budget phone on slow 3G
+  links-rotten      band  45-62  total  66.1  w/e/l 92.5 / 100.0 / 100.0  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 4.1  (1047 ms)
+      links: 14/20 found, score 70.0, broken 23, orphaned [], dead factor 0.700  pages: index.html 100, basket.html 100, catalogue.html 100, contact.html 100, product.html 100
+      - 33.9  23 links are broken: the home page's "Basket" link leads to basket.htm, which is not in the site; the basket page's "Kettle & Leaf" link leads to index.htm, which is not in the site; the basket page's "Home" link leads to index.htm, which is not in the site; ...
+  nav-incomplete    band  48-62  total  63.6  w/e/l 60.9 / 100.0 / 71.8  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 1.6  (1007 ms)
+      links: 6/20 found, score 30.0, broken 0, orphaned [basket.html, contact.html], dead factor 1.000  pages: index.html 97, basket.html 34, catalogue.html 98, contact.html 33, product.html 97
+      - 16.7  Nothing links to the basket page, so visitors cannot reach it
+      - 16.6  Nothing links to the contact page, so visitors cannot reach it
+      -  0.2  On the product page: the text 'Basket' is missing
+      -  0.2  On the product page: the text 'Contact' is missing
+  near              band  90-98  total  99.2  w/e/l 99.6 / 100.0 / 98.1  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 1.2  (948 ms)
+      links: 20/20 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 99, basket.html 100, catalogue.html 98, contact.html 99, product.html 100
+      -  0.2  On the catalogue page: 4 things sit about 10 pixels too low
+      -  0.1  On the contact page: the text 'Questions about an order or a tea? Se...' has different words from the goal's: missing 'one'; has 'a' where the goal does not
+      -  0.1  On the home page: 3 boxes sit about 10 pixels too high
+  one-page-wrong    band  72-85  total  85.5  w/e/l 86.8 / 100.0 / 81.8  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 0.5  (1130 ms)
+      links: 20/20 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, basket.html 100, catalogue.html 57, contact.html 100, product.html 100
+      -  1.3  On the catalogue page: an extra image near the bottom that the goal does not have
+      -  1.3  On the catalogue page: the dark green section near the bottom is missing
+      -  1.2  On the catalogue page: the image near the middle is missing
+      -  1.2  On the catalogue page: the image near the middle right is missing
+  rebuild-detailed  band  88-97  total  99.3  w/e/l 100.0 / 100.0 / 97.4  eng: eff 100.0 a11y 100.0 clean 100.0 by efficiency  LENIENT by 2.3  (1029 ms)
+      links: 20/20 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 99, basket.html 99, catalogue.html 100, contact.html 98, product.html 99
+      -  0.1  On the basket page: the button 'Basket' is taller than the goal's (about 31 pixels high instead of 25)
+      -  0.1  On the contact page: the button 'Contact' is taller than the goal's (about 31 pixels high instead of 25)
+      -  0.1  On the contact page: the button 'Send message' is less tall than the goal's (about 42 pixels high instead of 48)
+      -  0.1  On the product page: the button 'Add to basket' is less tall than the goal's (about 42 pixels high instead of 48)
+  rebuild-vague     band  35-50  total  36.7  w/e/l 42.7 / 98.1 / 28.1  eng: eff 100.0 a11y 98.1 clean 100.0 by accessibility  ok  (1179 ms)
+      links: 18/20 found, score 90.0, broken 2, orphaned [], dead factor 0.946  pages: index.html 30, basket.html=cart.html 29, catalogue.html=products.html 33, contact.html 24, product.html 23
+      -  2.1  2 links are broken: the home page's "Darjeeling First Flush" link opens the product page instead of the catalogue page; the home page's "Sencha Kyoto" link opens the product page instead of the catalogue page
+      -  1.2  On the contact page: the dark green section near the bottom is missing
+      -  1.1  On the catalogue page: the image near the middle is missing
+      -  1.1  On the product page: the text 'Bright, floral spring tea from the Ca...' has different words from the goal's: missing 'bright', 'from', 'the' and 15 more; has 'delicate', 'black', 'harvested' and 1 more where the goal does not
+  sloppy            band  60-75  total  79.2  w/e/l 100.0 / 40.6 / 100.0  eng: eff 100.0 a11y 40.6 clean 47.1 by accessibility  LENIENT by 4.2  (1026 ms)
+      links: 20/20 found, score 100.0, broken 0, orphaned [], dead factor 1.000  pages: index.html 100, basket.html 100, catalogue.html 100, contact.html 100, product.html 100
+      -  1.4  On the basket page: 4 form fields have no label saying what to type: add a <label> for it or an aria-label (for example input#name, input#email, textarea#address)
+      -  1.4  On the catalogue page: 5 form fields have no label saying what to type: add a <label> for it or an aria-label (for example input name=type, input name=type, input name=type)
+      -  1.4  On the home page: the page does not say what language it is in: add a lang attribute to <html>, like lang="en"
+      -  1.2  On the contact page: 3 form fields have no label saying what to type: add a <label> for it or an aria-label (for example input#cname, input#cemail, textarea#message)
+
+order checks:
+  docs: rebuild-detailed (99.2) > one-page-wrong (93.0)  ok
+  docs: near (98.8) > one-page-wrong (93.0)  ok
+  docs: near (98.8) > heavy (66.4)  ok
+  docs: near (98.8) > sloppy (80.4)  ok
+  docs: one-page-wrong (93.0) > nav-incomplete (69.4)  ok
+  docs: one-page-wrong (93.0) > links-rotten (68.4)  ok
+  docs: nav-incomplete (69.4) > half-built (28.3)  ok
+  docs: links-rotten (68.4) > half-built (28.3)  ok
+  docs: heavy (66.4) > half-built (28.3)  ok
+  docs: sloppy (80.4) > half-built (28.3)  ok
+  shop: rebuild-detailed (99.3) > one-page-wrong (85.5)  ok
+  shop: near (99.2) > one-page-wrong (85.5)  ok
+  shop: near (99.2) > heavy (65.9)  ok
+  shop: near (99.2) > sloppy (79.2)  ok
+  shop: one-page-wrong (85.5) > nav-incomplete (63.6)  ok
+  shop: one-page-wrong (85.5) > links-rotten (66.1)  ok
+  shop: nav-incomplete (63.6) > half-built (34.4)  ok
+  shop: links-rotten (66.1) > half-built (34.4)  ok
+  shop: heavy (65.9) > half-built (34.4)  ok
+  shop: sloppy (79.2) > half-built (34.4)  ok

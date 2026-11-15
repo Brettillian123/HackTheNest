@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledgerly — Features</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f8faf9;
+    color: #172321;
+    font-family: Arial, sans-serif;
+  }
+  header {
+    height: 76px;
+    background: #fff;
+    border-bottom: 1px solid #edf0ef;
+  }
+  .header-inner {
+    width: min(1120px, calc(100% - 48px));
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    color: #172321;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+  }
+  nav { display: flex; align-items: center; gap: 34px; }
+  nav a {
+    color: #65716e;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  nav .action {
+    background: #145c53;
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 19px;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+  main {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+  .intro {
+    text-align: center;
+    padding: 48px 0 38px;
+  }
+  .eyebrow {
+    margin: 0 0 13px;
+    color: #19766a;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0;
+    color: #172321;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -1.3px;
+    font-weight: 700;
+  }
+  .lead {
+    max-width: 560px;
+    margin: 16px auto 0;
+    color: #697572;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-bottom: 48px;
+  }
+  .card {
+    min-height: 190px;
+    padding: 23px 24px;
+    background: #fff;
+    border: 1px solid #e4eae7;
+    border-radius: 12px;
+  }
+  .icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 17px;
+    display: grid;
+    place-items: center;
+    color: #19766a;
+    background: #e8f4f1;
+    border-radius: 10px;
+  }
+  .icon svg { width: 22px; height: 22px; }
+  h2 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #1b2926;
+  }
+  .card p {
+    margin: 0;
+    color: #697572;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  @media (max-width: 760px) {
+    .header-inner, main { width: min(100% - 36px, 560px); }
+    nav { gap: 14px; }
+    nav a { font-size: 13px; }
+    nav .action { padding: 10px 12px; margin-left: 0; }
+    h1 { font-size: 32px; }
+    .intro { padding: 42px 0 30px; }
+    .features { grid-template-columns: 1fr; gap: 14px; }
+    .card { min-height: 0; }
+  }
+  @media (max-width: 480px) {
+    header { height: auto; min-height: 68px; }
+    .header-inner { padding: 14px 0; align-items: flex-start; gap: 12px; }
+    nav { justify-content: flex-end; flex-wrap: wrap; gap: 10px 13px; }
+    nav .action { padding: 8px 10px; }
+    h1 { font-size: 29px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#">Ledgerly</a>
+    <nav aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#customers">Customers</a>
+      <a class="action" href="#trial">Start free trial</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="intro" aria-labelledby="page-title">
+    <p class="eyebrow">Features</p>
+    <h1 id="page-title">Everything your books need, in one place</h1>
+    <p class="lead">Ledgerly handles the busywork of small-business accounting, so you can close the month in an afternoon instead of a week.</p>
+  </section>
+  <section class="features" id="features" aria-label="Features">
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h9l3 3V20H6z" /><path d="M14.5 3.5v4h4M9 12h6M9 15.5h6M9 8.5h2" /></svg></div>
+      <h2>Smart invoicing</h2>
+      <p>Send branded invoices in seconds and get paid by card or bank transfer.</p>
+    </article>
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M3.5 9h17M7 14h4M16.5 14h.5" /></svg></div>
+      <h2>Bank sync</h2>
+      <p>Connect over 12,000 banks and see every transaction matched overnight.</p>
+    </article>
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2z" /><path d="M9 7h6M8.5 16.5l2.5-2.5 2 1.5 3-4" /></svg></div>
+      <h2>Receipt capture</h2>
+      <p>Snap a photo of any receipt and Ledgerly files it against the right expense.</p>
+    </article>
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5h16M6.5 17V12M12 17V6M17.5 17V9" /><path d="m5 9 5-4 4 2 5-4" /></svg></div>
+      <h2>Live reports</h2>
+      <p>Profit and loss, cash flow and balance sheet, updated as money moves.</p>
+    </article>
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 19 6v5.5c0 4.1-2.9 7.3-7 9-4.1-1.7-7-4.9-7-9V6z" /><path d="m9 12 2 2 4-4" /></svg></div>
+      <h2>Tax ready</h2>
+      <p>Sales tax is worked out on every invoice and filed reports export in one click.</p>
+    </article>
+    <article class="card">
+      <div class="icon" aria-hidden="true"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3" /><path d="M3.5 19v-1.5a5.5 5.5 0 0 1 11 0V19z" /><path d="M16 5.5a3 3 0 0 1 0 5.8M17 14a4.5 4.5 0 0 1 3.5 4.5V19h-3" /></svg></div>
+      <h2>Team access</h2>
+      <p>Invite your accountant and staff with roles that show only what they need.</p>
+    </article>
+  </section>
+</main>
+</body>
+</html>

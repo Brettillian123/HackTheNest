@@ -1,0 +1,73 @@
+{
+  "links-ok": {
+    "self": { "band": [98, 101], "why": "Byte-for-byte the goal: it is the goal." },
+    "dot-slash": { "band": [97, 101], "why": "Links written ./about.html go to the same pages; nothing a person can see differs." },
+    "hash-team": { "band": [96, 101], "why": "About links jump to the team card on the right page; that works and looks the same." },
+    "root-slash": { "band": [95, 101], "why": "/about.html works on a site served from its root; identical to the eye." },
+    "query": { "band": [95, 101], "why": "about.html?ref=nav opens the same page on any static host; identical to the eye." },
+    "upper-case": { "band": [80, 95], "why": "ABOUT.html opens on Windows or Mac hosting but 404s on most Linux hosts, so a careful lead would flag it, though it looks identical." },
+    "image-link": { "band": [92, 100], "why": "The hero button is an image with alt text that links to pricing; it works and looks the same apart from a few pixels." },
+    "btn-nav": { "band": [85, 95], "why": "Every link works; the menu items are filled pills instead of plain text, a visible but small style change." },
+    "footer-nav": { "band": [72, 86], "why": "Everything is reachable, but the header menu is gone and the links sit in the footer: one obvious visible difference." },
+    "two-clicks": { "band": [78, 90], "why": "Contact is missing from the menu and is reached only through a button on About: works, but harder to find." },
+    "extra-links": { "band": [90, 99], "why": "Same site plus a row of working footer links; harmless addition." },
+    "extra-page": { "band": [88, 99], "why": "Same site plus a linked site map and a 404 page; harmless, arguably better." }
+  },
+  "links-bad": {
+    "nav-hash": { "band": [58, 72], "why": "The About menu item does nothing on every page (About still reachable from a pricing button): an obvious broken link everywhere." },
+    "nav-empty": { "band": [58, 72], "why": "href=\"\" just reloads the page, so the About menu item is broken on every page." },
+    "nav-js-void": { "band": [58, 72], "why": "javascript:void(0) does nothing, so the About menu item is broken on every page." },
+    "nav-typo": { "band": [52, 68], "why": "The About menu item leads to a 404 on every page: a dead link repeated four times." },
+    "nav-external": { "band": [50, 66], "why": "The About menu item sends the visitor to someone else's website on every page." },
+    "all-home": { "band": [25, 45], "why": "Every link goes to the home page, so three of the four pages can never be reached by a visitor." },
+    "contact-self-only": { "band": [55, 70], "why": "The Contact page exists but nothing leads to it except itself: one page unreachable and missing from the menu." },
+    "contact-hidden-only": { "band": [55, 70], "why": "The only link to Contact is hidden, so a visitor cannot reach it and the menu is visibly one item short." }
+  },
+  "dead-of-many": {
+    "one-dead": { "band": [84, 94], "why": "One footer link on one page 404s among about thirty working links: a small flaw." }
+  },
+  "dead-of-few": {
+    "one-dead": { "band": [68, 82], "why": "In a two-page site with three links, the only way back home from About is dead: a third of the navigation is broken." }
+  },
+  "structure": {
+    "one-page": { "band": [40, 58], "why": "All the content is there on one long page with anchor links, but it is not the four-page site asked for." },
+    "renamed": { "band": [85, 97], "why": "Same site with different file names (about-us.html) and consistent links: a visitor sees no difference, only the URLs." },
+    "subfolder": { "band": [88, 98], "why": "Pages live under pages/ with correct links and styles; the site looks and works the same." },
+    "merged": { "band": [62, 78], "why": "Contact content is appended to About and the Contact page and menu item are gone: content present, a page missing." },
+    "extra-copies": { "band": [80, 92], "why": "The site is perfect but ships an unlinked duplicate of every page: sloppy junk a lead would ask to delete." },
+    "home-is-home-html": { "band": [45, 65], "why": "The home page a visitor lands on is a bare 'Enter the site' button; the real home is one click further and the menu points there." }
+  },
+  "engineering": {
+    "minified": { "band": [100, 108], "why": "Identical look, every link works, noticeably smaller: should beat the goal a little." },
+    "css-split-6": { "band": [92, 100], "why": "Same bytes split over six stylesheets: more requests, a minor engineering point nobody would raise hard." },
+    "css-inline": { "band": [92, 100], "why": "All CSS repeated inline in every page: a bit more weight, fewer requests, looks identical." },
+    "unused-200k-linked": { "band": [52, 70], "why": "Looks identical but every page loads a 200 KB stylesheet that is never used: many times heavier than needed." },
+    "base64-250k": { "band": [55, 72], "why": "A 13-pixel footer icon carries 250 KB of base64 on the home page: the home page is tens of times heavier for nothing." },
+    "outside-20": { "band": [55, 72], "why": "Twenty stylesheets from an outside server that fail to load: looks fine, but slow and broken requests on every page." },
+    "bloated-2x": { "band": [82, 94], "why": "Identical but twice the size through comments and whitespace: a weakness worth a note, not a disaster at this size." },
+    "unlinked-200k-file": { "band": [80, 93], "why": "A 200 KB stylesheet sits in the site but no page loads it: dead weight a lead would ask to delete, visitors never download it." }
+  },
+  "docs-subfolder": {
+    "self": { "band": [98, 101], "why": "Byte-for-byte the goal, including ../index.html links from the sub-folder." },
+    "folder-link": { "band": [96, 101], "why": "Links to docs/ instead of docs/index.html open the same page on any static host." },
+    "dotdot-roundabout": { "band": [96, 101], "why": "Links like ../docs/guide.html from inside docs/ resolve to the same pages; nothing visible differs." },
+    "flattened": { "band": [82, 95], "why": "The docs pages moved out of the sub-folder (docs.html, guide.html) with working links; same site, different URLs." },
+    "one-css": { "band": [97, 102], "why": "The two stylesheets merged into one: identical look, one request fewer." },
+    "broken-css-path": { "band": [40, 58], "why": "The three docs pages load no styles at all (wrong path) and look like raw HTML; only the home page is right." }
+  },
+  "limits": {
+    "files-41": { "expect": "A clear refusal saying the site has more than 40 files.", "why": "The rule is stated; going over it should be refused with the limit named." },
+    "file-over-300k": { "expect": "A clear refusal naming big.css and the 300 KB per-file limit.", "why": "The rule is stated; the player needs to know which file is too big." },
+    "not-html": { "band": [50, 66], "why": "About is unstyled plain text with no menu, a dead end; the other three pages are right." },
+    "empty-index": { "band": [5, 25], "why": "A visitor opening the site sees a blank page and cannot reach the three good pages." },
+    "css-only": { "expect": "A clear refusal saying the site has no HTML page (or no index.html), or 0 with that reason.", "why": "There is no site to look at." },
+    "space-in-path": { "band": [95, 101], "why": "The stylesheet is named 'site styles.css' and linked as site%20styles.css; it loads and the site is identical." },
+    "dotdot-path": { "expect": "A clear refusal naming ../outside.css as outside the site, or that stray file ignored and the rest graded near 100.", "why": "A path that climbs out of the site is invalid; the player needs to know which one." },
+    "backslash-path": { "band": [95, 101], "why": "styles\\site.css is the same file as styles/site.css on Windows; the site renders identically (a clear refusal would also be acceptable)." }
+  },
+  "thirteen": {
+    "self": { "band": [98, 101], "why": "Byte-for-byte the thirteen-page goal." },
+    "missing-first": { "band": [75, 88], "why": "One route page of twelve is missing and its button is gone from the index: one page of thirteen absent." },
+    "missing-last": { "band": [75, 88], "why": "Same flaw as missing-first, on the page that sorts last; a person charges it exactly the same." }
+  }
+}

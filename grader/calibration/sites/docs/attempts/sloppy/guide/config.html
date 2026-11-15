@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration · Lumen Docs</title>
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<header class="topbar"><a href="../index.html" class="brand"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28">Lumen Docs</a><span class="version">v2.4</span></header>
+<div class="layout">
+<nav class="sidebar" aria-label="Documentation">
+<form class="search" role="search"><input id="q" type="search" placeholder="Search the docs"></form>
+<p class="sidebar-title">Getting started
+<ul>
+<li id="item"><a href="../index.html">Overview</a>
+</ul>
+<p class="sidebar-title">Guide
+<ul>
+<li id="item"><a href="install.html">Install</a>
+<li id="item"><a href="config.html" class="current" aria-current="page">Configuration</a>
+<li id="item"><a href="deploy.html">Deploy</a>
+</ul>
+<p class="sidebar-title">More
+<ul>
+<li id="item"><a href="../reference.html">Reference</a>
+<li id="item"><a href="../changelog.html">Changelog</a>
+</ul>
+</nav>
+<main class="content">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a> / Guide / Configuration</nav>
+<h1><font face="Arial">Configuration</font></h1>
+<p class="lead">Every Lumen site has one settings file, <code>lumen.config.json</code>, in its root folder.
+<h4 style="margin:32px 0 12px;font-size:22px;color:#0f172a">A starting file</h4>
+<pre><code>{
+  "title": "My site",
+  "theme": "paper",
+  "output": "dist",
+  "baseUrl": "/"
+}</code></pre>
+<h4 style="margin:32px 0 12px;font-size:22px;color:#0f172a">Options you will change most</h4>
+<p style="margin-top:0"><code>title</code> appears in the browser tab and the header. <code>theme</code> picks one of the built-in looks: <code>paper</code>, <code>slate</code> or <code>mono</code>. The full list is in the <a href="../reference.html#config-file">reference</a>.
+<h4 style="margin:32px 0 12px;font-size:22px;color:#0f172a">Profiles</h4>
+<p style="margin-top:0">Use a profile to change settings for one environment only, such as a staging server.
+<pre><code>lumen build --profile staging</code></pre>
+<nav class="prevnext" aria-label="Previous and next"><a href="install.html"><span>Previous</span>Install</a><a href="deploy.html"><span>Next</span>Deploy</a></nav>
+<footer class="footer"><center><p style="margin-top:0">Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</center></footer>
+</main>
+
+</body>
+</html>

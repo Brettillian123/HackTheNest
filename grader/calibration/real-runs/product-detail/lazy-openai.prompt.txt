@@ -1,0 +1,1 @@
+product page for the backpack with picture, price, colour and size options, add to cart and specs

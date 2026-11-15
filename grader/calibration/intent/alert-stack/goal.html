@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notifications</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f1f5f9; color: #0f172a; }
+main { width: 640px; margin: 72px auto 0; }
+h1 { margin: 0 0 8px; font-size: 28px; line-height: 36px; }
+.intro { margin: 0 0 32px; font-size: 16px; line-height: 24px; color: #475569; }
+.alerts { margin: 0; padding: 0; list-style: none; }
+.alert { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; padding: 16px 20px; border: 1px solid; border-left-width: 4px; border-radius: 8px; }
+.alert svg { flex-shrink: 0; }
+.alert-body { flex: 1; }
+.alert h2 { margin: 0 0 4px; font-size: 16px; line-height: 24px; }
+.alert p { margin: 0; font-size: 14px; line-height: 20px; }
+.alert-action { flex-shrink: 0; margin-top: 2px; padding: 0; border: 0; background: none; font-family: inherit; font-size: 14px; line-height: 20px; font-weight: bold; color: inherit; text-decoration: underline; }
+.alert-success { background: #f0fdf4; border-color: #bbf7d0; border-left-color: #16a34a; color: #14532d; }
+.alert-info { background: #eff6ff; border-color: #bfdbfe; border-left-color: #2563eb; color: #1e3a8a; }
+.alert-warning { background: #fffbeb; border-color: #fde68a; border-left-color: #d97706; color: #78350f; }
+.alert-error { background: #fef2f2; border-color: #fecaca; border-left-color: #dc2626; color: #7f1d1d; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Notifications</h1>
+  <p class="intro">Four messages from the last 24 hours</p>
+  <ul class="alerts">
+    <li class="alert alert-success">
+      <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Success"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3.5 3.5L17 9" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="alert-body">
+        <h2>Payment received</h2>
+        <p>Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</p>
+      </div>
+      <button class="alert-action" type="button">View invoice</button>
+    </li>
+    <li class="alert alert-info">
+      <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Information"><circle cx="12" cy="12" r="12" fill="#2563eb"/><circle cx="12" cy="7" r="1.5" fill="#ffffff"/><rect x="10.75" y="10" width="2.5" height="8" rx="1.25" fill="#ffffff"/></svg>
+      <div class="alert-body">
+        <h2>New version available</h2>
+        <p>Version 4.2 adds shared workspaces and faster PDF exports.</p>
+      </div>
+      <button class="alert-action" type="button">See what's new</button>
+    </li>
+    <li class="alert alert-warning">
+      <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Warning"><circle cx="12" cy="12" r="12" fill="#d97706"/><rect x="10.75" y="6" width="2.5" height="8" rx="1.25" fill="#ffffff"/><circle cx="12" cy="17" r="1.5" fill="#ffffff"/></svg>
+      <div class="alert-body">
+        <h2>Storage almost full</h2>
+        <p>You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</p>
+      </div>
+      <button class="alert-action" type="button">Upgrade plan</button>
+    </li>
+    <li class="alert alert-error">
+      <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Error"><circle cx="12" cy="12" r="12" fill="#dc2626"/><path d="M8 8l8 8M16 8l-8 8" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <div class="alert-body">
+        <h2>Sync failed</h2>
+        <p>We could not reach Google Drive. Your last 3 changes are saved on this device.</p>
+      </div>
+      <button class="alert-action" type="button">Try again</button>
+    </li>
+  </ul>
+</main>
+</body>
+</html>

@@ -2,23 +2,34 @@
   "name": "@hackthenest/grader",
   "version": "0.1.0",
   "private": true,
-  "description": "Deterministic grader: scores a generated page against a goal page.",
+  "description": "Deterministic grader: scores a generated page, site or 3D scene against a goal.",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run --exclude test/properties.page.test.ts --exclude test/properties.site.test.ts",
+    "test:properties": "vitest run test/properties.page.test.ts test/properties.site.test.ts",
+    "test:properties:page": "vitest run test/properties.page.test.ts",
+    "test:properties:site": "vitest run test/properties.site.test.ts",
+    "test:all": "vitest run",
     "typecheck": "tsc --noEmit",
     "grade": "tsx src/cli.ts",
     "calibrate": "tsx src/calibrate.ts",
-    "calibrate:sites": "tsx src/calibrate-sites.ts"
+    "calibrate:sites": "tsx src/calibrate-sites.ts",
+    "calibrate:scenes": "tsx src/scene3d/calibrate.ts",
+    "bench": "tsx src/bench.ts",
+    "fit": "tsx src/fit.ts",
+    "start": "tsx service/server.ts"
   },
   "dependencies": {
+    "parse5": "^8.1.1",
     "playwright": "^1.65.1",
-    "pngjs": "^7.0.0"
+    "pngjs": "^7.0.0",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/pngjs": "^6.0.5",
+    "@types/three": "^0.187.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"

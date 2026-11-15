@@ -1,0 +1,86 @@
+{
+  "slug": "alert-stack",
+  "title": "Alert stack",
+  "level": 1,
+  "category": "Components",
+  "brief": "We need a notifications page for our billing app that shows the four kinds of message our product sends: success, info, warning and error. Put a page heading, Notifications, with a short line under it saying these are four messages from the last 24 hours. Below that, stack the four messages as banners, one per kind, each tinted in its own colour family (green, blue, amber, red) with a stronger stripe down its left edge. Every banner needs a round icon that matches its kind, a bold title, one sentence of detail and a small underlined text button on the right. Keep it calm and readable on a soft grey-blue page; the colours should tell you the kind of message at a glance without shouting.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "The page heading reads Notifications, with the line Four messages from the last 24 hours under it",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "Four banners in this order: success, info, warning, error",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Each banner has an icon, a bold title, one line of text and a text button",
+      "kind": "structure",
+      "exact": false
+    },
+    {
+      "id": "r4",
+      "text": "The banner titles, texts and button labels match the key facts",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "Each banner is tinted in its own colour family (green, blue, amber, red) with a stronger stripe on its left edge",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "The icons are drawn shapes that match their kind: a tick, an i, an exclamation mark and a cross",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "The banners form a single centred column with even gaps between them",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "The banners are a list and the text buttons are real buttons",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r9",
+      "text": "Text is easy to read against each banner's tint",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Notifications",
+    "Four messages from the last 24 hours",
+    "Payment received",
+    "Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.",
+    "View invoice",
+    "New version available",
+    "Version 4.2 adds shared workspaces and faster PDF exports.",
+    "See what's new",
+    "Storage almost full",
+    "You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.",
+    "Upgrade plan",
+    "Sync failed",
+    "We could not reach Google Drive. Your last 3 changes are saved on this device.",
+    "Try again"
+  ],
+  "designNotes": [
+    "calm, roomy single column",
+    "soft tints with a stronger left stripe per kind",
+    "text in a dark shade of each banner's own colour",
+    "small underlined actions at the right"
+  ],
+  "maxPromptChars": 4000
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Quiet Return of the Night Train</title>
+<style>
+:root { --accent: #b91c1c; --serif: Georgia, serif; --sans: Arial, sans-serif; --r: 6px; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #fffdf8; color: #222222; font-family: var(--serif); }
+.top { border-bottom: 1px solid #e7e2d8; background: #ffffff; }
+.top .in { width: 1040px; margin: 0 auto; height: 64px; display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
+.logo { font-family: var(--serif); font-size: 26px; font-weight: bold; color: #111111; }
+.logo span { color: var(--accent); }
+.links a { margin-left: 26px; color: #444444; text-decoration: none; font-size: 15px; }
+article { width: 720px; margin: 0 auto; padding: 44px 0 30px; }
+.kicker { font-family: var(--sans); font-size: 13px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 44px; line-height: 1.15; margin: 12px 0 16px; }
+.byline { font-family: var(--sans); font-size: 14px; color: #6b6b6b; padding-bottom: 22px; border-bottom: 1px solid #e7e2d8; margin-bottom: 26px; }
+.byline b { color: #222222; }
+p { font-size: 19px; line-height: 1.65; margin: 0 0 20px; }
+h2 { font-size: 27px; margin: 34px 0 14px; }
+blockquote { margin: 30px 0; padding: 4px 0 4px 26px; border-left: 4px solid var(--accent); font-size: 26px; line-height: 1.4; font-style: italic; color: #333333; }
+figure { margin: 28px 0; }
+figure svg { display: block; background: #f6f1e7; border-radius: var(--r); }
+figcaption { font-family: var(--sans); font-size: 13px; color: #6b6b6b; margin-top: 10px; }
+table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 15px; margin: 8px 0 26px; }
+th { text-align: left; background: #f6f1e7; padding: 10px 12px; border-bottom: 2px solid #d6cfc0; }
+td { padding: 10px 12px; border-bottom: 1px solid #e7e2d8; }
+pre { background: #1f2430; color: #e6e1cf; font-family: "Courier New", monospace; font-size: 15px; line-height: 1.5; padding: 18px 20px; border-radius: var(--r); margin: 8px 0 26px; }
+ol { font-size: 19px; line-height: 1.6; margin: 0 0 24px; padding-left: 28px; }
+ol li { margin-bottom: 8px; }
+footer { background: #f3eee4; border-top: 1px solid #e7e2d8; font-family: var(--sans); }
+footer .in { width: 1040px; margin: 0 auto; padding: 36px 0 40px; display: flex; gap: 60px; }
+footer .col { flex: 1; }
+footer h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; color: #111111; }
+footer a { display: block; color: #555555; text-decoration: none; font-size: 14px; margin-bottom: 8px; }
+</style></head>
+<body>
+<header class="top"><div class="in">
+  <div class="logo">The <span>Ledger</span></div>
+  <nav class="links"><a href="#">World</a><a href="#">Travel</a><a href="#">Climate</a><a href="#">Culture</a><a href="#">Subscribe</a></nav>
+</div></header>
+<article>
+  <div class="kicker">Travel</div>
+  <h1>The Quiet Return of the Night Train</h1>
+  <div class="byline">By <b>Hannah Okafor</b> &middot; November 9, 2026 &middot; 8 min read</div>
+<!--S:intro-->  <p>Ten years ago, the sleeper train looked finished. Budget airlines had taken the routes, the carriages were old, and operators were cutting services every winter. Today new lines open every season, and many of them sell out weeks in advance.</p>
+  <p>What changed was not the trains themselves but the travellers. Families, remote workers and people avoiding short flights now treat a night on the rails as part of the trip rather than a cost of it.</p><!--/S:intro-->
+<!--S:quote-->  <blockquote>"You go to sleep in one country and wake up in another. No airport has ever given me that."</blockquote><!--/S:quote-->
+<!--S:list-->  <h2>How to book a good berth</h2>
+  <ol>
+    <li>Book as soon as the season opens, usually ninety days ahead.</li>
+    <li>Choose a lower berth if you want an easy climb at night.</li>
+    <li>Bring a small bag; there is little room for suitcases.</li>
+    <li>Check whether breakfast is included before you pay extra.</li>
+  </ol><!--/S:list-->
+<!--S:table-->  <h2>Where the new lines run</h2>
+  <table>
+    <tr><th>Route</th><th>Operator</th><th>Hours</th><th>From</th></tr>
+    <tr><td>Paris to Berlin</td><td>Nightjet</td><td>14</td><td>&euro;79</td></tr>
+    <tr><td>Amsterdam to Prague</td><td>European Sleeper</td><td>15</td><td>&euro;69</td></tr>
+    <tr><td>Stockholm to Hamburg</td><td>SJ Euronight</td><td>12</td><td>&euro;59</td></tr>
+    <tr><td>Rome to Munich</td><td>Nightjet</td><td>13</td><td>&euro;89</td></tr>
+  </table><!--/S:table-->
+<!--S:code-->  <h2>Checking the timetable yourself</h2>
+  <p>Most operators publish their timetables as open data. A short query is enough to find every overnight departure:</p>
+  <pre>SELECT route, depart, arrive
+FROM departures
+WHERE depart &gt;= '20:00'
+  AND overnight = true
+ORDER BY depart;</pre><!--/S:code-->
+<!--S:figure-->  <figure>
+    <svg width="720" height="230" viewBox="0 0 720 230">
+      <polyline points="40,190 140,176 240,168 340,140 440,110 540,82 640,50" fill="none" stroke="#b91c1c" stroke-width="4"/>
+      <g fill="#b91c1c"><circle cx="40" cy="190" r="6"/><circle cx="140" cy="176" r="6"/><circle cx="240" cy="168" r="6"/><circle cx="340" cy="140" r="6"/><circle cx="440" cy="110" r="6"/><circle cx="540" cy="82" r="6"/><circle cx="640" cy="50" r="6"/></g>
+      <g font-family="Arial" font-size="13" fill="#6b6b6b" text-anchor="middle"><text x="40" y="218">2020</text><text x="140" y="218">2021</text><text x="240" y="218">2022</text><text x="340" y="218">2023</text><text x="440" y="218">2024</text><text x="540" y="218">2025</text><text x="640" y="218">2026</text></g>
+    </svg>
+    <figcaption>Figure 1. Night train routes in Europe, 2020 to 2026. Source: Rail Europe Watch.</figcaption>
+  </figure><!--/S:figure-->
+</article>
+<footer><div class="in">
+  <div class="col"><h4>Sections</h4><a href="#">World</a><a href="#">Travel</a><a href="#">Climate</a><a href="#">Culture</a></div>
+  <div class="col"><h4>The Ledger</h4><a href="#">About us</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Press</a></div>
+  <div class="col"><h4>Follow</h4><a href="#">Newsletter</a><a href="#">Podcast</a><a href="#">RSS feed</a><a href="#">Archive</a></div>
+</div></footer>
+</body></html>

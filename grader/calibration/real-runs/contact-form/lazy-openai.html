@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Northfield Studio</title>
+<style>
+  :root {
+    --paper: #f5f3ed;
+    --white: #fffefa;
+    --ink: #1c3029;
+    --muted: #68756e;
+    --line: #d9ddd5;
+    --green: #274b3c;
+    --accent: #e2a26a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .topbar {
+    height: 82px;
+    padding: 0 8.2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(28,48,41,.12);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+  }
+  .mark {
+    width: 29px;
+    height: 29px;
+    position: relative;
+    border: 1px solid var(--green);
+    border-radius: 50%;
+  }
+  .mark:before, .mark:after {
+    content: "";
+    position: absolute;
+    background: var(--green);
+  }
+  .mark:before { width: 1px; height: 19px; left: 13px; top: 4px; transform: rotate(38deg); }
+  .mark:after { width: 17px; height: 1px; left: 5px; top: 14px; transform: rotate(-27deg); }
+  .nav-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    color: var(--green);
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 66px 30px 70px;
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #718076;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow:before { content: ""; width: 25px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(38px, 4.3vw, 56px);
+    line-height: 1.09;
+    letter-spacing: -1.7px;
+    max-width: 670px;
+    margin: 0;
+  }
+  .intro {
+    max-width: 630px;
+    margin: 17px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 74px;
+    align-items: start;
+    margin-top: 43px;
+  }
+  .details {
+    padding-top: 3px;
+  }
+  .details h2, .form-card h2 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -.35px;
+    margin: 0 0 24px;
+  }
+  .detail-item {
+    border-top: 1px solid var(--line);
+    padding: 17px 0 16px;
+  }
+  .detail-item:last-child { border-bottom: 1px solid var(--line); }
+  .detail-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #718076;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .detail-value {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .form-card {
+    background: var(--white);
+    border: 1px solid #e8e8e0;
+    padding: 29px 32px 27px;
+    box-shadow: 0 12px 34px rgba(33,53,43,.045);
+  }
+  .form-card h2 { margin-bottom: 21px; }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 15px;
+  }
+  .field { min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #32473d;
+  }
+  input, select, textarea {
+    width: 100%;
+    border: 1px solid #d9ded7;
+    border-radius: 2px;
+    background: #fff;
+    color: var(--ink);
+    font: 13px Arial, sans-serif;
+    outline: none;
+    padding: 11px 12px;
+  }
+  input, select { height: 42px; }
+  textarea {
+    height: 82px;
+    resize: vertical;
+    line-height: 1.45;
+  }
+  input::placeholder, textarea::placeholder { color: #9aa39c; opacity: 1; }
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 16px 0 18px;
+    color: #5e6d64;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .consent input {
+    appearance: none;
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    margin: 1px 0 0;
+    border: 1px solid #aeb9b0;
+    border-radius: 2px;
+    background: white;
+  }
+  button {
+    height: 45px;
+    padding: 0 21px;
+    border: 0;
+    border-radius: 2px;
+    background: var(--green);
+    color: white;
+    font: 700 12px Arial, sans-serif;
+    letter-spacing: .2px;
+    cursor: pointer;
+  }
+  button:after { content: "  →"; color: #efc08f; font-size: 15px; }
+  @media (max-width: 760px) {
+    .topbar { height: 70px; padding: 0 22px; }
+    main { padding: 46px 22px; }
+    .columns { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
+    .form-card { padding: 25px 22px; }
+  }
+  @media (max-width: 430px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: auto; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="mark" aria-hidden="true"></span><span>Northfield Studio</span></div>
+  <div class="nav-label">Contact</div>
+</header>
+<main>
+  <div class="eyebrow">Contact</div>
+  <h1>Let's talk about your project</h1>
+  <p class="intro">Tell us what you are planning and we will reply within one working day. Prefer to talk? Call the studio during opening hours.</p>
+
+  <div class="columns">
+    <section class="details" aria-label="Studio details">
+      <h2>Studio details</h2>
+      <div class="detail-item">
+        <span class="detail-label">Studio</span>
+        <div class="detail-value">24 Canal Street, Manchester M1 3HE</div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Phone</span>
+        <div class="detail-value">0161 496 0732</div>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Hours</span>
+        <div class="detail-value">Monday to Friday, 9:00 to 17:30</div>
+      </div>
+    </section>
+
+    <section class="form-card">
+      <h2>Send us a message</h2>
+      <form>
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Cooper">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="jane@example.com">
+          </div>
+          <div class="field full">
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic">
+              <option>New project enquiry</option>
+              <option>Existing project</option>
+              <option>Careers</option>
+              <option>Press</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="A few lines about your project, timeline and budget."></textarea>
+          </div>
+        </div>
+        <label class="consent"><input type="checkbox" name="consent"><span>I agree to Northfield Studio keeping my details so it can reply to this message.</span></label>
+        <button type="button">Send message</button>
+      </form>
+    </section>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "goal": "Three-page portfolio site (home, projects, contact), each page styled inline, reviewed, fixed and merged",
+  "steps": [
+    {
+      "id": "plan",
+      "title": "Write the site plan",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [
+        "PLAN.md"
+      ],
+      "proof": "PLAN.md lists all three pages, their sections, and the colour and font values",
+      "budget": {
+        "toolCalls": 10
+      }
+    },
+    {
+      "id": "home",
+      "title": "Build the home page",
+      "owner": "worker-home",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/index.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Screenshot of site/index.html at 1280x800 shows the heading, intro and footer, with its styles inline",
+      "budget": {
+        "toolCalls": 40
+      }
+    },
+    {
+      "id": "projects",
+      "title": "Build the projects page",
+      "owner": "worker-projects",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/projects.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Screenshot at 1280x800 shows every project card listed in PLAN.md, with its styles inline",
+      "budget": {
+        "toolCalls": 40
+      }
+    },
+    {
+      "id": "contact",
+      "title": "Build the contact page with its form",
+      "owner": "worker-contact",
+      "dependsOn": [
+        "plan"
+      ],
+      "changes": [
+        "site/contact.html"
+      ],
+      "reads": [
+        "PLAN.md"
+      ],
+      "proof": "Screenshot shows the form, and every input has a label in site/contact.html, with its styles inline",
+      "budget": {
+        "toolCalls": 40
+      }
+    },
+    {
+      "id": "review",
+      "title": "Review all three pages",
+      "owner": "reviewer",
+      "dependsOn": [
+        "home",
+        "projects",
+        "contact"
+      ],
+      "changes": [],
+      "kind": "review",
+      "reads": [
+        "site/**"
+      ],
+      "proof": "Review report lists each issue with file and line, or says none found",
+      "budget": {
+        "toolCalls": 20
+      }
+    },
+    {
+      "id": "fix",
+      "title": "Fix review issues and merge",
+      "owner": "coordinator",
+      "dependsOn": [
+        "review"
+      ],
+      "changes": [
+        "site/index.html",
+        "site/projects.html",
+        "site/contact.html"
+      ],
+      "proof": "All three screenshots retaken; every review issue marked fixed or explained",
+      "budget": {
+        "toolCalls": 30
+      }
+    }
+  ],
+  "loops": []
+}

@@ -1,4 +1,5 @@
-import { MAX_HTML_BYTES, SITE } from './config';
+import { MAX_HTML_BYTES } from './config';
+import { SITE } from './site-config';
 import { GraderInputError } from './types';
 
 /** A site as submitted: file path -> file text. Example: { 'index.html': '...', 'css/site.css': '...' }. */
@@ -128,4 +129,178 @@ export function linkTarget(href: string, fromPage: string): string | null {
   }
   const path = pathOfUrl(resolved.href);
   return path === null || path === fromPage ? null : path;
+}
+
+/**
+ * What following a link does, as a visitor sees it:
+ *   site     - opens another file of the site (`path`)
+ *   self     - stays on the same page (an in-page "#section", or the page's own address)
+ *   nothing  - does nothing at all: "#" alone, an empty address, "javascript:"
+ *   outside  - leaves the site
+ *   other    - not a web link (mailto:, tel:)
+ */
+export type LinkKind = 'site' | 'self' | 'nothing' | 'outside' | 'other';
+
+export function classifyLink(href: string, fromPage: string): { kind: LinkKind; path?: string } {
+  const trimmed = href.trim();
+  if (trimmed === '' || /^#!?$/.test(trimmed) || /^javascript:/i.test(trimmed)) return { kind: 'nothing' };
+  if (trimmed.startsWith('#')) return { kind: 'self' };
+  if (/^(mailto|tel|sms|data):/i.test(trimmed)) return { kind: 'other' };
+  let resolved: URL;
+  try {
+    resolved = new URL(trimmed, urlOf(fromPage));
+  } catch {
+    return { kind: 'nothing' };
+  }
+  if (resolved.origin !== SITE_ORIGIN) return { kind: /^https?:$/.test(resolved.protocol) ? 'outside' : 'other' };
+  const path = pathOfUrl(resolved.href);
+  if (path === null) return { kind: 'nothing' };
+  if (path === fromPage) return { kind: 'self' };
+  return { kind: 'site', path };
+}
+
+// ---------------------------------------------------------------------------
+// Reading a page's HTML text: link labels, title, heading, references
+// ---------------------------------------------------------------------------
+
+const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+
+export function decodeEntities(text: string): string {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, name: string) => {
+    if (name[0] === '#') {
+      const code = name[1] === 'x' || name[1] === 'X' ? parseInt(name.slice(2), 16) : parseInt(name.slice(1), 10);
+      return Number.isFinite(code) && code > 0 && code < 0x110000 ? String.fromCodePoint(code) : whole;
+    }
+    return ENTITIES[name.toLowerCase()] ?? whole;
+  });
+}
+
+function attr(tag: string, name: string): string | null {
+  const m = new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s"'>]+))`, 'i').exec(tag);
+  return m ? decodeEntities(m[1] ?? m[2] ?? m[3] ?? '') : null;
+}
+
+const textOf = (html: string) =>
+  decodeEntities(html.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]*>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/** Removes comments, scripts and styles, whose text a visitor never sees. */
+const visibleHtml = (html: string) =>
+  html.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|template)\b[\s\S]*?<\/\1\s*>/gi, ' ');
+
+/** A link as written in the HTML: its address and the label a visitor reads (its text, or for a picture link its alt text or aria-label). */
+export interface SourceLink {
+  href: string;
+  label: string;
+}
+
+export function sourceLinks(html: string): SourceLink[] {
+  const out: SourceLink[] = [];
+  const re = /<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi;
+  const clean = visibleHtml(html);
+  for (let m = re.exec(clean); m !== null && out.length < 5000; m = re.exec(clean)) {
+    const href = attr(m[1], 'href');
+    if (href === null) continue;
+    let label = attr(m[1], 'aria-label') ?? '';
+    if (!label.trim()) label = textOf(m[2]);
+    if (!label.trim()) {
+      const alts: string[] = [];
+      for (const img of m[2].matchAll(/<(img|svg)\b[^>]*>/gi)) {
+        const alt = attr(img[0], 'alt') ?? attr(img[0], 'aria-label') ?? attr(img[0], 'title');
+        if (alt) alts.push(alt);
+      }
+      label = alts.join(' ');
+    }
+    if (!label.trim()) label = attr(m[1], 'title') ?? '';
+    out.push({ href, label: label.trim() });
+  }
+  return out;
+}
+
+/** A label reduced to what matters for comparing it: lower case, letters and digits, single spaces. */
+export function normalizeLabel(label: string): string {
+  return label
+    .toLowerCase()
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter(Boolean)
+    .join(' ');
+}
+
+/** The page's title and first main heading, as written. */
+export function titleAndHeading(html: string): { title: string; heading: string } {
+  const clean = visibleHtml(html);
+  const title = /<title\b[^>]*>([\s\S]*?)<\/title\s*>/i.exec(html);
+  const h1 = /<h1\b[^>]*>([\s\S]*?)<\/h1\s*>/i.exec(clean);
+  return { title: title ? textOf(title[1]) : '', heading: h1 ? textOf(h1[1]) : '' };
+}
+
+/** True when a page's text has no HTML tags at all: plain text saved as .html. */
+export function isPlainText(html: string): boolean {
+  return html.trim() !== '' && !/<\s*[a-z!]/i.test(html);
+}
+
+/**
+ * Files a page or stylesheet asks the browser to load: stylesheets, images
+ * and fonts. `from` is the file the reference is written in. Each comes back
+ * as written and as resolved: a site path, or `outside` with the address.
+ */
+export interface Reference {
+  /** The site file the reference is written in. */
+  from: string;
+  /** The site path it points at, or the outside address. */
+  target: string;
+  outside: boolean;
+}
+
+function resolveReference(raw: string, from: string): Reference | null {
+  const value = raw.trim();
+  if (value === '' || value.startsWith('#') || /^(data|about|blob|javascript):/i.test(value)) return null;
+  let resolved: URL;
+  try {
+    resolved = new URL(value, urlOf(from));
+  } catch {
+    return null;
+  }
+  if (resolved.origin !== SITE_ORIGIN) return { from, target: resolved.href, outside: true };
+  const path = pathOfUrl(resolved.href);
+  return path === null ? { from, target: resolved.href, outside: true } : { from, target: path, outside: false };
+}
+
+function cssReferences(css: string, from: string): Reference[] {
+  const out: Reference[] = [];
+  const clean = css.replace(/\/\*[\s\S]*?\*\//g, ' ');
+  for (const m of clean.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)\s]*))\s*\)/gi)) {
+    const ref = resolveReference(decodeEntities(m[1] ?? m[2] ?? m[3] ?? ''), from);
+    if (ref) out.push(ref);
+  }
+  for (const m of clean.matchAll(/@import\s+(?:"([^"]*)"|'([^']*)')/gi)) {
+    const ref = resolveReference(m[1] ?? m[2] ?? '', from);
+    if (ref) out.push(ref);
+  }
+  return out;
+}
+
+/** References in a page's HTML: stylesheets, images, and url()s in its own CSS. */
+export function pageReferences(html: string, from: string): Reference[] {
+  const out: Reference[] = [];
+  const clean = html.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|template)\b[\s\S]*?<\/\1\s*>/gi, ' ');
+  for (const m of clean.matchAll(/<link\b[^>]*>/gi)) {
+    const rel = (attr(m[0], 'rel') ?? '').toLowerCase().split(/\s+/);
+    if (!rel.includes('stylesheet')) continue;
+    const ref = resolveReference(attr(m[0], 'href') ?? '', from);
+    if (ref) out.push(ref);
+  }
+  for (const m of clean.matchAll(/<img\b[^>]*>/gi)) {
+    const ref = resolveReference(attr(m[0], 'src') ?? '', from);
+    if (ref) out.push(ref);
+  }
+  for (const m of clean.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style\s*>/gi)) out.push(...cssReferences(m[1], from));
+  for (const m of clean.matchAll(/\sstyle\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)) out.push(...cssReferences(decodeEntities(m[1] ?? m[2] ?? ''), from));
+  return out;
+}
+
+/** References written in a stylesheet of the site: url()s and @imports. */
+export function stylesheetReferences(css: string, from: string): Reference[] {
+  return cssReferences(css, from);
 }

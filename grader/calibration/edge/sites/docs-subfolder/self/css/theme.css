@@ -1,0 +1,8 @@
+.top{background:#111827}
+.top b{color:#fbbf24}
+.top a{color:#e5e7eb}
+.top a.on{color:#fbbf24;font-weight:700}
+h1{color:#111827}
+pre{background:#1f2937;color:#a7f3d0}
+.cta{display:inline-block;background:#fbbf24;color:#111827;padding:12px 22px;border-radius:6px;font-weight:700;text-decoration:none}
+footer{background:#f9fafb;color:#6b7280}

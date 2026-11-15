@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e6ecf2; font-family: "Segoe UI", Tahoma, sans-serif; color: #1f2a37; }
+  main { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
+  header { border-bottom: 2px solid #cfd8e3; padding-bottom: 18px; margin-bottom: 28px; }
+  h1 { font-size: 34px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.5px; }
+  header p { margin: 0; font-size: 16px; color: #4b5563; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .alert { display: grid; grid-template-columns: 36px 1fr auto; gap: 16px; align-items: center;
+    padding: 20px 22px; border-radius: 4px; border-left: 6px solid; }
+  .alert svg { width: 36px; height: 36px; display: block; }
+  .alert h2 { font-size: 17px; margin: 0 0 4px; }
+  .alert p { margin: 0; font-size: 15px; line-height: 1.45; }
+  .alert button { background: none; border: 0; padding: 6px 0; font: inherit; font-size: 14px; font-weight: 600;
+    text-decoration: underline; cursor: pointer; color: inherit; white-space: nowrap; }
+  .ok { background: #e3f4ea; border-color: #2f8f5b; color: #17482e; }
+  .info { background: #e2edfb; border-color: #2f6fcb; color: #173a6b; }
+  .warn { background: #fdf1d9; border-color: #c98a12; color: #5c3d05; }
+  .err { background: #fbe4e2; border-color: #c8392f; color: #6d1b15; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Notifications</h1>
+    <p>Four messages from the last 24 hours</p>
+  </header>
+  <ul>
+    <li class="alert ok">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#2f8f5b"/><path d="M10 18.5l5.5 5.5L26 13" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><h2>Payment received</h2><p>Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</p></div>
+      <button type="button">View invoice</button>
+    </li>
+    <li class="alert info">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#2f6fcb"/><circle cx="18" cy="11" r="2.2" fill="#fff"/><rect x="16.2" y="15.5" width="3.6" height="11" rx="1.5" fill="#fff"/></svg>
+      <div><h2>New version available</h2><p>Version 4.2 adds shared workspaces and faster PDF exports.</p></div>
+      <button type="button">See what's new</button>
+    </li>
+    <li class="alert warn">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#c98a12"/><rect x="16.2" y="8.5" width="3.6" height="12" rx="1.5" fill="#fff"/><circle cx="18" cy="25.5" r="2.2" fill="#fff"/></svg>
+      <div><h2>Storage almost full</h2><p>You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</p></div>
+      <button type="button">Upgrade plan</button>
+    </li>
+    <li class="alert err">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="18" fill="#c8392f"/><path d="M12 12l12 12M24 12L12 24" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+      <div><h2>Sync failed</h2><p>We could not reach Google Drive. Your last 3 changes are saved on this device.</p></div>
+      <button type="button">Try again</button>
+    </li>
+  </ul>
+</main>
+</body>
+</html>

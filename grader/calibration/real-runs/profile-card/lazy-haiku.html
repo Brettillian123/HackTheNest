@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Maya Renner – Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #2e1065 0%, #6d28d9 55%, #a78bfa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 800px;
+    color: #1e1b4b;
+  }
+  .card {
+    width: 360px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(46, 16, 101, 0.45);
+    overflow: hidden;
+    text-align: center;
+  }
+  .banner {
+    height: 110px;
+    background: linear-gradient(90deg, #7c3aed, #c084fc);
+  }
+  .avatar {
+    width: 96px;
+    height: 96px;
+    margin: -48px auto 0;
+    border-radius: 50%;
+    background: #ede9fe;
+    border: 5px solid #ffffff;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 34px;
+    font-weight: bold;
+    color: #6d28d9;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 12px 0 4px;
+    color: #2e1065;
+  }
+  .title {
+    font-size: 14px;
+    color: #7c3aed;
+    margin: 0 0 18px;
+  }
+  .stats {
+    display: flex;
+    border-top: 1px solid #ede9fe;
+    border-bottom: 1px solid #ede9fe;
+  }
+  .stat {
+    flex: 1;
+    padding: 14px 0;
+  }
+  .stat + .stat { border-left: 1px solid #ede9fe; }
+  .num {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4c1d95;
+  }
+  .label {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .actions {
+    padding: 20px 24px 24px;
+  }
+  .follow {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-radius: 999px;
+    background: #7c3aed;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+  }
+  .follow:hover { background: #6d28d9; }
+  .meta {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="banner"></div>
+    <div class="avatar">MR</div>
+    <h1>Maya Renner</h1>
+    <p class="title">Senior Product Designer</p>
+    <div class="stats">
+      <div class="stat"><span class="num">248</span><span class="label">Posts</span></div>
+      <div class="stat"><span class="num">12.4k</span><span class="label">Followers</span></div>
+      <div class="stat"><span class="num">310</span><span class="label">Following</span></div>
+    </div>
+    <div class="actions">
+      <button class="follow" type="button">Follow</button>
+      <p class="meta">Profile in the people directory of a design community app</p>
+    </div>
+  </div>
+</body>
+</html>

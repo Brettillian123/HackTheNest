@@ -1,0 +1,106 @@
+{
+  "slug": "shopping-cart",
+  "title": "Shopping cart",
+  "level": 2,
+  "category": "Forms, commerce and documents",
+  "brief": "Harbor & Pine sells clothing and accessories online, and we need the cart page shoppers see just before checkout. A simple white top bar holds our name in a serif and a 'Continue shopping' link. The page heading says how many items are in the cart. On the left, a list of the three items, each with a small drawn thumbnail, the product name, its variant, a remove link, a quantity stepper with minus and plus buttons, and the line price. On the right, a promo code box with an Apply button, and an order summary card with subtotal, shipping, tax and total, then a big Checkout button. The figures must add up. Keep it tidy and reassuring, with one strong royal blue for the main action.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "A top bar with the brand 'Harbor & Pine' and a 'Continue shopping' link",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "The heading reads 'Your cart (3 items)'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Three line items, each with a thumbnail, name, variant, quantity control, price and a remove link",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Items are Linen Overshirt (Size M, Sand, 1, $68.00), Merino Crew Socks (One size, Charcoal, 2, $24.00 at $12.00 each) and Canvas Tote Bag (Natural, 1, $32.00)",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "Each quantity stepper is a number field with a visible label and real minus and plus buttons",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "A promo code field with a visible label, placeholder and an Apply button",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r7",
+      "text": "The order summary shows subtotal $124.00, shipping $6.00, tax (8%) $9.92 and total $139.92, and they add up",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r8",
+      "text": "The total stands out from the other lines and a full-width Checkout button sits under it",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r9",
+      "text": "Items on the left, promo and summary in a narrower column on the right",
+      "kind": "structure",
+      "exact": false
+    },
+    {
+      "id": "r10",
+      "text": "Text is easy to read against its background",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Harbor & Pine",
+    "Continue shopping",
+    "Your cart (3 items)",
+    "Linen Overshirt",
+    "Size M, Sand",
+    "$68.00",
+    "Merino Crew Socks",
+    "One size, Charcoal",
+    "$24.00",
+    "$12.00 each",
+    "Canvas Tote Bag",
+    "Natural",
+    "$32.00",
+    "Remove",
+    "Qty",
+    "Promo code",
+    "Apply",
+    "Order summary",
+    "Subtotal",
+    "$124.00",
+    "Shipping",
+    "$6.00",
+    "Tax (8%)",
+    "$9.92",
+    "Total",
+    "$139.92",
+    "Checkout",
+    "Free returns within 30 days"
+  ],
+  "designNotes": [
+    "tidy and reassuring",
+    "white cards on a very light grey page",
+    "one royal blue used for the checkout action",
+    "red remove links"
+  ],
+  "maxPromptChars": 4000
+}

@@ -1,0 +1,36 @@
+{
+  "_note": "Human bands, written before any attempt was graded. Scale: 100 identical in effect; 85-95 right with one or two small things; 70-85 right with several flaws or one obvious one; 50-70 recognisably the plan asked for with a big piece wrong or missing; 25-50 some of it; 5-25 little; 0-5 empty or unrelated. Fix the grader, never these bands.",
+  "three-page-site-plan": {
+    "reference": { "band": [100, 100], "why": "The reference plan." },
+    "a1-renamed": { "band": [88, 100], "why": "Same plan in effect: other ids, titles and owners, plus a separate merge step after the fixes." },
+    "a2-one-chain": { "band": [68, 82], "why": "Correct and safe, but styles and the three pages run one after another for no reason." },
+    "a3-shared-stylesheet": { "band": [62, 76], "why": "Two page workers edit site/styles.css at the same time as the styles worker: one real collision, three pairs." },
+    "a4-no-review": { "band": [52, 66], "why": "The required review of the contact form is missing; fixes follow the pages directly." },
+    "a5-cycle": { "band": [50, 65], "why": "Review and fix wait on each other with no declared loop, so the plan cannot start its last two steps." },
+    "a6-no-styles": { "band": [60, 74], "why": "No shared stylesheet step; each page styles itself, against the brief." },
+    "a7-bloated": { "band": [58, 72], "why": "The right core plan buried in nineteen extra steps that change and prove nothing." },
+    "a8-vague": { "band": [60, 75], "why": "Right structure, but every proof is 'make sure it works', titles are 'Step 1' and there are no budgets." }
+  },
+  "fix-loop-plan": {
+    "reference": { "band": [100, 100], "why": "The reference plan." },
+    "b1-renamed": { "band": [88, 100], "why": "Same plan with other names, an extra spec step and a cap of 3." },
+    "b2-no-exit": { "band": [62, 76], "why": "The loop has a cap but no exit test, so it always runs four rounds and cannot stop early." },
+    "b3-no-cap": { "band": [68, 82], "why": "Good exit test but no maxRounds: a loop that may never end if the tests never pass." },
+    "b4-leak": { "band": [55, 70], "why": "The builder reads the held-out tests, so the final check proves nothing." },
+    "b5-undeclared-cycle": { "band": [45, 60], "why": "Grade and fix wait on each other but no loop is declared: no exit test, no cap, no held-out note." },
+    "b6-no-held-out": { "band": [50, 65], "why": "No final held-out check at all and the loop names no held-out set." },
+    "b7-bloated": { "band": [58, 72], "why": "The right loop plan with seventeen needless steps around it." },
+    "b8-shared-file": { "band": [66, 80], "why": "A docstring step edits src/price.py while the fix loop is changing it." }
+  },
+  "verified-research": {
+    "reference": { "band": [100, 100], "why": "The reference plan." },
+    "c1-renamed-merged": { "band": [88, 100], "why": "Same plan with other names; revise and publish merged into one valid step." },
+    "c2-chained-research": { "band": [78, 90], "why": "The second researcher waits for the first for no reason; otherwise right." },
+    "c3-shared-index": { "band": [65, 80], "why": "Both researchers also write notes/index.md at the same time." },
+    "c4-no-verify": { "band": [40, 55], "why": "Nothing is verified: the draft goes straight to publishing, which is the point of the job." },
+    "c5-review-before-draft": { "band": [55, 70], "why": "The verify step runs beside the draft instead of after it, so it checks nothing." },
+    "c6-no-publish": { "band": [55, 70], "why": "FINDINGS.md, the deliverable, is never written." },
+    "c7-vague": { "band": [58, 72], "why": "Right structure but proofs like 'make sure it is accurate' and no budgets." },
+    "c8-cycle": { "band": [48, 62], "why": "Draft and verify wait on each other with no declared loop." }
+  }
+}

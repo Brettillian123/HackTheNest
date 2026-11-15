@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor — One calm inbox for your whole team</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f8f8f4;
+    color: #183b3b;
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { min-height: 100vh; overflow: hidden; position: relative; }
+  header {
+    height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1120px;
+    margin: 0 auto;
+    border-bottom: 1px solid #e8ebe5;
+    position: relative;
+    z-index: 2;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; letter-spacing: -.6px; }
+  .mark {
+    width: 29px; height: 29px; border-radius: 50%;
+    background: #d9eee6; display: grid; place-items: center; position: relative;
+  }
+  .mark:before {
+    content: ""; width: 12px; height: 8px; border: 2px solid #237765;
+    border-top: 0; border-radius: 0 0 10px 10px; transform: translateY(-1px);
+  }
+  .mark:after { content: ""; position: absolute; width: 2px; height: 6px; background: #237765; top: 6px; }
+  nav { display: flex; align-items: center; gap: 36px; }
+  nav a { color: #526767; text-decoration: none; font-size: 14px; }
+  nav .signin { color: #183b3b; font-weight: 600; margin-left: 8px; }
+  main { max-width: 1120px; margin: 0 auto; }
+  .hero {
+    min-height: 382px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    align-items: center;
+    gap: 44px;
+    padding: 44px 20px 38px;
+  }
+  .hero-copy { max-width: 590px; }
+  h1 {
+    font-size: 54px; line-height: 1.08; letter-spacing: -2.8px;
+    margin: 0 0 20px; font-weight: 700; max-width: 590px;
+  }
+  .subhead { color: #607271; font-size: 17px; line-height: 1.65; max-width: 525px; margin: 0 0 27px; }
+  .button {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 14px 22px; color: white; background: #237765; border-radius: 7px;
+    font-size: 14px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 5px 12px #23776524;
+  }
+  .art {
+    height: 274px; position: relative; display: grid; place-items: center;
+    border-radius: 48% 52% 43% 57% / 49% 40% 60% 51%;
+    background: #eaf2e9;
+  }
+  .orb { position: absolute; width: 11px; height: 11px; border-radius: 50%; background: #edbd83; right: 51px; top: 38px; }
+  .spark { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #8ebcaf; left: 43px; bottom: 53px; }
+  .inbox {
+    width: 300px; height: 194px; border: 1px solid #e7eae4; border-radius: 12px;
+    background: #fff; padding: 17px 18px; box-shadow: 0 20px 45px #24594a18;
+    transform: rotate(-2deg);
+  }
+  .ui-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 13px; border-bottom: 1px solid #eef0eb; }
+  .tiny-title { width: 71px; height: 7px; border-radius: 5px; background: #365d58; }
+  .tiny-pill { width: 40px; height: 17px; border-radius: 10px; background: #e3f1e9; }
+  .row { height: 41px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f1ed; }
+  .avatar { width: 22px; height: 22px; border-radius: 50%; background: #e8c9ad; flex: none; }
+  .avatar.two { background: #b8d8ca; }
+  .avatar.three { background: #d8d0ea; }
+  .lines { flex: 1; }
+  .line { height: 5px; border-radius: 4px; background: #dfe7e2; margin: 4px 0; }
+  .line.long { width: 82%; background: #aebfba; }
+  .line.short { width: 53%; }
+  .badge { width: 22px; height: 6px; border-radius: 4px; background: #e9c895; }
+  .features { padding: 10px 20px 45px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card {
+    background: #fff; border: 1px solid #e9ece6; border-radius: 10px;
+    padding: 23px 24px 24px; min-height: 156px;
+  }
+  .icon {
+    width: 34px; height: 34px; border-radius: 9px; background: #e8f3ed;
+    position: relative; margin-bottom: 15px;
+  }
+  .icon:before { content: ""; position: absolute; inset: 10px 8px; border: 1.5px solid #3c8774; border-radius: 3px; }
+  .icon.sort:before { inset: 10px 9px; border: 0; background: linear-gradient(#3c8774 0 0) 0 0/15px 2px no-repeat, linear-gradient(#3c8774 0 0) 0 6px/11px 2px no-repeat, linear-gradient(#3c8774 0 0) 0 12px/7px 2px no-repeat; }
+  .icon.report:before { inset: 9px; border: 0; background: linear-gradient(to top, #3c8774 0 9px, transparent 9px) 0 6px/4px 10px no-repeat, linear-gradient(to top, #3c8774 0 14px, transparent 14px) 7px 1px/4px 15px no-repeat, linear-gradient(to top, #3c8774 0 11px, transparent 11px) 14px 4px/4px 12px no-repeat; }
+  h2 { margin: 0 0 8px; font-size: 16px; letter-spacing: -.2px; }
+  .card p { margin: 0; color: #687876; font-size: 14px; line-height: 1.55; }
+  footer {
+    border-top: 1px solid #e8ebe5; color: #778582; font-size: 12px;
+    text-align: center; padding: 20px 15px 22px;
+  }
+  @media (max-width: 760px) {
+    header { margin: 0 22px; height: 72px; }
+    nav { gap: 14px; } nav a { font-size: 12px; }
+    .hero { grid-template-columns: 1fr; padding: 54px 24px 30px; gap: 28px; }
+    h1 { font-size: 43px; }
+    .art { max-width: 420px; width: 100%; margin: 0 auto; }
+    .features { padding: 10px 24px 35px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand"><span class="mark"></span><span>Harbor</span></div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#customers">Customers</a>
+      <a class="signin" href="#signin">Sign in</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>One calm inbox for your whole team</h1>
+        <p class="subhead">Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.</p>
+        <a class="button" href="#trial">Start free trial</a>
+      </div>
+      <div class="art" aria-hidden="true">
+        <span class="orb"></span><span class="spark"></span>
+        <div class="inbox">
+          <div class="ui-top"><span class="tiny-title"></span><span class="tiny-pill"></span></div>
+          <div class="row"><span class="avatar"></span><span class="lines"><i class="line long"></i><i class="line short"></i></span><span class="badge"></span></div>
+          <div class="row"><span class="avatar two"></span><span class="lines"><i class="line long"></i><i class="line short"></i></span></div>
+          <div class="row"><span class="avatar three"></span><span class="lines"><i class="line long"></i><i class="line short"></i></span><span class="badge"></span></div>
+        </div>
+      </div>
+    </section>
+    <section class="features" id="features">
+      <div class="cards">
+        <article class="card">
+          <div class="icon"></div>
+          <h2>Shared inbox</h2>
+          <p>Assign every message to a teammate and see who is replying.</p>
+        </article>
+        <article class="card">
+          <div class="icon sort"></div>
+          <h2>Smart sorting</h2>
+          <p>Urgent requests rise to the top while newsletters wait quietly.</p>
+        </article>
+        <article class="card">
+          <div class="icon report"></div>
+          <h2>Weekly reports</h2>
+          <p>Track reply times and workload with a clear summary each Monday.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>© 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.</footer>
+</div>
+</body>
+</html>

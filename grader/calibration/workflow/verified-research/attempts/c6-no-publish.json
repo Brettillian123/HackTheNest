@@ -1,0 +1,111 @@
+{
+  "goal": "report/FINDINGS.md answers the question with every claim tied to a checked source, and lists what was not verified",
+  "steps": [
+    {
+      "id": "scope",
+      "title": "Write the question and sub-questions",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/QUESTION.md states the question and lists the sub-questions to answer",
+      "budget": {
+        "toolCalls": 10
+      }
+    },
+    {
+      "id": "research-a",
+      "title": "Collect sources on Claude Code and Codex",
+      "owner": "researcher-a",
+      "dependsOn": [
+        "scope"
+      ],
+      "changes": [
+        "notes/sources-a.md"
+      ],
+      "kind": "research",
+      "reads": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/sources-a.md has a URL and a quoted line for each of its sub-questions",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "research-b",
+      "title": "Collect sources on Gemini CLI",
+      "owner": "researcher-b",
+      "dependsOn": [
+        "scope"
+      ],
+      "changes": [
+        "notes/sources-b.md"
+      ],
+      "kind": "research",
+      "reads": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/sources-b.md has a URL and a quoted line for each of its sub-questions",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "draft",
+      "title": "Write the draft report",
+      "owner": "writer",
+      "dependsOn": [
+        "research-a",
+        "research-b"
+      ],
+      "changes": [
+        "report/draft.md"
+      ],
+      "reads": [
+        "notes/**"
+      ],
+      "proof": "report/draft.md answers each sub-question and every claim cites a URL from the notes",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "verify",
+      "title": "Verify every claim against its source",
+      "owner": "verifier",
+      "dependsOn": [
+        "draft"
+      ],
+      "changes": [
+        "notes/verification.md"
+      ],
+      "kind": "review",
+      "reads": [
+        "report/draft.md",
+        "notes/**"
+      ],
+      "proof": "notes/verification.md lists each claim as confirmed, corrected or unverified, with its source URL",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "revise",
+      "title": "Revise the draft from the verification",
+      "owner": "writer",
+      "dependsOn": [
+        "verify"
+      ],
+      "changes": [
+        "report/draft.md"
+      ],
+      "proof": "Every claim marked corrected in notes/verification.md is changed in report/draft.md",
+      "budget": {
+        "toolCalls": 15
+      }
+    }
+  ],
+  "loops": []
+}

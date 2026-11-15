@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightleaf — Plan your week in five minutes</title>
+<style>
+:root{--ink:#17382c;--green:#26774e;--lime:#c9eb79;--muted:#63766b;--paper:#f8faf5;--line:#e3e9df;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif;font-size:15px}
+a{color:inherit;text-decoration:none}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 max(calc((100% - 1120px)/2),40px);background:#fff;border-bottom:1px solid #edf0eb}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;letter-spacing:-.6px}
+.logo{width:30px;height:30px;border-radius:10px;background:var(--green);display:grid;place-items:center;color:var(--lime);font-size:19px}
+nav{display:flex;gap:34px;color:#53665c;font-size:14px}
+nav a:hover{color:var(--green)}
+.header-cta,.button{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:white;padding:12px 19px;border-radius:9px;font-weight:700;font-size:14px}
+.hero{max-width:1120px;margin:0 auto;padding:82px 0 80px;display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center}
+.eyebrow{color:var(--green);font-weight:700;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;margin:0 0 18px}
+h1{font-size:58px;line-height:1.04;letter-spacing:-2.6px;margin:0 0 22px;max-width:540px}
+.lead{font-size:18px;line-height:1.65;color:var(--muted);max-width:500px;margin:0 0 27px}
+.hero-actions{display:flex;align-items:center;gap:20px}
+.button{padding:15px 23px}
+.rating{color:#52665b;font-size:13px}
+.rating strong{color:#c28b25;letter-spacing:1px;font-size:16px}
+.art{height:355px;position:relative;border-radius:24px;background:#e9f2df;overflow:hidden;padding:27px;box-shadow:0 18px 50px #23453212}
+.art:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:#d5e8bd;right:-72px;top:-99px}
+.calendar{position:relative;background:white;border:1px solid #e6ece3;border-radius:14px;padding:20px 19px;box-shadow:0 18px 38px #27473516}
+.cal-top{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:18px}
+.cal-top span:last-child{font-size:12px;color:#698074;font-weight:400}
+.days,.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.days{font-size:10px;color:#849187;text-align:center;margin-bottom:9px}
+.day{height:183px;background:#f7f9f5;border-radius:8px;padding:9px 6px;position:relative}
+.day b{display:block;text-align:center;font-size:11px;margin-bottom:10px;color:#53665c}
+.task{font-size:9px;line-height:1.35;padding:7px 6px;border-radius:5px;margin-bottom:7px;color:#28563e;background:#dff0d7}
+.task.gold{background:#f8edc9;color:#80652a}
+.task.pink{background:#f3e2d9;color:#885a44}
+.task.dark{background:#d8e9e4;color:#35645a}
+.floating{position:absolute;right:17px;bottom:17px;background:#fff;border-radius:12px;padding:12px 15px;box-shadow:0 8px 24px #2747351a;font-size:11px;color:#66766c}
+.floating b{display:block;color:var(--ink);font-size:13px;margin-bottom:4px}
+section{padding:76px 24px}
+.wrap{max-width:1120px;margin:auto}
+.section-head{text-align:center;margin-bottom:38px}
+.section-head .eyebrow{margin-bottom:10px}
+h2{font-size:36px;letter-spacing:-1.2px;margin:0}
+.features{background:#fff}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{border:1px solid var(--line);border-radius:13px;padding:23px 22px;min-height:144px;background:#fff}
+.icon{width:34px;height:34px;border-radius:10px;background:#edf5e8;color:var(--green);display:grid;place-items:center;font-size:17px;margin-bottom:15px}
+.feature h3{font-size:16px;margin:0 0 7px}
+.feature p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+.pricing{background:#f5f8f1}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.plan{background:#fff;border:1px solid var(--line);border-radius:15px;padding:25px;position:relative}
+.plan.popular{border:2px solid var(--green);padding:24px}
+.popular-label{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:11px;font-weight:700;border-radius:20px;padding:6px 13px;white-space:nowrap}
+.plan h3{font-size:18px;margin:0 0 14px}
+.price{font-size:36px;font-weight:700;letter-spacing:-1.5px;margin-bottom:20px}
+.price small{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.plan ul{list-style:none;padding:0;margin:0 0 22px;color:#53665c;font-size:13px;line-height:2}
+.plan li:before{content:"✓";color:var(--green);font-weight:bold;margin-right:9px}
+.plan .button{width:100%;background:#eef4eb;color:var(--green)}
+.plan.popular .button{background:var(--green);color:#fff}
+.customers{background:#fff}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+blockquote{margin:0;border:1px solid var(--line);border-radius:14px;padding:27px;font-size:18px;line-height:1.55;font-weight:600}
+blockquote footer{margin-top:18px;font-size:12px;font-weight:400;color:var(--muted)}
+.signup{background:#edf4e7}
+.signup-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;align-items:center}
+.signup h2{max-width:360px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+label{font-size:12px;color:#52665b;font-weight:700}
+input,select{display:block;width:100%;height:44px;margin-top:7px;padding:0 12px;border:1px solid #dce5d8;border-radius:8px;background:#fff;font:14px Arial,sans-serif;color:var(--ink)}
+form button{grid-column:1/-1;border:0;cursor:pointer;margin-top:3px}
+footer.site-footer{padding:25px max(calc((100% - 1120px)/2),40px);display:flex;justify-content:space-between;align-items:center;color:#6a7b70;font-size:12px;background:#fff}
+.footlinks{display:flex;gap:22px}
+@media(max-width:800px){header{padding:0 22px}nav{display:none}.hero{padding:55px 24px;grid-template-columns:1fr;gap:35px}.hero h1{font-size:46px}.art{height:330px}.feature-grid{grid-template-columns:repeat(2,1fr)}.signup-inner{grid-template-columns:1fr;gap:28px}}
+@media(max-width:520px){.feature-grid,.plans,.quotes{grid-template-columns:1fr}.days,.grid{gap:4px}.day{padding:7px 3px}.task{font-size:8px;padding:5px 3px}.hero h1{font-size:40px}h2{font-size:30px}section{padding:58px 20px}form{grid-template-columns:1fr}.signup-inner{gap:22px}footer.site-footer{padding:22px;gap:15px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="#" aria-label="Brightleaf"><span class="logo">✳</span>Brightleaf</a>
+<nav aria-label="Main navigation"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#customers">Customers</a><a href="#customers">Blog</a><a href="#contact">Contact</a></nav>
+<a class="header-cta" href="#contact">Start free trial</a>
+</header>
+
+<main>
+<section class="hero">
+<div>
+<p class="eyebrow">A calmer way to plan together</p>
+<h1>Plan your week in five minutes</h1>
+<p class="lead">Brightleaf turns scattered tasks, meetings and deadlines into one calm plan your whole team can trust.</p>
+<div class="hero-actions"><a class="button" href="#contact">Start free trial</a><span class="rating"><strong>★</strong> 4.9 from 2,000 teams</span></div>
+</div>
+<div class="art" aria-hidden="true">
+<div class="calendar">
+<div class="cal-top"><span>This week</span><span>May 12 — May 16　⌄</span></div>
+<div class="days"><span>MON 12</span><span>TUE 13</span><span>WED 14</span><span>THU 15</span><span>FRI 16</span></div>
+<div class="grid">
+<div class="day"><b>MON</b><div class="task">Project kickoff</div><div class="task gold">Plan sprint</div><div class="task dark">Focus time</div></div>
+<div class="day"><b>TUE</b><div class="task pink">Design review</div><div class="task">Write brief</div></div>
+<div class="day"><b>WED</b><div class="task dark">Focus time</div><div class="task gold">Team sync</div><div class="task">Milestone</div></div>
+<div class="day"><b>THU</b><div class="task">Launch prep</div><div class="task pink">1:1 check-in</div></div>
+<div class="day"><b>FRI</b><div class="task gold">Weekly review</div><div class="task dark">Wrap up</div></div>
+</div>
+</div>
+<div class="floating"><b>Week at a glance</b>Everything in its right place ✨</div>
+</div>
+</section>
+
+<section class="features" id="features">
+<div class="wrap">
+<div class="section-head"><p class="eyebrow">Features</p><h2>Why teams choose Brightleaf</h2></div>
+<div class="feature-grid">
+<article class="feature"><div class="icon">▦</div><h3>Shared calendars</h3><p>See every project, meeting and deadline on one calendar your whole team can edit.</p></article>
+<article class="feature"><div class="icon">◷</div><h3>Smart reminders</h3><p>Get a nudge before a task slips, not after the deadline has passed.</p></article>
+<article class="feature"><div class="icon">↻</div><h3>Weekly reviews</h3><p>A five-minute summary every Friday shows what got done and what moved.</p></article>
+<article class="feature"><div class="icon">▤</div><h3>Time blocking</h3><p>Drag tasks onto your week and protect time for deep, focused work.</p></article>
+<article class="feature"><div class="icon">⌘</div><h3>Integrations</h3><p>Connect Slack, Gmail and GitHub so tasks arrive where you already plan.</p></article>
+<article class="feature"><div class="icon">⌁</div><h3>Reports</h3><p>Spot overloaded teammates early with simple charts of planned hours.</p></article>
+</div>
+</div>
+</section>
+
+<section class="pricing" id="pricing">
+<div class="wrap">
+<div class="section-head"><h2>Simple pricing</h2></div>
+<div class="plans">
+<article class="plan"><h3>Starter</h3><div class="price">$19 <small>/month</small></div><ul><li>Up to 5 people</li><li>3 projects</li><li>Email support</li></ul><a class="button" href="#contact">Choose Starter</a></article>
+<article class="plan popular"><span class="popular-label">Most popular</span><h3>Team</h3><div class="price">$49 <small>/month</small></div><ul><li>Up to 25 people</li><li>Unlimited projects</li><li>Priority support</li></ul><a class="button" href="#contact">Choose Team</a></article>
+<article class="plan"><h3>Business</h3><div class="price">$99 <small>/month</small></div><ul><li>Unlimited people</li><li>SSO and audit log</li><li>Dedicated manager</li></ul><a class="button" href="#contact">Choose Business</a></article>
+</div>
+</div>
+</section>
+
+<section class="customers" id="customers">
+<div class="wrap">
+<div class="section-head"><h2>What customers say</h2></div>
+<div class="quotes">
+<blockquote>“Brightleaf cut our Monday planning meeting from an hour to ten minutes.”<footer>— Priya Shah, Head of Operations, Northwind</footer></blockquote>
+<blockquote>“The Friday review alone is worth the price.”<footer>— Tom Becker, Engineering Lead, Lumen Labs</footer></blockquote>
+</div>
+</div>
+</section>
+
+<section class="signup" id="contact">
+<div class="wrap signup-inner">
+<div><p class="eyebrow">Brightleaf</p><h2>Get early access</h2></div>
+<form>
+<label>Name<input type="text" name="name" autocomplete="name"></label>
+<label>Work email<input type="email" name="email" autocomplete="email"></label>
+<label>Company<input type="text" name="company"></label>
+<label>Team size<select name="team-size"><option value="" selected></option><option>Up to 5 people</option><option>Up to 25 people</option><option>Unlimited people</option></select></label>
+<button class="button" type="button">Request access</button>
+</form>
+</div>
+</section>
+</main>
+<footer class="site-footer"><span>© 2026 Brightleaf Inc.</span><div class="footlinks"><a href="#contact">Privacy</a><a href="#contact">Terms</a></div></footer>
+</body>
+</html>

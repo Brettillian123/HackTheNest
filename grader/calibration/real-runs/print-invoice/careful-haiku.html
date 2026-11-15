@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice INV-2026-0418 | Northwind Print Co.</title>
+<style>
+  :root { --teal: #0f7c80; --teal-dark: #0a5c60; --teal-tint: #e6f3f3; --ink: #1f2a2e; --muted: #5d6b70; --line: #d5dfe1; --amber: #f2b233; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: #e4e8ea; padding: 40px 0; font-size: 14px; line-height: 1.45; }
+  .sheet { width: 880px; margin: 0 auto; background: #fff; position: relative; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+  .strip { height: 12px; background: var(--teal); }
+  .inner { padding: 40px 48px 44px; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .brand { display: flex; gap: 16px; align-items: center; }
+  .logo { width: 64px; height: 64px; border-radius: 50%; background: var(--teal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 34px; font-weight: bold; }
+  .seller-name { font-size: 18px; font-weight: bold; margin: 0; }
+  .seller-addr { color: var(--muted); margin: 2px 0 0; }
+  .doc { text-align: right; }
+  h1 { margin: 0; font-size: 30px; letter-spacing: .32em; color: var(--teal); font-weight: normal; text-transform: uppercase; }
+  .docno { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+  .parties { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 36px; }
+  h2 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); margin: 0 0 8px; font-weight: bold; }
+  address { font-style: normal; line-height: 1.5; }
+  .meta { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; }
+  .meta dt { color: var(--muted); }
+  .meta dd { margin: 0; text-align: right; font-weight: bold; }
+  .pill { display: inline-block; background: var(--amber); color: #3d2b00; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 999px; letter-spacing: .04em; }
+  table { width: 100%; border-collapse: collapse; margin-top: 34px; }
+  caption { text-align: left; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: bold; padding-bottom: 8px; }
+  th, td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { background: var(--teal-tint); color: var(--teal-dark); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; text-align: left; border-bottom: 2px solid var(--teal); }
+  th.num, td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.code { font-family: "Courier New", Courier, monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+  tbody tr:nth-child(even) td { background: #fafcfc; }
+  .totals { display: flex; justify-content: flex-end; margin-top: 22px; }
+  .totals dl { margin: 0; width: 330px; }
+  .totals .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .totals dt { color: var(--muted); }
+  .totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .totals .due { border-bottom: none; border-top: 2px solid var(--teal); margin-top: 8px; padding-top: 12px; align-items: baseline; }
+  .totals .due dt { color: var(--teal-dark); font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+  .totals .due dd { color: var(--teal); font-size: 32px; font-weight: bold; }
+  .foot { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  .foot h2 { margin-bottom: 6px; }
+  .foot p { margin: 0 0 6px; }
+  .closing { margin-top: 28px; text-align: center; color: var(--muted); font-size: 12px; }
+  @page { size: auto; margin: 12mm; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .sheet { width: 100%; box-shadow: none; background: #fff; }
+    .strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .logo, thead th, .pill, .totals .due, tbody tr:nth-child(even) td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .inner { padding: 28px 36px 32px; }
+    tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <div class="strip"></div>
+  <div class="inner">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">N</div>
+        <div>
+          <p class="seller-name">Northwind Print Co.</p>
+          <p class="seller-addr">88 Mill Lane, Leeds LS1 4BX<br>VAT GB 284 1193 56</p>
+        </div>
+      </div>
+      <div class="doc">
+        <h1>Invoice</h1>
+        <p class="docno">No. INV-2026-0418</p>
+      </div>
+    </header>
+
+    <section class="parties" aria-label="Billing and shipping details">
+      <div>
+        <h2>Bill to</h2>
+        <address>
+          <strong>Harbourlight Events Ltd</strong><br>
+          Attn: Marcus Ode<br>
+          12 Quayside Walk<br>
+          Newcastle NE1 3DX
+        </address>
+      </div>
+      <div>
+        <h2>Ship to</h2>
+        <address>
+          <strong>Harbourlight Events Ltd</strong><br>
+          Unit 4, Baltic Works<br>
+          Gateshead NE8 2BA
+        </address>
+      </div>
+      <div>
+        <h2>Details</h2>
+        <dl class="meta">
+          <dt>Issued</dt><dd>3 November 2026</dd>
+          <dt>Due</dt><dd>3 December 2026</dd>
+          <dt>Invoice no.</dt><dd>INV-2026-0418</dd>
+          <dt>PO number</dt><dd>HL-7731</dd>
+          <dt>Status</dt><dd><span class="pill">Awaiting payment</span></dd>
+        </dl>
+      </div>
+    </section>
+
+    <table>
+      <caption>Line items</caption>
+      <thead>
+        <tr>
+          <th scope="col">Description</th>
+          <th scope="col">Code</th>
+          <th scope="col" class="num">Qty</th>
+          <th scope="col" class="num">Unit price</th>
+          <th scope="col" class="num">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Business cards, 16pt matte, double-sided</td><td class="code">BC-216</td><td class="num">2,000</td><td class="num">$0.09</td><td class="num">$180.00</td></tr>
+        <tr><td>Tri-fold brochure, A4, 150gsm gloss</td><td class="code">BR-310</td><td class="num">1,500</td><td class="num">$0.62</td><td class="num">$930.00</td></tr>
+        <tr><td>Pull-up banner, 850 × 2000 mm, with stand</td><td class="code">PB-085</td><td class="num">4</td><td class="num">$145.00</td><td class="num">$580.00</td></tr>
+        <tr><td>Letterhead, 120gsm uncoated</td><td class="code">LH-120</td><td class="num">2,500</td><td class="num">$0.11</td><td class="num">$275.00</td></tr>
+        <tr><td>Presentation folder with pocket</td><td class="code">PF-400</td><td class="num">600</td><td class="num">$1.35</td><td class="num">$810.00</td></tr>
+        <tr><td>Vinyl window decal, custom cut</td><td class="code">VD-022</td><td class="num">6</td><td class="num">$68.00</td><td class="num">$408.00</td></tr>
+        <tr><td>Design proof revisions (hours)</td><td class="code">SV-001</td><td class="num">5</td><td class="num">$75.00</td><td class="num">$375.00</td></tr>
+        <tr><td>Courier delivery, next day</td><td class="code">SH-NXT</td><td class="num">1</td><td class="num">$42.00</td><td class="num">$42.00</td></tr>
+      </tbody>
+    </table>
+
+    <section class="totals" aria-label="Totals">
+      <dl>
+        <div class="row"><dt>Subtotal</dt><dd>$3,600.00</dd></div>
+        <div class="row"><dt>Loyalty discount (5%)</dt><dd>−$180.00</dd></div>
+        <div class="row"><dt>VAT (5%)</dt><dd>$171.00</dd></div>
+        <div class="row due"><dt>Total due</dt><dd>$3,591.00</dd></div>
+      </dl>
+    </section>
+
+    <div class="foot">
+      <section>
+        <h2>Payment details</h2>
+        <p>Bank transfer to Northwind Print Co.</p>
+        <p>Sort code 40-12-76 · Account 31926819</p>
+        <p>Reference: INV-2026-0418</p>
+      </section>
+      <section>
+        <h2>Terms</h2>
+        <p>Payment due within 30 days. A late fee of 2% per month applies to overdue balances.</p>
+      </section>
+    </div>
+
+    <p class="closing">Thank you for your business — questions? accounts@northwindprint.co.uk · 0113 496 0021</p>
+  </div>
+</main>
+</body>
+</html>

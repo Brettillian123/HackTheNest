@@ -1,0 +1,21 @@
+[
+  {
+    "name": "get_order",
+    "description": "TODO",
+    "inputSchema": { "type": "object", "properties": { "order_id": { "type": "string", "description": "TBD" } }, "required": ["order_id"] }
+  },
+  {
+    "name": "search_orders",
+    "description": "Search orders. <insert details here>",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "customer_email": { "type": "string", "description": "TODO" }, "limit": { "type": "integer", "description": "TODO" } },
+      "required": ["customer_email"]
+    }
+  },
+  {
+    "name": "track_shipment",
+    "description": "TODO: describe this tool",
+    "inputSchema": { "type": "object", "properties": { "order_id": { "type": "string", "description": "TBD" } }, "required": ["order_id"] }
+  }
+]

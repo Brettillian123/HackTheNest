@@ -1,0 +1,30 @@
+{
+  "sections": [
+    { "name": "Goal", "aliases": ["Summary", "Purpose", "Problem", "Why"], "importance": "normal" },
+    { "name": "Requirements", "aliases": ["Behaviour", "Behavior", "What to build", "Specification"], "importance": "critical" },
+    { "name": "Out of scope", "aliases": ["Non-goals", "Not in scope", "Not included"], "importance": "normal" },
+    { "name": "Open questions", "aliases": ["Undecided", "Not decided", "Unknowns", "Questions"], "importance": "major", "mustContain": ["decided"] },
+    { "name": "Done when", "aliases": ["Done means", "Definition of done", "Acceptance criteria", "Acceptance tests", "Done"], "importance": "critical" }
+  ],
+  "keyFacts": [
+    { "label": "the endpoint GET /api/expenses/export", "anyOf": ["GET /api/expenses/export"], "importance": "critical", "inCode": true, "section": "Requirements" },
+    { "label": "the response header Content-Type: text/csv", "anyOf": ["Content-Type: text/csv"], "importance": "major", "section": "Requirements" },
+    { "label": "the column order", "anyOf": ["date,amount,category,note"], "importance": "major", "inCode": true, "section": "Requirements" },
+    { "label": "the date format YYYY-MM-DD", "anyOf": ["YYYY-MM-DD"], "section": "Requirements" },
+    { "label": "the row limit of 10,000", "anyOf": ["10,000", "10000"], "section": "Requirements" },
+    { "label": "the status code 413", "anyOf": ["413"], "section": "Requirements" },
+    { "label": "Excel files as out of scope", "anyOf": ["Excel"], "section": "Out of scope" },
+    { "label": "the open question about deleted expenses", "anyOf": ["deleted"], "importance": "major", "section": "Open questions" },
+    { "label": "the test command", "anyOf": ["npm test -- export"], "importance": "critical", "inCode": true, "section": "Done when" }
+  ],
+  "forbidden": [
+    { "label": "the untestable \"should be fast\"", "pattern": "\\b(should|must) be (fast|quick|snappy)\\b" },
+    { "label": "the untestable \"user-friendly\"", "pattern": "\\buser[- ]friendly\\b" },
+    { "label": "the untestable \"intuitive\" or \"seamless\"", "pattern": "\\b(intuitive|seamless)(ly)?\\b" },
+    { "label": "the vague phrase \"as needed\"", "pattern": "\\bas needed\\b" },
+    { "label": "an open-ended \"etc.\" or \"and so on\"", "pattern": "\\betc\\.|\\band so on\\b" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 100 },
+  "order": ["Goal", "Requirements", "Out of scope", "Open questions", "Done when"]
+}

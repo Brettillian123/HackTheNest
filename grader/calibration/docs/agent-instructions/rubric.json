@@ -1,0 +1,27 @@
+{
+  "sections": [
+    { "name": "Overview", "aliases": ["About", "Project overview", "What this is", "Introduction"], "importance": "normal" },
+    { "name": "Setup", "aliases": ["Getting started", "Install", "Installation", "Set up", "Requirements"], "importance": "critical" },
+    { "name": "Commands", "aliases": ["Common commands", "Scripts", "Development commands", "Everyday commands", "Usage"], "importance": "critical" },
+    { "name": "Project layout", "aliases": ["Structure", "Project structure", "Layout", "Where things live", "Code layout", "Folders"], "importance": "normal" },
+    { "name": "Rules", "aliases": ["Conventions", "Guidelines", "Ground rules", "Working rules", "Do and don't", "Constraints"], "importance": "major", "mustContain": ["dependency", "ask"] },
+    { "name": "Testing", "aliases": ["Tests", "Before you finish", "Checks", "Verification", "Before finishing"], "importance": "major", "mustContain": ["npm test", "lint"] }
+  ],
+  "keyFacts": [
+    { "label": "the install command", "anyOf": ["npm ci"], "importance": "critical", "inCode": true, "section": "Setup" },
+    { "label": "the Node version", "anyOf": ["Node 20", "Node.js 20", "Node v20", "Node 20.x", "Node.js 20.x"], "section": "Setup" },
+    { "label": "the dev server command", "anyOf": ["npm run dev"], "importance": "major", "inCode": true },
+    { "label": "the test command", "anyOf": ["npm test", "npm run test"], "importance": "critical", "inCode": true },
+    { "label": "the lint command", "anyOf": ["npm run lint"], "importance": "major", "inCode": true },
+    { "label": "the build command", "anyOf": ["npm run build"], "inCode": true },
+    { "label": "the pages folder", "anyOf": ["src/pages/", "src/pages"], "inCode": true, "section": "Project layout" },
+    { "label": "the components folder", "anyOf": ["src/components/", "src/components"], "inCode": true, "section": "Project layout" },
+    { "label": "the rule never to edit the build output", "anyOf": ["dist/", "dist"], "importance": "major", "inCode": true, "section": "Rules" },
+    { "label": "the rule never to commit the env file", "anyOf": [".env"], "importance": "major", "inCode": true, "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "a yarn or pnpm command", "pattern": "\\b(yarn|pnpm)\\s+(install|add|run|dev|test|build|lint)\\b" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 150 },
+  "order": ["Overview", "Setup", "Commands"]
+}

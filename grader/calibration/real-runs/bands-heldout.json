@@ -1,0 +1,139 @@
+{
+  "restaurant-menu": {
+    "careful-haiku": {
+      "band": [76, 84],
+      "why": "Right centred cream-and-serif menu with dotted leaders, but the dark green footer is gone and spacing is looser, so the page is visibly longer and its bottom reads differently; clean semantic build.",
+      "differences": [
+        "Reference's dark green three-column footer (Find us / Hours / Book) replaced by a centred 'Practical details' text block and a plain cream footer line",
+        "Item rows spaced much more loosely; page about 2190px tall versus 1627px",
+        "Prices carry a $ sign the reference does not use",
+        "Section labels in a light serif instead of bold letter-spaced sans; nav in serif, MENU active in rust",
+        "Header rule spans nearly full width with a green line; title a size larger"
+      ]
+    },
+    "careful-openai": {
+      "band": [78, 86],
+      "why": "Very close in the menu body (centred column, rust section labels, dotted leaders, unprefixed prices), but the footer is a light text row instead of the dark green block; clean semantic build.",
+      "differences": [
+        "Footer is a single light line of address/hours/phone/email instead of the dark green three-column block with headings",
+        "Section labels and nav in light serif rather than bold letter-spaced sans",
+        "Title larger and set slightly higher; header rule inset from the edges",
+        "Item spacing a little looser than the reference"
+      ]
+    },
+    "lazy-haiku": {
+      "band": [62, 70],
+      "why": "Right content and a well-built page, but rearranged and recoloured: dark brown header bar with left-aligned logo, a two-column menu grid, and gold accents instead of a centred single green-and-rust column.",
+      "differences": [
+        "Menu laid out in two columns instead of one centred column",
+        "Dark near-black header bar with left-aligned uppercase title and right-aligned nav, instead of a centred title and nav on cream",
+        "Footer is dark brown/black with gold headings instead of dark green",
+        "Section headings large left-aligned serif with gold underline, not small centred rust labels between rules",
+        "Accent colour family gold/brown instead of green and rust; no h1"
+      ]
+    },
+    "lazy-openai": {
+      "band": [55, 65],
+      "why": "On subject but rearranged: left-aligned header with a 'Restaurant:' prefix, an added large 'Menu' heading, two-column grid, small sans descriptions and a light footer.",
+      "differences": [
+        "Header left-aligned with nav at top right; title text changed to 'Restaurant: Osteria Lume' in brown",
+        "Added a large centred 'Menu' heading and repeated tagline that the reference does not have",
+        "Menu in two columns instead of one centred column",
+        "Footer is a light text row instead of the dark green three-column block",
+        "Descriptions in small sans instead of italic serif; prices with $ in brown",
+        "Overall palette brown/rust with no green"
+      ]
+    }
+  },
+  "kanban-board": {
+    "careful-haiku": {
+      "band": [84, 91],
+      "why": "Near match: same header, four grey columns with counts, tag pills, avatars and dates, struck-through done cards; clean semantic build identical in structure to the reference.",
+      "differences": [
+        "Avatar colours reassigned (NH teal, TS pink, KB orange instead of NH magenta, TS teal, KB indigo)",
+        "Cards slightly tighter and wider; 'Empty states for the dashboard' fits on one line",
+        "Done-card titles a lighter grey strike-through",
+        "Column headings a touch larger"
+      ]
+    },
+    "careful-openai": {
+      "band": [80, 88],
+      "why": "Close layout and clean build, but it marks every In progress and Review due date red and adds a line of team names under the subtitle, plus a softer avatar palette.",
+      "differences": [
+        "All In progress and Review due dates in red, not only the overdue Nov 14",
+        "Extra line of team member names under the sprint subtitle",
+        "Avatar colours changed (muted pink/indigo/teal, reassigned)",
+        "Review column shorter than the others instead of matching heights",
+        "Card text slightly smaller"
+      ]
+    },
+    "lazy-haiku": {
+      "band": [64, 72],
+      "why": "Right board arrangement, but restyled: solid saturated tag chips, avatars moved to the right, coloured left borders, '+ Add a card' buttons and header avatars nobody asked for, and done cards not struck through.",
+      "differences": [
+        "Tags are solid saturated chips (green/purple/blue/red) instead of pale pills; Content tag green instead of yellow",
+        "Avatar moved to the right of each card and date to the left",
+        "Added '+ Add a card' dashed buttons and stacked header avatars",
+        "Done cards not struck through; dates shown in green",
+        "Overdue Nov 14 not highlighted red",
+        "Columns stretch to full viewport height; New card button blue with '+'"
+      ]
+    },
+    "lazy-openai": {
+      "band": [58, 66],
+      "why": "Same four columns and cards, but a different design: no column panels, full names next to avatars, coloured dots and menus on headers, extra BOARD label and a tags legend, done cards not struck; column headings are not headings (no h2).",
+      "differences": [
+        "Columns have no grey panel backgrounds; headers carry coloured dots, inline counts and '...' menus",
+        "Cards show full assignee names beside small pale avatars, with a divider line",
+        "Added 'BOARD' eyebrow, header avatar stack, and a 'Tags' legend row at the bottom",
+        "Done cards not struck through; overdue date not red",
+        "Content tag pink and Bug tag yellow, swapping the reference's colour coding",
+        "Page inset with wide margins; column titles are not h2 headings"
+      ]
+    }
+  },
+  "analytics-dashboard": {
+    "careful-haiku": {
+      "band": [86, 93],
+      "why": "Very close: same navy sidebar, top bar, four KPI cards, indigo bar chart and full orders table with header cells; clean semantic build with only small visible differences.",
+      "differences": [
+        "User avatar placed to the left of 'Maya Chen' instead of right",
+        "Chart taller with gridline at 50k at top; bar heights differ somewhat",
+        "Search box and active nav item rounded into pills",
+        "Sidebar navy slightly more purple; vertical spacing a little tighter"
+      ]
+    },
+    "careful-openai": {
+      "band": [80, 88],
+      "why": "Same layout and look with clean semantic build, but the dark sidebar stops at the first screen height, leaving a white gap down the left of the table, and the chart is compressed.",
+      "differences": [
+        "Sidebar background ends at 800px; white area beneath it beside the orders table",
+        "Chart area shorter with smaller bars and tiny axis labels",
+        "Order numbers bold; table and KPI text slightly smaller",
+        "Avatar a paler orange"
+      ]
+    },
+    "lazy-haiku": {
+      "band": [52, 62],
+      "why": "Right parts but rearranged: the orders table is squeezed into a narrow right column beside the chart, wrapping names and dates and running off a fixed-height screen, and the refund change is green instead of red; many inline styles.",
+      "differences": [
+        "Recent orders moved beside the chart in a narrow column instead of full width below it",
+        "Table cells wrap badly (dates over three lines); table clipped at screen height",
+        "Chart card stretches with large empty white space under the bars",
+        "Refund '+0.4%' shown green instead of red",
+        "Avatar blue instead of orange; no nav element; 12 inline style attributes"
+      ]
+    },
+    "lazy-openai": {
+      "band": [62, 72],
+      "why": "Correct arrangement of KPIs, chart and table, but the sidebar is light instead of dark navy, with added icons, a logo, bell and KPI icons nobody asked for, and the change figures are all grey.",
+      "differences": [
+        "Sidebar is light grey/white instead of dark navy; added 'Workspace' label and Maya Chen moved to sidebar bottom",
+        "Added icons on every nav item, KPI card, a logo mark and a bell icon",
+        "KPI change figures grey instead of green/red",
+        "Bars lighter violet and thinner; chart legend added",
+        "Status pills have dots; table header shaded; no h2 headings; 12 inline style attributes"
+      ]
+    }
+  }
+}

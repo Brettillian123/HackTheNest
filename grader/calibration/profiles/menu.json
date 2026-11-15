@@ -1,0 +1,509 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 1627,
+  "components": [
+    {
+      "id": "c1",
+      "type": "navigation",
+      "name": "the header",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 217
+      },
+      "blocks": [
+        0,
+        1,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": [
+        26
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "list",
+      "name": "the 'ANTIPASTI' list",
+      "rect": {
+        "x": 284,
+        "y": 277,
+        "w": 712,
+        "h": 256
+      },
+      "blocks": [
+        2,
+        3,
+        32
+      ],
+      "children": [
+        {
+          "id": "c2.1",
+          "type": "other",
+          "name": "item 1 of the 'ANTIPASTI' list",
+          "rect": {
+            "x": 284,
+            "y": 311,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            4,
+            33,
+            34,
+            35
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            34
+          ]
+        },
+        {
+          "id": "c2.2",
+          "type": "other",
+          "name": "item 2 of the 'ANTIPASTI' list",
+          "rect": {
+            "x": 284,
+            "y": 371,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            5,
+            36,
+            37,
+            38
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            37
+          ]
+        },
+        {
+          "id": "c2.3",
+          "type": "other",
+          "name": "item 3 of the 'ANTIPASTI' list",
+          "rect": {
+            "x": 284,
+            "y": 431,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            6,
+            39,
+            40,
+            41
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            40
+          ]
+        },
+        {
+          "id": "c2.4",
+          "type": "other",
+          "name": "item 4 of the 'ANTIPASTI' list",
+          "rect": {
+            "x": 284,
+            "y": 491,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            7,
+            42,
+            43,
+            44
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            43
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        34,
+        37,
+        40,
+        43
+      ]
+    },
+    {
+      "id": "c3",
+      "type": "list",
+      "name": "the 'PRIMI' list",
+      "rect": {
+        "x": 284,
+        "y": 569,
+        "w": 712.0999999999999,
+        "h": 256
+      },
+      "blocks": [
+        8,
+        9,
+        45
+      ],
+      "children": [
+        {
+          "id": "c3.1",
+          "type": "other",
+          "name": "item 1 of the 'PRIMI' list",
+          "rect": {
+            "x": 284,
+            "y": 603,
+            "w": 712.0999999999999,
+            "h": 42
+          },
+          "blocks": [
+            10,
+            46,
+            47,
+            48
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            47
+          ]
+        },
+        {
+          "id": "c3.2",
+          "type": "other",
+          "name": "item 2 of the 'PRIMI' list",
+          "rect": {
+            "x": 284,
+            "y": 663,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            11,
+            49,
+            50,
+            51
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            50
+          ]
+        },
+        {
+          "id": "c3.3",
+          "type": "other",
+          "name": "item 3 of the 'PRIMI' list",
+          "rect": {
+            "x": 284,
+            "y": 723,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            12,
+            52,
+            53,
+            54
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            53
+          ]
+        },
+        {
+          "id": "c3.4",
+          "type": "other",
+          "name": "item 4 of the 'PRIMI' list",
+          "rect": {
+            "x": 284,
+            "y": 783,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            13,
+            55,
+            56,
+            57
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            56
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        47,
+        50,
+        53,
+        56
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "list",
+      "name": "the 'SECONDI' list",
+      "rect": {
+        "x": 284,
+        "y": 861,
+        "w": 712,
+        "h": 256
+      },
+      "blocks": [
+        14,
+        15,
+        58
+      ],
+      "children": [
+        {
+          "id": "c4.1",
+          "type": "other",
+          "name": "item 1 of the 'SECONDI' list",
+          "rect": {
+            "x": 284,
+            "y": 895,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            16,
+            59,
+            60,
+            61
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            60
+          ]
+        },
+        {
+          "id": "c4.2",
+          "type": "other",
+          "name": "item 2 of the 'SECONDI' list",
+          "rect": {
+            "x": 284,
+            "y": 955,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            17,
+            62,
+            63,
+            64
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            63
+          ]
+        },
+        {
+          "id": "c4.3",
+          "type": "other",
+          "name": "item 3 of the 'SECONDI' list",
+          "rect": {
+            "x": 284,
+            "y": 1015,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            18,
+            65,
+            66,
+            67
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            66
+          ]
+        },
+        {
+          "id": "c4.4",
+          "type": "other",
+          "name": "item 4 of the 'SECONDI' list",
+          "rect": {
+            "x": 284,
+            "y": 1075,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            19,
+            68,
+            69,
+            70
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            69
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        60,
+        63,
+        66,
+        69
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "list",
+      "name": "the 'DOLCI' list",
+      "rect": {
+        "x": 284,
+        "y": 1153,
+        "w": 712,
+        "h": 196
+      },
+      "blocks": [
+        20,
+        21,
+        71
+      ],
+      "children": [
+        {
+          "id": "c5.1",
+          "type": "other",
+          "name": "item 1 of the 'DOLCI' list",
+          "rect": {
+            "x": 284,
+            "y": 1187,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            22,
+            72,
+            73,
+            74
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            73
+          ]
+        },
+        {
+          "id": "c5.2",
+          "type": "other",
+          "name": "item 2 of the 'DOLCI' list",
+          "rect": {
+            "x": 284,
+            "y": 1247,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            23,
+            75,
+            76,
+            77
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            76
+          ]
+        },
+        {
+          "id": "c5.3",
+          "type": "other",
+          "name": "item 3 of the 'DOLCI' list",
+          "rect": {
+            "x": 284,
+            "y": 1307,
+            "w": 712,
+            "h": 42
+          },
+          "blocks": [
+            24,
+            78,
+            79,
+            80
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            79
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        73,
+        76,
+        79
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "text",
+      "name": "the text 'A 20% service charge applies...'",
+      "rect": {
+        "x": 336,
+        "y": 1415,
+        "w": 608,
+        "h": 16
+      },
+      "blocks": [
+        81
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c7",
+      "type": "footer",
+      "name": "the footer",
+      "rect": {
+        "x": 0,
+        "y": 1471,
+        "w": 1280,
+        "h": 156.2
+      },
+      "blocks": [
+        25,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "children": [],
+      "importance": "minor",
+      "keyTexts": []
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

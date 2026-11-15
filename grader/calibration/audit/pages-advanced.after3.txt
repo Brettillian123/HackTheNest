@@ -1,0 +1,94 @@
+
+== dashboard   goal vs itself: 100.00 ok
+dashboard rebuild-detailed band 87-96  total  90.6 | content  99.9 layout  89.0 style  90.3 visual  76.6 | ok
+      - (2.5) The heading 'ACCOUNT' should be bold
+      - (1.4) 44 boxes near the bottom have lost the lines drawn around them
+      - (1.1) The box with 'Orbit Analytics' is about 30 pixels wider than the goal's, so what is to its right sits further right
+dashboard rebuild-vague    band 35-50  total  22.5 | content  10.4 layout  45.1 style  42.0 visual  30.4 | HARSH by 12.5
+      - (21.9) Most of the text says something different from the goal (45 pieces of text, such as '$124,500' where the goal says '$48,250')
+      - (5.6) Extra content the goal does not have: 'Product'
+      - (5.3) The picture near the middle shows something different from the goal's
+dashboard near             band 90-98  total  98.2 | content 100.0 layout 100.0 style  89.0 visual  99.5 | LENIENT by 0.2
+      - (0.9) The heading 'Monthly revenue' should be bold
+      - (0.9) The heading 'Recent orders' should be bold
+dashboard wrong-data       band 70-82  total  44.6 | content  31.1 layout  90.8 style  93.6 visual  99.5 | HARSH by 25.4
+      - (12.1) The heading says '$52,910' where the goal says '$48,250'
+      - (8.5) The heading says '1,097' where the goal says '1,284'
+      - (5.9) The badge says 'TR' where the goal says 'MC'
+dashboard missing-section  band 55-70  total  79.5 | content  91.7 layout  70.0 style  87.2 visual  44.1 | LENIENT by 9.5
+      - (18.3) The box with 'Monthly revenue' is missing
+      - (1.2) The box with 'Orbit Analytics' is about 30 pixels wider than the goal's, so what is to its right sits further right
+      - (0.2) The box with 'Revenue' sits about 25 pixels too far right
+dashboard restyled         band 68-80  total  82.4 | content 100.0 layout 100.0 style  52.1 visual  73.0 | LENIENT by 2.4
+      - (15.0) The page uses a serif font where the goal uses a sans-serif one (83 pieces of text)
+      - (1.0) The colours of the picture near the middle differ from the goal's (red where the goal's is light blue)
+      - (0.9) The button 'Overview' is red where the goal's is blue
+dashboard rearranged       band 60-74  total  81.3 | content 100.0 layout  78.6 style 100.0 visual  26.7 | LENIENT by 7.3
+      - (18.7) The part with 'Orbit Analytics' and what sits beside it have swapped sides
+dashboard lorem            band 45-60  total  39.9 | content  29.5 layout  64.0 style  72.5 visual  89.8 | HARSH by 5.1
+      - (59.6) Most of the text says something different from the goal (38 pieces of text, such as 'Lorem ip' where the goal says 'Overview')
+      - (0.2) Part of the table (22 cells, such as 'AMOUNT') sits about 10 pixels too far right
+      - (0.1) 3 table cells sit about 10 pixels too far right
+
+== article   goal vs itself: 100.00 ok
+article   rebuild-detailed band 90-98  total  97.2 | content 100.0 layout  94.0 style  99.6 visual  95.8 | ok
+      - (1.0) Part of the table (10 cells, such as 'Hours') sits about 30 pixels too far left
+      - (0.5) Part of the table (10 cells, such as 'From') sits about 20 pixels too far left
+      - (0.4) A box near the middle has lines drawn around it that the goal does not have
+article   rebuild-vague    band 25-42  total  22.2 | content  22.4 layout  25.8 style  23.3 visual  29.7 | HARSH by 2.8
+      - (21.5) Most of the text says something different from the goal (20 pieces of text, such as 'For decades, the night train seemed d...' where the goal says 'The Quiet Return of the Night Train')
+      - (7.1) Colours across the page differ from the goal's: white where the goal uses dark grey, for example on the table cell 'Route'
+      - (5.8) The picture near the middle shows something different from the goal's
+article   near             band 88-97  total  97.2 | content 100.0 layout  99.7 style  84.2 visual  94.9 | LENIENT by 0.2
+      - (2.6) 3 pieces of text should be bold, such as the heading 'Where the new lines run'
+      - (0.1) The section with 'The Quiet Return of the Night Train' sits about 5 pixels too low
+article   wrong-data       band 68-82  total  48.7 | content  33.8 layout  94.8 style  96.6 visual  96.9 | HARSH by 19.3
+      - (6.7) The table cell says '11' where the goal says '15'
+      - (6.7) The table cell says '€49' where the goal says '€69'
+      - (6.7) The table cell says '10' where the goal says '12'
+article   missing-section  band 60-74  total  84.7 | content  92.2 layout  77.6 style  90.7 visual  61.5 | LENIENT by 10.7
+      - (15.3) The part with 'Figure 1. Night train routes in Europ...' is missing
+article   restyled         band 65-78  total  77.8 | content 100.0 layout  99.4 style  46.1 visual  66.4 | ok
+      - (17.9) Colours across the page differ from the goal's: blue where the goal uses red, for example on the logo 'The Ledger'
+      - (3.6) The text uses a sans-serif font where the goal uses a serif one (13 pieces of text)
+      - (0.3) The corners of the box with 'SELECT route, depart, arrive FROM dep...' are more rounded than the goal's
+article   rearranged       band 62-76  total  78.7 | content 100.0 layout  63.0 style 100.0 visual  68.1 | LENIENT by 2.7
+      - (12.1) The part with 'Figure 1. Night train routes in Europ...' sits about 800 pixels too low
+      - (7.0) The part with 'How to book a good berth' sits about 800 pixels too high
+      - (2.2) Part of the table (20 cells) sits about 60 pixels too high
+article   lorem            band 35-52  total  41.3 | content  29.8 layout  65.2 style  73.7 visual  93.7 | ok
+      - (16.0) The quote '"You go to sleep in one country and w...' has different words from the goal's: missing 'you', 'go', 'to' and 15 more; has 'lorem', 'ipsum', 'dolor' and 11 more where the goal does not
+      - (6.2) The caption 'Figure 1. Night train routes in Europ...' has different words from the goal's: missing 'figure', '1', 'night' and 10 more; has 'labore', 'et', 'dolore' and 10 more where the goal does not
+      - (5.8) The text 'Ten years ago, the sleeper train look...' has different words from the goal's: missing 'ten', 'years', 'ago' and 32 more; has 'lorem', 'ipsum', 'dolor' and 34 more where the goal does not
+
+== checkout   goal vs itself: 100.00 ok
+checkout  rebuild-detailed band 85-95  total  93.3 | content 100.0 layout  96.4 style  98.4 visual  67.5 | ok
+      - (1.7) Part of the table (14 cells) sits about 20 pixels too low
+      - (1.6) Part of the table (7 cells, such as 'Business') sits about 20 pixels too far right
+      - (1.0) The table cell '✓' is narrower than the goal's (about 208 pixels wide instead of 248)
+checkout  rebuild-vague    band 28-45  total  24.4 | content  23.4 layout  38.1 style  34.9 visual  13.0 | HARSH by 3.6
+      - (6.3) Colours across the page differ from the goal's: white where the goal uses teal, for example on the logo 'Fernway'
+      - (5.8) Extra text the goal does not have: 'Sign Up'
+      - (3.3) The heading says 'Powerful tools for teams of every size.' where the goal says 'Simple pricing for growing teams'
+checkout  near             band 90-98  total  97.6 | content 100.0 layout  99.8 style  86.0 visual  98.6 | ok
+      - (2.3) 3 pieces of text should be bold, such as the heading 'Starter'
+      - (0.1) Everything sits about 5 pixels too low
+checkout  wrong-data       band 65-80  total  45.4 | content  38.1 layout  77.2 style  97.8 visual  78.9 | HARSH by 19.6
+      - (8.6) The table cell '99.99%' is missing
+      - (5.8) The table cell says '2' where the goal says '1'
+      - (5.8) The table cell says '25' where the goal says '10'
+checkout  missing-section  band 55-70  total  74.8 | content  88.1 layout  66.4 style  73.6 visual  62.5 | LENIENT by 4.8
+      - (25.2) Part of the table (28 cells) is missing
+checkout  restyled         band 66-80  total  78.8 | content 100.0 layout  98.2 style  46.9 visual  62.9 | ok
+      - (13.9) The page uses a serif font where the goal uses a sans-serif one (61 pieces of text)
+      - (4.3) Colours across the page differ from the goal's: orange where the goal uses teal, for example on the logo 'Fernway'
+      - (1.6) Corners are sharper than the goal's throughout (12 boxes)
+checkout  rearranged       band 62-76  total  77.6 | content 100.0 layout  61.6 style 100.0 visual  72.6 | LENIENT by 1.6
+      - (11.2) The heading 'Compare plans' sits about 540 pixels too low
+      - (11.2) The heading 'Create your account' sits about 450 pixels too high
+checkout  lorem            band 45-60  total  40.0 | content  29.7 layout  78.4 style  84.5 visual  97.5 | HARSH by 5.0
+      - (5.3) The text 'Start free for 14 days. No credit car...' has different words from the goal's: missing 'start', 'free', 'for' and 9 more; has 'lorem', 'ipsum', 'dolor' and 8 more where the goal does not
+      - (4.4) The list item says 'Magna aliqu' where the goal says '5 GB storage'
+      - (4.4) The list item says 'T in volupta' where the goal says '1 TB storage'
+
+7/24 attempts inside the human band; 0 order failures

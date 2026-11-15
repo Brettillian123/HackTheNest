@@ -1,0 +1,1 @@
+analytics dashboard with a sidebar, four stat cards, a bar chart and an orders table

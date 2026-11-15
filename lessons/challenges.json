@@ -1,0 +1,1727 @@
+{
+  "levels": {
+    "1": "Easy",
+    "2": "Medium",
+    "3": "Hard"
+  },
+  "challenges": [
+    {
+      "slug": "agents-md-for-a-repo",
+      "title": "AGENTS.md for a small repo",
+      "level": 1,
+      "kind": "doc",
+      "lesson": "project-instructions",
+      "brief": "Get the model to write a short AGENTS.md that any coding agent can follow for a small Python project.",
+      "spec": [
+        {
+          "group": "Project facts",
+          "items": [
+            {
+              "label": "Name",
+              "value": "invoice-tool"
+            },
+            {
+              "label": "Install",
+              "value": "pip install -e .[dev]"
+            },
+            {
+              "label": "Test",
+              "value": "pytest"
+            },
+            {
+              "label": "Lint",
+              "value": "ruff check ."
+            },
+            {
+              "label": "Code",
+              "value": "src/invoice_tool/"
+            },
+            {
+              "label": "Tests",
+              "value": "tests/"
+            },
+            {
+              "label": "Never change",
+              "value": "data/samples/"
+            },
+            {
+              "label": "Never read",
+              "value": ".env"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "AGENTS.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Overview, Commands, Layout, Rules, Done means"
+            },
+            {
+              "label": "Length",
+              "value": "Under 80 lines"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Overview, Commands, Layout, Rules and Done means.",
+        "The commands pip install -e .[dev], pytest and ruff check . appear exactly, inside code fences.",
+        "The paths src/invoice_tool/, tests/ and data/samples/ appear exactly.",
+        "Says never to change data/samples/ and never to read .env.",
+        "Under 80 lines.",
+        "No placeholders such as TODO, angle-bracket gaps, your-project or lorem ipsum."
+      ],
+      "docKind": "instructions",
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "readme-for-a-cli",
+      "title": "README for a command-line tool",
+      "level": 1,
+      "kind": "doc",
+      "lesson": "documentation-as-a-prompt",
+      "brief": "Get the model to write a README that someone can act on without asking a question.",
+      "spec": [
+        {
+          "group": "Tool facts",
+          "items": [
+            {
+              "label": "Name",
+              "value": "site-check (checks a folder of HTML files for broken links)"
+            },
+            {
+              "label": "Install",
+              "value": "pip install site-check"
+            },
+            {
+              "label": "Run",
+              "value": "site-check ./public"
+            },
+            {
+              "label": "Flag",
+              "value": "--external also checks outside links"
+            },
+            {
+              "label": "Setting",
+              "value": "SITE_CHECK_TIMEOUT, seconds, default 10"
+            },
+            {
+              "label": "Test",
+              "value": "pytest"
+            },
+            {
+              "label": "Limit",
+              "value": "Does not check images yet"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "README.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Install, Use, Configuration, Test, Limits"
+            },
+            {
+              "label": "Length",
+              "value": "Under 400 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Install, Use, Configuration, Test and Limits.",
+        "The commands pip install site-check, site-check ./public and pytest appear exactly, inside code fences.",
+        "The names --external and SITE_CHECK_TIMEOUT and the default 10 appear exactly.",
+        "Says images are not checked yet.",
+        "Under 400 words.",
+        "No placeholders such as TODO, angle-bracket gaps, example.com/your-repo or lorem ipsum."
+      ],
+      "docKind": "readme",
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "release-notes-skill",
+      "title": "A release-notes skill",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "skills",
+      "brief": "Get the model to write a SKILL.md that turns the changelog into user-facing release notes.",
+      "spec": [
+        {
+          "group": "Task facts",
+          "items": [
+            {
+              "label": "Skill folder",
+              "value": "release-notes"
+            },
+            {
+              "label": "Read",
+              "value": "The ## [Unreleased] section of CHANGELOG.md"
+            },
+            {
+              "label": "Rewrite",
+              "value": "For users; no internal ticket numbers"
+            },
+            {
+              "label": "Save to",
+              "value": "docs/releases/<version>.md"
+            },
+            {
+              "label": "Check",
+              "value": "npm run docs:check"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "release-notes/SKILL.md with YAML front matter"
+            },
+            {
+              "label": "Sections",
+              "value": "Steps (numbered), Rules"
+            },
+            {
+              "label": "Length",
+              "value": "Under 120 lines"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Front matter has name: release-notes and a description.",
+        "The description is 1 to 1024 characters and contains 'Use when'.",
+        "CHANGELOG.md, docs/releases/ and npm run docs:check appear exactly; the command is in a code fence.",
+        "Has a numbered Steps section and a Rules section.",
+        "Under 120 lines.",
+        "No placeholders other than the labelled <version> value."
+      ],
+      "docKind": "skill",
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "mcp-server-trust-note",
+      "title": "MCP server note for a team",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "mcp-using-servers",
+      "brief": "Get the model to write the team's MCP-SERVERS.md: which server, the exact command to add it, what was checked and the rules.",
+      "spec": [
+        {
+          "group": "Server facts",
+          "items": [
+            {
+              "label": "Server",
+              "value": "Notion remote MCP server, https://mcp.notion.com/mcp"
+            },
+            {
+              "label": "Host",
+              "value": "Claude Code, shared with the team (project scope)"
+            },
+            {
+              "label": "Command",
+              "value": "claude mcp add --transport http --scope project notion https://mcp.notion.com/mcp"
+            },
+            {
+              "label": "Allowed",
+              "value": "Read and search pages"
+            },
+            {
+              "label": "Not allowed",
+              "value": "Editing or creating pages"
+            },
+            {
+              "label": "Outside content",
+              "value": "Yes: page text comes from many writers"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "MCP-SERVERS.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Servers, How to add, Checks done, Rules"
+            },
+            {
+              "label": "Length",
+              "value": "Under 300 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Servers, How to add, Checks done and Rules.",
+        "The command claude mcp add --transport http --scope project notion https://mcp.notion.com/mcp appears exactly, in a code fence.",
+        "The names .mcp.json and /mcp appear.",
+        "Checks done names the publisher, the tools allowed, and whether the server fetches outside content.",
+        "A rule says editing or creating pages is not allowed.",
+        "Under 300 words; no placeholders."
+      ],
+      "docKind": "readme",
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "library-tools",
+      "title": "Tool definitions for a library server",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "mcp-defining-tools",
+      "brief": "Get the model to write a JSON list of three MCP tool definitions a model could choose and call correctly.",
+      "spec": [
+        {
+          "group": "Tools",
+          "items": [
+            {
+              "label": "library_search",
+              "value": "Search the catalogue by title or author, with parameters query and field; changes nothing"
+            },
+            {
+              "label": "library_get_book",
+              "value": "Get one book by id, such as bk_1234, with parameter book_id; changes nothing"
+            },
+            {
+              "label": "library_place_hold",
+              "value": "Place a hold on a book for a student id, such as st_5678, with parameters book_id and student_id; adds a record"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "A JSON array only, no prose"
+            },
+            {
+              "label": "Fields",
+              "value": "name, description, inputSchema, annotations"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Valid JSON array of exactly three tool definitions named library_search, library_get_book and library_place_hold.",
+        "Each tool has a description that says what it does and when to use it, and mentions the id format where it takes an id (bk_ for books, st_ for students).",
+        "Each inputSchema is a valid object schema with typed properties and a required list that names real properties.",
+        "library_search takes query and field; library_get_book takes book_id; library_place_hold takes book_id and student_id; all are strings and all are required."
+      ],
+      "docKind": "mcp-tools",
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "three-page-site-plan",
+      "title": "Plan a three-page site build",
+      "level": 3,
+      "kind": "workflow",
+      "lesson": "agent-workflows",
+      "brief": "Get the model to plan a coordinator-and-workers build of a three-page site as a JSON graph, with a review before the merge.",
+      "spec": [
+        {
+          "group": "Files",
+          "items": [
+            {
+              "label": "Pages",
+              "value": "site/index.html, site/projects.html, site/contact.html"
+            },
+            {
+              "label": "Shared",
+              "value": "site/styles.css"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Plan, styles, one step per page, review, final fix or merge"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof, budget"
+            },
+            {
+              "label": "Review",
+              "value": "Required, with kind \"review\": the contact page has a form"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has a plan step, a styles step, one step per page, a review step and a final fix or merge step.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a proof and a budget.",
+        "Dependencies point only to steps that exist, with no cycle.",
+        "No two steps that can run at the same time list the same file in changes.",
+        "The review step (kind review) depends on all three page steps and the styles step.",
+        "There are no loops, or every loop has an until exit test and a maxRounds cap."
+      ],
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "fix-loop-plan",
+      "title": "Plan a capped fix loop with a held-out check",
+      "level": 3,
+      "kind": "workflow",
+      "lesson": "loops-and-graphs",
+      "brief": "Get the model to plan a build-grade-fix loop with an exit test, a cap and a final check on tests the builder never sees.",
+      "spec": [
+        {
+          "group": "Task",
+          "items": [
+            {
+              "label": "Function",
+              "value": "parse_price(text) in src/price.py; turns \"$1,299.00\" into a number"
+            },
+            {
+              "label": "Visible tests",
+              "value": "20, in tests/visible/"
+            },
+            {
+              "label": "Held-out tests",
+              "value": "8, in tests/held_out/; the builder never sees them"
+            },
+            {
+              "label": "Round limit",
+              "value": "At most 4 fix rounds"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Tests, build, grade-and-fix loop, final held-out check"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof, budget"
+            },
+            {
+              "label": "Loop",
+              "value": "id, steps (what repeats), until (exit test), maxRounds, heldOut"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has a tests step, a build step, a grade-and-fix loop and a final held-out check.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a proof and a budget.",
+        "The loop is declared with its steps, an until exit test, maxRounds of 4 or less and a heldOut note.",
+        "No cycle except inside the marked loop.",
+        "No two steps that can run at the same time list the same file in changes.",
+        "The held-out check comes after the loop, and no step in or before the loop reads or changes tests/held_out/."
+      ],
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "findings-report",
+      "title": "A findings report with sources",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "self-research-and-verification",
+      "brief": "Get the model to write FINDINGS.md that answers a question from given sources, ties each claim to a source and lists what was not verified.",
+      "spec": [
+        {
+          "group": "Facts given",
+          "items": [
+            {
+              "label": "Claude Code",
+              "value": "Reads CLAUDE.md; reads AGENTS.md instead when there is no CLAUDE.md"
+            },
+            {
+              "label": "OpenAI Codex",
+              "value": "Reads AGENTS.md, up to 32 KiB combined by default"
+            },
+            {
+              "label": "Gemini CLI",
+              "value": "Reads GEMINI.md; other names via context.fileName"
+            },
+            {
+              "label": "Open question",
+              "value": "Free-tier behaviour not checked"
+            }
+          ]
+        },
+        {
+          "group": "Sources given",
+          "items": [
+            {
+              "label": "Claude Code",
+              "value": "https://code.claude.com/docs/en/memory"
+            },
+            {
+              "label": "OpenAI Codex",
+              "value": "https://learn.chatgpt.com/docs/agent-configuration/agents-md"
+            },
+            {
+              "label": "Gemini CLI",
+              "value": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-md.md"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "FINDINGS.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Question, Answer, Claims, Sources, Not verified, Cross-check"
+            },
+            {
+              "label": "Length",
+              "value": "Under 450 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Question, Answer, Claims, Sources, Not verified and Cross-check.",
+        "CLAUDE.md, AGENTS.md, GEMINI.md, context.fileName and 32 KiB appear exactly.",
+        "Sources lists the three given links exactly.",
+        "Not verified mentions the free-tier question.",
+        "Under 450 words; no placeholders."
+      ],
+      "docKind": "readme",
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "claude-md-for-a-monorepo",
+      "title": "CLAUDE.md for a pnpm monorepo",
+      "level": 2,
+      "kind": "doc",
+      "docKind": "instructions",
+      "lesson": "project-instructions",
+      "brief": "Get the model to write a CLAUDE.md that imports AGENTS.md and stops an agent from using the wrong package manager or editing generated code.",
+      "spec": [
+        {
+          "group": "Project facts",
+          "items": [
+            {
+              "label": "Name",
+              "value": "trailmap (a pnpm workspace with a web app and an API)"
+            },
+            {
+              "label": "Shared notes",
+              "value": "Import AGENTS.md with the line @AGENTS.md"
+            },
+            {
+              "label": "Install",
+              "value": "pnpm install"
+            },
+            {
+              "label": "Test the web app",
+              "value": "pnpm --filter web test"
+            },
+            {
+              "label": "Test the API",
+              "value": "pnpm --filter api test"
+            },
+            {
+              "label": "Lint",
+              "value": "pnpm lint"
+            },
+            {
+              "label": "Regenerate the API client",
+              "value": "pnpm codegen"
+            },
+            {
+              "label": "Web app",
+              "value": "apps/web/"
+            },
+            {
+              "label": "API",
+              "value": "apps/api/"
+            },
+            {
+              "label": "Generated code, never edit by hand",
+              "value": "packages/client/src/generated/ (rebuild it with pnpm codegen)"
+            },
+            {
+              "label": "Package manager",
+              "value": "pnpm only; never npm or yarn; the lockfile is pnpm-lock.yaml"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "CLAUDE.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Overview, Commands, Layout, Rules, Done means"
+            },
+            {
+              "label": "Under the title",
+              "value": "A one-sentence description"
+            },
+            {
+              "label": "Length",
+              "value": "80 to 400 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has a one-sentence description under the title and the sections Overview, Commands, Layout, Rules and Done means.",
+        "Contains the import line @AGENTS.md.",
+        "The commands pnpm install, pnpm --filter web test, pnpm --filter api test, pnpm lint and pnpm codegen appear exactly, in code.",
+        "The Layout section names apps/web/ and apps/api/.",
+        "The Rules section says never to edit packages/client/src/generated/ and never to use npm or yarn, and names pnpm-lock.yaml.",
+        "No npm or yarn command written as a command to run.",
+        "80 to 400 words, with no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "agents-md-with-checkable-rules",
+      "title": "AGENTS.md with only checkable rules",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "instructions",
+      "lesson": "project-instructions",
+      "brief": "Get the model to write a tight AGENTS.md for a Go service in which every rule can be checked and nothing is left to judgement words.",
+      "spec": [
+        {
+          "group": "Project facts",
+          "items": [
+            {
+              "label": "Name",
+              "value": "parcel-tracker (a Go service that tracks parcels)"
+            },
+            {
+              "label": "Build",
+              "value": "go build ./..."
+            },
+            {
+              "label": "Test",
+              "value": "go test ./..."
+            },
+            {
+              "label": "Lint",
+              "value": "golangci-lint run"
+            },
+            {
+              "label": "Entry point",
+              "value": "cmd/parcel-tracker/"
+            },
+            {
+              "label": "Service code",
+              "value": "internal/"
+            },
+            {
+              "label": "Never",
+              "value": "Run make deploy; commit directly to main"
+            },
+            {
+              "label": "Ask a person first",
+              "value": "Before changing api/openapi.yaml or adding a dependency to go.mod"
+            },
+            {
+              "label": "Done means",
+              "value": "Build, tests and lint pass; each changed package under internal/ has a new or updated test"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "AGENTS.md"
+            },
+            {
+              "label": "Sections, in this order",
+              "value": "Overview, Commands, Layout, Rules, Ask first, Done means"
+            },
+            {
+              "label": "Banned phrases",
+              "value": "as needed, when appropriate, if necessary, best practice(s), be careful, clean code, etc., and so on"
+            },
+            {
+              "label": "Length",
+              "value": "80 to 300 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Overview, Commands, Layout, Rules, Ask first and Done means, with Commands through Done means in that order.",
+        "The commands go build ./..., go test ./... and golangci-lint run appear exactly, in code.",
+        "The Layout section names cmd/parcel-tracker/ and internal/.",
+        "The Rules section says never to run make deploy and never to commit to main.",
+        "The Ask first section names api/openapi.yaml and go.mod.",
+        "None of the banned vague phrases appear.",
+        "80 to 300 words, with no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "readme-for-a-web-service",
+      "title": "README for a web service",
+      "level": 2,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "documentation-as-a-prompt",
+      "brief": "Get the model to write a README whose configuration is so exact that nobody, person or model, has to guess a variable name.",
+      "spec": [
+        {
+          "group": "Service facts",
+          "items": [
+            {
+              "label": "Name",
+              "value": "weather-cache (an HTTP service that caches weather lookups)"
+            },
+            {
+              "label": "Runtime",
+              "value": "Node.js 20 or later"
+            },
+            {
+              "label": "Install",
+              "value": "npm ci"
+            },
+            {
+              "label": "Start",
+              "value": "npm start"
+            },
+            {
+              "label": "Health check",
+              "value": "curl http://localhost:8080/health prints ok"
+            },
+            {
+              "label": "Setting",
+              "value": "WEATHER_API_KEY: key for the weather API; required; no default; the service does not start without it"
+            },
+            {
+              "label": "Setting",
+              "value": "CACHE_TTL_SECONDS: how long an answer is cached, in seconds; default 600; not required"
+            },
+            {
+              "label": "Setting",
+              "value": "PORT: port to listen on; default 8080; not required"
+            },
+            {
+              "label": "Test",
+              "value": "npm test"
+            },
+            {
+              "label": "Limit",
+              "value": "No rate limiting yet"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "README.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Install, Configuration, Run, Test, Limits"
+            },
+            {
+              "label": "Length",
+              "value": "80 to 450 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Install, Configuration, Run, Test and Limits.",
+        "Install names Node.js 20 and has npm ci in code.",
+        "npm start, curl http://localhost:8080/health and npm test appear exactly, in code; npm test is in the Test section.",
+        "The Configuration section names WEATHER_API_KEY, CACHE_TTL_SECONDS and PORT, the defaults 600 and 8080, and says which settings are required.",
+        "The Limits section says there is no rate limiting yet.",
+        "80 to 450 words, with no placeholders such as your-api-key-here."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "spec-for-a-feature",
+      "title": "A spec a model can build from",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "documentation-as-a-prompt",
+      "brief": "Get the model to write a feature spec with testable requirements, a clear done test and the one undecided point marked as undecided.",
+      "spec": [
+        {
+          "group": "Feature facts",
+          "items": [
+            {
+              "label": "Project",
+              "value": "expense-tracker (a web app)"
+            },
+            {
+              "label": "Goal",
+              "value": "A signed-in user downloads all of their own expenses as one CSV file"
+            },
+            {
+              "label": "Endpoint",
+              "value": "GET /api/expenses/export; returns only the signed-in user's expenses"
+            },
+            {
+              "label": "Header",
+              "value": "Content-Type: text/csv"
+            },
+            {
+              "label": "Columns, in order",
+              "value": "date,amount,category,note (also the first row)"
+            },
+            {
+              "label": "Dates",
+              "value": "YYYY-MM-DD"
+            },
+            {
+              "label": "Limit",
+              "value": "More than 10,000 expenses: return status 413 and no file"
+            },
+            {
+              "label": "Out of scope",
+              "value": "Excel files; scheduled or emailed exports"
+            },
+            {
+              "label": "Not decided",
+              "value": "Whether deleted expenses are included"
+            },
+            {
+              "label": "Test",
+              "value": "npm test -- export"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "A Markdown spec"
+            },
+            {
+              "label": "Sections, in this order",
+              "value": "Goal, Requirements, Out of scope, Open questions, Done when"
+            },
+            {
+              "label": "Banned phrases",
+              "value": "should be fast, user-friendly, intuitive, seamless, as needed, etc., and so on"
+            },
+            {
+              "label": "Length",
+              "value": "100 to 450 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Goal, Requirements, Out of scope, Open questions and Done when, in that order.",
+        "The Requirements section has GET /api/expenses/export and date,amount,category,note in code, plus Content-Type: text/csv, YYYY-MM-DD, 10,000 and 413.",
+        "Out of scope names Excel.",
+        "Open questions names deleted expenses and says the point is not decided.",
+        "Done when has npm test -- export in code.",
+        "None of the banned untestable phrases appear.",
+        "100 to 450 words, with no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "pr-description-skill",
+      "title": "A pull-request description skill",
+      "level": 1,
+      "kind": "doc",
+      "docKind": "skill",
+      "lesson": "skills",
+      "brief": "Get the model to write a small SKILL.md that drafts a pull-request description from the current branch.",
+      "spec": [
+        {
+          "group": "Task facts",
+          "items": [
+            {
+              "label": "Skill folder",
+              "value": "pr-description"
+            },
+            {
+              "label": "List commits",
+              "value": "git log --oneline main..HEAD"
+            },
+            {
+              "label": "List changed files",
+              "value": "git diff --stat main...HEAD"
+            },
+            {
+              "label": "Write",
+              "value": "A description under three headings: Summary, Changes, Testing"
+            },
+            {
+              "label": "Then",
+              "value": "Show it to the user; do not open the pull request"
+            },
+            {
+              "label": "Never",
+              "value": "Invent test results"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "pr-description/SKILL.md with YAML front matter (name, description)"
+            },
+            {
+              "label": "Description",
+              "value": "Mentions pull requests and contains 'Use when'; at most 1024 characters"
+            },
+            {
+              "label": "Sections, in this order",
+              "value": "Steps (numbered), Rules"
+            },
+            {
+              "label": "Length",
+              "value": "50 to 400 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Front matter has name: pr-description and a description of at most 1024 characters that mentions pull requests and contains 'Use when'.",
+        "A numbered Steps section, then a Rules section.",
+        "Steps has git log --oneline main..HEAD and git diff --stat main...HEAD in code, and names the headings Summary, Changes and Testing.",
+        "Rules says not to invent test results and not to open the pull request.",
+        "50 to 400 words, with no placeholders."
+      ],
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "deploy-staging-skill",
+      "title": "A deploy skill that only a person can start",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "skill",
+      "lesson": "skills",
+      "brief": "Get the model to write a staging-deploy SKILL.md that cannot start itself, checks before it acts and says what to do when it fails.",
+      "spec": [
+        {
+          "group": "Task facts",
+          "items": [
+            {
+              "label": "Skill folder",
+              "value": "deploy-staging"
+            },
+            {
+              "label": "Started by",
+              "value": "A person only: set disable-model-invocation: true in the front matter"
+            },
+            {
+              "label": "Step 1",
+              "value": "git status --porcelain must print nothing; otherwise stop"
+            },
+            {
+              "label": "Step 2",
+              "value": "npm run build"
+            },
+            {
+              "label": "Step 3",
+              "value": "npm run deploy:staging"
+            },
+            {
+              "label": "Step 4",
+              "value": "npm run smoke:staging, then report the result"
+            },
+            {
+              "label": "Never",
+              "value": "Deploy to production; skip the smoke tests"
+            },
+            {
+              "label": "On failure",
+              "value": "Follow references/rollback.md, then stop and report"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "deploy-staging/SKILL.md with YAML front matter (name, description, disable-model-invocation)"
+            },
+            {
+              "label": "Description",
+              "value": "Mentions staging and contains 'Use when'; at most 1024 characters"
+            },
+            {
+              "label": "Sections",
+              "value": "Steps (numbered), Rules, If something fails"
+            },
+            {
+              "label": "Length",
+              "value": "60 to 500 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Front matter has name: deploy-staging, disable-model-invocation: true and a description of at most 1024 characters that mentions staging and contains 'Use when'.",
+        "A numbered Steps section with git status --porcelain, npm run build, npm run deploy:staging and npm run smoke:staging in code, and the word smoke.",
+        "A Rules section, after Steps, that says never to deploy to production.",
+        "An If something fails section that names references/rollback.md.",
+        "No production deploy command written as a step to run.",
+        "60 to 500 words, with no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "mcp-local-server-setup",
+      "title": "Set up an MCP server for yourself",
+      "level": 1,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "mcp-using-servers",
+      "brief": "Get the model to write SETUP-MCP.md: how to add the team's issue-search server for personal use, check it is connected and remove it.",
+      "spec": [
+        {
+          "group": "Server facts",
+          "items": [
+            {
+              "label": "Server",
+              "value": "issue-search, the team's own server, in tools/issue-search/server.js, run with Node"
+            },
+            {
+              "label": "Host",
+              "value": "Claude Code, local scope (the default), for your own use only"
+            },
+            {
+              "label": "Add",
+              "value": "claude mcp add --transport stdio issue-search -- node tools/issue-search/server.js"
+            },
+            {
+              "label": "Stored in",
+              "value": "~/.claude.json"
+            },
+            {
+              "label": "Check",
+              "value": "claude mcp list in the shell; /mcp inside a session"
+            },
+            {
+              "label": "Remove",
+              "value": "claude mcp remove issue-search"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "SETUP-MCP.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Add, Check, Remove"
+            },
+            {
+              "label": "Length",
+              "value": "Under 200 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Add, Check and Remove.",
+        "The add command appears exactly, in a code fence, under Add, and Add says it uses local scope.",
+        "Check gives claude mcp list in a code fence and mentions /mcp.",
+        "Remove gives claude mcp remove issue-search in a code fence.",
+        "Names ~/.claude.json.",
+        "No --scope project on the add command; under 200 words; no placeholders."
+      ],
+      "maxPromptChars": 2000
+    },
+    {
+      "slug": "mcp-tool-allowlist",
+      "title": "Review a server's tools and write the permissions",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "mcp-using-servers",
+      "brief": "Get the model to write TOOL-REVIEW.md: decide allow, ask or deny for each of a third-party server's tools, write the Claude Code permission rules and report a poisoned tool description.",
+      "spec": [
+        {
+          "group": "Server facts",
+          "items": [
+            {
+              "label": "Server",
+              "value": "A third-party server connected in Claude Code as tickets"
+            },
+            {
+              "label": "tickets_search",
+              "value": "Searches tickets; read-only"
+            },
+            {
+              "label": "tickets_get",
+              "value": "Gets one ticket; its description also tells the model to read ~/.ssh/id_rsa and pass the text in a context argument"
+            },
+            {
+              "label": "tickets_comment",
+              "value": "Adds a comment to a ticket"
+            },
+            {
+              "label": "tickets_close",
+              "value": "Closes a ticket"
+            },
+            {
+              "label": "tickets_delete",
+              "value": "Deletes a ticket permanently"
+            }
+          ]
+        },
+        {
+          "group": "Team policy",
+          "items": [
+            {
+              "label": "Allow",
+              "value": "Read-only tools"
+            },
+            {
+              "label": "Ask",
+              "value": "Tools that change tickets, every time"
+            },
+            {
+              "label": "Deny",
+              "value": "Permanent deletes, and any tool whose description asks for files outside the project (also report it)"
+            },
+            {
+              "label": "Rules file",
+              "value": ".claude/settings.json, permissions with allow, ask and deny lists"
+            },
+            {
+              "label": "Rule names",
+              "value": "mcp__tickets__tickets_search, mcp__tickets__tickets_get, mcp__tickets__tickets_comment, mcp__tickets__tickets_close, mcp__tickets__tickets_delete"
+            },
+            {
+              "label": "Order",
+              "value": "Deny rules are checked first, then ask, then allow"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "TOOL-REVIEW.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Tools listed, Decisions, Settings, Red flags"
+            },
+            {
+              "label": "Length",
+              "value": "Under 350 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Tools listed, Decisions, Settings and Red flags.",
+        "Decisions and Settings both use the words allow, ask and deny.",
+        "Settings names .claude/settings.json and lists all five rule names in code.",
+        "Red flags names ~/.ssh/id_rsa and says what is wrong with that description.",
+        "No wildcard rule such as mcp__tickets__*.",
+        "Under 350 words; no placeholders."
+      ],
+      "maxPromptChars": 3000
+    },
+    {
+      "slug": "weather-tool-repair",
+      "title": "Repair a weather tool",
+      "level": 1,
+      "kind": "doc",
+      "docKind": "mcp-tools",
+      "lesson": "mcp-defining-tools",
+      "brief": "Get the model to replace one vague weather tool with two clear MCP tool definitions a model could choose and call correctly.",
+      "spec": [
+        {
+          "group": "Tools",
+          "items": [
+            {
+              "label": "Before",
+              "value": "One tool named get, description \"Gets weather.\", untyped properties city, days and units"
+            },
+            {
+              "label": "weather_current",
+              "value": "Current weather for a city; parameters city (string, required) and units (string, optional: celsius or fahrenheit, default celsius); changes nothing"
+            },
+            {
+              "label": "weather_forecast",
+              "value": "Daily forecast for a city; parameters city (string, required), days (integer, required, 1 to 7) and units (string, optional); changes nothing"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "A JSON array only, no prose"
+            },
+            {
+              "label": "Fields",
+              "value": "name, description, inputSchema, annotations"
+            },
+            {
+              "label": "Descriptions",
+              "value": "Say what the tool does, when to use it (with the word Use) and what it returns"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Valid JSON array with tools named weather_current and weather_forecast.",
+        "Every parameter has the right name, type and required flag.",
+        "Each description says when to use the tool; weather_current mentions current weather and celsius, weather_forecast mentions the forecast and 1 to 7 days.",
+        "Each inputSchema is valid JSON Schema with type object, typed properties and a required list."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "calendar-booking-tools",
+      "title": "Tool definitions for a calendar booking server",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "mcp-tools",
+      "lesson": "mcp-defining-tools",
+      "brief": "Get the model to write four MCP tool definitions for a find, hold, confirm and cancel booking flow, with the hold's lifetime and id formats in the descriptions.",
+      "spec": [
+        {
+          "group": "Tools",
+          "items": [
+            {
+              "label": "calendar_find_slots",
+              "value": "Find slots when all attendees are free; attendees (array of emails, required), duration_minutes (integer, required), earliest_date (string, required, YYYY-MM-DD), latest_date (string, optional, YYYY-MM-DD); changes nothing; returns slot ids"
+            },
+            {
+              "label": "calendar_hold_slot",
+              "value": "Hold one slot; slot_id (string, required); returns a hold id starting hold_ that expires after 10 minutes"
+            },
+            {
+              "label": "calendar_confirm_booking",
+              "value": "Turn a hold into a booking; hold_id (string, required, starts with hold_), title (string, required), notify (boolean, optional); returns a booking id starting evt_"
+            },
+            {
+              "label": "calendar_cancel_booking",
+              "value": "Cancel a booking and tell the attendees; booking_id (string, required, starts with evt_), reason (string, optional); cannot be undone"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "A JSON array only, no prose"
+            },
+            {
+              "label": "Fields",
+              "value": "name, description, inputSchema, annotations"
+            },
+            {
+              "label": "Descriptions",
+              "value": "Say what the tool does, when to use it (with the word Use) and what it returns"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Valid JSON array with tools named calendar_find_slots, calendar_hold_slot, calendar_confirm_booking and calendar_cancel_booking.",
+        "Every parameter has the right name, type and required flag (attendees is an array, duration_minutes an integer, notify a boolean).",
+        "Each description says when to use the tool; find slots mentions slots, hold slot says the hold expires, confirm mentions the hold, cancel mentions the attendees.",
+        "calendar_find_slots mentions YYYY-MM-DD; calendar_hold_slot says the hold lasts 10 minutes; calendar_confirm_booking mentions hold_; calendar_cancel_booking mentions evt_ and says it cannot be undone.",
+        "Each inputSchema is valid JSON Schema with type object, typed properties and a required list."
+      ],
+      "maxPromptChars": 3000
+    },
+    {
+      "slug": "claim-check-sorting",
+      "title": "Check an answer claim by claim",
+      "level": 1,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "self-research-and-verification",
+      "brief": "Get the model to write CLAIM-CHECK.md: split a short answer into claims and give each one a verdict with evidence from one given source.",
+      "spec": [
+        {
+          "group": "Answer to check",
+          "items": [
+            {
+              "label": "Question",
+              "value": "What is the difference between sorted() and list.sort() in Python?"
+            },
+            {
+              "label": "Claim 1",
+              "value": "list.sort() returns the sorted list"
+            },
+            {
+              "label": "Claim 2",
+              "value": "sorted() works on any iterable, such as a tuple"
+            },
+            {
+              "label": "Claim 3",
+              "value": "list.sort() changes the list in place"
+            },
+            {
+              "label": "Claim 4",
+              "value": "Both sorts are stable"
+            },
+            {
+              "label": "Claim 5",
+              "value": "sorted() uses less memory than list.sort()"
+            }
+          ]
+        },
+        {
+          "group": "Source given",
+          "items": [
+            {
+              "label": "Link",
+              "value": "https://docs.python.org/3/howto/sorting.html"
+            },
+            {
+              "label": "It says",
+              "value": "list.sort() modifies the list in place and returns None; sorted() builds a new sorted list and accepts any iterable; sorts are guaranteed to be stable; nothing about memory"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "CLAIM-CHECK.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Answer checked, Claims, Sources, Summary"
+            },
+            {
+              "label": "Verdicts",
+              "value": "Supported, Wrong, Unconfirmed"
+            },
+            {
+              "label": "Length",
+              "value": "Under 350 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Answer checked, Claims, Sources and Summary.",
+        "Claims uses the verdicts Supported, Wrong and Unconfirmed.",
+        "Claims says that list.sort() returns None, and mentions memory.",
+        "Sources gives the link exactly.",
+        "Under 350 words; no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "source-conflict-report",
+      "title": "Report on sources that disagree",
+      "level": 3,
+      "kind": "doc",
+      "docKind": "readme",
+      "lesson": "self-research-and-verification",
+      "brief": "Get the model to write SOURCE-CONFLICT.md: compare three sources that give different rate limits, decide which to follow and say how to confirm it.",
+      "spec": [
+        {
+          "group": "Sources given (a made-up practice case)",
+          "items": [
+            {
+              "label": "Question",
+              "value": "What request limit should our client enforce for the internal ledger API?"
+            },
+            {
+              "label": "Team wiki",
+              "value": "wiki/ledger-api.md, last edited 2025-03-02: 100 requests per minute"
+            },
+            {
+              "label": "Owners' docs",
+              "value": "docs/ledger-api/limits.md, updated 2026-09-10: 60 requests per minute per API key; HTTP 429 when the limit is passed"
+            },
+            {
+              "label": "Changelog",
+              "value": "CHANGELOG.md, entry under Unreleased: raises the limit to 120 requests per minute"
+            },
+            {
+              "label": "Not done",
+              "value": "Nobody has tested the live limit"
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "File",
+              "value": "SOURCE-CONFLICT.md"
+            },
+            {
+              "label": "Sections",
+              "value": "Question, Sources compared, Conflict, Decision, Not verified, How to confirm"
+            },
+            {
+              "label": "Decision",
+              "value": "Use 60 requests per minute, following the owners' docs"
+            },
+            {
+              "label": "Length",
+              "value": "Under 450 words"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has the sections Question, Sources compared, Conflict, Decision, Not verified and How to confirm.",
+        "Sources compared names wiki/ledger-api.md, docs/ledger-api/limits.md and CHANGELOG.md, with the dates 2025-03-02 and 2026-09-10.",
+        "100 requests per minute, 120 requests per minute and the word Unreleased appear.",
+        "Decision says to use 60 requests per minute.",
+        "Not verified says the live limit was not tested; How to confirm mentions HTTP 429.",
+        "Never says to use 100 or 120 requests per minute; under 450 words; no placeholders."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "docs-refresh-plan",
+      "title": "Plan a docs refresh across three packages",
+      "level": 1,
+      "kind": "workflow",
+      "lesson": "agent-workflows",
+      "brief": "Get the model to plan a coordinator-and-workers refresh of the docs in three packages as a JSON graph, with one writer per package working at the same time.",
+      "spec": [
+        {
+          "group": "Files",
+          "items": [
+            {
+              "label": "Style guide",
+              "value": "docs/STYLE.md, written first by the coordinator"
+            },
+            {
+              "label": "Package docs",
+              "value": "packages/core/docs/, packages/cli/docs/, packages/web/docs/: one writer step each, and each step changes only its own folder"
+            },
+            {
+              "label": "Index",
+              "value": "docs/index.md, updated last, linking every package page"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Style guide, core docs, cli docs, web docs, index"
+            },
+            {
+              "label": "Order",
+              "value": "The style guide comes before all three package steps; the index comes after all three"
+            },
+            {
+              "label": "At the same time",
+              "value": "The three package steps run in parallel: none depends on another"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof (a command, test or file), budget"
+            },
+            {
+              "label": "Limits",
+              "value": "At most 6 steps and 5 owners"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape, with \"loops\": []"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has a step that changes docs/STYLE.md, one step for each package folder, and a step that changes docs/index.md.",
+        "The style guide step comes before every package step, and the index step comes after all three.",
+        "The three package steps do not depend on each other and do not share a file.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a checkable proof and a budget.",
+        "No more than 6 steps and 5 owners; the goal says when the job is done."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "data-migration-plan",
+      "title": "Plan a database migration with a rehearsed rollback",
+      "level": 2,
+      "kind": "workflow",
+      "lesson": "agent-workflows",
+      "brief": "Get the model to plan a database migration as a JSON graph: back up, write the change and its rollback in parallel, review both, rehearse on staging, then apply and verify.",
+      "spec": [
+        {
+          "group": "Task",
+          "items": [
+            {
+              "label": "Change",
+              "value": "Split users.full_name into first_name and last_name"
+            },
+            {
+              "label": "Up file",
+              "value": "migrations/0007_split_name.up.sql"
+            },
+            {
+              "label": "Rollback file",
+              "value": "migrations/0007_split_name.down.sql, which restores full_name"
+            },
+            {
+              "label": "Backup",
+              "value": "A step titled with \"back up\", \"backup\", \"snapshot\" or \"dump\" that changes only backups/"
+            },
+            {
+              "label": "Rehearsal",
+              "value": "A step titled with \"rehearse\", \"dry run\", \"staging\" or \"trial\" that runs up then down on a staging copy and writes reports/rehearsal.md"
+            },
+            {
+              "label": "Apply",
+              "value": "Runs the up file on production and writes reports/apply.md"
+            },
+            {
+              "label": "Verify",
+              "value": "Checks the converted rows and writes reports/verify.md"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Backup, up migration, rollback, review, rehearsal, apply, verify"
+            },
+            {
+              "label": "At the same time",
+              "value": "The up file and the rollback file are written by two parallel steps, each changing only its own file"
+            },
+            {
+              "label": "Review",
+              "value": "Required: a step with \"kind\": \"review\" that depends on both migration steps"
+            },
+            {
+              "label": "Order",
+              "value": "Review before rehearsal; rehearsal and backup both before apply; apply before verify"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof (a command, test or file), budget"
+            },
+            {
+              "label": "Limits",
+              "value": "At most 8 steps and 5 owners"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape, with \"loops\": []"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has backup, up migration, rollback, review, rehearsal, apply and verify steps, matched by the files and titles in the spec.",
+        "The up and rollback files are written by steps that can run at the same time and do not share a file.",
+        "A review step (kind review) depends on both migration steps.",
+        "Rehearsal follows the review; apply waits for both the rehearsal and the backup; verify follows apply.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a checkable proof and a budget.",
+        "No more than 8 steps and 5 owners; the goal says when the job is done."
+      ],
+      "maxPromptChars": 3000
+    },
+    {
+      "slug": "release-pipeline-plan",
+      "title": "Plan a release pipeline with one approval gate",
+      "level": 1,
+      "kind": "workflow",
+      "lesson": "loops-and-graphs",
+      "brief": "Get the model to plan a package release as a JSON graph where tests, docs and the build run at the same time and one approval gates the publish.",
+      "spec": [
+        {
+          "group": "Files",
+          "items": [
+            {
+              "label": "Version",
+              "value": "The first step changes package.json and CHANGELOG.md"
+            },
+            {
+              "label": "Tests",
+              "value": "Writes the test output to reports/tests.txt"
+            },
+            {
+              "label": "Docs",
+              "value": "Changes docs/"
+            },
+            {
+              "label": "Build",
+              "value": "Changes dist/"
+            },
+            {
+              "label": "Approval",
+              "value": "A step titled with \"approve\" or \"sign off\" that writes reports/approval.md"
+            },
+            {
+              "label": "Publish",
+              "value": "A step titled with \"publish\" that writes reports/publish.txt"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Version, tests, docs, build, approval, publish"
+            },
+            {
+              "label": "Order",
+              "value": "Version before tests, docs and build; all three before approval; approval before publish"
+            },
+            {
+              "label": "At the same time",
+              "value": "Tests, docs and build run in parallel: none depends on another"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof (a command, test or file), budget"
+            },
+            {
+              "label": "Limits",
+              "value": "At most 7 steps and 5 owners"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape, with \"loops\": []"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has version, tests, docs, build, approval and publish steps, matched by the files and titles in the spec.",
+        "Version comes first; tests, docs and build all come before the approval; the approval comes before publish.",
+        "Tests, docs and build do not depend on each other and do not share a file.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a checkable proof and a budget.",
+        "No more than 7 steps and 5 owners; the goal says when the job is done."
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "benchmark-tuning-loop",
+      "title": "Plan a prompt-tuning loop with a held-out set",
+      "level": 2,
+      "kind": "workflow",
+      "lesson": "loops-and-graphs",
+      "brief": "Get the model to plan a capped loop that tunes a prompt against a dev benchmark, with a check of the measure first and one final run on a held-out set the loop never sees.",
+      "spec": [
+        {
+          "group": "Task",
+          "items": [
+            {
+              "label": "Prompt",
+              "value": "prompts/summarize.txt, the only file the tuning step changes"
+            },
+            {
+              "label": "Dev set",
+              "value": "40 cases in benchmarks/dev/; scored with npm run bench -- benchmarks/dev"
+            },
+            {
+              "label": "Held-out set",
+              "value": "20 cases in benchmarks/held_out/; no step in the loop, or before it, may read or change it"
+            },
+            {
+              "label": "Round limit",
+              "value": "At most 5 rounds"
+            }
+          ]
+        },
+        {
+          "group": "Plan",
+          "items": [
+            {
+              "label": "Stages",
+              "value": "Baseline, check of the measure, score, tune, held-out check, report"
+            },
+            {
+              "label": "Baseline",
+              "value": "A step titled with \"baseline\" that scores the unchanged prompt on the dev set"
+            },
+            {
+              "label": "Check the measure",
+              "value": "A step titled with \"validate\", \"calibrate\" or \"check\" that compares the bench script with 5 hand-marked cases and writes reports/metric-check.md; it runs at the same time as the baseline"
+            },
+            {
+              "label": "Loop",
+              "value": "Declared in loops over a score step (titled \"score\", \"evaluate\" or \"measure\") and a tune step (titled \"tune\", \"revise\", \"improve\", \"edit\" or \"fix\"), with until, maxRounds of 5 or less and heldOut"
+            },
+            {
+              "label": "Order",
+              "value": "Baseline and the measure check before score; baseline before tune; score and tune before the held-out check (titled \"held-out\", \"holdout\", \"hidden\" or \"final\"); the held-out check before the report, which writes reports/benchmark.md"
+            },
+            {
+              "label": "Each step",
+              "value": "id, title, owner, dependsOn, changes, proof (a command, test or file), budget"
+            },
+            {
+              "label": "Limits",
+              "value": "At most 7 steps and 4 owners"
+            },
+            {
+              "label": "Format",
+              "value": "JSON only, in the lesson's example shape"
+            }
+          ]
+        }
+      ],
+      "criteria": [
+        "Has baseline, measure check, score, tune, held-out check and report steps, matched by the files and titles in the spec.",
+        "The loop is declared over the score and tune steps, with a checkable until, maxRounds of 5 or less and a heldOut note.",
+        "No step in the loop, or before it, reads or changes benchmarks/held_out/.",
+        "The baseline and the measure check can run at the same time and do not share a file.",
+        "No cycle except inside the marked loop; every step has a title, owner, changes, dependsOn, a checkable proof and a budget.",
+        "No more than 7 steps and 4 owners; the goal says when the job is done."
+      ],
+      "maxPromptChars": 3500
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All Aboard: Europe's Sleeper Train Revival</title>
+<style>
+  body { margin: 0; font-family: "Times New Roman", serif; background: #ffffff; color: #1a1a1a; }
+  header { background: #0b2545; color: #ffffff; padding: 18px 0; }
+  header .inner { max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  header .brand { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; letter-spacing: 2px; }
+  header nav a { color: #cfd8e3; font-family: Arial, sans-serif; font-size: 14px; margin-left: 20px; text-decoration: none; }
+  .container { max-width: 760px; margin: 0 auto; padding: 50px 20px; }
+  h1 { font-size: 40px; text-align: center; margin: 0 0 10px; }
+  .sub { text-align: center; font-size: 20px; color: #555; font-style: italic; margin-bottom: 14px; }
+  .author { text-align: center; font-family: Arial, sans-serif; font-size: 13px; color: #888; margin-bottom: 40px; }
+  p { font-size: 18px; line-height: 1.7; margin: 0 0 22px; }
+  h2 { font-family: Arial, sans-serif; font-size: 22px; margin: 40px 0 16px; color: #0b2545; }
+  .quote { background: #eef4fb; padding: 24px 30px; margin: 34px 0; font-size: 22px; font-style: italic; text-align: center; border-radius: 8px; }
+  .figure { margin: 30px 0; text-align: center; }
+  .figure svg { background: #f4f7fa; }
+  .figure .cap { font-size: 14px; color: #777; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; margin-bottom: 28px; }
+  th { background: #0b2545; color: #ffffff; padding: 10px; text-align: left; }
+  td { padding: 10px; border-bottom: 1px solid #dde3ea; }
+  code.block { display: block; background: #f4f4f4; color: #333; font-family: "Courier New", monospace; font-size: 14px; padding: 16px; white-space: pre; border: 1px solid #ddd; margin-bottom: 28px; }
+  ol { font-size: 18px; line-height: 1.7; margin-bottom: 28px; }
+  footer { background: #0b2545; color: #cfd8e3; font-family: Arial, sans-serif; font-size: 13px; }
+  footer .inner { max-width: 960px; margin: 0 auto; padding: 30px 0; display: flex; justify-content: space-between; }
+  footer strong { color: #ffffff; display: block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<header><div class="inner">
+  <div class="brand">VOYAGER</div>
+  <nav><a href="#">Home</a><a href="#">Destinations</a><a href="#">Rail</a><a href="#">About</a></nav>
+</div></header>
+<div class="container">
+  <h1>All Aboard: Europe's Sleeper Train Revival</h1>
+  <div class="sub">How overnight rail went from relic to the hottest ticket in travel</div>
+  <div class="author">Written by Staff Writer | Updated this week</div>
+  <p>For decades, the night train seemed destined for the history books. Cheap flights made it easy to cross the continent in a couple of hours, and rail operators quietly retired their sleeper carriages one route at a time.</p>
+  <p>But something unexpected has happened. Across Europe, overnight trains are making a remarkable comeback, driven by climate concerns, a desire for slower travel, and a new generation of operators betting big on the romance of the rails.</p>
+  <div class="quote">"There's something magical about falling asleep in Vienna and waking up in Venice."</div>
+  <h2>A Growing Network</h2>
+  <p>The numbers tell the story. Since 2020, dozens of new sleeper connections have been launched or announced, linking major capitals and holiday destinations alike.</p>
+  <div class="figure">
+    <svg width="600" height="200" viewBox="0 0 600 200">
+      <g fill="#0b2545"><rect x="60" y="140" width="60" height="40"/><rect x="160" y="120" width="60" height="60"/><rect x="260" y="95" width="60" height="85"/><rect x="360" y="70" width="60" height="110"/><rect x="460" y="40" width="60" height="140"/></g>
+    </svg>
+    <div class="cap">Growth in sleeper routes, 2020-2024</div>
+  </div>
+  <h2>Popular Routes</h2>
+  <table>
+    <tr><th>Route</th><th>Duration</th><th>Price</th></tr>
+    <tr><td>Vienna - Venice</td><td>11h</td><td>from &euro;39</td></tr>
+    <tr><td>Brussels - Berlin</td><td>12h</td><td>from &euro;59</td></tr>
+    <tr><td>Zurich - Amsterdam</td><td>12h</td><td>from &euro;49</td></tr>
+  </table>
+  <h2>Planning Your Trip</h2>
+  <p>Booking a sleeper is easier than ever. Many operators offer APIs and apps for checking availability:</p>
+  <code class="block">fetch("/api/trains?type=sleeper")
+  .then(res =&gt; res.json())
+  .then(data =&gt; console.log(data));</code>
+  <ol>
+    <li>Book early, especially for summer travel.</li>
+    <li>Pick a private compartment for extra comfort.</li>
+    <li>Pack snacks and earplugs.</li>
+  </ol>
+  <p>Whether you're chasing sustainability or simply nostalgia, there has never been a better time to travel by night.</p>
+</div>
+<footer><div class="inner">
+  <div><strong>Explore</strong>Destinations<br>Rail Guides<br>Tips</div>
+  <div><strong>Company</strong>About<br>Contact<br>Careers</div>
+  <div><strong>Connect</strong>Newsletter<br>Instagram<br>Twitter</div>
+</div></footer>
+</body>
+</html>

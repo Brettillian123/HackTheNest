@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#1f2937;min-height:800px}
+.wrap{max-width:720px;margin:0 auto;padding:48px 24px}
+h1{margin:0 0 6px;font-size:30px;font-family:Georgia,serif;color:#111827}
+.sub{margin:0 0 28px;color:#6b7280;font-size:15px}
+.note{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border-radius:8px;border-left:6px solid;margin-bottom:16px;background:#fff}
+.icon{flex:0 0 36px;height:36px;border-radius:50%;color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;justify-content:center}
+.body{flex:1}
+.kind{font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:bold;margin-bottom:4px}
+.title{font-size:17px;font-weight:bold;margin-bottom:4px;color:#111827}
+.text{font-size:14px;line-height:1.5;color:#374151}
+.action{display:inline-block;margin-top:10px;font-size:14px;font-weight:bold;text-decoration:none;padding:6px 12px;border-radius:5px;background:#fff;border:1px solid currentColor}
+.success{background:#ecfdf5;border-color:#10b981;color:#047857}
+.success .icon{background:#10b981}
+.info{background:#eff6ff;border-color:#3b82f6;color:#1d4ed8}
+.info .icon{background:#3b82f6}
+.warning{background:#fffbeb;border-color:#f59e0b;color:#b45309}
+.warning .icon{background:#f59e0b}
+.error{background:#fef2f2;border-color:#ef4444;color:#b91c1c}
+.error .icon{background:#ef4444}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Notifications</h1>
+<p class="sub">Four messages from the last 24 hours</p>
+
+<div class="note success">
+<div class="icon">&#10003;</div>
+<div class="body">
+<div class="kind">Success</div>
+<div class="title">Payment received</div>
+<div class="text">Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</div>
+<a class="action" href="#">View invoice</a>
+</div>
+</div>
+
+<div class="note info">
+<div class="icon">i</div>
+<div class="body">
+<div class="kind">Information</div>
+<div class="title">New version available</div>
+<div class="text">Version 4.2 adds shared workspaces and faster PDF exports.</div>
+<a class="action" href="#">See what's new</a>
+</div>
+</div>
+
+<div class="note warning">
+<div class="icon">!</div>
+<div class="body">
+<div class="kind">Warning</div>
+<div class="title">Storage almost full</div>
+<div class="text">You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</div>
+<a class="action" href="#">Upgrade plan</a>
+</div>
+</div>
+
+<div class="note error">
+<div class="icon">&#10005;</div>
+<div class="body">
+<div class="kind">Error</div>
+<div class="title">Sync failed</div>
+<div class="text">We could not reach Google Drive. Your last 3 changes are saved on this device.</div>
+<a class="action" href="#">Try again</a>
+</div>
+</div>
+</div>
+</body>
+</html>

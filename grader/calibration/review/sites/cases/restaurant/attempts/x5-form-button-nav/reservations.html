@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a table — Olive & Ember</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="w-top"><div class="w-bar"><form action="index.html" method="get" class="w-go"><button type="submit" class="w-brand">Olive &amp; Ember</button></form><nav class="w-nav" aria-label="Main"><form action="index.html" method="get" class="w-go"><button type="submit">Home</button></form>
+<form action="menu.html" method="get" class="w-go"><button type="submit">Menu</button></form>
+<form action="reservations.html" method="get" class="w-go"><button type="submit" aria-current="page">Reservations</button></form>
+<form action="find-us.html" method="get" class="w-go"><button type="submit">Find us</button></form></nav></div></header>
+<main><h1>Book a table</h1><p>Tables are held for fifteen minutes. Groups of more than eight, please call 01632 960 123.</p>
+<form class="w-form" action="reservations.html" method="get">
+<label>Name<input name="name" autocomplete="name" required></label>
+<label>Email<input type="email" name="email" autocomplete="email" required></label>
+<label>Date<input type="date" name="date" required></label>
+<label>Time<select name="time"><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option></select></label>
+<label>Guests<input type="number" name="guests" min="1" max="8" value="2"></label>
+<label class="w-wide">Notes (allergies, occasions)<textarea name="notes" rows="4"></textarea></label>
+<button type="submit">Request booking</button>
+</form></main>
+<footer><div class="w-bar"><nav aria-label="Footer"><form action="reservations.html" method="get" class="w-go"><button type="submit">Book a table</button></form><form action="find-us.html" method="get" class="w-go"><button type="submit">Opening hours</button></form></nav><p>&copy; 2026 Olive &amp; Ember, 14 Quay Street</p></div></footer>
+</body>
+</html>

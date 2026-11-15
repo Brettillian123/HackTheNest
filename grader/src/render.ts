@@ -1,9 +1,11 @@
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { PNG } from 'pngjs';
-import { dominantColor, hasInk, refineBlocks, type RawBlock } from './blocks';
+import { dominantColor, hasInk, needsInkCheck, refineBlocks, type RawBlock } from './blocks';
 import { MAX_BLOCKS, MAX_HTML_BYTES, MAX_PAGE_HEIGHT, RENDER_TIMEOUT_MS, VIEWPORT } from './config';
 import { EXTRACT_SOURCE } from './extract-source';
 import type { PageStats } from './performance';
+import { checkSource, gatherDomFacts } from './quality/index';
+import type { DomFacts, SourceFacts } from './quality/types';
 import { contentTypeOf, isPage, pathOfUrl, urlOf } from './site';
 import { GraderInputError, type PageSnapshot, type RGB, type Rect } from './types';
 
@@ -134,7 +136,124 @@ const STATS_SOURCE = String.raw`
     }
     links.push({ href: href.slice(0, 2000), x: x0 + sx, y: y0 + sy, w: x1 - x0, h: y1 - y0 });
   }
+
+  // Other ways a visitor reaches a page with scripts off. Same shape and
+  // the same visibility test as links.
+  var mAttr = Element.prototype.getAttribute;
+  var mQueryIn = Element.prototype.querySelectorAll;
+  function seen(el) {
+    return typeof mVisible !== 'function' || mVisible.call(el, {
+      checkOpacity: true, checkVisibilityCSS: true, opacityProperty: true, visibilityProperty: true
+    });
+  }
+
+  // Image maps: each area of a picture that is shown, at its place on the picture.
+  var maps = Document.prototype.querySelectorAll.call(document, 'map');
+  var pictures = Document.prototype.querySelectorAll.call(document, 'img[usemap]');
+  for (var p = 0; p < pictures.length && p < 200 && links.length < 2000; p++) {
+    var img = pictures[p];
+    var use = String(mAttr.call(img, 'usemap') || '');
+    if (use.charAt(0) !== '#' || use.length < 2) continue;
+    var key = use.slice(1);
+    var map = null;
+    for (var mi = 0; mi < maps.length && mi < 500; mi++) {
+      if (mAttr.call(maps[mi], 'name') === key || (map === null && mAttr.call(maps[mi], 'id') === key)) { map = maps[mi]; if (mAttr.call(map, 'name') === key) break; }
+    }
+    if (!map || !seen(img)) continue;
+    var ir = mRect.call(img);
+    if (ir.width <= 0 || ir.height <= 0) continue;
+    var areas = mQueryIn.call(map, 'area[href]');
+    for (var ai = 0; ai < areas.length && ai < 200 && links.length < 2000; ai++) {
+      var area = areas[ai];
+      var ahref = mAttr.call(area, 'href');
+      if (typeof ahref !== 'string') continue;
+      var shape = String(mAttr.call(area, 'shape') || 'rect').toLowerCase();
+      var nums = String(mAttr.call(area, 'coords') || '').split(/[\s,]+/).filter(function (v) { return v !== ''; }).map(parseFloat);
+      var bx0 = 0, by0 = 0, bx1 = ir.width, by1 = ir.height;
+      if (shape === 'circle' || shape === 'circ') {
+        if (nums.length < 3) continue;
+        bx0 = nums[0] - nums[2]; by0 = nums[1] - nums[2]; bx1 = nums[0] + nums[2]; by1 = nums[1] + nums[2];
+      } else if (shape === 'poly' || shape === 'polygon') {
+        if (nums.length < 6) continue;
+        bx0 = Infinity; by0 = Infinity; bx1 = -Infinity; by1 = -Infinity;
+        for (var pi = 0; pi + 1 < nums.length; pi += 2) {
+          bx0 = Math.min(bx0, nums[pi]); bx1 = Math.max(bx1, nums[pi]);
+          by0 = Math.min(by0, nums[pi + 1]); by1 = Math.max(by1, nums[pi + 1]);
+        }
+      } else if (shape !== 'default') {
+        if (nums.length < 4) continue;
+        bx0 = Math.min(nums[0], nums[2]); bx1 = Math.max(nums[0], nums[2]);
+        by0 = Math.min(nums[1], nums[3]); by1 = Math.max(nums[1], nums[3]);
+      }
+      if (!(bx1 > bx0 && by1 > by0)) continue;
+      bx0 = Math.max(0, bx0); by0 = Math.max(0, by0); bx1 = Math.min(ir.width, bx1); by1 = Math.min(ir.height, by1);
+      if (!(bx1 > bx0 && by1 > by0)) continue;
+      links.push({ href: ahref.slice(0, 2000), x: ir.left + bx0 + sx, y: ir.top + by0 + sy, w: bx1 - bx0, h: by1 - by0 });
+    }
+  }
+
+  // A form that sends the visitor to another page (method GET, the default)
+  // when its submit button is pressed. A POST form sends data; it is not a link.
+  var forms = Document.prototype.querySelectorAll.call(document, 'form');
+  for (var fi = 0; fi < forms.length && fi < 500 && links.length < 2000; fi++) {
+    var form = forms[fi];
+    var buttons = mQueryIn.call(form, 'button, input[type=submit], input[type=image]');
+    for (var bi = 0; bi < buttons.length && bi < 50 && links.length < 2000; bi++) {
+      var btn = buttons[bi];
+      var btype = String(mAttr.call(btn, 'type') || 'submit').toLowerCase();
+      if (btype !== 'submit' && btype !== 'image') continue;
+      if (mAttr.call(btn, 'disabled') !== null) continue;
+      var method = String(mAttr.call(btn, 'formmethod') || mAttr.call(form, 'method') || 'get').trim().toLowerCase();
+      if (method !== 'get') continue;
+      var action = mAttr.call(btn, 'formaction');
+      if (typeof action !== 'string') action = mAttr.call(form, 'action');
+      if (typeof action !== 'string' || !seen(btn)) continue;
+      var br = mRect.call(btn);
+      links.push({ href: action.slice(0, 2000), x: br.left + sx, y: br.top + sy, w: br.width, h: br.height });
+    }
+  }
   return { elements: elements, maxDepth: maxDepth, cssRules: cssRules, links: links };
+})
+`;
+
+/**
+ * Runs inside the page after the screenshot: makes every piece of text
+ * see-through, so a second screenshot shows the page without its text. The
+ * two differ exactly where text can be seen. A style sheet covers the
+ * pseudo-elements (placeholders, ::before); an inline !important on every
+ * element beats anything the page set, even its own inline !important.
+ * Only colours change, so nothing moves. Page nodes are read through the
+ * browser's own getters, as everywhere else.
+ */
+const BARE_CSS =
+  '*,*::before,*::after,*::placeholder,*::first-letter,*::first-line,*::marker,*::selection{' +
+  'color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;' +
+  'text-decoration-color:transparent!important;-webkit-text-stroke-color:transparent!important}';
+
+const BARE_SOURCE = String.raw`
+(function (css) {
+  var D = Document.prototype;
+  var root = Object.getOwnPropertyDescriptor(D, 'documentElement').get.call(document);
+  if (!root) return 0;
+  var style = D.createElement.call(document, 'style');
+  style.textContent = css;
+  Node.prototype.appendChild.call(root, style);
+  var gStyle = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'style').get;
+  var setProp = CSSStyleDeclaration.prototype.setProperty;
+  var all = D.querySelectorAll.call(document, '*');
+  var n = 0;
+  for (var i = 0; i < all.length && i < 200000; i++) {
+    var el = all[i];
+    if (!(el instanceof HTMLElement)) continue;
+    var st = gStyle.call(el);
+    setProp.call(st, 'color', 'transparent', 'important');
+    setProp.call(st, '-webkit-text-fill-color', 'transparent', 'important');
+    setProp.call(st, 'text-shadow', 'none', 'important');
+    setProp.call(st, 'text-decoration-color', 'transparent', 'important');
+    setProp.call(st, '-webkit-text-stroke-color', 'transparent', 'important');
+    n++;
+  }
+  return n;
 })
 `;
 
@@ -166,6 +285,30 @@ export interface RendererOptions {
   timeoutMs?: number;
   /** For tests only: replaces the in-page extractor. */
   extractSource?: string;
+}
+
+/**
+ * What the accessibility and clean-code checks need from one page of a
+ * site. Either part is null when it could not be gathered; the page then
+ * counts as having no extra problems of that kind, and `notes` says why.
+ */
+export interface PageQuality {
+  /** Read from the live page, before the grader adds anything to it. */
+  dom: DomFacts | null;
+  /** Read from the page's HTML text. */
+  source: SourceFacts | null;
+  notes: string[];
+}
+
+const reasonOf = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
+/** The HTML-text checks for one page. Never throws. */
+function sourceQuality(html: string): Pick<PageQuality, 'source' | 'notes'> {
+  try {
+    return { source: checkSource(html), notes: [] };
+  } catch (error) {
+    return { source: null, notes: [`The page's HTML could not be checked: ${reasonOf(error)}`] };
+  }
 }
 
 type Input = { kind: 'html'; html: string } | { kind: 'site'; files: Map<string, string>; path: string };
@@ -249,13 +392,15 @@ export class Renderer {
   async renderSitePage(
     files: Map<string, string>,
     path: string,
-  ): Promise<{ snapshot: PageSnapshot; stats: PageStats }> {
+  ): Promise<{ snapshot: PageSnapshot; stats: PageStats; quality: PageQuality }> {
     if (!files.has(path) || !isPage(path)) throw new GraderInputError(`"${path}" is not a page of the site.`);
-    const { snapshot, stats } = await this.capture({ kind: 'site', files, path });
-    return { snapshot, stats: stats! };
+    const { snapshot, stats, quality } = await this.capture({ kind: 'site', files, path });
+    return { snapshot, stats: stats!, quality: quality! };
   }
 
-  private async capture(input: Input): Promise<{ snapshot: PageSnapshot; stats: PageStats | null }> {
+  private async capture(
+    input: Input,
+  ): Promise<{ snapshot: PageSnapshot; stats: PageStats | null; quality: PageQuality | null }> {
     const ms = this.timeoutMs;
     const browser = await this.getBrowser();
     const context = await browser.newContext({
@@ -289,6 +434,22 @@ export class Renderer {
         rawStats = (await withTimeout(page.evaluate(`${STATS_SOURCE}()`), ms, 'Counting the page')) as RawStats;
       }
 
+      // The accessibility facts are read before the page is settled, so the
+      // grader's own style element is not counted. A failure here does not
+      // fail the render: the page then has no facts of that kind.
+      let quality: PageQuality | null = null;
+      if (input.kind === 'site') {
+        let dom: DomFacts | null = null;
+        const notes: string[] = [];
+        try {
+          dom = await gatherDomFacts(page, ms);
+        } catch (error) {
+          notes.push(`The page's accessibility facts could not be read: ${reasonOf(error)}`);
+        }
+        const fromSource = sourceQuality(input.files.get(input.path) ?? '');
+        quality = { dom, source: fromSource.source, notes: [...notes, ...fromSource.notes] };
+      }
+
       // Not page.addStyleTag: it waits on a load event that never comes when
       // the page's scripts are switched off, and hangs.
       await withTimeout(page.evaluate(`${FREEZE_SOURCE}(${JSON.stringify(FREEZE_CSS)})`), ms, 'Settling the page');
@@ -318,11 +479,52 @@ export class Renderer {
       const decoded = PNG.sync.read(png);
       const pixels = new Uint8Array(decoded.data.buffer, decoded.data.byteOffset, decoded.data.length);
 
+      // Text with something else drawn in its patch (a picture over or under
+      // it, a gradient, a panel) is checked against the same page with its
+      // text made see-through: where the two screenshots differ, the text's
+      // own ink shows. Only the area around those texts is shot again.
+      let bare: { pixels: Uint8Array; check: Set<RawBlock> } | undefined;
+      const check = new Set<RawBlock>();
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const b of raw.blocks) {
+        if (b.kind !== 'text' || !b.textStyle) continue;
+        if (!needsInkCheck(pixels, decoded.width, decoded.height, b.rect, b.textStyle.color)) continue;
+        check.add(b);
+        x0 = Math.min(x0, b.rect.x);
+        y0 = Math.min(y0, b.rect.y);
+        x1 = Math.max(x1, b.rect.x + b.rect.w);
+        y1 = Math.max(y1, b.rect.y + b.rect.h);
+      }
+      const cx0 = Math.max(0, Math.floor(x0) - 1), cy0 = Math.max(0, Math.floor(y0) - 1);
+      const cx1 = Math.min(decoded.width, Math.ceil(x1) + 1), cy1 = Math.min(decoded.height, Math.ceil(y1) + 1);
+      if (check.size > 0 && cx1 > cx0 && cy1 > cy0) {
+        await withTimeout(page.evaluate(`${BARE_SOURCE}(${JSON.stringify(BARE_CSS)})`), ms, 'Hiding the text');
+        const barePng = await page.screenshot({
+          type: 'png',
+          fullPage: true,
+          clip: { x: cx0, y: cy0, width: cx1 - cx0, height: cy1 - cy0 },
+          animations: 'disabled',
+          caret: 'hide',
+          scale: 'css',
+          timeout: ms,
+        });
+        const part = PNG.sync.read(barePng);
+        if (part.width === cx1 - cx0 && part.height === cy1 - cy0) {
+          // The rest of the page is copied from the first shot: it is not used.
+          const whole = new Uint8Array(pixels);
+          for (let y = 0; y < part.height; y++) {
+            const from = y * part.width * 4;
+            whole.set(part.data.subarray(from, from + part.width * 4), ((cy0 + y) * decoded.width + cx0) * 4);
+          }
+          bare = { pixels: whole, check };
+        }
+      }
+
       const whole: Rect = { x: 0, y: 0, w: decoded.width, h: decoded.height };
       const pageBackground = raw.samplePageBackground
         ? dominantColor(pixels, decoded.width, decoded.height, whole)
         : raw.pageBackground;
-      const blocks = refineBlocks(raw.blocks, pixels, decoded.width, decoded.height);
+      const blocks = refineBlocks(raw.blocks, pixels, decoded.width, decoded.height, bare);
 
       const snapshot: PageSnapshot = {
         width: decoded.width,
@@ -349,7 +551,7 @@ export class Renderer {
                 .map((l) => l.href),
             }
           : null;
-      return { snapshot, stats };
+      return { snapshot, stats, quality };
     } finally {
       // A page stuck in a loop can refuse to close. Do not wait on it forever:
       // drop the whole browser instead, and the next render starts a new one.

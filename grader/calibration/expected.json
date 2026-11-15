@@ -14,7 +14,8 @@
       ["near", "good", "partial", "wrong", "blank"],
       ["good", "wrong-theme", "wrong"],
       ["good", "text-only", "wrong"]
-    ]
+    ],
+    "pending": ["text-only"]
   },
   "profile": {
     "bands": {
@@ -28,5 +29,73 @@
       ["near", "shifted", "left-aligned", "blank"],
       ["near", "partial", "blank"]
     ]
+  },
+  "dashboard": {
+    "bands": {
+      "rebuild-detailed": [87, 96],
+      "rebuild-vague": [35, 50],
+      "near": [90, 98],
+      "wrong-data": [70, 82],
+      "missing-section": [55, 70],
+      "restyled": [68, 80],
+      "rearranged": [60, 74],
+      "lorem": [45, 60]
+    },
+    "order": [
+      ["near", "restyled"],
+      ["near", "missing-section"],
+      ["near", "lorem"],
+      ["rebuild-detailed", "rebuild-vague"],
+      ["rebuild-detailed", "missing-section"],
+      ["missing-section", "rebuild-vague"],
+      ["lorem", "rebuild-vague"],
+      ["wrong-data", "lorem"]
+    ],
+    "pending": ["rebuild-vague", "wrong-data", "restyled", "near", "missing-section", "rearranged", "lorem"]
+  },
+  "article": {
+    "bands": {
+      "rebuild-detailed": [90, 98],
+      "rebuild-vague": [25, 42],
+      "near": [88, 97],
+      "wrong-data": [68, 82],
+      "missing-section": [60, 74],
+      "restyled": [65, 78],
+      "rearranged": [62, 76],
+      "lorem": [35, 52]
+    },
+    "order": [
+      ["near", "restyled"],
+      ["near", "missing-section"],
+      ["near", "lorem"],
+      ["rebuild-detailed", "rebuild-vague"],
+      ["rebuild-detailed", "missing-section"],
+      ["missing-section", "rebuild-vague"],
+      ["lorem", "rebuild-vague"],
+      ["wrong-data", "lorem"]
+    ],
+    "pending": ["wrong-data", "restyled", "lorem", "rebuild-vague", "near", "missing-section", "rearranged"]
+  },
+  "checkout": {
+    "bands": {
+      "rebuild-detailed": [85, 95],
+      "rebuild-vague": [28, 45],
+      "near": [90, 98],
+      "wrong-data": [65, 80],
+      "missing-section": [55, 70],
+      "restyled": [66, 80],
+      "rearranged": [62, 76],
+      "lorem": [45, 60]
+    },
+    "order": [
+      ["near", "restyled"],
+      ["near", "missing-section"],
+      ["near", "lorem"],
+      ["rebuild-detailed", "rebuild-vague"],
+      ["rebuild-detailed", "missing-section"],
+      ["missing-section", "rebuild-vague"],
+      ["lorem", "rebuild-vague"]
+    ],
+    "pending": ["rebuild-vague", "wrong-data", "missing-section", "rearranged", "lorem"]
   }
 }

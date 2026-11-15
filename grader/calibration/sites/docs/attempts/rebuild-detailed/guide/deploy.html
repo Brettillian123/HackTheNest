@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy · Lumen Docs</title>
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+<header class="masthead"><a href="../index.html" class="logo-link"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28" alt="Lumen logo">Lumen Docs</a><small class="tag">v2.4</small></header>
+<div class="frame">
+<main class="doc">
+<nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="../index.html">Home</a></li><li>Guide</li><li>Deploy</li></ol></nav>
+<h1>Deploy</h1>
+<p class="intro">A Lumen site is plain files, so it can be hosted anywhere that serves static pages.</p>
+<h2>Build the site</h2>
+<pre><code>lumen build
+Built 42 pages in 0.8 s -&gt; dist/</code></pre>
+<h2>Upload</h2>
+<p>Copy the <code>dist</code> folder to your host. With the built-in command you can upload straight to an S3-compatible bucket:</p>
+<pre><code>lumen deploy --target s3://my-bucket</code></pre>
+<h2>Roll back</h2>
+<p>Every deploy keeps the previous build. Run <code>lumen deploy --rollback</code> to put it back.</p>
+<nav class="pager" aria-label="Previous and next"><a href="config.html" class="pager-link"><small>Previous</small>Configuration</a><a href="../reference.html" class="pager-link pager-next"><small>Next</small>Reference</a></nav>
+<footer class="doc-foot">Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</footer>
+</main>
+<aside class="docs-nav"><nav aria-label="Documentation">
+<form class="find" role="search"><label for="search" class="sr-only">Search the docs</label><input id="search" type="search" placeholder="Search the docs"></form>
+<div class="nav-heading">Getting started</div>
+<ul>
+<li><a href="../index.html">Overview</a></li>
+</ul>
+<div class="nav-heading">Guide</div>
+<ul>
+<li><a href="install.html">Install</a></li>
+<li><a href="config.html">Configuration</a></li>
+<li><a href="deploy.html" class="is-active" aria-current="page">Deploy</a></li>
+</ul>
+<div class="nav-heading">More</div>
+<ul>
+<li><a href="../reference.html">Reference</a></li>
+<li><a href="../changelog.html">Changelog</a></li>
+</ul>
+</nav></aside>
+</div>
+</body>
+</html>

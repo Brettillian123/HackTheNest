@@ -1,0 +1,91 @@
+{
+  "goal": "report/FINDINGS.md answers the question with every claim tied to a checked source, and lists what was not verified",
+  "steps": [
+    {
+      "id": "scope",
+      "title": "Write the question and sub-questions",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/QUESTION.md states the question and lists the sub-questions to answer",
+      "budget": {
+        "toolCalls": 10
+      }
+    },
+    {
+      "id": "research-a",
+      "title": "Collect sources on Claude Code and Codex",
+      "owner": "researcher-a",
+      "dependsOn": [
+        "scope"
+      ],
+      "changes": [
+        "notes/sources-a.md"
+      ],
+      "kind": "research",
+      "reads": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/sources-a.md has a URL and a quoted line for each of its sub-questions",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "research-b",
+      "title": "Collect sources on Gemini CLI",
+      "owner": "researcher-b",
+      "dependsOn": [
+        "scope"
+      ],
+      "changes": [
+        "notes/sources-b.md"
+      ],
+      "kind": "research",
+      "reads": [
+        "notes/QUESTION.md"
+      ],
+      "proof": "notes/sources-b.md has a URL and a quoted line for each of its sub-questions",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "draft",
+      "title": "Write the draft report",
+      "owner": "writer",
+      "dependsOn": [
+        "research-a",
+        "research-b"
+      ],
+      "changes": [
+        "report/draft.md"
+      ],
+      "reads": [
+        "notes/**"
+      ],
+      "proof": "report/draft.md answers each sub-question and every claim cites a URL from the notes",
+      "budget": {
+        "toolCalls": 30
+      }
+    },
+    {
+      "id": "publish",
+      "title": "Publish FINDINGS.md",
+      "owner": "coordinator",
+      "dependsOn": [
+        "draft"
+      ],
+      "changes": [
+        "report/FINDINGS.md"
+      ],
+      "proof": "report/FINDINGS.md exists and matches the draft",
+      "budget": {
+        "toolCalls": 5
+      }
+    }
+  ],
+  "loops": []
+}

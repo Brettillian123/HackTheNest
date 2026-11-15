@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Osteria Lume — Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f2e9;color:#2b2420;font-family:Georgia,serif;min-height:800px}
+header{background:#1f1a17;color:#f3ead9;padding:28px 64px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #b8945a}
+.brand{font-size:30px;letter-spacing:4px;text-transform:uppercase}
+.tag{font-style:italic;font-size:14px;color:#c9b48a;margin-top:6px;letter-spacing:1px}
+nav a{color:#e6d6b2;text-decoration:none;font-family:Arial,sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-left:28px;padding-bottom:4px}
+nav a.on{color:#d2a86a;border-bottom:1px solid #d2a86a}
+main{display:grid;grid-template-columns:1fr 1fr;gap:20px 64px;padding:44px 64px 20px}
+section.course h2{font-weight:normal;font-size:26px;letter-spacing:3px;text-transform:uppercase;color:#7a5a2e;border-bottom:1px solid #c9b48a;padding-bottom:8px;margin-bottom:18px}
+.item{margin-bottom:18px}
+.row{display:flex;align-items:baseline;gap:10px}
+.name{font-size:17px;color:#2b2420}
+.dots{flex:1;border-bottom:1px dotted #b8945a;transform:translateY(-4px)}
+.price{font-size:16px;color:#7a5a2e}
+.desc{font-style:italic;font-size:13px;color:#6b5d50;margin-top:4px;line-height:1.4}
+.wide{grid-column:1 / -1}
+.note{font-size:13px;color:#6b5d50;font-style:italic;text-align:center;margin-top:8px;line-height:1.6}
+footer{margin-top:28px;background:#1f1a17;color:#e6d6b2;padding:28px 64px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;font-family:Arial,sans-serif;font-size:13px;line-height:1.7}
+footer h3{font-family:Georgia,serif;font-weight:normal;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#d2a86a;margin-bottom:6px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">Osteria Lume</div>
+    <div class="tag">Cucina di stagione · Est. 2011</div>
+  </div>
+  <nav>
+    <a class="on" href="#">Menu</a>
+    <a href="#">Wine</a>
+    <a href="#">Reservations</a>
+    <a href="#">Visit</a>
+  </nav>
+</header>
+<main>
+  <section class="course">
+    <h2>Antipasti</h2>
+    <div class="item"><div class="row"><span class="name">Burrata con pesche</span><span class="dots"></span><span class="price">16</span></div><div class="desc">Burrata, grilled peaches, basil oil, toasted hazelnuts</div></div>
+    <div class="item"><div class="row"><span class="name">Carpaccio di manzo</span><span class="dots"></span><span class="price">18</span></div><div class="desc">Thin-sliced beef, rocket, aged parmesan, lemon</div></div>
+    <div class="item"><div class="row"><span class="name">Arancini al tartufo</span><span class="dots"></span><span class="price">14</span></div><div class="desc">Three crisp risotto balls, black truffle, fontina</div></div>
+    <div class="item"><div class="row"><span class="name">Zuppa di ceci</span><span class="dots"></span><span class="price">11</span></div><div class="desc">Chickpea soup, rosemary, olive oil crouton</div></div>
+  </section>
+  <section class="course">
+    <h2>Primi</h2>
+    <div class="item"><div class="row"><span class="name">Tagliatelle al ragù</span><span class="dots"></span><span class="price">24</span></div><div class="desc">Hand-cut egg pasta, slow-cooked beef and pork ragù</div></div>
+    <div class="item"><div class="row"><span class="name">Cacio e pepe</span><span class="dots"></span><span class="price">21</span></div><div class="desc">Tonnarelli, pecorino romano, cracked black pepper</div></div>
+    <div class="item"><div class="row"><span class="name">Risotto ai funghi</span><span class="dots"></span><span class="price">26</span></div><div class="desc">Carnaroli rice, wild mushrooms, thyme, mascarpone</div></div>
+    <div class="item"><div class="row"><span class="name">Ravioli di zucca</span><span class="dots"></span><span class="price">23</span></div><div class="desc">Roasted squash ravioli, brown butter, sage, amaretti</div></div>
+  </section>
+  <section class="course">
+    <h2>Secondi</h2>
+    <div class="item"><div class="row"><span class="name">Branzino al forno</span><span class="dots"></span><span class="price">34</span></div><div class="desc">Whole roasted sea bass, fennel, capers, salsa verde</div></div>
+    <div class="item"><div class="row"><span class="name">Pollo alla diavola</span><span class="dots"></span><span class="price">29</span></div><div class="desc">Spatchcocked chicken, chili, garlic, charred lemon</div></div>
+    <div class="item"><div class="row"><span class="name">Bistecca alla fiorentina</span><span class="dots"></span><span class="price">92</span></div><div class="desc">900 g T-bone for two, rosemary potatoes</div></div>
+    <div class="item"><div class="row"><span class="name">Melanzane alla parmigiana</span><span class="dots"></span><span class="price">25</span></div><div class="desc">Layered aubergine, tomato, basil, mozzarella</div></div>
+  </section>
+  <section class="course">
+    <h2>Dolci</h2>
+    <div class="item"><div class="row"><span class="name">Tiramisù</span><span class="dots"></span><span class="price">12</span></div><div class="desc">Espresso-soaked savoiardi, mascarpone, cocoa</div></div>
+    <div class="item"><div class="row"><span class="name">Panna cotta</span><span class="dots"></span><span class="price">11</span></div><div class="desc">Vanilla cream, blood orange, pistachio crumble</div></div>
+    <div class="item"><div class="row"><span class="name">Affogato</span><span class="dots"></span><span class="price">9</span></div><div class="desc">Fior di latte gelato drowned in espresso</div></div>
+  </section>
+  <p class="note wide">A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.</p>
+</main>
+<footer>
+  <div><h3>Find us</h3>214 Harbour Street<br>Portland, ME 04101</div>
+  <div><h3>Hours</h3>Tuesday – Sunday<br>5:00 pm – 11:00 pm</div>
+  <div><h3>Book</h3>(207) 555-0148<br>hello@osterialume.com</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Osteria Lume — Menu</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:#f5f1e8;color:#282a22;font-family:Arial,sans-serif}
+  body{padding:0 44px}
+  .topbar{height:76px;border-bottom:1px solid #d8d0c1;display:flex;align-items:center;justify-content:space-between}
+  .brand{font:24px Georgia,serif;letter-spacing:.06em;color:#53372f}
+  .brand small{display:block;margin-top:3px;font:9px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#777362}
+  nav{display:flex;gap:35px;align-items:center}
+  nav a{font-size:11px;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;color:#56564d;padding:10px 0}
+  nav a.current{color:#8c4538;border-bottom:1px solid #8c4538}
+  .intro{text-align:center;padding:21px 0 19px}
+  .eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#98775d}
+  h1{font:42px Georgia,serif;font-weight:400;letter-spacing:.04em;margin:5px 0 0;color:#382e28}
+  .rule{width:42px;height:1px;background:#ad775e;margin:12px auto 0}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:66px;row-gap:14px;max-width:1110px;margin:0 auto}
+  .course{padding:0 0 9px;border-bottom:1px solid #ded7ca}
+  .course h2{font:17px Georgia,serif;font-weight:400;color:#854b3b;letter-spacing:.04em;margin:0 0 8px}
+  .dish{margin:0 0 7px}
+  .dish-head{display:flex;align-items:baseline;gap:9px}
+  .dish-name{font:14px Georgia,serif;color:#302c25}
+  .dots{flex:1;border-bottom:1px dotted #bcb3a4;transform:translateY(-3px)}
+  .price{font-size:12px;color:#6d493b;white-space:nowrap}
+  .desc{font-size:10.5px;color:#777468;line-height:1.35;margin-top:2px}
+  .note{max-width:1110px;margin:12px auto 0;text-align:center;font-size:10px;line-height:1.45;color:#6c695f}
+  footer{border-top:1px solid #d8d0c1;margin:14px auto 0;padding:12px 0 15px;max-width:1110px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;color:#5e5b51}
+  footer h3{font:10px Arial,sans-serif;text-transform:uppercase;letter-spacing:.15em;color:#8c5544;margin:0 0 5px}
+  footer p{font-size:10px;line-height:1.55;margin:0}
+  @media(max-width:700px){
+    body{padding:0 20px}.topbar{height:auto;padding:18px 0;align-items:flex-start;gap:15px;flex-direction:column}
+    nav{gap:18px;flex-wrap:wrap}.menu-grid{grid-template-columns:1fr;row-gap:17px}
+    footer{grid-template-columns:1fr;gap:12px}h1{font-size:36px}
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Restaurant: Osteria Lume<small>Cucina di stagione · Est. 2011</small></div>
+  <nav aria-label="Site sections">
+    <a class="current" href="#menu">Menu</a>
+    <a href="#wine">Wine</a>
+    <a href="#reservations">Reservations</a>
+    <a href="#visit">Visit</a>
+  </nav>
+</header>
+<main id="menu">
+  <section class="intro">
+    <div class="eyebrow">Cucina di stagione · Est. 2011</div>
+    <h1>Menu</h1>
+    <div class="rule"></div>
+  </section>
+  <section class="menu-grid" aria-label="Menu by course">
+    <section class="course">
+      <h2>Antipasti</h2>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Burrata con pesche</span><i class="dots"></i><span class="price">$16</span></div><div class="desc">Burrata, grilled peaches, basil oil, toasted hazelnuts</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Carpaccio di manzo</span><i class="dots"></i><span class="price">$18</span></div><div class="desc">Thin-sliced beef, rocket, aged parmesan, lemon</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Arancini al tartufo</span><i class="dots"></i><span class="price">$14</span></div><div class="desc">Three crisp risotto balls, black truffle, fontina</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Zuppa di ceci</span><i class="dots"></i><span class="price">$11</span></div><div class="desc">Chickpea soup, rosemary, olive oil crouton</div></div>
+    </section>
+    <section class="course">
+      <h2>Primi</h2>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Tagliatelle al ragù</span><i class="dots"></i><span class="price">$24</span></div><div class="desc">Hand-cut egg pasta, slow-cooked beef and pork ragù</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Cacio e pepe</span><i class="dots"></i><span class="price">$21</span></div><div class="desc">Tonnarelli, pecorino romano, cracked black pepper</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Risotto ai funghi</span><i class="dots"></i><span class="price">$26</span></div><div class="desc">Carnaroli rice, wild mushrooms, thyme, mascarpone</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Ravioli di zucca</span><i class="dots"></i><span class="price">$23</span></div><div class="desc">Roasted squash ravioli, brown butter, sage, amaretti</div></div>
+    </section>
+    <section class="course">
+      <h2>Secondi</h2>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Branzino al forno</span><i class="dots"></i><span class="price">$34</span></div><div class="desc">Whole roasted sea bass, fennel, capers, salsa verde</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Pollo alla diavola</span><i class="dots"></i><span class="price">$29</span></div><div class="desc">Spatchcocked chicken, chili, garlic, charred lemon</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Bistecca alla fiorentina</span><i class="dots"></i><span class="price">$92</span></div><div class="desc">900 g T-bone for two, rosemary potatoes</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Melanzane alla parmigiana</span><i class="dots"></i><span class="price">$25</span></div><div class="desc">Layered aubergine, tomato, basil, mozzarella</div></div>
+    </section>
+    <section class="course">
+      <h2>Dolci</h2>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Tiramisù</span><i class="dots"></i><span class="price">$12</span></div><div class="desc">Espresso-soaked savoiardi, mascarpone, cocoa</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Panna cotta</span><i class="dots"></i><span class="price">$11</span></div><div class="desc">Vanilla cream, blood orange, pistachio crumble</div></div>
+      <div class="dish"><div class="dish-head"><span class="dish-name">Affogato</span><i class="dots"></i><span class="price">$9</span></div><div class="desc">Fior di latte gelato drowned in espresso</div></div>
+    </section>
+  </section>
+  <p class="note">Note: A 20% service charge applies to parties of eight or more. Please tell your server about any allergies.</p>
+</main>
+<footer id="visit">
+  <section><h3>Find us</h3><p>214 Harbour Street, Portland, ME 04101</p></section>
+  <section><h3>Hours</h3><p>Tuesday – Sunday, 5:00 pm – 11:00 pm</p></section>
+  <section id="reservations"><h3>Book</h3><p>(207) 555-0148, hello@osterialume.com</p></section>
+</footer>
+</body>
+</html>

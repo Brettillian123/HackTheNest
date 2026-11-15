@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit Analytics — Overview</title>
+<style>
+*{box-sizing:border-box}
+:root{--ink:#182230;--muted:#8590a1;--line:#e9edf2;--violet:#6959e8;--lav:#eeeaff;--green:#14865d}
+body{margin:0;background:#f7f8fa;color:var(--ink);font-family:Arial,sans-serif;font-size:14px}
+.app{min-height:100vh;display:flex}
+.sidebar{width:238px;background:#fff;border-right:1px solid var(--line);padding:25px 16px 20px;display:flex;flex-direction:column;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:11px;padding:0 12px 31px;font-weight:700;font-size:16px;letter-spacing:-.3px}
+.brand-mark{width:29px;height:29px;border-radius:9px;background:#6959e8;position:relative}
+.brand-mark:before,.brand-mark:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.brand-mark:before{width:13px;height:13px;left:8px;top:5px}
+.brand-mark:after{width:6px;height:6px;left:11px;top:16px}
+.nav-label{font-size:10px;letter-spacing:1.15px;font-weight:700;color:#a2aab6;padding:0 12px 10px}
+.nav{display:grid;gap:4px}
+.nav-item{height:40px;display:flex;align-items:center;gap:12px;padding:0 12px;color:#687384;text-decoration:none;border-radius:7px;font-weight:500}
+.nav-item.active{background:#f0edff;color:#5d4fda;font-weight:600}
+.icon{width:17px;height:17px;display:inline-flex;align-items:center;justify-content:center;color:currentColor;flex-shrink:0}
+.icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.account-label{margin-top:29px}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--line);padding:17px 6px 0;display:flex;align-items:center;gap:10px}
+.avatar{height:34px;width:34px;border-radius:50%;background:#f1e6df;color:#8a5b49;display:grid;place-items:center;font-size:12px;font-weight:700}
+.user-name{font-size:13px;font-weight:600}
+.main{flex:1;min-width:0;padding:0 34px 32px}
+.topbar{height:77px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;margin-bottom:27px}
+.search{width:280px;height:38px;border:1px solid #e5e9ef;border-radius:7px;background:#fff;display:flex;align-items:center;gap:9px;padding:0 12px;color:#9aa3af}
+.search svg{width:16px;height:16px;stroke:#929baa;fill:none;stroke-width:1.8}
+.search input{border:0;outline:0;background:none;font:13px Arial,sans-serif;width:100%;color:var(--ink)}
+.search input::placeholder{color:#929baa;opacity:1}
+.top-right{display:flex;align-items:center;gap:21px}
+.bell{width:19px;height:19px;color:#6f7886}
+.top-avatar{width:34px;height:34px;border-radius:50%;background:#f1e6df;color:#8a5b49;display:grid;place-items:center;font-size:12px;font-weight:700}
+.heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:21px}
+h1{font-size:24px;letter-spacing:-.6px;margin:0;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.card,.panel{background:white;border:1px solid var(--line);border-radius:9px}
+.card{padding:17px 18px 16px;min-height:112px}
+.card-top{display:flex;justify-content:space-between;align-items:center;color:#687384;font-size:13px;font-weight:500}
+.card-icon{width:30px;height:30px;border-radius:8px;background:#f3f1ff;color:#705fe7;display:grid;place-items:center}
+.card-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.value{font-size:25px;font-weight:700;letter-spacing:-.7px;margin:8px 0 5px}
+.change{font-size:11.5px;color:#8a94a3}
+.chart-panel{height:263px;padding:17px 19px 14px;margin-bottom:20px}
+.panel-head{display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:14px;font-weight:600}
+.legend{font-size:11px;color:#7c8797;display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;background:#7666ec;border-radius:50%}
+.chart{height:190px;display:flex;margin-top:14px;position:relative}
+.y-axis{width:41px;display:flex;flex-direction:column;justify-content:space-between;padding:0 0 22px;color:#97a0ad;font-size:10px}
+.plot{flex:1;position:relative;display:flex;align-items:stretch;border-bottom:1px solid #e7eaf0}
+.gridline{position:absolute;left:0;right:0;border-top:1px dashed #e9edf2}
+.gridline.one{top:0}.gridline.two{top:50%}
+.bars{position:absolute;inset:0 2px 0 2px;display:flex;align-items:flex-end;justify-content:space-around;gap:10px}
+.bar-wrap{height:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;position:relative;padding-bottom:0}
+.bar{width:min(24px,68%);background:#7969ed;border-radius:4px 4px 0 0;z-index:1;opacity:.94}
+.month{position:absolute;top:calc(100% + 6px);font-size:10px;color:#929baa}
+.orders{padding:17px 0 0;overflow:hidden}
+.orders-head{padding:0 19px 14px;display:flex;align-items:center;justify-content:space-between}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}
+thead{background:#fafbfc;color:#8490a0;font-size:10px;letter-spacing:.45px;text-transform:uppercase}
+th{height:34px;font-weight:600;padding:0 19px;white-space:nowrap}
+td{height:41px;border-top:1px solid #f0f2f5;padding:0 19px;white-space:nowrap;color:#435064}
+td:first-child{font-weight:600;color:#536072}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:20px}
+.status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.paid{background:#eaf7f1;color:#16835c}.pending{background:#fff6e7;color:#b87912}.failed{background:#fff0ef;color:#d24e4b}
+@media(max-width:1000px){.sidebar{width:205px}.main{padding-left:22px;padding-right:22px}.cards{gap:10px}.card{padding:14px}.bars{gap:4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><span class="brand-mark"></span><span>Orbit Analytics</span></div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <a class="nav-item active" href="#"><span class="icon"><svg viewbox="0 0 24 24"><rect x="3" y="3" width="7" height="8" rx="1" /><rect x="14" y="3" width="7" height="5" rx="1" /><rect x="14" y="12" width="7" height="9" rx="1" /><rect x="3" y="15" width="7" height="6" rx="1" /></svg></span>Overview</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="M4 9h16M8 5v4" /></svg></span>Orders</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><circle cx="9" cy="8" r="4" /><path d="M2 20c0-4 3-6 7-6s7 2 7 6M16 4a4 4 0 0 1 0 8m2 2c2 .7 4 2.5 4 5" /></svg></span>Customers</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><path d="m4 8 8-5 8 5-8 5zM4 8v9l8 4 8-4V8M12 13v8" /></svg></span>Products</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><path d="M4 19V5m0 14h17M7 15l4-5 4 3 6-7" /></svg></span>Reports</a>
+  </nav>
+  <div class="nav-label account-label">ACCOUNT</div>
+  <nav class="nav">
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><circle cx="9" cy="8" r="3" /><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5v1" /></svg></span>Team</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 10h18" /></svg></span>Billing</a>
+    <a class="nav-item" href="#"><span class="icon"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="3" /><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.6.9l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.6-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.9l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.6-.9l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.6.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.8z" /></svg></span>Settings</a>
+  </nav>
+  <div class="sidebar-bottom"><div class="avatar">MC</div><div class="user-name">Maya Chen</div></div>
+</aside>
+<main class="main">
+  <header class="topbar">
+    <label class="search"><svg viewbox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></svg><input type="search" placeholder="Search orders, customers..."></label>
+    <div class="top-right"><svg class="bell" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg><div class="top-avatar">MC</div></div>
+  </header>
+  <div class="heading"><h1>Overview</h1></div>
+  <section class="cards">
+    <article class="card"><div class="card-top">Revenue<span class="card-icon"><svg viewbox="0 0 24 24"><path d="M12 2v20m5-15c0-2-2-3-5-3s-5 1-5 3 2 3 5 4 5 2 5 4-2 4-5 4-5-1-5-3" /></svg></span></div><div class="value">$48,250</div><div class="change">+12.4% this month</div></article>
+    <article class="card"><div class="card-top">Orders<span class="card-icon"><svg viewbox="0 0 24 24"><path d="M4 4h2l2 12h10l2-8H7" /><circle cx="10" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg></span></div><div class="value">1,284</div><div class="change">+8.1% this month</div></article>
+    <article class="card"><div class="card-top">New customers<span class="card-icon"><svg viewbox="0 0 24 24"><circle cx="9" cy="8" r="4" /><path d="M2 20c0-4 3-6 7-6s7 2 7 6m4-9v6m-3-3h6" /></svg></span></div><div class="value">312</div><div class="change">+4.6% this month</div></article>
+    <article class="card"><div class="card-top">Refund rate<span class="card-icon"><svg viewbox="0 0 24 24"><path d="M4 7h13l-3-3m6 13H7l3 3M17 7l3 3-3 3M7 17l-3-3 3-3" /></svg></span></div><div class="value">2.3%</div><div class="change">+0.4% this month</div></article>
+  </section>
+  <section class="panel chart-panel">
+    <div class="panel-head"><div class="panel-title">Monthly revenue</div><div class="legend"><span class="dot"></span>Revenue</div></div>
+    <div class="chart">
+      <div class="y-axis"><span>50k</span><span>25k</span><span>0</span></div>
+      <div class="plot">
+        <div class="gridline one"></div><div class="gridline two"></div>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar" style="height:35%"></div><span class="month">Jan</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:43%"></div><span class="month">Feb</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:39%"></div><span class="month">Mar</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:53%"></div><span class="month">Apr</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:48%"></div><span class="month">May</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:63%"></div><span class="month">Jun</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:56%"></div><span class="month">Jul</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:72%"></div><span class="month">Aug</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:66%"></div><span class="month">Sep</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:83%"></div><span class="month">Oct</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:76%"></div><span class="month">Nov</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:94%"></div><span class="month">Dec</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="panel orders">
+    <div class="orders-head"><div class="panel-title">Recent orders</div></div>
+    <table>
+      <thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>#10241</td><td>Liam Patel</td><td>Nov 12, 2026</td><td>$320.00</td><td><span class="status paid">Paid</span></td></tr>
+        <tr><td>#10240</td><td>Sofia Garcia</td><td>Nov 12, 2026</td><td>$89.50</td><td><span class="status pending">Pending</span></td></tr>
+        <tr><td>#10239</td><td>Noah Kim</td><td>Nov 11, 2026</td><td>$1,240.00</td><td><span class="status paid">Paid</span></td></tr>
+        <tr><td>#10238</td><td>Emma Rossi</td><td>Nov 11, 2026</td><td>$56.20</td><td><span class="status failed">Failed</span></td></tr>
+        <tr><td>#10237</td><td>Oliver Brown</td><td>Nov 10, 2026</td><td>$410.75</td><td><span class="status paid">Paid</span></td></tr>
+        <tr><td>#10236</td><td>Ava Johnson</td><td>Nov 10, 2026</td><td>$215.00</td><td><span class="status pending">Pending</span></td></tr>
+        <tr><td>#10235</td><td>Lucas Martin</td><td>Nov 9, 2026</td><td>$78.40</td><td><span class="status paid">Paid</span></td></tr>
+        <tr><td>#10234</td><td>Mia Dubois</td><td>Nov 9, 2026</td><td>$642.10</td><td><span class="status paid">Paid</span></td></tr>
+        <tr><td>#10233</td><td>Ethan Novak</td><td>Nov 8, 2026</td><td>$33.00</td><td><span class="status failed">Failed</span></td></tr>
+        <tr><td>#10232</td><td>Chloe Silva</td><td>Nov 8, 2026</td><td>$905.60</td><td><span class="status paid">Paid</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</div>
+</body>
+</html>

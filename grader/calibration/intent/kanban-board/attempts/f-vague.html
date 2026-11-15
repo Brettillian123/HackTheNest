@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kanban Board</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+  h1 { color: #333; }
+  .board { display: flex; gap: 20px; }
+  .col { background: #e2e4e9; border-radius: 6px; padding: 10px; width: 280px; }
+  .col h2 { font-size: 18px; margin: 0 0 10px; }
+  .task { background: white; padding: 10px; border-radius: 4px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+</style>
+</head>
+<body>
+<h1>Kanban Board</h1>
+<div class="board">
+  <div class="col"><h2>To Do</h2><div class="task">Design homepage</div><div class="task">Write documentation</div><div class="task">Set up database</div></div>
+  <div class="col"><h2>In Progress</h2><div class="task">Implement login</div><div class="task">Fix navbar bug</div></div>
+  <div class="col"><h2>Done</h2><div class="task">Project setup</div><div class="task">Create wireframes</div></div>
+</div>
+</body>
+</html>

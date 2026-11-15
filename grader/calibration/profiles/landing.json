@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 800,
+  "components": [
+    {
+      "id": "c1",
+      "type": "navigation",
+      "name": "the menu bar",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 73
+      },
+      "blocks": [
+        0,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": [
+        6
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "hero",
+      "name": "the hero",
+      "rect": {
+        "x": 157.7,
+        "y": 169,
+        "w": 964.5999999999999,
+        "h": 206
+      },
+      "blocks": [
+        1,
+        11,
+        12,
+        13
+      ],
+      "children": [],
+      "importance": "major",
+      "keyTexts": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "c3",
+      "type": "card-group",
+      "name": "the cards",
+      "rect": {
+        "x": 80,
+        "y": 463,
+        "w": 1120,
+        "h": 146
+      },
+      "blocks": [],
+      "children": [
+        {
+          "id": "c3.1",
+          "type": "card",
+          "name": "the 'Shared inbox' card",
+          "rect": {
+            "x": 80,
+            "y": 463,
+            "w": 352,
+            "h": 146
+          },
+          "blocks": [
+            2,
+            14,
+            17
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c3.2",
+          "type": "card",
+          "name": "the 'Smart sorting' card",
+          "rect": {
+            "x": 464,
+            "y": 463,
+            "w": 352,
+            "h": 146
+          },
+          "blocks": [
+            3,
+            15,
+            18
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c3.3",
+          "type": "card",
+          "name": "the 'Weekly reports' card",
+          "rect": {
+            "x": 848,
+            "y": 463,
+            "w": 352,
+            "h": 146
+          },
+          "blocks": [
+            4,
+            16,
+            19
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c4",
+      "type": "footer",
+      "name": "the footer",
+      "rect": {
+        "x": 0,
+        "y": 720,
+        "w": 1280,
+        "h": 80
+      },
+      "blocks": [
+        5,
+        20
+      ],
+      "children": [],
+      "importance": "minor",
+      "keyTexts": []
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

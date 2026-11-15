@@ -1,0 +1,31 @@
+{
+  "sections": [],
+  "tools": [
+    {
+      "name": "library_search",
+      "mustDescribe": ["use", "title", "author"],
+      "params": [
+        { "name": "query", "type": "string", "required": true },
+        { "name": "field", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "library_get_book",
+      "mustDescribe": ["use", "book"],
+      "params": [{ "name": "book_id", "type": "string", "required": true }]
+    },
+    {
+      "name": "library_place_hold",
+      "mustDescribe": ["use", "hold", "student"],
+      "params": [
+        { "name": "book_id", "type": "string", "required": true },
+        { "name": "student_id", "type": "string", "required": true }
+      ]
+    }
+  ],
+  "keyFacts": [
+    { "label": "the book id format (bk_)", "anyOf": ["bk_1234", "bk_"], "importance": "major", "section": "library_get_book" },
+    { "label": "the student id format (st_)", "anyOf": ["st_5678", "st_"], "importance": "major", "section": "library_place_hold" }
+  ],
+  "limits": { "maxWords": 400 }
+}

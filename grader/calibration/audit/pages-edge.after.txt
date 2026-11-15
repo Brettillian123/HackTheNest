@@ -1,0 +1,120 @@
+build-bg          wrapper-bg         [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-border      inset-shadow       [93-100] total  96.9 | C 100.0 L  99.7 S  80.2 V  98.4 | ok
+      - The box with 'Shared calendars' should not have a shadow (0.2)
+      - The box with 'Smart reminders' should not have a shadow (0.2)
+build-button      as-button          [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-button      as-div             [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-caps        typed-caps         [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-grid        table              [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-grid        flex               [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-icon        data-img           [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-text        b-tag              [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-text        three-spans        [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+build-units       rem                [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+colour-contrast   pale-text          [50-68] total  55.0 | C  61.4 L 100.0 S   0.0 V  32.5 | ok
+      - The text is pale and hard to read where the goal's is clear (38 pieces of text) (45)
+colour-gradient   reversed           [86-95] total  99.2 | C 100.0 L 100.0 S  99.8 V  96.1 | LENIENT by 4.2
+      - The background behind the heading 'Plan your week in five minutes' is a different shade of light green from the goal's (0.5)
+      - The background behind the text 'Brightleaf turns scattered tasks, mee...' is a different shade of light green from the goal's (0.2)
+colour-hue        hue-20             [80-92] total  86.3 | C 100.0 L 100.0 S  51.7 V  67.2 | ok
+      - Colours across the page differ from the goal's: dark teal where the goal uses dark teal, for example on the heading 'Plan your week in five minutes' (13.1)
+      - The border of the box with 'Most popular' is teal where the goal's is green (0.2)
+colour-theme      dark               [42-60] total  60.0 | C 100.0 L 100.0 S   0.0 V   7.7 | ok
+      - The page background is dark where the goal's is light (35.3)
+      - The border of the box with '“Brightleaf cut our Monday planning m...' is dark blue where the goal's is green (0.7)
+colour-theme      greyscale          [55-72] total  58.5 | C  78.6 L  37.7 S  77.9 V  27.4 | ok
+      - The dark teal section near the bottom is missing (12.1)
+      - 3 buttons are missing (9.2)
+colour-tint       black-10           [82-93] total  64.4 | C  79.2 L  44.6 S  78.5 V  43.2 | HARSH by 17.6
+      - 2 boxes are missing (10.2)
+      - The box with 'Most popular' is missing (8.7)
+content-cards     missing-one        [75-87] total  81.1 | C  89.2 L  68.5 S  96.7 V  71.6 | ok
+      - The box with 'Reports' is missing (18.9)
+content-cards     swapped-two        [84-94] total  82.9 | C 100.0 L  60.1 S 100.0 V  74.3 | HARSH by 1.1
+      - The box with 'Smart reminders' sits about 370 pixels too far left (9.5)
+      - The box with 'Shared calendars' sits about 370 pixels too far right (5.3)
+content-cta       cta-learn-more     [75-88] total  85.9 | C  60.8 L  99.0 S  99.5 V  99.3 | ok
+      - The button says 'Learn more' where the goal says 'Start free trial' (13.7)
+      - The button 'Start free trial' is narrower than the goal's (about 143 pixels wide instead of 160) (0.4)
+content-form      missing-field      [78-90] total  83.8 | C  92.6 L  69.6 S  98.7 V  74.9 | ok
+      - The text 'Company' is missing (13.8)
+      - The white box near the bottom right is missing (2.4)
+content-language  spanish            [30-48] total  40.2 | C   0.0 L  47.5 S  58.2 V  91.9 | ok
+      - Most of the text says something different from the goal (51 pieces of text, such as 'Planifica tu semana en cinco minutos' where the goal says 'Plan your week in five minutes') (59.7)
+      - The tag 'Most popular' is narrower than the goal's (about 95 pixels wide instead of 99) (0.1)
+content-logo      other-company      [68-82] total  86.7 | C  61.9 L  98.8 S  99.2 V  99.9 | LENIENT by 4.7
+      - The logo says 'Greenfield' where the goal says 'Brightleaf' (13.3)
+content-nav       four-links         [83-93] total  93.0 | C  80.1 L  98.3 S  98.8 V  99.8 | ok
+      - The text says 'FeaturesPricingCustomersContact' where the goal says 'FeaturesPricingCustomersBlogContact' (7)
+content-price     team-94            [75-88] total  92.9 | C  79.7 L 100.0 S 100.0 V  99.9 | LENIENT by 4.9
+      - The text says '$94/month' where the goal says '$49/month' (7.1)
+content-typo      headline-typo      [78-90] total  88.1 | C  66.0 L 100.0 S 100.0 V  99.9 | ok
+      - The heading says 'Plan your week in five mintues' where the goal says 'Plan your week in five minutes' (11.9)
+layout-columns    hero-one-column    [62-78] total  77.4 | C 100.0 L  45.6 S  99.9 V  36.5 | ok
+      - The part with '★ 4.9 from 2,000 teams' is on the left where the goal has it on the right (12.4)
+      - The button 'Start free trial' sits about 90 pixels too high (4.4)
+layout-overlap    badge-30px         [88-96] total  97.8 | C 100.0 L  94.8 S 100.0 V  96.6 | LENIENT by 1.8
+      - The tag 'Most popular' sits about 30 pixels too far right (2.2)
+layout-overlap    chip-behind-image  [76-88] total  76.2 | C  79.6 L 100.0 S  36.6 V  64.3 | ok
+      - The text '★ 4.9 from 2,000 teams' is hard to read against its background (23.7)
+layout-scale      zoom-90            [72-86] total  75.7 | C 100.0 L  41.9 S 100.0 V  32.8 | ok
+      - The content is about 10% narrower than the goal's (10.7)
+      - The green section near the top is less tall than the goal's (about 313 pixels high instead of 348) (0.8)
+layout-short      off-centre         [72-86] total  80.9 | C 100.0 L  60.7 S 100.0 V  63.4 | ok
+      - The page looks a little different from the goal at a glance (13.9)
+      - The text 'Thanks — your order is on its way.' sits about 160 pixels too far right (5.2)
+layout-sticky     sticky-header      [95-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+layout-tall       diff-below-cut     [82-94] total  85.7 | C  59.2 L  95.3 S  96.8 V  99.2 | ok
+      - The text 'This release improves sync speed for ...' has different words from the goal's: missing 'this', 'release', 'improves' and 29 more; has 'we', 'removed', 'the' and 30 more where the goal does not (14.3)
+layout-tall       diff-above-cut     [82-94] total  85.7 | C  59.2 L  95.3 S  96.8 V  99.2 | ok
+      - The text 'This release improves sync speed for ...' has different words from the goal's: missing 'this', 'release', 'improves' and 29 more; has 'we', 'removed', 'the' and 30 more where the goal does not (14.3)
+layout-width      no-max-width       [72-86] total  67.0 | C 100.0 L  18.7 S 100.0 V  36.6 | HARSH by 5.0
+      - The content is about 15% wider than the goal's (14)
+      - The heading 'Plan your week in five minutes' sits about 60 pixels too far right (1.8)
+layout-width      left-aligned       [65-80] total  74.3 | C 100.0 L  40.0 S 100.0 V  61.4 | ok
+      - The section with 'Plan your week in five minutes' sits about 80 pixels too far left (14.6)
+      - The section with 'What customers say' sits about 80 pixels too far left (7.6)
+less-chart        bars-differ        [88-96] total  99.9 | C 100.0 L 100.0 S 100.0 V  99.6 | LENIENT by 3.9
+      - Something looks different near the middle of the page (0.1)
+less-extras       cookie-banner      [85-95] total  93.7 | C  97.4 L  87.4 S 100.0 V  87.4 | ok
+      - Extra content the goal does not have: 'We use cookies to improve your experi...' (6.3)
+less-extras       back-to-top        [90-98] total  95.0 | C  85.6 L  99.4 S  99.7 V  99.9 | ok
+      - The text says 'Back to top ↑PrivacyTerms' where the goal says 'PrivacyTerms' (5)
+less-extras       extra-testimonial  [86-95] total  92.3 | C  96.5 L  84.1 S 100.0 V  81.3 | ok
+      - Extra content the goal does not have: '“We finally know who is overloaded be...' (7.7)
+less-picture      other-photo        [85-94] total  96.6 | C 100.0 L 100.0 S  88.7 V  91.5 | LENIENT by 2.6
+      - The colours of the picture near the top right differ from the goal's (orange where the goal's is light blue) (3.3)
+      - The green section near the top is light green where the goal's is green (0.1)
+less-table        rows-swapped       [88-96] total  97.4 | C 100.0 L  94.0 S 100.0 V  96.1 | LENIENT by 1.4
+      - 2 tags sit about 30 pixels too high (2.2)
+      - 2 tags sit about 30 pixels too low (0.3)
+own-whole         unstyled           [22-42] total  10.7 | C  11.0 L   0.0 S   0.0 V   0.0 | HARSH by 11.3
+      - Colours across the page differ from the goal's: black where the goal uses dark green, for example on the logo 'Brightleaf' (14)
+      - 2 sections are missing (12.1)
+own-whole         lorem              [30-48] total  33.7 | C   0.0 L  41.6 S  51.5 V  73.6 | ok
+      - Most of the text says something different from the goal (51 pieces of text, such as 'Dolor sit amet consectetur adi' where the goal says 'Plan your week in five minutes') (52)
+      - The button 'Start free trial' is missing (10.1)
+own-whole         no-pricing         [52-68] total  67.0 | C  83.8 L  37.7 S  75.3 V  47.8 | ok
+      - The section with 'Simple pricing' is missing (33)
+own-whole         no-icons           [84-93] total  81.1 | C  90.7 L  65.4 S  96.4 V  55.2 | HARSH by 2.9
+      - 6 pictures are missing (16.2)
+      - The box with 'Shared calendars' is less tall than the goal's (about 124 pixels high instead of 180) (0.5)
+small-font        helvetica          [94-100] total 100.0 | C 100.0 L 100.0 S 100.0 V 100.0 | ok
+small-grey        body-grey          [94-100] total  97.8 | C 100.0 L 100.0 S  92.7 V  94.6 | ok
+      - Colours across the page differ from the goal's: grey where the goal uses grey, for example on the text 'Brightleaf turns scattered tasks, mee...' (2.2)
+small-lineheight  lh-1-6             [85-95] total  96.0 | C 100.0 L  98.9 S 100.0 V  81.4 | LENIENT by 1.0
+      - Something looks different near the top of the page (3.5)
+      - An extra white box near the bottom left that the goal does not have (0.4)
+small-narrow      narrower-20px      [91-98] total  94.7 | C 100.0 L  87.5 S 100.0 V  92.0 | ok
+      - The part with 'Plan your week in five minutes' sits about 10 pixels too far right (0.9)
+      - The part with 'Simple pricing' sits about 10 pixels too far right (0.7)
+small-offset      down-6px           [92-99] total  99.6 | C 100.0 L  99.0 S 100.0 V  99.4 | LENIENT by 0.6
+      - 2 sections sit about 5 pixels too low (0.4)
+small-quotes      straight-quotes    [93-100] total 100.0 | C 100.0 L 100.0 S 100.0 V  99.9 | ok
+RANK content-cards: swapped-two 82.9 > missing-one 81.1 ok
+RANK own-whole: no-icons 81.1 > no-pricing 67 ok
+RANK own-whole: no-pricing 67 > lorem 33.7 ok
+RANK own-whole: no-pricing 67 > unstyled 10.7 ok
+RANK layout-tall: above 85.7 ~ below 85.7 (gap 0.0)
+
+38/52 inside band; self/determinism problems: 0

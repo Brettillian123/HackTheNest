@@ -1,0 +1,16 @@
+{
+  "goal": "The docs for core, cli and web match release 3.0, follow docs/STYLE.md, and docs/index.md links every page; done when the link check passes",
+  "steps": [
+    { "id": "style", "title": "Write the style guide and page list", "owner": "coordinator", "dependsOn": [], "changes": ["docs/STYLE.md"],
+      "proof": "docs/STYLE.md lists the heading order, the tone rules and every page each package must have", "budget": { "toolCalls": 10 } },
+    { "id": "core-docs", "title": "Rewrite the core package docs", "owner": "writer-core", "dependsOn": ["style"], "changes": ["packages/core/docs/**"], "reads": ["docs/STYLE.md"],
+      "proof": "npm run docs:check -- packages/core passes and every page in docs/STYLE.md for core exists", "budget": { "toolCalls": 30 } },
+    { "id": "cli-docs", "title": "Rewrite the cli package docs", "owner": "writer-cli", "dependsOn": ["style"], "changes": ["packages/cli/docs/**"], "reads": ["docs/STYLE.md"],
+      "proof": "npm run docs:check -- packages/cli passes and every command in cli --help has a page", "budget": { "toolCalls": 30 } },
+    { "id": "web-docs", "title": "Rewrite the web package docs", "owner": "writer-web", "dependsOn": ["style"], "changes": ["packages/web/docs/**"], "reads": ["docs/STYLE.md"],
+      "proof": "npm run docs:check -- packages/web passes and every page in docs/STYLE.md for web exists", "budget": { "toolCalls": 30 } },
+    { "id": "index", "title": "Update the docs index and check links", "owner": "coordinator", "dependsOn": ["core-docs", "cli-docs", "web-docs"], "changes": ["docs/index.md"],
+      "proof": "docs/index.md links every package page and npm run docs:links reports 0 broken links", "budget": { "toolCalls": 10 } }
+  ],
+  "loops": []
+}

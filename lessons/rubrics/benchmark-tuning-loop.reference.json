@@ -1,0 +1,123 @@
+{
+  "goal": "prompts/summarize.txt scores at least 36 of 40 on benchmarks/dev/ and its held-out score is reported; done when reports/benchmark.md shows both numbers",
+  "steps": [
+    {
+      "id": "baseline",
+      "title": "Run the baseline on the dev set",
+      "owner": "tuner",
+      "dependsOn": [],
+      "changes": [
+        "reports/rounds/round-0.json"
+      ],
+      "reads": [
+        "prompts/summarize.txt",
+        "benchmarks/dev/**"
+      ],
+      "proof": "npm run bench -- benchmarks/dev writes reports/rounds/round-0.json with a score out of 40",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "metric-check",
+      "title": "Validate the benchmark script against five hand-marked cases",
+      "owner": "coordinator",
+      "dependsOn": [],
+      "changes": [
+        "reports/metric-check.md"
+      ],
+      "reads": [
+        "benchmarks/dev/**"
+      ],
+      "proof": "reports/metric-check.md shows npm run bench gives the same pass or fail as the hand marks on all 5 cases",
+      "budget": {
+        "minutes": 10
+      }
+    },
+    {
+      "id": "score",
+      "title": "Score the dev set",
+      "owner": "tuner",
+      "dependsOn": [
+        "baseline",
+        "metric-check",
+        "tune"
+      ],
+      "changes": [
+        "reports/rounds/**"
+      ],
+      "reads": [
+        "benchmarks/dev/**"
+      ],
+      "proof": "npm run bench -- benchmarks/dev output saved as reports/rounds/round-N.json",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "tune",
+      "title": "Tune the prompt from the failed cases",
+      "owner": "tuner",
+      "dependsOn": [
+        "score"
+      ],
+      "changes": [
+        "prompts/summarize.txt"
+      ],
+      "proof": "prompts/summarize.txt changed and the diff names the failed case ids it targets",
+      "budget": {
+        "minutes": 10
+      }
+    },
+    {
+      "id": "held-out",
+      "title": "Run the held-out set once",
+      "owner": "coordinator",
+      "dependsOn": [
+        "score",
+        "tune"
+      ],
+      "changes": [
+        "reports/held-out.json"
+      ],
+      "reads": [
+        "benchmarks/held_out/**",
+        "prompts/summarize.txt"
+      ],
+      "proof": "npm run bench -- benchmarks/held_out writes reports/held-out.json with a score out of 20, run once",
+      "budget": {
+        "minutes": 5
+      }
+    },
+    {
+      "id": "report",
+      "title": "Write the benchmark report",
+      "owner": "coordinator",
+      "dependsOn": [
+        "held-out"
+      ],
+      "changes": [
+        "reports/benchmark.md"
+      ],
+      "reads": [
+        "reports/**"
+      ],
+      "proof": "reports/benchmark.md lists the score for every round, the held-out score and the gap between dev and held-out",
+      "budget": {
+        "minutes": 5
+      }
+    }
+  ],
+  "loops": [
+    {
+      "id": "tuning-loop",
+      "steps": [
+        "score",
+        "tune"
+      ],
+      "until": "Dev score is at least 36 of 40, or the score has not risen for two rounds",
+      "maxRounds": 5,
+      "heldOut": "The 20 cases in benchmarks/held_out/, run once by held-out after the loop"
+    }
+  ]
+}

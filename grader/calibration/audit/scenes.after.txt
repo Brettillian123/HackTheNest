@@ -1,0 +1,187 @@
+lamp/goal-vs-itself total 100
+lamp/heavy | band 50-65 | total 30 | works 100 eng -100 looks 99.8 | bonus 0 | 927 ms | HARSH by 20
+    - Uses 62 times as many triangles as the goal (47,744 against 776); curved shapes need fewer segments.
+lamp/low-poly | band 68-82 | total 95.9 | works 98.1 eng 100 looks 89.3 | bonus 0 | 633 ms | LENIENT by 13.9
+    - Curves are too coarse: curved parts need more segments to match the goal.
+lamp/missing-part | band 55-70 | total 65.2 | works 61.8 eng 100 looks 76.3 | bonus 0 | 835 ms | ok
+    - A part is missing near the top left (1 of the goal's 6 parts).
+lamp/near | band 85-95 | total 96.6 | works 97.8 eng 100 looks 93 | bonus 0 | 480 ms | LENIENT by 1.6
+    - Colours differ from the goal: the part near the top left is a different colour.
+lamp/rebuild-detailed | band 86-97 | total 99.7 | works 100 eng 100 looks 98.6 | bonus 0 | 458 ms | LENIENT by 2.7
+    - It looks slightly different from the goal in the three-quarter front view.
+lamp/rebuild-vague | band 38-52 | total 33.4 | works 25.4 eng 100 looks 57.8 | bonus 0 | 845 ms | HARSH by 4.6
+    - A part is missing near the top right (1 of the goal's 6 parts).
+    - The shape differs from the goal near the right.
+lamp/recoloured | band 70-84 | total 89 | works 100 eng 100 looks 56.1 | bonus 0 | 532 ms | LENIENT by 5
+    - The colours are different throughout.
+lamp/wrong-proportions | band 60-75 | total 30.4 | works 26 eng 100 looks 51.9 | bonus 0 | 733 ms | HARSH by 29.6
+    - 2 parts are missing: near the top left (2 of the goal's 6 parts).
+    - The shape differs from the goal near the bottom.
+    - The model is about 42% bigger than the goal: 2 points.
+    - The model stands about 11% of the goal's size from where the goal stands (to the right): 1 point.
+car/goal-vs-itself total 100
+car/heavy | band 50-65 | total 30 | works 100 eng -100 looks 100 | bonus 0 | 637 ms | HARSH by 20
+    - Uses 57 times as many triangles as the goal (31,832 against 560); curved shapes need fewer segments.
+car/low-poly | band 72-85 | total 87.9 | works 84.9 eng 100 looks 97.1 | bonus 0 | 426 ms | LENIENT by 2.9
+    - Curves are too coarse: curved parts need more segments to match the goal.
+car/missing-part | band 62-77 | total 84.4 | works 83.2 eng 100 looks 87.8 | bonus 0 | 541 ms | LENIENT by 7.4
+    - A part is missing near the bottom front right (1 of the goal's 12 parts).
+car/near | band 85-95 | total 98.8 | works 99.7 eng 100 looks 96.3 | bonus 0 | 498 ms | LENIENT by 3.8
+    - Colours differ from the goal, most in the top view.
+car/rebuild-detailed | band 88-98 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 378 ms | LENIENT by 2
+    - Matches the goal.
+car/rebuild-vague | band 45-60 | total 55.1 | works 60.6 eng 92.2 looks 49.2 | bonus 0 | 534 ms | ok
+    - 4 parts are missing: near the bottom back left, near the bottom back right, near the bottom front left and elsewhere (4 of the goal's 12 parts).
+    - Colours differ from the goal on 3 parts: in the middle, near the top and near the back right.
+    - Uses 33% more triangles than the goal (744 against 560); curved shapes need fewer segments.
+    - The model is about 17% bigger than the goal: 1 point.
+car/recoloured | band 70-84 | total 86.7 | works 100 eng 100 looks 46.6 | bonus 0 | 412 ms | LENIENT by 2.7
+    - The colours are different throughout.
+car/wrong-proportions | band 58-72 | total 56.5 | works 54.5 eng 100 looks 62.9 | bonus 0 | 776 ms | HARSH by 1.5
+    - 2 parts are missing: near the back right and near the front right (2 of the goal's 12 parts).
+    - The shape differs from the goal near the bottom front left.
+    - There are 2 extra parts the goal does not have, near the back right and near the front right.
+house/goal-vs-itself total 100
+house/heavy | band 50-65 | total 30 | works 100 eng -100 looks 100 | bonus 0 | 484 ms | HARSH by 20
+    - Uses 97 times as many triangles as the goal (7,732 against 80); the extra triangles are on flat faces, which need only a few each.
+house/low-poly | band 45-62 | total 78.8 | works 75.8 eng 100 looks 88 | bonus 0 | 865 ms | LENIENT by 16.8
+    - The shape differs from the goal near the top.
+house/missing-part | band 68-82 | total 91.3 | works 89 eng 100 looks 98.2 | bonus 0 | 489 ms | LENIENT by 9.3
+    - A part is missing near the bottom front right (1 of the goal's 7 parts).
+house/near | band 86-96 | total 99 | works 99.3 eng 100 looks 97.8 | bonus 0 | 476 ms | LENIENT by 3
+    - Matches the goal.
+house/rebuild-detailed | band 88-98 | total 98.1 | works 100 eng 94.6 looks 100 | bonus 0 | 399 ms | LENIENT by 0.1
+    - Uses 45% more triangles than the goal (116 against 80); the extra triangles are on flat faces, which need only a few each.
+house/rebuild-vague | band 30-45 | total 24.2 | works 19.4 eng 100 looks 44.2 | bonus 0 | 785 ms | HARSH by 5.8
+    - The shape is very different from the goal.
+    - 3 parts are missing: near the bottom, near the bottom front right and near the front left (3 of the goal's 7 parts).
+    - The shape differs from the goal near the right.
+    - The model is turned about 90 degrees from the goal's facing: 1 point.
+house/recoloured | band 70-84 | total 91.7 | works 100 eng 100 looks 66.7 | bonus 0 | 426 ms | LENIENT by 7.7
+    - The colours are different throughout.
+house/wrong-proportions | band 58-72 | total 50.3 | works 44.1 eng 100 looks 69.3 | bonus 0 | 762 ms | HARSH by 7.7
+    - A part is missing near the top back right (1 of the goal's 7 parts).
+    - The shape differs from the goal near the top.
+    - There are 2 extra parts the goal does not have, near the top and near the top right.
+blocks30/goal-vs-itself total 100
+blocks30/instanced | band 94-103 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 388 ms | ok
+    - Matches the goal.
+blocks30/merged | band 94-103 | total 98.2 | works 100 eng 94.7 looks 100 | bonus 0 | 429 ms | ok
+    - The code is 66% longer than the goal's (595 bytes against 358, not counting comments and spacing).
+box-surface/goal-vs-itself total 100
+box-surface/doubleside-flipped | band 94-100 | total 98.5 | works 100 eng 95.8 looks 100 | bonus 0 | 383 ms | ok
+    - The code is 2 times as long as the goal's (354 bytes against 177, not counting comments and spacing).
+box-surface/flipped-winding | band 80-94 | total 96.1 | works 100 eng 97.5 looks 88 | bonus 0 | 451 ms | LENIENT by 2.1
+    - Colours differ from the goal, most in the three-quarter front view.
+    - The code is 86% longer than the goal's (330 bytes against 177, not counting comments and spacing).
+box-surface/hollow | band 84-96 | total 87.9 | works 100 eng 65.4 looks 100 | bonus 0 | 422 ms | ok
+    - Uses 6 times as many triangles as the goal (72 against 12); the extra triangles are on flat faces, which need only a few each.
+box-surface/non-indexed | band 96-100 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 448 ms | ok
+    - Matches the goal.
+box-surface/thin-planes | band 90-100 | total 95.2 | works 100 eng 86.4 looks 100 | bonus 0 | 374 ms | ok
+    - The code is 3 times as long as the goal's (489 bytes against 177, not counting comments and spacing).
+chair-extras/goal-vs-itself total 100
+chair-extras/copy-inside | band 70-84 | total 87.9 | works 100 eng 65.4 looks 100 | bonus 0 | 372 ms | LENIENT by 3.9
+    - Uses 2 times as many triangles as the goal (480 against 240); some of it is built more than once, in the same place.
+chair-extras/ground-plane | band 58-72 | total 66.6 | works 79 eng 99.2 looks 30.1 | bonus 0 | 603 ms | ok
+    - There is a floor the goal does not have: remove it.
+    - The code is 28% longer than the goal's (1,152 bytes against 903, not counting comments and spacing).
+chair-extras/hidden-extra | band 88-99 | total 99.6 | works 100 eng 98.8 looks 100 | bonus 0 | 339 ms | LENIENT by 0.6
+    - The code is 29% longer than the goal's (1,162 bytes against 903, not counting comments and spacing).
+chair-extras/lines-points | band 85-97 | total 96 | works 100 eng 88.6 looks 100 | bonus 0 | 343 ms | ok
+    - The code is 60% longer than the goal's (1,445 bytes against 903, not counting comments and spacing).
+chair-extras/opacity-zero-extra | band 86-98 | total 99.5 | works 100 eng 98.4 looks 100 | bonus 0 | 341 ms | LENIENT by 1.5
+    - The code is 30% longer than the goal's (1,172 bytes against 903, not counting comments and spacing).
+chair-extras/stray-cube | band 86-97 | total 98 | works 97.8 eng 99 looks 100 | bonus 0 | 470 ms | LENIENT by 1
+    - There is an extra part near the bottom front right that the goal does not have.
+    - The code is 28% longer than the goal's (1,156 bytes against 903, not counting comments and spacing).
+chair-failures/goal-vs-itself total 100
+chair-failures/async | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 169 ms | ok
+    expect: Zero with a message that says buildScene must not be async (or the chair graded if the grader awaits it).
+    error: buildScene did not return a 3D object: it returned a Promise. buildScene must not be async; build the scene and return it directly.
+    - buildScene did not return a 3D object: it returned a Promise. buildScene must not be async; build the scene and return it directly.
+chair-failures/defined-twice | band 88-100 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 342 ms | ok
+    expect: The chair is graded (last definition wins).
+    - Matches the goal.
+chair-failures/document | band 85-98 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 342 ms | LENIENT by 2
+    expect: The page write is harmless or refused with a clear message; never affects the views.
+    - Matches the goal.
+chair-failures/fetch | band 85-98 | total 100 | works 100 eng 100 looks 100 | bonus 0 | 351 ms | LENIENT by 2
+    expect: The request is blocked; the chair is graded normally or the code is refused with a clear message. No network access.
+    - Matches the goal.
+chair-failures/huge-400k | band - | total 0 | works 0 eng 0 looks 0 | bonus 0 | 232 ms | no band
+    expect: A clear size-limit refusal with zero is acceptable; if graded, a person would give 45-60. Must not hang.
+    error: The scene has more than 100,000 triangles, the limit.
+    - The scene has more than 100,000 triangles, the limit.
+chair-failures/infinite-loop | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 8016 ms | ok
+    expect: Zero with a time-out message; no hang; under 15 seconds.
+    error: Building the scene took longer than 8 seconds.
+    - Building the scene took longer than 8 seconds.
+chair-failures/nan-vertices | band 88-100 | total 99.3 | works 100 eng 98 looks 100 | bonus 0 | 372 ms | ok
+    expect: The bad triangle is dropped and the chair graded, or a clear message.
+    - The code is 31% longer than the goal's (1,184 bytes against 903, not counting comments and spacing).
+chair-failures/returns-nothing | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 168 ms | ok
+    expect: Zero with a clear message that buildScene returned nothing; fast.
+    error: buildScene did not return a 3D object (a THREE.Scene, Group or Mesh): it returned nothing.
+    - buildScene did not return a 3D object (a THREE.Scene, Group or Mesh): it returned nothing.
+chair-failures/returns-number | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 175 ms | ok
+    expect: Zero with a clear message that it returned a number, not a 3D object.
+    error: buildScene did not return a 3D object (a THREE.Scene, Group or Mesh): it returned a number.
+    - buildScene did not return a 3D object (a THREE.Scene, Group or Mesh): it returned a number.
+chair-failures/throws | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 167 ms | ok
+    expect: Zero with the error text (RoundedBoxGeometry is not a constructor).
+    error: The code stopped with an error: THREE.RoundedBoxGeometry is not a constructor
+    - The code stopped with an error: THREE.RoundedBoxGeometry is not a constructor
+chair-failures/zero-triangles | band 0-5 | total 0 | works 0 eng 0 looks 0 | bonus 0 | 168 ms | ok
+    expect: Zero with a message that the scene is empty.
+    error: buildScene returned a scene with no visible meshes in it.
+    - buildScene returned a scene with no visible meshes in it.
+chair-orientation/goal-vs-itself total 100
+chair-orientation/turn15 | band 85-96 | total 98.4 | works 99.9 eng 100 looks 96.3 | bonus 0 | 474 ms | LENIENT by 2.4
+    - It looks slightly different from the goal in the front view.
+    - The model is turned about 15 degrees from the goal's facing: 1 point.
+chair-orientation/turn180 | band 70-84 | total 90 | works 100 eng 100 looks 100 | bonus 0 | 431 ms | LENIENT by 6
+    - The model is turned about 180 degrees from the goal's facing: 10 points.
+chair-orientation/turn90 | band 70-84 | total 95.1 | works 100 eng 100 looks 100 | bonus 0 | 441 ms | LENIENT by 11.1
+    - The model is turned about 90 degrees from the goal's facing: 5 points.
+chair-placement/goal-vs-itself total 100
+chair-placement/far-origin | band 88-99 | total 90 | works 100 eng 100 looks 100 | bonus 0 | 351 ms | ok
+    - The model stands about 37 times the goal's size from where the goal stands (to the right and too far forward): 10 points.
+chair-placement/scale100 | band 82-95 | total 90 | works 100 eng 100 looks 100 | bonus 0 | 348 ms | ok
+    - The model is about 100 times bigger than the goal: 10 points.
+chair-placement/scene-with-lights | band 96-101 | total 98.5 | works 100 eng 95.7 looks 100 | bonus 0 | 362 ms | ok
+    - The code is 38% longer than the goal's (1,248 bytes against 903, not counting comments and spacing).
+chair-visibility/goal-vs-itself total 100
+chair-visibility/hidden-leg | band 62-76 | total 81.6 | works 78.3 eng 100 looks 91.4 | bonus 0 | 559 ms | LENIENT by 5.6
+    - A part is missing near the bottom back left (1 of the goal's 8 parts).
+chair-visibility/wireframe | band 55-70 | total 75 | works 100 eng 100 looks 0 | bonus 0 | 346 ms | LENIENT by 5
+    - The model is drawn as wireframe (material.wireframe), which shows only its edges: no credit for looks.
+lamp-mirror/goal-vs-itself total 100
+lamp-mirror/mirrored | band 80-94 | total 88.8 | works 100 eng 100 looks 100 | bonus 0 | 503 ms | ok
+    - The model is turned about 180 degrees from the goal's facing: 10 points.
+    - The model stands about 9% of the goal's size from where the goal stands (to the right): 1 point.
+order lamp/near (96.6) > lamp/missing-part (65.2): ok
+order lamp/near (96.6) > lamp/wrong-proportions (30.4): ok
+order lamp/near (96.6) > lamp/heavy (30): ok
+order lamp/near (96.6) > lamp/recoloured (89): ok
+order lamp/rebuild-detailed (99.7) > lamp/rebuild-vague (33.4): ok
+order lamp/low-poly (95.9) > lamp/heavy (30): ok
+order lamp/missing-part (65.2) > lamp/rebuild-vague (33.4): ok
+order car/near (98.8) > car/missing-part (84.4): ok
+order car/near (98.8) > car/wrong-proportions (56.5): ok
+order car/near (98.8) > car/heavy (30): ok
+order car/near (98.8) > car/recoloured (86.7): ok
+order car/rebuild-detailed (100) > car/rebuild-vague (55.1): ok
+order car/low-poly (87.9) > car/heavy (30): ok
+order house/near (99) > house/missing-part (91.3): ok
+order house/near (99) > house/wrong-proportions (50.3): ok
+order house/near (99) > house/heavy (30): ok
+order house/near (99) > house/recoloured (91.7): ok
+order house/rebuild-detailed (98.1) > house/rebuild-vague (24.2): ok
+order house/missing-part (91.3) > house/low-poly (78.8): ok
+order house/low-poly (78.8) > house/rebuild-vague (24.2): ok
+order chair-orientation/turn15 (98.4) > chair-orientation/turn90 (95.1): ok
+order chair-extras/stray-cube (98) > chair-extras/ground-plane (66.6): ok
+order chair-extras/hidden-extra (99.6) > chair-extras/copy-inside (87.9): ok
+order box-surface/non-indexed (100) > box-surface/hollow (87.9): ok
+order chair-placement/scene-with-lights (98.5) > chair-placement/scale100 (90): ok

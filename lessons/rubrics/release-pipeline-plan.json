@@ -1,0 +1,21 @@
+{
+  "stages": [
+    { "name": "version", "match": { "changesAny": ["package.json", "CHANGELOG.md"] }, "importance": "major" },
+    { "name": "tests", "match": { "changesAny": ["reports/tests.txt"] }, "importance": "critical" },
+    { "name": "docs", "match": { "changesAny": ["docs/**"] }, "importance": "major" },
+    { "name": "build", "match": { "changesAny": ["dist/**"] }, "importance": "major" },
+    { "name": "approval", "match": { "titleAny": ["approv", "sign"], "changesAny": ["reports/approval.md"] }, "importance": "critical" },
+    { "name": "publish", "match": { "titleAny": ["publish"], "changesAny": ["reports/publish.txt"] }, "importance": "critical" }
+  ],
+  "before": [
+    ["version", "tests"],
+    ["version", "docs"],
+    ["version", "build"],
+    ["tests", "approval"],
+    ["docs", "approval"],
+    ["build", "approval"],
+    ["approval", "publish"]
+  ],
+  "parallel": [["tests", "docs"], ["tests", "build"]],
+  "limits": { "maxSteps": 7, "maxOwners": 5 }
+}

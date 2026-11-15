@@ -1,0 +1,123 @@
+{
+  "goal": "A portfolio site with landing, projects and contact pages on one shared theme, checked by a reviewer and merged once every screenshot matches the outline",
+  "steps": [
+    {
+      "id": "outline",
+      "title": "Outline pages, sections and theme values",
+      "owner": "lead",
+      "dependsOn": [],
+      "changes": [
+        "docs/OUTLINE.md"
+      ],
+      "proof": "docs/OUTLINE.md names each page, its sections, colours and fonts",
+      "budget": {
+        "minutes": 10
+      }
+    },
+    {
+      "id": "theme",
+      "title": "Write the shared theme stylesheet",
+      "owner": "styler",
+      "dependsOn": [
+        "outline"
+      ],
+      "changes": [
+        "site/styles.css"
+      ],
+      "proof": "site/styles.css contains every colour and font from docs/OUTLINE.md",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "page-index",
+      "title": "Build the landing page",
+      "owner": "builder-1",
+      "dependsOn": [
+        "outline"
+      ],
+      "changes": [
+        "site/index.html"
+      ],
+      "proof": "Screenshot of the landing page at 1280x800 shows hero and footer",
+      "budget": {
+        "minutes": 25
+      }
+    },
+    {
+      "id": "page-projects",
+      "title": "Build the projects gallery",
+      "owner": "builder-2",
+      "dependsOn": [
+        "outline"
+      ],
+      "changes": [
+        "site/projects.html"
+      ],
+      "proof": "Screenshot shows all project cards from the outline",
+      "budget": {
+        "minutes": 25
+      }
+    },
+    {
+      "id": "page-contact",
+      "title": "Build the contact page and form",
+      "owner": "builder-3",
+      "dependsOn": [
+        "outline"
+      ],
+      "changes": [
+        "site/contact.html"
+      ],
+      "proof": "Screenshot shows the form; each input has a label",
+      "budget": {
+        "minutes": 25
+      }
+    },
+    {
+      "id": "qa",
+      "title": "Check pages against the outline",
+      "owner": "checker",
+      "dependsOn": [
+        "theme",
+        "page-index",
+        "page-projects",
+        "page-contact"
+      ],
+      "changes": [],
+      "kind": "review",
+      "proof": "QA report lists issues by file and line, or none",
+      "budget": {
+        "minutes": 15
+      }
+    },
+    {
+      "id": "apply-fixes",
+      "title": "Apply review fixes",
+      "owner": "lead",
+      "dependsOn": [
+        "qa"
+      ],
+      "changes": [
+        "site/"
+      ],
+      "proof": "Every QA issue is marked fixed in the report; screenshots retaken",
+      "budget": {
+        "minutes": 20
+      }
+    },
+    {
+      "id": "merge",
+      "title": "Merge the site branch",
+      "owner": "lead",
+      "dependsOn": [
+        "apply-fixes"
+      ],
+      "changes": [],
+      "proof": "`git merge site` succeeds and all three pages open locally",
+      "budget": {
+        "minutes": 5
+      }
+    }
+  ]
+}

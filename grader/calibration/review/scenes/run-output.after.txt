@@ -1,0 +1,494 @@
+# Review run
+
+## mug: goal 1600 triangles, 4 meshes, 898 bytes
+self: total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 4/4 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]  (exactly 100: ok)
+
+mug/m1_excellent  band 93-103  ok  915 ms
+  fresh rebuild: lathe body, circle for the coffee, fewer segments, near-identical sizes and colours
+  total 95.2 | works 94.8 eng 100.0 looks 96.4 bonus 0.0 | shape 100 parts 4/4 miss 0 extra 0 credit 94.8 scale 0.98 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The coffee is about 24% too short.
+
+mug/m2_good_slips  band 82-94  ok  1326 ms
+  fresh rebuild with slips: straight-sided body a little taller, handle a little small, coffee too light, saucer not tapered
+  total 85.4 | works 97.3 eng 100.0 looks 50.0 bonus 0.0 | shape 99.8 parts 4/4 miss 0 extra 0 credit 97.5 scale 1.00 off 0.04 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The surfaces show edges and shading the goal does not have, most in the front view.
+  - The model's proportions are off: about 10% taller than the goal, compared with its width and depth.
+  - Colours differ from the goal: the coffee is a different colour.
+
+mug/m3_mediocre  band 58-72  HARSH by 21.5  2460 ms
+  fresh rebuild, right parts, clumsy proportions: squat wide body, chunky full-ring handle, small saucer
+  total 36.5 | works 35.6 eng 100.0 looks 43.6 bonus 0.0 | shape 77.6 parts 4/4 miss 0 extra 0 credit 44.1 scale 0.93 off 0.14 turn 0 factor 0.97 eng[tri 100 mesh 100 src 100]
+  - The saucer sits too high, by about 14% of the model's size.
+  - The coffee sits too low, by about 14% of the model's size.
+  - The handle is about 55% too wide.
+  - The model stands about 14% of the goal's size from where the goal stands (too low): 1 point.
+
+mug/m4_poor  band 36-50  HARSH by 14.5  1568 ms
+  right idea, few parts: a blue cylinder and a box for a handle, no saucer, no coffee
+  total 21.5 | works 16.3 eng 100.0 looks 37.1 bonus 0.0 | shape 85.5 parts 2/4 miss 2 extra 0 credit 18.7 scale 0.98 off 0.00 turn 2 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 2 parts are missing: the saucer and the coffee (2 of the goal's 4 parts).
+  - The handle is a different shape from the goal's.
+
+mug/m5_handle_left  band 87-100  ok  1052 ms
+  the goal exactly, but the handle on the left: the same mug turned half round
+  total 90.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 4/4 miss 0 extra 0 credit 100 scale 1.00 off 0.02 turn 0 MIRROR factor 0.90 eng[tri 100 mesh 100 src 100]
+  - The model is a mirror image of the goal: 10 points.
+
+mug/m6_handle_floating  band 70-84  ok  1021 ms
+  the goal, but the handle floats 0.25 away from the body
+  total 76.1 | works 82.9 eng 100.0 looks 55.7 bonus 0.0 | shape 98.8 parts 4/4 miss 0 extra 0 credit 83.8 scale 1.04 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The handle sits too far right, by about 12% of the model's size.
+
+mug/m7_no_saucer  band 68-82  HARSH by 16.0  1784 ms
+  the goal without the saucer (the widest part)
+  total 52.0 | works 46.5 eng 100.0 looks 68.5 bonus 0.0 | shape 79.9 parts 3/4 miss 1 extra 0 credit 56.2 scale 1.00 off 0.00 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The saucer is missing (1 of the goal's 4 parts).
+
+mug/m8_half_height  band 38-53  ok  1256 ms
+  the goal squashed to half its height (handle too)
+  total 40.3 | works 43.1 eng 100.0 looks 32.3 bonus 0.0 | shape 94 parts 4/4 miss 0 extra 0 credit 45.5 scale 0.94 off 0.04 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The coffee sits too low, by about 30% of the model's size.
+  - The body is about 47% too short, and the part on it moved with it.
+  - The saucer is about 16% too short.
+
+mug/x1_mug_extruded_outline  band 8-25  ok  1474 ms
+  CHEAT: the front outline (saucer, body, handle) extruded into a slab as deep as the mug
+  total 15.1 | works 11.6 eng 100.0 looks 27.7 bonus 0.0 | shape 85.8 parts 2/4 miss 2 extra 0 credit 13.2 scale 1.10 off 0.04 turn 26 factor 0.97 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 2 parts are missing: the saucer and the coffee (2 of the goal's 4 parts).
+  - The handle is about 2.1 times as big as the goal's along one side (too thick).
+  - The body is about 71% too wide.
+
+## rocket: goal 560 triangles, 9 meshes, 1362 bytes
+self: total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]  (exactly 100: ok)
+
+rocket/r1_excellent  band 93-103  ok  710 ms
+  fresh rebuild with a helper, 24 segments, sizes within a few percent
+  total 98.2 | works 98.4 eng 100.0 looks 97.6 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.4 scale 1.00 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The outline differs from the goal, most in the top view.
+
+rocket/r2_good_slips  band 80-92  ok  708 ms
+  the goal with slips: nose a little short with a small gap above the body, band orange, window missing
+  total 90.5 | works 92.0 eng 100.0 looks 85.9 bonus 0.0 | shape 100 parts 8/9 miss 1 extra 0 credit 92 scale 0.98 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The window is missing (1 of the goal's 9 parts).
+  - The surfaces show edges and shading the goal does not have, most in the front view.
+  - Colours differ from the goal: the band is a different colour.
+
+rocket/r3_mediocre  band 50-65  HARSH by 4.4  962 ms
+  fresh rebuild, clumsy: fat short body, tall nose, small fins, no band or window
+  total 45.6 | works 46.9 eng 100.0 looks 44.1 bonus 0.0 | shape 95.9 parts 7/9 miss 2 extra 0 credit 48.6 scale 0.99 off 0.08 turn 4 factor 0.99 eng[tri 100 mesh 100 src 100]
+  - 2 parts are missing: the band and the window (2 of the goal's 9 parts).
+  - The fin near the bottom right is about 50% too short.
+  - The fin near the bottom left is about 50% too short.
+  - The fin near the bottom front is about 50% too short.
+  - Curved parts look faceted: there are hard edges and flat bands where the goal is smooth; use more segments.
+  - The model stands about 8% of the goal's size from where the goal stands (too low): 1 point.
+
+rocket/r4_poor  band 34-50  HARSH by 6.7  643 ms
+  right idea, few parts: a white cylinder and a red cone, no fins, nozzle, band or window
+  total 27.3 | works 14.7 eng 100.0 looks 70.7 bonus 0.0 | shape 96.6 parts 2/9 miss 7 extra 0 credit 15.1 scale 0.95 off 0.03 turn 45 factor 0.95 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 7 parts are missing: the band, the window, the nozzle and 4 more (7 of the goal's 9 parts).
+  - The model is turned about 45 degrees from the goal's facing: 1 point.
+
+rocket/r5_fins_45  band 86-97  ok  762 ms
+  the goal, but the fins turned 45 degrees about the body (window still faces the front)
+  total 94.0 | works 99.3 eng 100.0 looks 96.9 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.3 scale 0.99 off 0.01 turn 45 factor 0.95 eng[tri 100 mesh 100 src 100]
+  - The model is turned about 45 degrees from the goal's facing: 5 points.
+  - The window is at a different angle from the goal's, about 45 degrees off.
+
+rocket/r6_three_fins  band 72-86  ok  1371 ms
+  the goal with three fins at 120 degrees instead of four
+  total 78.2 | works 80.7 eng 100.0 looks 70.5 bonus 0.0 | shape 98.8 parts 8/9 miss 1 extra 0 credit 81.5 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The fin near the bottom left is missing (1 of the goal's 9 parts).
+  - The fin near the bottom front is at a different angle from the goal's, about 30 degrees off.
+  - The fin near the bottom back is at a different angle from the goal's, about 30 degrees off.
+
+rocket/r7_no_nose  band 62-78  ok  1093 ms
+  the goal without the nose cone: a flat-topped tube
+  total 74.5 | works 70.7 eng 100.0 looks 85.9 bonus 0.0 | shape 96.2 parts 8/9 miss 1 extra 0 credit 73.1 scale 0.99 off 0.00 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The nose is missing (1 of the goal's 9 parts).
+
+rocket/x2_rocket_cube_cloud  band 20-40  ok  1195 ms
+  CHEAT: ~700 small cubes filling the rocket volume, coloured by region
+  total 23.4 | works 47.1 eng -50.0 looks 51.2 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 47.1 scale 0.99 off 0.01 turn 0 factor 1.00 eng[tri -100 mesh -100 src 100]
+  - Uses 14 times as many triangles as the goal (7,992 against 560); the extra triangles are on flat faces, which need only a few each.
+  - The band is about 84% too short.
+  - The fin near the bottom left is about 83% too short.
+  - The fin near the bottom right is about 83% too short.
+  - The surfaces show edges and shading the goal does not have, most in the three-quarter front view.
+  - Colours differ from the goal: the window is a different colour.
+
+rocket/x3_rocket_billboard  band 5-22  ok  699 ms
+  CHEAT: two crossed flat cut-outs of the rocket outline (fins included), like a cardboard model
+  total 18.2 | works 15.4 eng 100.0 looks 26.5 bonus 0.0 | shape 78.8 parts 4/9 miss 5 extra 0 credit 18.9 scale 1.00 off 0.03 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 5 parts are missing: the body, the nose, the band and 2 more (5 of the goal's 9 parts).
+  - The colours are different throughout.
+
+## snowman: goal 4072 triangles, 13 meshes, 1654 bytes
+self: total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]  (exactly 100: ok)
+
+snowman/s1_excellent  band 93-103  ok  773 ms
+  fresh rebuild: loops, hat as a group, radii within 0.01, all small parts present
+  total 99.3 | works 100.0 eng 100.0 looks 97.4 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The outline differs from the goal, most in the front view.
+
+snowman/s2_good_slips  band 80-92  ok  1036 ms
+  fresh rebuild with slips: arms short (0.6), head sits 0.15 high with a small gap, nose red, two buttons
+  total 89.4 | works 92.6 eng 100.0 looks 79.8 bonus 0.0 | shape 99.9 parts 12/13 miss 1 extra 0 credit 92.7 scale 1.01 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The button near the front is missing (1 of the goal's 13 parts).
+  - The left arm is about 25% too short.
+  - The right arm is about 25% too short.
+
+snowman/s3_mediocre  band 58-72  ok  1878 ms
+  fresh rebuild, clumsy: three nearly equal balls, oversized hat, arms straight out, no eyes
+  total 69.7 | works 75.6 eng 100.0 looks 53.0 bonus 0.0 | shape 94.6 parts 11/13 miss 2 extra 0 credit 79.2 scale 1.03 off 0.05 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - 2 parts are missing: the left eye and the right eye (2 of the goal's 13 parts).
+  - The base is about 22% too short.
+  - The right arm is about 27% too short.
+  - The left arm is about 27% too short.
+
+snowman/s4_poor  band 35-50  ok  1596 ms
+  right idea, few parts: three white balls and a carrot nose; no hat, arms, eyes or buttons
+  total 42.2 | works 28.6 eng 100.0 looks 83.8 bonus 0.0 | shape 94.9 parts 4/13 miss 9 extra 0 credit 29.9 scale 0.99 off 0.01 turn 6 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - 9 parts are missing: the brim, the crown, the left arm and 4 more (9 of the goal's 13 parts).
+
+snowman/s5_hat_beside  band 68-82  HARSH by 0.1  1729 ms
+  the goal, but the hat floats beside the head instead of on it
+  total 67.9 | works 69.9 eng 100.0 looks 61.9 bonus 0.0 | shape 92.2 parts 13/13 miss 0 extra 0 credit 75 scale 1.00 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The brim sits too far right, by about 25% of the model's size, and the part on it moved with it.
+
+snowman/s6_arms_raised  band 82-93  ok  1418 ms
+  the goal posed differently: both arms raised nearly straight up
+  total 91.7 | works 97.0 eng 100.0 looks 75.6 bonus 0.0 | shape 99.8 parts 13/13 miss 0 extra 0 credit 97.2 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The right arm is at a different angle from the goal's, about 45 degrees off.
+  - The left arm is at a different angle from the goal's, about 45 degrees off.
+
+snowman/s7_sunk  band 60-75  LENIENT by 10.9  1558 ms
+  the goal with the balls sunk deep into each other (middle 0.2 lower, head 0.33 lower), everything on them follows
+  total 85.9 | works 92.5 eng 100.0 looks 66.1 bonus 0.0 | shape 99.7 parts 13/13 miss 0 extra 0 credit 92.8 scale 0.95 off 0.02 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The head sits too low, by about 7% of the model's size, and the parts on it moved with it.
+
+snowman/s8_floating  band 62-78  ok  1523 ms
+  the goal with the balls floating apart (gaps of about 0.15), everything on them follows
+  total 68.6 | works 73.8 eng 100.0 looks 54.9 bonus 0.0 | shape 97.4 parts 13/13 miss 0 extra 0 credit 75.5 scale 1.10 off 0.00 turn 0 factor 0.99 eng[tri 100 mesh 100 src 100]
+  - The head sits too high, by about 14% of the model's size, and the parts on it moved with it.
+  - The middle sits too high, by about 5% of the model's size, and the parts on it moved with it.
+  - The left arm sits too far right and too high, by about 5% of the model's size.
+
+snowman/x4_snowman_block  band 0-14  ok  1046 ms
+  CHEAT: one white box the size of the snowman's bounding box
+  total 13.3 | works 3.8 eng 100.0 looks 44.2 bonus 0.0 | shape 77.4 parts 1/13 miss 12 extra 0 credit 4.8 scale 1.00 off 0.04 turn 40 factor 0.96 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 12 parts are missing: the middle, the head, the brim and 7 more (12 of the goal's 13 parts).
+  - The base sits too high, by about 7% of the model's size.
+  - The model is turned about 40 degrees from the goal's facing: 1 point.
+
+snowman/x5_snowman_cutout  band 8-25  HARSH by 1.0  1786 ms
+  CHEAT: two crossed flat cut-outs (discs and hat rectangles) plus a flat strip for arms
+  total 7.0 | works 1.7 eng 100.0 looks 26.1 bonus 0.0 | shape 57.8 parts 4/13 miss 9 extra 0 credit 2.7 scale 1.00 off 0.05 turn 93 factor 0.89 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 9 parts are missing: the base, the middle, the head and 4 more (9 of the goal's 13 parts).
+  - The left arm is about 3 times as big as the goal's along one side (too long).
+  - The right arm sits too far left and too high, by about 47% of the model's size.
+  - The nose is about 3.1 times as big as the goal's along one side (too long).
+  - The colours are different throughout.
+
+## bookshelf: goal 180 triangles, 15 meshes, 1153 bytes
+self: total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 15/15 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]  (exactly 100: ok)
+
+bookshelf/b1_excellent  band 93-103  ok  818 ms
+  fresh rebuild with loops; book heights and depths within 0.01
+  total 100.4 | works 100.0 eng 100.0 looks 99.9 bonus 0.4 | shape 100 parts 15/15 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - Matches the goal exactly while using about 2% less on average: 0.4 bonus points.
+
+bookshelf/b2_five_books  band 78-90  ok  788 ms
+  the goal with five books instead of eight (green, yellow and orange left out, gaps where they were)
+  total 84.9 | works 80.1 eng 100.0 looks 99.1 bonus 0.0 | shape 99.9 parts 12/15 miss 3 extra 0 credit 80.2 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - 3 parts are missing: 2 books near the bottom left and the book near the right (3 of the goal's 15 parts).
+
+bookshelf/b3_books_swapped  band 88-98  LENIENT by 0.8  816 ms
+  the goal with the red and yellow books swapped (heights 0.42 and 0.44)
+  total 98.8 | works 100.0 eng 100.0 looks 95.1 bonus 0.0 | shape 100 parts 15/15 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - Colours differ from the goal: 2 parts are a different colour, 2 books near the bottom left.
+
+bookshelf/b4_no_back  band 68-82  ok  1522 ms
+  the goal without the back panel (seen through from the front, missing from the back)
+  total 69.5 | works 74.7 eng 100.0 looks 53.9 bonus 0.0 | shape 92.5 parts 15/15 miss 0 extra 0 credit 79.8 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The back is about 71% too short.
+  - The surfaces show edges and shading the goal does not have, most in the three-quarter back view.
+  - Colours differ from the goal: the back is a different colour.
+
+bookshelf/b5_mediocre  band 50-65  HARSH by 0.6  1152 ms
+  fresh rebuild, clumsy: deep thick boards, shelves at the wrong heights, eight identical brown books all on the bottom
+  total 49.4 | works 59.3 eng 100.0 looks 21.2 bonus 0.0 | shape 92.7 parts 15/15 miss 0 extra 0 credit 63.2 scale 1.01 off 0.06 turn 0 factor 0.99 eng[tri 100 mesh 100 src 100]
+  - The book near the right sits too low, by about 31% of the model's size.
+  - The shelf near the bottom sits too high, by about 10% of the model's size.
+  - The book near the right sits too low, by about 30% of the model's size, and the part on it moved with it.
+  - Colours differ from the goal: 7 parts are a different colour, 3 books near the bottom left, the book near the bottom and 3 books near the right.
+
+bookshelf/b6_poor  band 25-42  HARSH by 3.3  776 ms
+  right idea, few parts: an empty frame (sides, top, bottom); no shelves, back or books
+  total 21.7 | works 12.9 eng 100.0 looks 48.2 bonus 0.0 | shape 71 parts 4/15 miss 11 extra 0 credit 17.1 scale 1.00 off 0.02 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 11 parts are missing: the shelf near the bottom, the shelf near the top, the back and 3 more (11 of the goal's 15 parts).
+  - The surfaces show edges and shading the goal does not have, most in the three-quarter back view.
+
+bookshelf/b7_good_slips  band 76-88  ok  1004 ms
+  the goal with slips: upper shelf missing, two book colours off, top board 0.03 above the sides
+  total 84.3 | works 83.1 eng 100.0 looks 87.7 bonus 0.0 | shape 97.8 parts 14/15 miss 1 extra 0 credit 84.7 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shelf near the top is missing (1 of the goal's 15 parts).
+
+bookshelf/b8_shallow  band 55-70  HARSH by 2.9  1255 ms
+  the goal with the right front but less than half the depth (0.15 instead of 0.35), books shallower too
+  total 52.1 | works 53.2 eng 100.0 looks 49.4 bonus 0.0 | shape 95.4 parts 15/15 miss 0 extra 0 credit 55.4 scale 0.99 off 0.04 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The left side is about 40% too shallow.
+  - The right side is about 40% too shallow.
+  - The top is about 55% too shallow.
+
+bookshelf/x6_bookshelf_block  band 10-28  ok  913 ms
+  CHEAT: one wood-coloured box the size of the bookshelf
+  total 24.4 | works 11.8 eng 100.0 looks 62.2 bonus 0.0 | shape 91.5 parts 4/15 miss 11 extra 0 credit 12.8 scale 1.00 off 0.02 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 11 parts are missing: the top, the shelf near the bottom, the shelf near the top and 3 more (11 of the goal's 15 parts).
+  - The back is about 3.4 times as big as the goal's along one side (too deep).
+
+bookshelf/x7_bookshelf_painted_block  band 15-32  ok  1414 ms
+  CHEAT: the same box with the shelves, opening and books painted on its front with vertex colours
+  total 19.3 | works 16.2 eng -50.0 looks 62.8 bonus 0.0 | shape 91.5 parts 7/15 miss 8 extra 0 credit 17.4 scale 1.00 off 0.02 turn 0 factor 1.00 eng[tri -100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 8 parts are missing: the top, the shelf near the bottom, the shelf near the top and 3 more (8 of the goal's 15 parts).
+  - The back is about 3.4 times as big as the goal's along one side (too deep).
+  - Uses 101 times as many triangles as the goal (18,224 against 180); the extra triangles are on flat faces, which need only a few each.
+
+## bicycle: goal 2796 triangles, 12 meshes, 1860 bytes
+self: total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 12/12 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]  (exactly 100: ok)
+
+bicycle/k1_excellent  band 93-103  ok  839 ms
+  fresh rebuild with lookAt rods, 10-sided tubes, wheel and tube sizes within 0.01
+  total 98.9 | works 99.9 eng 100.0 looks 95.9 bonus 0.0 | shape 100 parts 12/12 miss 0 extra 0 credit 99.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The outline differs from the goal, most in the front view.
+
+bicycle/k2_good_slips  band 82-93  LENIENT by 1.8  861 ms
+  the goal with slips: wheels a little small (0.32, so they float 0.03), seat 0.06 high off its tube, handlebar black
+  total 94.8 | works 100.0 eng 100.0 looks 79.3 bonus 0.0 | shape 100 parts 12/12 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The outline differs from the goal, most in the front view.
+  - Colours differ from the goal: the handlebar is a different colour.
+
+bicycle/k3_mediocre  band 45-62  ok  1349 ms
+  fresh rebuild, clumsy: small wheels, thick tubes at rough angles, no seat stay or chainring
+  total 46.7 | works 47.8 eng 100.0 looks 47.1 bonus 0.0 | shape 93.2 parts 10/12 miss 2 extra 0 credit 50.8 scale 0.89 off 0.07 turn 0 factor 0.98 eng[tri 100 mesh 100 src 100]
+  - 2 parts are missing: the seat stay and the stem (2 of the goal's 12 parts).
+  - The chain stay is about 70% too deep.
+  - The rear wheel is about 31% too short.
+  - The front wheel is about 31% too short, and the part on it moved with it.
+  - Colours differ from the goal: 2 parts are a different colour, the fork and the handlebar.
+
+bicycle/k4_poor  band 25-42  ok  965 ms
+  right idea, few parts: two wheels joined by one red bar
+  total 32.2 | works 20.1 eng 100.0 looks 68.4 bonus 0.0 | shape 87 parts 3/12 miss 9 extra 0 credit 22.7 scale 0.99 off 0.03 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 9 parts are missing: the chain stay, the seat stay, the seat tube and 6 more (9 of the goal's 12 parts).
+  - The top tube is about 85% too long.
+
+bicycle/k5_disc_wheels  band 60-75  LENIENT by 2.4  1446 ms
+  the goal with solid disc wheels (cylinders) instead of tyres
+  total 77.4 | works 79.6 eng 100.0 looks 70.7 bonus 0.0 | shape 95.6 parts 12/12 miss 0 extra 0 credit 82.7 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The front wheel is a different shape from the goal's.
+  - The rear wheel is a different shape from the goal's.
+
+bicycle/k6_bar_rotated  band 84-94  LENIENT by 2.3  1108 ms
+  the goal with the handlebar turned 90 degrees in place (along the bike instead of across it)
+  total 96.3 | works 97.9 eng 100.0 looks 91.6 bonus 0.0 | shape 99.8 parts 12/12 miss 0 extra 0 credit 98.1 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The handlebar is at a different angle from the goal's, about 90 degrees off.
+
+bicycle/k7_bloat  band 50-65  HARSH by 2.6  2056 ms
+  the goal at very high detail: tyres 40x400, tubes 96-sided (about 24 times the triangles)
+  total 47.4 | works 100.0 eng -50.0 looks 99.6 bonus 0.0 | shape 100 parts 12/12 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -100 mesh 100 src 100]
+  - Uses 24 times as many triangles as the goal (67,852 against 2,796); curved shapes need fewer segments.
+
+bicycle/k8_flattened  band 50-66  HARSH by 1.4  1095 ms
+  the goal squashed to 5% of its depth: right from the side, a flat sheet from above
+  total 48.6 | works 39.7 eng 100.0 looks 75.3 bonus 0.0 | shape 99.1 parts 12/12 miss 0 extra 0 credit 40 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The front wheel is about 46% too shallow.
+  - The rear wheel is about 46% too shallow.
+  - The handlebar is about 64% too short.
+
+bicycle/x8_bicycle_boxes  band 10-28  LENIENT by 1.6  1534 ms
+  CHEAT: a box per region in the right colours (square slabs for wheels, one slab for the frame)
+  total 29.6 | works 20.9 eng 100.0 looks 55.7 bonus 0.0 | shape 94.4 parts 6/12 miss 6 extra 0 credit 21.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+  - The shape is very different from the goal.
+  - 6 parts are missing: the chain stay, the seat stay, the seat tube and 3 more (6 of the goal's 12 parts).
+  - The rear wheel is a different shape from the goal's.
+  - The front wheel is a different shape from the goal's.
+  - The fork is about 31% too thin.
+
+## Order checks
+held   mug/m1_excellent 95.2 > mug/m2_good_slips 85.4
+held   mug/m2_good_slips 85.4 > mug/m3_mediocre 36.5
+held   mug/m3_mediocre 36.5 > mug/m4_poor 21.5
+held   mug/m5_handle_left 90.0 > mug/m6_handle_floating 76.1
+held   mug/m2_good_slips 85.4 > mug/m7_no_saucer 52.0
+held   mug/m7_no_saucer 52.0 > mug/m8_half_height 40.3
+held   mug/m4_poor 21.5 > mug/x1_mug_extruded_outline 15.1
+held   rocket/r1_excellent 98.2 > rocket/r2_good_slips 90.5
+held   rocket/r2_good_slips 90.5 > rocket/r3_mediocre 45.6
+held   rocket/r3_mediocre 45.6 > rocket/r4_poor 27.3
+held   rocket/r5_fins_45 94.0 > rocket/r6_three_fins 78.2
+held   rocket/r6_three_fins 78.2 > rocket/r7_no_nose 74.5
+held   rocket/r4_poor 27.3 > rocket/x3_rocket_billboard 18.2
+held   rocket/r3_mediocre 45.6 > rocket/x2_rocket_cube_cloud 23.4
+held   snowman/s1_excellent 99.3 > snowman/s2_good_slips 89.4
+held   snowman/s2_good_slips 89.4 > snowman/s3_mediocre 69.7
+held   snowman/s3_mediocre 69.7 > snowman/s4_poor 42.2
+held   snowman/s6_arms_raised 91.7 > snowman/s5_hat_beside 67.9
+held   snowman/s2_good_slips 89.4 > snowman/s7_sunk 85.9
+held   snowman/s4_poor 42.2 > snowman/x4_snowman_block 13.3
+held   snowman/s4_poor 42.2 > snowman/x5_snowman_cutout 7.0
+held   bookshelf/b1_excellent 100.4 > bookshelf/b3_books_swapped 98.8
+held   bookshelf/b3_books_swapped 98.8 > bookshelf/b2_five_books 84.9
+held   bookshelf/b2_five_books 84.9 > bookshelf/b5_mediocre 49.4
+held   bookshelf/b5_mediocre 49.4 > bookshelf/b6_poor 21.7
+held   bookshelf/b3_books_swapped 98.8 > bookshelf/b4_no_back 69.5
+BROKEN bookshelf/b6_poor 21.7 > bookshelf/x6_bookshelf_block 24.4
+held   bookshelf/b5_mediocre 49.4 > bookshelf/x7_bookshelf_painted_block 19.3
+held   bicycle/k1_excellent 98.9 > bicycle/k2_good_slips 94.8
+held   bicycle/k2_good_slips 94.8 > bicycle/k3_mediocre 46.7
+held   bicycle/k3_mediocre 46.7 > bicycle/k4_poor 32.2
+held   bicycle/k6_bar_rotated 96.3 > bicycle/k5_disc_wheels 77.4
+held   bicycle/k2_good_slips 94.8 > bicycle/k7_bloat 47.4
+held   bicycle/k4_poor 32.2 > bicycle/x8_bicycle_boxes 29.6
+
+## Summary
+in band 29/47; outside: 18, mean distance 5.3, worst 21.5; order 33/34
+grades over 5 s: none
+
+## Probe: remove parts (snowman)
+snowman -armR              total 85.3 | works 81.5 eng 100.0 looks 96.6 bonus 0.0 | shape 99.4 parts 12/13 miss 1 extra 0 credit 81.9 scale 0.99 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The right arm is missing (1 of the goal's 13 parts).
+snowman -armR,nose         total 80.7 | works 75.6 eng 100.0 looks 95.9 bonus 0.0 | shape 99.3 parts 11/13 miss 2 extra 0 credit 76.1 scale 0.99 off 0.00 turn 2 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: 2 parts are missing: the nose and the right arm (2 of the goal's 13 parts).
+snowman -armR,nose,crown   total 67.7 | works 60.8 eng 100.0 looks 88.6 bonus 0.0 | shape 96.4 parts 10/13 miss 3 extra 0 credit 62.7 scale 1.00 off 0.00 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: 3 parts are missing: the crown, the nose and the right arm (3 of the goal's 13 parts).
+
+## Probe: remove parts (bookshelf books)
+bookshelf -book8           total 93.9 | works 92.4 eng 100.0 looks 98.2 bonus 0.0 | shape 99.7 parts 14/15 miss 1 extra 0 credit 92.6 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The book near the right is missing (1 of the goal's 15 parts).
+bookshelf -book8,book7     total 89.3 | works 86.1 eng 100.0 looks 99.0 bonus 0.0 | shape 99.5 parts 13/15 miss 2 extra 0 credit 86.4 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: 2 parts are missing: 2 books near the right (2 of the goal's 15 parts).
+bookshelf -book8,book7,book6 total 84.0 | works 79.0 eng 100.0 looks 98.8 bonus 0.0 | shape 98.7 parts 12/15 miss 3 extra 0 credit 79.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: 3 parts are missing: 3 books near the right (3 of the goal's 15 parts).
+
+## Probe: move the hat sideways (snowman height 2.67)
+hat +x 0.05                total 99.0 | works 100.0 eng 100.0 looks 96.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Some of the goal's edges and corners are missing or in other places, most in the front view.
+hat +x 0.1                 total 96.3 | works 98.9 eng 100.0 looks 88.5 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 98.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Some of the goal's edges and corners are missing or in other places, most in the three-quarter back view.
+hat +x 0.2                 total 91.0 | works 97.0 eng 100.0 looks 73.0 bonus 0.0 | shape 99.8 parts 13/13 miss 0 extra 0 credit 97.1 scale 1.00 off 0.02 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The brim sits too far right, by about 5% of the model's size, and the part on it moved with it.
+hat +x 0.4                 total 79.9 | works 85.5 eng 100.0 looks 63.1 bonus 0.0 | shape 97.7 parts 13/13 miss 0 extra 0 credit 87.2 scale 1.00 off 0.02 turn 1 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The brim sits too far right, by about 13% of the model's size, and the part on it moved with it.
+hat +x 0.6                 total 69.5 | works 73.4 eng 100.0 looks 57.8 bonus 0.0 | shape 94.1 parts 13/13 miss 0 extra 0 credit 77.3 scale 1.00 off 0.02 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The brim sits too far right, by about 21% of the model's size, and the part on it moved with it.
+hat +x 0.9                 total 65.8 | works 67.8 eng 100.0 looks 59.6 bonus 0.0 | shape 90.7 parts 13/13 miss 0 extra 0 credit 73.7 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The brim sits too far right, by about 34% of the model's size, and the part on it moved with it.
+
+## Probe: move the nose cone up (rocket height 3.0)
+nose +y 0.05               total 98.0 | works 100.0 eng 100.0 looks 92.1 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 1.01 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The surfaces show edges and shading the goal does not have, most in the front view.
+nose +y 0.1                total 95.2 | works 98.9 eng 100.0 looks 84.1 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.9 scale 0.99 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Some of the goal's edges and corners are missing or in other places, most in the front view.
+nose +y 0.2                total 92.5 | works 98.5 eng 100.0 looks 74.5 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.5 scale 1.01 off 0.02 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The surfaces show edges and shading the goal does not have, most in the front view. | The nose sits too high, by about 4% of the model's size.
+nose +y 0.4                total 89.7 | works 97.5 eng 100.0 looks 69.2 bonus 0.0 | shape 99.8 parts 9/9 miss 0 extra 0 credit 97.7 scale 1.10 off 0.02 turn 0 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The nose sits too high, by about 6% of the model's size. | The model is about 10% bigger than the goal: 1 point.
+nose +y 0.6                total 82.7 | works 91.6 eng 100.0 looks 60.8 bonus 0.0 | shape 99.6 parts 9/9 miss 0 extra 0 credit 92 scale 1.16 off 0.02 turn 1 factor 0.98 eng[tri 100 mesh 100 src 100]
+                           feedback: The nose sits too high, by about 6% of the model's size. | The model is about 16% bigger than the goal: 1 point.
+
+## Probe: scale the head (snowman)
+head x0.5                  total 91.1 | works 91.5 eng 100.0 looks 90.1 bonus 0.0 | shape 98.5 parts 13/13 miss 0 extra 0 credit 92.7 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The head is about 50% too short.
+head x0.7                  total 94.8 | works 96.3 eng 100.0 looks 90.2 bonus 0.0 | shape 99.5 parts 13/13 miss 0 extra 0 credit 96.8 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The head is about 30% too shallow.
+head x0.85                 total 98.8 | works 99.2 eng 100.0 looks 97.6 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 99.2 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Some of the goal's edges and corners are missing or in other places, most in the three-quarter back view.
+head x1.15                 total 98.8 | works 99.5 eng 100.0 looks 96.8 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 99.5 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Some of the goal's edges and corners are missing or in other places, most in the three-quarter back view.
+head x1.4                  total 91.5 | works 95.8 eng 100.0 looks 78.7 bonus 0.0 | shape 98.6 parts 13/13 miss 0 extra 0 credit 97 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The head is about 40% too tall.
+head x2                    total 79.2 | works 86.4 eng 100.0 looks 57.6 bonus 0.0 | shape 92.5 parts 13/13 miss 0 extra 0 credit 92.4 scale 1.00 off 0.01 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The head is about 2 times as big as the goal's along one side (too tall).
+
+## Probe: triangle count (rocket, segments multiplied)
+segments x1                total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Matches the goal.
+segments x2                total 86.2 | works 99.9 eng 61.0 looks 99.9 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 61 mesh 100 src 100]
+                           feedback: Uses 2 times as many triangles as the goal (1,104 against 560); curved shapes need fewer segments.
+segments x4                total 59.5 | works 99.8 eng -15.5 looks 99.9 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.8 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -15.5 mesh 100 src 100]
+                           feedback: Uses 4 times as many triangles as the goal (2,192 against 560); curved shapes need fewer segments.
+segments x8                total 47.4 | works 99.9 eng -50.0 looks 99.9 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -71.6 mesh 100 src 100]
+                           feedback: Uses 8 times as many triangles as the goal (4,368 against 560); curved shapes need fewer segments.
+segments x16               total 47.4 | works 99.8 eng -50.0 looks 99.8 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.8 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -100 mesh 100 src 100]
+                           feedback: Uses 16 times as many triangles as the goal (8,720 against 560); curved shapes need fewer segments.
+segments x32               total 47.4 | works 99.9 eng -50.0 looks 99.8 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -100 mesh 100 src 100]
+                           feedback: Uses 31 times as many triangles as the goal (17,424 against 560); curved shapes need fewer segments.
+segments x64               total 47.4 | works 99.9 eng -50.0 looks 99.8 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 99.9 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri -100 mesh 100 src 100]
+                           feedback: Uses 62 times as many triangles as the goal (34,832 against 560); curved shapes need fewer segments.
+
+## Probe: turn the rocket about the up axis
+rocket turn 0              total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Matches the goal.
+rocket turn 15             total 98.4 | works 100.0 eng 100.0 looks 99.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 0.99 off 0.00 turn 15 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 15 degrees from the goal's facing: 1 point.
+rocket turn 30             total 96.9 | works 100.0 eng 100.0 looks 99.7 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 30 factor 0.97 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 30 degrees from the goal's facing: 3 points.
+rocket turn 45             total 94.9 | works 100.0 eng 100.0 looks 98.5 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 45 factor 0.95 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 45 degrees from the goal's facing: 5 points.
+rocket turn 60             total 95.6 | works 98.6 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 1.00 off 0.00 turn 30 factor 0.97 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 30 degrees from the goal's facing: 3 points. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 75             total 97.1 | works 98.6 eng 100.0 looks 98.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 0.99 off 0.00 turn 15 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 15 degrees from the goal's facing: 1 point. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 90             total 98.7 | works 98.6 eng 100.0 looks 98.9 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 105            total 97.1 | works 98.6 eng 100.0 looks 98.0 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 0.99 off 0.00 turn 15 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 15 degrees from the goal's facing: 1 point. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 120            total 95.6 | works 98.6 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 1.00 off 0.00 turn 30 factor 0.97 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 30 degrees from the goal's facing: 3 points. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 135            total 93.6 | works 98.6 eng 100.0 looks 97.5 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 0.99 off 0.01 turn 45 factor 0.95 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 45 degrees from the goal's facing: 5 points. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 150            total 92.3 | works 98.6 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 98.6 scale 1.00 off 0.00 turn 60 factor 0.94 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 60 degrees from the goal's facing: 6 points. | The window is at a different angle from the goal's, about 90 degrees off.
+rocket turn 165            total 94.5 | works 94.8 eng 100.0 looks 98.8 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 94.8 scale 0.99 off 0.00 turn 15 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The window sits too far back, by about 20% of the model's size. | The model is turned about 15 degrees from the goal's facing: 1 point.
+rocket turn 180            total 96.1 | works 94.8 eng 100.0 looks 99.8 bonus 0.0 | shape 100 parts 9/9 miss 0 extra 0 credit 94.8 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: The window sits too far back, by about 20% of the model's size.
+
+## Probe: turn the snowman about the up axis
+snowman turn 0             total 100.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 0 factor 1.00 eng[tri 100 mesh 100 src 100]
+                           feedback: Matches the goal.
+snowman turn 15            total 98.3 | works 100.0 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 15 factor 0.99 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 15 degrees from the goal's facing: 1 point.
+snowman turn 30            total 96.7 | works 100.0 eng 100.0 looks 99.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.00 turn 30 factor 0.97 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 30 degrees from the goal's facing: 3 points.
+snowman turn 45            total 94.8 | works 100.0 eng 100.0 looks 98.1 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 45 factor 0.95 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 45 degrees from the goal's facing: 5 points.
+snowman turn 60            total 93.3 | works 100.0 eng 100.0 looks 98.7 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 60 factor 0.94 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 60 degrees from the goal's facing: 6 points.
+snowman turn 75            total 91.5 | works 100.0 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 75 factor 0.92 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 75 degrees from the goal's facing: 8 points.
+snowman turn 90            total 90.2 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 90 factor 0.90 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 90 degrees from the goal's facing: 10 points.
+snowman turn 105           total 88.2 | works 100.0 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 105 factor 0.89 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 105 degrees from the goal's facing: 11 points.
+snowman turn 120           total 86.6 | works 100.0 eng 100.0 looks 99.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.00 turn 120 factor 0.87 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 120 degrees from the goal's facing: 13 points.
+snowman turn 135           total 84.7 | works 100.0 eng 100.0 looks 98.1 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 135 factor 0.85 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 135 degrees from the goal's facing: 15 points.
+snowman turn 150           total 83.1 | works 100.0 eng 100.0 looks 98.7 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 150 factor 0.83 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 150 degrees from the goal's facing: 17 points.
+snowman turn 165           total 81.4 | works 100.0 eng 100.0 looks 98.6 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 0.99 off 0.01 turn 165 factor 0.82 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 165 degrees from the goal's facing: 18 points.
+snowman turn 180           total 80.0 | works 100.0 eng 100.0 looks 100.0 bonus 0.0 | shape 100 parts 13/13 miss 0 extra 0 credit 100 scale 1.00 off 0.00 turn 180 factor 0.80 eng[tri 100 mesh 100 src 100]
+                           feedback: The model is turned about 180 degrees from the goal's facing: 20 points.

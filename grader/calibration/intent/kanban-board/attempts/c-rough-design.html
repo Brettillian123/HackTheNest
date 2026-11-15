@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Board</title>
+<style>
+  body { margin: 0; background: #fff; font-family: Verdana, sans-serif; }
+  header { padding: 6px 14px; border-bottom: 1px solid #eee; }
+  h1 { font-size: 16px; display: inline; }
+  header p { display: inline; font-size: 11px; color: #c0c4cc; margin-left: 10px; }
+  header button { float: right; background: #a5b4fc; color: #fff; border: 0; padding: 3px 8px; font-size: 11px; }
+  main { padding: 8px; }
+  section { display: inline-block; vertical-align: top; width: 21%; background: #f3f4f6; margin-right: 6px; padding: 4px; }
+  section:nth-child(2) { width: 25%; padding: 14px; }
+  section:nth-child(3) { margin-top: 30px; }
+  h2 { font-size: 12px; margin: 2px; }
+  h2 span { color: #bbb; font-weight: normal; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { background: #fff; margin: 4px 0 10px; padding: 5px 8px; border: 1px solid #f0f0f0; }
+  li:nth-child(2) { margin: 14px 10px; }
+  .tag { font-size: 10px; padding: 0 4px; }
+  li h3 { font-size: 12px; margin: 2px 0; font-weight: normal; }
+  .av { display: inline-block; width: 18px; height: 18px; border-radius: 50%; font-size: 8px; text-align: center; line-height: 18px; color: #fff; }
+  .d { font-size: 10px; color: #c3c7cf; margin-left: 30px; }
+  .late { color: #f87171; }
+  .done h3 { text-decoration: line-through; }
+</style>
+</head>
+<body>
+<header><h1>Website relaunch</h1><p>Sprint 14, 9 to 27 November</p><button type="button">New card</button></header>
+<main>
+<section><h2>Backlog <span>(3)</span></h2><ul>
+<li><span class="tag" style="background:#fef3c7;color:#92400e">Content</span><h3>Write FAQ answers for pricing</h3><span class="av" style="background:#be185d">NH</span><span class="d">Due Nov 25</span></li>
+<li><span class="tag" style="background:#f3e8ff;color:#6b21a8">Design</span><h3>Empty states for the dashboard</h3><span class="av" style="background:#047857">TS</span><span class="d">Due Nov 26</span></li>
+<li><span class="tag" style="background:#dbeafe;color:#1e40af">Frontend</span><h3>Lazy-load case study images</h3><span class="av" style="background:#4338ca">KB</span><span class="d">Due Nov 27</span></li>
+</ul></section>
+<section><h2>In progress <span>(3)</span></h2><ul>
+<li><span class="tag" style="background:#dbeafe;color:#1e40af">Frontend</span><h3>Build the new pricing table</h3><span class="av" style="background:#4338ca">KB</span><span class="d">Due Nov 18</span></li>
+<li><span class="tag" style="background:#fee2e2;color:#991b1b">Bug</span><h3>Menu closes on iOS scroll</h3><span class="av" style="background:#047857">TS</span><span class="d late">Due Nov 14</span></li>
+<li><span class="tag" style="background:#f3e8ff;color:#6b21a8">Design</span><h3>Homepage hero illustration</h3><span class="av" style="background:#be185d">NH</span><span class="d">Due Nov 19</span></li>
+</ul></section>
+<section><h2>Review <span>(2)</span></h2><ul>
+<li><span class="tag" style="background:#fef3c7;color:#92400e">Content</span><h3>About page copy, second draft</h3><span class="av" style="background:#be185d">NH</span><span class="d">Due Nov 17</span></li>
+<li><span class="tag" style="background:#dbeafe;color:#1e40af">Frontend</span><h3>Contact form validation</h3><span class="av" style="background:#4338ca">KB</span><span class="d">Due Nov 16</span></li>
+</ul></section>
+<section class="done"><h2>Done <span>(3)</span></h2><ul>
+<li><span class="tag" style="background:#f3e8ff;color:#6b21a8">Design</span><h3>New colour palette</h3><span class="av" style="background:#047857">TS</span><span class="d">Done Nov 10</span></li>
+<li><span class="tag" style="background:#fee2e2;color:#991b1b">Bug</span><h3>Broken link in footer</h3><span class="av" style="background:#4338ca">KB</span><span class="d">Done Nov 11</span></li>
+<li><span class="tag" style="background:#fef3c7;color:#92400e">Content</span><h3>Team bios and photos</h3><span class="av" style="background:#be185d">NH</span><span class="d">Done Nov 12</span></li>
+</ul></section>
+</main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a table — Olive & Ember</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="s-top" style="background:#2f3b2b"><div class="s-bar"><span class="s-brand" style="color:#f4ead8">Olive &amp; Ember</span><div class="s-nav"><a href="index.html">Home</a><a href="menu.html">Menu</a><a href="reservations.html" aria-current="page">Reservations</a><a href="find-us.html">Find us</a></div></div></div>
+<div class="s-main" id="content"><h1>Book a table</h1><p>Tables are held for fifteen minutes. Groups of more than eight, please call 01632 960 123.</p>
+<form class="s-form" action="reservations.html" method="get">
+<input name="name" autocomplete="name" required placeholder="Name">
+<input type="email" name="email" autocomplete="email" required placeholder="Email">
+<input type="date" name="date" required placeholder="Date">
+<select name="time" placeholder="Time"><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option></select>
+<input type="number" name="guests" min="1" max="8" value="2" placeholder="Guests">
+<textarea name="notes" rows="4" class="s-wide" placeholder="Notes"></textarea>
+<button type="submit">Request booking</button>
+</form></div>
+<footer><div class="s-bar"><nav aria-label="Footer"><a href="reservations.html">Book a table</a><a href="find-us.html">Opening hours</a></nav><p>&copy; 2026 Olive &amp; Ember, 14 Quay Street</p></div></footer>
+</body>
+</html>

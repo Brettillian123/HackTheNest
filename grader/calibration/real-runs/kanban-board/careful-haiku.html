@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website relaunch: Sprint 14</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f1f5f9;color:#0f172a}
+header{background:#fff;border-bottom:1px solid #e2e8f0;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+h1{margin:0;font-size:26px;font-weight:bold}
+.sprint{margin:4px 0 0;color:#64748b;font-size:15px}
+button{background:#4f46e5;color:#fff;font-weight:bold;font-family:inherit;font-size:15px;border:0;border-radius:8px;padding:10px 18px;cursor:pointer}
+main{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:24px 32px}
+.col{background:#e2e8f0;border-radius:12px;padding:16px}
+.col-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}
+.col-head h2{margin:0;font-size:16px;font-weight:bold}
+.count{background:#fff;border-radius:999px;font-size:12px;font-weight:bold;padding:3px 9px;color:#334155}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:14px}
+.tag{display:inline-block;font-size:11px;font-weight:bold;border-radius:6px;padding:3px 8px;margin-bottom:8px}
+.content{background:#fef3c7;color:#92400e}
+.design{background:#ede9fe;color:#5b21b6}
+.frontend{background:#dbeafe;color:#1e40af}
+.bug{background:#fee2e2;color:#991b1b}
+.title{font-weight:bold;font-size:15px;margin:0 0 12px;line-height:1.35}
+.done .title{text-decoration:line-through;color:#94a3b8}
+.foot{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#64748b}
+.avatar{width:26px;height:26px;border-radius:50%;color:#fff;font-size:11px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center}
+.nh{background:#0d9488}.ts{background:#db2777}.kb{background:#ea580c}
+.overdue{color:#dc2626;font-weight:bold}
+@media (max-width:900px){main{grid-template-columns:1fr;padding:16px}header{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+<div>
+<h1>Website relaunch</h1>
+<p class="sprint">Sprint 14, 9 to 27 November</p>
+</div>
+<button type="button">New card</button>
+</header>
+<main>
+<section class="col">
+<div class="col-head"><h2>Backlog</h2><span class="count">3</span></div>
+<ul>
+<li class="card"><span class="tag content">Content</span><p class="title">Write FAQ answers for pricing</p><div class="foot"><span class="avatar nh" title="Nadia Haddad">NH</span><span>Due Nov 25</span></div></li>
+<li class="card"><span class="tag design">Design</span><p class="title">Empty states for the dashboard</p><div class="foot"><span class="avatar ts" title="Tomás Silva">TS</span><span>Due Nov 26</span></div></li>
+<li class="card"><span class="tag frontend">Frontend</span><p class="title">Lazy-load case study images</p><div class="foot"><span class="avatar kb" title="Kai Becker">KB</span><span>Due Nov 27</span></div></li>
+</ul>
+</section>
+<section class="col">
+<div class="col-head"><h2>In progress</h2><span class="count">3</span></div>
+<ul>
+<li class="card"><span class="tag frontend">Frontend</span><p class="title">Build the new pricing table</p><div class="foot"><span class="avatar kb" title="Kai Becker">KB</span><span>Due Nov 18</span></div></li>
+<li class="card"><span class="tag bug">Bug</span><p class="title">Menu closes on iOS scroll</p><div class="foot"><span class="avatar ts" title="Tomás Silva">TS</span><span class="overdue">Due Nov 14</span></div></li>
+<li class="card"><span class="tag design">Design</span><p class="title">Homepage hero illustration</p><div class="foot"><span class="avatar nh" title="Nadia Haddad">NH</span><span>Due Nov 19</span></div></li>
+</ul>
+</section>
+<section class="col">
+<div class="col-head"><h2>Review</h2><span class="count">2</span></div>
+<ul>
+<li class="card"><span class="tag content">Content</span><p class="title">About page copy, second draft</p><div class="foot"><span class="avatar nh" title="Nadia Haddad">NH</span><span>Due Nov 17</span></div></li>
+<li class="card"><span class="tag frontend">Frontend</span><p class="title">Contact form validation</p><div class="foot"><span class="avatar kb" title="Kai Becker">KB</span><span>Due Nov 16</span></div></li>
+</ul>
+</section>
+<section class="col done">
+<div class="col-head"><h2>Done</h2><span class="count">3</span></div>
+<ul>
+<li class="card"><span class="tag design">Design</span><p class="title">New colour palette</p><div class="foot"><span class="avatar ts" title="Tomás Silva">TS</span><span>Done Nov 10</span></div></li>
+<li class="card"><span class="tag bug">Bug</span><p class="title">Broken link in footer</p><div class="foot"><span class="avatar kb" title="Kai Becker">KB</span><span>Done Nov 11</span></div></li>
+<li class="card"><span class="tag content">Content</span><p class="title">Team bios and photos</p><div class="foot"><span class="avatar nh" title="Nadia Haddad">NH</span><span>Done Nov 12</span></div></li>
+</ul>
+</section>
+</main>
+</body>
+</html>

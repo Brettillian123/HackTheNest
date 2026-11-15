@@ -1,0 +1,933 @@
+{
+  "scale": "100 = the reference build by definition (not banded). 93-99 exceptional and rare; 85-93 strong; 78-88 solid with a couple of slips; 62-78 partly there or right content with the wrong look; 40-62 much of the brief unmet; 15-40 little of the brief; 0-15 blank, broken or unrelated.",
+  "challenges": {
+    "alert-stack": {
+      "split": "train",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "All four banners, facts, list and real buttons right; same calm grey-blue column and tint families, a little wider with larger icons."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Everything present but the warning action reads Upgrade now and the gap before the error banner is uneven, its padding cramped."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Content and markup right, but the column is off-centre, banners vary in width and indent, the heading is weak and the detail text is pale grey on tint."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks like the reference but it is div soup: no landmarks, no heading elements, no list, actions are underlined divs and every style is repeated inline; icons are text glyphs."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but the banners run in reverse order, have no icons, and three facts are off (4 new messages, Payment successful, Retry)."
+        },
+        "f-vague": {
+          "band": [
+            22,
+            34
+          ],
+          "why": "Generic four-alert page with only the Notifications heading right; invented messages, no actions, no icons."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Content and engineering match the strong attempt, but the page is dark brown instead of soft grey-blue and the column sits against the left edge."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "feature-grid": {
+      "split": "train",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Header, intro, six cards in order with drawn icons on teal tiles, list and headings right; same light teal look with a slightly narrower card grid."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "All there, but Bank sync says 10,000 banks and the gap between the two rows is cramped."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Content complete, but cards are uneven sizes and paddings, icons sit inconsistently, the heading is small and off-centre, descriptions are low contrast."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but nav links are spans, the trial button is a div, there are no headings below the page title (all divs), no list, no landmarks, styles repeated inline."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but the header lacks Customers and the trial button, Tax ready comes before Live reports, and 12,000 banks became thousands of banks."
+        },
+        "f-vague": {
+          "band": [
+            15,
+            27
+          ],
+          "why": "A generic dark-banner features page with invented features and emoji icons; none of the Ledgerly facts."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right content and build, but the accent is orange on a peach page and the intro is pushed into a left column with a two-across grid beside it."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "leaderboard-table": {
+      "split": "train",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Real table, ten rows right, medals, avatars, highlight, right-aligned bold scores and both lines exact; same light look, slightly different shades."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete but the header reads Prompts not Prompts used, Marcus shows 9,651, and the rows are cramped."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Rows and data right, but numbers are centred not right-aligned, rows vary in height, avatar and medal colours are too pale to read, heading weak and the table is pushed left and oversized."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks close but it is a CSS grid of divs, not a table: no headers, no heading element, no landmarks, inline styles on every cell; dividers also break between cells."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but only eight rows, Jordan is not highlighted or marked (you), and the reset note is missing."
+        },
+        "f-vague": {
+          "band": [
+            22,
+            34
+          ],
+          "why": "A generic five-row green-header table with invented names; only the idea of a leaderboard."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right table and data, but the page is peach with an orange stripe and all-orange avatars, and the board is pushed against the right edge."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "kanban-board": {
+      "split": "train",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Four columns with counts, eleven cards with labels, avatars, dates, red overdue and struck Done titles, sections and lists; same light grey and indigo look."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete, but Review shows a count of 3 for two cards, Contact form validation is due Nov 15, and the Done cards are cramped."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "All cards and facts present, but columns differ in width and height and are staggered, cards are uneven, dates and avatars are tiny and pale, the button is pale."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but every column, card and the New card button are divs with inline styles; no headings, sections, lists or landmarks."
+        },
+        "e-incomplete": {
+          "band": [
+            48,
+            60
+          ],
+          "why": "Polished, but the Review column and its two cards are missing and the column headers have no counts."
+        },
+        "f-vague": {
+          "band": [
+            20,
+            32
+          ],
+          "why": "A generic three-column board with invented tasks; no labels, avatars, dates or project facts."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right board and build, but orange columns and buttons on a peach page and the project bar moved into a dark rust sidebar on the right."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "contact-form": {
+      "split": "train",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Intro with exact facts and labelled details beside a fully labelled, required, typed form on one white card; same pale blue page and teal accent, card a little wider."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete, but the name label reads Your name and the message box is squashed to one line with the consent row crowding it."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "All fields and facts present, but the card is pinned top-left, the two sides do not align, fields have random widths, labels and details are tiny and pale, the button floats mid-row."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but has no form, no label elements, no landmarks or headings, the email field is plain text, nothing is required, the send button is a div, styles inline."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but the hours are missing, there is no consent checkbox, the phone number is wrong and the button reads Send."
+        },
+        "f-vague": {
+          "band": [
+            22,
+            34
+          ],
+          "why": "A generic centred Contact Us form with no studio details, intro, topic or consent."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right content and build, but orange accent on a peach page, the card pressed to the left edge, and the form and intro swapped sides."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "settings-toggles": {
+      "split": "heldout",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Heading, nav of links with Notifications current, three groups, eight labelled real switches with helper text linked and right states; same off-white and indigo look."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete, but Quiet hours says 23:00 and the Push notifications rows are cramped."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Content and markup right, but the menu is tiny and pale, cards vary in indent and spacing, switches float out of line, helper text is barely legible."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but the menu is divs not links in a nav, group titles are not headings, and the switches are painted divs with no checkbox or label."
+        },
+        "e-incomplete": {
+          "band": [
+            48,
+            60
+          ],
+          "why": "Polished, but the Workspace group is missing and Product updates and Quiet hours are shown on."
+        },
+        "f-vague": {
+          "band": [
+            15,
+            27
+          ],
+          "why": "A small generic settings box with four invented plain checkboxes; only the Settings heading."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right content and build, but red switches and a red current pill on a pink page, and the section menu moved to the right side."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "event-schedule": {
+      "split": "heldout",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Navy hero with amber accent, all facts, a real ten-row table with quiet breaks and coloured pills, three speakers, ticket band, header, main and footer; close to the reference."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete, but the hero reads 8 talks, 3 tracks and the speaker cards are cramped together."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Content right, but the hero is squashed, the button is pale, table cells are centred with uneven row heights, pills are grey, speaker cards staggered and uneven."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but the schedule is a grid of divs not a table, no header, main or footer, no heading elements, buttons and links are divs and spans, styles inline."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but the table stops at 14:30 (eight rows) and the Featured speakers section is missing."
+        },
+        "f-vague": {
+          "band": [
+            18,
+            30
+          ],
+          "why": "A generic TechConf schedule list with invented sessions and speakers; only the Schedule heading."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right content and build, but the bands are maroon with pink buttons instead of navy and amber, and the ticket band moved above the schedule."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    },
+    "shopping-cart": {
+      "split": "heldout",
+      "attempts": {
+        "a-strong": {
+          "band": [
+            85,
+            95
+          ],
+          "why": "Serif brand bar, exact heading, three items with labelled steppers and real buttons, promo, summary that adds up and full-width blue Checkout; close to the reference."
+        },
+        "b-good": {
+          "band": [
+            78,
+            88
+          ],
+          "why": "Complete, but the socks show $12 each and the summary lines are crammed together with no separation above the total."
+        },
+        "c-rough-design": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Everything present, but the layout stretches edge to edge, items are misaligned, prices left-aligned, text and remove links pale, the Checkout button pale, narrow and off-centre."
+        },
+        "d-poor-engineering": {
+          "band": [
+            63,
+            74
+          ],
+          "why": "Looks right but the steppers are divs with no input or label, Remove, Apply, Checkout and Continue shopping are divs, the promo field has no label, no landmarks or headings."
+        },
+        "e-incomplete": {
+          "band": [
+            50,
+            62
+          ],
+          "why": "Polished, but the promo code box is missing and the total reads $128.00, which does not add up."
+        },
+        "f-vague": {
+          "band": [
+            18,
+            30
+          ],
+          "why": "A generic cart table with invented products and a green button; only the Checkout label."
+        },
+        "g-wrong-look": {
+          "band": [
+            65,
+            76
+          ],
+          "why": "Right content and build, but orange Checkout on a peach page and the promo and summary moved above the items instead of beside them."
+        }
+      },
+      "order": [
+        [
+          "a-strong",
+          "b-good"
+        ],
+        [
+          "a-strong",
+          "c-rough-design"
+        ],
+        [
+          "a-strong",
+          "d-poor-engineering"
+        ],
+        [
+          "a-strong",
+          "e-incomplete"
+        ],
+        [
+          "a-strong",
+          "f-vague"
+        ],
+        [
+          "a-strong",
+          "g-wrong-look"
+        ],
+        [
+          "b-good",
+          "c-rough-design"
+        ],
+        [
+          "b-good",
+          "d-poor-engineering"
+        ],
+        [
+          "b-good",
+          "e-incomplete"
+        ],
+        [
+          "b-good",
+          "f-vague"
+        ],
+        [
+          "c-rough-design",
+          "f-vague"
+        ],
+        [
+          "d-poor-engineering",
+          "f-vague"
+        ],
+        [
+          "e-incomplete",
+          "f-vague"
+        ],
+        [
+          "g-wrong-look",
+          "e-incomplete"
+        ],
+        [
+          "g-wrong-look",
+          "f-vague"
+        ]
+      ]
+    }
+  }
+}

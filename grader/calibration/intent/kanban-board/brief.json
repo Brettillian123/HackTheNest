@@ -1,0 +1,98 @@
+{
+  "slug": "kanban-board",
+  "title": "Kanban board",
+  "level": 2,
+  "category": "App screens and data",
+  "brief": "Make the task board for our 'Website relaunch' project, sprint 14 (9 to 27 November). A white top bar holds the project name, the sprint dates and a 'New card' button. Below it, four equal columns: Backlog, In progress, Review and Done, each with a count of its cards in a small pill in the header. There are eleven cards in all. Each card has a coloured label (Design, Frontend, Content or Bug, each with its own colour), a short title, the assignee's initials in a round avatar and a due date. One card in progress is overdue and its date should be red; the cards in Done have their titles struck through and show when they were finished. It should feel light and organised, like a modern project tool, with an indigo accent.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "Heading 'Website relaunch' with 'Sprint 14, 9 to 27 November' and a 'New card' button",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "Four columns in this order: Backlog, In progress, Review, Done",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Each column header shows how many cards it holds: 3, 3, 2, 3 (eleven cards in all)",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Every card shows a label, a title, an initials avatar and a date",
+      "kind": "structure",
+      "exact": false
+    },
+    {
+      "id": "r5",
+      "text": "Labels Design, Frontend, Content and Bug each have their own colour, used the same way on every card",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "Card titles and dates match the goal, e.g. 'Build the new pricing table' due Nov 18, 'Contact form validation' due Nov 16",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r7",
+      "text": "'Menu closes on iOS scroll' is overdue: 'Due Nov 14' is shown in red",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "Done cards have struck-through titles and dates written 'Done Nov 10', 'Done Nov 11', 'Done Nov 12'",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r9",
+      "text": "Columns are sections with headings and their cards are lists",
+      "kind": "engineering",
+      "exact": false
+    },
+    {
+      "id": "r10",
+      "text": "Text, including labels and avatar initials, is easy to read against its background",
+      "kind": "style",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Website relaunch",
+    "Sprint 14, 9 to 27 November",
+    "New card",
+    "Backlog",
+    "In progress",
+    "Review",
+    "Done",
+    "Write FAQ answers for pricing",
+    "Empty states for the dashboard",
+    "Lazy-load case study images",
+    "Build the new pricing table",
+    "Menu closes on iOS scroll",
+    "Due Nov 14",
+    "Homepage hero illustration",
+    "About page copy, second draft",
+    "Contact form validation",
+    "New colour palette",
+    "Broken link in footer",
+    "Team bios and photos",
+    "Done Nov 12"
+  ],
+  "designNotes": [
+    "light and organised, soft grey columns",
+    "white cards with a faint shadow",
+    "one colour per label kind",
+    "indigo accent for the main button"
+  ],
+  "maxPromptChars": 4500
+}

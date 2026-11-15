@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit Analytics — Overview</title>
+<style>
+*{box-sizing:border-box}
+:root{font-family:Arial,sans-serif;color:#172033;background:#f5f6fa;font-synthesis:none}
+body{margin:0;min-width:760px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:205px;background:#111a35;color:#d0d5e2;padding:25px 15px}
+.brand{font-size:17px;font-weight:700;color:#fff;padding:0 10px;margin:2px 0 31px}
+nav ul{list-style:none;margin:0;padding:0}
+nav li{margin:4px 0}
+nav a{display:block;padding:10px 11px;border-radius:7px;color:#c2c9d8;text-decoration:none;font-size:13px}
+nav a.active{background:#4e4bd8;color:#fff;font-weight:700}
+.group-label{margin:27px 10px 8px;color:#7d89a5;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+main{margin-left:205px;min-height:100vh}
+.topbar{height:65px;background:#fff;border-bottom:1px solid #e7e9ef;display:flex;align-items:center;justify-content:space-between;padding:0 34px}
+.search{width:320px;height:36px;border:1px solid #e1e4eb;border-radius:7px;padding:0 12px;font:13px Arial,sans-serif;color:#273146;background:#fafbfc;outline:none}
+.search::placeholder{color:#9098a9}
+.user{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:600;color:#283044}
+.avatar{width:34px;height:34px;border-radius:50%;background:#f4a261;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.content{padding:27px 34px 36px;max-width:1320px;margin:auto}
+h1{margin:0 0 20px;font-size:23px;letter-spacing:-.4px;color:#172033}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.metric,.panel{background:#fff;border:1px solid #e7e9ef;border-radius:8px}
+.metric{padding:16px 17px 14px;min-height:105px}
+.metric-label{font-size:12px;color:#778096;margin-bottom:9px}
+.metric-value{font-size:23px;line-height:1.1;font-weight:700;letter-spacing:-.4px;color:#182139}
+.change{margin-top:8px;font-size:11px;color:#24966a}
+.change.bad{color:#d45454}
+.panel{padding:17px 19px}
+.chart-panel{margin-bottom:17px}
+.panel h2{font-size:14px;margin:0 0 10px;color:#202a40}
+.chart{width:100%;height:174px;display:block}
+.orders-panel{padding:16px 19px 9px}
+.orders-panel h2{margin-bottom:13px}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}
+thead th{padding:0 10px 10px;color:#8490a4;font-size:9px;letter-spacing:.75px;text-transform:uppercase;font-weight:700}
+tbody td{padding:9px 10px;border-top:1px solid #edf0f4;color:#465066;white-space:nowrap}
+tbody td:first-child{font-weight:600;color:#283249}
+.status{display:inline-block;border-radius:20px;padding:4px 9px;font-size:10px;font-weight:700}
+.paid{color:#21835c;background:#e8f6ef}
+.pending{color:#a96b12;background:#fff3d9}
+.failed{color:#bf4a4a;background:#fdecec}
+@media(max-width:900px){.content{padding-left:22px;padding-right:22px}.topbar{padding:0 22px}.metrics{gap:9px}.metric{padding:14px 11px}.metric-value{font-size:20px}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">Orbit Analytics</div>
+  <nav aria-label="Primary navigation">
+    <ul>
+      <li><a href="#" class="active" aria-current="page">Overview</a></li>
+      <li><a href="#">Orders</a></li>
+      <li><a href="#">Customers</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Reports</a></li>
+    </ul>
+    <div class="group-label">Account</div>
+    <ul>
+      <li><a href="#">Team</a></li>
+      <li><a href="#">Billing</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+</aside>
+<main>
+  <header class="topbar">
+    <input class="search" type="search" placeholder="Search orders, customers..." aria-label="Search orders, customers...">
+    <div class="user"><span>Maya Chen</span><span class="avatar" aria-label="MC">MC</span></div>
+  </header>
+  <div class="content">
+    <h1>Overview</h1>
+    <section class="metrics" aria-label="Key figures">
+      <article class="metric"><div class="metric-label">Revenue</div><div class="metric-value">$48,250</div><div class="change">+12.4% this month</div></article>
+      <article class="metric"><div class="metric-label">Orders</div><div class="metric-value">1,284</div><div class="change">+8.1% this month</div></article>
+      <article class="metric"><div class="metric-label">New customers</div><div class="metric-value">312</div><div class="change">+4.6% this month</div></article>
+      <article class="metric"><div class="metric-label">Refund rate</div><div class="metric-value">2.3%</div><div class="change bad">+0.4% this month</div></article>
+    </section>
+    <section class="panel chart-panel" aria-labelledby="chart-title">
+      <h2 id="chart-title">Monthly revenue</h2>
+      <svg class="chart" viewbox="0 0 940 174" role="img" aria-label="Monthly revenue bar chart, January to December, scale 0, 25k, 50k">
+        <g fill="none" stroke="#edf0f5" stroke-width="1">
+          <line x1="54" y1="22" x2="930" y2="22" /><line x1="54" y1="77" x2="930" y2="77" /><line x1="54" y1="132" x2="930" y2="132" />
+        </g>
+        <g fill="#8993a5" font-family="Arial,sans-serif" font-size="10">
+          <text x="5" y="25">50k</text><text x="5" y="80">25k</text><text x="21" y="135">0</text>
+          <text x="87" y="158">Jan</text><text x="158" y="158">Feb</text><text x="229" y="158">Mar</text><text x="300" y="158">Apr</text><text x="371" y="158">May</text><text x="442" y="158">Jun</text><text x="513" y="158">Jul</text><text x="584" y="158">Aug</text><text x="655" y="158">Sep</text><text x="726" y="158">Oct</text><text x="797" y="158">Nov</text><text x="868" y="158">Dec</text>
+        </g>
+        <g fill="#5653dc">
+          <rect x="75" y="91" width="34" height="41" rx="5" /><rect x="146" y="83" width="34" height="49" rx="5" /><rect x="217" y="77" width="34" height="55" rx="5" /><rect x="288" y="69" width="34" height="63" rx="5" /><rect x="359" y="62" width="34" height="70" rx="5" /><rect x="430" y="56" width="34" height="76" rx="5" /><rect x="501" y="48" width="34" height="84" rx="5" /><rect x="572" y="54" width="34" height="78" rx="5" /><rect x="643" y="43" width="34" height="89" rx="5" /><rect x="714" y="36" width="34" height="96" rx="5" /><rect x="785" y="30" width="34" height="102" rx="5" /><rect x="856" y="25" width="34" height="107" rx="5" />
+        </g>
+      </svg>
+    </section>
+    <section class="panel orders-panel" aria-labelledby="orders-title">
+      <h2 id="orders-title">Recent orders</h2>
+      <table>
+        <thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td>#10241</td><td>Liam Patel</td><td>Nov 12, 2026</td><td>$320.00</td><td><span class="status paid">Paid</span></td></tr>
+          <tr><td>#10240</td><td>Sofia Garcia</td><td>Nov 12, 2026</td><td>$89.50</td><td><span class="status pending">Pending</span></td></tr>
+          <tr><td>#10239</td><td>Noah Kim</td><td>Nov 11, 2026</td><td>$1,240.00</td><td><span class="status paid">Paid</span></td></tr>
+          <tr><td>#10238</td><td>Emma Rossi</td><td>Nov 11, 2026</td><td>$56.20</td><td><span class="status failed">Failed</span></td></tr>
+          <tr><td>#10237</td><td>Oliver Brown</td><td>Nov 10, 2026</td><td>$410.75</td><td><span class="status paid">Paid</span></td></tr>
+          <tr><td>#10236</td><td>Ava Johnson</td><td>Nov 10, 2026</td><td>$215.00</td><td><span class="status pending">Pending</span></td></tr>
+          <tr><td>#10235</td><td>Lucas Martin</td><td>Nov 9, 2026</td><td>$78.40</td><td><span class="status paid">Paid</span></td></tr>
+          <tr><td>#10234</td><td>Mia Dubois</td><td>Nov 9, 2026</td><td>$642.10</td><td><span class="status paid">Paid</span></td></tr>
+          <tr><td>#10233</td><td>Ethan Novak</td><td>Nov 8, 2026</td><td>$33.00</td><td><span class="status failed">Failed</span></td></tr>
+          <tr><td>#10232</td><td>Chloe Silva</td><td>Nov 8, 2026</td><td>$905.60</td><td><span class="status paid">Paid</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>
+</body>
+</html>

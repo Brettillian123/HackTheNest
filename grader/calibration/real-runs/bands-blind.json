@@ -1,0 +1,114 @@
+{
+  "alert-stack": {
+    "careful-haiku": {
+      "band": [
+        80,
+        88
+      ]
+    },
+    "lazy-haiku": {
+      "band": [
+        55,
+        66
+      ]
+    }
+  },
+  "feature-grid": {
+    "careful-openai": {
+      "band": [
+        82,
+        90
+      ]
+    },
+    "lazy-openai": {
+      "band": [
+        74,
+        83
+      ]
+    }
+  },
+  "leaderboard-table": {
+    "careful-haiku": {
+      "band": [
+        86,
+        93
+      ]
+    },
+    "lazy-haiku": {
+      "band": [
+        68,
+        78
+      ]
+    }
+  },
+  "contact-form": {
+    "careful-openai": {
+      "band": [
+        84,
+        92
+      ]
+    },
+    "lazy-openai": {
+      "band": [
+        50,
+        62
+      ]
+    }
+  },
+  "field-notes-post": {
+    "careful-haiku": {
+      "band": [
+        70,
+        80
+      ]
+    },
+    "lazy-haiku": {
+      "band": [
+        64,
+        74
+      ]
+    }
+  },
+  "planner-landing": {
+    "careful-openai": {
+      "band": [
+        72,
+        82
+      ]
+    },
+    "lazy-openai": {
+      "band": [
+        58,
+        68
+      ]
+    }
+  },
+  "print-invoice": {
+    "careful-haiku": {
+      "band": [
+        82,
+        90
+      ]
+    },
+    "lazy-haiku": {
+      "band": [
+        62,
+        72
+      ]
+    }
+  },
+  "product-detail": {
+    "careful-openai": {
+      "band": [
+        74,
+        83
+      ]
+    },
+    "lazy-openai": {
+      "band": [
+        66,
+        76
+      ]
+    }
+  }
+}

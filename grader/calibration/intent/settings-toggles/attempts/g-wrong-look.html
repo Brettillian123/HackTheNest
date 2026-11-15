@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings | Harbor Studio</title>
+<style>
+  :root { --accent: #dc2626; --pill: #fde2e2; --page: #fff3f0; --ink: #1c2230; --muted: #667085; --line: #e7e9ef; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 40px 32px; display: grid; grid-template-columns: 210px 1fr; column-gap: 36px; grid-template-columns: 1fr 210px; }
+  h1 { grid-column: 1 / -1; font-size: 28px; margin: 0 0 26px; }
+  nav ul { list-style: none; margin: 0; padding: 0; }
+  nav a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 14px; margin-bottom: 2px; }
+  nav a[aria-current] { background: var(--pill); color: var(--accent); font-weight: 600; }
+  .group { background: #fff; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 20px; }
+  .group h2 { font-size: 16px; margin: 0; padding: 16px 20px 6px; }
+  .setting { display: flex; align-items: center; gap: 24px; padding: 14px 20px; border-top: 1px solid var(--line); }
+  .group h2 + .setting { border-top: 0; }
+  .text { flex: 1; }
+  .text label { font-weight: 600; font-size: 14px; display: block; }
+  .text p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+  input.switch { appearance: none; -webkit-appearance: none; width: 40px; height: 22px; border-radius: 999px; background: #d4d8e0; position: relative; margin: 0; flex: none; cursor: pointer; }
+  input.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+  input.switch:checked { background: var(--accent); }
+  input.switch:checked::after { left: 21px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Settings</h1>
+  <nav aria-label="Settings sections" style="grid-column: 2; grid-row: 2;"><ul>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Account</a></li>
+    <li><a href="#" aria-current="page">Notifications</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Billing</a></li>
+  </ul></nav>
+  <main style="grid-column: 1; grid-row: 2;">
+    <section class="group" aria-labelledby="g-E">
+      <h2 id="g-E">Email</h2>
+      <div class="setting"><div class="text"><label for="weekly">Weekly summary</label><p id="weekly-help">A digest of activity across your projects, sent every Monday at 8:00.</p></div><input class="switch" type="checkbox" role="switch" id="weekly" aria-describedby="weekly-help" checked></div>
+      <div class="setting"><div class="text"><label for="product">Product updates</label><p id="product-help">News about features and improvements, about once a month.</p></div><input class="switch" type="checkbox" role="switch" id="product" aria-describedby="product-help"></div>
+      <div class="setting"><div class="text"><label for="mentions">Mentions</label><p id="mentions-help">An email when someone mentions you in a comment.</p></div><input class="switch" type="checkbox" role="switch" id="mentions" aria-describedby="mentions-help" checked></div>
+    </section>
+    <section class="group" aria-labelledby="g-P">
+      <h2 id="g-P">Push notifications</h2>
+      <div class="setting"><div class="text"><label for="dm">Direct messages</label><p id="dm-help">Notify me when a teammate sends me a message.</p></div><input class="switch" type="checkbox" role="switch" id="dm" aria-describedby="dm-help" checked></div>
+      <div class="setting"><div class="text"><label for="tasks">Task reminders</label><p id="tasks-help">Remind me 1 hour before a task is due.</p></div><input class="switch" type="checkbox" role="switch" id="tasks" aria-describedby="tasks-help" checked></div>
+      <div class="setting"><div class="text"><label for="quiet">Quiet hours</label><p id="quiet-help">Pause push notifications from 22:00 to 07:00.</p></div><input class="switch" type="checkbox" role="switch" id="quiet" aria-describedby="quiet-help"></div>
+    </section>
+    <section class="group" aria-labelledby="g-W">
+      <h2 id="g-W">Workspace</h2>
+      <div class="setting"><div class="text"><label for="members">New members</label><p id="members-help">Tell me when someone joins the Harbor Studio workspace.</p></div><input class="switch" type="checkbox" role="switch" id="members" aria-describedby="members-help"></div>
+      <div class="setting"><div class="text"><label for="billing">Billing alerts</label><p id="billing-help">Warn me 7 days before the card on file is charged.</p></div><input class="switch" type="checkbox" role="switch" id="billing" aria-describedby="billing-help" checked></div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

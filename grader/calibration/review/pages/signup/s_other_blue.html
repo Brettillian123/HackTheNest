@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Sign up — Ledgerly</title><style>
+*{box-sizing:border-box;margin:0}
+body{font-family:Arial,Helvetica,sans-serif;color:#0f172a;background:#fff;height:920px;display:flex}
+.panel{width:520px;background:linear-gradient(20deg,#0e7490 0%,#1e40af 100%);color:#fff;padding:64px 56px;display:flex;flex-direction:column}
+.brand{font-size:24px;font-weight:bold;display:flex;align-items:center;gap:10px}
+.mark{width:32px;height:32px;border-radius:8px;background:#fff;color:#1e3a8a;display:flex;align-items:center;justify-content:center;font-size:18px}
+.panel h2{font-size:34px;line-height:1.25;margin-top:120px;font-weight:bold}
+.panel ul{list-style:none;padding:0;margin-top:32px}
+.panel li{font-size:16px;margin-bottom:16px;padding-left:30px;position:relative;color:#dbeafe}
+.panel li:before{content:"✓";position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:12px;text-align:center;line-height:20px}
+.quote{margin-top:auto;font-size:14px;color:#bfdbfe;font-style:italic}
+.side{flex:1;display:flex;align-items:center;justify-content:center}
+form{width:400px}
+h1{font-size:28px}
+.sub{color:#64748b;font-size:15px;margin-top:8px;margin-bottom:28px}
+label{display:block;font-size:14px;font-weight:bold;margin-bottom:6px;color:#334155}
+input[type=text],input[type=email],input[type=password],select{display:block;width:100%;height:42px;border:1px solid #cbd5e1;border-radius:8px;padding:0 12px;font-size:15px;font-family:Arial,sans-serif;color:#0f172a;background:#fff}
+.f{margin-bottom:18px}
+.hint{font-size:12px;color:#64748b;margin-top:6px}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;color:#334155;margin:4px 0 22px}
+.check input{width:16px;height:16px}
+a{color:#2563eb;text-decoration:none}
+button{display:block;width:100%;height:44px;border:0;border-radius:8px;font-size:16px;font-weight:bold;font-family:Arial,sans-serif;cursor:pointer}
+.primary{background:#1d4ed8;color:#fff}
+.or{display:flex;align-items:center;gap:12px;color:#94a3b8;font-size:13px;margin:20px 0}
+.or:before,.or:after{content:"";flex:1;border-top:1px solid #e2e8f0}
+.google{background:#fff;border:1px solid #cbd5e1;color:#334155}
+.foot{text-align:center;font-size:14px;color:#64748b;margin-top:22px}
+</style></head><body>
+<div class="panel"><div class="brand"><span class="mark">L</span>Ledgerly</div>
+<h2>Bookkeeping that<br>does itself.</h2>
+<ul><li>Connect your bank in two minutes</li><li>Receipts matched automatically</li><li>Tax-ready reports every quarter</li></ul>
+<p class="quote">“We closed our books in a day instead of a week.” — Priya N., Fernway Studio</p></div>
+<div class="side"><form>
+<h1>Create your account</h1><p class="sub">Start your 14-day free trial. No credit card required.</p>
+<div class="f"><label>Full name</label><input type="text" placeholder="Jane Cooper"></div>
+<div class="f"><label>Work email</label><input type="email" placeholder="jane@company.com"></div>
+<div class="f"><label>Password</label><input type="password" value="secretpass1"><p class="hint">At least 8 characters, with one number and one symbol.</p></div>
+<div class="f"><label>Company size</label><select><option>1–10 employees</option></select></div>
+
+<div class="check"><input type="checkbox"><span>I agree to the <a>Terms of Service</a> and <a>Privacy Policy</a></span></div>
+<button class="primary" type="button">Create account</button>
+<div class="or">or</div>
+<button class="google" type="button">Continue with Google</button>
+<p class="foot">Already have an account? <a>Sign in</a></p>
+</form></div>
+</body></html>

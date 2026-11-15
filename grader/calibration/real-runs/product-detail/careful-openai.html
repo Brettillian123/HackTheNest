@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alder 28L Roll-Top Pack — Fernpeak Outfitters</title>
+<style>
+:root{--green:#183d32;--green2:#315e4c;--ink:#242923;--muted:#69716b;--line:#e5e8e3;--cream:#fafaf7;--panel:#eff0ec;--orange:#cf4c2d}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:Arial,sans-serif;font-size:14px}
+a{color:inherit;text-decoration:none}
+header{height:74px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 6.2%}
+.brand{font:26px Georgia,serif;color:var(--green);letter-spacing:-.7px}
+nav{display:flex;justify-content:center;gap:34px;color:#424942;font-size:13px}
+.cart{justify-self:end;color:var(--green);font-weight:700;font-size:13px}
+main{max-width:1120px;margin:0 auto;padding:22px 0 0}
+.breadcrumb{font-size:12px;color:#777f78;margin:0 0 18px}
+.breadcrumb span{padding:0 8px;color:#a6aca6}
+.product{display:grid;grid-template-columns:1.04fr .96fr;gap:54px}
+.visual{height:405px;background:var(--panel);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.visual:before,.visual:after{content:"";position:absolute;border-radius:50%;background:#e7e9e4}
+.visual:before{width:270px;height:270px;left:-155px;bottom:-160px}
+.visual:after{width:180px;height:180px;right:-105px;top:-110px}
+.visual svg{width:340px;height:360px;position:relative;z-index:1}
+.details{padding:3px 0 0}
+h1{font:34px/1.12 Georgia,serif;font-weight:400;letter-spacing:-.8px;margin:0 0 11px;color:#202720}
+.rating{display:flex;align-items:center;gap:9px;font-size:12px;color:#68716a}
+.stars{color:#ba762e;letter-spacing:2px;font-size:15px}
+.price{font:29px Georgia,serif;color:var(--green);margin:17px 0 9px}
+.summary{font-size:13px;line-height:1.6;color:#555e57;max-width:470px;margin:0 0 16px}
+fieldset{border:0;padding:0;margin:0 0 15px}
+legend{font-size:12px;color:#39433c;font-weight:700;margin-bottom:8px}
+.colour-choice,.size-choice{position:relative;display:inline-flex;align-items:center;cursor:pointer}
+.colour-choice input,.size-choice input{position:absolute;opacity:0;width:1px;height:1px}
+.swatch{width:27px;height:27px;background:var(--orange);border:3px solid white;outline:1px solid #9da49d;border-radius:50%;display:block;margin:1px}
+.colour-choice input:checked+.swatch{outline:2px solid var(--green);outline-offset:2px}
+.colour-name{font-size:12px;margin-left:10px;color:#4d554f}
+.sizes{display:flex;gap:8px}
+.size-choice span{height:36px;min-width:60px;padding:0 13px;border:1px solid #d8ddd7;display:grid;place-items:center;color:#424a43;font-size:12px}
+.size-choice input:checked+span{border:2px solid var(--green);color:var(--green);font-weight:700}
+.actions{display:flex;gap:10px;margin-top:18px}
+.add{height:45px;flex:1;background:var(--green);color:#fff;border:0;font-weight:700;font-size:13px;letter-spacing:.1px}
+.wishlist{width:47px;height:45px;border:1px solid #cbd2ca;background:#fff;color:var(--green);font-size:20px}
+.stock{font-size:12px;color:#326346;margin:13px 0 11px}
+.assurances{display:flex;gap:23px;border-top:1px solid var(--line);padding-top:12px;color:#59625b;font-size:11px}
+.assurances div{white-space:nowrap}
+.assurances div:before{content:"✓";color:var(--green);font-weight:bold;margin-right:6px}
+.info{margin-top:35px;border-top:1px solid var(--line)}
+.tabs{height:48px;display:flex;gap:34px;border-bottom:1px solid var(--line);align-items:stretch}
+.tabs a{display:flex;align-items:center;color:#68716a;font-size:12px}
+.tabs a.active{color:var(--green);font-weight:700;border-bottom:2px solid var(--green)}
+.info-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:70px;padding:22px 0 36px}
+h2{font:22px Georgia,serif;font-weight:400;margin:0 0 12px;color:#26382f}
+.description p{font-size:13px;line-height:1.65;color:#555e57;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{width:42%;color:#667068;font-weight:400}
+td{color:#303a33}
+.below{border-top:1px solid var(--line);padding:28px 0}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review{border:1px solid var(--line);padding:17px;color:#515a53;font-size:13px;line-height:1.55}
+.review strong{color:#26382f}
+.review .stars{display:block;margin:4px 0}
+.related{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.related article{background:var(--cream);padding:23px 18px;border:1px solid var(--line);font:17px Georgia,serif}
+.related article span{display:block;font:13px Arial,sans-serif;color:var(--green);margin-top:10px}
+footer{border-top:1px solid var(--line);padding:20px 6.2%;display:flex;justify-content:space-between;color:#69716b;font-size:12px}
+footer a{margin-left:18px}
+@media(max-width:700px){
+ header{height:auto;min-height:68px;padding:14px 5%;grid-template-columns:1fr auto;row-gap:12px}
+ .brand{font-size:23px}nav{grid-row:2;grid-column:1/3;justify-content:flex-start;gap:22px} .cart{grid-column:2;grid-row:1}
+ main{padding:18px 5% 0}.product{grid-template-columns:1fr;gap:24px}.visual{height:340px}.visual svg{height:310px}
+ h1{font-size:29px}.assurances{gap:10px;flex-wrap:wrap}
+ .info-grid{grid-template-columns:1fr;gap:22px}.reviews{grid-template-columns:1fr}.related{grid-template-columns:1fr 1fr}
+ footer{padding:18px 5%;gap:12px;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#">Fernpeak Outfitters</a>
+  <nav aria-label="Shop sections"><a href="#">Packs</a><a href="#">Tents</a><a href="#">Clothing</a><a href="#">Sale</a></nav>
+  <a class="cart" href="#">Cart (0)</a>
+</header>
+<main>
+  <div class="breadcrumb">Home<span>/</span>Packs<span>/</span>Daypacks<span>/</span>Alder 28L Roll-Top Pack</div>
+  <section class="product" aria-label="Alder 28L Roll-Top Pack">
+    <div class="visual">
+      <svg viewbox="0 0 360 380" role="img" aria-label="Alder pack">
+        <ellipse cx="183" cy="341" rx="112" ry="15" fill="#d8dbd4" />
+        <path d="M139 79 Q139 47 180 47 Q221 47 221 79" fill="none" stroke="#a83e27" stroke-width="17" stroke-linecap="round" />
+        <path d="M133 79 Q180 93 227 79 L248 112 Q266 140 263 180 L253 304 Q250 330 224 334 L136 334 Q110 330 107 304 L97 180 Q94 140 112 112Z" fill="#cf4c2d" stroke="#a83e27" stroke-width="4" />
+        <path d="M133 81 Q180 101 227 81 L233 113 Q181 130 127 113Z" fill="#dc5a36" stroke="#a83e27" stroke-width="3" />
+        <path d="M128 118 Q180 134 232 118 L238 153 Q181 169 122 153Z" fill="#b9442b" />
+        <path d="M119 169 Q180 158 241 169 L238 267 Q181 281 123 267Z" fill="#d95331" stroke="#a83e27" stroke-width="3" />
+        <path d="M133 180 Q180 173 227 180 L225 253 Q180 262 135 253Z" fill="#c8492d" stroke="#a83e27" stroke-width="2" />
+        <path d="M144 187 Q180 182 216 187" fill="none" stroke="#e7784f" stroke-width="3" />
+        <path d="M151 261 L151 272 M209 261 L209 272" stroke="#8d3725" stroke-width="3" />
+        <path d="M112 129 Q95 152 101 214 M248 129 Q265 152 259 214" fill="none" stroke="#a83e27" stroke-width="9" stroke-linecap="round" />
+        <path d="M121 304 Q180 318 239 304" fill="none" stroke="#a83e27" stroke-width="4" />
+        <path d="M147 98 L147 110 M213 98 L213 110" stroke="#ed8059" stroke-width="3" />
+      </svg>
+    </div>
+    <div class="details">
+      <h1>Alder 28L Roll-Top Pack</h1>
+      <div class="rating"><span class="stars" aria-label="5 of 5 stars">★★★★★</span><span>4.8 · 312 reviews</span></div>
+      <div class="price">$149.00</div>
+      <p class="summary">A waterproof roll-top pack with a padded 16-inch laptop sleeve, quick-access side pockets and a removable hip belt. Built from recycled 420D nylon.</p>
+      <fieldset>
+        <legend>Colour</legend>
+        <label class="colour-choice"><input type="radio" name="colour" value="Ember" checked><span class="swatch"></span><span class="colour-name">Colour: Ember</span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Size</legend>
+        <div class="sizes">
+          <label class="size-choice"><input type="radio" name="size" value="S/M"><span>S/M</span></label>
+          <label class="size-choice"><input type="radio" name="size" value="M/L" checked><span>M/L</span></label>
+        </div>
+      </fieldset>
+      <div class="actions"><button class="add" type="button">Add to cart</button><button class="wishlist" type="button" aria-label="save to wishlist">♡</button></div>
+      <div class="stock">In stock — ships in 1–2 business days</div>
+      <div class="assurances"><div>Free returns within 60 days</div><div>Lifetime repair guarantee</div></div>
+    </div>
+  </section>
+  <section class="info">
+    <nav class="tabs" aria-label="Information sections"><a class="active" href="#description">Description</a><a href="#specifications">Specifications</a><a href="#reviews">Reviews (312)</a></nav>
+    <div class="info-grid">
+      <section class="description" id="description">
+        <h2>Description</h2>
+        <p>The Alder is our everyday pack for people who don't stop at the city limits. The roll-top closure expands from 24 to 28 litres, and welded seams keep rain out.</p>
+        <p>Inside, a suspended laptop sleeve keeps your machine off the ground when you set the pack down, and a zip pocket holds keys and passport.</p>
+      </section>
+      <section id="specifications">
+        <h2>Specifications</h2>
+        <table><tbody>
+          <tr><th>Volume</th><td>24–28 litres</td></tr>
+          <tr><th>Weight</th><td>1.1 kg</td></tr>
+          <tr><th>Material</th><td>Recycled 420D nylon, TPU coated</td></tr>
+          <tr><th>Laptop sleeve</th><td>Fits up to 16 inches</td></tr>
+          <tr><th>Dimensions</th><td>52 × 30 × 17 cm</td></tr>
+        </tbody></table>
+      </section>
+    </div>
+  </section>
+  <section class="below" id="reviews">
+    <h2>What customers say</h2>
+    <div class="reviews">
+      <article class="review"><strong>Daniel K.</strong><span class="stars">★★★★★</span>Took it on a 9-day trek in the Dolomites. The hip belt carried everything and the roll-top kept my gear dry through two storms.</article>
+      <article class="review"><strong>Sofia M.</strong><span class="stars">★★★★☆</span>Great daily bag. Laptop sleeve fits a 16-inch machine. Wish the side pockets were a little deeper for my bottle.</article>
+      <article class="review"><strong>Ravi P.</strong><span class="stars">★★★★★</span>Third year using it for my commute and it still looks new. The orange is brighter in person.</article>
+    </div>
+  </section>
+  <section class="below">
+    <h2>You may also like:</h2>
+    <div class="related">
+      <article>Ridge 18 Daypack<span>$89</span></article>
+      <article>Summit Hip Pack<span>$45</span></article>
+      <article>Trailhead Duffel 40L<span>$129</span></article>
+      <article>Stormproof Pack Cover<span>$24</span></article>
+    </div>
+  </section>
+</main>
+<footer><span>© 2026 Fernpeak Outfitters</span><span><a href="#">Shipping</a> · <a href="#">Returns</a> · <a href="#">Contact</a></span></footer>
+</body>
+</html>

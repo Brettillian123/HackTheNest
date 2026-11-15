@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 1814,
+  "components": [
+    {
+      "id": "c1",
+      "type": "navigation",
+      "name": "the menu bar",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 68
+      },
+      "blocks": [
+        0,
+        1,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": [
+        45,
+        50
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "hero",
+      "name": "the hero",
+      "rect": {
+        "x": 0,
+        "y": 68,
+        "w": 1280,
+        "h": 279
+      },
+      "blocks": [
+        2,
+        51,
+        52
+      ],
+      "children": [],
+      "importance": "major",
+      "keyTexts": [
+        51
+      ]
+    },
+    {
+      "id": "c3",
+      "type": "card-group",
+      "name": "the pricing cards",
+      "rect": {
+        "x": 120,
+        "y": 251,
+        "w": 1040,
+        "h": 353
+      },
+      "blocks": [],
+      "children": [
+        {
+          "id": "c3.1",
+          "type": "card",
+          "name": "the 'Starter' card",
+          "rect": {
+            "x": 120,
+            "y": 267,
+            "w": 327.3,
+            "h": 335
+          },
+          "blocks": [
+            3,
+            4,
+            54,
+            57,
+            60,
+            63,
+            66,
+            69,
+            72
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            57,
+            72
+          ]
+        },
+        {
+          "id": "c3.2",
+          "type": "card",
+          "name": "the 'Team' card",
+          "rect": {
+            "x": 475.3,
+            "y": 251,
+            "w": 329.3,
+            "h": 353
+          },
+          "blocks": [
+            5,
+            6,
+            7,
+            53,
+            56,
+            59,
+            62,
+            65,
+            68,
+            71,
+            74
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            53,
+            59,
+            74
+          ]
+        },
+        {
+          "id": "c3.3",
+          "type": "card",
+          "name": "the 'Business' card",
+          "rect": {
+            "x": 832.7,
+            "y": 267,
+            "w": 327.3,
+            "h": 335
+          },
+          "blocks": [
+            8,
+            9,
+            55,
+            58,
+            61,
+            64,
+            67,
+            70,
+            73
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            58,
+            73
+          ]
+        }
+      ],
+      "importance": "major",
+      "keyTexts": [
+        53,
+        57,
+        58,
+        59,
+        72,
+        73,
+        74
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "table",
+      "name": "the 'Compare plans' table",
+      "rect": {
+        "x": 120,
+        "y": 674,
+        "w": 1040,
+        "h": 383.5
+      },
+      "blocks": [
+        75
+      ],
+      "children": [
+        {
+          "id": "c4.1",
+          "type": "other",
+          "name": "row 1 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 734,
+            "w": 1040,
+            "h": 46
+          },
+          "blocks": [
+            10,
+            11,
+            12,
+            13,
+            76,
+            77,
+            78,
+            79
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c4.2",
+          "type": "other",
+          "name": "row 2 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 780,
+            "w": 1040,
+            "h": 46.5
+          },
+          "blocks": [
+            14,
+            15,
+            16,
+            17,
+            80,
+            81,
+            82,
+            83
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c4.3",
+          "type": "other",
+          "name": "row 3 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 826.5,
+            "w": 1040,
+            "h": 45
+          },
+          "blocks": [
+            18,
+            19,
+            20,
+            21,
+            84,
+            85,
+            86,
+            87
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            85,
+            86
+          ]
+        },
+        {
+          "id": "c4.4",
+          "type": "other",
+          "name": "row 4 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 871.5,
+            "w": 1040,
+            "h": 47
+          },
+          "blocks": [
+            22,
+            23,
+            24,
+            25,
+            88,
+            89,
+            90,
+            91
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c4.5",
+          "type": "other",
+          "name": "row 5 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 918.5,
+            "w": 1040,
+            "h": 47
+          },
+          "blocks": [
+            26,
+            27,
+            28,
+            29,
+            92,
+            93,
+            94,
+            95
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c4.6",
+          "type": "other",
+          "name": "row 6 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 965.5,
+            "w": 1040,
+            "h": 47
+          },
+          "blocks": [
+            30,
+            31,
+            32,
+            33,
+            96,
+            97,
+            98,
+            99
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c4.7",
+          "type": "other",
+          "name": "row 7 of the 'Compare plans' table",
+          "rect": {
+            "x": 120,
+            "y": 1012.5,
+            "w": 1040,
+            "h": 45
+          },
+          "blocks": [
+            34,
+            35,
+            36,
+            37,
+            100,
+            101,
+            102,
+            103
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            101,
+            102,
+            103
+          ]
+        }
+      ],
+      "importance": "major",
+      "keyTexts": [
+        85,
+        86,
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "form",
+      "name": "the sign-up form",
+      "rect": {
+        "x": 360,
+        "y": 1128,
+        "w": 560,
+        "h": 470
+      },
+      "blocks": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113
+      ],
+      "children": [],
+      "importance": "major",
+      "keyTexts": [
+        110,
+        113
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "footer",
+      "name": "the footer",
+      "rect": {
+        "x": 0,
+        "y": 1678,
+        "w": 1280,
+        "h": 136
+      },
+      "blocks": [
+        44,
+        114,
+        115,
+        116,
+        117,
+        118
+      ],
+      "children": [],
+      "importance": "minor",
+      "keyTexts": []
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

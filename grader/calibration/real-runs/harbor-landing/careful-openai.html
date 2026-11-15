@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:#171d2a}
+body{min-height:100vh;display:flex;flex-direction:column;background:#f6f7f9}
+header{height:72px;flex:none;background:#fff;border-bottom:1px solid #e4e7eb}
+.nav{max-width:1120px;height:100%;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-size:22px;font-weight:700;color:#172033;text-decoration:none}
+.links{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.links a{font-size:15px;color:#687181;text-decoration:none}
+.links a:hover{color:#172033}
+main{width:100%;max-width:1120px;margin:0 auto;padding:94px 24px 78px;flex:1}
+.hero{text-align:center}
+h1{margin:0;color:#171d2a;font-size:48px;line-height:1.15;letter-spacing:-1.5px;font-weight:700}
+.subtitle{max-width:720px;margin:20px auto 28px;color:#687181;font-size:19px;line-height:1.6}
+.button{display:inline-block;padding:14px 25px;border-radius:6px;background:#2864dc;color:#fff;text-decoration:none;font-size:16px;font-weight:700}
+.button:hover{background:#1e53bd}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:76px}
+.card{padding:27px 26px 29px;background:#fff;border:1px solid #e1e5eb;border-radius:9px}
+.card h2{margin:0 0 12px;font-size:19px;line-height:1.3;color:#1b2332}
+.card p{margin:0;color:#687181;font-size:16px;line-height:1.6}
+footer{min-height:68px;background:#17243b;color:#d3d9e3;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px 24px;font-size:13px}
+@media(max-width:700px){
+ header{height:auto;min-height:72px}
+ .nav{padding:18px 22px;align-items:flex-start;flex-direction:column;gap:14px}
+ .links{gap:18px}
+ main{padding:62px 22px}
+ h1{font-size:38px;letter-spacing:-1px}
+ .subtitle{font-size:17px}
+ .features{grid-template-columns:1fr;gap:14px;margin-top:52px}
+}
+@media(max-width:420px){h1{font-size:33px}.links{gap:13px}}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#">Harbor</a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#customers">Customers</a>
+      <a href="#signin">Sign in</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <h1>One calm inbox for your whole team</h1>
+    <p class="subtitle">Harbor gathers email, chat and support requests into a single shared view, so nothing slips through.</p>
+    <a class="button" href="#features">Start free trial</a>
+  </section>
+  <section class="features" id="features" aria-label="Features">
+    <article class="card">
+      <h2>Shared inbox</h2>
+      <p>Assign every message to a teammate and see who is replying.</p>
+    </article>
+    <article class="card">
+      <h2>Smart sorting</h2>
+      <p>Urgent requests rise to the top while newsletters wait quietly.</p>
+    </article>
+    <article class="card">
+      <h2>Weekly reports</h2>
+      <p>Track reply times and workload with a clear summary each Monday.</p>
+    </article>
+  </section>
+</main>
+<footer>© 2026 Harbor Labs, Inc. Made for small teams everywhere. All rights reserved.</footer>
+</body>
+</html>

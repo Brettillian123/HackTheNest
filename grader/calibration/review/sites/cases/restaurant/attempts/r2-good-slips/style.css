@@ -1,0 +1,30 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia, 'Times New Roman', serif;background:#fbf7f0;color:#2b2622;line-height:1.5}
+.k-top{background:#3a4a35;color:#f4ead8}
+.k-bar{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.k-brand{font-size:24px;font-weight:700;color:#f4ead8;text-decoration:none}
+.k-nav{display:flex;gap:24px}
+.k-nav a{color:#f4ead8;text-decoration:none;font-size:17px}
+.k-nav a[aria-current]{border-bottom:2px solid #b5532c}
+main,.k-main{display:block;max-width:1080px;margin:0 auto;padding:40px 24px}
+h1{font-size:44px;margin:0 0 12px;color:#3a4a35}
+h2{font-size:26px;margin:28px 0 10px;color:#3a4a35}
+.k-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.k-btn{display:inline-block;background:#b5532c;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700}
+.k-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.k-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.k-card h2{margin-top:8px}
+.k-dishes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+.k-dish{display:flex;justify-content:space-between;border-bottom:1px dotted #b9ad99;padding:6px 0}
+.k-dish small{display:block;color:#6b6257}
+.k-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px}
+.k-form label{display:flex;flex-direction:column;font-weight:700;gap:6px}
+.k-form input,.k-form select,.k-form textarea{font:inherit;padding:10px;border:1px solid #b9ad99;border-radius:6px;background:#fff}
+.k-wide{grid-column:1/-1}
+.k-form button{grid-column:1/-1;justify-self:start;font:inherit;font-weight:700;background:#b5532c;color:#fff;border:0;border-radius:6px;padding:12px 22px}
+.k-two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:8px;border-bottom:1px solid #d8cfc0}
+footer{background:#3a4a35;color:#f4ead8;margin-top:40px}
+footer nav{display:flex;gap:20px}
+footer a{color:#f4ead8}

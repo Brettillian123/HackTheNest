@@ -91,8 +91,67 @@ export function deltaE00(lab1: Lab, lab2: Lab): number {
   return Math.sqrt(lTerm * lTerm + cTerm * cTerm + hTerm * hTerm + rT * cTerm * hTerm);
 }
 
+// The same few colours are converted again and again; the conversion is
+// pure, so remembering it changes nothing but the time taken.
+const labCache = new Map<number, Lab>();
+
+/** rgbToLab, remembered. Callers must not change the returned array. */
+export function labOf(rgb: RGB): Lab {
+  const key = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+  let v = labCache.get(key);
+  if (!v) {
+    if (labCache.size >= 200_000) labCache.clear();
+    v = rgbToLab(rgb);
+    labCache.set(key, v);
+  }
+  return v;
+}
+
 /** Colour difference between two sRGB colours. */
 export function colorDistance(a: RGB, b: RGB): number {
   if (a[0] === b[0] && a[1] === b[1] && a[2] === b[2]) return 0;
-  return deltaE00(rgbToLab(a), rgbToLab(b));
+  return deltaE00(labOf(a), labOf(b));
+}
+
+/** WCAG contrast ratio of two colours, 1 (the same) to 21 (black on white). Below about 3, body text is hard to read. */
+export function contrastRatio(a: RGB, b: RGB): number {
+  const lum = (c: RGB) => 0.2126 * srgbToLinear(c[0]) + 0.7152 * srgbToLinear(c[1]) + 0.0722 * srgbToLinear(c[2]);
+  const la = lum(a);
+  const lb = lum(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** Chroma (colourfulness) in CIE Lab: about 0 for greys. */
+export function chroma(rgb: RGB): number {
+  const l = labOf(rgb);
+  return Math.hypot(l[1], l[2]);
+}
+
+/** Lightness, 0 (black) to 100 (white). */
+export function lightness(rgb: RGB): number {
+  return labOf(rgb)[0];
+}
+
+/** A plain name for a colour, the way a person would say it: "dark blue", "orange", "light grey". */
+export function colorName(rgb: RGB): string {
+  const [r, g, b] = rgb.map((v) => v / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  if (l > 0.94) return 'white';
+  if (l < 0.08) return 'black';
+  if (s < 0.15 || d < 0.06) return l > 0.75 ? 'light grey' : l < 0.3 ? 'dark grey' : 'grey';
+  let h = 0;
+  if (max === r) h = ((g - b) / d) % 6;
+  else if (max === g) h = (b - r) / d + 2;
+  else h = (r - g) / d + 4;
+  h = (h * 60 + 360) % 360;
+  let name =
+    h < 15 || h >= 345 ? 'red' : h < 40 ? 'orange' : h < 65 ? 'yellow' : h < 160 ? 'green' : h < 195 ? 'teal' : h < 255 ? 'blue' : h < 290 ? 'purple' : 'pink';
+  if (name === 'orange' && l < 0.4) name = 'brown';
+  if (l > 0.8) return `light ${name}`;
+  if (l < 0.3) return `dark ${name}`;
+  return name;
 }

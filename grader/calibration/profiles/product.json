@@ -1,0 +1,477 @@
+{
+  "version": 1,
+  "source": "rules",
+  "width": 1280,
+  "height": 1739,
+  "components": [
+    {
+      "id": "c1",
+      "type": "navigation",
+      "name": "the menu bar",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 68
+      },
+      "blocks": [
+        0,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": [
+        32
+      ]
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "name": "the text 'Home / Packs / Daypacks...'",
+      "rect": {
+        "x": 48,
+        "y": 86,
+        "w": 309,
+        "h": 15
+      },
+      "blocks": [
+        38
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c3",
+      "type": "image",
+      "name": "the image",
+      "rect": {
+        "x": 48,
+        "y": 131,
+        "w": 560,
+        "h": 520
+      },
+      "blocks": [
+        1,
+        2
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c4",
+      "type": "other",
+      "name": "the 'Alder 28L Roll-Top Pack' details",
+      "rect": {
+        "x": 664,
+        "y": 144,
+        "w": 568,
+        "h": 569.4
+      },
+      "blocks": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "children": [],
+      "importance": "major",
+      "keyTexts": [
+        39,
+        42,
+        46,
+        47,
+        49
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "banner",
+      "name": "the 'Description' banner",
+      "rect": {
+        "x": 48,
+        "y": 761.4,
+        "w": 1184,
+        "h": 50
+      },
+      "blocks": [
+        12,
+        13,
+        52,
+        53,
+        54
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c6",
+      "type": "table",
+      "name": "the 'Volume' table",
+      "rect": {
+        "x": 792,
+        "y": 843.4,
+        "w": 440,
+        "h": 189.5000000000001
+      },
+      "blocks": [],
+      "children": [
+        {
+          "id": "c6.1",
+          "type": "other",
+          "name": "row 1 of the 'Volume' table",
+          "rect": {
+            "x": 792,
+            "y": 843.4,
+            "w": 440,
+            "h": 37.5
+          },
+          "blocks": [
+            14,
+            15,
+            56,
+            57
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c6.2",
+          "type": "other",
+          "name": "row 2 of the 'Volume' table",
+          "rect": {
+            "x": 792,
+            "y": 880.9,
+            "w": 440,
+            "h": 38
+          },
+          "blocks": [
+            16,
+            17,
+            58,
+            59
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c6.3",
+          "type": "other",
+          "name": "row 3 of the 'Volume' table",
+          "rect": {
+            "x": 792,
+            "y": 918.9,
+            "w": 440,
+            "h": 38
+          },
+          "blocks": [
+            18,
+            19,
+            61,
+            62
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c6.4",
+          "type": "other",
+          "name": "row 4 of the 'Volume' table",
+          "rect": {
+            "x": 792,
+            "y": 956.9,
+            "w": 440,
+            "h": 38
+          },
+          "blocks": [
+            20,
+            21,
+            63,
+            64
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c6.5",
+          "type": "other",
+          "name": "row 5 of the 'Volume' table",
+          "rect": {
+            "x": 792,
+            "y": 994.9,
+            "w": 440,
+            "h": 38.000000000000114
+          },
+          "blocks": [
+            22,
+            23,
+            65,
+            66
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        }
+      ],
+      "importance": "major",
+      "keyTexts": []
+    },
+    {
+      "id": "c7",
+      "type": "text",
+      "name": "the text 'The Alder is our everyday...'",
+      "rect": {
+        "x": 48,
+        "y": 847.4,
+        "w": 669.3,
+        "h": 106.60000000000002
+      },
+      "blocks": [
+        55,
+        60
+      ],
+      "children": [],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c8",
+      "type": "card-group",
+      "name": "the 'What customers say' cards",
+      "rect": {
+        "x": 48,
+        "y": 1081.4,
+        "w": 1184,
+        "h": 211
+      },
+      "blocks": [
+        67
+      ],
+      "children": [
+        {
+          "id": "c8.1",
+          "type": "card",
+          "name": "the 'Daniel K.' card",
+          "rect": {
+            "x": 48,
+            "y": 1126.4,
+            "w": 378.7,
+            "h": 166
+          },
+          "blocks": [
+            24,
+            68,
+            71,
+            74
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c8.2",
+          "type": "card",
+          "name": "the 'Sofia M.' card",
+          "rect": {
+            "x": 450.7,
+            "y": 1126.4,
+            "w": 378.7,
+            "h": 166
+          },
+          "blocks": [
+            25,
+            69,
+            72,
+            75
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        },
+        {
+          "id": "c8.3",
+          "type": "card",
+          "name": "the 'Ravi P.' card",
+          "rect": {
+            "x": 853.3,
+            "y": 1126.4,
+            "w": 378.7,
+            "h": 166
+          },
+          "blocks": [
+            26,
+            70,
+            73,
+            76
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": []
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": []
+    },
+    {
+      "id": "c9",
+      "type": "card-group",
+      "name": "the 'You may also like' cards",
+      "rect": {
+        "x": 48,
+        "y": 1340.3,
+        "w": 1184,
+        "h": 271
+      },
+      "blocks": [
+        77
+      ],
+      "children": [
+        {
+          "id": "c9.1",
+          "type": "card",
+          "name": "the 'Ridge 18 Daypack' card",
+          "rect": {
+            "x": 48,
+            "y": 1385.3,
+            "w": 278,
+            "h": 226
+          },
+          "blocks": [
+            27,
+            78,
+            82
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            82
+          ]
+        },
+        {
+          "id": "c9.2",
+          "type": "card",
+          "name": "the 'Summit Hip Pack' card",
+          "rect": {
+            "x": 350,
+            "y": 1385.3,
+            "w": 278,
+            "h": 226
+          },
+          "blocks": [
+            28,
+            79,
+            83
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            83
+          ]
+        },
+        {
+          "id": "c9.3",
+          "type": "card",
+          "name": "the 'Trailhead Duffel 40L' card",
+          "rect": {
+            "x": 652,
+            "y": 1385.3,
+            "w": 278,
+            "h": 226
+          },
+          "blocks": [
+            29,
+            80,
+            84
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            84
+          ]
+        },
+        {
+          "id": "c9.4",
+          "type": "card",
+          "name": "the 'Stormproof Pack Cover' card",
+          "rect": {
+            "x": 954,
+            "y": 1385.3,
+            "w": 278,
+            "h": 226
+          },
+          "blocks": [
+            30,
+            81,
+            85
+          ],
+          "children": [],
+          "importance": "normal",
+          "keyTexts": [
+            85
+          ]
+        }
+      ],
+      "importance": "normal",
+      "keyTexts": [
+        82,
+        83,
+        84,
+        85
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "footer",
+      "name": "the footer",
+      "rect": {
+        "x": 0,
+        "y": 1667.3,
+        "w": 1280,
+        "h": 72
+      },
+      "blocks": [
+        31,
+        86,
+        87
+      ],
+      "children": [],
+      "importance": "minor",
+      "keyTexts": []
+    }
+  ],
+  "weightShift": {
+    "content": 0,
+    "layout": 0,
+    "style": 0,
+    "visual": 0
+  }
+}

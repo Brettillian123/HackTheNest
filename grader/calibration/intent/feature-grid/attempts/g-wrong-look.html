@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Features | Ledgerly</title>
+<style>
+  :root { --accent: #d9481f; --tile: #fde3d8; --ink: #14212b; --muted: #536170; --line: #e1e7ec; --page: #fff4ee; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .topbar { background: #fff; border-bottom: 1px solid var(--line); }
+  .topbar .wrap { max-width: 1120px; margin: 0 auto; padding: 16px 32px; display: flex; align-items: center; gap: 28px; }
+  .brand { font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; margin-right: auto; }
+  .topbar ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
+  .topbar ul a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .trial { background: var(--accent); color: #fff; text-decoration: none; padding: 9px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+  main { max-width: 1120px; margin: 0 auto; padding: 56px 32px 72px; display: grid; grid-template-columns: 340px 1fr; gap: 40px; }
+  .intro { text-align: left; max-width: 520px; margin: 0 0 40px; }
+  .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 10px; }
+  h1 { font-size: 34px; margin: 0 0 14px; line-height: 1.2; }
+  .intro p.lead { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 0; }
+  .features { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .feature { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px 22px; }
+  .tile { width: 42px; height: 42px; border-radius: 9px; background: var(--tile); display: grid; place-items: center; margin-bottom: 16px; }
+  .tile svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  .feature p { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#">Ledgerly</a>
+    <nav aria-label="Main"><ul><li><a href="#">Features</a></li><li><a href="#">Pricing</a></li><li><a href="#">Customers</a></li></ul></nav>
+    <a class="trial" href="#">Start free trial</a>
+  </div>
+</header>
+<main>
+  <section class="intro">
+    <p class="eyebrow">Features</p>
+    <h1>Everything your books need, in one place</h1>
+    <p class="lead">Ledgerly takes care of the routine accounting work, so you can close the month in an afternoon instead of a week.</p>
+  </section>
+  <ul class="features">
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg></div>
+      <h2>Smart invoicing</h2><p>Send branded invoices in seconds and get paid by card or bank transfer.</p></li>
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><path d="M4 9h14l-3-3M20 15H6l3 3"/></svg></div>
+      <h2>Bank sync</h2><p>Connect over 12,000 banks and see every transaction matched overnight.</p></li>
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.5"/><path d="M9 7l1.5-3h3L15 7"/></svg></div>
+      <h2>Receipt capture</h2><p>Snap a photo of any receipt and Ledgerly files it against the right expense.</p></li>
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V6M17 16v-8"/></svg></div>
+      <h2>Live reports</h2><p>Profit and loss, cash flow and balance sheet, updated as money moves.</p></li>
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><path d="M6 18L18 6"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div>
+      <h2>Tax ready</h2><p>Sales tax is worked out on every invoice and filed reports export in one click.</p></li>
+    <li class="feature"><div class="tile"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5 2 5 5"/></svg></div>
+      <h2>Team access</h2><p>Invite your accountant and staff with roles that show only what they need.</p></li>
+  </ul>
+</main>
+</body>
+</html>

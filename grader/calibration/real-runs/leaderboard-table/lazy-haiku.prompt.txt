@@ -1,0 +1,1 @@
+weekly leaderboard table with rank, player, score and prompts, highlight my row

@@ -1,0 +1,35 @@
+{
+  "tools": [
+    {
+      "name": "get_order",
+      "description": "Look up a single order (IDs look like ORD-10293). Gives back its status, line items, totals and delivery address.",
+      "input_schema": {
+        "type": "object",
+        "properties": { "order_id": { "type": "string", "description": "Order identifier, e.g. ORD-10293." } },
+        "required": ["order_id"]
+      }
+    },
+    {
+      "name": "search_orders",
+      "description": "List the orders placed with a customer's email, newest first (up to 50). Use it when there is no order number.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "customer_email": { "type": "string", "description": "Customer's email address." },
+          "status": { "type": "string", "description": "Optional filter: pending, shipped, delivered or cancelled." },
+          "limit": { "type": "integer", "description": "Maximum results, 1-50." }
+        },
+        "required": ["customer_email"]
+      }
+    },
+    {
+      "name": "track_shipment",
+      "description": "Where a shipped order is now: carrier name, tracking number and the most recent delivery event.",
+      "input_schema": {
+        "type": "object",
+        "properties": { "order_id": { "type": "string", "description": "Order identifier, e.g. ORD-10293." } },
+        "required": ["order_id"]
+      }
+    }
+  ]
+}

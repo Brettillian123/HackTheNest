@@ -1,0 +1,33 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;color:#1f2933;background:#fff;line-height:1.6}
+.n-wrap{max-width:860px;margin:0 auto;padding:0 24px}
+.n-head{border-bottom:1px solid #e5ded5}
+.n-bar{display:flex;justify-content:space-between;align-items:center;padding-top:20px;padding-bottom:20px}
+.n-name{font-weight:700;font-size:20px;color:#1f2933;text-decoration:none}
+.n-head nav{display:flex;gap:20px}
+.n-head nav a{color:#1f2933;text-decoration:none}
+.n-head nav a[aria-current]{color:#c2410c;font-weight:700}
+main{padding-top:40px;padding-bottom:40px}
+h1{font-size:40px;line-height:1.15;margin:0 0 12px}
+h2{font-size:22px;margin:28px 0 8px}
+a{color:#c2410c}
+.n-lede{font-size:19px;color:#52606d}
+.n-hero{padding:40px 0;border-bottom:1px solid #e5ded5}
+.n-btn{display:inline-block;background:#c2410c;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+.n-posts{list-style:none;padding:0}
+.n-posts li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e5ded5}
+.n-posts span,.n-date{color:#7b8794;font-size:15px}
+.n-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.n-card{background:#f5f1ec;border-radius:12px;padding:16px}
+.n-card h2{margin-top:12px}
+.n-about{display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:start}
+.n-form{display:grid;gap:16px;max-width:520px}
+.n-form label{display:grid;gap:6px;font-weight:600}
+.n-form input,.n-form textarea{font:inherit;padding:10px;border:1px solid #cbd2d9;border-radius:8px}
+.n-form button{justify-self:start;font:inherit;font-weight:700;background:#c2410c;color:#fff;border:0;border-radius:999px;padding:10px 20px}
+.n-entry{padding:16px 0;border-bottom:1px solid #e5ded5}
+.n-entry h2{margin:0}
+.n-crumbs{font-size:15px;color:#7b8794;margin-bottom:24px}
+.n-post{max-width:680px}
+.n-pager{display:flex;justify-content:space-between;border-top:1px solid #e5ded5;padding-top:16px;margin-top:32px}
+.n-foot{border-top:1px solid #e5ded5;color:#7b8794}

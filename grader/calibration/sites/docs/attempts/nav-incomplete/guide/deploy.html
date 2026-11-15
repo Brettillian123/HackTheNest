@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy · Lumen Docs</title>
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<header class="topbar"><a href="../index.html" class="brand"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='%2338bdf8'/%3E%3Cpath d='M9 8v12h10' stroke='%230f172a' stroke-width='3' fill='none'/%3E%3C/svg%3E" width="28" height="28" alt="Lumen logo">Lumen Docs</a><span class="version">v2.4</span></header>
+<div class="layout">
+<nav class="sidebar" aria-label="Documentation">
+<form class="search" role="search"><label for="q" class="visually-hidden">Search the docs</label><input id="q" type="search" placeholder="Search the docs"></form>
+<p class="sidebar-title">Getting started</p>
+<ul>
+<li><a href="../index.html">Overview</a></li>
+</ul>
+<p class="sidebar-title">Guide</p>
+<ul>
+<li><a href="install.html">Install</a></li>
+<li><a href="config.html">Configuration</a></li>
+</ul>
+<p class="sidebar-title">More</p>
+<ul>
+<li><a href="../reference.html">Reference</a></li>
+</ul>
+</nav>
+<main class="content">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a> / Guide / Deploy</nav>
+<h1>Deploy</h1>
+<p class="lead">A Lumen site is plain files, so it can be hosted anywhere that serves static pages.</p>
+<h2>Build the site</h2>
+<pre><code>lumen build
+Built 42 pages in 0.8 s -&gt; dist/</code></pre>
+<h2>Upload</h2>
+<p>Copy the <code>dist</code> folder to your host. With the built-in command you can upload straight to an S3-compatible bucket:</p>
+<pre><code>lumen deploy --target s3://my-bucket</code></pre>
+<h2>Roll back</h2>
+<p>Every deploy keeps the previous build. Run <code>lumen deploy --rollback</code> to put it back.</p>
+<nav class="prevnext" aria-label="Previous and next"><a href="config.html"><span>Previous</span>Configuration</a><a href="../reference.html"><span>Next</span>Reference</a></nav>
+<footer class="footer"><p>Questions? Email <a href="mailto:docs@lumen.example">docs@lumen.example</a>. © 2026 Lumen Labs.</p></footer>
+</main>
+</div>
+</body>
+</html>

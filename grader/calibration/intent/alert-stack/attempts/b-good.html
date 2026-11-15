@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<style>
+  body { margin: 0; background: #eef2f7; font-family: Arial, Helvetica, sans-serif; color: #222; }
+  main { width: 600px; margin: 50px auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: #555; margin: 0 0 24px; font-size: 14px; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-radius: 8px; border-left: 4px solid; margin-bottom: 12px; }
+  li.third { margin-bottom: 30px; }
+  li.last { padding: 8px 10px; }
+  .icon { width: 22px; height: 22px; flex: none; }
+  .body { flex: 1; }
+  .title { font-weight: bold; font-size: 15px; margin: 0 0 3px; }
+  .text { margin: 0; font-size: 13px; }
+  button { background: none; border: none; text-decoration: underline; font-size: 13px; color: inherit; cursor: pointer; padding: 0; }
+  .s { background: #e7f6ec; border-color: #22a35a; color: #155c33; }
+  .i { background: #e6f0fd; border-color: #2b74d8; color: #1a4280; }
+  .w { background: #fff4dc; border-color: #e09a12; color: #6b4708; }
+  .e { background: #fde8e7; border-color: #d93a30; color: #7a1d17; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Notifications</h1>
+  <p class="sub">Four messages from the last 24 hours</p>
+  <ul>
+    <li class="s">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#22a35a"/><path d="M7 12l3.5 3.5L17 9" stroke="#fff" stroke-width="2.5" fill="none"/></svg>
+      <div class="body"><p class="title">Payment received</p><p class="text">Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.</p></div>
+      <button>View invoice</button>
+    </li>
+    <li class="i">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#2b74d8"/><rect x="11" y="10" width="2.4" height="8" fill="#fff"/><circle cx="12.2" cy="7" r="1.5" fill="#fff"/></svg>
+      <div class="body"><p class="title">New version available</p><p class="text">Version 4.2 adds shared workspaces and faster PDF exports.</p></div>
+      <button>See what's new</button>
+    </li>
+    <li class="w third">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#e09a12"/><rect x="10.8" y="5.5" width="2.4" height="9" fill="#fff"/><circle cx="12" cy="18" r="1.5" fill="#fff"/></svg>
+      <div class="body"><p class="title">Storage almost full</p><p class="text">You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.</p></div>
+      <button>Upgrade now</button>
+    </li>
+    <li class="e last">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#d93a30"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.5"/></svg>
+      <div class="body"><p class="title">Sync failed</p><p class="text">We could not reach Google Drive. Your last 3 changes are saved on this device.</p></div>
+      <button>Try again</button>
+    </li>
+  </ul>
+</main>
+</body>
+</html>

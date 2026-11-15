@@ -1,0 +1,85 @@
+{
+  "slug": "feature-grid",
+  "title": "Feature grid",
+  "level": 1,
+  "category": "Marketing and content",
+  "brief": "Ledgerly is accounting software for small businesses, and our features page needs a clean overview section. At the top, a simple header: the Ledgerly name on the left, links to Features, Pricing and Customers, and a solid 'Start free trial' link in our teal. Below, a centred introduction: a small 'Features' label, the heading 'Everything your books need, in one place' and one sentence about closing the month faster. Then six feature cards in a grid of three across and two down. Each card gets a simple line icon on a soft teal tile, a short title and about two lines of description. The six features are Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready and Team access. It should feel tidy, light and trustworthy.",
+  "requirements": [
+    {
+      "id": "r1",
+      "text": "A header with the Ledgerly name, three links (Features, Pricing, Customers) and a 'Start free trial' link styled as a solid button",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r2",
+      "text": "A centred intro with the label 'Features', the heading 'Everything your books need, in one place' and one sentence",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r3",
+      "text": "Six feature cards laid out three across and two down",
+      "kind": "structure",
+      "exact": true
+    },
+    {
+      "id": "r4",
+      "text": "Cards in this order: Smart invoicing, Bank sync, Receipt capture, Live reports, Tax ready, Team access",
+      "kind": "content",
+      "exact": true
+    },
+    {
+      "id": "r5",
+      "text": "Each card has an icon drawn as inline SVG, a title and about two lines of text",
+      "kind": "content",
+      "exact": false
+    },
+    {
+      "id": "r6",
+      "text": "Icons sit on a soft tinted square tile and match each feature's meaning",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r7",
+      "text": "The cards are a list, each title is a heading below the page heading",
+      "kind": "structure",
+      "exact": false
+    },
+    {
+      "id": "r8",
+      "text": "Cards are white with a thin border and rounded corners on a very light page",
+      "kind": "style",
+      "exact": false
+    },
+    {
+      "id": "r9",
+      "text": "Text is easy to read against its background",
+      "kind": "engineering",
+      "exact": false
+    }
+  ],
+  "keyFacts": [
+    "Ledgerly",
+    "Features",
+    "Pricing",
+    "Customers",
+    "Start free trial",
+    "Everything your books need, in one place",
+    "Smart invoicing",
+    "Bank sync",
+    "Receipt capture",
+    "Live reports",
+    "Tax ready",
+    "Team access",
+    "12,000 banks"
+  ],
+  "designNotes": [
+    "tidy and light, lots of white space",
+    "teal used only for the label, icons and trial link",
+    "equal white cards with thin borders",
+    "three across, two down on a wide screen"
+  ],
+  "maxPromptChars": 4000
+}

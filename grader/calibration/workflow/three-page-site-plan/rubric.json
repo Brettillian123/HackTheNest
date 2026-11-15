@@ -1,0 +1,131 @@
+{
+  "stages": [
+    {
+      "name": "plan",
+      "match": {
+        "titleAny": [
+          "plan",
+          "spec",
+          "outline",
+          "brief"
+        ]
+      }
+    },
+    {
+      "name": "styles",
+      "match": {
+        "changesAny": [
+          "site/styles.css"
+        ],
+        "titleAny": [
+          "style",
+          "css",
+          "theme"
+        ]
+      }
+    },
+    {
+      "name": "page-home",
+      "match": {
+        "changesAny": [
+          "site/index.html"
+        ]
+      }
+    },
+    {
+      "name": "page-projects",
+      "match": {
+        "changesAny": [
+          "site/projects.html"
+        ]
+      }
+    },
+    {
+      "name": "page-contact",
+      "match": {
+        "changesAny": [
+          "site/contact.html"
+        ]
+      },
+      "importance": "major"
+    },
+    {
+      "name": "review",
+      "match": {
+        "kind": "review"
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "fix",
+      "match": {
+        "titleAny": [
+          "fix",
+          "merge",
+          "final",
+          "apply",
+          "integrate",
+          "polish"
+        ],
+        "kind": "work"
+      }
+    }
+  ],
+  "before": [
+    [
+      "plan",
+      "styles"
+    ],
+    [
+      "plan",
+      "page-home"
+    ],
+    [
+      "plan",
+      "page-projects"
+    ],
+    [
+      "plan",
+      "page-contact"
+    ],
+    [
+      "styles",
+      "review"
+    ],
+    [
+      "page-home",
+      "review"
+    ],
+    [
+      "page-projects",
+      "review"
+    ],
+    [
+      "page-contact",
+      "review"
+    ],
+    [
+      "review",
+      "fix"
+    ]
+  ],
+  "parallel": [
+    [
+      "styles",
+      "page-home",
+      "page-projects",
+      "page-contact"
+    ]
+  ],
+  "reviewOf": [
+    "styles",
+    "page-home",
+    "page-projects",
+    "page-contact"
+  ],
+  "limits": {
+    "maxSteps": 10,
+    "maxOwners": 6,
+    "maxParallel": 4
+  }
+}

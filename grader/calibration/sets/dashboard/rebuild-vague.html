@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Orbit Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Verdana, sans-serif; background: #f8fafc; color: #0f172a; }
+  .wrap { display: flex; min-height: 100vh; }
+  .sidebar { width: 220px; background: #ffffff; border-right: 1px solid #e2e8f0; padding: 28px 20px; }
+  .sidebar h2 { font-size: 18px; color: #2563eb; margin-bottom: 36px; }
+  .sidebar a { display: block; color: #475569; text-decoration: none; font-size: 14px; padding: 10px 12px; margin-bottom: 6px; border-radius: 6px; }
+  .sidebar a.active { background: #dbeafe; color: #1d4ed8; }
+  .main { flex: 1; padding: 32px 40px; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; }
+  .header .right { display: flex; gap: 16px; align-items: center; }
+  .header input { width: 260px; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 20px; font-family: Verdana; font-size: 13px; }
+  .header .pic { width: 40px; height: 40px; border-radius: 50%; background: #2563eb; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+  .card { background: #ffffff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .card .t { font-size: 13px; color: #64748b; margin-bottom: 10px; }
+  .card .n { font-size: 30px; font-weight: bold; }
+  .card .c { font-size: 12px; color: #16a34a; margin-top: 8px; }
+  .box { background: #ffffff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 32px; }
+  .box h3 { font-size: 16px; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: #64748b; font-weight: normal; padding: 12px 8px; border-bottom: 2px solid #e2e8f0; }
+  td { padding: 14px 8px; border-bottom: 1px solid #f1f5f9; }
+  .status { padding: 4px 12px; border-radius: 12px; font-size: 11px; }
+  .done { background: #dcfce7; color: #15803d; }
+  .ship { background: #dbeafe; color: #1d4ed8; }
+  .cancel { background: #fee2e2; color: #b91c1c; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sidebar">
+    <h2>&#9679; Orbit</h2>
+    <a class="active" href="#">Dashboard</a>
+    <a href="#">Sales</a>
+    <a href="#">Inventory</a>
+    <a href="#">Customers</a>
+    <a href="#">Analytics</a>
+    <a href="#">Settings</a>
+  </div>
+  <div class="main">
+    <div class="header">
+      <h1>Welcome back!</h1>
+      <div class="right"><input placeholder="Search..."><div class="pic"></div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="t">Total Sales</div><div class="n">$124,500</div><div class="c">&#9650; 15% from last month</div></div>
+      <div class="card"><div class="t">Active Users</div><div class="n">8,420</div><div class="c">&#9650; 6% from last month</div></div>
+      <div class="card"><div class="t">Conversion</div><div class="n">3.8%</div><div class="c">&#9650; 0.5% from last month</div></div>
+    </div>
+    <div class="box">
+      <h3>Sales Overview</h3>
+      <svg width="100%" height="220" viewBox="0 0 900 220" preserveAspectRatio="none">
+        <polyline points="0,180 100,150 200,165 300,120 400,130 500,90 600,100 700,60 800,70 900,30" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <polygon points="0,180 100,150 200,165 300,120 400,130 500,90 600,100 700,60 800,70 900,30 900,220 0,220" fill="#dbeafe" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="box">
+      <h3>Latest Orders</h3>
+      <table>
+        <tr><th>ID</th><th>Customer</th><th>Product</th><th>Total</th><th>Status</th></tr>
+        <tr><td>1001</td><td>John Smith</td><td>Wireless Headphones</td><td>$129.99</td><td><span class="status done">Completed</span></td></tr>
+        <tr><td>1002</td><td>Sarah Lee</td><td>Smart Watch</td><td>$249.00</td><td><span class="status ship">Shipped</span></td></tr>
+        <tr><td>1003</td><td>Mike Davis</td><td>Laptop Stand</td><td>$45.50</td><td><span class="status done">Completed</span></td></tr>
+        <tr><td>1004</td><td>Emily Clark</td><td>USB-C Hub</td><td>$39.99</td><td><span class="status cancel">Cancelled</span></td></tr>
+        <tr><td>1005</td><td>David Wilson</td><td>Mechanical Keyboard</td><td>$159.00</td><td><span class="status ship">Shipped</span></td></tr>
+        <tr><td>1006</td><td>Anna Taylor</td><td>Monitor 27"</td><td>$329.00</td><td><span class="status done">Completed</span></td></tr>
+        <tr><td>1007</td><td>Chris Moore</td><td>Webcam HD</td><td>$69.99</td><td><span class="status done">Completed</span></td></tr>
+        <tr><td>1008</td><td>Laura Hall</td><td>Desk Lamp</td><td>$34.00</td><td><span class="status ship">Shipped</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

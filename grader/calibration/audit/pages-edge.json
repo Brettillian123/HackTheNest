@@ -1,0 +1,132 @@
+{
+  "build-grid": {
+    "table": { "band": [94, 100], "why": "Card grid built as a table renders pixel-identical; a person sees the same page." },
+    "flex": { "band": [94, 100], "why": "Card grid built with flex wrap is identical to the eye (sub-pixel text differences only)." }
+  },
+  "build-button": {
+    "as-button": { "band": [94, 100], "why": "Hero CTA as a <button> renders pixel-identical to the goal's <a>." },
+    "as-div": { "band": [94, 100], "why": "Hero CTA as a <div> renders pixel-identical; a boss cannot tell." }
+  },
+  "build-icon": {
+    "data-img": { "band": [94, 100], "why": "Feature icons as data: images instead of inline SVG look exactly the same." }
+  },
+  "build-units": {
+    "rem": { "band": [94, 100], "why": "Sizes written in rem render pixel-identical to the px goal." }
+  },
+  "build-border": {
+    "inset-shadow": { "band": [93, 100], "why": "Card border drawn with an inset shadow looks the same; rows shift up 2 px each, invisible without flipping." }
+  },
+  "build-bg": {
+    "wrapper-bg": { "band": [94, 100], "why": "Page background on a full wrapper instead of body is pixel-identical." }
+  },
+  "build-caps": {
+    "typed-caps": { "band": [94, 100], "why": "Eyebrow typed in capitals instead of CSS uppercase reads and looks identical." }
+  },
+  "build-text": {
+    "b-tag": { "band": [94, 100], "why": "<b> versus font-weight:700 is pixel-identical." },
+    "three-spans": { "band": [94, 100], "why": "One paragraph split into three spans is visually identical." }
+  },
+  "small-offset": {
+    "down-6px": { "band": [92, 99], "why": "Whole page 6 px lower; only visible when flipping, should cost a little." }
+  },
+  "small-narrow": {
+    "narrower-20px": { "band": [91, 98], "why": "Content column 20 px narrower; you only notice side by side, a small cost." }
+  },
+  "small-grey": {
+    "body-grey": { "band": [94, 100], "why": "Body text a slightly lighter grey; you only find it by flipping." }
+  },
+  "small-font": {
+    "helvetica": { "band": [94, 100], "why": "Helvetica falls back to Arial here and renders pixel-identical." }
+  },
+  "small-lineheight": {
+    "lh-1-6": { "band": [85, 95], "why": "Body line-height 1.6 instead of 1.5: same post, a bit airier, lower parts drift 20 px; nearly there." }
+  },
+  "small-quotes": {
+    "straight-quotes": { "band": [93, 100], "why": "Straight instead of curly quotes and a normal space for &nbsp;; a typographer notices, a boss barely." }
+  },
+  "content-price": {
+    "team-94": { "band": [75, 88], "why": "Perfect page but the headline price of the main plan is wrong, which a boss must send back." }
+  },
+  "content-typo": {
+    "headline-typo": { "band": [78, 90], "why": "Perfect page with a visible typo in the headline; obvious single flaw." }
+  },
+  "content-cta": {
+    "cta-learn-more": { "band": [75, 88], "why": "The main call-to-action says Learn more instead of Start free trial; one obvious, meaningful flaw." }
+  },
+  "content-cards": {
+    "missing-one": { "band": [75, 87], "why": "One of six feature cards is missing, leaving a gap in the grid; one obvious flaw." },
+    "swapped-two": { "band": [84, 94], "why": "All six cards present, first two in swapped order; minor, and must rank above missing-one." }
+  },
+  "content-logo": {
+    "other-company": { "band": [68, 82], "why": "Logo shows another company's name; tiny on screen but a boss rejects it straight away." }
+  },
+  "content-form": {
+    "missing-field": { "band": [78, 90], "why": "Signup form has three of four fields; noticeable functional gap." }
+  },
+  "content-nav": {
+    "four-links": { "band": [83, 93], "why": "Nav lacks the Blog link; small but noticeable." }
+  },
+  "content-language": {
+    "spanish": { "band": [30, 48], "why": "Perfect layout and styling but every word is in Spanish; looks like the goal with most content wrong." }
+  },
+  "less-picture": {
+    "other-photo": { "band": [85, 94], "why": "Hero placeholder picture is a different scene of the same size; the page is right, the image is a detail." }
+  },
+  "less-chart": {
+    "bars-differ": { "band": [88, 96], "why": "Bar heights differ by a few pixels; same chart to the eye unless you flip." }
+  },
+  "less-table": {
+    "rows-swapped": { "band": [88, 96], "why": "Two adjacent rows of a ten-row table in another order; hard to spot." }
+  },
+  "less-extras": {
+    "cookie-banner": { "band": [85, 95], "why": "Correct page with an extra cookie bar at the very bottom; minor addition." },
+    "back-to-top": { "band": [90, 98], "why": "Extra small Back to top link in the footer; barely noticed." },
+    "extra-testimonial": { "band": [86, 95], "why": "One more testimonial; everything above it identical, the rest just moves down." }
+  },
+  "layout-scale": {
+    "zoom-90": { "band": [72, 86], "why": "Right page at 90% size; side by side clearly smaller everywhere but all content and design right." }
+  },
+  "layout-width": {
+    "no-max-width": { "band": [72, 86], "why": "No max-width so the content stretches edge to edge; same page, obviously wider." },
+    "left-aligned": { "band": [65, 80], "why": "Content block hugs the left edge instead of being centred; obvious layout flaw on an otherwise right page." }
+  },
+  "layout-columns": {
+    "hero-one-column": { "band": [62, 78], "why": "Hero picture drops below the text instead of beside it; a big visible piece of the layout is wrong." }
+  },
+  "layout-sticky": {
+    "sticky-header": { "band": [95, 100], "why": "Sticky header renders identically in a still screenshot." }
+  },
+  "layout-overlap": {
+    "badge-30px": { "band": [88, 96], "why": "Most popular badge 30 px to the right; small, noticeable on a close look." },
+    "chip-behind-image": { "band": [76, 88], "why": "Rating chip half hidden behind the hero picture; one obvious visual bug." }
+  },
+  "layout-tall": {
+    "diff-below-cut": { "band": [82, 94], "why": "One release note paragraph differs, at y about 2800 (below the 2400 cut); a person still sees it." },
+    "diff-above-cut": { "band": [82, 94], "why": "The same single paragraph change near the top; should score about the same as below-cut." }
+  },
+  "layout-short": {
+    "off-centre": { "band": [72, 86], "why": "The only element, one sentence, sits visibly right of centre; one obvious flaw." }
+  },
+  "colour-theme": {
+    "dark": { "band": [42, 60], "why": "Same layout and words but a dark theme where a light one was asked; does not look like the goal." },
+    "greyscale": { "band": [55, 72], "why": "Correct layout and words but the green brand colour is gone; a big piece of the look is wrong." }
+  },
+  "colour-hue": {
+    "hue-20": { "band": [80, 92], "why": "Accent green shifted towards teal; visible side by side but clearly the same design." }
+  },
+  "colour-contrast": {
+    "pale-text": { "band": [50, 68], "why": "Pale grey text that is hard to read where the goal is dark; a big flaw a boss rejects." }
+  },
+  "colour-gradient": {
+    "reversed": { "band": [86, 95], "why": "Hero gradient runs the other way; noticeable, minor." }
+  },
+  "colour-tint": {
+    "black-10": { "band": [82, 93], "why": "Whole page 10% darker; same page, looks a little dingy side by side." }
+  },
+  "own-whole": {
+    "unstyled": { "band": [22, 42], "why": "Same words and pictures as raw unstyled HTML; does not look like the goal at all." },
+    "lorem": { "band": [30, 48], "why": "Perfect look but all text is lorem ipsum; looks like the goal with the content wrong." },
+    "no-pricing": { "band": [52, 68], "why": "Whole pricing section missing; recognisably the page with a big piece gone." },
+    "no-icons": { "band": [84, 93], "why": "All six feature icons missing; cards otherwise right; a noticeable but small loss." }
+  }
+}

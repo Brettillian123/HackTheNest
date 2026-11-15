@@ -1,0 +1,1 @@
+invoice page with seller, bill to, line items table, totals and payment details, teal

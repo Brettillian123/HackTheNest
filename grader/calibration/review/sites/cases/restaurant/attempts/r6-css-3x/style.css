@@ -1,0 +1,108 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia, 'Times New Roman', serif;background:#fbf7f0;color:#2b2622;line-height:1.5}
+.b-top{background:#2f3b2b;color:#f4ead8}
+.b-bar{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.b-brand{font-size:24px;font-weight:700;color:#f4ead8;text-decoration:none}
+.b-nav{display:flex;gap:24px}
+.b-nav a{color:#f4ead8;text-decoration:none;font-size:17px}
+.b-nav a[aria-current]{border-bottom:2px solid #b5532c}
+main,.b-main{display:block;max-width:1080px;margin:0 auto;padding:40px 24px}
+h1{font-size:44px;margin:0 0 12px;color:#2f3b2b}
+h2{font-size:26px;margin:28px 0 10px;color:#2f3b2b}
+.b-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.b-btn{display:inline-block;background:#b5532c;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700}
+.b-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.b-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.b-card h2{margin-top:8px}
+.b-dishes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+.b-dish{display:flex;justify-content:space-between;border-bottom:1px dotted #b9ad99;padding:6px 0}
+.b-dish small{display:block;color:#6b6257}
+.b-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px}
+.b-form label{display:flex;flex-direction:column;font-weight:700;gap:6px}
+.b-form input,.b-form select,.b-form textarea{font:inherit;padding:10px;border:1px solid #b9ad99;border-radius:6px;background:#fff}
+.b-wide{grid-column:1/-1}
+.b-form button{grid-column:1/-1;justify-self:start;font:inherit;font-weight:700;background:#b5532c;color:#fff;border:0;border-radius:6px;padding:12px 22px}
+.b-two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:8px;border-bottom:1px solid #d8cfc0}
+footer{background:#2f3b2b;color:#f4ead8;margin-top:40px}
+footer nav{display:flex;gap:20px}
+footer a{color:#f4ead8}
+.b-promo-0{display:flex;margin:0px 0px;padding:0px;color:#000000;border-radius:0px}
+.b-promo-1{display:flex;margin:1px 1px;padding:1px;color:#2880e3;border-radius:1px}
+.b-promo-2{display:flex;margin:2px 2px;padding:2px;color:#5101c6;border-radius:2px}
+.b-promo-3{display:flex;margin:3px 3px;padding:3px;color:#7982a9;border-radius:3px}
+.b-promo-4{display:flex;margin:4px 4px;padding:4px;color:#a2038c;border-radius:4px}
+.b-promo-5{display:flex;margin:5px 5px;padding:0px;color:#ca846f;border-radius:5px}
+.b-promo-6{display:flex;margin:6px 6px;padding:1px;color:#f30552;border-radius:6px}
+.b-promo-7{display:flex;margin:0px 7px;padding:2px;color:#1b8636;border-radius:7px}
+.b-promo-8{display:flex;margin:1px 8px;padding:3px;color:#440719;border-radius:8px}
+.b-promo-9{display:flex;margin:2px 9px;padding:4px;color:#6c87fc;border-radius:0px}
+.b-promo-10{display:flex;margin:3px 10px;padding:0px;color:#9508df;border-radius:1px}
+.b-promo-11{display:flex;margin:4px 0px;padding:1px;color:#bd89c2;border-radius:2px}
+.b-promo-12{display:flex;margin:5px 1px;padding:2px;color:#e60aa5;border-radius:3px}
+.b-promo-13{display:flex;margin:6px 2px;padding:3px;color:#0e8b89;border-radius:4px}
+.b-promo-14{display:flex;margin:0px 3px;padding:4px;color:#370c6c;border-radius:5px}
+.b-promo-15{display:flex;margin:1px 4px;padding:0px;color:#5f8d4f;border-radius:6px}
+.b-promo-16{display:flex;margin:2px 5px;padding:1px;color:#880e32;border-radius:7px}
+.b-promo-17{display:flex;margin:3px 6px;padding:2px;color:#b08f15;border-radius:8px}
+.b-promo-18{display:flex;margin:4px 7px;padding:3px;color:#d90ff8;border-radius:0px}
+.b-promo-19{display:flex;margin:5px 8px;padding:4px;color:#0190dc;border-radius:1px}
+.b-promo-20{display:flex;margin:6px 9px;padding:0px;color:#2a11bf;border-radius:2px}
+.b-promo-21{display:flex;margin:0px 10px;padding:1px;color:#5292a2;border-radius:3px}
+.b-promo-22{display:flex;margin:1px 0px;padding:2px;color:#7b1385;border-radius:4px}
+.b-promo-23{display:flex;margin:2px 1px;padding:3px;color:#a39468;border-radius:5px}
+.b-promo-24{display:flex;margin:3px 2px;padding:4px;color:#cc154b;border-radius:6px}
+.b-promo-25{display:flex;margin:4px 3px;padding:0px;color:#f4962e;border-radius:7px}
+.b-promo-26{display:flex;margin:5px 4px;padding:1px;color:#1d1712;border-radius:8px}
+.b-promo-27{display:flex;margin:6px 5px;padding:2px;color:#4597f5;border-radius:0px}
+.b-promo-28{display:flex;margin:0px 6px;padding:3px;color:#6e18d8;border-radius:1px}
+.b-promo-29{display:flex;margin:1px 7px;padding:4px;color:#9699bb;border-radius:2px}
+.b-promo-30{display:flex;margin:2px 8px;padding:0px;color:#bf1a9e;border-radius:3px}
+.b-promo-31{display:flex;margin:3px 9px;padding:1px;color:#e79b81;border-radius:4px}
+.b-promo-32{display:flex;margin:4px 10px;padding:2px;color:#101c65;border-radius:5px}
+.b-promo-33{display:flex;margin:5px 0px;padding:3px;color:#389d48;border-radius:6px}
+.b-promo-34{display:flex;margin:6px 1px;padding:4px;color:#611e2b;border-radius:7px}
+.b-promo-35{display:flex;margin:0px 2px;padding:0px;color:#899f0e;border-radius:8px}
+.b-promo-36{display:flex;margin:1px 3px;padding:1px;color:#b21ff1;border-radius:0px}
+.b-promo-37{display:flex;margin:2px 4px;padding:2px;color:#daa0d4;border-radius:1px}
+.b-promo-38{display:flex;margin:3px 5px;padding:3px;color:#0321b8;border-radius:2px}
+.b-promo-39{display:flex;margin:4px 6px;padding:4px;color:#2ba29b;border-radius:3px}
+.b-promo-40{display:flex;margin:5px 7px;padding:0px;color:#54237e;border-radius:4px}
+.b-promo-41{display:flex;margin:6px 8px;padding:1px;color:#7ca461;border-radius:5px}
+.b-promo-42{display:flex;margin:0px 9px;padding:2px;color:#a52544;border-radius:6px}
+.b-promo-43{display:flex;margin:1px 10px;padding:3px;color:#cda627;border-radius:7px}
+.b-promo-44{display:flex;margin:2px 0px;padding:4px;color:#f6270a;border-radius:8px}
+.b-promo-45{display:flex;margin:3px 1px;padding:0px;color:#1ea7ee;border-radius:0px}
+.b-promo-46{display:flex;margin:4px 2px;padding:1px;color:#4728d1;border-radius:1px}
+.b-promo-47{display:flex;margin:5px 3px;padding:2px;color:#6fa9b4;border-radius:2px}
+.b-promo-48{display:flex;margin:6px 4px;padding:3px;color:#982a97;border-radius:3px}
+.b-promo-49{display:flex;margin:0px 5px;padding:4px;color:#c0ab7a;border-radius:4px}
+.b-promo-50{display:flex;margin:1px 6px;padding:0px;color:#e92c5d;border-radius:5px}
+.b-promo-51{display:flex;margin:2px 7px;padding:1px;color:#11ad41;border-radius:6px}
+.b-promo-52{display:flex;margin:3px 8px;padding:2px;color:#3a2e24;border-radius:7px}
+.b-promo-53{display:flex;margin:4px 9px;padding:3px;color:#62af07;border-radius:8px}
+.b-promo-54{display:flex;margin:5px 10px;padding:4px;color:#8b2fea;border-radius:0px}
+.b-promo-55{display:flex;margin:6px 0px;padding:0px;color:#b3b0cd;border-radius:1px}
+.b-promo-56{display:flex;margin:0px 1px;padding:1px;color:#dc31b0;border-radius:2px}
+.b-promo-57{display:flex;margin:1px 2px;padding:2px;color:#04b294;border-radius:3px}
+.b-promo-58{display:flex;margin:2px 3px;padding:3px;color:#2d3377;border-radius:4px}
+.b-promo-59{display:flex;margin:3px 4px;padding:4px;color:#55b45a;border-radius:5px}
+.b-promo-60{display:flex;margin:4px 5px;padding:0px;color:#7e353d;border-radius:6px}
+.b-promo-61{display:flex;margin:5px 6px;padding:1px;color:#a6b620;border-radius:7px}
+.b-promo-62{display:flex;margin:6px 7px;padding:2px;color:#cf3703;border-radius:8px}
+.b-promo-63{display:flex;margin:0px 8px;padding:3px;color:#f7b7e6;border-radius:0px}
+.b-promo-64{display:flex;margin:1px 9px;padding:4px;color:#2038ca;border-radius:1px}
+.b-promo-65{display:flex;margin:2px 10px;padding:0px;color:#48b9ad;border-radius:2px}
+.b-promo-66{display:flex;margin:3px 0px;padding:1px;color:#713a90;border-radius:3px}
+.b-promo-67{display:flex;margin:4px 1px;padding:2px;color:#99bb73;border-radius:4px}
+.b-promo-68{display:flex;margin:5px 2px;padding:3px;color:#c23c56;border-radius:5px}
+.b-promo-69{display:flex;margin:6px 3px;padding:4px;color:#eabd39;border-radius:6px}
+.b-promo-70{display:flex;margin:0px 4px;padding:0px;color:#133e1d;border-radius:7px}
+.b-promo-71{display:flex;margin:1px 5px;padding:1px;color:#3bbf00;border-radius:8px}
+.b-promo-72{display:flex;margin:2px 6px;padding:2px;color:#643fe3;border-radius:0px}
+.b-promo-73{display:flex;margin:3px 7px;padding:3px;color:#8cc0c6;border-radius:1px}
+.b-promo-74{display:flex;margin:4px 8px;padding:4px;color:#b541a9;border-radius:2px}
+.b-promo-75{display:flex;margin:5px 9px;padding:0px;color:#ddc28c;border-radius:3px}
+.b-promo-76{display:flex;margin:6px 10px;padding:1px;color:#064370;border-radius:4px}
+.b-promo-77{display:flex;margin:0px 0px;padding:2px;color:#2ec453;border-radius:5px}
