@@ -1,0 +1,249 @@
+{
+  "levels": { "1": "Easy", "2": "Medium", "3": "Hard" },
+  "challenges": [
+    {
+      "slug": "agents-md-for-a-repo",
+      "title": "AGENTS.md for a small repo",
+      "level": 1,
+      "kind": "doc",
+      "lesson": "project-instructions",
+      "brief": "Get the model to write a short AGENTS.md that any coding agent can follow for a small Python project.",
+      "spec": [
+        { "group": "Project facts", "items": [
+          { "label": "Name", "value": "invoice-tool" },
+          { "label": "Install", "value": "pip install -e .[dev]" },
+          { "label": "Test", "value": "pytest" },
+          { "label": "Lint", "value": "ruff check ." },
+          { "label": "Code", "value": "src/invoice_tool/" },
+          { "label": "Tests", "value": "tests/" },
+          { "label": "Never change", "value": "data/samples/" },
+          { "label": "Never read", "value": ".env" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "File", "value": "AGENTS.md" },
+          { "label": "Sections", "value": "Overview, Commands, Layout, Rules, Done means" },
+          { "label": "Length", "value": "Under 80 lines" }
+        ] }
+      ],
+      "criteria": [
+        "Has the sections Overview, Commands, Layout, Rules and Done means.",
+        "The commands pip install -e .[dev], pytest and ruff check . appear exactly, inside code fences.",
+        "The paths src/invoice_tool/, tests/ and data/samples/ appear exactly.",
+        "Says never to change data/samples/ and never to read .env.",
+        "Under 80 lines.",
+        "No placeholders such as TODO, angle-bracket gaps, your-project or lorem ipsum."
+      ]
+    },
+    {
+      "slug": "readme-for-a-cli",
+      "title": "README for a command-line tool",
+      "level": 1,
+      "kind": "doc",
+      "lesson": "documentation-as-a-prompt",
+      "brief": "Get the model to write a README that someone can act on without asking a question.",
+      "spec": [
+        { "group": "Tool facts", "items": [
+          { "label": "Name", "value": "site-check (checks a folder of HTML files for broken links)" },
+          { "label": "Install", "value": "pip install site-check" },
+          { "label": "Run", "value": "site-check ./public" },
+          { "label": "Flag", "value": "--external also checks outside links" },
+          { "label": "Setting", "value": "SITE_CHECK_TIMEOUT, seconds, default 10" },
+          { "label": "Test", "value": "pytest" },
+          { "label": "Limit", "value": "Does not check images yet" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "File", "value": "README.md" },
+          { "label": "Sections", "value": "Install, Use, Configuration, Test, Limits" },
+          { "label": "Length", "value": "Under 400 words" }
+        ] }
+      ],
+      "criteria": [
+        "Has the sections Install, Use, Configuration, Test and Limits.",
+        "The commands pip install site-check, site-check ./public and pytest appear exactly, inside code fences.",
+        "The names --external and SITE_CHECK_TIMEOUT and the default 10 appear exactly.",
+        "Says images are not checked yet.",
+        "Under 400 words.",
+        "No placeholders such as TODO, angle-bracket gaps, example.com/your-repo or lorem ipsum."
+      ]
+    },
+    {
+      "slug": "release-notes-skill",
+      "title": "A release-notes skill",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "skills",
+      "brief": "Get the model to write a SKILL.md that turns the changelog into user-facing release notes.",
+      "spec": [
+        { "group": "Task facts", "items": [
+          { "label": "Skill folder", "value": "release-notes" },
+          { "label": "Read", "value": "The ## [Unreleased] section of CHANGELOG.md" },
+          { "label": "Rewrite", "value": "For users; no internal ticket numbers" },
+          { "label": "Save to", "value": "docs/releases/<version>.md" },
+          { "label": "Check", "value": "npm run docs:check" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "File", "value": "release-notes/SKILL.md with YAML front matter" },
+          { "label": "Sections", "value": "Steps (numbered), Rules" },
+          { "label": "Length", "value": "Under 120 lines" }
+        ] }
+      ],
+      "criteria": [
+        "Front matter has name: release-notes and a description.",
+        "The description is 1 to 1024 characters and contains 'Use when'.",
+        "CHANGELOG.md, docs/releases/ and npm run docs:check appear exactly; the command is in a code fence.",
+        "Has a numbered Steps section and a Rules section.",
+        "Under 120 lines.",
+        "No placeholders other than the labelled <version> value."
+      ]
+    },
+    {
+      "slug": "mcp-server-trust-note",
+      "title": "MCP server note for a team",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "mcp-using-servers",
+      "brief": "Get the model to write the team's MCP-SERVERS.md: which server, the exact command to add it, what was checked and the rules.",
+      "spec": [
+        { "group": "Server facts", "items": [
+          { "label": "Server", "value": "Notion remote MCP server, https://mcp.notion.com/mcp" },
+          { "label": "Host", "value": "Claude Code, shared with the team (project scope)" },
+          { "label": "Command", "value": "claude mcp add --transport http --scope project notion https://mcp.notion.com/mcp" },
+          { "label": "Allowed", "value": "Read and search pages" },
+          { "label": "Not allowed", "value": "Editing or creating pages" },
+          { "label": "Outside content", "value": "Yes: page text comes from many writers" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "File", "value": "MCP-SERVERS.md" },
+          { "label": "Sections", "value": "Servers, How to add, Checks done, Rules" },
+          { "label": "Length", "value": "Under 300 words" }
+        ] }
+      ],
+      "criteria": [
+        "Has the sections Servers, How to add, Checks done and Rules.",
+        "The command claude mcp add --transport http --scope project notion https://mcp.notion.com/mcp appears exactly, in a code fence.",
+        "The names .mcp.json and /mcp appear.",
+        "Checks done names the publisher, the tools allowed, and whether the server fetches outside content.",
+        "A rule says editing or creating pages is not allowed.",
+        "Under 300 words; no placeholders."
+      ]
+    },
+    {
+      "slug": "library-tools",
+      "title": "Tool definitions for a library server",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "mcp-defining-tools",
+      "brief": "Get the model to write a JSON list of three MCP tool definitions a model could choose and call correctly.",
+      "spec": [
+        { "group": "Tools", "items": [
+          { "label": "library_search", "value": "Search the catalogue by title or author; changes nothing" },
+          { "label": "library_get_book", "value": "Get one book by id, such as bk_1234; changes nothing" },
+          { "label": "library_place_hold", "value": "Place a hold on a book for a student id, such as st_5678; adds a record" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "Format", "value": "A JSON array only, no prose" },
+          { "label": "Fields", "value": "name, description, inputSchema, annotations" }
+        ] }
+      ],
+      "criteria": [
+        "Valid JSON array of exactly three objects named library_search, library_get_book and library_place_hold.",
+        "Each description is at least 60 characters and contains 'Use'.",
+        "Each inputSchema is valid JSON Schema with type object, a required list and additionalProperties false.",
+        "library_search has a field property with enum title and author.",
+        "The id properties use patterns that match bk_ and st_ ids.",
+        "Search and get have readOnlyHint true; place hold has readOnlyHint false and destructiveHint false."
+      ]
+    },
+    {
+      "slug": "three-page-site-plan",
+      "title": "Plan a three-page site build",
+      "level": 3,
+      "kind": "workflow",
+      "lesson": "agent-workflows",
+      "brief": "Get the model to plan a coordinator-and-workers build of a three-page site as a JSON graph, with a review before the merge.",
+      "spec": [
+        { "group": "Files", "items": [
+          { "label": "Pages", "value": "site/index.html, site/projects.html, site/contact.html" },
+          { "label": "Shared", "value": "site/styles.css" }
+        ] },
+        { "group": "Plan", "items": [
+          { "label": "Stages", "value": "Plan, styles, one step per page, review, final fix or merge" },
+          { "label": "Each step", "value": "id, title, owner, dependsOn, changes, proof, budget" },
+          { "label": "Review", "value": "Required, with kind \"review\": the contact page has a form" },
+          { "label": "Format", "value": "JSON only, in the lesson's example shape" }
+        ] }
+      ],
+      "criteria": [
+        "Has a plan step, a styles step, one step per page, a review step and a final fix or merge step.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a proof and a budget.",
+        "Dependencies point only to steps that exist, with no cycle.",
+        "No two steps that can run at the same time list the same file in changes.",
+        "The review step (kind review) depends on all three page steps and the styles step.",
+        "There are no loops, or every loop has an until exit test and a maxRounds cap."
+      ]
+    },
+    {
+      "slug": "fix-loop-plan",
+      "title": "Plan a capped fix loop with a held-out check",
+      "level": 3,
+      "kind": "workflow",
+      "lesson": "loops-and-graphs",
+      "brief": "Get the model to plan a build-grade-fix loop with an exit test, a cap and a final check on tests the builder never sees.",
+      "spec": [
+        { "group": "Task", "items": [
+          { "label": "Function", "value": "parse_price(text) in src/price.py; turns \"$1,299.00\" into a number" },
+          { "label": "Visible tests", "value": "20, in tests/visible/" },
+          { "label": "Held-out tests", "value": "8, in tests/held_out/; the builder never sees them" },
+          { "label": "Round limit", "value": "At most 4 fix rounds" }
+        ] },
+        { "group": "Plan", "items": [
+          { "label": "Stages", "value": "Tests, build, grade-and-fix loop, final held-out check" },
+          { "label": "Each step", "value": "id, title, owner, dependsOn, changes, proof, budget" },
+          { "label": "Loop", "value": "id, steps (what repeats), until (exit test), maxRounds, heldOut" },
+          { "label": "Format", "value": "JSON only, in the lesson's example shape" }
+        ] }
+      ],
+      "criteria": [
+        "Has a tests step, a build step, a grade-and-fix loop and a final held-out check.",
+        "Every step has a title, an owner, a changes list, a dependsOn list, a proof and a budget.",
+        "The loop is declared with its steps, an until exit test, maxRounds of 4 or less and a heldOut note.",
+        "No cycle except inside the marked loop.",
+        "No two steps that can run at the same time list the same file in changes.",
+        "The held-out check comes after the loop, and no step in or before the loop reads or changes tests/held_out/."
+      ]
+    },
+    {
+      "slug": "findings-report",
+      "title": "A findings report with sources",
+      "level": 2,
+      "kind": "doc",
+      "lesson": "self-research-and-verification",
+      "brief": "Get the model to write FINDINGS.md that answers a question from given sources, ties each claim to a source and lists what was not verified.",
+      "spec": [
+        { "group": "Facts given", "items": [
+          { "label": "Claude Code", "value": "Reads CLAUDE.md; reads AGENTS.md instead when there is no CLAUDE.md" },
+          { "label": "OpenAI Codex", "value": "Reads AGENTS.md, up to 32 KiB combined by default" },
+          { "label": "Gemini CLI", "value": "Reads GEMINI.md; other names via context.fileName" },
+          { "label": "Open question", "value": "Free-tier behaviour not checked" }
+        ] },
+        { "group": "Sources given", "items": [
+          { "label": "Claude Code", "value": "https://code.claude.com/docs/en/memory" },
+          { "label": "OpenAI Codex", "value": "https://learn.chatgpt.com/docs/agent-configuration/agents-md" },
+          { "label": "Gemini CLI", "value": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-md.md" }
+        ] },
+        { "group": "Output", "items": [
+          { "label": "File", "value": "FINDINGS.md" },
+          { "label": "Sections", "value": "Question, Answer, Claims, Sources, Not verified, Cross-check" },
+          { "label": "Length", "value": "Under 450 words" }
+        ] }
+      ],
+      "criteria": [
+        "Has the sections Question, Answer, Claims, Sources, Not verified and Cross-check.",
+        "CLAUDE.md, AGENTS.md, GEMINI.md, context.fileName and 32 KiB appear exactly.",
+        "Sources lists the three given links exactly.",
+        "Not verified mentions the free-tier question.",
+        "Under 450 words; no placeholders."
+      ]
+    }
+  ]
+}

@@ -128,7 +128,7 @@ const createRun = guarded('Create run', async (request, response) => {
     'X-Prompt-Count': String(run.n),
   });
 
-  const cleaner = kind.cleaner();
+  const cleaner = kind.cleaner(challenge);
   let status = 'done';
   try {
     if (!first.done) {

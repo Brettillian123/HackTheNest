@@ -64,13 +64,13 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
   if (c.criteria) challenge.criteria = c.criteria.slice();
   if (c.marks !== undefined) challenge.marks = c.marks; // reserved: sent next to the goal when present
   if (KINDS[kind].loadGoal) {
-    try { Object.assign(challenge, KINDS[kind].loadGoal(dirs, c.slug)); }
+    try { Object.assign(challenge, KINDS[kind].loadGoal(dirs, c.slug, c)); }
     catch (error) {
       // A page without its goal is skipped; other kinds stay listed but cannot be played yet.
       if (kind === 'page') return fail(error.message);
       problems.push(`${source} challenge ${name}: ${error.message}`);
       challenge.available = false;
-      challenge.unavailableReason = 'This challenge is not ready yet.';
+      challenge.unavailableReason = error.playerReason || 'This challenge is not ready yet.';
     }
   }
   return challenge;
@@ -161,6 +161,9 @@ function load() {
         bySlug.set(built.slug, built);
       });
     }
+  }
+  for (const l of lessons) {
+    if (l.bonusChallenge && !lessonChallenges.some(c => c.slug === l.bonusChallenge)) problems.push(`Lesson "${l.slug}": bonus challenge "${l.bonusChallenge}" is not in lessons/challenges.json.`);
   }
   return { challenges, lessonChallenges, bySlug, levels, models, viewport, lessons, lessonsDir, problems };
 }

@@ -1,0 +1,90 @@
+[
+  {
+    "order": 1,
+    "slug": "project-instructions",
+    "title": "Project instructions a model actually follows",
+    "level": 1,
+    "minutes": 20,
+    "summary": "Write a short, checkable instructions file (CLAUDE.md, AGENTS.md and the like) that a coding model reads at the start of every session.",
+    "file": "01-project-instructions.md",
+    "bonusChallenge": "agents-md-for-a-repo",
+    "grader": "doc"
+  },
+  {
+    "order": 2,
+    "slug": "documentation-as-a-prompt",
+    "title": "Documentation as a prompt",
+    "level": 1,
+    "minutes": 20,
+    "summary": "Write READMEs and specs that a model or a new teammate can act on without asking a single question.",
+    "file": "02-documentation-as-a-prompt.md",
+    "bonusChallenge": "readme-for-a-cli",
+    "grader": "doc"
+  },
+  {
+    "order": 3,
+    "slug": "skills",
+    "title": "Skills: packaging a repeatable task",
+    "level": 2,
+    "minutes": 25,
+    "summary": "Package a task you repeat into a skill folder with a SKILL.md file, so a model loads it only when the task comes up.",
+    "file": "03-skills.md",
+    "bonusChallenge": "release-notes-skill",
+    "grader": "doc"
+  },
+  {
+    "order": 4,
+    "slug": "mcp-using-servers",
+    "title": "MCP, part one: giving a model tools",
+    "level": 2,
+    "minutes": 25,
+    "summary": "Learn what the Model Context Protocol is, how a client talks to a server, and what to check before you trust one.",
+    "file": "04-mcp-using-servers.md",
+    "bonusChallenge": "mcp-server-trust-note",
+    "grader": "doc"
+  },
+  {
+    "order": 5,
+    "slug": "mcp-defining-tools",
+    "title": "MCP, part two: defining tools well",
+    "level": 2,
+    "minutes": 30,
+    "summary": "Define MCP tools a model can choose and call correctly, with clear names, useful descriptions, strict input schemas and errors it can recover from.",
+    "file": "05-mcp-defining-tools.md",
+    "bonusChallenge": "library-tools",
+    "grader": "doc"
+  },
+  {
+    "order": 6,
+    "slug": "agent-workflows",
+    "title": "Agent workflows: one coordinator, scoped workers",
+    "level": 3,
+    "minutes": 35,
+    "summary": "Split a job between a coordinator and scoped workers, write briefs they can act on alone, and plan the job so no two workers collide.",
+    "file": "06-agent-workflows.md",
+    "bonusChallenge": "three-page-site-plan",
+    "grader": "workflow"
+  },
+  {
+    "order": 7,
+    "slug": "loops-and-graphs",
+    "title": "Loops and graphs",
+    "level": 3,
+    "minutes": 35,
+    "summary": "Run a model in a loop against a test with a fixed exit and a cap, and plan a job as a graph so you know what can run at once and what sets the finish time.",
+    "file": "07-loops-and-graphs.md",
+    "bonusChallenge": "fix-loop-plan",
+    "grader": "workflow"
+  },
+  {
+    "order": 8,
+    "slug": "self-research-and-verification",
+    "title": "Self-research and verification",
+    "level": 2,
+    "minutes": 25,
+    "summary": "Get a model to check its own claims, by finding sources before stating facts, proving things once with real output, naming what it did not verify, and cross-checking with a fresh second pass.",
+    "file": "08-self-research-and-verification.md",
+    "bonusChallenge": "findings-report",
+    "grader": "doc"
+  }
+]

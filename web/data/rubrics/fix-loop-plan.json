@@ -1,0 +1,111 @@
+{
+  "stages": [
+    {
+      "name": "tests",
+      "match": {
+        "titleAny": [
+          "test",
+          "fixture"
+        ]
+      },
+      "importance": "minor"
+    },
+    {
+      "name": "build",
+      "match": {
+        "changesAny": [
+          "src/price.py"
+        ],
+        "titleAny": [
+          "build",
+          "write",
+          "implement",
+          "draft",
+          "create",
+          "first"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "grade",
+      "match": {
+        "titleAny": [
+          "grade",
+          "visible",
+          "evaluate",
+          "score"
+        ]
+      },
+      "importance": "major"
+    },
+    {
+      "name": "fix",
+      "match": {
+        "changesAny": [
+          "src/price.py"
+        ],
+        "titleAny": [
+          "fix",
+          "repair",
+          "improve",
+          "patch",
+          "revise"
+        ]
+      },
+      "importance": "critical"
+    },
+    {
+      "name": "held-out-check",
+      "match": {
+        "titleAny": [
+          "held",
+          "hidden",
+          "holdout",
+          "final"
+        ]
+      },
+      "importance": "critical"
+    }
+  ],
+  "before": [
+    [
+      "tests",
+      "grade"
+    ],
+    [
+      "build",
+      "grade"
+    ],
+    [
+      "build",
+      "fix"
+    ],
+    [
+      "grade",
+      "held-out-check"
+    ],
+    [
+      "fix",
+      "held-out-check"
+    ]
+  ],
+  "loops": [
+    {
+      "name": "fix-loop",
+      "stages": [
+        "grade",
+        "fix"
+      ],
+      "maxRoundsAtMost": 4,
+      "needsHeldOut": true,
+      "heldOutPaths": [
+        "tests/held_out/**"
+      ]
+    }
+  ],
+  "limits": {
+    "maxSteps": 8,
+    "maxOwners": 4
+  }
+}

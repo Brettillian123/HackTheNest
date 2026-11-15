@@ -1,0 +1,28 @@
+{
+  "frontMatter": [
+    { "key": "name", "required": true, "maxLength": 64, "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    { "key": "description", "required": true, "maxLength": 300, "mustMention": ["release notes", "changelog"] }
+  ],
+  "sections": [
+    { "name": "When to use", "aliases": ["When to use this skill", "Use when", "Use this skill when", "Triggers", "When"], "importance": "major" },
+    { "name": "Inputs", "aliases": ["What you need", "Before you start", "Requirements", "Input"], "importance": "minor" },
+    { "name": "Steps", "aliases": ["Instructions", "Workflow", "Process", "Procedure", "How to", "Method"], "importance": "critical", "mustContain": ["git log", "category"] },
+    { "name": "Output format", "aliases": ["Format", "Output", "Template", "Entry format", "Result"], "importance": "major" },
+    { "name": "Rules", "aliases": ["Guidelines", "Constraints", "Guardrails", "Do not", "Notes"], "importance": "normal", "mustContain": ["invent"] }
+  ],
+  "keyFacts": [
+    { "label": "the command to find the last tag", "anyOf": ["git describe --tags --abbrev=0"], "importance": "major", "inCode": true, "section": "Steps" },
+    { "label": "the command to list commits", "anyOf": ["git log --oneline"], "importance": "critical", "inCode": true, "section": "Steps" },
+    { "label": "the changelog file", "anyOf": ["CHANGELOG.md"], "importance": "critical", "inCode": true },
+    { "label": "the version heading format", "anyOf": ["## [x.y.z] - YYYY-MM-DD", "## [X.Y.Z] - YYYY-MM-DD"], "importance": "major", "inCode": true, "section": "Output format" },
+    { "label": "the Added category", "anyOf": ["Added"], "section": "Output format" },
+    { "label": "the Changed category", "anyOf": ["Changed"], "section": "Output format" },
+    { "label": "the Fixed category", "anyOf": ["Fixed"], "section": "Output format" },
+    { "label": "the rule to skip merge commits", "anyOf": ["merge commits", "merge commit"], "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "an instruction to push or publish", "pattern": "\\bgit push\\b|\\bnpm publish\\b|\\bgit tag\\s+v?\\d" }
+  ],
+  "limits": { "maxWords": 400, "minWords": 120 },
+  "order": ["When to use", "Steps", "Output format"]
+}

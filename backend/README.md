@@ -33,8 +33,9 @@ Known limit: sessions are stateless signed tokens, so logout clears the cookie b
 | `kind` | Goal file | Model output | Grader route | State |
 |---|---|---|---|---|
 | `page` (default) | `web/data/goals/<slug>.html` | one HTML file, cleaned (allow-list, inline SVG and `data:` images kept) | `/v1/grade/site`, one file each | proven with fakes; grader live |
-| `doc` | `web/data/rubrics/<slug>.json` (lesson challenges too) | Markdown, stored as text (client must render it safely) | `/v1/grade/doc` `{ kind, rubric, candidate }` | **built from grader/INTEGRATION.md; unproven, route not live yet**; no stand-in |
-| `site`, `scene`, `workflow` | | | | listed with `available: false`; runs answer 501 |
+| `doc` | `web/data/rubrics/<slug>.json` (lesson challenges too) | Markdown (JSON for `mcp-tools`), stored as text in `markdown` (client must render it safely) | `/v1/grade/doc` `{ kind, rubric, candidate }`; `kind` is the grader's document kind (`instructions`, `readme`, `skill`, `mcp-tools`) from the challenge's `docKind`, a string `kind` in the rubric, or the table in `kinds.js` | live in grader 0.8.0; no stand-in |
+| `workflow` | `web/data/rubrics/<slug>.json` | a plan as JSON, streamed as `text/plain`, stored as text in `markdown`; not JSON scores 0 with a plain reason and no grader call | `/v1/grade/workflow` `{ rubric, candidate }` | live in grader 0.8.0; no stand-in |
+| `site`, `scene` | | | | listed with `available: false`; runs answer 501 |
 
 An optional `marks` value on a challenge entry is sent next to `goal` in the grade request (reserved by the grader).
 

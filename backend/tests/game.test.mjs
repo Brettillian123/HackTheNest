@@ -246,7 +246,10 @@ test('bad input on every route answers 400', async () => {
 test('health reports db, models, grader mode and challenge problems without secrets', async () => {
   const { deps } = setup({ env: { ANTHROPIC_API_KEY: 'secret-model-key', GRADER_URL: 'https://g.test', GRADER_API_KEY: 'secret-grader-key' } });
   const res = await call('GET', '/api/health');
-  assert.deepEqual(res.body, { ok: true, db: true, models: ['claude-haiku'], grader: 'service', challenges: 6, problems: [] });
+  // The shipped lessons have five bonus challenges whose grader rubrics are not written yet.
+  const noRubric = ['agents-md-for-a-repo', 'readme-for-a-cli', 'mcp-server-trust-note', 'library-tools', 'findings-report']
+    .map(slug => `Lesson challenge "${slug}": rubrics/${slug}.json is missing.`);
+  assert.deepEqual(res.body, { ok: true, db: true, models: ['claude-haiku'], grader: 'service', challenges: 6, problems: noRubric });
   assert.doesNotMatch(res.text, /secret/);
   setDeps({ ...deps, env: {}, store: { ping: async () => { throw Object.assign(new Error('down'), { name: 'MongoServerSelectionError' }); } } });
   const down = await call('GET', '/api/health');

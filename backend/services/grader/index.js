@@ -136,6 +136,9 @@ async function callService({ route, body, env, fetch, now }) {
 // score is used and `notice` says why.
 export async function gradeRun({ challenge, output, env, fetch, now = Date.now }) {
   const kind = KINDS[challenge.kind || 'page'];
+  // Output the grader would only reject (a workflow plan that is not JSON) is scored 0 here, as the grader would.
+  const invalid = kind.validate ? kind.validate(output) : null;
+  if (invalid) return { ...mapServiceResult({ total: 0, error: invalid }), raw: { total: 0, error: invalid } };
   if (graderMode(env) === 'standin') {
     if (!kind.standin) throw new GraderMissing('This challenge is scored by the grader service, which is not set up yet.');
     return kind.standin(challenge, output);
