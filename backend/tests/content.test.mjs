@@ -73,7 +73,7 @@ test('the content block follows the prompt on first and follow-up runs; challeng
   assert.equal((await run('Make the button wider')).status, 200);
   for (const c of calls.model) assert.ok(c.body.messages[0].content.endsWith(block));
   assert.match(calls.model[0].body.system, /spell it exactly as listed/);
-  assert.match(calls.model[0].body.system, /layout and styling direction from the player's request/);
+  assert.match(calls.model[0].body.system, /Build only what the player's request describes/);
 });
 
 test('limit rule: brief plus acceptance only; the larger of rule and explicit wins', () => {
