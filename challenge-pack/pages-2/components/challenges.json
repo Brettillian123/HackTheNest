@@ -78,7 +78,7 @@
         "We could not reach Google Drive. Your last 3 changes are saved on this device.",
         "Try again"
       ],
-      "content": "Page title: Notifications\nSubtitle: Four messages from the last 24 hours\nMessages, newest first (kind; title; text; action):\n1. Success; Payment received; Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.; View invoice\n2. Information; New version available; Version 4.2 adds shared workspaces and faster PDF exports.; See what's new\n3. Warning; Storage almost full; You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.; Upgrade plan\n4. Error; Sync failed; We could not reach Google Drive. Your last 3 changes are saved on this device.; Try again",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- Error\n- Four messages from the last 24 hours\n- Information\n- Invoice INV-2041 for $1,280.00 was paid by Northwind Traders.\n- New version available\n- Notifications\n- Payment received\n- See what's new\n- Storage almost full\n- Success\n- Sync failed\n- Try again\n- Upgrade plan\n- Version 4.2 adds shared workspaces and faster PDF exports.\n- View invoice\n- Warning\n- We could not reach Google Drive. Your last 3 changes are saved on this device.\n- You have used 9.1 GB of your 10 GB plan. Uploads pause at the limit.",
       "acceptance": [
         "I can tell at a glance which message is good news and which needs action",
         "The kind of each message is clear even without colour",
@@ -156,7 +156,7 @@
         "Create project",
         "Import from Trello"
       ],
-      "content": "Product: Lumen (team workspace app)\nPage: Projects (the account has no projects yet)\nHeading: No projects yet\nMessage: Projects keep your files, tasks and teammates in one place. Create your first one to get started.\nMain action: Create project\nSecond action: Import from Trello",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- An empty project folder\n- Create project\n- Import from Trello\n- No projects yet\n- Projects keep your files, tasks and teammates in one place. Create your first one to get started.",
       "acceptance": [
         "A first-time customer can tell that the page is empty on purpose, not broken",
         "Creating a project is clearly the main next step, and importing is the alternative",
@@ -244,7 +244,7 @@
         "$208.98",
         "Continue to review"
       ],
-      "content": "Page: Checkout\nSteps, in order: 1 Cart, 2 Shipping, 3 Payment, 4 Review\nCompleted steps: Cart, Shipping\nCurrent step: Payment (step 3)\nOrder summary:\n- Subtotal (3 items): $184.00\n- Shipping: $9.50\n- Tax: $15.48\n- Total: $208.98\nButton: Continue to review",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- $15.48\n- $184.00\n- $208.98\n- $9.50\n- 3\n- 4\n- Cart\n- Checkout\n- Checkout progress\n- Completed\n- Continue to review\n- Order summary\n- Payment\n- Review\n- Shipping\n- Subtotal (3 items)\n- Tax\n- Total",
       "acceptance": [
         "I can tell which steps are finished, which one I'm on and what is left",
         "The current step is announced to a screen reader, not shown by colour alone",
@@ -345,7 +345,7 @@
         "$2,150.00",
         "Paid"
       ],
-      "content": "Company: Atlas Logistics\nPage subtitle: Account settings for the Business workspace\nSettings sections: Overview, Billing, Team, Integrations, Security\nCurrent section: Billing\nBilling:\n- Intro: Your plan renews automatically. Invoices are emailed to the billing contact.\n- Plan: Business, billed yearly\n- Billing contact: Priya Shah, priya.shah@atlaslogistics.com\n- Next invoice: 1 December 2026, $2,400.00\n- Payment method: Mastercard ending 8831\nRecent invoices (Invoice | Date | Amount | Status):\nINV-3108 | 1 Nov 2026 | $2,400.00 | Paid\nINV-2987 | 1 Oct 2026 | $2,400.00 | Paid\nINV-2861 | 1 Sep 2026 | $2,150.00 | Paid",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- $2,150.00\n- $2,400.00\n- 1 December 2026, $2,400.00\n- 1 Nov 2026\n- 1 Oct 2026\n- 1 Sep 2026\n- Account sections\n- Account settings for the Business workspace\n- Amount\n- Atlas Logistics\n- Billing\n- Billing contact\n- Business, billed yearly\n- Date\n- Integrations\n- INV-2861\n- INV-2987\n- INV-3108\n- Invoice\n- Mastercard ending 8831\n- Next invoice\n- Overview\n- Paid\n- Payment method\n- Plan\n- Priya Shah, priya.shah@atlaslogistics.com\n- Recent invoices\n- Security\n- Status\n- Team\n- Your plan renews automatically. Invoices are emailed to the billing contact.",
       "acceptance": [
         "I can tell which settings section I am in",
         "The plan, next invoice and payment method are easy to find",
@@ -450,7 +450,7 @@
         "Billing alerts",
         "Warn me 7 days before the card on file is charged."
       ],
-      "content": "Workspace: Harbor Studio\nPage: Settings\nSettings sections: Profile, Account, Notifications, Privacy, Billing\nCurrent section: Notifications\nNotification settings by group (name; description; on or off):\nEmail\n- Weekly summary; A digest of activity across your projects, sent every Monday at 8:00.; on\n- Product updates; News about features and improvements, about once a month.; off\n- Mentions; An email when someone mentions you in a comment.; on\nPush notifications\n- Direct messages; Notify me when a teammate sends me a message.; on\n- Task reminders; Remind me 1 hour before a task is due.; on\n- Quiet hours; Pause push notifications from 22:00 to 07:00.; off\nWorkspace\n- New members; Tell me when someone joins the Harbor Studio workspace.; off\n- Billing alerts; Warn me 7 days before the card on file is charged.; on",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- A digest of activity across your projects, sent every Monday at 8:00.\n- Account\n- An email when someone mentions you in a comment.\n- Billing\n- Billing alerts\n- Direct messages\n- Email\n- Mentions\n- New members\n- News about features and improvements, about once a month.\n- Notifications\n- Notify me when a teammate sends me a message.\n- Pause push notifications from 22:00 to 07:00.\n- Privacy\n- Product updates\n- Profile\n- Push notifications\n- Quiet hours\n- Remind me 1 hour before a task is due.\n- Settings\n- Settings sections\n- Task reminders\n- Tell me when someone joins the Harbor Studio workspace.\n- Warn me 7 days before the card on file is charged.\n- Weekly summary\n- Workspace",
       "acceptance": [
         "I can tell at a glance which notifications are on and which are off",
         "I can always see which settings section I am in",
@@ -545,7 +545,7 @@
         "Write a reply",
         "Post reply"
       ],
-      "content": "Team: Growth team\nDiscussion title: Should we switch onboarding emails to a weekly digest?\nComment count: 5 comments\nComments, oldest first (author; initials; posted; text):\n1. Dana Whitfield; DW; 2 hours ago; New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.\n2. Marcus Lee; ML; 1 hour ago; Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?\n3. Sofia Alvarez; SA; 45 minutes ago; Keeping day 1 makes sense. I can have the digest template ready by Thursday.\n4. Priya Nair; PN; 30 minutes ago; Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.\n5. Tom Okafor; TO; 12 minutes ago; I'll set up the test cohort in the email tool today and share the dashboard link here.\nAction on each comment: Reply\nNew reply: placeholder: Write a reply; button: Post reply",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- 1 hour ago\n- 12 minutes ago\n- 2 hours ago\n- 30 minutes ago\n- 45 minutes ago\n- 5 comments\n- Agreed on volume, but the day 1 setup email drives most activations. Can we keep that one?\n- Dana Whitfield\n- DW\n- Growth team\n- I'll set up the test cohort in the email tool today and share the dashboard link here.\n- Keeping day 1 makes sense. I can have the digest template ready by Thursday.\n- Let's run it as an A/B test on 20% of new accounts for two weeks before we switch everyone.\n- Marcus Lee\n- ML\n- New sign-ups get six emails in their first week. Unsubscribes doubled since March. I'd like to try one digest on day 7 instead.\n- PN\n- Post reply\n- Priya Nair\n- Reply\n- SA\n- Should we switch onboarding emails to a weekly digest?\n- Sofia Alvarez\n- TO\n- Tom Okafor\n- Write a reply",
       "acceptance": [
         "I can follow the conversation in order and see who said what and when",
         "Each comment's author is easy to recognise",
@@ -710,7 +710,7 @@
         "Previous",
         "Next"
       ],
-      "content": "Product: Ledgerly\nPage title: Invoices\nSummary: 142 invoices, $318,420.00 outstanding\nSearch: label: Search; placeholder: Customer or invoice number\nActions: Export CSV, New invoice\nInvoices (Invoice | Customer | Issued | Due | Amount | Status):\nINV-2412 | Northwind Traders | 14 Nov 2026 | 14 Dec 2026 | $4,250.00 | Pending\nINV-2411 | Bluebird Dental | 13 Nov 2026 | 13 Dec 2026 | $1,180.00 | Paid\nINV-2410 | Halcyon Studio | 12 Nov 2026 | 27 Nov 2026 | $2,940.50 | Pending\nINV-2409 | Ferro & Sons | 10 Nov 2026 | 10 Dec 2026 | $760.00 | Draft\nINV-2408 | Cedar Ridge Farms | 7 Nov 2026 | 7 Dec 2026 | $12,400.00 | Paid\nINV-2407 | Oakline Legal | 5 Nov 2026 | 5 Dec 2026 | $3,615.00 | Paid\nINV-2406 | Meridian Health | 1 Nov 2026 | 15 Nov 2026 | $8,020.00 | Overdue\nINV-2405 | Polar Freight | 30 Oct 2026 | 29 Nov 2026 | $5,300.00 | Pending\nINV-2404 | Juniper Books | 28 Oct 2026 | 11 Nov 2026 | $420.00 | Overdue\nINV-2403 | Tidewater Marine | 24 Oct 2026 | 23 Nov 2026 | $9,875.00 | Paid\nINV-2402 | Lark Coffee Co. | 21 Oct 2026 | 20 Nov 2026 | $1,045.75 | Paid\nINV-2401 | Granite Peak Gym | 17 Oct 2026 | 16 Nov 2026 | $2,200.00 | Paid\nSelected invoice: INV-2410\nPaging: Showing 1 to 12 of 142 invoices; pages 1, 2, 3, ..., 12; current page: 1; Previous (unavailable on page 1), Next",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- ...\n- $1,045.75\n- $1,180.00\n- $12,400.00\n- $2,200.00\n- $2,940.50\n- $3,615.00\n- $4,250.00\n- $420.00\n- $5,300.00\n- $760.00\n- $8,020.00\n- $9,875.00\n- 1\n- 1 Nov 2026\n- 10 Dec 2026\n- 10 Nov 2026\n- 11 Nov 2026\n- 12\n- 12 Nov 2026\n- 13 Dec 2026\n- 13 Nov 2026\n- 14 Dec 2026\n- 14 Nov 2026\n- 142 invoices, $318,420.00 outstanding\n- 15 Nov 2026\n- 16 Nov 2026\n- 17 Oct 2026\n- 2\n- 20 Nov 2026\n- 21 Oct 2026\n- 23 Nov 2026\n- 24 Oct 2026\n- 27 Nov 2026\n- 28 Oct 2026\n- 29 Nov 2026\n- 3\n- 30 Oct 2026\n- 5 Dec 2026\n- 5 Nov 2026\n- 7 Dec 2026\n- 7 Nov 2026\n- Amount\n- Bluebird Dental\n- Cedar Ridge Farms\n- Customer\n- Customer or invoice number\n- Draft\n- Due\n- Export CSV\n- Ferro & Sons\n- Granite Peak Gym\n- Halcyon Studio\n- INV-2401\n- INV-2402\n- INV-2403\n- INV-2404\n- INV-2405\n- INV-2406\n- INV-2407\n- INV-2408\n- INV-2409\n- INV-2410\n- INV-2411\n- INV-2412\n- Invoice\n- Invoices\n- Issued\n- Juniper Books\n- Lark Coffee Co.\n- Meridian Health\n- New invoice\n- Next\n- Northwind Traders\n- Oakline Legal\n- Overdue\n- Pagination\n- Paid\n- Pending\n- Polar Freight\n- Previous\n- Search\n- Showing 1 to 12 of 142 invoices\n- Sorted newest first\n- Status\n- Tidewater Marine",
       "acceptance": [
         "I can spot overdue and pending invoices immediately",
         "Dense rows stay easy to read and amounts are easy to compare",
@@ -815,7 +815,7 @@
         "Also delete the 12 linked reports",
         "Cancel"
       ],
-      "content": "Product: Fieldnote\nNavigation: Projects, Reports, Settings (current: Projects)\nProjects (name; description; file count):\n- Spring campaign; Launch plan, ad copy and landing pages for the April release.; 48 files\n- Customer interviews; Notes and recordings from 14 interviews with clinic managers.; 31 files\n- Brand refresh; Logo options, colour studies and the updated style guide.; 22 files\nOpen dialog: deleting the project Spring campaign\n- Title: Delete project\n- Warning: This permanently removes Spring campaign and its 48 files. It cannot be undone.\n- Field: Type the project name to confirm; placeholder: Spring campaign\n- Field: Reason for deleting; filled in: Campaign has ended\n- Checkbox: Also delete the 12 linked reports\n- Buttons: Cancel; Delete project (the destructive action)",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- 22 files\n- 31 files\n- 48 files\n- Also delete the 12 linked reports\n- Brand refresh\n- Cancel\n- Customer interviews\n- Delete project\n- Fieldnote\n- Launch plan, ad copy and landing pages for the April release.\n- Logo options, colour studies and the updated style guide.\n- Main\n- Notes and recordings from 14 interviews with clinic managers.\n- Projects\n- Reason for deleting\n- Reports\n- Settings\n- Spring campaign\n- This permanently removes Spring campaign and its 48 files. It cannot be undone.\n- Type the project name to confirm",
       "acceptance": [
         "It is clear what will be deleted and that it cannot be undone",
         "The destructive action is clearly distinct from cancelling",

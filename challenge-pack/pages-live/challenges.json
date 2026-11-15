@@ -76,7 +76,7 @@
         "New to Fernway?",
         "Create an account"
       ],
-      "content": "Company: Fernway (project planning app)\nPage: sign-in for returning customers\nHeading: Welcome back\nSubheading: Sign in to pick up where you left off.\nFields:\n- Email; placeholder: you@example.com\n- Password; placeholder: At least 8 characters\nOption: Remember me\nLink: Forgot password?\nMain button: Sign in\nNew customer prompt: New to Fernway?; link: Create an account",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- At least 8 characters\n- Email\n- Fernway\n- Forgot password?\n- New to Fernway? Create an account\n- Password\n- Remember me\n- Sign in\n- Sign in to pick up where you left off.\n- Welcome back\n- you@example.com",
       "acceptance": [
         "A returning customer can see straight away where to type and what to press to sign in",
         "Every field has a visible name, so it works with a screen reader and a keyboard",
@@ -258,7 +258,7 @@
         "© 2026 Harbor Software Inc.",
         "Privacy · Terms · Cookies"
       ],
-      "content": "Company: Harbor (Harbor Software Inc.)\nCall to action:\n- Heading: Ready to ship faster?\n- Line: Join 4,000 teams who plan their releases with Harbor.\n- Button: Start free trial\nAbout: Harbor; Release planning for small product teams. Built in Halifax, used around the world.\nLink groups (group name: links, in order):\n- Product: Roadmaps, Changelog, Integrations, Pricing\n- Company: About, Careers, Press, Contact\n- Resources: Docs, Guides, Status, Help center\nCopyright: © 2026 Harbor Software Inc.\nLegal links: Privacy · Terms · Cookies",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- © 2026 Harbor Software Inc.\n- About\n- Careers\n- Changelog\n- Company\n- Contact\n- Docs\n- Guides\n- Harbor\n- Help center\n- Integrations\n- Join 4,000 teams who plan their releases with Harbor.\n- Press\n- Pricing\n- Privacy · Terms · Cookies\n- Product\n- Ready to ship faster?\n- Release planning for small product teams. Built in Halifax, used around the world.\n- Resources\n- Roadmaps\n- Start free trial\n- Status",
       "acceptance": [
         "The invitation to start a free trial is the first thing I notice",
         "I can find any footer link quickly because related links sit together under a clear name",
@@ -443,7 +443,7 @@
         "Book a demo",
         "No credit card needed. Free for teams up to 5."
       ],
-      "content": "Company: Northwind (analytics product)\nNavigation links: Product, Solutions, Pricing, Docs\nNavigation button: Get started\nAnnouncement: New: live dashboards\nHeadline: Analytics your whole team can read\nSubheadline: Northwind turns raw product data into clear weekly reports, so everyone sees the same numbers.\nMain button: Start for free\nSecond button: Book a demo\nNote: No credit card needed. Free for teams up to 5.",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- Analytics your whole team can read\n- Docs\n- Get started\n- New: live dashboards\n- No credit card needed. Free for teams up to 5.\n- Northwind\n- Northwind turns raw product data into clear weekly reports, so everyone sees the same numbers.\n- Pricing\n- Product\n- Solutions\n- Start for free Book a demo",
       "acceptance": [
         "A first-time visitor can tell what Northwind does within a few seconds",
         "Starting for free is clearly the main action, with booking a demo as the alternative",
@@ -643,7 +643,7 @@
         "Maya Robles",
         "March 4, 2026 · 8 min read"
       ],
-      "content": "Article\nCategory: Design\nTitle: Why slow design wins in a fast market\nStandfirst: Teams that spend an extra week on research ship fewer features, and keep more customers. Here is what we learned from twelve launches.\nAuthor: Maya Robles; initials: MR\nDate and reading time: March 4, 2026 · 8 min read",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- Design\n- March 4, 2026 · 8 min read\n- Maya Robles\n- MR\n- Teams that spend an extra week on research ship fewer features, and keep more customers. Here is what we learned from twelve launches.\n- Why slow design wins in a fast market",
       "acceptance": [
         "The title is the first thing I read, and it feels like a considered publication",
         "I can tell the topic, the author and the reading time before scrolling",
@@ -829,7 +829,7 @@
         "Dedicated manager",
         "Contact sales"
       ],
-      "content": "Company: Fernway\nHeading: Simple pricing for every team\nSubheading: Start free. Upgrade when you need more seats.\nPrices are per month, written as the amount followed by \"/ month\".\nPlans (name; tagline; price; included; button):\n- Starter; For solo makers.; $0 / month; 1 project, Basic reports, Community support; Get started\n- Team; For growing teams.; $24 / month; Unlimited projects, Shared dashboards, Priority email support; Start free trial\n- Business; For larger companies.; $79 / month; Single sign-on, Audit log, Dedicated manager; Contact sales\nMost popular plan: Team (label text: Most popular)",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- / month\n- $0\n- $24\n- $79\n- 1 project\n- Audit log\n- Basic reports\n- Business\n- Community support\n- Contact sales\n- Dedicated manager\n- For growing teams.\n- For larger companies.\n- For solo makers.\n- Get started\n- Most popular\n- Priority email support\n- Shared dashboards\n- Simple pricing for every team\n- Single sign-on\n- Start free trial\n- Start free. Upgrade when you need more seats.\n- Starter\n- Team\n- Unlimited projects",
       "acceptance": [
         "I can compare what each plan costs and includes at a glance",
         "It is obvious which plan most teams pick",
@@ -1019,7 +1019,7 @@
         "Lighting",
         "$118"
       ],
-      "content": "Shop: Oak and Clay\nSection title: New arrivals\nLink: View all\nProducts (name; category; price):\n1. Stoneware mug; Kitchen; $18\n2. Linen throw; Living; $64\n3. Clay planter; Garden; on sale for $28, was $36\n4. Oak side table; Furniture; $149\n5. Wool cushion; Living; $42\n6. Glass carafe; Kitchen; $26\n7. Rattan basket; Storage; on sale for $31, was $39\n8. Brass lamp; Lighting; $118",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- $118\n- $149\n- $18\n- $26\n- $28\n- $31\n- $36\n- $39\n- $42\n- $64\n- Brass lamp\n- Clay planter\n- Furniture\n- Garden\n- Glass carafe\n- Kitchen\n- Lighting\n- Linen throw\n- Living\n- New arrivals\n- Oak side table\n- Rattan basket\n- Stoneware mug\n- Storage\n- View all\n- Wool cushion",
       "acceptance": [
         "I can scan every new product and its price quickly",
         "Items on sale stand out, and I can see both the sale and the regular price",
