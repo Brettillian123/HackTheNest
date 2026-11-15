@@ -1,6 +1,6 @@
 // Leaderboard page: leaderboard.html?c=<slug>&b=<bracket>&p=<period>
 import { mountShell, shellUser } from './shell.js';
-import { dropdown, esc, levelClass, demoTag, provisionalTag } from './ui.js';
+import { dropdown, esc, levelClass, demoTag, setStat, provisionalTag } from './ui.js';
 import { getLeaderboard, listChallenges, me, BRACKETS, isSimulated, isProvisional } from './api.js';
 
 const $ = (id) => document.getElementById(id);
@@ -46,6 +46,9 @@ function initials(name) {
 const profileHref = (name) => `profile.html?u=${encodeURIComponent(name)}`;
 const prompts = (n) => `${n} prompt${n === 1 ? '' : 's'}`;
 const current = () => challenges.find((c) => c.slug === state.c) || null;
+// Prompts column: a count on a challenge board, an average with one decimal on the overall board.
+const promptsOf = (r) => (state.c ? String(r.promptCount) : Number(r.avgPrompts ?? r.promptCount).toFixed(1));
+const PODIUM = 3;
 
 // ---------------------------------------------------------------- controls
 
@@ -108,6 +111,7 @@ function wireFilters() {
 // ---------------------------------------------------------------- render
 
 function renderLoading() {
+  $('podium').hidden = false;
   $('podium').innerHTML = [1, 2, 3].map((n) => `<div class="bd-top${n === 1 ? ' first' : ''}"><div class="skel"><i></i><i class="line"></i></div></div>`).join('');
   $('rows').innerHTML = '';
   $('table').hidden = true;
@@ -120,7 +124,7 @@ function topCell(r, n) {
   const tag = n === 1 ? 'r' : n === 2 ? 'p' : 'w';
   return `<div class="bd-top${n === 1 ? ' first' : ''}${r.isYou ? ' you' : ''}">
     <div class="who"><span class="lvl ${tag}">#${r.rank}</span><span class="avatar">${esc(initials(r.username))}</span>${nameHtml(r)}</div>
-    <div class="low"><span class="pr"><b>${r.promptCount}</b> ${r.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}</span><span class="big">${r.score}<small class="unit">${state.c ? 'Score' : 'Points'}</small></span></div>
+    <div class="low"><span class="pr"><b>${promptsOf(r)}</b> ${state.c && r.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}</span><span class="big">${r.score}<small class="unit">${state.c ? 'Score' : 'Points'}</small></span></div>
   </div>`;
 }
 
@@ -133,11 +137,15 @@ function renderBoard(data) {
   const { rows, you } = data;
   $('bdDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'));
   const top = rows.length ? rows[0].score : null;
-  $('stPlayers').textContent = rows.length.toLocaleString('en-US');
-  $('stTop').textContent = top == null ? 'none yet' : String(top);
-  $('stYou').textContent = you ? `#${you.rank}` : 'none yet';
+  setStat($('stPlayers'), rows.length.toLocaleString('en-US'));
+  setStat($('stTop'), top == null ? 'None yet' : String(top));
+  setStat($('stYou'), you ? `#${you.rank}` : 'None yet');
 
-  $('podium').innerHTML = [0, 1, 2].map((i) => topCell(rows[i], i + 1)).join('');
+  // Podium only with three or more players; the table then starts at #4, so no row shows twice.
+  const podium = rows.length >= PODIUM;
+  $('podium').hidden = !podium;
+  $('podium').innerHTML = podium ? [0, 1, 2].map((i) => topCell(rows[i], i + 1)).join('') : '';
+  const listed = podium ? rows.slice(PODIUM) : rows;
 
   if (!rows.length) {
     $('table').hidden = true;
@@ -147,13 +155,12 @@ function renderBoard(data) {
     return;
   }
   $('state').innerHTML = '';
-  $('table').hidden = false;
-  $('rows').innerHTML = rows.map((r) => `<tr${r.isYou ? ' class="you" id="youRow"' : ''}>
+  $('table').hidden = !listed.length;
+  $('rows').innerHTML = listed.map((r) => `<tr${r.isYou ? ' class="you" id="youRow"' : ''}>
     <td class="pos">#${r.rank}</td>
     <td><span class="who"><span class="avatar">${esc(initials(r.username))}</span>${nameHtml(r)}</span></td>
-    <td class="r num">${r.promptCount}</td>
+    <td class="r num">${promptsOf(r)}</td>
     <td class="r sc-cell">${r.score}</td></tr>`).join('');
-  $('wrap').scrollTop = 0;
   pinYou(you);
 }
 
@@ -174,7 +181,7 @@ function pinYou(you) {
   if (youObserver) { youObserver.disconnect(); youObserver = null; }
   const row = $('youRow');
   if (!you || !row) { pin.hidden = true; return; }
-  pin.innerHTML = `<span class="pos">#${you.rank}</span><span>You: rank <b>${you.rank}</b>, <b>${you.score}</b> ${state.c ? 'score' : 'points'}${you.promptCount != null ? `, <b>${you.promptCount}</b> ${you.promptCount === 1 ? 'prompt' : 'prompts'}` : ''}</span>
+  pin.innerHTML = `<span class="pos">#${you.rank}</span><span>You: rank <b>${you.rank}</b>, <b>${you.score}</b> ${state.c ? 'score' : 'points'}${you.promptCount != null ? `, <b>${state.c ? you.promptCount : promptsOf(you)}</b> ${state.c && you.promptCount === 1 ? 'prompt' : 'prompts'}${state.c ? '' : ' avg'}` : ''}</span>
     <button type="button" class="btn btn-ghost sm" id="pinJump">${ICON.down}Show my row</button>`;
   $('pinJump').addEventListener('click', () => row.scrollIntoView({ block: 'center', behavior: 'smooth' }));
   youObserver = new IntersectionObserver(([e]) => { pin.hidden = e.isIntersecting; }, { root: null, threshold: 0.9, rootMargin: '0px 0px -72px 0px' });

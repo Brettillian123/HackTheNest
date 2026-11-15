@@ -111,30 +111,100 @@ export function toast(message, { slot, ms = 3200 } = {}) {
   setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 220); }, ms);
 }
 
-// Scale 960x600 content inside every .frame to the frame width (as v8 does).
+// Scale the 1280 x 800 goal page inside every .frame to the frame width, whole and without scrollbars.
 export function fitFrames(root = document) {
   const frames = root.querySelectorAll('.frame');
   const fit = (f) => {
     const m = f.querySelector(':scope > iframe, :scope > img, :scope > .mock');
-    if (m && f.clientWidth) m.style.transform = `scale(${f.clientWidth / 960})`;
+    if (m && f.clientWidth) m.style.transform = `scale(${f.clientWidth / (m.offsetWidth || 1280)})`;
   };
+  // A goal preview never scrolls: no scrollbar inside the frame in any browser.
+  const noScroll = (fr) => {
+    try { const d = fr.contentDocument; if (d && d.documentElement) d.documentElement.style.overflow = 'hidden'; } catch { /* other origin: scrolling="no" still applies */ }
+  };
+  frames.forEach((f) => {
+    const fr = f.querySelector(':scope > iframe');
+    if (!fr) return;
+    fr.setAttribute('scrolling', 'no');
+    fr.addEventListener('load', () => noScroll(fr));
+    noScroll(fr);
+  });
   const ro = new ResizeObserver((es) => es.forEach((e) => fit(e.target)));
   frames.forEach((f) => { ro.observe(f); fit(f); });
 }
 
-// Editable editor: keeps the line-number gutter in step with the textarea and grows it.
+// Editable editor: one number per line of the prompt, set against the first row of that line even
+// when it wraps. Each line's wrapped height is measured in a hidden copy of the textarea.
 export function lineNumbers(editorEl) {
   const ta = editorEl && editorEl.querySelector('textarea');
   const gutter = editorEl && editorEl.querySelector('.gutter');
   if (!ta || !gutter) return;
+  const mirror = document.createElement('div');
+  mirror.setAttribute('aria-hidden', 'true');
+  mirror.style.cssText = 'position:absolute;left:-10000px;top:0;visibility:hidden;white-space:pre-wrap;overflow-wrap:break-word;word-break:normal;padding:0;border:0';
+  document.body.appendChild(mirror);
+  let width = 0;
   const sync = () => {
     ta.style.height = 'auto';
     ta.style.height = ta.scrollHeight + 'px';
-    const n = Math.max(1, ta.value.split('\n').length);
-    if (gutter.children.length !== n) gutter.innerHTML = Array.from({ length: n }, (_, i) => `<span>${i + 1}</span>`).join('');
+    const cs = getComputedStyle(ta);
+    width = ta.clientWidth;
+    const inner = width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const lines = ta.value.split('\n');
+    if (inner <= 0) return;
+    mirror.style.width = inner + 'px';
+    mirror.style.font = cs.font;
+    mirror.style.letterSpacing = cs.letterSpacing;
+    mirror.style.tabSize = cs.tabSize;
+    mirror.innerHTML = lines.map((l) => `<div>${esc(l) || '&#8203;'}</div>`).join('');
+    const hs = Array.from(mirror.children, (d) => d.getBoundingClientRect().height);
+    gutter.innerHTML = hs.map((h, i) => `<span style="height:${h}px">${i + 1}</span>`).join('');
   };
   ta.addEventListener('input', sync);
+  // Re-measure when the width changes (window resize, panel shown).
+  new ResizeObserver(() => { if (ta.clientWidth !== width) sync(); }).observe(ta);
   sync();
+}
+
+// Stat or cell value: words ("None yet", "Not tried") are set in sans, numbers stay mono.
+export function setStat(el, value) {
+  if (!el) return;
+  const t = String(value);
+  el.textContent = t;
+  el.classList.toggle('is-word', !/\d/.test(t));
+}
+
+// Phones: tapping a page frame opens that page at full size in a simple in-page viewer.
+export function frameViewer(frameEls) {
+  const phone = window.matchMedia('(max-width:760px)');
+  frameEls.forEach((f) => f && f.addEventListener('click', () => {
+    if (!phone.matches) return;
+    const src = f.querySelector(':scope > iframe');
+    if (!src) return;
+    const panel = f.closest('.panel');
+    const prev = f.previousElementSibling;
+    let lbl = 'Page';
+    if (prev && prev.classList.contains('frame-lbl')) {
+      const c = prev.cloneNode(true);
+      c.querySelectorAll('.lvl').forEach((t) => t.remove());
+      lbl = c.textContent.trim();
+    } else if (panel && panel.querySelector('.panel-head .h')) lbl = panel.querySelector('.panel-head .h').textContent.trim();
+    const back = document.activeElement;
+    const box = document.createElement('div');
+    box.className = 'fv';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', lbl + ' at full size');
+    box.innerHTML = `<div class="fv-bar"><span class="h">${esc(lbl)}</span><button type="button" class="btn btn-secondary sm">Close</button></div><div class="fv-scroll"><iframe sandbox="allow-same-origin" title="${esc(lbl)} at full size"></iframe></div>`;
+    const fr = box.querySelector('iframe');
+    if (src.hasAttribute('srcdoc')) fr.srcdoc = src.srcdoc; else fr.src = src.getAttribute('src') || 'about:blank';
+    const close = () => { box.remove(); document.removeEventListener('keydown', onKey, true); if (back && back.focus) back.focus(); };
+    const onKey = (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); } };
+    box.querySelector('button').addEventListener('click', close);
+    document.addEventListener('keydown', onKey, true);
+    document.body.appendChild(box);
+    box.querySelector('button').focus();
+  }));
 }
 
 // Simulated data labels. One wording for the whole site; show them only when api.isSimulated() says so.

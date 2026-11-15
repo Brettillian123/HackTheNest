@@ -10,6 +10,8 @@
 .ws-page .col > .panel{min-height:0;overflow:hidden}
 .ws-page .col > .panel.grow{flex:1 1 0}
 .ws-page .col > .panel.ws-dd-host{overflow:visible}
+/* every panel head is as tall as the tool group, so all head labels share one baseline */
+.ws-page .panel > .panel-head{min-height:34px}
 
 /* frames hold the page at its real viewport, scaled by workspace.js */
 .ws .frame > iframe{width:1280px;height:800px}
@@ -19,18 +21,33 @@
 /* tab counter */
 .ws-count{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
 
-/* instructions menu */
-.ws-ins{min-width:380px;max-height:calc(100vh - 230px);overflow:auto}
-.ws-ins:focus-visible{outline:none}
-.ws-ins-group{padding:var(--s-3) var(--s-3) var(--s-1);font:var(--w-bold) var(--fs-11)/16px var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-4)}
+/* instructions: a column docked beside the goal inside its panel; the page frames shrink to make room */
+.ws-ins{display:none}
+.ws-page .col > .panel.ins-open{flex:1 1 0;display:grid;grid-template-columns:minmax(0,34fr) minmax(0,66fr);grid-template-rows:auto minmax(0,1fr);column-gap:var(--s-6);align-content:stretch}
+.panel.ins-open > .panel-head{grid-column:1 / -1}
+.panel.ins-open > :not(.panel-head):not(.ws-ins){grid-column:1;grid-row:2;align-self:start}
+.panel.ins-open > .ws-ins{display:block;grid-column:2;grid-row:2;min-height:0;overflow:auto;padding-left:var(--s-6);border-left:1px solid var(--line)}
+.panel.ins-open > .checks-wrap,.panel.ins-open > .ws-run-prompt{display:none}
+.panel.ins-open .pair{grid-template-columns:minmax(0,1fr);gap:var(--s-4)}
+.ws-ins > .h{margin-bottom:var(--s-1)}
+.ws-ins-cols{columns:2;column-gap:var(--s-6)}
+.ws-ins-group{break-after:avoid;padding:var(--s-2) 0 2px;font:var(--w-bold) var(--fs-11)/16px var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-4)}
+.ws-ins-group:first-child{padding-top:0}
+.ws-ins dl > div{break-inside:avoid;padding:2px 0 var(--s-1)}
+.ws-ins dt{font:var(--w-bold) var(--fs-11)/14px var(--ui);color:var(--text-3)}
+.ws-ins dd{font:var(--w-reg) var(--fs-12)/16px var(--ui);color:var(--text);text-align:left}
 .ws-model-menu{min-width:200px}
 .dd-item[aria-checked="true"]{color:var(--text);background:var(--hover)}
 
 /* prompt panel */
 .ws-prompt{display:flex;flex-direction:column}
-.ws-prompt .editor{flex:1 1 0;min-height:120px}
-.ws-status{display:flex;align-items:center;gap:var(--s-3);margin-top:var(--s-3);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
-.ws-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+.ws-prompt .editor{flex:1 1 0;min-height:120px;cursor:text}
+.ws-prompt .editor textarea{min-height:100%}
+/* the status line takes the place of the preview note: same slot, same size, no shift */
+.ws-status{display:flex;align-items:flex-start;gap:var(--s-3);margin-top:var(--s-4);font-size:var(--fs-12);line-height:17px;color:var(--text-2)}
+.ws-status.bad{color:var(--text-fail)}
+.ws-status::before{content:"";width:6px;height:6px;margin-top:6px;border-radius:50%;background:var(--text-4);flex:none}
+.ws-status.bad::before{background:var(--red)}
 .ws-prompt .again{margin-top:var(--s-5)}
 .ws-prompt .ws-sim{margin-top:var(--s-4)}
 .ws-tall{height:52px;padding:0 var(--s-8)}
@@ -40,7 +57,7 @@
 .btn .ws-bl small{color:var(--text-3)}
 
 /* last run summary while refining, and run detail costs */
-.ws-last{margin-bottom:var(--s-4);padding:var(--s-3) var(--s-5);background:var(--sunk);border-radius:var(--r-6)}
+.ws-last{margin-bottom:var(--s-4);padding:var(--s-3) var(--s-5);background:var(--sunk);border-radius:var(--r-panel)}
 .ws-last-top{display:flex;align-items:baseline;gap:var(--s-3);font-size:var(--fs-13);color:var(--text-2)}
 .ws-last-top b{font:var(--w-bold) var(--fs-16) var(--mono);color:var(--red)}
 .ws-mini{display:flex;align-items:baseline;gap:var(--s-4);padding:3px 0;font-size:var(--fs-13);line-height:19px;color:var(--text)}
@@ -56,9 +73,11 @@
 /* compare panel: the prompt that produced this score fills the space under the checks */
 .ws-compare{display:flex;flex-direction:column}
 .ws-compare > .pair,.ws-compare > .checks-wrap,.ws-compare > .panel-head{flex:none}
-.ws-run-prompt{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin-top:var(--s-5);border-top:1px solid var(--line);padding-top:var(--s-4)}
-.ws-run-prompt .panel-head{margin-bottom:var(--s-3)}
-.ws-rp{flex:1 1 0;min-height:44px;padding-top:var(--s-3);padding-bottom:var(--s-3);overflow:auto;white-space:pre-wrap;word-break:break-word}
+.ws-run-prompt{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin-top:var(--s-3);border-top:1px solid var(--line);padding-top:var(--s-3)}
+.ws-compare .checks-wrap{margin-top:var(--s-4);padding-top:var(--s-3)}
+.ws-compare .checks li{padding:4px 0}
+.ws-run-prompt .panel-head{margin-bottom:var(--s-2)}
+.ws-rp{flex:1 1 0;min-height:78px;padding-top:var(--s-3);padding-bottom:var(--s-3);overflow:auto;white-space:pre-wrap;word-break:break-word}
 
 /* runs panel */
 .ws-runs{display:flex;flex-direction:column;gap:var(--s-4)}
@@ -71,10 +90,17 @@
 .ws-detail-top .of{font:var(--w-semi) var(--fs-13) var(--mono);color:var(--text-4)}
 .ws-rd-costs{flex:1 1 0;min-height:60px;overflow:auto;margin-top:0}
 .ws-rd-costs .cost .w{font-size:var(--fs-15);line-height:22px}
-.ws-detail .btn{flex:none}
+.ws-detail .btn{flex:none;margin-top:var(--s-1)}
 
-/* stage panel */
-.ws-stages .stages.row{flex-wrap:wrap}
+/* while running: the page panel takes the height, scoring is one tight row */
+#minePanel{display:flex;flex-direction:column}
+#minePanel .frame{margin:auto 0}
+.ws #mineFrame{background:var(--editor)}
+.ws-stages{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-3) var(--s-8);padding-top:var(--s-5);padding-bottom:var(--s-5)}
+.ws-page .panel.ws-stages > .panel-head{margin:0;min-height:0;gap:var(--s-5)}
+.ws-stages .stages.row{flex-wrap:wrap;row-gap:var(--s-3);column-gap:var(--s-7)}
+.ws-stages .stages li{padding:0}
+@media (max-width:1180px){.ws .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* page tools: overlay, ruler, magnifier */
 .tool-ov{position:absolute;inset:0;z-index:2;cursor:crosshair;touch-action:none;overflow:hidden}
@@ -85,6 +111,6 @@
 .tool-tip{position:absolute;padding:2px var(--s-2);background:var(--overlay);border-radius:var(--r-3);font:var(--w-semi) var(--fs-11)/16px var(--mono);color:var(--text);white-space:nowrap;pointer-events:none}
 .tool-rect{position:absolute;border:1px solid var(--red);background:var(--red-tint);pointer-events:none}
 .tool-rect .tool-tip{left:0;top:100%;margin-top:var(--s-1)}
-.tool-lens{position:fixed;z-index:60;width:220px;height:220px;overflow:hidden;border-radius:var(--r-8);background:var(--white);box-shadow:0 0 0 2px var(--red),var(--shadow-float);pointer-events:none}
+.tool-lens{position:fixed;z-index:60;width:220px;height:220px;overflow:hidden;border-radius:var(--r-panel);background:var(--section);outline:2px solid var(--red);pointer-events:none}
 .tool-lens iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none}
-.tool-lens::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-5px 0 0 -5px;border:1px solid var(--red);border-radius:50%}
+.tool-lens::after{content:"";position:absolute;left:var(--cx,50%);top:var(--cy,50%);width:9px;height:9px;margin:-5px 0 0 -5px;border:1px solid var(--red);border-radius:50%}

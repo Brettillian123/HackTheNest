@@ -4,6 +4,7 @@
 // [data-tool="ruler"|"mag"] buttons in it. group.link(a, b) mirrors two layers. One tool at a time.
 
 const LENS = 220;
+const LENS_SMALL = 140; // compare view: small frames side by side
 const ZOOM = 3;
 
 function el(cls, tag = 'div') {
@@ -77,12 +78,22 @@ function makeLayer(frameEl, viewport, group) {
       cx.hidden = cy.hidden = tip.hidden = false;
       cx.style.left = Math.round(l.x) + 'px';
       cy.style.top = Math.round(l.y) + 'px';
-      tip.textContent = `x ${p.x}  y ${p.y}`;
+      tip.textContent = `x ${p.x}, y ${p.y}`;
       const w = frameEl.clientWidth;
       const h = frameEl.clientHeight;
       const tw = tip.offsetWidth || 90;
       tip.style.left = (l.x + 10 + tw > w ? l.x - 10 - tw : l.x + 10) + 'px';
-      tip.style.top = (l.y + 30 > h ? l.y - 26 : l.y + 10) + 'px';
+      let top = l.y + 30 > h ? l.y - 26 : l.y + 10;
+      // With a measured box showing, keep the cursor label at least 8px clear of the size label.
+      if (!rect.hidden) {
+        const a = rtip.getBoundingClientRect();
+        const fr = frameEl.getBoundingClientRect();
+        const lt = fr.left + parseFloat(tip.style.left);
+        const overlapX = lt < a.right + 8 && lt + tw > a.left - 8;
+        const overlapY = fr.top + top < a.bottom + 8 && fr.top + top + 20 > a.top - 8;
+        if (overlapX && overlapY) top = a.top - fr.top > 30 ? a.top - fr.top - 8 - 20 : a.bottom - fr.top + 8;
+      }
+      tip.style.top = top + 'px';
     },
     showRect(a, b) {
       const la = toLocal(a);
@@ -92,7 +103,7 @@ function makeLayer(frameEl, viewport, group) {
       rect.style.top = Math.min(la.y, lb.y) + 'px';
       rect.style.width = Math.abs(lb.x - la.x) + 'px';
       rect.style.height = Math.abs(lb.y - la.y) + 'px';
-      rtip.textContent = `${Math.abs(b.x - a.x)} x ${Math.abs(b.y - a.y)}`;
+      rtip.textContent = `${Math.abs(b.x - a.x)} × ${Math.abs(b.y - a.y)}`;
       const below = Math.max(la.y, lb.y) + 24 < frameEl.clientHeight;
       rtip.style.top = below ? '100%' : 'auto';
       rtip.style.bottom = below ? 'auto' : '100%';
@@ -113,10 +124,21 @@ function makeLayer(frameEl, viewport, group) {
       const l = toLocal(p);
       const r = frameEl.getBoundingClientRect();
       const L = scale() * ZOOM;
+      // The lens stays inside its own frame (never over the other frame, the score or the rail)
+      // and inside the window; the ring marks the point under the cursor.
+      const size = Math.min(r.width < 400 ? LENS_SMALL : LENS, r.width, r.height);
+      const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), Math.max(lo, hi));
+      const left = clamp(r.left + l.x - size / 2, Math.max(r.left, 0), Math.min(r.right, window.innerWidth) - size);
+      const top = clamp(r.top + l.y - size / 2, Math.max(r.top, 0), Math.min(r.bottom, window.innerHeight) - size);
+      const cx = r.left + l.x - left;
+      const cy = r.top + l.y - top;
       lens.hidden = false;
-      lens.style.left = r.left + l.x - LENS / 2 + 'px';
-      lens.style.top = r.top + l.y - LENS / 2 + 'px';
-      lensFrame.style.transform = `translate(${LENS / 2 - (p.x - sc.x) * L}px, ${LENS / 2 - (p.y - sc.y) * L}px) scale(${L})`;
+      lens.style.width = lens.style.height = size + 'px';
+      lens.style.left = left + 'px';
+      lens.style.top = top + 'px';
+      lens.style.setProperty('--cx', cx + 'px');
+      lens.style.setProperty('--cy', cy + 'px');
+      lensFrame.style.transform = `translate(${cx - (p.x - sc.x) * L}px, ${cy - (p.y - sc.y) * L}px) scale(${L})`;
     },
   };
 
@@ -181,12 +203,11 @@ export function createTools() {
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tool === group.mode)));
       layers.forEach((l) => l.setMode(group.mode));
     },
-    // Esc: clear a ruler rectangle first, otherwise turn the tool off. Returns true if it did something.
+    // Esc: turn the tool off (and clear any measured box). Returns true if it did something.
     escape() {
       if (!group.mode) return false;
-      const withRect = layers.filter((l) => l.hasRect());
-      if (withRect.length) withRect.forEach((l) => l.clearRect());
-      else group.setMode(null);
+      layers.forEach((l) => l.clearRect());
+      group.setMode(null);
       return true;
     },
   };

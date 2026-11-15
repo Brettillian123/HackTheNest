@@ -16,7 +16,9 @@
   .bd-top{height:auto;min-height:112px}
   .bd-top .low{flex-wrap:wrap;row-gap:var(--s-2)}
   .bd-top .pr{white-space:nowrap}
-  .overlay{width:270px}
+  .overlay{grid-template-columns:minmax(0,1fr)}
+  .overlay .costs{margin-top:var(--s-4)}
+  .overlay .cost:first-child{border-top:1px solid var(--line)}
 }
 
 /* ---------- 760 and below: phones ---------- */
@@ -30,8 +32,9 @@
   .ws-model-menu{min-width:0}
   /* frame: bottom bar instead of the left rail */
   #rail,.rail{inset:auto 0 0 0;width:auto;height:var(--nav-h);flex-direction:row;justify-content:space-around;align-items:center;padding:0 var(--s-3);gap:0;border-top:1px solid var(--line)}
-  .rail-logo,.rail-dot{display:none}
-  .rail-link{width:56px;height:var(--nav-h)}
+  .rail-dot{display:none}
+  .rail-link{width:72px;height:var(--nav-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+  .rail-lbl{display:block;font-size:var(--fs-10);line-height:12px}
   .rail-link.on::before{left:14px;right:14px;top:0;bottom:auto;width:auto;height:3px;border-radius:0 0 var(--r-3) var(--r-3)}
   #nav,.top{margin-left:0;padding:0 var(--gutter);align-items:center}
   .page{margin-left:0;padding:0 var(--gutter) calc(var(--nav-h) + var(--s-8))}
@@ -40,6 +43,7 @@
   .nav-links{margin-top:0;gap:var(--s-2)}
   .nav-links > a:not(.nav-me){display:none}
   .nav-auth{margin-left:0}
+  .nav-auth .btn-ghost{display:none}
   .nav-auth .btn{height:40px}
   .nav-me{margin-left:0}
 
@@ -57,7 +61,8 @@
   .split,.auth-grid,.nf-split{min-height:0}
   .phead{flex-direction:column;align-items:stretch;gap:var(--s-5)}
   .phead-side{margin-left:0;flex-wrap:wrap}
-  .phead-side .stat,.phead-side .stat:nth-child(3){display:block;flex:1 1 calc(50% - var(--s-4));min-width:0}
+  .phead-side{flex-wrap:nowrap}
+  .phead-side .stat,.phead-side:not(.keep) .stat:nth-child(3){display:block;flex:1 1 0;min-width:0}
   .panel,.section{padding:var(--s-6)}
   .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
   .checks{grid-template-columns:1fr}
@@ -69,10 +74,16 @@
   .chal-cell{flex:1 1 0;min-width:0}
   .chal > svg{display:none}
   .chal.wide .frame{order:-1;flex:1 1 100%;width:100%}
+  /* level tag on the title line; the brief keeps the full width */
+  .chal.wide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"f f f" "m m m"}
+  .chal.wide .frame{grid-area:f}
+  .chal.wide .chal-main{grid-area:m}
+  .chal.wide > .lvl{grid-area:m;justify-self:start;align-self:start;margin-top:-2px}
+  .chal.wide .chal-title{text-indent:48px}
+  .board .panel-head > .note{display:none}
 
   /* landing */
   .hero-copy{padding:var(--s-6)}
-  .overlay{position:static;width:auto;margin-top:var(--s-5)}
   .foot{flex-wrap:wrap;gap:var(--s-5)}
   .foot nav{flex-wrap:wrap;gap:var(--s-5)}
   .foot .end{margin-left:0}
@@ -82,9 +93,24 @@
   /* leaderboard */
   .bd-board{min-height:0}
   .bd-podium{grid-template-columns:minmax(0,1fr)}
+  /* the table fits a 390px screen: tighter cells, no sideways scroll */
+  .bd-wrap .lbt th,.bd-wrap .lbt td{padding:0 var(--s-3)}
+  .bd-pin{bottom:var(--nav-h)}
+  .bd-wrap .lbt{table-layout:fixed}
+  .bd-wrap .lbt th:nth-child(1){width:48px}
+  .bd-wrap .lbt th:nth-child(3){width:96px}
+  .bd-wrap .lbt th:nth-child(4){width:64px}
+  .bd-wrap .lbt th{white-space:nowrap}
+  .bd-wrap .lbt td:nth-child(2){overflow:hidden}
+  .bd-wrap .lbt .who{min-width:0}
   .bd-top{height:auto;min-height:88px}
-  .bd-wrap{flex:none;contain:none;height:60vh;min-height:0}
   .bd-board .panel-head .filters{display:flex;flex-wrap:wrap;gap:var(--s-3)}
+  /* bracket pills: a 3 x 2 grid, never one pill alone on a row */
+  .bd-board #bracketPills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}
+  .bd-board #bracketPills > button{justify-content:center;padding:0 var(--s-2)}
+  /* profile: four stats as 2 x 2 */
+  .pf-head .phead-side{flex-wrap:wrap}
+  .pf-head .phead-side .stat{flex:1 1 calc(50% - var(--s-4))}
 
   /* workspace: goal, prompt and results stack and the page scrolls */
   .ws-page{height:auto;overflow:visible}
@@ -92,8 +118,19 @@
   .ws-page .col > .panel,.ws-page .col > .panel.grow{flex:none;overflow:visible}
   .ws-prompt .editor{min-height:200px}
   .ws-rp{min-height:120px}
+  .ws-run-prompt,.ws-page .ws-rp{flex:none}
+  .ws-page .ws-rp{max-height:240px}
   .ws-rd-costs{min-height:0}
   .again{flex-wrap:wrap}
   .ws-tall{flex:1 1 auto}
   .run kbd{display:none}
+  /* run and cancel stay in view above the bottom bar */
+  .ws-prompt .again{position:sticky;bottom:calc(var(--nav-h) + var(--s-3));z-index:3;background:var(--section);padding:var(--s-3) 0;margin-bottom:calc(var(--s-3) * -1)}
+  .ws-stages{gap:var(--s-3) var(--s-6)}
+  /* instructions: a full-width sheet right under the panel header */
+  .ws-page .col > .panel.ins-open{display:flex;flex-direction:column}
+  .panel.ins-open > .panel-head{order:-2}
+  .panel.ins-open > .ws-ins{order:-1;padding:0 0 var(--s-5);margin-bottom:var(--s-5);border-left:0;border-bottom:1px solid var(--line);overflow:visible}
+  .ws-ins-cols{columns:1}
+  .ws .frame{cursor:zoom-in}
 }
