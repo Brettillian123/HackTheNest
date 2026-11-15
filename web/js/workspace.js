@@ -324,6 +324,13 @@ function renderModels() {
 const OK_SVG = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg>';
 const NO_SVG = '<svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg>';
 
+// Points a problem cost. The grader sends no figure for most page problems (and puts it in the
+// sentence for 3D ones), so a problem with no figure shows a dot, never a misleading -0.
+function lost(c) {
+  let p = Number(c.points) || 0;
+  if (!p) { const m = /([0-9]+(?:\.[0-9]+)?) points? lost/.exec(c.message || ''); if (m) p = Number(m[1]); }
+  return p > 0 ? MINUS + fmtScore(p) : '•';
+}
 function signed(n) { return (n >= 0 ? '+' : MINUS) + fmtScore(Math.abs(n)); }
 function sortedCosts(r) { return (r.costs || []).slice().sort((a, b) => b.points - a.points); }
 function topCosts(r) { return sortedCosts(r).slice(0, 3); }
@@ -331,7 +338,7 @@ const COST_ROWS = 3; // rows the score panel has room for at 1280 x 800
 function miniCosts(r) {
   const cs = topCosts(r);
   return cs.length
-    ? cs.map((c) => `<div class="ws-mini"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span>${esc(c.message)}</span></div>`).join('')
+    ? cs.map((c) => `<div class="ws-mini"><span class="pt">${lost(c)}</span><span>${esc(c.message)}</span></div>`).join('')
     : '<div class="ws-mini none">No points lost on this run</div>';
 }
 
@@ -405,8 +412,8 @@ function renderScore(run) {
   const rest = all.slice(shown.length);
   const restPts = rest.reduce((s, c) => s + c.points, 0);
   $('scCosts').innerHTML = all.length
-    ? shown.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
-      (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${MINUS}${fmtScore(restPts)}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
+    ? shown.map((c) => `<div class="cost"><span class="pt">${lost(c)}</span><span class="w">${esc(c.message)}</span></div>`).join('') +
+      (rest.length ? `<button type="button" class="cost more" id="moreCosts"><span class="pt">${restPts > 0 ? MINUS + fmtScore(restPts) : '+'}</span><span class="w">${rest.length} more ${rest.length === 1 ? 'cost' : 'costs'}<small>See every cost in Runs</small></span></button>` : '')
     : '<div class="cost"><span class="w">No points lost on this run</span></div>';
   const more = $('moreCosts');
   if (more) more.addEventListener('click', () => { S.sel = run.n; viewTabs.select(1); });
@@ -443,7 +450,7 @@ function renderRuns() {
   // Every cost of the selected run; its prompt shows on the left under the checks.
   const all = (run.result.costs || []).slice().sort((a, b) => b.points - a.points);
   $('rdCosts').innerHTML = all.length
-    ? all.map((c) => `<div class="cost"><span class="pt">${MINUS}${fmtScore(c.points)}</span><span class="w">${esc(c.message)}</span></div>`).join('')
+    ? all.map((c) => `<div class="cost"><span class="pt">${lost(c)}</span><span class="w">${esc(c.message)}</span></div>`).join('')
     : '<div class="cost"><span class="w">No points lost on this run</span></div>';
 }
 
