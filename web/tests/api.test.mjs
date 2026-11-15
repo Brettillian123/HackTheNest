@@ -39,6 +39,20 @@ test("getChallenge has goal, viewport, models and a factual spec", async () => {
     assert.ok(existsSync(goalPath), `goal file for ${slug}`);
     const goal = readFileSync(goalPath, "utf8");
     assert.ok(!/<script/i.test(goal), "no scripts in goal");
+    if (c.format === "brief") {
+      // A brief challenge has no spec; every key fact is an exact text on the example page.
+      assert.equal(c.spec, undefined, `${slug}: no spec on a brief challenge`);
+      assert.ok(c.brief.trim() && c.requirements.length >= 6 && c.designNotes.length >= 3, `${slug}: brief fields`);
+      // Compared with the page's text: entities decoded, runs of white space as one space.
+      const NAMED = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", copy: "©", rsquo: "’", lsquo: "‘", ldquo: "“", rdquo: "”", mdash: "—", ndash: "–", hellip: "…", middot: "·", times: "×", pound: "£", euro: "€" };
+      const flat = (t) => t.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+        .replace(/&([a-z]+);/gi, (m, n) => NAMED[n.toLowerCase()] ?? m).replace(/\s+/g, " ");
+      const text = flat(goal);
+      for (const k of c.keyFacts) assert.ok(text.includes(flat(k)), `${slug}: key fact "${k}" not in example`);
+      for (const f of faults.challenges[slug] || []) assert.ok(goal.includes(f.find), `${slug}: fault "${f.check}" does not match`);
+      continue;
+    }
+    assert.equal(c.format, "spec");
     const groups = c.spec.map((g) => g.group);
     if (ORIGINAL.includes(slug)) assert.deepEqual(groups, ["Page", "Type", "Layout", "Output"]);
     assert.ok(groups.length >= 2, `${slug}: at least two spec groups`);

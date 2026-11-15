@@ -77,7 +77,7 @@ export class GraderRejected extends Error {
 }
 // The grader could not be reached, timed out or stayed busy.
 export class GraderUnavailable extends Error {
-  constructor(message) { super(message); this.name = 'GraderUnavailable'; }
+  constructor(message, status = null) { super(message); this.name = 'GraderUnavailable'; this.status = status; }
 }
 // No grader is configured and this kind has no stand-in.
 export class GraderMissing extends Error {
@@ -116,7 +116,7 @@ async function callService({ route, body, env, fetch, now }) {
     }
     if (!res.ok) {
       console.error(`Grader service answered ${res.status}`);
-      throw new GraderUnavailable(res.status === 503 ? 'The grader is busy.' : `The grader could not score this page (${res.status}).`);
+      throw new GraderUnavailable(res.status === 503 ? 'The grader is busy.' : `The grader could not score this page (${res.status}).`, res.status);
     }
     let parsed;
     try { parsed = await res.json(); } catch { throw new GraderUnavailable('The grader sent an answer that could not be read.'); }
@@ -134,21 +134,54 @@ async function callService({ route, body, env, fetch, now }) {
 // Scores one run's output. Returns { total, checks, passedCount, totalChecks, costs, provisional,
 // ...service fields, raw?, notice? }. If the service fails and the kind has a stand-in, the stand-in
 // score is used and `notice` says why.
+// Intent grading: for a challenge with keyFacts, the grade request may carry
+// `intent: { "index.html": { keyFacts } }`. Older graders reject unknown top-level fields, so it is
+// sent only when GRADER_INTENT=on, or when the grader's /health reports `intent: true` or a
+// `features` list with "intent" (GRADER_INTENT=off never sends it). A 400 to a request with intent
+// is retried once without it, and this instance stops sending it to that grader.
+const intentRefused = new WeakMap();
+const intentSetting = env => String(env.GRADER_INTENT || '').trim().toLowerCase();
+
+async function intentEnabled({ env, fetch, now }) {
+  if (intentSetting(env) === 'off') return false;
+  if (intentRefused.get(fetch)?.has(baseUrl(env))) return false;
+  if (intentSetting(env) === 'on') return true;
+  return (await liveGraderHealth({ env, fetch, now })).intent;
+}
+
+function rememberIntentRefused(env, fetch) {
+  const set = intentRefused.get(fetch) || new Set();
+  set.add(baseUrl(env));
+  intentRefused.set(fetch, set);
+}
+
+// Every result says whether intent grading was used (`intentGraded`), so the two styles are not mixed.
 export async function gradeRun({ challenge, output, env, fetch, now = Date.now }) {
   const kind = KINDS[challenge.kind || 'page'];
   // Output the grader would only reject (a workflow plan that is not JSON) is scored 0 here, as the grader would.
   const invalid = kind.validate ? kind.validate(output) : null;
-  if (invalid) return { ...mapServiceResult({ total: 0, error: invalid }), raw: { total: 0, error: invalid } };
+  if (invalid) return { ...mapServiceResult({ total: 0, error: invalid }), raw: { total: 0, error: invalid }, intentGraded: false };
   if (graderMode(env) === 'standin') {
     if (!kind.standin) throw new GraderMissing('This challenge is scored by the grader service, which is not set up yet.');
-    return kind.standin(challenge, output);
+    return { ...kind.standin(challenge, output), intentGraded: false };
   }
+  const body = kind.gradeBody(challenge, output);
+  const intent = kind.intent ? kind.intent(challenge) : null;
   try {
-    return await callService({ route: kind.graderRoute, body: kind.gradeBody(challenge, output), env, fetch, now });
+    if (intent && await intentEnabled({ env, fetch, now })) {
+      try {
+        return { ...(await callService({ route: kind.graderRoute, body: { ...body, intent }, env, fetch, now })), intentGraded: true };
+      } catch (error) {
+        if (!(error instanceof GraderUnavailable && error.status === 400)) throw error;
+        console.error('Grader refused intent (400): retrying without it, and not sending it again from this instance');
+        rememberIntentRefused(env, fetch);
+      }
+    }
+    return { ...(await callService({ route: kind.graderRoute, body, env, fetch, now })), intentGraded: false };
   } catch (error) {
     if (!(error instanceof GraderUnavailable) || !kind.standin) throw error;
     console.error(`Grader fallback: ${error.message}`);
-    return { ...kind.standin(challenge, output), notice: `${error.message} This is a provisional score from the quick checker; score again later for a full grade.` };
+    return { ...kind.standin(challenge, output), intentGraded: false, notice: `${error.message} This is a provisional score from the quick checker; score again later for a full grade.` };
   }
 }
 
@@ -159,23 +192,29 @@ export function gradePage({ goalHtml, html, env, fetch, now = Date.now }) {
 
 export { standinScore };
 
-// The live grader's version from its /health (no key), cached per instance for 60 s; null when
-// unreachable or not configured.
+// The live grader's /health (no key), cached per instance for 60 s: { version, intent }. version is
+// null and intent false when unreachable or not configured; both are read defensively.
 const healthCache = new WeakMap();
-export async function liveGraderVersion({ env, fetch, now = Date.now }) {
-  if (graderMode(env) !== 'service') return null;
+export async function liveGraderHealth({ env, fetch, now = Date.now }) {
+  if (graderMode(env) !== 'service') return { version: null, intent: false };
   const url = `${baseUrl(env)}/health`;
   const perFetch = healthCache.get(fetch) || new Map();
   healthCache.set(fetch, perFetch);
   const hit = perFetch.get(url);
-  if (hit && now() - hit.at < HEALTH_TTL_MS) return hit.version;
-  let version = null;
+  if (hit && now() - hit.at < HEALTH_TTL_MS) return hit.info;
+  const info = { version: null, intent: false };
   try {
     const res = await fetch(url, { method: 'GET', signal: AbortSignal.timeout(HEALTH_TIMEOUT_MS) });
-    if (res.ok) version = str((await res.json())?.version, 50);
-  } catch {
-    version = null;
-  }
-  perFetch.set(url, { at: now(), version });
-  return version;
+    if (res.ok) {
+      const body = await res.json();
+      info.version = str(body?.version, 50);
+      info.intent = body?.intent === true || (Array.isArray(body?.features) && body.features.includes('intent'));
+    }
+  } catch { /* unreachable: defaults */ }
+  perFetch.set(url, { at: now(), info });
+  return info;
+}
+
+export async function liveGraderVersion(deps) {
+  return (await liveGraderHealth(deps)).version;
 }

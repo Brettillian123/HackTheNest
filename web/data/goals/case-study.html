@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case study: Greenleaf Grocers - Stackwell</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: #fffdf8; color: #1f2937; }
+.site-header { border-bottom: 1px solid #e7e2d6; }
+.header-inner { display: flex; justify-content: space-between; align-items: center; width: 1040px; height: 72px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; }
+.brand { font-size: 20px; line-height: 28px; font-weight: bold; color: #1f2937; text-decoration: none; }
+.site-nav ul { display: flex; gap: 32px; margin: 0; padding: 0; list-style: none; }
+.site-nav a { font-size: 15px; line-height: 20px; color: #4b5563; text-decoration: none; }
+.site-nav a[aria-current="page"] { font-weight: bold; color: #166534; }
+.intro { width: 760px; margin: 0 auto; padding: 64px 0 40px; }
+.eyebrow { margin: 0 0 16px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #166534; }
+h1 { margin: 0 0 20px; font-size: 46px; line-height: 54px; font-weight: normal; color: #111827; }
+.summary { margin: 0; font-size: 21px; line-height: 32px; color: #4b5563; }
+.results { display: grid; grid-template-columns: repeat(3, 1fr); width: 1040px; margin: 0 auto; padding: 32px 0; list-style: none; border-top: 1px solid #e7e2d6; border-bottom: 1px solid #e7e2d6; }
+.results li { padding: 0 32px; text-align: center; }
+.results li + li { border-left: 1px solid #e7e2d6; }
+.figure-value { display: block; margin: 0 0 8px; font-size: 56px; line-height: 64px; color: #166534; }
+.figure-label { display: block; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 22px; color: #4b5563; }
+.body { width: 760px; margin: 0 auto; padding: 48px 0 72px; }
+h2 { margin: 40px 0 12px; font-size: 28px; line-height: 36px; font-weight: normal; color: #111827; }
+.body p { margin: 0 0 16px; font-size: 18px; line-height: 30px; }
+blockquote { margin: 32px 0; padding: 0 0 0 28px; border-left: 4px solid #166534; }
+.body blockquote p { margin: 0 0 12px; font-size: 26px; line-height: 38px; font-style: italic; color: #111827; }
+.body .cite { margin: 0; font-style: normal; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 22px; color: #4b5563; }
+.chart { margin: 24px 0 32px; }
+.chart svg { display: block; width: 100%; height: auto; }
+figcaption { margin: 8px 0 0; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 20px; color: #4b5563; }
+table { width: 100%; margin: 16px 0 0; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; }
+th, td { padding: 12px 16px; font-size: 15px; line-height: 22px; text-align: left; border-bottom: 1px solid #e7e2d6; }
+thead th { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #4b5563; border-bottom: 2px solid #1f2937; }
+tbody th { font-weight: normal; color: #1f2937; }
+.after { font-weight: bold; color: #166534; }
+footer { border-top: 1px solid #e7e2d6; }
+.footer-inner { display: flex; justify-content: space-between; width: 1040px; margin: 0 auto; padding: 32px 0 40px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 20px; color: #4b5563; }
+.footer-inner p { margin: 0; }
+.footer-inner a { color: #166534; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#">Stackwell</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="#">Services</a></li>
+        <li><a href="#" aria-current="page">Case studies</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main>
+  <article>
+    <div class="intro">
+      <p class="eyebrow">Case study &middot; Retail</p>
+      <h1>How Greenleaf Grocers cut checkout drop-off by 38%</h1>
+      <p class="summary">A regional grocery chain was losing one in two online baskets at checkout. In twelve weeks we rebuilt the flow around speed and fewer decisions.</p>
+    </div>
+    <ul class="results">
+      <li><span class="figure-value">38%</span><span class="figure-label">fewer abandoned checkouts</span></li>
+      <li><span class="figure-value">2.4x</span><span class="figure-label">faster checkout page loads</span></li>
+      <li><span class="figure-value">$1.2M</span><span class="figure-label">added yearly online revenue</span></li>
+    </ul>
+    <div class="body">
+      <h2>The challenge</h2>
+      <p>Greenleaf runs 46 stores across Oregon and Washington. Online orders had doubled since 2024, but almost half of the shoppers who reached checkout left before paying. The checkout asked for an account, five pages of details and a delivery slot chosen last.</p>
+      <h2>What we changed</h2>
+      <p>We cut checkout to a single page, made guest checkout the default and moved the delivery slot to the start, so shoppers knew their time before they filled in anything else. Page weight fell from 3.1 MB to 1.2 MB.</p>
+      <blockquote>
+        <p>For the first time, our online checkout feels as quick as our fastest till.</p>
+        <p class="cite">Dana Whitfield, Head of Digital, Greenleaf Grocers</p>
+      </blockquote>
+      <h2>The results</h2>
+      <p>The new checkout launched on 1 April 2026. Completion rose in the first month and kept climbing as returning shoppers got used to it.</p>
+      <figure class="chart">
+        <svg viewBox="0 0 640 320" role="img" aria-label="Bar chart of checkout completion by month, January to June 2026: 52, 54 and 53 percent before launch, then 61, 68 and 71 percent after.">
+          <g stroke="#e7e2d6" stroke-width="1">
+            <path d="M64 204 H616 M64 144 H616 M64 84 H616 M64 24 H616"/>
+          </g>
+          <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#4b5563" text-anchor="end">
+            <text x="56" y="268">0%</text>
+            <text x="56" y="208">20%</text>
+            <text x="56" y="148">40%</text>
+            <text x="56" y="88">60%</text>
+            <text x="56" y="28">80%</text>
+          </g>
+          <g fill="#9ca3af">
+            <rect x="82" y="108" width="56" height="156"/>
+            <rect x="174" y="102" width="56" height="162"/>
+            <rect x="266" y="105" width="56" height="159"/>
+          </g>
+          <g fill="#166534">
+            <rect x="358" y="81" width="56" height="183"/>
+            <rect x="450" y="60" width="56" height="204"/>
+            <rect x="542" y="51" width="56" height="213"/>
+          </g>
+          <g font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#1f2937" text-anchor="middle">
+            <text x="110" y="100">52%</text>
+            <text x="202" y="94">54%</text>
+            <text x="294" y="97">53%</text>
+            <text x="386" y="73">61%</text>
+            <text x="478" y="52">68%</text>
+            <text x="570" y="43">71%</text>
+          </g>
+          <path d="M64 24 V264 H616" fill="none" stroke="#1f2937" stroke-width="1.5"/>
+          <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#4b5563" text-anchor="middle">
+            <text x="110" y="284">Jan</text>
+            <text x="202" y="284">Feb</text>
+            <text x="294" y="284">Mar</text>
+            <text x="386" y="284">Apr</text>
+            <text x="478" y="284">May</text>
+            <text x="570" y="284">Jun</text>
+            <text x="340" y="312">Month, 2026</text>
+            <text x="16" y="144" transform="rotate(-90 16 144)">Checkout completion</text>
+          </g>
+        </svg>
+        <figcaption>Checkout completion by month. Grey bars: old checkout. Green bars: new checkout, launched 1 April.</figcaption>
+      </figure>
+      <table>
+        <caption hidden>Before and after the new checkout</caption>
+        <thead>
+          <tr><th scope="col">Measure</th><th scope="col">Before</th><th scope="col">After</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Checkout completion</th><td>53%</td><td class="after">71%</td></tr>
+          <tr><th scope="row">Pages in checkout</th><td>5</td><td class="after">1</td></tr>
+          <tr><th scope="row">Median time to pay</th><td>4 min 10 s</td><td class="after">1 min 35 s</td></tr>
+          <tr><th scope="row">Checkout page weight</th><td>3.1 MB</td><td class="after">1.2 MB</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</main>
+<footer>
+  <div class="footer-inner">
+    <p>&copy; 2026 Stackwell Digital, Portland, Oregon</p>
+    <p><a href="#">Start a project with us</a></p>
+  </div>
+</footer>
+</body>
+</html>

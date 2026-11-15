@@ -157,12 +157,67 @@ async function renderBoard() {
 }
 
 // Instructions: a column docked inside the page panel on show; the button opens and closes it.
+// A brief-format challenge docks the Brief instead: the brief, requirements, key facts and design notes,
+// and its goal page is labelled as one example of a good result.
+const isBrief = () => !!(S.ch && S.ch.format === 'brief' && !isDoc());
 function renderInstructions() {
+  $('insBtn').addEventListener('click', () => { S.ins = !S.ins; render(); });
+  if (isBrief()) { setupBrief(); return; }
   const groups = S.ch.spec.map((g) =>
     `<h4 class="ws-ins-group">${esc(g.group)}</h4><dl>` +
     g.items.map((i) => `<div><dt>${esc(i.label)}</dt><dd>${esc(i.value)}</dd></div>`).join('') + '</dl>').join('');
   $('insMenu').innerHTML = `<h3 class="h">Match these exactly</h3><div class="ws-ins-cols">${groups}</div>`;
-  $('insBtn').addEventListener('click', () => { S.ins = !S.ins; render(); });
+}
+
+const KIND_NAME = { content: 'Content', structure: 'Structure', behaviour: 'Behaviour', style: 'Style', engineering: 'Engineering' };
+const COPY_SVG = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.2"/><path d="M9.5 2H3.2C2.5 2 2 2.5 2 3.2v6.3"/></svg>';
+function setupBrief() {
+  const label = [...$('insBtn').childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+  if (label) label.textContent = 'Brief';
+  $('insMenu').setAttribute('aria-label', 'Brief');
+  $('insMenu').classList.add('ws-brief');
+  $('goalTitle').textContent = 'Example result';
+  $('goalTitle').insertAdjacentHTML('afterend', '<span class="note ws-ex-note">One good answer, not a target to copy</span>');
+  const g = document.querySelector('#cmpPair .frame-lbl');
+  if (g && g.lastChild) g.lastChild.textContent = 'Example result';
+  $('goalFrame').querySelector('iframe').title = 'Example result';
+  ta.placeholder = 'Describe the page that meets the brief';
+  // One listener for every copy button in the column.
+  $('insMenu').addEventListener('click', (e) => {
+    const b = e.target.closest('.ws-copy');
+    if (!b) return;
+    const done = (ok) => { b.dataset.state = ok ? 'ok' : 'no'; b.lastChild.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(() => { delete b.dataset.state; b.lastChild.textContent = 'Copy'; }, 1400); };
+    const text = (S.ch.keyFacts || [])[Number(b.dataset.i)] || '';
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => done(true), () => done(false)); else done(false);
+  });
+}
+
+// The Brief column; requirements are ticked or crossed only when the last result maps them by id.
+function renderBrief() {
+  const c = S.ch;
+  const runs = S.attempt ? S.attempt.runs : [];
+  const last = runs[runs.length - 1];
+  const res = new Map(((last && last.result.requirements) || []).map((r) => [r.id, r.met]));
+  const reqs = c.requirements || [];
+  const groups = api.REQUIREMENT_KINDS.map((k) => {
+    const items = reqs.filter((r) => r.kind === k);
+    if (!items.length) return '';
+    return `<h4 class="ws-ins-group">${KIND_NAME[k]}</h4><ul class="checks one ws-reqs">` + items.map((r) => {
+      const met = res.get(r.id);
+      const cls = met === true ? 'ok' : met === false ? 'no' : 'todo';
+      const mark = met === true ? OK_SVG : met === false ? NO_SVG : '';
+      const say = met === true ? 'Met: ' : met === false ? 'Not met: ' : '';
+      return `<li class="${cls}"><span class="m" aria-hidden="true">${mark}</span><span class="ws-req-t"><span class="sr-only">${say}</span>${esc(r.text)}</span>${r.exact ? '<span class="ws-exact" title="Must match exactly">Exact</span>' : ''}</li>`;
+    }).join('') + '</ul>';
+  }).join('');
+  const facts = (c.keyFacts || []).map((f, i) =>
+    `<li><code>${esc(f)}</code><button type="button" class="btn btn-ghost sm ws-copy" data-i="${i}" aria-label="Copy: ${esc(f)}">${COPY_SVG}<span>Copy</span></button></li>`).join('');
+  const notes = (c.designNotes || []).map((n) => `<li>${esc(n)}</li>`).join('');
+  $('insMenu').innerHTML =
+    `<h3 class="h">The brief</h3><p class="ws-brief-p">${esc(c.brief)}</p>` +
+    (groups ? `<h3 class="h ws-brief-h">Requirements</h3>${groups}` : '') +
+    (facts ? `<h3 class="h ws-brief-h">Key facts</h3><ul class="ws-facts">${facts}</ul>` : '') +
+    (notes ? `<h3 class="h ws-brief-h">Design notes</h3><ul class="ws-notes">${notes}</ul>` : '');
 }
 
 function renderModels() {
@@ -279,6 +334,10 @@ function renderScore(run) {
   if (more) more.addEventListener('click', () => { S.sel = run.n; viewTabs.select(1); });
   $('scNoteText').innerHTML = rejected
     ? `<b>The grader could not mark this page:</b> ${esc(r.rejectedReason)}`
+    : r.intentGraded
+    ? 'Marked on meeting the brief, not on matching the picture'
+    : isBrief()
+    ? 'Marked against the example for now'
     : bonus
     ? `<b>A perfect match, leaner than the goal: +${fmtScore(bonus)} bonus</b>`
     : r.total >= 100
@@ -371,7 +430,11 @@ function render() {
   }
   dd.hidden = !host;
   if (!host) S.ins = false;
-  ['goalPanel', 'comparePanel'].forEach((id) => $(id).classList.toggle('ins-open', S.ins && $(id) === host));
+  ['goalPanel', 'comparePanel'].forEach((id) => {
+    $(id).classList.toggle('ins-open', S.ins && $(id) === host);
+    $(id).classList.toggle('ins-brief', isBrief());
+  });
+  if (isBrief() && S.ins) renderBrief();
   $('insBtn').setAttribute('aria-expanded', String(S.ins));
   // The docked column needs the height: the leaderboard strip steps aside while it is open.
   if (S.ins && host === $('goalPanel')) show('lbPanel', false);
@@ -627,6 +690,8 @@ async function main() {
   ta.value = draft || (runs.length ? runs[runs.length - 1].prompt : '');
   ta.dispatchEvent(new Event('input'));
   S.mode = runs.length ? 'scored' : 'idle';
+  // Before the first run of a brief challenge, the Brief is what the player needs most: open it.
+  if (isBrief() && !runs.length && !(S.attempt && S.attempt.pending)) S.ins = true;
   if (S.attempt && S.attempt.pending) { S.mode = 'stopped'; S.runN = S.attempt.pending.n; showMine(outputOf(S.attempt.pending)); setStatus('Page saved, score it to see the result'); }
   if (S.ch.available === false) setStatus(S.ch.unavailableReason || 'This challenge is not playable yet');
   render();

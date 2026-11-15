@@ -89,3 +89,7 @@
 .chal-kind{display:grid;place-items:center;background:var(--bg)}
 .chal-kind span{font:var(--w-bold) var(--fs-12)/1 var(--mono);letter-spacing:1px;color:var(--text-4)}
 .chal-off{display:block;margin-top:4px;color:var(--text-3)}
+
+/* challenge list: category filter beside the level filter; category tag on each row */
+.bar{flex-wrap:wrap;row-gap:var(--s-3)}
+.chal-meta .mtag.cat-tag{padding:0 var(--s-2);border-radius:var(--r-3);background:var(--sunk);line-height:18px;color:var(--text-2)}

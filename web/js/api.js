@@ -531,15 +531,105 @@ function youName() {
 
 // ---------------------------------------------------------------- challenges
 
+// Challenge categories, in filter order. A challenge with no category is "classic" in the list filter.
+export const CATEGORIES = ["components", "marketing", "apps", "forms"];
+export const CATEGORY_FILTERS = ["all", ...CATEGORIES, "classic"];
+export const REQUIREMENT_KINDS = ["content", "structure", "behaviour", "style", "engineering"];
+// Category ids; long labels ("Marketing and content", "App screens and data") map by their first word.
+export function normCategory(v) {
+  const s = String(v || "").trim().toLowerCase();
+  if (!s) return undefined;
+  return CATEGORIES.find((k) => s === k || s.startsWith(k.replace(/s$/, ""))) || undefined;
+}
+export function categoryOf(c) {
+  return (c && normCategory(c.category)) || "classic";
+}
+// "brief" or "spec"; with no format given, a challenge with requirements and no spec is a brief.
+export function formatOf(c) {
+  if (!c) return "spec";
+  if (c.format === "brief" || c.format === "spec") return c.format;
+  return Array.isArray(c.requirements) && !Array.isArray(c.spec) ? "brief" : "spec";
+}
+export function filterByCategory(list, cat = "all") {
+  if (!CATEGORY_FILTERS.includes(cat) || cat === "all") return list.slice();
+  return list.filter((c) => categoryOf(c) === cat);
+}
+
+// Brief-format fields, from the server or the mock, read defensively. Returns {} for a spec challenge.
+export function briefFields(sc) {
+  if (formatOf(sc) !== "brief") return {};
+  const strs = (a) => (Array.isArray(a) ? a.map((x) => String(x == null ? "" : x).trim()).filter(Boolean) : []);
+  const requirements = (Array.isArray(sc.requirements) ? sc.requirements : [])
+    .filter((r) => r && (r.text || r.id))
+    .map((r, i) => ({
+      id: String(r.id ?? `r${i + 1}`),
+      text: String(r.text || r.id),
+      kind: REQUIREMENT_KINDS.includes(r.kind) ? r.kind : r.kind === "behavior" ? "behaviour" : "content",
+      exact: r.exact === true,
+    }));
+  return { format: "brief", brief: String(sc.brief || ""), requirements, keyFacts: strs(sc.keyFacts), designNotes: strs(sc.designNotes) };
+}
+
+// Mock-only extras for the preview build: categories, and two challenges in the brief format.
+const MOCK_META = {
+  "login-card": { category: "forms" },
+  "split-signup": {
+    category: "forms",
+    format: "brief",
+    brief: "A sign-up page for Ledgerly, bookkeeping software for small studios. Make starting a free trial feel quick and safe, with the product's promise on one side and the form on the other.",
+    requirements: [
+      { id: "promise", text: "A brand side that says what Ledgerly does and lists three benefits", kind: "content", exact: false },
+      { id: "quote", text: "One short customer quote with a name and company", kind: "content", exact: false },
+      { id: "split", text: "Two halves on wide screens: brand on the left, form on the right", kind: "structure", exact: false },
+      { id: "fields", text: "Fields for full name, work email, password and company size, each with a visible label", kind: "structure", exact: true },
+      { id: "terms", text: "A terms checkbox that must be ticked before the account can be created", kind: "behaviour", exact: false },
+      { id: "google", text: "A second way in: continue with Google", kind: "behaviour", exact: false },
+      { id: "calm", text: "One strong brand colour, used for the main button", kind: "style", exact: false },
+      { id: "a11y", text: "Real form controls a keyboard and screen reader can use", kind: "engineering", exact: false },
+    ],
+    keyFacts: ["Create your account", "Start your 14-day free trial. No credit card required.", "At least 8 characters, with one number and one symbol.", "Create account", "Already have an account?"],
+    designNotes: ["Calm and trustworthy", "Plenty of white space", "Blue brand panel"],
+  },
+  "harbor-landing": {
+    category: "marketing",
+    format: "brief",
+    brief: "A landing page for Harbor, a shared inbox for small teams. A visitor should understand the product in five seconds and see one clear way to start.",
+    requirements: [
+      { id: "nav", text: "A header with the brand, three page links and a sign-in link", kind: "structure", exact: false },
+      { id: "hero", text: "A centred hero with the headline, one supporting sentence and the main button", kind: "structure", exact: false },
+      { id: "features", text: "Three features, each with a short title and one line", kind: "content", exact: true },
+      { id: "footer", text: "A footer with the copyright line", kind: "content", exact: false },
+      { id: "cta", text: "The main button is the most visible thing on the page", kind: "style", exact: false },
+      { id: "links", text: "Links and the button are real links a keyboard can reach", kind: "behaviour", exact: false },
+      { id: "lean", text: "Semantic sections and no unused styles", kind: "engineering", exact: false },
+    ],
+    keyFacts: ["One calm inbox for your whole team", "Start free trial", "Shared inbox", "Smart sorting", "Weekly reports", "Made for small teams everywhere."],
+    designNotes: ["Quiet and friendly", "One accent colour", "Lots of breathing room"],
+  },
+  "nav-hero": { category: "marketing" },
+  "pricing-plans": { category: "marketing" },
+  "profile-card": { category: "components" },
+  "footer-columns": { category: "components" },
+  "product-grid": { category: "components" },
+  "analytics-dashboard": { category: "apps" },
+  "print-invoice": { category: "apps" },
+};
+// Which mock brief challenges are marked on the brief (the others are marked against the example).
+const MOCK_INTENT = new Set(["harbor-landing"]);
+
 function summary(data, c, others, best) {
   const scores = others.map((r) => r.score);
   if (best) scores.push(best.score);
+  const meta = formatOf(c) === "brief" ? { category: (MOCK_META[c.slug] || {}).category } : MOCK_META[c.slug] || {};
+  const category = normCategory(c.category) || meta.category;
   return {
     slug: c.slug,
     title: c.title,
     level: c.level,
     levelLabel: data.levels[String(c.level)],
-    brief: c.brief,
+    brief: meta.brief || c.brief,
+    ...(category ? { category } : {}),
+    format: meta.format || formatOf(c),
     solvedCount: others.length + (best ? 1 : 0),
     topScore: scores.length ? Math.max(...scores) : null,
     yourBest: best ? best.score : null,
@@ -565,6 +655,8 @@ function fromServerSummary(s) {
     level: s.level,
     levelLabel: s.levelLabel,
     brief: s.brief,
+    ...(normCategory(s.category) ? { category: normCategory(s.category) } : {}),
+    format: formatOf(s),
     solvedCount: s.solvedCount ?? 0,
     topScore: s.topScore ?? null,
     yourBest: s.yourBest ?? null,
@@ -591,6 +683,7 @@ async function mockListChallenges() {
 
 async function mockChallenge(slug) {
   const { data, c } = await findChallenge(slug);
+  const brief = briefFields(formatOf(c) === "brief" ? c : { ...c, ...(MOCK_META[slug] || {}) });
   return {
     ...summary(data, c, await mockBoard(slug), store.getBest(slug)),
     goalUrl: (c.kind || "page") === "page" ? goalUrlFor(slug) : null,
@@ -599,7 +692,7 @@ async function mockChallenge(slug) {
     maxPromptChars: Number(c.maxPromptChars) || 2500,
     viewport: { ...data.viewport },
     models: data.models.map((m) => ({ ...m })),
-    spec: c.spec.map((g) => ({ group: g.group, items: g.items.map((i) => ({ ...i })) })),
+    ...(brief.format ? brief : { spec: (c.spec || []).map((g) => ({ group: g.group, items: g.items.map((i) => ({ ...i })) })) }),
   };
 }
 
@@ -643,11 +736,15 @@ export async function getChallenge(slug) {
     viewport: sc.viewport ? { width: sc.viewport.width, height: sc.viewport.height } : { width: 1280, height: 800 },
     models: fromServerModels(sc.models),
     spec: (sc.spec || []).map((g) => ({ group: g.group, items: (g.items || []).map((i) => ({ ...i })) })),
+    format: "spec",
+    ...briefFields(sc),
   };
   if (body.statsAvailable) return { ...fromServerSummary(sc), ...details };
   simulated.add("boards");
   const mock = await mockChallenge(slug).catch(() => null);
-  return { ...(mock || fromServerSummary(sc)), ...details };
+  const base = { ...(mock || fromServerSummary(sc)) };
+  if (details.format === "spec") ["requirements", "keyFacts", "designNotes"].forEach((k) => delete base[k]);
+  return { ...base, ...details };
 }
 
 // ---------------------------------------------------------------- attempts
@@ -697,7 +794,19 @@ function fromServerResult(r) {
     }));
   }
   if (r.rejectedReason) out.rejectedReason = String(r.rejectedReason);
+  if (r.intentGraded != null) out.intentGraded = !!r.intentGraded;
+  const reqs = requirementResults(r.requirements);
+  if (reqs) out.requirements = reqs;
   return out;
+}
+
+// Per-requirement results, only when the grader sends an id and a yes/no for it; otherwise null.
+export function requirementResults(list) {
+  if (!Array.isArray(list)) return null;
+  const out = list
+    .filter((x) => x && x.id != null && [x.met, x.passed].some((v) => typeof v === "boolean"))
+    .map((x) => ({ id: String(x.id), met: typeof x.met === "boolean" ? x.met : x.passed }));
+  return out.length ? out : null;
 }
 
 // A run: page runs keep the page in html; doc runs keep the answer in markdown (html stays "").
@@ -878,8 +987,17 @@ async function mockGrade(slug, n, prompt) {
       { id: "looks", label: "Looks like the goal", value: Math.max(0, 100 - lost) },
     ],
     engineering: { efficiency: 0.9, accessibility: 0.85, cleanCode: 0.8, decidedBy: "cleanCode" },
+    ...mockBriefGrade(slug, prompt),
     activeFaults: split.map((s) => s.fault),
   };
+}
+
+// Brief-format mock challenges: one is marked on the brief (with per-requirement results), the other is not.
+function mockBriefGrade(slug, prompt) {
+  const meta = MOCK_META[slug];
+  if (!meta || meta.format !== "brief" || !meta.requirements) return {};
+  if (!MOCK_INTENT.has(slug)) return { intentGraded: false };
+  return { intentGraded: true, requirements: meta.requirements.map((q) => ({ id: q.id, met: hash(`${prompt}|${q.id}`) % 4 !== 0 })) };
 }
 
 // Saves a finished run into the current attempt and the best record; returns { attempt, run }.

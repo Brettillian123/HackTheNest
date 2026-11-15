@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your cart - Harbor &amp; Pine</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #0f172a; }
+header { background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+.bar { display: flex; align-items: center; justify-content: space-between; width: 1120px; height: 72px; margin: 0 auto; }
+.brand { font-family: Georgia, "Times New Roman", serif; font-size: 22px; line-height: 28px; font-weight: bold; color: #0f172a; text-decoration: none; }
+.back { font-size: 15px; line-height: 20px; color: #1e40af; }
+main { width: 1120px; margin: 0 auto; padding: 48px 0 80px; }
+h1 { margin: 0 0 32px; font-size: 32px; line-height: 40px; }
+.layout { display: flex; align-items: flex-start; gap: 40px; }
+.items { flex: 1; margin: 0; padding: 0; list-style: none; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; }
+.item { display: flex; align-items: center; gap: 24px; padding: 24px; border-top: 1px solid #e2e8f0; }
+.item:first-child { border-top: 0; }
+.thumb { display: block; flex-shrink: 0; border-radius: 8px; }
+.info { flex: 1; }
+h2 { margin: 0 0 4px; font-size: 17px; line-height: 24px; }
+.variant { margin: 0 0 10px; font-size: 14px; line-height: 20px; color: #475569; }
+.remove { font-size: 14px; line-height: 20px; color: #b91c1c; }
+.qty-label { display: block; margin-bottom: 6px; font-size: 12px; line-height: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #475569; }
+.stepper { display: flex; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; }
+.stepper button { width: 36px; height: 40px; font-family: inherit; font-size: 18px; color: #0f172a; background: #f1f5f9; border: 0; }
+.stepper input { width: 48px; height: 40px; font-family: inherit; font-size: 16px; text-align: center; color: #0f172a; border: 0; border-left: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; }
+.price { width: 110px; margin: 0; font-size: 17px; line-height: 24px; font-weight: bold; text-align: right; }
+.each { display: block; font-size: 13px; line-height: 18px; font-weight: normal; color: #475569; }
+aside { width: 380px; }
+.promo { margin-bottom: 24px; padding: 24px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; }
+.promo label { display: block; margin-bottom: 8px; font-size: 14px; line-height: 20px; font-weight: bold; }
+.promo-row { display: flex; gap: 8px; }
+.promo-row input { flex: 1; height: 44px; padding: 0 14px; font-family: inherit; font-size: 15px; border: 1px solid #cbd5e1; border-radius: 8px; }
+.promo-row input::placeholder { color: #64748b; }
+.promo-row button { padding: 0 20px; font-family: inherit; font-size: 15px; font-weight: bold; color: #0f172a; background: #e2e8f0; border: 0; border-radius: 8px; }
+.summary { padding: 28px 24px 24px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; }
+.summary h2 { margin: 0 0 20px; font-size: 20px; line-height: 28px; }
+.totals { margin: 0 0 24px; }
+.line { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; line-height: 22px; }
+.line dt { color: #475569; }
+.line dd { margin: 0; }
+.total { margin-top: 12px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 18px; font-weight: bold; }
+.total dt { color: #0f172a; }
+.checkout { display: block; width: 100%; height: 52px; font-family: inherit; font-size: 17px; font-weight: bold; color: #ffffff; background: #1e40af; border: 0; border-radius: 8px; }
+.secure { margin: 12px 0 0; font-size: 13px; line-height: 18px; text-align: center; color: #475569; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="#">Harbor &amp; Pine</a>
+    <a class="back" href="#">Continue shopping</a>
+  </div>
+</header>
+<main>
+  <h1>Your cart (3 items)</h1>
+  <div class="layout">
+    <ul class="items">
+      <li class="item">
+        <svg class="thumb" width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="Linen overshirt"><rect width="88" height="88" fill="#f5efe6"/><path d="M30 22 L38 18 L50 18 L58 22 L68 34 L60 40 L58 36 L58 70 L30 70 L30 36 L28 40 L20 34 Z" fill="#d6c3a5"/></svg>
+        <div class="info">
+          <h2>Linen Overshirt</h2>
+          <p class="variant">Size M, Sand</p>
+          <a class="remove" href="#">Remove</a>
+        </div>
+        <div>
+          <label class="qty-label" for="qty-1">Qty</label>
+          <div class="stepper"><button type="button" aria-label="Decrease quantity">-</button><input id="qty-1" name="qty-1" type="number" value="1" min="1"><button type="button" aria-label="Increase quantity">+</button></div>
+        </div>
+        <p class="price">$68.00</p>
+      </li>
+      <li class="item">
+        <svg class="thumb" width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="Merino crew socks"><rect width="88" height="88" fill="#e8ecf1"/><path d="M36 16 L52 16 L52 52 L62 60 C66 64 64 72 56 72 L40 72 C34 72 32 68 34 62 L36 56 Z" fill="#475569"/></svg>
+        <div class="info">
+          <h2>Merino Crew Socks</h2>
+          <p class="variant">One size, Charcoal</p>
+          <a class="remove" href="#">Remove</a>
+        </div>
+        <div>
+          <label class="qty-label" for="qty-2">Qty</label>
+          <div class="stepper"><button type="button" aria-label="Decrease quantity">-</button><input id="qty-2" name="qty-2" type="number" value="2" min="1"><button type="button" aria-label="Increase quantity">+</button></div>
+        </div>
+        <p class="price">$24.00<span class="each">$12.00 each</span></p>
+      </li>
+      <li class="item">
+        <svg class="thumb" width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="Canvas tote bag"><rect width="88" height="88" fill="#eef2ea"/><path d="M34 34 C34 20 54 20 54 34" fill="none" stroke="#8a7a5c" stroke-width="4"/><rect x="24" y="32" width="40" height="40" rx="3" fill="#e4d9c0"/></svg>
+        <div class="info">
+          <h2>Canvas Tote Bag</h2>
+          <p class="variant">Natural</p>
+          <a class="remove" href="#">Remove</a>
+        </div>
+        <div>
+          <label class="qty-label" for="qty-3">Qty</label>
+          <div class="stepper"><button type="button" aria-label="Decrease quantity">-</button><input id="qty-3" name="qty-3" type="number" value="1" min="1"><button type="button" aria-label="Increase quantity">+</button></div>
+        </div>
+        <p class="price">$32.00</p>
+      </li>
+    </ul>
+    <aside>
+      <form class="promo" action="#" method="post">
+        <label for="promo">Promo code</label>
+        <div class="promo-row">
+          <input id="promo" name="promo" type="text" placeholder="Enter code">
+          <button type="submit">Apply</button>
+        </div>
+      </form>
+      <section class="summary">
+        <h2>Order summary</h2>
+        <dl class="totals">
+          <div class="line"><dt>Subtotal</dt><dd>$124.00</dd></div>
+          <div class="line"><dt>Shipping</dt><dd>$6.00</dd></div>
+          <div class="line"><dt>Tax (8%)</dt><dd>$9.92</dd></div>
+          <div class="line total"><dt>Total</dt><dd>$139.92</dd></div>
+        </dl>
+        <button class="checkout" type="button">Checkout</button>
+        <p class="secure">Free returns within 30 days</p>
+      </section>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
