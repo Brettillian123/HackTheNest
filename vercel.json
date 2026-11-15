@@ -6,8 +6,11 @@
     { "source": "/", "destination": "/home", "statusCode": 302 }
   ],
   "rewrites": [
-    { "source": "/api/:route*", "destination": "/api/index?__route=:route*" },
+    { "source": "/home", "destination": "/pages/home.html" },
+    { "source": "/login", "destination": "/pages/login.html" },
+    { "source": "/signup", "destination": "/pages/signup.html" },
     { "source": "/challenge", "destination": "/pages/home.html" },
-    { "source": "/([A-Za-z0-9_-]+)", "destination": "/pages/$1.html" }
+    { "source": "/api/:route*", "destination": "/api/index" },
+    { "source": "/:page([A-Za-z0-9_-]+)", "destination": "/pages/:page.html" }
   ]
 }

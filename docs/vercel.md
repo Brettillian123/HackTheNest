@@ -1,31 +1,34 @@
 # Deploying on Vercel
 
-The repo deploys to Vercel with two added files and no change to `npm run dev`:
+The repo deploys to Vercel with these added files and no change to `npm run dev`:
 
 - `vercel.json` serves `frontend/` as static files, redirects `/` to `/home`, maps
-  `/home`, `/login`, `/signup`, `/challenge` to `frontend/pages/*.html`, and sends every
-  `/api/...` request to one function.
-- `api/index.js` is that function. It calls the same `handleApiRequest` the dev server uses.
+  `/home`, `/login`, `/signup`, `/challenge` (and any future `/name`) to
+  `frontend/pages/*.html`, and sends unknown `/api/...` paths to `api/index.js`.
+- `api/auth/signup.js`, `api/auth/login.js`, `api/auth/me.js`, `api/auth/logout.js`,
+  `api/test-objects.js`: one function per API route; each calls the same `handleApiRequest`
+  the dev server uses.
+- `api/index.js`: fallback, so unknown API paths get the usual JSON 404.
+- `lib/vercel-handler.js`: shared helper (outside `api/` so it is not a function).
+
+**Adding things:** a new API route needs its own file at `api/<path>.js` (for
+`/api/foo/bar`, `api/foo/bar.js`, copying `api/auth/me.js`) as well as the line in
+`backend/route/api.js`. A new page `frontend/pages/<name>.html` works at `/<name>` with no
+config change.
 
 ## Import the repo (once)
 
-1. In Vercel, click **Add New... > Project** and import the GitHub repository.
-   Vercel's GitHub app needs access to the repo (it is private).
-2. On the import screen:
-   - **Framework Preset:** Other (vercel.json also forces this).
-   - **Root Directory:** leave as the repo root.
-   - **Build Command / Output Directory / Install Command:** leave the defaults.
-     vercel.json sets the output directory to `frontend`; there is no build step.
-3. Open **Environment Variables** and add:
-   - `MONGODB_URI` - the MongoDB Atlas connection string (same one as in your local `.env`).
-     Tick Production and Preview.
-4. Click **Deploy**.
-5. In MongoDB Atlas, **Network Access** must allow Vercel. Vercel functions do not have a
-   fixed IP, so the usual choice is `0.0.0.0/0` (allow from anywhere). Without it, signup and
-   login answer 502/503 with a MongoDB message.
+1. In Vercel, click **Add New... > Project** and import the GitHub repository
+   (Vercel's GitHub app needs access to the private repo).
+2. Import screen: **Framework Preset** Other; **Root Directory** the repo root; leave Build,
+   Output and Install commands at their defaults (vercel.json sets output to `frontend`).
+3. **Environment Variables:** add `MONGODB_URI` (the Atlas connection string, as in your
+   local `.env`), ticked for Production and Preview. Then click **Deploy**.
+4. In MongoDB Atlas, **Network Access** must allow Vercel, which has no fixed IP; the usual
+   choice is `0.0.0.0/0`. Without it, signup and login answer 502/503.
 
 Optional: **Settings > Build and Deployment > Node.js Version** defaults to the newest LTS
-(26.x at the time of writing). Pick 24.x to match what the team runs locally.
+(26.x now). Pick 24.x to match what the team runs locally.
 
 ## Branches and deployments
 
