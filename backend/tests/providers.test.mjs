@@ -18,7 +18,7 @@ async function collect(modelId, env, response) {
 
 test('providers are enabled only by their keys', () => {
   assert.deepEqual(availableModels({}), []);
-  assert.deepEqual(availableModels({ OPENAI_API_KEY: ' ', GEMINI_API_KEY: 'g' }).map(m => m.id), ['gemini-flash']);
+  assert.deepEqual(availableModels({ OPENAI_API_KEY: ' ', ANTHROPIC_API_KEY: 'a', GEMINI_API_KEY: 'g' }).map(m => m.id), ['claude-haiku']);
 });
 
 test('OpenAI: Responses API request and streamed text deltas', async () => {
@@ -35,20 +35,6 @@ test('OpenAI: Responses API request and streamed text deltas', async () => {
   assert.deepEqual([body.model, body.instructions, body.input, body.stream], ['custom-mini', 'SYS', 'USER', true]);
 });
 
-test('Gemini: streamGenerateContent request and candidate text', async () => {
-  const { text, request } = await collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, sseResponse([
-    { data: { candidates: [{ content: { parts: [{ text: 'thinking', thought: true }, { text: '<h1>' }] } }] } },
-    { data: { candidates: [{ content: { parts: [{ text: 'Hello</h1>' }] } }] } },
-  ]));
-  assert.equal(text, '<h1>Hello</h1>');
-  assert.equal(request.url, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:streamGenerateContent?alt=sse');
-  assert.equal(request.init.headers['x-goog-api-key'], 'gk');
-  const body = JSON.parse(request.init.body);
-  assert.equal(body.systemInstruction.parts[0].text, 'SYS');
-  assert.deepEqual(body.contents, [{ role: 'user', parts: [{ text: 'USER' }] }]);
-  assert.deepEqual(body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
-});
-
 // A raw SSE Response from text; when keepOpen is set the stream never closes.
 function rawResponse(text, { keepOpen = false, status = 200 } = {}) {
   const encoder = new TextEncoder();
@@ -61,29 +47,30 @@ function rawResponse(text, { keepOpen = false, status = 200 } = {}) {
   return new Response(stream, { status, headers: { 'content-type': 'text/event-stream' } });
 }
 
-test('Gemini: finishReason ends the stream even if the connection stays open', async () => {
+test('OpenAI: response.completed ends the stream even if the connection stays open', async () => {
   const chunk = d => `data: ${JSON.stringify(d)}\n\n`;
-  const { text } = await collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse(
-    chunk({ candidates: [{ content: { parts: [{ text: 'plan', thought: true }] } }] })
-    + chunk({ candidates: [{ content: { parts: [{ text: '<p>A' }] } }] })
-    + chunk({ candidates: [{ content: { parts: [{ text: 'B</p>' }] }, finishReason: 'STOP' }] }),
+  const { text } = await collect('openai-mini', { OPENAI_API_KEY: 'ok' }, rawResponse(
+    chunk({ type: 'response.created' })
+    + chunk({ type: 'response.output_text.delta', delta: '<p>A' })
+    + chunk({ type: 'response.output_text.delta', delta: 'B</p>' })
+    + chunk({ type: 'response.completed' }),
     { keepOpen: true },
   ));
   assert.equal(text, '<p>AB</p>');
 });
 
-test('Gemini: CRLF-separated events and a last event without a blank line', async () => {
+test('OpenAI: CRLF-separated events and a last event without a blank line', async () => {
   const chunk = d => `data: ${JSON.stringify(d)}`;
-  const { text } = await collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse(
-    chunk({ candidates: [{ content: { parts: [{ text: '<p>' }] } }] }) + '\r\n\r\n'
-    + chunk({ candidates: [{ content: { parts: [{ text: 'x</p>' }] } }] }),
+  const { text } = await collect('openai-mini', { OPENAI_API_KEY: 'ok' }, rawResponse(
+    chunk({ type: 'response.output_text.delta', delta: '<p>' }) + '\r\n\r\n'
+    + chunk({ type: 'response.output_text.delta', delta: 'x</p>' }),
   ));
   assert.equal(text, '<p>x</p>');
 });
 
-test('Gemini: a non-200 answer fails fast with a plain message', async () => {
+test('OpenAI: a non-200 answer fails fast with a plain message', async () => {
   const started = Date.now();
-  await assert.rejects(collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse('{"error":{"code":404}}', { status: 404, keepOpen: true })),
+  await assert.rejects(collect('openai-mini', { OPENAI_API_KEY: 'ok' }, rawResponse('{"error":{"code":404}}', { status: 404, keepOpen: true })),
     { name: 'ModelError', message: 'The model service refused the request (404). Try again or pick another model.' });
   assert.ok(Date.now() - started < 1000);
 });

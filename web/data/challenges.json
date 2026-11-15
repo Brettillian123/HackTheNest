@@ -3,7 +3,6 @@
   "viewport": { "width": 1280, "height": 800 },
   "models": [
     { "id": "openai-mini", "label": "OpenAI mini" },
-    { "id": "gemini-flash", "label": "Gemini Flash" },
     { "id": "claude-haiku", "label": "Claude Haiku" }
   ],
   "challenges": [

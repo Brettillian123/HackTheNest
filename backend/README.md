@@ -40,7 +40,7 @@ An optional `marks` value on a challenge entry is sent next to `goal` in the gra
 
 ## Environment variables
 
-`MONGODB_URI`; `AUTH_SECRET` (else derived from `MONGODB_URI`); `OPENAI_API_KEY`, `GEMINI_API_KEY`, `ANTHROPIC_API_KEY` (each enables a model) and optional `OPENAI_MODEL`, `GEMINI_MODEL`, `ANTHROPIC_MODEL` (defaults `gpt-6-luna`, `gemini-3.8-flash`, `claude-haiku-5-5`); `GRADER_URL`, `GRADER_API_KEY`, `GRADER_TIMEOUT_MS` (default 45000); `RUNS_PER_DAY` (30), `RUNS_PER_IP_PER_DAY` (10 x `RUNS_PER_DAY`), `RUNS_PER_DAY_TOTAL` (1500). Names only in `.env.example`.
+`MONGODB_URI`; `AUTH_SECRET` (else derived from `MONGODB_URI`); `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` (each enables a model) and optional `OPENAI_MODEL`, `ANTHROPIC_MODEL` (defaults `gpt-6-luna`, `claude-haiku-5-5`); `GRADER_URL`, `GRADER_API_KEY`, `GRADER_TIMEOUT_MS` (default 45000); `RUNS_PER_DAY` (30), `RUNS_PER_IP_PER_DAY` (10 x `RUNS_PER_DAY`), `RUNS_PER_DAY_TOTAL` (1500). Names only in `.env.example`.
 
 ## How to plug in the real grader
 
