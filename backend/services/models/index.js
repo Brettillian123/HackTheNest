@@ -93,15 +93,22 @@ const providers = {
       body: {
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: 'user', parts: [{ text: user }] }],
-        generationConfig: { maxOutputTokens: MAX_OUTPUT_TOKENS },
+        // Gemini 3 Flash thinks by default (gemini-3.8-flash: medium), thought tokens count
+        // against maxOutputTokens and no text arrives until thinking ends. LOW is the lowest
+        // level gemini-3.8-flash accepts (https://aistudio.google.com/docs/thinking).
+        generationConfig: { maxOutputTokens: MAX_OUTPUT_TOKENS, thinkingConfig: { thinkingLevel: 'LOW' } },
       },
     }),
     read(msg) {
       if (!msg) return null;
       if (msg.error) return { error: true };
-      const parts = msg.candidates?.[0]?.content?.parts || [];
+      const candidate = msg.candidates?.[0];
+      const parts = candidate?.content?.parts || [];
       const text = parts.filter(p => typeof p.text === 'string' && !p.thought).map(p => p.text).join('');
-      return text ? { text } : null;
+      // A finishReason marks the last chunk; it can carry the final text too.
+      const done = Boolean(candidate?.finishReason);
+      if (!text && !done) return null;
+      return { ...(text ? { text } : {}), ...(done ? { done: true } : {}) };
     },
   },
   anthropic: {
@@ -143,8 +150,8 @@ export async function* generate({ model, system, user, env, fetch, signal }) {
       const out = provider.read(parse(data));
       if (!out) continue;
       if (out.error) throw new ModelError('The model stopped with an error. Run again.');
-      if (out.done) return;
       if (out.text) yield out.text;
+      if (out.done) return;
     }
   } catch (error) {
     if (error instanceof ModelError) throw error;
