@@ -343,6 +343,7 @@ export const EXTRACT_SOURCE = String.raw`
       var sides = ['Top', 'Right', 'Bottom', 'Left'];
       var borderW = 0;
       var borderC = null;
+      var borderArea = 0;
       for (var i = 0; i < sides.length; i++) {
         var w = parseFloat(s['border' + sides[i] + 'Width']) || 0;
         var st = s['border' + sides[i] + 'Style'];
@@ -350,9 +351,13 @@ export const EXTRACT_SOURCE = String.raw`
           var c = parseColor(s['border' + sides[i] + 'Color']);
           if (c[3] > 0) {
             var cc = over(c, own);
-            if (differs(cc, own, 4) && w > borderW) {
-              borderW = w;
-              borderC = cc;
+            if (differs(cc, own, 4)) {
+              // Top and bottom run the width of the box, left and right its height.
+              borderArea += w * (i % 2 === 0 ? rect.w : rect.h);
+              if (w > borderW) {
+                borderW = w;
+                borderC = cc;
+              }
             }
           }
         }
@@ -371,6 +376,8 @@ export const EXTRACT_SOURCE = String.raw`
             sampleBackground: hasImage || (bg[3] <= 0 && behind.image),
             hasBorder: borderW > 0,
             borderColor: borderC,
+            borderWidth: r1(borderW),
+            borderShare: Math.round(Math.min(1, borderArea / (rect.w * rect.h)) * 100) / 100,
             radius: radiusOf(s, rect),
             shadow: shadow
           }
@@ -381,22 +388,49 @@ export const EXTRACT_SOURCE = String.raw`
     // Form fields show text that is not a text node.
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
       var shownText = '';
+      var placeholder = false;
       if (tag === 'SELECT') {
         var chosen = gSelectedOptions.call(el);
         shownText = chosen && chosen.length > 0 ? gOptionText.call(chosen[0]) : '';
-      } else if (tag === 'TEXTAREA') {
-        shownText = gTextAreaValue.call(el) || attr(el, 'placeholder') || '';
       } else {
         var type = String(attr(el, 'type') || 'text').toLowerCase();
-        if (!NO_TEXT_INPUT[type]) shownText = gInputValue.call(el) || attr(el, 'placeholder') || '';
+        if (tag === 'TEXTAREA' || !NO_TEXT_INPUT[type]) {
+          shownText = (tag === 'TEXTAREA' ? gTextAreaValue.call(el) : gInputValue.call(el)) || '';
+          if (!shownText) {
+            shownText = attr(el, 'placeholder') || '';
+            placeholder = !!shownText;
+          }
+        }
       }
       shownText = String(shownText).replace(/\s+/g, ' ').trim();
       if (shownText) {
         var fieldPaint = painted(el);
-        var fieldColor = over(parseColor(s.color), fieldPaint.color);
+        // Placeholder text is drawn in its own (usually grey) colour.
+        var fieldColor = over(parseColor(placeholder ? getComputedStyle(el, '::placeholder').color : s.color), fieldPaint.color);
+        // Where the text itself sits: inside the padding and border, as wide
+        // as the text is and as tall as one line, so a field and a look-alike
+        // box with the same text give the same text block.
+        var px = function (v) { return parseFloat(v) || 0; };
+        var cx = rect.x + px(s.borderLeftWidth) + px(s.paddingLeft);
+        var cy = rect.y + px(s.borderTopWidth) + px(s.paddingTop);
+        var cw = Math.max(0, rect.w - px(s.borderLeftWidth) - px(s.borderRightWidth) - px(s.paddingLeft) - px(s.paddingRight));
+        var ch = Math.max(0, rect.h - px(s.borderTopWidth) - px(s.borderBottomWidth) - px(s.paddingTop) - px(s.paddingBottom));
+        var textRect = { x: r1(cx), y: r1(cy), w: r1(cw), h: r1(ch) };
+        if (tag !== 'TEXTAREA' && ctx) {
+          ctx.font = s.fontStyle + ' ' + s.fontWeight + ' ' + s.fontSize + ' ' + s.fontFamily;
+          var m = ctx.measureText(shownText);
+          var tw = Math.min(cw, m.width);
+          var th = m.fontBoundingBoxAscent + m.fontBoundingBoxDescent;
+          if (!(th > 0)) th = (parseFloat(s.fontSize) || 16) * 1.15;
+          th = Math.min(ch, th);
+          var align = s.textAlign;
+          var tx = align === 'center' ? cx + (cw - tw) / 2 : align === 'right' || align === 'end' ? cx + cw - tw : cx;
+          textRect = { x: r1(tx), y: r1(cy + (ch - th) / 2), w: r1(tw), h: r1(th) };
+        }
+        if (textRect.w < 1 || textRect.h < 1) textRect = rect;
         blocks.push({
           kind: 'text',
-          rect: rect,
+          rect: textRect,
           behind: fieldPaint.color,
           sample: fieldPaint.image,
           text: shownText,

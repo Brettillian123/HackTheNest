@@ -4,6 +4,8 @@ import { dominantColor, hasInk, refineBlocks, type RawBlock } from './blocks';
 import { MAX_BLOCKS, MAX_HTML_BYTES, MAX_PAGE_HEIGHT, RENDER_TIMEOUT_MS, VIEWPORT } from './config';
 import { EXTRACT_SOURCE } from './extract-source';
 import type { PageStats } from './performance';
+import { checkSource, gatherDomFacts } from './quality/index';
+import type { DomFacts, SourceFacts } from './quality/types';
 import { contentTypeOf, isPage, pathOfUrl, urlOf } from './site';
 import { GraderInputError, type PageSnapshot, type RGB, type Rect } from './types';
 
@@ -168,6 +170,30 @@ export interface RendererOptions {
   extractSource?: string;
 }
 
+/**
+ * What the accessibility and clean-code checks need from one page of a
+ * site. Either part is null when it could not be gathered; the page then
+ * counts as having no extra problems of that kind, and `notes` says why.
+ */
+export interface PageQuality {
+  /** Read from the live page, before the grader adds anything to it. */
+  dom: DomFacts | null;
+  /** Read from the page's HTML text. */
+  source: SourceFacts | null;
+  notes: string[];
+}
+
+const reasonOf = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
+/** The HTML-text checks for one page. Never throws. */
+function sourceQuality(html: string): Pick<PageQuality, 'source' | 'notes'> {
+  try {
+    return { source: checkSource(html), notes: [] };
+  } catch (error) {
+    return { source: null, notes: [`The page's HTML could not be checked: ${reasonOf(error)}`] };
+  }
+}
+
 type Input = { kind: 'html'; html: string } | { kind: 'site'; files: Map<string, string>; path: string };
 
 /** A page that tries to send the browser somewhere else is not followed. */
@@ -249,13 +275,15 @@ export class Renderer {
   async renderSitePage(
     files: Map<string, string>,
     path: string,
-  ): Promise<{ snapshot: PageSnapshot; stats: PageStats }> {
+  ): Promise<{ snapshot: PageSnapshot; stats: PageStats; quality: PageQuality }> {
     if (!files.has(path) || !isPage(path)) throw new GraderInputError(`"${path}" is not a page of the site.`);
-    const { snapshot, stats } = await this.capture({ kind: 'site', files, path });
-    return { snapshot, stats: stats! };
+    const { snapshot, stats, quality } = await this.capture({ kind: 'site', files, path });
+    return { snapshot, stats: stats!, quality: quality! };
   }
 
-  private async capture(input: Input): Promise<{ snapshot: PageSnapshot; stats: PageStats | null }> {
+  private async capture(
+    input: Input,
+  ): Promise<{ snapshot: PageSnapshot; stats: PageStats | null; quality: PageQuality | null }> {
     const ms = this.timeoutMs;
     const browser = await this.getBrowser();
     const context = await browser.newContext({
@@ -287,6 +315,22 @@ export class Renderer {
       let rawStats: RawStats | null = null;
       if (input.kind === 'site') {
         rawStats = (await withTimeout(page.evaluate(`${STATS_SOURCE}()`), ms, 'Counting the page')) as RawStats;
+      }
+
+      // The accessibility facts are read before the page is settled, so the
+      // grader's own style element is not counted. A failure here does not
+      // fail the render: the page then has no facts of that kind.
+      let quality: PageQuality | null = null;
+      if (input.kind === 'site') {
+        let dom: DomFacts | null = null;
+        const notes: string[] = [];
+        try {
+          dom = await gatherDomFacts(page, ms);
+        } catch (error) {
+          notes.push(`The page's accessibility facts could not be read: ${reasonOf(error)}`);
+        }
+        const fromSource = sourceQuality(input.files.get(input.path) ?? '');
+        quality = { dom, source: fromSource.source, notes: [...notes, ...fromSource.notes] };
       }
 
       // Not page.addStyleTag: it waits on a load event that never comes when
@@ -349,7 +393,7 @@ export class Renderer {
                 .map((l) => l.href),
             }
           : null;
-      return { snapshot, stats };
+      return { snapshot, stats, quality };
     } finally {
       // A page stuck in a loop can refuse to close. Do not wait on it forever:
       // drop the whole browser instead, and the next render starts a new one.

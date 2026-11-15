@@ -1,4 +1,5 @@
-import { MAX_HTML_BYTES, SITE } from './config';
+import { MAX_HTML_BYTES } from './config';
+import { SITE } from './site-config';
 import { GraderInputError } from './types';
 
 /** A site as submitted: file path -> file text. Example: { 'index.html': '...', 'css/site.css': '...' }. */

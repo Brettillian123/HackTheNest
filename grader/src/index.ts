@@ -5,15 +5,42 @@ import type { SiteFiles } from './site';
 import { gradeSite, prepareSite, type PreparedSite, type SiteGradeOutput } from './site-grade';
 import { GraderInputError, type GradeResult, type PageSnapshot } from './types';
 
-export { GRADER_VERSION, PERF, VIEWPORT, WEIGHTS } from './config';
+export { GRADER_VERSION, VIEWPORT, WEIGHTS } from './config';
+export { PERF, SITE_WEIGHTS } from './site-config';
 export { Renderer } from './render';
 export { score } from './score';
 export { PreparedSite, scoreSite } from './site-grade';
 export { GraderInputError } from './types';
 export type { DeviceCheck, Efficiency, PageStats } from './performance';
+export type { PageQuality } from './render';
 export type { SiteFiles } from './site';
-export type { RenderedPage, SiteGradeOutput, SiteGradeResult, SiteLinks, SitePageResult } from './site-grade';
-export type { Block, Breakdown, GradeDetails, GradeResult, PageSnapshot } from './types';
+export type {
+  FeedbackItem,
+  RenderedPage,
+  SiteEngineering,
+  SiteGradeOutput,
+  SiteGradeResult,
+  SiteLinks,
+  SitePageResult,
+  SitePillars,
+} from './site-grade';
+export type { Block, Breakdown, Feedback, GradeDetails, GradeResult, PageSnapshot } from './types';
+
+// Accessibility and clean-code checks: the types a caller needs to show issues.
+export type { DomFacts, Issue, QualityFacts, QualityPart, QualityResult, SourceFacts } from './quality/index';
+
+// The 3D grader. It runs its own browser, started on first use.
+export { SCENE_LIMITS, SCENE_VERSION, SceneBuildError, SceneGrader } from './scene3d/index';
+export type {
+  Bounds,
+  EngineeringMeasure,
+  PreparedScene,
+  SceneData,
+  SceneDetails,
+  SceneGradeResult,
+  SceneMesh,
+  SceneView,
+} from './scene3d/index';
 
 export interface GradeOutput {
   result: GradeResult;
@@ -105,6 +132,7 @@ function zeroResult(goal: PageSnapshot, reason: string): GradeResult {
       globalOffset: { dx: 0, dy: 0 },
       visual: { structure: 0, color: 0 },
     },
+    feedback: [{ message: reason, points: 100 }],
     error: reason,
   };
 }

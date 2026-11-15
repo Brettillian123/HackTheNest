@@ -86,6 +86,18 @@ export function checkExpected(reports: SetReport[], expected: Expected): string[
   return problems;
 }
 
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/** What cost the attempt points, as a list for the report. */
+function feedbackList(result: GradeResult): string {
+  const items = result.feedback ?? [];
+  if (result.error) return `<ul class="fb"><li>${escapeHtml(result.error)}</li></ul>`;
+  if (items.length === 0) return '';
+  return `<ul class="fb">${items.map((f) => `<li><b>-${f.points.toFixed(1)}</b> ${escapeHtml(f.message)}</li>`).join('')}</ul>`;
+}
+
 function cell(value: number | null): string {
   return value === null ? 'n/a' : value.toFixed(1);
 }
@@ -105,7 +117,7 @@ function toHtml(reports: SetReport[], expected: Expected, problems: string[]): s
 <span class="total">${a.result.total.toFixed(1)}</span>
 <span class="band">${band ? `expected ${band[0]} to ${band[1]}` : 'no expectation set'}</span>
 <span class="parts">content ${cell(b.content)} · layout ${cell(b.layout)} · style ${cell(b.style)} · visual ${cell(b.visual)}</span>
-</figcaption></figure>`;
+${feedbackList(a.result)}</figcaption></figure>`;
         })
         .join('\n');
       return `<section><h2>${report.name}</h2><div class="grid"><figure class="goal">${img(report.goalPng)}<figcaption><b>goal</b><span class="total">100.0</span><span class="band">the target</span></figcaption></figure>
@@ -130,6 +142,7 @@ figcaption{padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px
 .total{font-size:22px;font-weight:700;text-align:right}
 .band,.parts{grid-column:1 / -1;color:#4b5563;font-size:12px}
 .ok{color:#047857}.warn{color:#b91c1c}
+.fb{grid-column:1 / -1;margin:6px 0 0;padding-left:18px;font-size:12px;color:#374151}.fb b{color:#b91c1c}
 </style></head><body><h1>Grader calibration</h1>
 <p>Grading rules version ${GRADER_VERSION}. Attempts are sorted best first. Check by eye: does each score match how close the attempt looks to the goal? A red border means the score is outside the band a person set for it.</p>
 ${summary}
@@ -148,6 +161,7 @@ function printTable(reports: SetReport[]): void {
           b.layout,
         ).padStart(6)} ${cell(b.style).padStart(5)}  ${cell(b.visual).padStart(6)}`,
       );
+      for (const f of a.result.feedback ?? []) console.log(`      -${f.points.toFixed(1).padStart(4)}  ${f.message}`);
     }
   }
 }

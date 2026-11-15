@@ -23,6 +23,10 @@ export interface BoxStyle {
   background: RGB;
   hasBorder: boolean;
   borderColor: RGB | null;
+  /** Width of the widest visible border side, in px (0 without a border). */
+  borderWidth: number;
+  /** Share of the box's area its visible borders paint, 0 to 1: about 1 for a CSS triangle. */
+  borderShare: number;
   /** Corner radius as a fraction of half the shorter side, 0 to 1. */
   radius: number;
   shadow: boolean;
@@ -75,6 +79,14 @@ export interface GradeDetails {
   visual: { structure: number; color: number };
 }
 
+/** One thing that cost the player points, in plain words. */
+export interface Feedback {
+  /** A sentence a player can act on, e.g. "The heading 'Pricing' is missing". */
+  message: string;
+  /** Roughly how many points of the page total it cost, one decimal place. */
+  points: number;
+}
+
 export interface GradeResult {
   /** Version of the grading rules that produced this score. */
   version: string;
@@ -82,6 +94,13 @@ export interface GradeResult {
   total: number;
   breakdown: Breakdown;
   details: GradeDetails;
+  /**
+   * What cost the most points, most costly first, at most six. Empty for a
+   * perfect page. The points come from the same arithmetic as the total:
+   * every deduction, shown or not, adds up to 100 minus the total. For a
+   * page that could not be rendered: one line with the reason, 100 points.
+   */
+  feedback: Feedback[];
   /** Set only when the submission could not be rendered; the total is then 0. */
   error?: string;
 }

@@ -21,9 +21,20 @@ export function round1(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-/** Lower-case words, with punctuation and spacing removed. */
+/**
+ * Lower-case words, with punctuation and spacing removed. Accents and vowel
+ * signs (Thai, Hindi, Arabic...) stay part of their word. Scripts written
+ * without spaces (Chinese, Japanese, Thai, Lao, Khmer, Burmese) count each
+ * character as a word, so one wrong character is one wrong word, not a wrong
+ * sentence. Each emoji is a word too: a person reads it.
+ */
+const NO_SPACE = String.raw`\p{sc=Han}\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Thai}\p{sc=Lao}\p{sc=Khmer}\p{sc=Myanmar}`;
+const WORD = new RegExp(
+  String.raw`[${NO_SPACE}]\p{M}*|\p{Extended_Pictographic}|(?![${NO_SPACE}])[\p{L}\p{N}](?:(?![${NO_SPACE}])[\p{L}\p{M}\p{N}])*`,
+  'gu',
+);
 export function words(text: string): string[] {
-  return text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
+  return text.toLowerCase().match(WORD) ?? [];
 }
 
 /**
@@ -47,6 +58,18 @@ export function wordOverlap(a: string[], b: string[]): number {
   const precision = shared / b.length;
   const recall = shared / a.length;
   return (2 * precision * recall) / (precision + recall);
+}
+
+/**
+ * Every pair of neighbouring words, taken within each list separately:
+ * [['a','b','c'], ['d','e']] gives ['a b', 'b c', 'd e'].
+ */
+export function wordPairs(lists: string[][]): string[] {
+  const pairs: string[] = [];
+  for (const list of lists) {
+    for (let i = 0; i + 1 < list.length; i++) pairs.push(`${list[i]} ${list[i + 1]}`);
+  }
+  return pairs;
 }
 
 /** Median of a list; 0 for an empty list. Does not change the input. */
