@@ -1,0 +1,23 @@
+{
+  "frontMatter": [
+    { "key": "name", "required": true, "maxLength": 64, "pattern": "^release-notes$" },
+    { "key": "description", "required": true, "maxLength": 1024, "pattern": "Use when" }
+  ],
+  "sections": [
+    { "name": "Steps", "aliases": ["Instructions", "Workflow", "Process", "Procedure", "How to"], "importance": "critical", "mustContain": ["unreleased"] },
+    { "name": "Rules", "aliases": ["Guidelines", "Constraints", "Guardrails", "Do not"], "importance": "normal", "mustContain": ["ticket"] }
+  ],
+  "keyFacts": [
+    { "label": "the changelog file CHANGELOG.md", "anyOf": ["CHANGELOG.md"], "importance": "major" },
+    { "label": "the output folder docs/releases/", "anyOf": ["docs/releases/"], "importance": "major" },
+    { "label": "the check command", "anyOf": ["npm run docs:check"], "importance": "critical", "inCode": true },
+    { "label": "the Unreleased section heading", "anyOf": ["## [Unreleased]", "[Unreleased]"], "section": "Steps" },
+    { "label": "the output file name docs/releases/<version>.md", "anyOf": ["<version>.md"], "section": "Steps" },
+    { "label": "the skill folder name release-notes", "anyOf": ["release-notes"] }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap other than <version>", "pattern": "<(?!version>)[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 600, "minWords": 60 },
+  "order": ["Steps", "Rules"]
+}

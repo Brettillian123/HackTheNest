@@ -1,0 +1,23 @@
+{
+  "sections": [
+    { "name": "Overview", "aliases": ["About", "Project overview", "What this is", "Introduction"], "importance": "normal" },
+    { "name": "Commands", "aliases": ["Common commands", "Everyday commands", "Development commands", "Scripts", "Setup", "Usage"], "importance": "critical" },
+    { "name": "Layout", "aliases": ["Project layout", "Structure", "Project structure", "Where things live", "Folders", "Code layout"], "importance": "normal" },
+    { "name": "Rules", "aliases": ["Conventions", "Guidelines", "Ground rules", "Working rules", "Constraints", "Do and don't"], "importance": "normal", "mustContain": ["never"] },
+    { "name": "Done means", "aliases": ["Definition of done", "Done", "Before you finish", "Before finishing", "Finishing", "Checks"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the install command", "anyOf": ["pip install -e .[dev]", "pip install -e \".[dev]\"", "pip install -e '.[dev]'"], "importance": "critical", "inCode": true },
+    { "label": "the test command", "anyOf": ["pytest"], "inCode": true },
+    { "label": "the lint command", "anyOf": ["ruff check ."], "inCode": true },
+    { "label": "the code folder", "anyOf": ["src/invoice_tool/", "src/invoice_tool"], "section": "Layout" },
+    { "label": "the tests folder", "anyOf": ["tests/"], "section": "Layout" },
+    { "label": "the rule never to change data/samples/", "anyOf": ["data/samples/", "data/samples"], "importance": "major", "section": "Rules" },
+    { "label": "the rule never to read .env", "anyOf": [".env"], "importance": "major", "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "a your-project placeholder", "pattern": "\\byour[-_](project|repo|name|package)\\b" },
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 80 }
+}

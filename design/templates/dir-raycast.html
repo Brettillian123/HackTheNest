@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en" data-state="a">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080a;
+  --panel-a:rgba(17,18,20,.75);
+  --panel-b:rgba(12,13,15,.9);
+  --win-top:rgba(38,35,35,.96);
+  --win-bot:rgba(27,25,25,.97);
+  --hair:rgba(255,255,255,.06);
+  --hair-2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.1);
+  --ring:rgba(255,255,255,.2);
+  --hi:rgba(255,255,255,.15);
+  --row:rgba(255,255,255,.1);
+  --text:#ffffff;
+  --text-2:rgba(255,255,255,.62);
+  --text-3:rgba(255,255,255,.45);
+  --mono-muted:#8a8b8c;
+  --red:#ff6363;
+  --red-2:#e5484d;
+  --red-3:#b4232c;
+  --red-ink:#1d0607;
+  --red-soft:rgba(255,99,99,.14);
+  --red-text:#ff8a8a;
+  --font:"Inter",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.4;
+  -webkit-font-smoothing:antialiased;overflow:hidden;min-width:1000px}
+
+/* red light: diagonal bands, blurred and masked */
+.aura{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.aura::before,.aura::after{content:"";position:absolute;inset:-20%;
+  background:repeating-linear-gradient(128deg,transparent 0 46px,rgba(255,52,64,.95) 74px,rgba(255,128,128,.85) 92px,rgba(120,10,20,.6) 112px,transparent 140px 176px);
+  filter:blur(20px)}
+.aura::before{-webkit-mask-image:radial-gradient(ellipse 42% 46% at 80% 24%,#000 0%,rgba(0,0,0,.7) 45%,transparent 78%);
+  mask-image:radial-gradient(ellipse 42% 46% at 80% 24%,#000 0%,rgba(0,0,0,.7) 45%,transparent 78%);opacity:1}
+.aura::after{-webkit-mask-image:radial-gradient(ellipse 36% 36% at 14% 86%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(ellipse 36% 36% at 14% 86%,#000 0%,transparent 72%);opacity:.85}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(120% 80% at 50% 10%,transparent 40%,rgba(7,8,10,.7) 100%)}
+
+.page{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:12px 40px 0;height:100%;display:flex;flex-direction:column}
+
+/* nav */
+.nav{height:52px;display:flex;align-items:center;gap:28px;padding:0 10px 0 18px;border-radius:16px;
+  background:linear-gradient(137deg,var(--panel-a) 4.87%,var(--panel-b) 75.88%);
+  border:.8px solid var(--hair);box-shadow:inset 0 1px 1px 0 var(--hi);backdrop-filter:blur(20px)}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15px;letter-spacing:-.2px}
+.mark{width:20px;height:20px}
+.links{display:flex;gap:4px;margin-left:14px}
+.links a{color:var(--text-2);text-decoration:none;font-size:14px;font-weight:500;padding:6px 11px;border-radius:8px}
+.links a.on{color:var(--text);background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:10px}
+.search{display:flex;align-items:center;gap:8px;height:34px;padding:0 6px 0 12px;border-radius:9px;color:var(--text-3);font-size:13px;
+  background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);min-width:220px}
+.search svg{flex:none}
+.search .keys{margin-left:auto}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--red-ink);
+  background:radial-gradient(80% 80% at 35% 20%,#ffb3b3 0%,var(--red) 55%,var(--red-3) 100%);
+  box-shadow:0 0 0 2px rgba(0,0,0,.5),inset 0 1px .4px rgba(255,255,255,.7)}
+
+/* keys */
+.keys{display:inline-flex;gap:3px}
+kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:6px;font-family:var(--font);font-size:11px;
+  color:var(--text-2);box-shadow:inset 0 0 0 1px var(--ring);font-weight:500}
+kbd.fill{background:rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+
+/* heading */
+.head{display:flex;align-items:flex-end;justify-content:space-between;padding:22px 4px 16px}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.3px;color:var(--mono-muted);margin-bottom:6px}
+.eyebrow b{color:var(--red-text);font-weight:500}
+h1{font-size:30px;font-weight:600;letter-spacing:-.7px;line-height:1.1;
+  background:linear-gradient(90deg,rgba(255,255,255,.82) 0%,#fff 50%,rgba(255,255,255,.82) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.head-r{display:flex;align-items:center;gap:14px}
+.badge{font-size:13px;font-weight:500;letter-spacing:.2px;color:var(--red-text);padding:5px 12px 5px 10px;border-radius:16px;display:inline-flex;gap:7px;align-items:center;
+  border:.8px solid transparent;
+  background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(150deg,rgba(255,120,120,.55),rgba(255,255,255,.07)) border-box;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.2)}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red)}
+.stat{font-family:var(--mono);font-size:12px;color:var(--mono-muted);letter-spacing:.2px}
+.stat b{color:var(--text);font-weight:500}
+
+/* app window */
+.frame{flex:1;min-height:0;margin-bottom:62px;padding:6px;border-radius:20px;
+  background:radial-gradient(85% 50% at 51% 0%,rgba(255,99,99,.2) 0%,rgba(255,120,120,.06) 46%,rgba(255,255,255,.02) 100%),rgba(0,0,0,.44);
+  border:.8px solid var(--hair-2);
+  box-shadow:0 0 60px 18px rgba(255,40,50,.06),inset 0 .5px 0 rgba(255,255,255,.3)}
+.win{height:100%;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;
+  background:linear-gradient(var(--win-top),var(--win-bot));border:.8px solid var(--hair-2);
+  box-shadow:0 0 2px rgba(255,255,255,.19),inset 0 .5px 0 rgba(255,255,255,.12),0 12px 24px 6px rgba(0,0,0,.2);backdrop-filter:blur(40px)}
+.bar{height:58px;flex:none;display:flex;align-items:center;gap:12px;padding:0 14px 0 16px;border-bottom:.8px solid var(--line)}
+.back{width:24px;height:22px;border-radius:5px;background:rgba(255,255,255,.1);display:grid;place-items:center;color:var(--text-2)}
+.field{flex:1;font-size:18px;font-weight:350;font-variation-settings:"wght" 350;display:flex;align-items:center;gap:8px;color:var(--text)}
+.field .crumb{color:var(--text-3)}
+.field .caret{width:2px;height:20px;border-radius:1px;background:var(--red);animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.trigger{height:32px;display:flex;align-items:center;gap:8px;padding:0 9px 0 11px;border-radius:7px;font-size:13px;box-shadow:0 0 0 1px var(--ring)}
+.trigger .dot{width:16px;height:16px;border-radius:4px;display:grid;place-items:center;background:linear-gradient(160deg,#3a3a3a,#1c1c1c);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+.trigger .sub{color:var(--text-3)}
+
+.body{flex:1;min-height:0;display:flex}
+.master{width:410px;flex:none;padding:14px 8px 10px;border-right:.8px solid var(--line);display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.detail{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+
+.group-h{display:flex;justify-content:space-between;align-items:center;padding:0 8px 7px;font-size:11px;color:var(--text-2)}
+.group-h span:last-child{font-family:var(--mono);color:var(--text-3)}
+
+/* prompt editor */
+.editor{margin:0 4px;border-radius:9px;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 1px 2px rgba(0,0,0,.4);
+  padding:10px 10px 10px 0;font-family:var(--mono);font-size:11.5px;line-height:1.7;counter-reset:ln;color:rgba(255,255,255,.88)}
+.editor .l{counter-increment:ln;position:relative;padding-left:34px}
+.editor .l::before{content:counter(ln);position:absolute;left:0;width:22px;text-align:right;color:rgba(255,255,255,.26)}
+.editor .l:last-child{background:linear-gradient(90deg,rgba(255,99,99,.1),transparent 80%)}
+.editor q{color:var(--red-text);quotes:none}
+.editor .cur{display:inline-block;width:7px;height:14px;vertical-align:-2px;background:var(--red);animation:blink 1.1s steps(1) infinite}
+
+/* list rows */
+.rows{display:flex;flex-direction:column}
+.meta{display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 8px;margin:0 4px;font-size:12px;border-bottom:.8px solid rgba(255,255,255,.05)}
+.meta:last-child{border-bottom:0}
+.meta .k{color:var(--text-2)}
+.meta .v{display:flex;align-items:center;gap:6px}
+.meta .v.mono{font-family:var(--mono);font-size:12px}
+
+.run{margin:auto 4px 0;display:flex;align-items:center;gap:10px}
+.btn-red{height:38px;padding:0 10px 0 16px;border:0;border-radius:9px;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  font:600 14px var(--font);color:var(--red-ink);letter-spacing:-.1px;
+  background:linear-gradient(180deg,#ff7a7a 0%,var(--red) 45%,var(--red-2) 100%);
+  box-shadow:0 0 0 2px rgba(0,0,0,.5),0 0 22px rgba(255,80,80,.38),inset 0 -1px .4px rgba(0,0,0,.25),inset 0 1px .4px rgba(255,255,255,.75)}
+.btn-red kbd{color:rgba(29,6,7,.75);box-shadow:inset 0 0 0 1px rgba(29,6,7,.28);background:rgba(255,255,255,.18)}
+.run .hint{font-size:12px;color:var(--text-3)}
+
+/* score */
+.score{margin:0 4px;display:flex;align-items:center;gap:18px;padding:14px 14px;border-radius:12px;
+  background:radial-gradient(90% 120% at 0% 0%,rgba(255,99,99,.22),rgba(255,99,99,0) 60%),rgba(0,0,0,.22);
+  box-shadow:inset 0 0 0 1px rgba(255,120,120,.16),inset 0 1px 0 rgba(255,255,255,.08)}
+.ring{width:92px;height:92px;flex:none;position:relative}
+.ring svg{display:block}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .num b{display:block;font-size:32px;font-weight:600;letter-spacing:-1px;line-height:1}
+.ring .num small{display:block;font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:3px}
+.score-t{flex:1;min-width:0}
+.score-t .big{font-size:16px;font-weight:600;letter-spacing:-.2px;margin-bottom:3px}
+.score-t .sub{font-size:12px;color:var(--text-2);margin-bottom:10px}
+.segs{display:grid;grid-template-columns:repeat(14,1fr);gap:3px}
+.segs i{height:6px;border-radius:2px;background:rgba(255,255,255,.82)}
+.segs i.f{background:var(--red);box-shadow:0 0 6px rgba(255,99,99,.6)}
+
+.cost{display:flex;align-items:center;gap:10px;height:38px;padding:0 8px;margin:0 4px;border-radius:6px;font-size:13px}
+.cost.sel{background:var(--row);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.cost .pts{width:34px;height:22px;flex:none;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500;
+  color:var(--red-text);background:var(--red-soft);box-shadow:inset 0 0 0 1px rgba(255,99,99,.25)}
+.cost .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cost .c{font-size:11px;color:var(--text-3)}
+
+/* detail / preview */
+.stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;gap:16px;padding:22px 24px 8px;
+  background:radial-gradient(60% 55% at 50% 45%,rgba(255,99,99,.14),transparent 70%),radial-gradient(40% 30% at 100% 0%,rgba(255,99,99,.1),transparent 70%)}
+.shot{flex:none;display:flex;flex-direction:column;align-items:stretch}
+.shot-cap{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 2px;font-size:11px;color:var(--text-2)}
+.shot-cap b{color:var(--text);font-weight:500;font-size:12px}
+.shot-cap span:last-child{font-family:var(--mono);color:var(--text-3)}
+.card{--s:.8;width:calc(720px * var(--s));height:calc(450px * var(--s));border-radius:10px;overflow:hidden;position:relative;background:#fff;
+  box-shadow:0 0 0 1px rgba(255,255,255,.9),0 0 0 4px rgba(0,0,0,.35),0 18px 40px rgba(0,0,0,.45),0 0 40px rgba(255,80,80,.12)}
+.card .mock{position:absolute;left:0;top:0;width:720px;height:450px;transform:scale(var(--s));transform-origin:0 0}
+html[data-state="b"] .card{--s:.47}
+
+.info{flex:none;padding:12px 16px 12px;border-top:.8px solid var(--line)}
+.info .group-h{padding:0 0 4px}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0 16px}
+.info-grid .it{display:flex;justify-content:space-between;height:26px;align-items:center;font-size:11px;border-bottom:.8px solid rgba(255,255,255,.05)}
+.info-grid .it span:first-child{color:var(--text-2)}
+.info-grid .it span:last-child{font-family:var(--mono)}
+.info-grid .it .warn{color:var(--red-text)}
+
+/* action footer */
+.foot{height:42px;flex:none;display:flex;align-items:center;gap:10px;padding:0 10px 0 14px;border-top:.8px solid var(--line);background:rgba(0,0,0,.12)}
+.foot .left{display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:12px}
+.foot .left .mark{width:16px;height:16px}
+.foot .status{display:inline-flex;align-items:center;gap:6px}
+.foot .status i{width:6px;height:6px;border-radius:50%;background:#7a7a7a}
+html[data-state="b"] .foot .status i{background:var(--red);box-shadow:0 0 8px var(--red)}
+.foot .right{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:12px}
+.foot .act{display:flex;align-items:center;gap:7px;font-weight:500}
+.foot .act.dim{color:var(--text-2);font-weight:400}
+.foot .sep{width:.8px;height:16px;background:var(--line)}
+
+/* state visibility */
+html[data-state="a"] .only-b{display:none!important}
+html[data-state="b"] .only-a{display:none!important}
+
+/* state switcher (dock) */
+.dock{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:5;display:flex;gap:4px;padding:5px;border-radius:14px;
+  background:linear-gradient(181deg,rgba(20,20,22,.9) 4.5%,rgba(40,40,42,.9) 99.5%);border:.8px solid var(--hair);
+  box-shadow:0 4px 4px rgba(0,0,0,.25),0 12px 24px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(20px)}
+.dock button{height:30px;padding:0 14px;border:0;border-radius:9px;background:transparent;color:var(--text-2);font:500 12px var(--font);cursor:pointer}
+.dock button.on{color:#fff;background:radial-gradient(79% 79% at 42% 0,#5a5a5a 0%,#262626 100%);
+  box-shadow:0 4px 5px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.19),0 0 6px rgba(255,255,255,.12)}
+
+/* ---------- goal page mock (light) ---------- */
+.mock{font-family:"Inter",system-ui,sans-serif;color:#151821;background:#f7f8fb;display:flex;flex-direction:column}
+.mock .mn{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:#fff;border-bottom:1px solid #e6e8ee}
+.mock .mn b{font-size:15px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:7px}
+.mock .mn b i{width:14px;height:14px;border-radius:4px;background:#2563eb}
+.mock .mn nav{display:flex;gap:20px;font-size:12px;color:#5b6170}
+.mock .mh{text-align:center;padding:26px 0 18px}
+.mock .mh h2{font-size:28px;font-weight:700;letter-spacing:-.6px;color:#11141b}
+.mock .mh p{font-size:13px;color:#5b6170;margin-top:6px}
+.mock .plans{display:flex;justify-content:center;gap:16px;padding:0 36px}
+.mock .plan{width:204px;background:#fff;border:1px solid #e3e6ec;border-radius:12px;padding:16px 16px 14px;box-shadow:0 2px 8px rgba(20,24,40,.06);position:relative}
+.mock .plan.pop{border:2px solid #2563eb;padding:15px 15px 13px}
+.mock .tag{position:absolute;top:-10px;right:14px;background:#2563eb;color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px}
+.mock .plan h3{font-size:13px;font-weight:600;color:#3a4050}
+.mock .price{margin:6px 0 10px;font-size:28px;font-weight:700;letter-spacing:-.8px;color:#11141b}
+.mock .price small{font-size:12px;font-weight:500;color:#7a8090;letter-spacing:0}
+.mock .plan ul{list-style:none;font-size:11.5px;color:#4a5060;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.mock .plan li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#93b4f5;margin-right:7px;vertical-align:1px}
+.mock .plan .cta{height:30px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:600;background:#eef1f6;color:#1d2230}
+.mock .plan.pop .cta{background:#2563eb;color:#fff}
+.mock .mf{margin-top:auto;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;border-top:1px solid #e6e8ee;background:#fff;font-size:11px;color:#7a8090}
+.mock .mf nav{display:flex;gap:18px;color:#4a5060}
+/* player's version: narrower cards, no footer links */
+.mock.yours .plans{gap:22px}
+.mock.yours .plan{width:176px}
+.mock.yours .mh{padding-top:22px}
+.mock.yours .mf{justify-content:center}
+
+@media (max-width:1180px){
+  .page{padding:12px 24px 0}
+  .master{width:360px}
+  .card{--s:.62}
+  html[data-state="b"] .card{--s:.36}
+  .search{min-width:170px}
+  .info-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="aura"></div>
+<div class="vignette"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="mk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8c8c"/><stop offset=".55" stop-color="#ff4b55"/><stop offset="1" stop-color="#b4232c"/>
+    </linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="1" stop-color="#e5484d"/>
+    </linearGradient>
+    <symbol id="logo" viewBox="0 0 20 20">
+      <path d="M10 1.5 18.5 10 10 18.5 1.5 10Z" fill="url(#mk)" stroke="rgba(255,255,255,.35)" stroke-width=".6" stroke-linejoin="round"/>
+      <path d="M7.2 7.6 9.8 10l-2.6 2.4M10.8 12.6h2.6" fill="none" stroke="#1d0607" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="page">
+  <header class="nav">
+    <div class="brand"><svg class="mark"><use href="#logo"/></svg>promptdyno</div>
+    <nav class="links">
+      <a class="on" href="#">Challenges</a>
+      <a href="#">Leaderboard</a>
+      <a href="#">Daily</a>
+      <a href="#">Learn</a>
+    </nav>
+    <div class="nav-r">
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="4.3"/><path d="m9.3 9.3 3 3" stroke-linecap="round"/></svg>
+        Search challenges
+        <span class="keys"><kbd class="fill">Ctrl</kbd><kbd class="fill">K</kbd></span>
+      </div>
+      <div class="avatar">MR</div>
+    </div>
+  </header>
+
+  <section class="head">
+    <div>
+      <div class="eyebrow"><b>CHALLENGE 07</b> &nbsp;/&nbsp; LAYOUT &nbsp;/&nbsp; HTML + CSS</div>
+      <h1>Pricing page with three plans</h1>
+    </div>
+    <div class="head-r">
+      <span class="stat"><b>1,204</b> solved</span>
+      <span class="stat">Top score <b>97</b></span>
+      <span class="badge"><i></i>Medium</span>
+    </div>
+  </section>
+
+  <div class="frame">
+    <div class="win">
+      <div class="bar">
+        <div class="back"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 2.5 4 6l3.5 3.5"/></svg></div>
+        <div class="field">
+          <span class="crumb">Challenges /</span>
+          <span>Pricing page with three plans</span>
+          <span class="caret only-a"></span>
+        </div>
+        <div class="trigger">
+          <span class="dot"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#ff8a8a" stroke-width="1.3"><rect x="1.5" y="1.5" width="7" height="7" rx="1.5"/><path d="M3.5 5h3M5 3.5v3" stroke-linecap="round"/></svg></span>
+          Llama 3.2 3B <span class="sub">Model</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.3" stroke-linecap="round"><path d="m2.5 4 2.5 2.5L7.5 4"/></svg>
+        </div>
+      </div>
+
+      <div class="body">
+        <!-- left column -->
+        <div class="master">
+          <!-- state a: the prompt -->
+          <div class="only-a">
+            <div class="group-h"><span>Your prompt</span><span>9 lines &middot; 396 chars</span></div>
+            <div class="editor">
+              <div class="l">Build one pricing page, light grey background.</div>
+              <div class="l">White nav bar with brand <q>"Ledgerly"</q> and 4 links.</div>
+              <div class="l">Centered heading <q>"Simple pricing"</q>, one line under.</div>
+              <div class="l">Three plan cards in a row, about 200px each.</div>
+              <div class="l">Free $0, Pro $8, Team $20, <q>"/month"</q> small.</div>
+              <div class="l">Three features per card, full-width button.</div>
+              <div class="l">Pro: 2px blue border and a <q>"Popular"</q> tag.</div>
+              <div class="l">Corners 12px, soft shadow, sans-serif font.</div>
+              <div class="l">One style tag, no images, no JavaScript.<span class="cur"></span></div>
+            </div>
+          </div>
+          <div class="only-a">
+            <div class="group-h"><span>Run</span><span>attempt 3</span></div>
+            <div class="rows">
+              <div class="meta"><span class="k">Model</span><span class="v">Llama 3.2 3B</span></div>
+              <div class="meta"><span class="k">Prompts used</span><span class="v mono">2</span></div>
+              <div class="meta"><span class="k">Your best</span><span class="v mono">71</span></div>
+            </div>
+          </div>
+          <div class="run only-a">
+            <button class="btn-red" type="button">Run prompt <span class="keys"><kbd>Ctrl</kbd><kbd>&#8629;</kbd></span></button>
+            <span class="hint">Generates the page, then scores it</span>
+          </div>
+
+          <!-- state b: the score -->
+          <div class="score only-b">
+            <div class="ring">
+              <svg width="92" height="92" viewBox="0 0 92 92">
+                <circle cx="46" cy="46" r="39" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="7"/>
+                <circle cx="46" cy="46" r="39" fill="none" stroke="url(#rg)" stroke-width="7" stroke-linecap="round"
+                  stroke-dasharray="205.8 245" transform="rotate(-90 46 46)" style="filter:drop-shadow(0 0 5px rgba(255,99,99,.6))"/>
+              </svg>
+              <div class="num"><div><b>84</b><small>/ 100</small></div></div>
+            </div>
+            <div class="score-t">
+              <div class="big">13 points over your best</div>
+              <div class="sub">11 of 14 checks passed</div>
+              <div class="segs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f"></i><i class="f"></i><i class="f"></i></div>
+            </div>
+          </div>
+          <div class="only-b">
+            <div class="group-h"><span>Point costs</span><span>&minus;16</span></div>
+            <div class="rows">
+              <div class="cost sel"><span class="pts">&minus;8</span><span class="t">Footer links are missing</span><span class="c">Content</span></div>
+              <div class="cost"><span class="pts">&minus;5</span><span class="t">Page is 2x the goal size</span><span class="c">Size</span></div>
+              <div class="cost"><span class="pts">&minus;3</span><span class="t">Plan cards are narrower than the goal</span><span class="c">Layout</span></div>
+            </div>
+          </div>
+          <div class="only-b">
+            <div class="group-h"><span>Run</span><span>attempt 3</span></div>
+            <div class="rows">
+              <div class="meta"><span class="k">Prompts used</span><span class="v mono">3</span></div>
+              <div class="meta"><span class="k">Rank on this challenge</span><span class="v mono">#38</span></div>
+            </div>
+          </div>
+          <div class="run only-b">
+            <button class="btn-red" type="button">Run again <span class="keys"><kbd>Ctrl</kbd><kbd>&#8629;</kbd></span></button>
+            <span class="hint">Your prompt stays as you left it</span>
+          </div>
+        </div>
+
+        <!-- right column -->
+        <div class="detail">
+          <div class="stage">
+            <div class="shot">
+              <div class="shot-cap"><b>Goal</b><span>1280 &times; 800</span></div>
+              <div class="card">
+                <div class="mock">
+                  <div class="mn"><b><i></i>Ledgerly</b><nav><span>Product</span><span>Pricing</span><span>Customers</span><span>Sign in</span></nav></div>
+                  <div class="mh"><h2>Simple pricing</h2><p>Start free. Upgrade when your team grows.</p></div>
+                  <div class="plans">
+                    <div class="plan"><h3>Free</h3><div class="price">$0 <small>/month</small></div><ul><li>1 project</li><li>Basic reports</li><li>Email support</li></ul><div class="cta">Get started</div></div>
+                    <div class="plan pop"><span class="tag">Popular</span><h3>Pro</h3><div class="price">$8 <small>/month</small></div><ul><li>Unlimited projects</li><li>Advanced reports</li><li>Priority support</li></ul><div class="cta">Start trial</div></div>
+                    <div class="plan"><h3>Team</h3><div class="price">$20 <small>/month</small></div><ul><li>Everything in Pro</li><li>Up to 10 seats</li><li>Shared workspaces</li></ul><div class="cta">Contact sales</div></div>
+                  </div>
+                  <div class="mf"><span>&copy; 2026 Ledgerly</span><nav><span>Docs</span><span>Changelog</span><span>Privacy</span><span>Contact</span></nav></div>
+                </div>
+              </div>
+            </div>
+            <div class="shot only-b">
+              <div class="shot-cap"><b>Your page</b><span>attempt 3</span></div>
+              <div class="card">
+                <div class="mock yours">
+                  <div class="mn"><b><i></i>Ledgerly</b><nav><span>Product</span><span>Pricing</span><span>Customers</span><span>Sign in</span></nav></div>
+                  <div class="mh"><h2>Simple pricing</h2><p>Start free. Upgrade when your team grows.</p></div>
+                  <div class="plans">
+                    <div class="plan"><h3>Free</h3><div class="price">$0 <small>/month</small></div><ul><li>1 project</li><li>Basic reports</li><li>Email support</li></ul><div class="cta">Get started</div></div>
+                    <div class="plan pop"><span class="tag">Popular</span><h3>Pro</h3><div class="price">$8 <small>/month</small></div><ul><li>Unlimited projects</li><li>Advanced reports</li><li>Priority support</li></ul><div class="cta">Start trial</div></div>
+                    <div class="plan"><h3>Team</h3><div class="price">$20 <small>/month</small></div><ul><li>Everything in Pro</li><li>Up to 10 seats</li><li>Shared workspaces</li></ul><div class="cta">Contact sales</div></div>
+                  </div>
+                  <div class="mf"><span>&copy; 2026 Ledgerly</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info only-b">
+            <div class="group-h"><span>Information</span><span></span></div>
+            <div class="info-grid">
+              <div class="it"><span>Goal size</span><span>6.1 KB</span></div>
+              <div class="it"><span>Your size</span><span class="warn">12.4 KB</span></div>
+              <div class="it"><span>Model</span><span>Llama 3.2 3B</span></div>
+              <div class="it"><span>Checks</span><span>11 / 14</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div class="left">
+          <svg class="mark"><use href="#logo"/></svg>
+          <span class="status"><i></i><span class="only-a">Ready to run</span><span class="only-b">Scored 84 &middot; 11 of 14 checks</span></span>
+        </div>
+        <div class="right">
+          <span class="act"><span class="only-a">Run prompt</span><span class="only-b">Run again</span><span class="keys"><kbd class="fill">Ctrl</kbd><kbd class="fill">&#8629;</kbd></span></span>
+          <span class="sep"></span>
+          <span class="act dim">Leaderboard <span class="keys"><kbd class="fill">L</kbd></span></span>
+          <span class="sep"></span>
+          <span class="act dim">Actions <span class="keys"><kbd class="fill">Ctrl</kbd><kbd class="fill">K</kbd></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dock" role="group" aria-label="Preview state">
+  <button type="button" class="on" data-s="a">Before run</button>
+  <button type="button" data-s="b">After scoring</button>
+</div>
+
+<script>
+document.querySelectorAll('.dock button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-state',b.dataset.s);
+    document.querySelectorAll('.dock button').forEach(function(x){x.classList.toggle('on',x===b)});
+  });
+});
+</script>
+</body>
+</html>

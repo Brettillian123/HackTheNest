@@ -4,9 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --env-file-if-exists=.env dev.mjs",
-    "dev:web": "node --env-file=.env dev-server.mjs",
-    "dev:grader": "node --env-file=.env grader/node_modules/tsx/dist/cli.mjs grader/server.ts"
+    "dev": "node --env-file=.env dev-server.mjs"
   },
   "dependencies": {
     "mongodb": "^7.9.0"

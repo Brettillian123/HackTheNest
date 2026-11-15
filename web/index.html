@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno: write the prompt, match the page</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="description" content="Practice prompting. Look at a goal web page, write a prompt, a small model builds it, and a grader scores the match from 0 to 100.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+
+<main class="page">
+  <!-- first screen: what it is, and the product as the picture -->
+  <div class="hero">
+    <section class="panel hero-copy">
+      <h1>Write the prompt.<br>Match the page.<br><i>Get scored.</i></h1>
+      <p class="lede">Describe a goal page, a small model builds it, the grader scores it out of 100</p>
+      <div class="hero-acts">
+        <a class="run" href="workspace.html?c=login-card"><svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.5v11l9.5-5.5z"/></svg>Try the first challenge</a>
+        <a class="btn btn-secondary" href="challenges.html">Browse challenges</a>
+      </div>
+      <ol class="hero-steps" aria-label="How a run goes">
+        <li><span class="lvl r sm">1</span>Study the goal page</li>
+        <li><span class="lvl r sm">2</span>Describe it in one prompt</li>
+        <li><span class="lvl r sm">3</span>See what every lost point was for</li>
+      </ol>
+      <div class="hero-stats">
+        <div class="stat"><div class="k">Challenges</div><div class="v" id="statCount">6</div></div>
+        <div class="stat"><div class="k">Levels</div><div class="v" id="statLevels">3</div></div>
+        <div class="stat"><div class="k">Account</div><div class="v is-word" id="statAcct">Optional</div></div>
+      </div>
+    </section>
+
+    <section class="panel hero-goal">
+      <div class="panel-head"><h2 class="h">Goal page</h2><span class="note" id="heroTitle">Pricing page</span></div>
+      <div class="stage">
+        <div class="frame"><iframe src="data/goals/pricing-plans.html" title="Goal page: pricing plans" sandbox="allow-same-origin" scrolling="no" loading="eager" tabindex="-1" aria-hidden="true"></iframe></div>
+        <div class="panel score mini overlay" aria-label="Example score for this goal page">
+          <div>
+            <div class="sc">
+              <div class="bigscore"><span class="n">89</span><span class="of">/100</span></div>
+              <div class="info"><div class="gain">Example run</div><div class="rk">1 prompt</div></div>
+            </div>
+            <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i></div>
+            <div class="segcap"><span><b>12 of 14</b> checks passed</span></div>
+          </div>
+          <div class="costs">
+            <div class="cost"><span class="pt">&minus;7</span><span class="w">"Most popular" label is missing</span></div>
+            <div class="cost"><span class="pt">&minus;4</span><span class="w">Plan cards are narrower than the goal</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- how it works -->
+  <section class="sect" aria-labelledby="howTitle">
+    <div class="sect-head"><h2 class="h" id="howTitle">How it works</h2><span class="note">One challenge, start to finish</span></div>
+    <div class="steps">
+      <article class="panel step">
+        <div class="step-t"><span class="lvl r">1</span><h3 class="title">Study the goal page</h3></div>
+        <p class="small">Note the layout, words, sizes and colours</p>
+        <div class="step-body">
+          <div class="frame"><iframe src="data/goals/login-card.html" title="Goal page: sign-in card" sandbox="allow-same-origin" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        </div>
+      </article>
+
+      <article class="panel step">
+        <div class="step-t"><span class="lvl r">2</span><h3 class="title">Write the prompt</h3></div>
+        <p class="small">A small model turns your words into one HTML file</p>
+        <div class="step-body">
+          <div class="editor code" aria-label="Example prompt">
+<div class="l">Sign-in page for <q>"Fernway"</q>.</div>
+<div class="l">One centered white card titled</div>
+<div class="l"><q>"Welcome back"</q>, short subtitle.</div>
+<div class="l">Email and Password fields.</div>
+<div class="l"><em>Remember me</em> left, <q>"Forgot</q></div>
+<div class="l"><q>password?"</q> right, one row.</div>
+<div class="l">Full width <q>"Sign in"</q> button.</div>
+<div class="l">One HTML file, inline CSS.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel step">
+        <div class="step-t"><span class="lvl r">3</span><h3 class="title">Get scored</h3></div>
+        <p class="small">Every lost point says what it was for</p>
+        <div class="step-body">
+          <div class="score mini" aria-label="Example score">
+            <div class="sc">
+              <div class="bigscore"><span class="n">94</span><span class="of">/100</span></div>
+              <div class="info"><div class="gain">Example</div><div class="rk">13 of 14 checks</div></div>
+            </div>
+            <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i></div>
+            <div class="costs">
+              <div class="cost"><span class="pt">&minus;4</span><span class="w">Card is 40px wider than the goal</span></div>
+              <div class="cost"><span class="pt">&minus;2</span><span class="w">Button corners are rounder than the goal</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- leaderboard preview and prompt brackets -->
+  <section class="sect" aria-labelledby="boardTitle">
+    <div class="sect-head"><h2 class="h" id="boardTitle">Leaderboard</h2><a class="link small" href="leaderboard.html">Full leaderboard</a></div>
+    <div class="board">
+      <section class="panel">
+        <div class="panel-head"><div class="ph-l"><h3 class="h">Top 5 overall</h3><span id="boardDemo"></span></div><span class="note">All prompt counts, all time</span></div>
+        <div id="board">
+          <div class="skel"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </section>
+
+      <section class="panel brackets">
+        <div class="panel-head"><h3 class="h">Prompt brackets</h3><span class="note">How ranking works</span></div>
+        <p class="lead-line">Fewer prompts for the same score <b>ranks higher</b></p>
+        <nav class="pills" aria-label="Leaderboard by prompt bracket">
+          <a href="leaderboard.html?b=1">1 prompt</a><a href="leaderboard.html?b=2">2 prompts</a><a href="leaderboard.html?b=3-5">3 to 5</a><a href="leaderboard.html?b=6-10">6 to 10</a><a href="leaderboard.html?b=11%2B">11 or more</a>
+        </nav>
+        <p class="small">A one-shot 92 never meets a 92 that took eight tries</p>
+        <dl class="kv">
+          <div><dt>92 in 1 prompt</dt><dd>1 prompt board</dd></div>
+          <div><dt>92 in 4 prompts</dt><dd>3 to 5 board</dd></div>
+          <div><dt>92 in 3 vs 92 in 5</dt><dd>3 ranks higher</dd></div>
+        </dl>
+      </section>
+    </div>
+  </section>
+
+  <!-- perfection -->
+  <section class="sect" aria-labelledby="whyTitle">
+    <div class="sect-head"><h2 class="h" id="whyTitle">What a score means</h2></div>
+    <section class="panel why">
+      <div>
+        <p class="lead-line">A perfect 100 is rare by design</p>
+        <p class="callout"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span><b>Good score ranges vary by level</b></span></p>
+      </div>
+      <div>
+        <div class="bands">
+          <div class="stat"><div class="k">Level 1</div><div class="v">80–90s</div><div class="d">Good score</div></div>
+          <div class="stat"><div class="k">Level 2</div><div class="v">70–80s</div><div class="d">Good score</div></div>
+          <div class="stat"><div class="k">Level 3</div><div class="v">60–70s</div><div class="d">Good score</div></div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <footer id="foot"></footer>
+</main>
+
+<script type="module" src="js/landing.js"></script>
+</body>
+</html>

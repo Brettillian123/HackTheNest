@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>November 2026 - Calendar</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #0f172a; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; border-bottom: 1px solid #e2e8f0; }
+.left { display: flex; align-items: center; gap: 12px; }
+h1 { margin: 0 0 0 8px; font-size: 26px; line-height: 32px; }
+button { font-family: inherit; color: #0f172a; background: #ffffff; border: 1px solid #cbd5e1; }
+.today-btn { padding: 8px 16px; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: bold; }
+.arrow { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border-radius: 50%; }
+.views { display: flex; }
+.views button { padding: 8px 18px; font-size: 14px; line-height: 20px; }
+.views button:first-child { border-radius: 8px 0 0 8px; }
+.views button:last-child { border-radius: 0 8px 8px 0; border-left: 0; }
+.views button[aria-pressed="true"] { background: #1d4ed8; border-color: #1d4ed8; color: #ffffff; }
+main { padding: 16px 32px 32px; }
+.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); margin: 0; padding: 0; list-style: none; }
+.weekdays li { padding: 8px 10px; font-size: 13px; line-height: 18px; font-weight: bold; text-transform: uppercase; color: #475569; }
+.month { border-top: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; }
+.week { position: relative; }
+.days { display: grid; grid-template-columns: repeat(7, 1fr); }
+.day { height: 112px; padding: 8px 10px; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; font-size: 14px; line-height: 24px; font-weight: bold; }
+.out { background: #f8fafc; color: #64748b; font-weight: normal; }
+.today time { display: inline-block; width: 28px; height: 28px; margin: -2px 0 0 -6px; border-radius: 50%; background: #1d4ed8; color: #ffffff; line-height: 28px; text-align: center; }
+.events { position: absolute; top: 38px; left: 0; right: 0; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 24px; grid-auto-flow: dense; row-gap: 4px; margin: 0; padding: 0; list-style: none; }
+.event { margin: 0 6px; padding: 0 8px; border-radius: 6px; font-size: 12px; line-height: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c1 { grid-column: 1; }
+.c2 { grid-column: 2; }
+.c3 { grid-column: 3; }
+.c4 { grid-column: 4; }
+.c5 { grid-column: 5; }
+.c6 { grid-column: 6; }
+.span3 { grid-column: 3 / span 3; }
+.work { background: #dbeafe; color: #1e3a8a; }
+.health { background: #dcfce7; color: #14532d; }
+.personal { background: #fef3c7; color: #78350f; }
+.travel { background: #ede9fe; color: #4c1d95; }
+.deadline { background: #ffe4e6; color: #881337; }
+</style>
+</head>
+<body>
+<header>
+  <div class="left">
+    <button type="button" class="today-btn">Today</button>
+    <button type="button" class="arrow" aria-label="Previous month"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="#0f172a" stroke-width="2" fill="none"/></svg></button>
+    <button type="button" class="arrow" aria-label="Next month"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="#0f172a" stroke-width="2" fill="none"/></svg></button>
+    <h1>November 2026</h1>
+  </div>
+  <div class="views" role="group" aria-label="View">
+    <button type="button" aria-pressed="true">Month</button>
+    <button type="button" aria-pressed="false">Week</button>
+    <button type="button" aria-pressed="false">Day</button>
+  </div>
+</header>
+<main>
+  <ul class="weekdays">
+    <li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li><li>Sat</li><li>Sun</li>
+  </ul>
+  <div class="month">
+    <div class="week">
+      <div class="days">
+        <div class="day out"><time datetime="2026-10-26">26</time></div>
+        <div class="day out"><time datetime="2026-10-27">27</time></div>
+        <div class="day out"><time datetime="2026-10-28">28</time></div>
+        <div class="day out"><time datetime="2026-10-29">29</time></div>
+        <div class="day out"><time datetime="2026-10-30">30</time></div>
+        <div class="day out"><time datetime="2026-10-31">31</time></div>
+        <div class="day"><time datetime="2026-11-01">1</time></div>
+      </div>
+    </div>
+    <div class="week">
+      <div class="days">
+        <div class="day"><time datetime="2026-11-02">2</time></div>
+        <div class="day"><time datetime="2026-11-03">3</time></div>
+        <div class="day"><time datetime="2026-11-04">4</time></div>
+        <div class="day"><time datetime="2026-11-05">5</time></div>
+        <div class="day"><time datetime="2026-11-06">6</time></div>
+        <div class="day"><time datetime="2026-11-07">7</time></div>
+        <div class="day"><time datetime="2026-11-08">8</time></div>
+      </div>
+      <ul class="events">
+        <li class="event work c2">10:00 Design review</li>
+        <li class="event health c4">15:30 Dentist</li>
+      </ul>
+    </div>
+    <div class="week">
+      <div class="days">
+        <div class="day"><time datetime="2026-11-09">9</time></div>
+        <div class="day"><time datetime="2026-11-10">10</time></div>
+        <div class="day"><time datetime="2026-11-11">11</time></div>
+        <div class="day"><time datetime="2026-11-12">12</time></div>
+        <div class="day"><time datetime="2026-11-13">13</time></div>
+        <div class="day"><time datetime="2026-11-14">14</time></div>
+        <div class="day today"><time datetime="2026-11-15" aria-current="date">15</time></div>
+      </div>
+      <ul class="events">
+        <li class="event work c1">09:30 Sprint planning</li>
+        <li class="event travel span3">Web Summit, Lisbon</li>
+        <li class="event personal c6">Ana's birthday</li>
+      </ul>
+    </div>
+    <div class="week">
+      <div class="days">
+        <div class="day"><time datetime="2026-11-16">16</time></div>
+        <div class="day"><time datetime="2026-11-17">17</time></div>
+        <div class="day"><time datetime="2026-11-18">18</time></div>
+        <div class="day"><time datetime="2026-11-19">19</time></div>
+        <div class="day"><time datetime="2026-11-20">20</time></div>
+        <div class="day"><time datetime="2026-11-21">21</time></div>
+        <div class="day"><time datetime="2026-11-22">22</time></div>
+      </div>
+      <ul class="events">
+        <li class="event work c3">11:00 1:1 with Priya</li>
+        <li class="event deadline c5">Quarterly report due</li>
+      </ul>
+    </div>
+    <div class="week">
+      <div class="days">
+        <div class="day"><time datetime="2026-11-23">23</time></div>
+        <div class="day"><time datetime="2026-11-24">24</time></div>
+        <div class="day"><time datetime="2026-11-25">25</time></div>
+        <div class="day"><time datetime="2026-11-26">26</time></div>
+        <div class="day"><time datetime="2026-11-27">27</time></div>
+        <div class="day"><time datetime="2026-11-28">28</time></div>
+        <div class="day"><time datetime="2026-11-29">29</time></div>
+      </div>
+      <ul class="events">
+        <li class="event health c2">18:00 Yoga</li>
+        <li class="event personal c4">19:30 Team dinner</li>
+      </ul>
+    </div>
+    <div class="week">
+      <div class="days">
+        <div class="day"><time datetime="2026-11-30">30</time></div>
+        <div class="day out"><time datetime="2026-12-01">1</time></div>
+        <div class="day out"><time datetime="2026-12-02">2</time></div>
+        <div class="day out"><time datetime="2026-12-03">3</time></div>
+        <div class="day out"><time datetime="2026-12-04">4</time></div>
+        <div class="day out"><time datetime="2026-12-05">5</time></div>
+        <div class="day out"><time datetime="2026-12-06">6</time></div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

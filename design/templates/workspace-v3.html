@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" data-state="a" data-view="yours">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F0D0C;--sf:#181514;--bd:#2E2826;--tx:#F1EBE4;--mu:#A39A92;--red:#E5484D;--ok:#5DBB7E;--hi:#FFFFFF;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:2px;--pad:40px;
+  color-scheme:dark;
+}
+/* state switches */
+[data-state="a"] .b,[data-state="b"] .a{display:none!important}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:400 14px/20px var(--sans);overflow:hidden}
+a{color:var(--tx);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+button,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.meta{font:400 12px/16px var(--mono);color:var(--mu);font-variant-numeric:tabular-nums}
+.cap{font:400 12px/16px var(--sans);color:var(--mu)}
+.lbl{font-weight:600}
+
+/* frame: 1280 x 760 app area, everything placed on the spec grid */
+.w{position:relative;width:1280px;height:760px;margin:0 auto}
+.hl{position:absolute;left:calc(640px - 50vw);width:100vw;height:1px;background:var(--bd)}
+
+/* top bar: 0 to 56 */
+.top{position:absolute;left:var(--pad);right:var(--pad);top:0;height:56px;display:flex;align-items:center}
+.brand{display:flex;align-items:flex-end;gap:8px;font-weight:600}
+.mark{position:relative;width:23px;height:20px}
+.mark i{position:absolute;bottom:2px;width:3px;height:12px;background:var(--tx)}
+.mark i:nth-child(n+4){background:var(--red)}
+.mark i:last-child{height:18px}
+.top .ch{margin-left:24px}
+.top .lb{margin-left:auto}
+
+/* rail band: 56 to 184 (20 pad, 48 row, 12 gap, 32 rail, 4 gap, 2 bracket, 10 pad) */
+.row{position:absolute;left:var(--pad);right:var(--pad);top:76px;height:48px;display:flex;align-items:flex-end;justify-content:space-between}
+.title{margin:0;font:600 28px/32px var(--sans);letter-spacing:-.01em}
+.score{font:600 48px/48px var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rail{position:absolute;left:var(--pad);top:136px;width:1200px;height:32px}
+.t{position:absolute;bottom:0;width:3px;height:24px;background:var(--red);transition:opacity 120ms}
+.t.x{height:32px}
+[data-state="b"] .t.e{background:var(--tx)}
+.brk{position:absolute;left:var(--pad);top:172px;width:1200px;height:2px}
+.bk{position:absolute;top:0;height:2px;background:var(--red);transition:opacity 120ms}
+.t.dim,.bk.dim{opacity:.3}
+
+/* work area: 184 to 760 (24 pad, 24 caption, 8 gap, 480 content, 40 pad) */
+.capr{position:absolute;top:208px;height:24px;display:flex;align-items:center;justify-content:space-between}
+.capl{left:var(--pad);width:768px}
+.capp{left:840px;width:400px}
+.tabs{display:flex;gap:16px}
+.tab{background:none;border:0;padding:0;height:24px;font-weight:400;color:var(--mu);cursor:pointer}
+.tab:hover{color:var(--tx)}
+.tab[aria-selected="true"]{font-weight:600;color:var(--tx)}
+
+/* specimen: 768 x 480 at x 40, y 240, square, no border */
+.spec{position:absolute;left:var(--pad);top:240px;width:768px;height:480px;overflow:hidden;background:#FFFFFF}
+.goalpg{display:block}
+.yours{display:none}
+[data-state="b"][data-view="yours"] .goalpg{display:none}
+[data-state="b"][data-view="yours"] .yours{display:block}
+
+/* the goal page: a real 1280 x 800 page shown at 60 percent */
+.pg{position:absolute;left:0;top:0;width:1280px;height:800px;transform:scale(.6);transform-origin:0 0;background:#FFFFFF;color:#1D2433;font:400 16px/24px var(--sans)}
+.pg nav{height:72px;padding:0 160px;display:flex;align-items:center;gap:32px;border-bottom:1px solid #E6E8EC;font-size:15px}
+.pg nav b{margin-right:auto;font-size:20px;font-weight:600}
+.pg h1{position:absolute;top:128px;left:0;right:0;margin:0;text-align:center;font:600 44px/52px var(--sans);letter-spacing:-.01em}
+.pg .sub{position:absolute;top:188px;left:0;right:0;margin:0;text-align:center;font-size:18px;line-height:28px;color:#5B6372}
+.pg .plans{position:absolute;top:264px;left:160px;width:960px;display:flex;gap:24px}
+.pg.yo .plans{left:220px;width:840px}
+.plan{flex:1;height:392px;box-sizing:border-box;border:1px solid #E6E8EC;border-radius:8px;padding:32px;display:flex;flex-direction:column}
+.plan.pro{border-color:#1D2433}
+.plan b{font-size:18px;font-weight:600}
+.plan .pr{margin:12px 0 20px;font:600 40px/48px var(--sans)}
+.plan .pr small{font-size:15px;font-weight:400;color:#5B6372}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;color:#5B6372;font-size:15px}
+.plan .go{margin-top:auto;height:44px;border-radius:6px;background:#1D2433;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:600}
+.pg footer{position:absolute;left:0;right:0;bottom:0;height:64px;padding:0 160px;display:flex;align-items:center;gap:32px;border-top:1px solid #E6E8EC;color:#5B6372;font-size:15px}
+.pg footer span:last-child{margin-left:auto}
+
+/* prompt column: x 840 to 1240, y 240 to 720 */
+.col{position:absolute;left:840px;top:240px;width:400px;height:480px;display:flex;flex-direction:column}
+textarea{box-sizing:border-box;width:100%;height:416px;flex:none;margin:0;padding:15px;resize:none;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);font:400 14px/24px var(--mono);color:var(--tx);scrollbar-color:var(--bd) transparent}
+[data-state="b"] textarea{height:248px}
+textarea:focus{outline:none;border-color:var(--tx)}
+.act{height:40px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex:none}
+[data-state="a"] .act{margin-top:24px}
+.pick{position:relative;display:inline-flex;align-items:center}
+.pick select{appearance:none;background:none;border:0;border-radius:var(--r);height:40px;padding:0 16px 0 0;color:var(--mu);cursor:pointer}
+.pick select:hover{color:var(--tx)}
+.pick::after{content:"\25BE";position:absolute;right:0;color:var(--mu);pointer-events:none}
+.pick option{background:var(--sf);color:var(--tx)}
+.btn{height:40px;padding:0 16px;border-radius:var(--r);font-weight:600;cursor:pointer}
+.pri{width:144px;text-align:center;background:var(--tx);color:var(--bg);border:0}
+.pri:hover{background:var(--hi)}
+.pri:disabled{opacity:.4;cursor:default}
+
+/* points lost: header row plus three rows of 40 */
+.costs{margin-top:16px}
+.tr[data-c]{cursor:default}
+.tr{height:40px;box-sizing:border-box;display:flex;align-items:center}
+.tr+.tr{border-top:1px solid var(--bd)}
+.th{justify-content:space-between}
+.c{display:inline-block;width:40px;font:600 14px/20px var(--mono);color:var(--red);font-variant-numeric:tabular-nums}
+.th a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--mu)}
+
+/* review bar: not part of the product */
+.review{position:fixed;left:0;right:0;bottom:0;height:40px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--bg);border-top:1px solid var(--bd);color:var(--mu);font:400 12px/16px var(--sans)}
+.review span{margin-right:16px}
+.review button{background:none;border:0;padding:4px 8px;color:var(--mu);cursor:pointer}
+.review button[aria-pressed="true"]{color:var(--tx);font-weight:600}
+</style>
+</head>
+<body>
+<div class="w">
+  <header class="top">
+    <a class="brand" href="#" aria-label="promptdyno home"><span class="mark" aria-hidden="true"><i style="left:0"></i><i style="left:5px"></i><i style="left:10px"></i><i style="left:15px"></i><i style="left:20px"></i></span>promptdyno</a>
+    <a class="ch" href="#">Challenges</a>
+    <a class="lb" href="#">Leaderboard</a>
+  </header>
+  <div class="hl" style="top:55px"></div>
+
+  <div class="row">
+    <h1 class="title">Pricing page with three plans</h1>
+    <span class="cap a">No runs yet</span>
+    <span class="score b" aria-label="Score 84">84</span>
+  </div>
+  <div class="rail" aria-hidden="true"></div>
+  <div class="brk b" aria-hidden="true"></div>
+  <div class="hl" style="top:183px"></div>
+
+  <div class="capr capl">
+    <span class="lbl a">Goal</span>
+    <div class="tabs b" role="tablist">
+      <button class="tab" role="tab" data-view="yours">Yours</button>
+      <button class="tab" role="tab" data-view="goal">Goal</button>
+    </div>
+    <span class="meta">1280 x 800 at 60%</span>
+  </div>
+
+  <div class="spec">
+    <div class="pg goalpg">
+      <nav><b>Ledger</b><span>Features</span><span>Pricing</span><span>Sign in</span></nav>
+      <h1>Simple pricing</h1>
+      <p class="sub">Start free. Upgrade when your notes outgrow it.</p>
+      <div class="plans">
+        <div class="plan"><b>Free</b><div class="pr">$0 <small>/ month</small></div><ul><li>1 notebook</li><li>Sync on 2 devices</li><li>Basic search</li></ul><span class="go">Get started</span></div>
+        <div class="plan pro"><b>Pro</b><div class="pr">$8 <small>/ month</small></div><ul><li>Unlimited notebooks</li><li>Sync on all devices</li><li>Full-text search</li></ul><span class="go">Start trial</span></div>
+        <div class="plan"><b>Team</b><div class="pr">$20 <small>/ month</small></div><ul><li>Shared notebooks</li><li>Admin controls</li><li>Priority support</li></ul><span class="go">Contact sales</span></div>
+      </div>
+      <footer><span>About</span><span>Blog</span><span>Privacy</span><span>Terms</span><span>&copy; 2026 Ledger</span></footer>
+    </div>
+    <div class="pg yo yours">
+      <nav><b>Ledger</b><span>Features</span><span>Pricing</span><span>Sign in</span></nav>
+      <h1>Simple pricing</h1>
+      <p class="sub">Start free. Upgrade when your notes outgrow it.</p>
+      <div class="plans">
+        <div class="plan"><b>Free</b><div class="pr">$0 <small>/ month</small></div><ul><li>1 notebook</li><li>Sync on 2 devices</li><li>Basic search</li></ul><span class="go">Get started</span></div>
+        <div class="plan pro"><b>Pro</b><div class="pr">$8 <small>/ month</small></div><ul><li>Unlimited notebooks</li><li>Sync on all devices</li><li>Full-text search</li></ul><span class="go">Start trial</span></div>
+        <div class="plan"><b>Team</b><div class="pr">$20 <small>/ month</small></div><ul><li>Shared notebooks</li><li>Admin controls</li><li>Priority support</li></ul><span class="go">Contact sales</span></div>
+      </div>
+      <footer><span>&copy; 2026 Ledger</span></footer>
+    </div>
+  </div>
+
+  <div class="capr capp">
+    <label class="lbl" for="prompt">Prompt</label>
+    <span class="meta" id="count">0 / 2000</span>
+  </div>
+  <div class="col">
+    <textarea id="prompt" maxlength="2000" spellcheck="false">Pricing page for a notes app, Ledger.
+Nav: Ledger left; Features, Pricing,
+Sign in right. Centered "Simple pricing"
+with one line below. Three cards: Free
+$0, Pro $8, Team $20 a month, each with
+three features and a dark button. Pro
+card has a dark border. Footer: About,
+Blog, Privacy, Terms. White page, dark
+slate text, no images.</textarea>
+    <div class="act">
+      <span class="pick"><select aria-label="Model"><option>Llama 3.2 3B</option><option>Qwen 2.5 3B</option><option>Gemma 2 2B</option></select></span>
+      <button class="btn pri" id="run" type="button"><span class="a">Run prompt</span><span class="b">Run again</span></button>
+    </div>
+    <div class="costs b">
+      <div class="tr th"><span class="lbl">Points lost</span><a href="#"><span class="num">11</span> of <span class="num">14</span> checks passed</a></div>
+      <div class="tr" data-c="0" tabindex="0"><span class="c">&minus;8</span>Footer links are missing</div>
+      <div class="tr" data-c="1" tabindex="0"><span class="c">&minus;5</span>Page is 2x the goal size</div>
+      <div class="tr" data-c="2" tabindex="0"><span class="c">&minus;3</span>Plan cards are narrower than the goal</div>
+    </div>
+  </div>
+</div>
+
+<div class="review" aria-label="Design review controls">
+  <span>Design review</span>
+  <button data-s="a">Before run</button><button data-s="b">After scoring</button>
+</div>
+
+<script>
+const h = document.documentElement, $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+const SCORE = 84, COSTS = [8, 5, 3], rail = $('.rail'), brk = $('.brk');
+// tick i starts at 12i + floor(i/10), so the last of 100 ends at 1200
+const x = i => i * 12 + Math.floor(i / 10);
+// lost ticks are grouped in cost-row order: group g owns the next COSTS[g] red ticks
+const group = i => { let s = SCORE; for (let g = 0; g < COSTS.length; g++) { s += COSTS[g]; if (i < s) return g; } return -1; };
+for (let i = 0; i < 100; i++) {
+  const t = document.createElement('i');
+  t.className = 't' + (i < SCORE ? ' e' : '') + (i % 10 === 9 ? ' x' : '');
+  if (i >= SCORE && group(i) >= 0) t.dataset.c = group(i);
+  t.style.left = x(i) + 'px';
+  rail.append(t);
+}
+// one bracket per cost row, from its first tick's left edge to its last tick's right edge
+COSTS.reduce((first, c, g) => {
+  const b = document.createElement('i'), last = first + c - 1;
+  b.className = 'bk'; b.dataset.c = g;
+  b.style.left = x(first) + 'px'; b.style.width = x(last) + 3 - x(first) + 'px';
+  brk.append(b);
+  return first + c;
+}, SCORE);
+function setState(s) {
+  h.dataset.state = s;
+  history.replaceState(null, '', '#' + s);
+  $$('.review button').forEach(b => b.setAttribute('aria-pressed', b.dataset.s === s));
+}
+function setView(v) {
+  h.dataset.view = v;
+  $$('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.view === v));
+}
+$$('.review button').forEach(b => b.onclick = () => setState(b.dataset.s));
+$$('.tab').forEach(b => b.onclick = () => setView(b.dataset.view));
+addEventListener('hashchange', () => setState(location.hash === '#b' ? 'b' : 'a'));
+setState(location.hash === '#b' ? 'b' : 'a');
+setView('yours');
+
+// hovering or focusing a cost row dims every other group's ticks and bracket
+$$('.tr[data-c]').forEach(r => {
+  r.onmouseenter = r.onfocus = () => $$('.t[data-c], .bk').forEach(m => m.classList.toggle('dim', m.dataset.c !== r.dataset.c));
+  r.onmouseleave = r.onblur = () => $$('.dim').forEach(m => m.classList.remove('dim'));
+});
+
+const ta = $('#prompt'), count = () => $('#count').textContent = ta.value.length + ' / 2000';
+ta.oninput = count; count();
+
+const run = $('#run');
+run.onclick = () => {
+  if (h.dataset.state === 'a') { setView('yours'); setState('b'); return; }
+  run.disabled = true;
+  setTimeout(() => { run.disabled = false; }, 700);
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact us - Northfield Studio</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f1f5f9; color: #0f172a; }
+main { display: flex; gap: 64px; width: 1040px; margin: 80px auto; padding: 56px; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); }
+.intro { width: 360px; flex-shrink: 0; }
+.eyebrow { margin: 0 0 12px; font-size: 13px; line-height: 16px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; color: #0f766e; }
+h1 { margin: 0 0 16px; font-size: 36px; line-height: 44px; }
+.lead { margin: 0 0 40px; font-size: 16px; line-height: 26px; color: #475569; }
+.details { margin: 0; padding-top: 32px; border-top: 1px solid #e2e8f0; }
+dt { margin: 0 0 4px; font-size: 12px; line-height: 16px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #475569; }
+dd { margin: 0 0 24px; font-size: 16px; line-height: 24px; }
+address { font-style: normal; }
+form { flex: 1; }
+h2 { margin: 0 0 24px; font-size: 22px; line-height: 28px; }
+.row { display: flex; gap: 16px; }
+.field { flex: 1; margin-bottom: 20px; }
+.field label { display: block; margin-bottom: 8px; font-size: 14px; line-height: 20px; font-weight: bold; }
+input, select, textarea { display: block; width: 100%; padding: 12px 14px; font-family: inherit; font-size: 15px; line-height: 20px; color: #0f172a; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; }
+textarea { height: 140px; resize: vertical; }
+::placeholder { color: #64748b; }
+.consent { display: flex; align-items: flex-start; gap: 12px; margin: 4px 0 28px; font-size: 14px; line-height: 20px; color: #475569; }
+.consent input { width: 18px; height: 18px; margin: 1px 0 0; flex-shrink: 0; accent-color: #0f766e; }
+button { padding: 14px 32px; font-family: inherit; font-size: 16px; line-height: 20px; font-weight: bold; color: #ffffff; background: #0f766e; border: 0; border-radius: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <section class="intro">
+    <p class="eyebrow">Contact</p>
+    <h1>Let's talk about your project</h1>
+    <p class="lead">Tell us what you are planning and we will reply within one working day. Prefer to talk? Call the studio during opening hours.</p>
+    <dl class="details">
+      <dt>Studio</dt>
+      <dd><address>24 Canal Street, Manchester M1 3HE</address></dd>
+      <dt>Phone</dt>
+      <dd>0161 496 0732</dd>
+      <dt>Hours</dt>
+      <dd>Monday to Friday, 9:00 to 17:30</dd>
+    </dl>
+  </section>
+  <form action="#" method="post">
+    <h2>Send us a message</h2>
+    <div class="row">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" placeholder="Jane Cooper" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required>
+      </div>
+    </div>
+    <div class="field">
+      <label for="topic">Topic</label>
+      <select id="topic" name="topic">
+        <option>New project enquiry</option>
+        <option>Existing project</option>
+        <option>Careers</option>
+        <option>Press</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="A few lines about your project, timeline and budget." required></textarea>
+    </div>
+    <div class="consent">
+      <input id="consent" name="consent" type="checkbox" required>
+      <label for="consent">I agree to Northfield Studio keeping my details so it can reply to this message.</label>
+    </div>
+    <button type="submit">Send message</button>
+  </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbox - Mail</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #0f172a; }
+header { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; border-bottom: 1px solid #e2e8f0; }
+h1 { margin: 0; font-size: 22px; line-height: 28px; color: #1d4ed8; }
+.compose { padding: 10px 20px; background: #1d4ed8; border: 0; border-radius: 8px; font-family: inherit; font-size: 15px; line-height: 20px; font-weight: bold; color: #ffffff; }
+.app { display: flex; min-height: 736px; }
+nav { width: 220px; padding: 16px 12px; background: #f8fafc; border-right: 1px solid #e2e8f0; }
+nav ul { margin: 0; padding: 0; list-style: none; }
+nav a { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 8px; font-size: 15px; line-height: 20px; color: #334155; text-decoration: none; }
+nav .current { background: #dbeafe; font-weight: bold; color: #1e3a8a; }
+.count { font-size: 13px; line-height: 20px; }
+.mail { display: flex; flex: 1; }
+.list { width: 420px; border-right: 1px solid #e2e8f0; }
+h2 { margin: 0; padding: 16px 20px; border-bottom: 1px solid #e2e8f0; font-size: 18px; line-height: 24px; }
+.messages { margin: 0; padding: 0; list-style: none; }
+.messages li { padding: 12px 20px; border-bottom: 1px solid #e2e8f0; border-left: 4px solid #ffffff; }
+.messages .selected { background: #eff6ff; border-left-color: #1d4ed8; }
+.row { display: flex; justify-content: space-between; font-size: 15px; line-height: 20px; }
+.time { font-size: 13px; color: #64748b; }
+.subject { margin: 2px 0 0; font-size: 14px; line-height: 20px; }
+.preview { margin: 2px 0 0; font-size: 13px; line-height: 18px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.unread .row, .unread .subject { font-weight: bold; }
+.unread .time { color: #1d4ed8; }
+.reader { flex: 1; padding: 28px 40px; }
+.reader h2 { padding: 0 0 8px; border: 0; font-size: 24px; line-height: 32px; }
+.from { margin: 0; font-size: 14px; line-height: 20px; color: #475569; }
+.body { margin-top: 24px; padding-top: 24px; border-top: 1px solid #e2e8f0; font-size: 15px; line-height: 24px; color: #1e293b; }
+.body p { margin: 0 0 16px; }
+.actions { display: flex; gap: 12px; margin-top: 8px; }
+.actions button { padding: 9px 18px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 14px; line-height: 20px; color: #0f172a; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Mail</h1>
+  <button type="button" class="compose">Compose</button>
+</header>
+<div class="app">
+  <nav aria-label="Folders">
+    <ul>
+      <li><a class="current" href="#inbox" aria-current="page">Inbox <span class="count">3</span></a></li>
+      <li><a href="#starred">Starred <span class="count">12</span></a></li>
+      <li><a href="#sent">Sent <span class="count">248</span></a></li>
+      <li><a href="#drafts">Drafts <span class="count">2</span></a></li>
+      <li><a href="#archive">Archive <span class="count">1,406</span></a></li>
+      <li><a href="#spam">Spam <span class="count">7</span></a></li>
+    </ul>
+  </nav>
+  <main class="mail">
+  <section class="list" id="inbox">
+    <h2>Inbox</h2>
+    <ul class="messages">
+      <li class="unread selected"><div class="row"><span>Hannah Lee</span><span class="time">9:42</span></div><p class="subject">Venue confirmed for the offsite</p><p class="preview">Great news: the Harbour Loft is booked for the 3rd and 4th of December.</p></li>
+      <li class="unread"><div class="row"><span>GitHub</span><span class="time">8:15</span></div><p class="subject">[web-app] Pull request #482 approved</p><p class="preview">Marco approved your changes to the checkout form validation.</p></li>
+      <li class="unread"><div class="row"><span>Omar Farouk</span><span class="time">7:58</span></div><p class="subject">Quick question about the Q4 budget</p><p class="preview">Do we still have room for the analytics licence, or should it wait?</p></li>
+      <li><div class="row"><span>Grace Turner</span><span class="time">Sat</span></div><p class="subject">Notes from Friday's design review</p><p class="preview">Attached are the notes and the three follow-ups we agreed on.</p></li>
+      <li><div class="row"><span>Northwind Air</span><span class="time">Sat</span></div><p class="subject">Your boarding pass for LIS to AMS</p><p class="preview">Flight NW 1184 departs Wednesday 18 November at 07:35 from gate B12.</p></li>
+      <li><div class="row"><span>Lucas Moreau</span><span class="time">Fri</span></div><p class="subject">Re: Onboarding checklist</p><p class="preview">Thanks, I've added the security training step to week one.</p></li>
+      <li><div class="row"><span>Figma</span><span class="time">Fri</span></div><p class="subject">Ines commented on Checkout v3</p><p class="preview">"Can we try the summary panel on the right instead of below?"</p></li>
+      <li><div class="row"><span>Priya Shah</span><span class="time">Thu</span></div><p class="subject">Lunch on Tuesday?</p><p class="preview">The new ramen place on Rua Augusta opened, want to try it?</p></li>
+      <li><div class="row"><span>Bank of Lisbon</span><span class="time">Nov 11</span></div><p class="subject">Your October statement is ready</p><p class="preview">Your statement for the account ending 4821 can now be viewed online.</p></li>
+    </ul>
+  </section>
+  <article class="reader" aria-label="Selected message">
+    <h2>Venue confirmed for the offsite</h2>
+    <p class="from">Hannah Lee &lt;hannah.lee@brightlane.io&gt;, to me</p>
+    <p class="from">Sunday 15 November 2026, 9:42</p>
+    <div class="body">
+      <p>Hi all,</p>
+      <p>Great news: the Harbour Loft is booked for the 3rd and 4th of December. It holds up to 40 people, has two breakout rooms and is a ten-minute walk from Cais do Sodré station.</p>
+      <p>Lunch is included on both days. Please send me any dietary needs by Friday so I can pass them on to the caterers.</p>
+      <p>I'll share the full agenda next week.</p>
+      <p>Thanks,<br>Hannah</p>
+    </div>
+    <div class="actions">
+      <button type="button">Reply</button>
+      <button type="button">Reply all</button>
+      <button type="button">Forward</button>
+    </div>
+  </article>
+  </main>
+</div>
+</body>
+</html>

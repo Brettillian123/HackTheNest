@@ -1,0 +1,221 @@
+/* Workspace page layout. Colours and sizes come from tokens.css; components from components.css. */
+
+.ws [hidden]{display:none !important}
+
+/* one screen, no page scroll */
+.ws-page{height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;padding-bottom:var(--s-5);overflow:hidden}
+.ws-page > .phead,.ws-page > .tabs{flex:none}
+.ws-page > .split{flex:1;min-height:0}
+.ws-page .col{min-height:0}
+.ws-page .col > .panel{min-height:0;overflow:hidden}
+.ws-page .col > .panel.grow{flex:1 1 0}
+.ws-page .col > .panel.ws-dd-host{overflow:visible;display:flex;flex-direction:column}
+/* every panel head is as tall as the tool group, so all head labels share one baseline */
+.ws-page .panel > .panel-head{min-height:34px}
+
+/* frames hold the page at its real viewport, scaled by workspace.js */
+.ws .frame > iframe{width:1280px;height:800px}
+.ws-flex{display:flex;flex-direction:column}
+.ws-pair-box{min-width:0;display:flex;flex-direction:column;min-height:0}
+
+/* frames fit their panel in both directions: the slot takes the free space and the frame is the
+   largest box of the page's ratio inside it, centred (--vw / --vh set from the viewport by workspace.js) */
+.ws-page{--vw:1280;--vh:800}
+.ws-slot{flex:1 1 0;min-height:0;min-width:0;container-type:size;display:flex;align-items:center;justify-content:center}
+.ws-slot:has(> .frame[hidden]){display:none}
+.ws-slot > .frame{flex:none}
+.ws-slot{align-items:flex-start}
+.ws-page .col > #goalPanel{flex:1 1 0}
+.ws-page .col > #lbPanel{flex:none}
+.ws-compare{container-type:inline-size}
+.ws-compare > .pair{flex:4 1 auto;min-height:0;grid-auto-rows:minmax(0,1fr);max-height:calc((100cqw - var(--s-5)) / 2 * var(--vh) / var(--vw) + var(--fs-11) + var(--s-3))}
+
+/* prompt length counter beside the model picker; red in the last 5 percent */
+.ws-cap{font-family:var(--mono);white-space:nowrap}
+.ws-cap.near{color:var(--text-fail)}
+
+/* tab counter */
+.ws-count{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
+
+/* instructions / brief: a dropdown panel under the header button, overlaying the right of the page
+   panel; it never takes layout space, so the page frames keep their full size */
+.ws-ins{display:none}
+.ws-page .col > .panel.ws-dd-host{position:relative}
+.ws-page .col > .panel.ins-open > .ws-ins{display:block;position:absolute;z-index:30;top:calc(var(--s-7) + 34px + var(--s-2));right:var(--s-7);bottom:var(--s-7);width:min(400px, calc(100% - 2 * var(--s-7)));overflow:auto;padding:var(--s-6);background:var(--overlay);border:1px solid var(--line);border-radius:var(--r-panel)}
+@media (max-width:760px){
+  /* phones: a full-width sheet right under the panel header */
+  .ws-page .col > .panel.ins-open > .ws-ins{order:0;left:0;right:0;bottom:auto;width:auto;max-height:70vh;margin:0;border-left:1px solid var(--line);border-bottom:1px solid var(--line);overflow:auto}
+}
+.ws-ins > .h{margin-bottom:var(--s-1)}
+.ws-ins-cols{columns:2;column-gap:var(--s-6)}
+.ws-ins-group{break-after:avoid;padding:var(--s-2) 0 2px;font:var(--w-bold) var(--fs-11)/16px var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-4)}
+.ws-ins-group:first-child{padding-top:0}
+.ws-ins dl > div{break-inside:avoid;padding:2px 0 var(--s-1)}
+.ws-ins dt{font:var(--w-bold) var(--fs-11)/14px var(--ui);color:var(--text-3)}
+.ws-ins dd{font:var(--w-reg) var(--fs-12)/16px var(--ui);color:var(--text);text-align:left}
+.ws-model-menu{min-width:200px}
+.dd-item[aria-checked="true"]{color:var(--text);background:var(--hover)}
+
+/* prompt panel */
+.ws-prompt{display:flex;flex-direction:column}
+.ws-prompt .editor{flex:1 1 0;min-height:120px;cursor:text}
+.ws-prompt .editor textarea{min-height:100%}
+/* the status line takes the place of the preview note: same slot, same size, no shift */
+.ws-status{display:flex;align-items:flex-start;gap:var(--s-3);margin-top:var(--s-4);font-size:var(--fs-12);line-height:17px;color:var(--text-2)}
+.ws-status.bad{color:var(--text-fail)}
+.ws-status::before{content:"";width:6px;height:6px;margin-top:6px;border-radius:50%;background:var(--text-4);flex:none}
+.ws-status.bad::before{background:var(--red)}
+.ws-prompt .again{margin-top:var(--s-5)}
+.ws-prompt .ws-sim{margin-top:var(--s-4)}
+.ws-tall{height:52px;padding:0 var(--s-8)}
+.ws-bl{display:flex;flex-direction:column;align-items:flex-start;gap:3px;line-height:1}
+.ws-bl small{font:var(--w-reg) var(--fs-11)/1 var(--ui);letter-spacing:0;opacity:.8}
+.run .ws-bl small{color:var(--text-on-red)}
+.btn .ws-bl small{color:var(--text-3)}
+
+/* last run summary while refining, and run detail costs */
+.ws-last{margin-bottom:var(--s-4);padding:var(--s-3) var(--s-5);background:var(--sunk);border-radius:var(--r-panel)}
+.ws-last-top{display:flex;align-items:baseline;gap:var(--s-3);font-size:var(--fs-13);color:var(--text-2)}
+.ws-last-top b{font:var(--w-bold) var(--fs-16) var(--mono);color:var(--red)}
+.ws-mini{display:flex;align-items:baseline;gap:var(--s-4);padding:3px 0;font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.ws-mini .pt{flex:none;min-width:30px;font:var(--w-bold) var(--fs-13) var(--mono);color:var(--red)}
+.ws-mini.none{color:var(--text-3)}
+
+/* score panel */
+.ws-score .costs{margin-top:0}
+.ws-score .costs .h{margin-bottom:var(--s-2)}
+.ws-score .callout{margin:0}
+.ws-score .again .btn{flex:none}
+
+/* compare panel: the prompt that produced this score fills the space under the checks */
+.ws-compare{display:flex;flex-direction:column}
+.ws-compare > .checks-wrap,.ws-compare > .panel-head{flex:none}
+.ws-run-prompt{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin-top:var(--s-3);border-top:1px solid var(--line);padding-top:var(--s-3)}
+.ws-compare .checks-wrap{margin-top:var(--s-4);padding-top:var(--s-3)}
+.ws-compare .checks li{padding:4px 0}
+.ws-run-prompt .panel-head{margin-bottom:var(--s-2)}
+.ws-rp{flex:1 1 0;min-height:78px;padding-top:var(--s-3);padding-bottom:var(--s-3);overflow:auto;white-space:pre-wrap;word-break:break-word}
+
+/* runs panel */
+.ws-runs{display:flex;flex-direction:column;gap:var(--s-4)}
+.ws-runs .panel-head{margin-bottom:0}
+.ws-hist{max-height:150px;overflow:auto;flex:none}
+.hist-s small{margin-left:var(--s-2);font:var(--w-reg) var(--fs-11) var(--mono);color:var(--text-3)}
+.ws-detail{display:flex;flex-direction:column;gap:var(--s-3);min-height:0;flex:1}
+.ws-detail-top{display:flex;align-items:baseline;gap:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line)}
+.ws-detail-top .big{font:var(--w-bold) var(--fs-28)/1 var(--mono);color:var(--red)}
+.ws-detail-top .of{font:var(--w-semi) var(--fs-13) var(--mono);color:var(--text-4)}
+.ws-rd-costs{flex:1 1 0;min-height:60px;overflow:auto;margin-top:0}
+.ws-rd-costs .cost .w{font-size:var(--fs-15);line-height:22px}
+.ws-detail .btn{flex:none;margin-top:var(--s-1)}
+
+/* while running: the page panel takes the height, scoring is one tight row */
+#minePanel{display:flex;flex-direction:column}
+.ws #mineFrame{background:var(--editor)}
+.ws-stages{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-3) var(--s-8);padding-top:var(--s-5);padding-bottom:var(--s-5)}
+.ws-page .panel.ws-stages > .panel-head{margin:0;min-height:0;gap:var(--s-5)}
+.ws-stages .stages.row{flex-wrap:wrap;row-gap:var(--s-3);column-gap:var(--s-7)}
+.ws-stages .stages li{padding:0}
+@media (max-width:1180px){.ws .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* page tools: overlay, ruler, magnifier */
+.tool-ov{position:absolute;inset:0;z-index:2;cursor:crosshair;touch-action:none;overflow:hidden}
+.tool-ov.mag{cursor:none}
+.tool-cx,.tool-cy{position:absolute;background:var(--red);pointer-events:none}
+.tool-cx{top:0;bottom:0;width:1px}
+.tool-cy{left:0;right:0;height:1px}
+.tool-tip{position:absolute;padding:2px var(--s-2);background:var(--overlay);border-radius:var(--r-3);font:var(--w-semi) var(--fs-11)/16px var(--mono);color:var(--text);white-space:nowrap;pointer-events:none}
+.tool-rect{position:absolute;border:1px solid var(--red);background:var(--red-tint);pointer-events:none}
+.tool-rect .tool-tip{left:0;top:100%;margin-top:var(--s-1)}
+.tool-lens{position:fixed;z-index:60;width:220px;height:220px;overflow:hidden;border-radius:var(--r-panel);background:var(--section);outline:2px solid var(--red);pointer-events:none}
+.tool-lens iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none}
+.tool-lens::after{content:"";position:absolute;left:var(--cx,50%);top:var(--cy,50%);width:9px;height:9px;margin:-5px 0 0 -5px;border:1px solid var(--red);border-radius:50%}
+
+/* ---------- grader result: bonus tag, pillar meters, report card ---------- */
+.bonus-tag{align-self:center;margin-left:var(--s-3);padding:3px var(--s-3);border-radius:var(--r-4);background:var(--red);color:var(--text-on-red);font:var(--w-bold) var(--fs-12)/1 var(--mono);white-space:nowrap}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);margin-top:var(--s-5)}
+.pl{display:flex;flex-direction:column;gap:5px;min-width:0}
+.pl-top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-2)}
+.pl-k{font-size:var(--fs-12);color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-v{font:var(--w-bold) var(--fs-14)/1 var(--mono);color:var(--text)}
+.pl-note{font-size:var(--fs-11);line-height:14px;color:var(--text-4)}
+.meter{display:block;height:6px;border-radius:var(--r-2);background:var(--fill-off);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--red)}
+.meter.sm{width:56px;height:4px;flex:none}
+.report{max-height:108px;overflow:auto;padding-right:var(--s-2)}
+.rc-group+.rc-group{margin-top:var(--s-4)}
+.rc-h{font:var(--w-semi) var(--fs-11)/16px var(--ui);letter-spacing:.4px;text-transform:uppercase;color:var(--text-4);margin-bottom:2px}
+.rc-item{padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.rc-top{display:flex;align-items:center;gap:var(--s-3);font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.rc-name{flex:1;min-width:0}
+.rc-v{width:26px;text-align:right;font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-2)}
+.rc-na{font:var(--fs-12) var(--mono);color:var(--text-4)}
+.rc-note{font-size:var(--fs-12);line-height:17px;color:var(--text-3);margin-top:2px}
+
+/* ---------- doc challenges: the task and the answer as text ---------- */
+.ws-doc{flex:1;min-height:0;overflow:auto;background:var(--section);border:1px solid var(--line);border-radius:var(--r-6,6px);padding:var(--s-6)}
+.ws-doc[hidden]{display:none}
+.ws-doc-brief{font-size:var(--fs-15,15px);line-height:23px;color:var(--text);margin-bottom:var(--s-6)}
+.ws-doc-crit{display:grid;gap:var(--s-2);margin-top:var(--s-3)}
+.ws-doc-crit li{position:relative;padding-left:var(--s-6);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
+.ws-doc-crit li::before{content:"";position:absolute;left:4px;top:7px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.ws-cmp-doc{max-height:300px}
+.kind-tag{margin-left:var(--s-3)}
+/* Next prompt cost beside the run button; the status line's link (Buy credits, Sign up). */
+.used .v.is-word{font-family:var(--ui);font-weight:var(--w-bold);white-space:nowrap}
+.ws-status-link{color:var(--red);font-weight:var(--w-semi);text-decoration:underline;text-underline-offset:2px;margin-left:var(--s-1)}
+
+/* ---------- brief-format challenges: the Brief dropdown content ---------- */
+.ws-goal-cap{margin:0 auto 0 var(--s-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ws-brief-p{font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.ws-brief .ws-brief-h{margin:var(--s-6) 0 0}
+.ws-brief .ws-ins-group{padding-top:var(--s-3)}
+.ws-done{margin-top:var(--s-2);padding-left:18px;list-style:disc}
+.ws-done li{font-size:var(--fs-13);line-height:19px;color:var(--text);padding:2px 0}
+.ws-content-note{display:block;margin-top:var(--s-1)}
+/* ---------- bigger goal: the page column takes about 64 percent, panels trim their padding ---------- */
+.ws-page > .split{grid-template-columns:minmax(0,64fr) minmax(400px,36fr)}
+.ws-page .col > .panel.ws-dd-host{padding:var(--s-4)}
+.ws-page .col > .panel.ws-dd-host > .panel-head{margin-bottom:var(--s-3)}
+.ws-page .col > .panel.ins-open > .ws-ins{top:calc(var(--s-4) + 34px + var(--s-2));right:var(--s-4);bottom:var(--s-4)}
+.ws-hint{flex:none;margin-top:var(--s-2);text-align:center}
+.ws-pair-box .frame-lbl{display:flex;align-items:center;gap:var(--s-2);height:28px;margin:0 0 var(--s-2)}
+.ws-pair-box .ws-big-btn{margin-left:auto;height:26px}
+.ws-compare > .pair{max-height:calc((100cqw - var(--s-5)) / 2 * var(--vh) / var(--vw) + 28px + var(--s-2) + 4px)}
+/* leaderboard: a slim row under the prompt panel */
+.ws-page .panel.ws-lb{flex:none;padding:var(--s-4) var(--s-5)}
+.ws-page .panel.ws-lb > .panel-head{min-height:0;margin-bottom:var(--s-2)}
+.ws-lb .lb-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-2)}
+.ws-lb .lb-strip li{height:30px}
+/* start hint: read the brief first */
+.ws-start{display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-4);font:var(--w-semi) var(--fs-13)/18px var(--ui);color:var(--text);text-align:left}
+.ws-start::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+/* after scoring: score above, the editor with the submitted prompt below */
+.ws-page .col > .panel.ws-score{flex:none;gap:var(--s-4)}
+.ws-score .callout:not(:has(b)){display:none}
+.ws-page .col > .panel.ws-prompt.ws-after{flex:1 1 0}
+.ws-prompt .editor{overflow:auto}
+/* full-size view */
+.ws-big{position:fixed;inset:0;z-index:90;display:flex;padding:var(--s-7);background:var(--overlay)}
+.ws-big-box{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--s-4);padding:var(--s-5);background:var(--section);border:1px solid var(--line);border-radius:var(--r-panel)}
+.ws-big-bar{display:flex;align-items:center;gap:var(--s-5);flex:none}
+.ws-big-t{margin-right:auto}
+.ws-big-sw{display:flex;gap:var(--s-2)}
+.ws-big-body{flex:1;min-height:0;display:flex;justify-content:center}
+.ws-big-frame{position:relative;overflow:hidden;background:var(--white);border-radius:var(--r-panel)}
+.ws-big-frame > iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+@media (max-width:760px){
+  .ws-big{padding:0}
+  .ws-big-box{border-radius:0;border:0;padding:var(--s-4)}
+}
+.ws-content{margin:var(--s-3) 0 var(--s-2);padding:var(--s-3) var(--s-4);max-height:220px;overflow:auto;background:var(--sunk);border:1px solid var(--line-soft);border-radius:var(--r-3);font:var(--w-reg) var(--fs-12)/18px var(--mono);color:var(--text);white-space:pre-wrap;word-break:break-word}
+
+/* phones: calmer goal header, run bar in the flow, one-column score strip */
+@media (max-width:760px){
+  .ws-goal-cap{display:none}
+  .ws #goalTitle{white-space:nowrap}
+  .ws .again{position:static !important}
+  .ws .lb-strip{grid-template-columns:1fr}
+  .ws .lb-strip .nm{white-space:normal}
+  .ws-prompt .editor{min-height:200px}
+}

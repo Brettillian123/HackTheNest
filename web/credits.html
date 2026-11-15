@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credits - promptdyno</title>
+<meta name="description" content="Your promptdyno credits: today's free challenges, credit packs and what each prompt costs.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/credits.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+
+<main class="page">
+  <section class="panel phead">
+    <div>
+      <div class="phead-t"><h1>Credits</h1><span id="demo"></span></div>
+      <div class="phead-sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg><span id="acct">Play without an account</span></span>
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2.5" y="6" width="9" height="6.5" rx="1.2"/><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6"/></svg>Card details go only to Stripe</span>
+      </div>
+    </div>
+    <div class="phead-side">
+      <div class="stat"><div class="k">Free today</div><div class="v" id="sFree">2</div></div>
+      <div class="stat"><div class="k">Next reset</div><div class="v is-word" id="sReset">Midnight UTC</div></div>
+    </div>
+  </section>
+
+  <p class="callout cr-notice" id="notice" role="status" hidden></p>
+
+  <div class="cr-grid">
+    <section class="panel cr-balance">
+      <div class="panel-head"><h2 class="h" id="balH">Your balance</h2></div>
+      <div class="bigscore cr-big"><span class="n" id="bal">0</span><span class="of" id="balUnit">credits</span></div>
+      <p class="cr-free" id="freeLine">2 free Level 1 challenges left today</p>
+      <h3 class="h cr-sub">What things cost</h3>
+      <dl class="kv">
+        <div><dt>First two Level 1 challenges each day</dt><dd>Free</dd></div>
+        <div><dt>Standard challenge prompt</dt><dd id="cStd">1 credit</dd></div>
+        <div><dt>Lesson challenge prompt</dt><dd id="cLes">2 credits</dd></div>
+        <div><dt>Scoring a saved page</dt><dd>Free</dd></div>
+      </dl>
+    </section>
+
+    <section class="panel cr-buy">
+      <div class="panel-head"><h2 class="h">Buy credits</h2><span class="note" id="testNote">Test mode: use card 4242 4242 4242 4242</span></div>
+      <div class="cr-packs" id="packs"><div class="skel rows" aria-label="Loading"><i></i><i></i><i></i></div></div>
+      <p class="callout" id="payOff" hidden><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span>Payments are not connected yet</span></p>
+      <h3 class="h cr-sub">How it works</h3>
+      <ul class="cr-how">
+        <li>Pick a pack and pay on Stripe's checkout page</li>
+        <li>Credits land on your account when you come back</li>
+        <li>Each prompt you run spends its cost</li>
+        <li>A run that fails or is cancelled gives its credits back</li>
+        <li>Free challenges reset every day at midnight UTC</li>
+      </ul>
+    </section>
+  </div>
+  <footer id="foot"></footer>
+</main>
+
+<script type="module" src="js/credits.js"></script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+/* promptdyno components, in the exact language of workspace-v8.html.
+   Use only these classes and tokens.css variables in pages.
+
+   INDEX (class group: what it is / minimal HTML)
+   shell .......... rail and top nav, rendered by js/shell.js / <aside id="rail"></aside><header id="nav"></header>
+   .panel ......... grey panel (v8 .section) / <section class="panel">...</section>
+   .panel-head .... panel header row: uppercase label + right meta / <div class="panel-head"><h2 class="h">Goal page</h2><span class="note">This week</span></div>
+   .lvl ........... level or rank tag, colour .r .p .w .d, size .sm / <span class="lvl r">Lv 4</span>
+   .meta .......... icon + quiet text / <span class="meta"><svg/>2,418 players solved</span>
+   .mtag .......... small mono tag / <span class="mtag"><svg/>1280 x 800</span>
+   .demo-tag ...... "Demo data" tag in a panel header (ui.js demoTag) / <span class="demo-tag">Demo data</span>
+   .sim-note ...... quiet preview-build note (ui.js simNote) / <p class="sim-note">Preview build: ...</p>
+   .phead ......... page header: tag, title, sub line, stat cells / <section class="panel phead"><div><div class="phead-t"><span class="lvl r">Lv 4</span><h1 class="title">..</h1></div><div class="phead-sub">..</div></div><div class="phead-side"><div class="stat">..</div></div></section>
+   .stat .......... small stat cell / <div class="stat"><div class="k">Top score</div><div class="v">99</div></div>
+   .chip-ico ...... red icon chip inside a stat / <span class="chip-ico"><svg/></span>
+   .tabs .......... tab row, .on marks active, .tabs-right for counters / <nav class="tabs"><a class="on" href="#"><svg/>Workspace</a><a href="#">Solutions</a></nav>
+   .btn ........... buttons: .btn-primary .btn-secondary .btn-ghost, size .sm, .block / <button class="btn btn-primary">Save</button>
+   .run ........... tall 52px red run button with key hint / <button class="run"><svg/>Run prompt<kbd>Ctrl Enter</kbd></button>
+   .used .......... "Prompts used" box beside a run button, wrap both in .again / <div class="again"><div class="used"><span class="k">Prompts used</span><span class="v">3</span></div><button class="run">..</button></div>
+   .frame ......... goal page frame, 960x600 content scaled by ui.fitFrames() / <div class="frame"><iframe src=".." title="Goal page"></iframe></div>
+   .frame-lbl ..... label above a frame / <div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div>
+   .editor ........ prompt or code with line numbers; read-only uses .l lines, editable uses .gutter + textarea / <div class="editor"><div class="l">text</div></div>
+   .lb-strip ...... four-cell leaderboard strip, li.you highlights you / <ul class="lb-strip"><li><span class="pos">#1</span><span class="nm">kmorrow</span><span class="s">99</span></li></ul>
+   .score ......... score hero panel: .sc .bigscore .gain .rk, .seg bar, .segcap / see kitchen.html
+   .cost .......... point cost row / <div class="cost"><span class="pt">&minus;8</span><span class="w">Footer links are missing<small>why</small></span></div>
+   .checks ........ check list, li.ok or li.no with .m mark / <ul class="checks"><li class="ok"><span class="m"><svg/></span>Title reads ..</li></ul>
+   .dd ............ dropdown button + menu; ui.dropdown() wires it / <div class="dd"><button class="btn btn-secondary dd-btn">..</button><div class="dd-menu" hidden>..</div></div>
+   .kv ............ label and mono value rows (inside .dd-menu or a panel) / <dl class="kv"><div><dt>Viewport</dt><dd>1280 x 800</dd></div></dl>
+   .dd-item ....... clickable row in a menu / <button class="dd-item" role="menuitem">Copy prompt</button>
+   .tool .......... small icon toggle for panel headers, aria-pressed="true" is active / <button class="tool" aria-pressed="false" title="Ruler"><svg/></button>
+   .tools ......... group of .tool buttons / <div class="tools">..</div>
+   .pills ......... segmented filter pills / <div class="pills" role="group"><button aria-pressed="true">1 prompt</button><button aria-pressed="false">2</button></div>
+   .lbt ........... full leaderboard table, tr.you highlights you / <table class="lbt"><thead>..</thead><tbody><tr><td class="pos">#1</td>..</tr></tbody></table>
+   .chal .......... challenge list row / <a class="chal" href="workspace.html?c=slug"><span class="lvl r">Lv 4</span><span class="chal-main">..</span>..</a>
+   .field ......... form field, .bad shows the error line / <label class="field"><span class="field-lbl">Email</span><input class="input"><span class="field-err">..</span></label>
+   .auth .......... narrow auth card / <section class="panel auth">..</section>
+   .callout ....... quiet inline note / <p class="callout"><svg/>A perfect 100 is rare.</p>
+   .hist .......... run history item, .on is selected / <button class="hist on"><span class="hist-n">#3</span><span class="hist-x">..</span><span class="hist-s">84</span></button>
+   .empty ......... empty state / <div class="empty"><svg/><p class="title">..</p><p class="small">..</p></div>
+   .skel .......... skeleton rows while loading / <div class="skel"><i></i><i></i><i></i></div>
+   .stages ........ named steps with one active / <ol class="stages"><li class="done">..</li><li class="on">..</li><li>..</li></ol>
+   .toast ......... quiet inline note written by ui.toast() / <div class="toast-slot"></div>
+*/
+
+/* ---------- shell: rail ---------- */
+.rail-lbl{display:none}
+/* skip link: hidden until focused by keyboard */
+.skip{position:fixed;left:var(--s-3);top:var(--s-3);z-index:50;padding:var(--s-3) var(--s-6);border-radius:var(--r-control);background:var(--red);color:var(--text-on-red);font:var(--w-bold) var(--fs-13)/20px var(--ui);transform:translateY(-200%)}
+.skip:focus-visible{transform:none}
+.rail-link{position:relative;width:var(--rail-w);height:42px;display:grid;place-items:center;color:var(--text-3)}
+.rail-link:hover{color:var(--text-2)}
+.rail-link.on{color:var(--text)}
+.rail-link.on::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;background:var(--red);border-radius:0 var(--r-3) var(--r-3) 0}
+.rail-link svg{width:20px;height:20px}
+.rail-dot{width:16px;height:2px;border-radius:var(--r-1);background:var(--divider);margin:7px 0}
+
+/* ---------- shell: top nav ---------- */
+/* brand lockup in the top nav: 24px tall, top 16px, so it centres in the 56px nav like the old .word */
+.brand{margin-top:16px;height:24px;display:block;flex:none;line-height:0}
+.brand-svg{height:24px;width:auto;display:block}
+.brand .b-mark,.brand .b-dyno{fill:var(--red)}
+.brand .b-prompt{fill:var(--text)}
+.word{margin-top:17px;font:var(--w-semi) var(--fs-15)/22px var(--mono);letter-spacing:-.2px;color:var(--text)}
+.word i{font-style:normal;color:var(--red)}
+.crumb{background:var(--sunk);color:var(--text-crumb);border-radius:var(--r-panel);margin-top:var(--s-3);padding:9px var(--s-6);font-size:var(--fs-14);line-height:22px}
+.crumb b{color:var(--text);font-weight:var(--w-bold)}
+.crumb a:hover{color:var(--text)}
+.crumb .sep{color:var(--text-5);margin:0 var(--s-2)}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:var(--s-1);margin-top:var(--s-4)}
+.nav-links > a:not(.nav-me),.nav-auth .btn{display:inline-flex;align-items:center;height:36px;padding:0 var(--s-6);font-size:var(--fs-14);line-height:1;border-radius:var(--r-control)}
+.nav-links > a:not(.nav-me){color:var(--text-2)}
+.nav-links > a:not(.nav-me):hover{color:var(--text)}
+.nav-links > a.on:not(.nav-me){color:var(--text);background:var(--hover)}
+.nav-auth{display:flex;gap:var(--s-3);margin-left:var(--s-5)}
+.nav-me{display:flex;align-items:center;gap:var(--s-4);margin-left:var(--s-5);padding:5px var(--s-2) 5px var(--s-4);border-radius:var(--r-control);background:var(--section);border:1px solid transparent}
+.nav-me.on{border-color:var(--line)}
+.nav-me .pts{font:var(--w-semi) var(--fs-13) var(--mono);color:var(--text)}
+.nav-me .pts small{color:var(--text-3);font:var(--w-reg) var(--fs-11) var(--ui);margin-left:var(--s-1)}
+.avatar{width:28px;height:28px;border-radius:var(--r-control);background:var(--avatar-b);display:grid;place-items:center;font:var(--w-bold) var(--fs-12) var(--ui);color:var(--text-avatar);flex:none}
+.avatar.lg{width:56px;height:56px;border-radius:var(--r-panel);font-size:var(--fs-20)}
+
+/* ---------- panel ---------- */
+.panel,.section{background:var(--section);border-radius:var(--r-panel);padding:var(--s-7)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-4)}
+.panel-head .note,.panel-meta{font-size:var(--fs-12);color:var(--text-4)}
+.panel-head > .right{display:flex;align-items:center;gap:var(--s-3)}
+
+/* ---------- level and rank tag ---------- */
+.lvl{--c:var(--rank-white);display:inline-grid;place-items:center;height:26px;min-width:38px;padding:0 9px;background:var(--hexfill);border-radius:var(--r-control);outline:1.5px solid var(--c);outline-offset:-1.5px;color:var(--c);font:var(--w-bold) var(--fs-11)/1 var(--ui);white-space:nowrap;flex:none}
+.lvl.r{--c:var(--red)} .lvl.p{--c:var(--peach)} .lvl.w{--c:var(--rank-white)} .lvl.d{--c:var(--rank-d)}
+.lvl.sm{height:20px;min-width:30px;font-size:var(--fs-10);padding:0 7px}
+
+/* ---------- meta and mono tag ---------- */
+.meta{color:var(--text-2);font-size:var(--fs-13);display:inline-flex;align-items:center;gap:var(--s-2);margin-right:var(--s-7)}
+.meta svg{width:13px;height:13px;color:var(--text-3)}
+.mtag{font:var(--w-reg) var(--fs-11)/21px var(--mono);color:var(--text-2);display:inline-flex;align-items:center;gap:5px;margin-right:var(--s-5)}
+.mtag svg{width:11px;height:11px}
+
+/* ---------- page header ---------- */
+.phead{display:flex;align-items:center;gap:var(--s-8)}
+.phead-t{display:flex;align-items:center;gap:var(--s-4)}
+.phead-t h1{font:var(--w-bold) var(--fs-17)/24px var(--ui);color:var(--text)}
+.phead-sub{margin-top:var(--s-2);display:flex;align-items:center;flex-wrap:wrap}
+.phead-side{margin-left:auto;display:flex;gap:var(--s-4);align-items:stretch}
+.stat{background:var(--sunk);border-radius:var(--r-panel);padding:7px var(--s-5);min-width:104px}
+.stat .k{font-size:var(--fs-10);letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.stat .v{font:var(--w-semi) var(--fs-14)/20px var(--mono);color:var(--text)}
+/* words in a stat or cell ("None yet", "Not tried", "Optional") are sans; mono is for numbers only (ui.setStat) */
+.stat .v.is-word,.chal-cell .v.is-word,.chal-cell .v.none{font-family:var(--ui);font-weight:var(--w-bold)}
+.chal-cell .v.none{font-weight:var(--w-reg)}
+.stat .v.model{display:flex;align-items:center;gap:7px}
+.chip-ico{width:18px;height:18px;border-radius:var(--r-control);background:var(--red-tint);display:grid;place-items:center;color:var(--red)}
+.chip-ico svg{width:12px;height:12px}
+@media (max-width:1180px){.phead-side:not(.keep) .stat:nth-child(3){display:none}}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;align-items:center;margin:var(--s-3) 0}
+.tabs > a,.tabs > button{height:40px;display:inline-flex;align-items:center;gap:7px;padding:0 var(--s-9);font-size:var(--fs-13);color:var(--text-2);border-radius:var(--r-control)}
+.tabs > a:hover,.tabs > button:hover{color:var(--text)}
+.tabs > .on,.tabs > [aria-selected="true"]{background:var(--hover);color:var(--text-tab)}
+.tabs svg{width:13px;height:13px}
+.tabs-right{margin-left:auto;display:flex;gap:18px;color:var(--text-2);font-size:var(--fs-13)}
+.tabs-right b{color:var(--text);font:var(--w-semi) var(--fs-13) var(--mono)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-3);height:36px;padding:0 var(--s-7);border-radius:var(--r-control);font:var(--w-bold) var(--fs-13)/1 var(--ui);white-space:nowrap}
+.btn svg{width:13px;height:13px}
+.btn.sm{height:28px;padding:0 var(--s-6);font-size:var(--fs-12);border-radius:var(--r-control)}
+.btn.block{width:100%}
+.btn-primary{background:var(--red);color:var(--text-on-red)}
+.btn-primary:hover{background:var(--red-hover)}
+.btn-primary.sm{background:var(--red-btn);color:var(--white)}
+.btn-primary.sm:hover{background:var(--red-btn-hover)}
+.btn-secondary{background:var(--fill-soft);color:var(--text);outline:1px solid var(--line-soft);outline-offset:-1px}
+.btn-secondary:hover{background:var(--fill-off)}
+.btn-ghost{color:var(--text-2);font-weight:var(--w-reg)}
+.btn-ghost:hover{color:var(--text);background:var(--hover)}
+.btn[disabled],.run[disabled]{opacity:.45;cursor:not-allowed}
+.btn-primary[disabled]:hover,.run[disabled]:hover{background:var(--red)}
+
+.run{margin-top:var(--s-5);width:100%;height:52px;flex:none;border-radius:var(--r-control);background:var(--red);color:var(--text-on-red);font:var(--w-bold) var(--fs-17)/1 var(--mono);letter-spacing:.64px;display:flex;align-items:center;justify-content:center;gap:var(--s-4)}
+.run:hover{background:var(--red-hover)}
+.run svg{width:15px;height:15px}
+/* running: a spinner instead of the play icon, no key hint */
+.run.busy > svg,.run.busy kbd{display:none}
+.run.busy::before{content:"";width:14px;height:14px;flex:none;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.run.busy::before{animation:none}}
+.run kbd{font:var(--w-reg) var(--fs-11) var(--mono);background:var(--red-kbd);padding:2px var(--s-2);border-radius:var(--r-3);letter-spacing:0}
+.again{display:flex;align-items:center;gap:var(--s-5)}
+.again .run{margin-top:0;flex:1}
+.used{background:var(--sunk);border-radius:var(--r-control);height:52px;padding:0 var(--s-6);display:flex;flex-direction:column;justify-content:center}
+.used .k{font-size:var(--fs-10);letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.used .v{font:var(--w-semi) var(--fs-14)/18px var(--mono)}
+
+/* ---------- goal page frame ---------- */
+/* Goal pages are built for a 1280 x 800 viewport; ui.fitFrames() scales that whole page to the frame width. */
+.frame{position:relative;width:100%;aspect-ratio:1280/800;overflow:hidden;border-radius:var(--r-panel);background:var(--white);border:1px solid var(--line)}
+.frame > iframe,.frame > img,.frame > .mock{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;overflow:hidden;transform-origin:0 0}
+.frame-lbl{display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-3);font:var(--w-bold) var(--fs-11)/1 var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-3)}
+
+/* ---------- prompt or code editor ---------- */
+.editor{position:relative;flex:1;background:var(--editor);border:1px solid var(--line);border-radius:var(--r-panel);padding:var(--s-5) var(--s-6) var(--s-5) 0;font:var(--w-reg) var(--fs-18)/25px var(--mono);color:var(--text-code);counter-reset:ln}
+.editor:not(.editable)::before{content:"";position:absolute;left:0;top:0;bottom:0;width:36px;background:var(--sunk);border-radius:var(--r-panel) 0 0 var(--r-panel)}
+.editor .l{position:relative;padding-left:50px}
+.editor .l::before{counter-increment:ln;content:counter(ln);position:absolute;left:0;width:26px;text-align:right;color:var(--text-6);font-size:var(--fs-13)}
+.editor q{quotes:none;color:var(--peach)}
+.editor em{font-style:normal;color:var(--red-soft)}
+.editor.code{font-size:var(--fs-13);line-height:20px}
+.editor.editable{display:flex;padding:0;min-height:200px;overflow:auto}
+.editor.editable:focus-within{border-color:var(--red-ring)}
+.editor .gutter{flex:none;width:36px;background:var(--sunk);padding:var(--s-5) 0;text-align:right;color:var(--text-6);font-size:var(--fs-13);user-select:none}
+.editor .gutter span{display:block;width:26px;height:25px}
+.editor textarea{flex:1;min-width:0;background:none;border:0;resize:none;outline:none;padding:var(--s-5) var(--s-6) var(--s-5) var(--s-6);font:inherit;color:inherit;white-space:pre-wrap;overflow:hidden;box-shadow:none;border-radius:0}
+.editor textarea::placeholder{color:var(--text-6)}
+.editor.code .gutter span{height:20px}
+@media (max-width:1180px){.editor{font-size:var(--fs-15);line-height:22px}.editor .gutter span{height:22px}}
+
+/* ---------- leaderboard strip ---------- */
+.lb-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s-3)}
+.lb-strip li{display:flex;align-items:center;gap:7px;height:40px;padding:0 var(--s-4);background:var(--sunk);border-radius:var(--r-panel);font:var(--w-bold) var(--fs-13) var(--ui);min-width:0}
+.lb-strip .pos{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
+.lb-strip .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-strip .s{margin-left:auto;font:var(--w-semi) var(--fs-13) var(--mono)}
+.lb-strip li.you{background:var(--red-tint);outline:1px solid var(--red-ring);outline-offset:-1px}
+.lb-strip li.you .pos{color:var(--red)}
+/* you are below the rows shown: a small gap mark before your rank */
+.lb-strip li.gap .pos::before{content:"6";margin-right:var(--s-1);color:var(--text-5)}
+
+/* ---------- score hero ---------- */
+.score{position:relative;overflow:hidden;background:var(--section)}
+.score.fill{display:flex;flex-direction:column;justify-content:space-between}
+.sc{display:flex;align-items:center;gap:var(--s-9)}
+.bigscore{display:flex;align-items:baseline;gap:var(--s-3)}
+.bigscore .n{font:var(--w-bold) var(--fs-128)/.9 var(--mono);letter-spacing:-6px;color:var(--red)}
+.bigscore .of{font:var(--w-semi) var(--fs-16) var(--mono);color:var(--text-4)}
+.sc .gain{font:var(--w-bold) var(--fs-20)/28px var(--mono);color:var(--red)}
+.sc .rk{font-size:var(--fs-13);color:var(--text-4)}
+.seg{display:grid;grid-template-columns:repeat(var(--n,14),1fr);gap:3px;margin:var(--s-6) 0 var(--s-2)}
+.seg i{height:8px;border-radius:var(--r-2);background:var(--red)}
+.seg i.x{background:var(--fill-off)}
+.segcap{display:flex;justify-content:space-between;font-size:var(--fs-12);color:var(--text-2)}
+.segcap b{color:var(--text);font:var(--w-semi) var(--fs-12) var(--mono)}
+
+/* ---------- cost row ---------- */
+.costs{margin-top:var(--s-6)}
+.cost{display:flex;align-items:center;gap:var(--s-6);padding:var(--s-4) 0;border-top:1px solid var(--line)}
+.cost .pt{flex:none;width:58px;height:36px;border-radius:var(--r-control);background:var(--red-tint);color:var(--red);font:var(--w-bold) var(--fs-20)/36px var(--mono);text-align:center}
+.cost .w{font-size:var(--fs-19);line-height:26px;color:var(--text)}
+.cost .w small{display:block;font-size:var(--fs-12);line-height:16px;color:var(--text-3)}
+/* "3 more, -9": the rest of the costs, opens the full list */
+button.cost{width:100%;text-align:left;border-radius:0}
+button.cost:hover .w{text-decoration:underline;text-decoration-color:var(--red-brand);text-underline-offset:3px}
+.cost.more .pt{background:var(--fill-soft);color:var(--text)}
+
+/* ---------- checks ---------- */
+.checks{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--s-8)}
+.checks.one{grid-template-columns:1fr}
+.checks li{display:flex;align-items:center;gap:9px;font-size:var(--fs-13);line-height:19px;padding:5px 0;border-bottom:1px solid var(--line-soft);color:var(--text)}
+.checks .m{width:16px;height:16px;flex:none;border-radius:var(--r-3);display:grid;place-items:center}
+.checks li.ok .m{background:var(--fill-soft);color:var(--text-2)}
+.checks li.no{color:var(--text-fail)}
+.checks li.no .m{background:var(--red);color:var(--text-on-red)}
+.checks .m svg{width:10px;height:10px}
+.checks-wrap{margin-top:var(--s-6);border-top:1px solid var(--line);padding-top:var(--s-5)}
+@media (max-width:1180px){.checks{grid-template-columns:1fr}}
+
+/* ---------- dropdown ---------- */
+.dd{position:relative;display:inline-block}
+.dd-btn .chev{width:10px;height:10px;color:var(--text-3);transition:transform .12s}
+.dd-btn[aria-expanded="true"]{background:var(--fill-off)}
+.dd-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.dd-menu{position:absolute;top:calc(100% + var(--s-2));left:0;z-index:30;min-width:280px;padding:var(--s-3);background:var(--overlay);border:1px solid var(--line);border-radius:var(--r-panel)}
+.dd-menu.end{left:auto;right:0}
+.dd-menu[hidden]{display:none}
+.dd-menu .h{padding:var(--s-1) var(--s-3) var(--s-2)}
+.dd-item{display:flex;align-items:center;gap:var(--s-3);width:100%;padding:var(--s-3) var(--s-4);border-radius:var(--r-control);font-size:var(--fs-13);color:var(--text-2);text-align:left}
+.dd-item:hover,.dd-item:focus-visible{background:var(--hover);color:var(--text);box-shadow:none}
+.dd-item svg{width:13px;height:13px;color:var(--text-3)}
+.dd-sep{height:1px;background:var(--line);margin:var(--s-2) 0}
+.kv{display:flex;flex-direction:column}
+.kv > div{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-7);padding:7px var(--s-3);border-bottom:1px solid var(--line-soft)}
+.kv > div:last-child{border-bottom:0}
+.kv dt{font-size:var(--fs-13);color:var(--text-2)}
+.kv dd{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text);text-align:right}
+
+/* ---------- tool toggles ---------- */
+.tools{display:inline-flex;gap:var(--s-1);padding:3px;background:var(--sunk);border-radius:var(--r-control)}
+.tool{width:28px;height:28px;display:grid;place-items:center;border-radius:var(--r-control);color:var(--text-3)}
+.tool svg{width:15px;height:15px}
+.tool:hover{color:var(--text);background:var(--hover)}
+.tool[aria-pressed="true"],.tool.on{background:var(--red-tint);color:var(--red)}
+
+/* ---------- segmented pills ---------- */
+.pills{display:inline-flex;gap:2px;padding:3px;background:var(--sunk);border-radius:var(--r-control)}
+.pills > button,.pills > a{height:30px;padding:0 var(--s-6);border-radius:var(--r-control);font-size:var(--fs-13);color:var(--text-2);white-space:nowrap;display:inline-flex;align-items:center}
+.pills > button:hover,.pills > a:hover{color:var(--text)}
+.pills > [aria-pressed="true"],.pills > .on{background:var(--section);color:var(--text);outline:1px solid var(--line);outline-offset:-1px}
+.filters{display:flex;align-items:center;gap:var(--s-5);flex-wrap:wrap}
+
+/* ---------- leaderboard table ---------- */
+.lbt{width:100%;border-collapse:separate;border-spacing:0 var(--s-1)}
+.lbt th{font:var(--w-bold) var(--fs-11)/20px var(--ui);text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);text-align:left;padding:0 var(--s-5) var(--s-1)}
+.lbt td{height:44px;padding:0 var(--s-5);background:var(--sunk);font-size:var(--fs-13);color:var(--text)}
+.lbt td:first-child{border-radius:var(--r-panel) 0 0 var(--r-panel)}
+.lbt td:last-child{border-radius:0 var(--r-panel) var(--r-panel) 0}
+.lbt th.r,.lbt td.r{text-align:right}
+.lbt .pos{width:64px;font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
+.lbt .who{display:flex;align-items:center;gap:var(--s-4);font-weight:var(--w-bold)}
+.lbt .who .avatar{width:24px;height:24px;font-size:var(--fs-10)}
+.lbt .num{font:var(--w-semi) var(--fs-13) var(--mono)}
+.lbt .sc-cell{font:var(--w-semi) var(--fs-14) var(--mono);color:var(--text)}
+.lbt tbody tr:hover td{background:var(--hover)}
+.lbt tr.you td,.lbt tbody tr.you:hover td{background:var(--red-tint)}
+.lbt tr.you .pos{color:var(--red)}
+
+/* ---------- challenge row ---------- */
+.chal-list{display:flex;flex-direction:column;gap:var(--s-3)}
+.chal{display:grid;grid-template-columns:auto minmax(0,1fr) 120px 96px 16px;align-items:center;gap:var(--s-7);padding:var(--s-6) var(--s-7);background:var(--section);border-radius:var(--r-panel);color:var(--text)}
+.chal:hover{background:var(--section-hover)}
+.chal-main{min-width:0}
+.chal-title,.chal-brief,.chal-cell .k,.chal-cell .v{display:block}
+.chal-title{font:var(--w-bold) var(--fs-15)/22px var(--ui);color:var(--text)}
+.chal-brief{font-size:var(--fs-13);line-height:19px;color:var(--text-3)}
+.chal-main .chal-brief{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chal-cell .k{font-size:var(--fs-10);letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.chal-cell .v{font:var(--w-semi) var(--fs-14)/20px var(--mono);color:var(--text)}
+.chal-cell .v.none{color:var(--text-4);font-weight:var(--w-reg)}
+.chal-cell .v.best{color:var(--red)}
+.chal > svg{width:14px;height:14px;color:var(--text-3)}
+
+/* ---------- form field and auth card ---------- */
+.field{display:flex;flex-direction:column;gap:var(--s-2)}
+.field + .field{margin-top:var(--s-3)}
+.field-lbl{font:var(--w-bold) var(--fs-12)/20px var(--ui);color:var(--text-2)}
+.input{height:40px;padding:0 var(--s-5);background:var(--editor);border:1px solid var(--line);border-radius:var(--r-control);color:var(--text);font-size:var(--fs-14);width:100%}
+.input::placeholder{color:var(--text-6)}
+.input:focus{border-color:var(--red-ring);outline:none}
+/* the error line is always reserved so fields never jump; with a hint, the error takes the hint's place */
+.field-err{display:block;min-height:16px;font-size:var(--fs-12);line-height:16px;color:var(--text-fail)}
+.field-hint + .field-err{display:none}
+.field.bad .input{border-color:var(--red)}
+.field.bad .field-hint + .field-err{display:block}
+.field-hint{font-size:var(--fs-12);line-height:16px;color:var(--text-4)}
+.auth{width:100%;max-width:400px;margin:var(--s-10) auto 0;padding:28px}
+.auth-head{display:flex;flex-direction:column;align-items:center;gap:var(--s-3);margin-bottom:var(--s-9);text-align:center}
+.auth-head svg{width:40px;height:40px}
+.auth .btn.block{height:44px;margin-top:var(--s-9);font-size:var(--fs-14)}
+.auth-foot{margin-top:var(--s-7);text-align:center;font-size:var(--fs-13);color:var(--text-3)}
+
+/* ---------- callout ---------- */
+.callout{display:flex;align-items:flex-start;gap:var(--s-4);padding:var(--s-4) var(--s-5);background:var(--sunk);border-radius:var(--r-panel);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
+/* errors: red text and icon, no accent bar */
+.callout.bad{color:var(--text-fail)}
+.callout.bad svg{color:var(--red)}
+.callout svg{width:14px;height:14px;margin-top:2px;color:var(--text-3)}
+.callout b{color:var(--text)}
+
+/* ---------- run history item ---------- */
+.hist-list{display:flex;flex-direction:column;gap:var(--s-2)}
+.hist{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:var(--s-4);width:100%;padding:var(--s-3) var(--s-4);background:var(--sunk);border-radius:var(--r-panel);text-align:left;color:var(--text-2)}
+.hist:hover{background:var(--hover)}
+.hist-n{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
+.hist-x{font-size:var(--fs-13);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hist-s{font:var(--w-semi) var(--fs-14) var(--mono);color:var(--text)}
+.hist.on{background:var(--red-tint);outline:1px solid var(--red-ring);outline-offset:-1px;color:var(--text)}
+.hist.on .hist-n,.hist.on .hist-s{color:var(--red)}
+
+/* ---------- empty state ---------- */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-2);padding:40px var(--s-8);text-align:center;color:var(--text-3)}
+.empty svg{width:32px;height:32px;margin-bottom:var(--s-2);color:var(--text-5)}
+.empty .btn{margin-top:var(--s-5)}
+
+/* ---------- skeleton rows ---------- */
+.skel{display:flex;flex-direction:column;gap:var(--s-3)}
+.skel i{display:block;height:40px;border-radius:var(--r-panel);background:var(--sunk);animation:skel .9s ease-in-out infinite alternate}
+.skel i.line{height:12px;width:60%}
+@keyframes skel{to{background:var(--hover)}}
+@media (prefers-reduced-motion:reduce){.skel i{animation:none}}
+
+/* ---------- stage list ---------- */
+.stages{display:flex;flex-direction:column;gap:2px;counter-reset:st}
+.stages li{display:flex;align-items:center;gap:var(--s-4);padding:var(--s-2) 0;font-size:var(--fs-13);color:var(--text-4)}
+.stages li::before{counter-increment:st;content:counter(st);width:20px;height:20px;flex:none;display:grid;place-items:center;border-radius:var(--r-control);background:var(--sunk);font:var(--w-semi) var(--fs-11) var(--mono);color:var(--text-3)}
+.stages li.done{color:var(--text-2)}
+.stages li{position:relative}
+.stages li.done::before{content:"";background:var(--fill-soft)}
+.stages li.done::after{content:"";position:absolute;left:6px;top:50%;width:8px;height:4px;margin-top:-3px;border-left:2px solid var(--text-2);border-bottom:2px solid var(--text-2);transform:rotate(-45deg)}
+.stages li.on{color:var(--text);font-weight:var(--w-bold)}
+.stages li.on::before{background:var(--red);color:var(--text-on-red)}
+.stages.row{flex-direction:row;gap:var(--s-8)}
+
+/* ---------- toast (quiet inline note) ---------- */
+.toast-slot{min-height:0}
+.toast{display:flex;align-items:center;gap:var(--s-3);margin-top:var(--s-3);padding:7px var(--s-5);border-radius:var(--r-panel);background:var(--sunk);font-size:var(--fs-13);color:var(--text-2);transition:opacity .2s}
+.toast::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+.toast.out{opacity:0}
+.page > .toast:first-child{margin:var(--s-3) 0}
+
+/* phone viewer: a goal or result page at full size, opened by tapping its frame (ui.frameViewer) */
+.fv{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:var(--bg)}
+.fv-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);height:var(--nav-h);padding:0 var(--gutter);border-bottom:1px solid var(--line);flex:none}
+.fv-scroll{flex:1;overflow:auto;padding:var(--gutter)}
+.fv-scroll iframe{display:block;width:1280px;height:800px;border:0;border-radius:var(--r-panel);background:var(--white)}
+
+/* simulated data labels (ui.js demoTag / simNote): quiet, no fill colour of their own */
+.panel-head .ph-l{display:flex;align-items:center;gap:var(--s-3);min-width:0}
+.demo-tag{display:inline-flex;align-items:center;height:20px;padding:0 var(--s-3);border:1px solid var(--line);border-radius:var(--r-control);font:var(--w-semi) var(--fs-11)/1 var(--ui);letter-spacing:.4px;text-transform:uppercase;color:var(--text-3);white-space:nowrap}
+.sim-note{display:flex;align-items:flex-start;gap:var(--s-3);font-size:var(--fs-12);line-height:17px;color:var(--text-3)}
+.sim-note::before{content:"";flex:none;width:6px;height:6px;margin-top:6px;border-radius:50%;background:var(--text-4)}
+
+/* ---------- shared footer (shell.js fills <footer id="foot">) ---------- */
+.foot{display:flex;align-items:center;gap:var(--s-8);margin-top:28px;padding:var(--s-8) var(--s-2) 0;border-top:1px solid var(--line-soft);font-size:var(--fs-13);color:var(--text-3)}
+/* footer wordmark: the nav lockup at 18px */
+.foot .brand{margin-top:0;height:18px}
+.foot .brand-svg{height:18px}
+.foot nav{display:flex;gap:var(--s-7)}
+.foot nav a:hover{color:var(--text)}
+.foot .end{margin-left:auto;color:var(--text-4)}
+
+/* ---------- .md: Markdown rendered by js/markdown.js (lessons, doc answers) ---------- */
+.md{color:var(--text-2);font-size:var(--fs-15,15px);line-height:24px}
+.md>*+*{margin-top:var(--s-5)}
+.md h1,.md h2,.md h3,.md h4{color:var(--text);font-weight:var(--w-bold);line-height:1.25;scroll-margin-top:80px}
+.md h1{font-size:28px}.md h2{font-size:22px;margin-top:var(--s-8)}.md h3{font-size:18px;margin-top:var(--s-7)}.md h4{font-size:15px}
+.md ul,.md ol{padding-left:22px}.md ul{list-style:disc}.md ol{list-style:decimal}
+.md li+li{margin-top:4px}
+.md a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+.md strong{color:var(--text);font-weight:var(--w-semi)}
+.md code{font:var(--fs-13) var(--mono);background:var(--fill-soft);border-radius:var(--r-3);padding:1px 5px;color:var(--text)}
+.md pre{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-4);padding:var(--s-5);overflow:auto}
+.md pre code{background:none;padding:0;font-size:var(--fs-13);line-height:20px;white-space:pre}
+.md blockquote{border-left:3px solid var(--red);padding-left:var(--s-5);color:var(--text-3)}
+.md hr{border:0;border-top:1px solid var(--line)}
+.md table{width:100%;border-collapse:collapse;font-size:var(--fs-13)}
+.md th,.md td{text-align:left;padding:6px var(--s-3);border-bottom:1px solid var(--line-soft)}
+.md th{color:var(--text);font-weight:var(--w-semi);border-bottom-color:var(--line)}
+
+/* ---------- Markdown <details>: a collapsible block, matte like a well ---------- */
+.md details{background:var(--sunk);border-radius:var(--r-panel);padding:var(--s-4) var(--s-6)}
+.md details>*+*{margin-top:var(--s-5)}
+.md summary{cursor:pointer;color:var(--text);font-weight:var(--w-semi)}
+.md summary:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:var(--r-3)}
+
+/* ---------- credits: nav chip, cost tag ---------- */
+/* .nav-credits sits beside .nav-me in the top nav (signed in only) / <a class="nav-me nav-credits" href="credits.html"><span class="pts">12<small>credits</small></span></a> */
+.nav-credits{padding:5px var(--s-5)}
+.nav-credits + .nav-me{margin-left:var(--s-2)}
+/* .cost-tag: what the next prompt costs ("Free today", "1 credit") / <span class="mtag cost-tag">1 credit</span> */
+.cost-tag{height:20px;padding:0 var(--s-3);border:1px solid var(--line);border-radius:var(--r-control);font-family:var(--ui);font-weight:var(--w-semi);color:var(--text-2);white-space:nowrap}
+.cost-tag.free{border-color:var(--red-ring);color:var(--red)}

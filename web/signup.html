@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign up - promptdyno</title>
+<meta name="description" content="Create a promptdyno account to keep your scores and join the leaderboard.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+<main class="page" id="main">
+  <section class="panel phead">
+    <div>
+      <div class="phead-t"><h1>Create your account</h1></div>
+      <div class="phead-sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M4.6 7.2l1.7 1.6 3.2-3.4"/></svg>Free, and the scores you already earned come with you</span>
+      </div>
+    </div>
+    <div class="phead-side" id="headStats"></div>
+  </section>
+
+  <div class="auth-grid gap-t">
+    <section class="panel auth-card" id="authCard" aria-labelledby="authTitle">
+      <div class="panel-head"><h2 class="h" id="authTitle">Sign up</h2><span class="note">Takes under a minute</span></div>
+      <p class="auth-lead">Pick a name for the leaderboard</p>
+      <p class="callout bad auth-alert" id="formAlert" role="alert" hidden></p>
+      <form id="authForm" novalidate>
+        <div class="field" data-for="username">
+          <label class="field-lbl" for="username">Username</label>
+          <input class="input" id="username" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" aria-describedby="usernameHint usernameErr" required>
+          <span class="field-hint" id="usernameHint">3 to 20 letters, numbers or underscores</span>
+          <span class="field-err" id="usernameErr" aria-live="polite"></span>
+        </div>
+        <div class="field" data-for="email">
+          <label class="field-lbl" for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="email" spellcheck="false" aria-describedby="emailErr" required>
+          <span class="field-err" id="emailErr" aria-live="polite"></span>
+        </div>
+        <div class="field" data-for="password">
+          <label class="field-lbl" for="password">Password</label>
+          <div class="pw-wrap">
+            <input class="input" id="password" name="password" type="password" autocomplete="new-password" maxlength="128" aria-describedby="passwordHint passwordErr" required>
+            <button class="pw-tog" type="button" aria-controls="password" aria-pressed="false" aria-label="Show password">Show</button>
+          </div>
+          <span class="field-hint" id="passwordHint">8 or more characters</span>
+          <span class="field-err" id="passwordErr" aria-live="polite"></span>
+        </div>
+        <button class="btn btn-primary block" type="submit" id="submitBtn" data-busy="Creating account">Create account</button>
+      </form>
+      <p class="auth-foot">Already have an account? <a href="login.html" id="switchLink">Log in</a></p>
+      <p class="callout auth-bottom" id="bottomNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span>Runs from this browser move onto your account</span></p>
+    </section>
+    <div class="col auth-side" id="authSide" aria-live="polite"></div>
+  </div>
+  <p class="sr-only" id="announce" aria-live="assertive"></p>
+</main>
+<script type="module">
+import { initAuthPage } from './js/auth-pages.js';
+initAuthPage('signup');
+</script>
+</body>
+</html>

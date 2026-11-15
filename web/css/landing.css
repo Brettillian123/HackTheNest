@@ -1,0 +1,95 @@
+/* Page layout for index.html and challenges.html. Tokens only. */
+
+/* ---------- landing: first screen ---------- */
+.hero{display:grid;grid-template-columns:440px minmax(0,1fr);gap:var(--s-5);align-items:stretch}
+/* copy sits as one block, centred in its panel, so any extra height splits evenly above and below */
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:28px 28px var(--s-8)}
+.hero-copy h1{font:var(--w-black) calc(var(--fs-20) * 2)/1.08 var(--ui);letter-spacing:-.8px;color:var(--text)}
+.hero-copy h1 i{font-style:normal;color:var(--red)}
+.hero-copy .lede{margin-top:var(--s-6);font-size:var(--fs-16);line-height:24px;color:var(--text-2)}
+/* stacked so both buttons fit the 440px column (the mono run label is wide) */
+.hero-acts{display:flex;flex-direction:column;align-items:stretch;gap:var(--s-3);margin-top:28px}
+.hero-acts .run{width:100%;margin-top:0;padding:0 var(--s-8);justify-content:center;font:var(--w-bold) var(--fs-15)/1 var(--ui);letter-spacing:0}
+.hero-acts .btn{height:52px;padding:0 var(--s-7);font-size:var(--fs-14);justify-content:center}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-8)}
+.hero-stats .stat{min-width:0}
+.hero-copy .callout{margin-top:var(--s-5)}
+/* wide screens: the goal panel is tall, so the copy column carries the three steps too */
+.hero-steps{display:none}
+@media (min-width:1360px){
+  .hero-steps{display:flex;flex-direction:column;gap:var(--s-2);margin-top:var(--s-8)}
+  .hero-steps li{display:flex;align-items:center;gap:var(--s-4);height:44px;padding:0 var(--s-5);background:var(--sunk);border-radius:var(--r-panel);font-size:var(--fs-14);color:var(--text-2)}
+}
+
+.hero-goal{display:flex;flex-direction:column}
+.hero-goal .stage{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+
+/* example score card under the goal frame, so the goal always shows whole.
+   Wide screens: score on the left, the two costs on the right. 1180 and below: stacked. */
+.overlay{display:grid;grid-template-columns:260px minmax(0,1fr);column-gap:var(--s-8);align-items:center;margin-top:var(--s-5);padding:var(--s-5) var(--s-7);background:var(--sunk);border:1px solid var(--line)}
+.overlay .costs{margin-top:0}
+.overlay .cost:first-child{border-top:0}
+.mini .bigscore .n{font-size:calc(var(--fs-28) * 2);letter-spacing:-3px}
+.mini .sc{gap:var(--s-6)}
+.mini .sc .gain{font-size:var(--fs-16);line-height:22px}
+.mini .seg{margin:var(--s-4) 0 var(--s-1)}
+.mini .seg i{height:6px}
+.mini .costs{margin-top:var(--s-4)}
+.mini .cost{gap:var(--s-4);padding:var(--s-3) 0}
+.mini .cost .pt{width:44px;height:28px;font-size:var(--fs-15);line-height:28px}
+.mini .cost .w{font-size:var(--fs-13);line-height:18px}
+
+/* ---------- landing: sections ---------- */
+.sect{margin-top:28px}
+.sect-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-4)}
+.sect-head .h{color:var(--text-2)}
+
+/* each step shares the row tracks of its neighbours (subgrid), so titles, text and pictures line up across all three */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:var(--s-5)}
+.step{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}
+.step-t{display:flex;align-items:center;gap:var(--s-4);margin-bottom:var(--s-2)}
+.step-t .title{font-size:var(--fs-15)}
+.step > .small{margin-bottom:var(--s-6);line-height:19px}
+.step-body{display:flex;flex-direction:column;justify-content:flex-start}
+/* same 1280 x 800 shape as the goal frame beside them */
+.step .editor{flex:none;aspect-ratio:1280/800;min-height:192px;overflow:hidden}
+.step .mini{background:var(--sunk);border-radius:var(--r-panel);padding:var(--s-5) var(--s-6) var(--s-1);aspect-ratio:1280/800;min-height:192px}
+
+.board{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:var(--s-5)}
+.board .lbt .who{font-weight:var(--w-bold)}
+.brackets .pills{margin:var(--s-2) 0 var(--s-6)}
+.brackets .kv{margin-top:var(--s-5)}
+.lead-line{font-size:var(--fs-15);line-height:22px;color:var(--text)}
+.lead-line b{color:var(--red)}
+
+.bands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-5)}
+.bands .stat .v{font-size:var(--fs-16)}
+.bands .stat .d{font-size:var(--fs-12);color:var(--text-3);margin-top:2px}
+.why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.why .lead-line{margin-bottom:var(--s-4)}
+.why .bands{margin-top:0}
+
+
+/* ---------- challenge list ---------- */
+.bar{display:flex;align-items:center;gap:var(--s-5);margin:var(--s-5) 0}
+.bar .kicker{margin-right:var(--s-1)}
+.bar .end{margin-left:auto;display:flex;align-items:center;gap:var(--s-3)}
+.chal.wide{position:relative;grid-template-columns:auto 176px minmax(0,1fr) 96px 96px 96px 16px;padding:var(--s-5) var(--s-7)}
+.chal.wide .frame{width:176px;border-radius:var(--r-control)}
+.chal.wide .frame iframe{pointer-events:none}
+.chal-link{color:var(--text)}
+.chal-link::after{content:"";position:absolute;inset:0;border-radius:var(--r-panel)}
+.chal-link:focus-visible{outline:none;box-shadow:none}
+.chal.wide:focus-within{box-shadow:var(--focus)}
+.chal-meta{display:block;margin-top:var(--s-2)}
+.chal-meta .mtag{color:var(--text-3)}
+.skel.rows i{height:122px;border-radius:var(--r-panel)}
+.list-err{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5)}
+.list-foot{margin-top:var(--s-5)}
+.chal-kind{display:grid;place-items:center;background:var(--bg)}
+.chal-kind span{font:var(--w-bold) var(--fs-12)/1 var(--mono);letter-spacing:1px;color:var(--text-4)}
+.chal-off{display:block;margin-top:4px;color:var(--text-3)}
+
+/* challenge list: category filter beside the level filter; category tag on each row */
+.bar{flex-wrap:wrap;row-gap:var(--s-3)}
+.chal-meta .mtag.cat-tag{padding:0 var(--s-2);border-radius:var(--r-3);background:var(--sunk);line-height:18px;color:var(--text-2)}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Roast Report - Harbor &amp; Pine Coffee</title>
+<style>
+* { box-sizing: border-box; }
+body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; font-family: Arial, Helvetica, sans-serif; background: #1c1917; color: #1c1917; }
+main { display: flex; flex: 1; align-items: center; padding: 96px 0; background: #fef3c7; }
+.band { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; width: 1040px; margin: 0 auto; }
+.icon { display: block; width: 56px; height: 56px; margin: 0 0 24px; }
+.eyebrow { margin: 0 0 12px; font-size: 14px; line-height: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #9a3412; }
+h1 { margin: 0 0 16px; font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 52px; color: #451a03; }
+.intro { margin: 0; font-size: 18px; line-height: 28px; color: #57534e; }
+.signup { padding: 40px; background: #ffffff; border-radius: 16px; box-shadow: 0 12px 32px rgba(69, 26, 3, 0.12); }
+.signup label { display: block; margin: 0 0 8px; font-size: 15px; line-height: 20px; font-weight: bold; color: #1c1917; }
+.signup-row { display: flex; gap: 12px; }
+.signup input { flex: 1; height: 52px; padding: 0 16px; font-family: inherit; font-size: 16px; color: #1c1917; background: #ffffff; border: 1px solid #a8a29e; border-radius: 10px; }
+.signup button { height: 52px; padding: 0 28px; font-family: inherit; font-size: 16px; font-weight: bold; color: #ffffff; background: #9a3412; border: 0; border-radius: 10px; }
+.privacy { margin: 16px 0 0; font-size: 13px; line-height: 20px; color: #57534e; }
+footer { padding: 0 120px; background: #1c1917; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; border-bottom: 1px solid #44403c; }
+.footer-brand { font-family: Georgia, "Times New Roman", serif; font-size: 22px; line-height: 28px; font-weight: bold; color: #fafaf9; text-decoration: none; }
+.footer-nav ul { display: flex; gap: 32px; margin: 0; padding: 0; list-style: none; }
+.footer-nav a { font-size: 15px; line-height: 20px; color: #e7e5e4; text-decoration: none; }
+.footer-bottom { display: flex; justify-content: space-between; padding: 24px 0 32px; font-size: 13px; line-height: 20px; color: #a8a29e; }
+.footer-bottom p { margin: 0; }
+.legal { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; }
+.legal a { color: #a8a29e; }
+</style>
+</head>
+<body>
+<main>
+  <div class="band">
+    <div>
+      <svg class="icon" viewBox="0 0 56 56" aria-hidden="true">
+        <rect width="56" height="56" rx="14" fill="#9a3412"/>
+        <rect x="14" y="18" width="28" height="20" rx="3" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <path d="M15 20 L28 30 L41 20" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+      </svg>
+      <p class="eyebrow">The Roast Report</p>
+      <h1>Fresh lots, brewed better</h1>
+      <p class="intro">One email every other Thursday: new single-origin lots, brewing guides from our roasters and subscriber-only prices.</p>
+    </div>
+    <form class="signup" action="#">
+      <label for="email">Email address</label>
+      <div class="signup-row">
+        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+        <button type="submit">Subscribe</button>
+      </div>
+      <p class="privacy">We only use your email to send the newsletter. Unsubscribe in one click, any time.</p>
+    </form>
+  </div>
+</main>
+<footer>
+  <div class="footer-top">
+    <a class="footer-brand" href="#">Harbor &amp; Pine</a>
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="#">Shop coffee</a></li>
+        <li><a href="#">Subscriptions</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">Brewing guides</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Harbor &amp; Pine Coffee Roasters, Portland, Oregon</p>
+    <ul class="legal">
+      <li><a href="#">Privacy policy</a></li>
+      <li><a href="#">Terms of sale</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

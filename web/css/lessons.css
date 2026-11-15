@@ -1,0 +1,42 @@
+/* Lessons list (lessons.html) and one lesson (lesson.html). v8: matte panels, flat red, no glows. */
+.ls-list{display:grid;gap:var(--s-3)}
+.ls-row{display:grid;grid-template-columns:44px auto 1fr auto auto;align-items:center;gap:var(--s-7);padding:var(--s-6) var(--s-7);background:var(--section);border:1px solid var(--line);border-radius:var(--r-6,6px);color:inherit;text-decoration:none}
+.ls-row:hover{background:var(--fill-soft)}
+.ls-row:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ls-n{font:var(--w-bold) 22px/1 var(--mono);color:var(--text-4)}
+.ls-main{min-width:0;display:flex;flex-direction:column;gap:4px}
+.ls-title{font-size:var(--fs-16,16px);font-weight:var(--w-semi);color:var(--text)}
+.ls-sum{font-size:var(--fs-13);line-height:19px;color:var(--text-3)}
+.ls-min{font:var(--fs-13) var(--mono);color:var(--text-3);white-space:nowrap}
+.ls-go{color:var(--red);font-size:var(--fs-13);font-weight:var(--w-semi);white-space:nowrap}
+.ls-empty{padding:var(--s-8) var(--s-7)}
+
+.ls-split{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--s-5);align-items:start}
+.ls-article{padding:var(--s-8) clamp(20px,4vw,48px) calc(var(--s-8) * 2)}
+.ls-article .md{max-width:760px}
+.ls-side{position:sticky;top:calc(var(--nav-h) + var(--s-5))}
+.ls-side .panel{display:flex;flex-direction:column;gap:var(--s-5)}
+.ls-facts{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+.ls-toc-h{margin-top:var(--s-2)}
+.ls-toc{display:grid;gap:2px;max-height:40vh;overflow:auto}
+.ls-toc a{display:block;padding:5px var(--s-3);border-radius:var(--r-3);font-size:var(--fs-13);line-height:18px;color:var(--text-2);text-decoration:none}
+.ls-toc a:hover{background:var(--fill-soft);color:var(--text)}
+.ls-toc .sub a{padding-left:var(--s-7);color:var(--text-3)}
+
+@media (max-width:1180px){.ls-row{grid-template-columns:36px 1fr auto}.ls-row .lvl,.ls-go{display:none}}
+@media (max-width:760px){.ls-split{grid-template-columns:1fr}.ls-side{position:static;order:-1}.ls-toc{max-height:none}}
+/* Space under the header, and an empty state that fills the screen so no bare band is left. */
+.page>#list{margin-top:var(--s-5)}
+.ls-empty{min-height:calc(100vh - var(--nav-h) - 250px);display:flex;flex-direction:column;align-items:center;justify-content:center}
+@media (max-width:760px){.ls-empty{min-height:0}}
+/* The lesson's challenges in the side column; unavailable ones greyed with their reason. */
+.ls-bonus{display:flex;flex-direction:column;gap:var(--s-3)}
+.ls-chals{display:grid;gap:var(--s-3)}
+.ls-chal{display:grid;gap:var(--s-3);padding:var(--s-4) var(--s-5);background:var(--sunk);border-radius:var(--r-panel)}
+.ls-chal-top{display:flex;align-items:center;gap:var(--s-3);min-width:0}
+.ls-chal-t{font-size:var(--fs-14);font-weight:var(--w-semi);color:var(--text);line-height:19px}
+.ls-chal-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2)}
+.ls-chal-meta:empty{display:none}
+.ls-chal-meta .mtag{margin-right:0}
+.ls-chal.off{opacity:.55}
+.ls-chal-off{font-size:var(--fs-12);line-height:17px;color:var(--text-3)}

@@ -1,0 +1,19 @@
+{
+  "stages": [
+    { "name": "style-guide", "match": { "changesAny": ["docs/STYLE.md"] } },
+    { "name": "core-docs", "match": { "changesAny": ["packages/core/docs/**"] }, "importance": "major" },
+    { "name": "cli-docs", "match": { "changesAny": ["packages/cli/docs/**"] }, "importance": "major" },
+    { "name": "web-docs", "match": { "changesAny": ["packages/web/docs/**"] }, "importance": "major" },
+    { "name": "index", "match": { "changesAny": ["docs/index.md"] }, "importance": "major" }
+  ],
+  "before": [
+    ["style-guide", "core-docs"],
+    ["style-guide", "cli-docs"],
+    ["style-guide", "web-docs"],
+    ["core-docs", "index"],
+    ["cli-docs", "index"],
+    ["web-docs", "index"]
+  ],
+  "parallel": [["core-docs", "cli-docs", "web-docs"]],
+  "limits": { "maxSteps": 6, "maxOwners": 5 }
+}

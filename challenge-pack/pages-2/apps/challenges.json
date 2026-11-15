@@ -1,0 +1,853 @@
+{
+  "challenges": [
+    {
+      "slug": "weather-card",
+      "title": "Weather card",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "For our travel app I need the current-weather panel, showing Lisbon this Sunday afternoon. Travellers glance at it for a second, so the temperature has to come first, then what the sky is doing, then the finer details, and finally the next few days. Use simple weather pictures so it reads without words. Keep it light and friendly, with a sky-blue feel. The content is supplied. The attached reference is precisely what we want, so make yours match it. Done means someone can tell me today's weather and the week's trend after one look.",
+      "acceptance": [
+        "I can read the current temperature at a glance",
+        "The sky conditions are clear even before I read the label",
+        "The forecast for the coming days is easy to compare",
+        "The weather pictures have text alternatives for screen readers",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Lisbon, Portugal' with 'Sunday 15 November, 14:00' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The temperature 18° is the largest text on the card",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "A drawn icon of a sun partly behind a cloud sits beside the temperature, with 'Partly cloudy' and 'Feels like 17°' next to it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three stat boxes in this order: Humidity 72%, Wind 14 km/h NW, UV index 3 Moderate",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A section headed '5-day forecast' lists Mon to Fri in order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Each forecast day shows an icon and a high and low: Mon 21°/14°, Tue 19°/13°, Wed 16°/12°, Thu 17°/12°, Fri 20°/13°",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "Forecast icons match the day: sunny Mon and Fri, partly cloudy Tue, rain Wed, cloudy Thu",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Everything sits on one white rounded card centred on a pale blue page",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Icons are drawn shapes with text alternatives, and the stats and forecast are lists",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Lisbon, Portugal",
+        "Sunday 15 November, 14:00",
+        "18°",
+        "Partly cloudy",
+        "Feels like 17°",
+        "Humidity",
+        "72%",
+        "Wind",
+        "14 km/h NW",
+        "UV index",
+        "3 Moderate",
+        "5-day forecast",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "21°",
+        "14°",
+        "16°"
+      ],
+      "designNotes": [
+        "one white card on a pale sky-blue page",
+        "temperature first, details second",
+        "warm yellow sun, soft grey clouds",
+        "stats in tinted rounded boxes"
+      ],
+      "content": "Location: Lisbon, Portugal\nDate and time: Sunday 15 November, 14:00\nCurrent conditions\nTemperature: 18°\nSky: Partly cloudy\nFeels like 17°\nDetails (label: value):\nHumidity: 72%\nWind: 14 km/h NW\nUV index: 3 Moderate\n5-day forecast (day: high / low):\nMon: 21° / 14°\nTue: 19° / 13°\nWed: 16° / 12°\nThu: 17° / 12°\nFri: 20° / 13°",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "leaderboard-table",
+      "title": "Leaderboard table",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "Our players want to see how they stack up this week, so build the weekly leaderboard. Anyone opening it should see who is leading, how the scores compare, and, most of all, where they themselves stand without searching. The tie-break rule and reset time need to be visible but quiet. It should be a proper data table that a screen reader can make sense of. Keep it light and clean. The content is supplied. The reference design is the finished screen; match it as closely as possible. Done means a player finds their own row in under a second.",
+      "acceptance": [
+        "I can find my own position immediately",
+        "The leading players clearly stand out from the rest",
+        "Scores and prompt counts are easy to compare",
+        "It is a real table that works with a screen reader",
+        "It matches the reference design closely"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Weekly leaderboard' with the line 'Week 46, 9 to 15 November 2026. Fewer prompts break a tie.'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A real table with column headers Rank, Player, Score, Prompts used",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Ten rows in this order: Priya Nair 9,840/31, Marcus Okafor 9,615/28, Lena Brandt 9,402/35, Daniel Kim 9,118/33, Sofia Rossi 8,977/40, Tom Whitfield 8,730/37, Jordan Ellis (you) 8,544/29, Aisha Haddad 8,301/44, Rafael Costa 8,066/39, Emma Visser 7,912/42",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Ranks 1, 2 and 3 sit in round gold, silver and bronze badges; ranks 4 to 10 are plain",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Every player has a round avatar with their initials",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Jordan Ellis's row is highlighted so it stands out from the others",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Score and Prompts used are right-aligned; scores are bold",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Note under the table: 'Scores reset every Monday at 00:00 UTC.'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Text, including avatar initials and badge numbers, is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Weekly leaderboard",
+        "Week 46, 9 to 15 November 2026. Fewer prompts break a tie.",
+        "Rank",
+        "Player",
+        "Score",
+        "Prompts used",
+        "Priya Nair",
+        "9,840",
+        "Marcus Okafor",
+        "Lena Brandt",
+        "Jordan Ellis (you)",
+        "8,544",
+        "Emma Visser",
+        "7,912",
+        "Scores reset every Monday at 00:00 UTC."
+      ],
+      "designNotes": [
+        "light grey page, one white rounded table",
+        "medal colours only on the top three",
+        "soft indigo highlight for the viewer's row",
+        "thin dividers, generous row height"
+      ],
+      "content": "Title: Weekly leaderboard\nSubtitle: Week 46, 9 to 15 November 2026. Fewer prompts break a tie.\nTable header: Rank | Player | Score | Prompts used\n1 | Priya Nair (PN) | 9,840 | 31\n2 | Marcus Okafor (MO) | 9,615 | 28\n3 | Lena Brandt (LB) | 9,402 | 35\n4 | Daniel Kim (DK) | 9,118 | 33\n5 | Sofia Rossi (SR) | 8,977 | 40\n6 | Tom Whitfield (TW) | 8,730 | 37\n7 | Jordan Ellis (you) (JE) | 8,544 | 29\n8 | Aisha Haddad (AH) | 8,301 | 44\n9 | Rafael Costa (RC) | 8,066 | 39\n10 | Emma Visser (EV) | 7,912 | 42\n(Letters in brackets are each player's initials.)\nMedals: rank 1 gold, rank 2 silver, rank 3 bronze\nCurrent player: Jordan Ellis (you), rank 7\nNote: Scores reset every Monday at 00:00 UTC.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "now-playing",
+      "title": "Now playing",
+      "level": 1,
+      "category": "App screens and data",
+      "brief": "I'd like the now-playing screen for our music app. Someone glancing at their phone should know straight away what song is on, who it's by, how far through it is, and what is coming next. The playback controls must be easy to hit and clearly named for people using a screen reader. It's a dark screen, with a soft periwinkle accent and the album art doing most of the visual work. The content is supplied. The attached reference is the exact target, and closeness to it is how I will judge it. Done means it feels like a real player app.",
+      "acceptance": [
+        "I can tell what is playing and who it is by at a glance",
+        "I can see how far through the song I am",
+        "Every control has a clear name for screen readers",
+        "The queue of upcoming songs is easy to read",
+        "Next to the reference, the two look like the same page"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Small caps-style line 'Playing from Autumn Drive' at the top",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Square album art drawn as an illustration of a moon over a harbour with a lighthouse",
+          "kind": "content",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "Title 'Harbour Lights' is the heading, with 'The Wandering Pines' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "A progress bar roughly a third full, with 1:24 at the left and 3:42 at the right below it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Five control buttons in this order: shuffle, previous, pause, next, repeat; the pause button is larger and filled with the accent colour",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Each control is a real button with an accessible name and a drawn icon",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "An 'Up next' list, in order: Slow Tide (The Wandering Pines, 4:05), Neon Orchard (Mira Sol, 3:18), Paper Kites (Juniper Lane, 3:51)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "Dark card on a deep indigo page; light text that is easy to read",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Playing from Autumn Drive",
+        "Harbour Lights",
+        "The Wandering Pines",
+        "1:24",
+        "3:42",
+        "Up next",
+        "Slow Tide",
+        "4:05",
+        "Neon Orchard",
+        "Mira Sol",
+        "3:18",
+        "Paper Kites",
+        "Juniper Lane",
+        "3:51"
+      ],
+      "designNotes": [
+        "dark mode, deep navy card on indigo",
+        "one periwinkle accent for progress and play",
+        "big art, compact controls",
+        "quiet grey secondary text"
+      ],
+      "content": "Source: Playing from Autumn Drive (playlist: Autumn Drive)\nCurrent track: Harbour Lights\nArtist: The Wandering Pines\nAlbum art: a moon over a harbour at night\nPosition: 1:24 elapsed of 3:42\nState: playing (the play button currently offers Pause)\nControls: Shuffle, Previous track, Pause, Next track, Repeat\nUp next (title / artist / length):\n1. Slow Tide / The Wandering Pines / 4:05\n2. Neon Orchard / Mira Sol / 3:18\n3. Paper Kites / Juniper Lane / 3:51",
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "inbox-list",
+      "title": "Inbox list",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "We're building a mail app and I need the main inbox screen: folders, the message list and the open message, all at once. Someone starting their morning should see which mail is new, what each message is about, and read the selected one comfortably. Unread mail must stand out by more than colour alone. It's a work tool, so calm, dense but tidy, with one blue accent. The content is supplied. The reference is what we signed off: match it as faithfully as you can. Done means it feels like a real mail client you could work in all day.",
+      "acceptance": [
+        "I can see at a glance which messages I have not read",
+        "I can tell which message is open",
+        "Each folder shows how much is in it",
+        "The open message is comfortable to read",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Top bar with 'Mail' as the page heading and a 'Compose' button on the right",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Folder navigation, in order, with counts: Inbox 3, Starred 12, Sent 248, Drafts 2, Archive 1,406, Spam 7; Inbox is marked as current",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Three panes side by side: folders, message list, reading pane",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "Nine messages in order from Hannah Lee, GitHub, Omar Farouk, Grace Turner, Northwind Air, Lucas Moreau, Figma, Priya Shah, Bank of Lisbon, each with subject, preview and time",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The first three messages are unread and visibly bolder than the others",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Hannah Lee's message is selected: tinted background and a blue bar on its left",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Long previews stay on one line and end with an ellipsis",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Reading pane shows 'Venue confirmed for the offsite', the sender line, the date 'Sunday 15 November 2026, 9:42' and the full message",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Buttons Reply, Reply all, Forward under the message",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r10",
+          "text": "Folders are links in a labelled nav list; messages are a list",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Mail",
+        "Compose",
+        "Inbox",
+        "Starred",
+        "Sent",
+        "Drafts",
+        "Archive",
+        "1,406",
+        "Spam",
+        "Hannah Lee",
+        "Venue confirmed for the offsite",
+        "GitHub",
+        "[web-app] Pull request #482 approved",
+        "Omar Farouk",
+        "Quick question about the Q4 budget",
+        "Grace Turner",
+        "Northwind Air",
+        "Lucas Moreau",
+        "Figma",
+        "Priya Shah",
+        "Bank of Lisbon",
+        "Nov 11",
+        "Sunday 15 November 2026, 9:42",
+        "Reply",
+        "Reply all",
+        "Forward"
+      ],
+      "designNotes": [
+        "calm work tool, white with thin grey dividers",
+        "one blue accent for brand, Compose and selection",
+        "unread shown by weight, not colour alone",
+        "dense but tidy list"
+      ],
+      "content": "App: Mail\nAction: Compose\nFolders (name: count): Inbox: 3, Starred: 12, Sent: 248, Drafts: 2, Archive: 1,406, Spam: 7\nCurrent folder: Inbox\nMessages in Inbox, newest first (sender / time / subject / preview):\n1. Hannah Lee / 9:42 / Venue confirmed for the offsite / Great news: the Harbour Loft is booked for the 3rd and 4th of December.\n2. GitHub / 8:15 / [web-app] Pull request #482 approved / Marco approved your changes to the checkout form validation.\n3. Omar Farouk / 7:58 / Quick question about the Q4 budget / Do we still have room for the analytics licence, or should it wait?\n4. Grace Turner / Sat / Notes from Friday's design review / Attached are the notes and the three follow-ups we agreed on.\n5. Northwind Air / Sat / Your boarding pass for LIS to AMS / Flight NW 1184 departs Wednesday 18 November at 07:35 from gate B12.\n6. Lucas Moreau / Fri / Re: Onboarding checklist / Thanks, I've added the security training step to week one.\n7. Figma / Fri / Ines commented on Checkout v3 / \"Can we try the summary panel on the right instead of below?\"\n8. Priya Shah / Thu / Lunch on Tuesday? / The new ramen place on Rua Augusta opened, want to try it?\n9. Bank of Lisbon / Nov 11 / Your October statement is ready / Your statement for the account ending 4821 can now be viewed online.\nUnread: messages 1, 2 and 3\nSelected message: 1\nSelected message in full\nSubject: Venue confirmed for the offsite\nFrom: Hannah Lee <hannah.lee@brightlane.io>, to me\nDate: Sunday 15 November 2026, 9:42\nBody:\nHi all,\nGreat news: the Harbour Loft is booked for the 3rd and 4th of December. It holds up to 40 people, has two breakout rooms and is a ten-minute walk from Cais do Sodré station.\nLunch is included on both days. Please send me any dietary needs by Friday so I can pass them on to the caterers.\nI'll share the full agenda next week.\nThanks,\nHannah\nMessage actions: Reply, Reply all, Forward",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "transactions-list",
+      "title": "Transactions list",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "I need the transactions screen for our banking app's everyday account. Customers open it to answer two things: how much do I have, and what just happened to my money. The balance must be unmistakable, recent activity should be grouped so it's easy to follow, and money in must be clearly different from money out, without relying on colour alone. The brand is a deep forest green with a fresh mint accent. The content is supplied. The reference design shows exactly the finished screen, so get as close to it as you can. Done means a customer can spot their last payment instantly.",
+      "acceptance": [
+        "I can see my balance immediately",
+        "I can tell money in from money out without relying on colour",
+        "Activity is easy to follow day by day",
+        "The main actions are easy to reach",
+        "Put side by side with the reference, it is hard to tell them apart"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Header with 'Everyday Account, ending 4821', the balance '$4,286.52' as the biggest text, and 'Available balance, updated 15 Nov at 14:02'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Two buttons in the header: 'Send money' (the stronger one) and 'Add money'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Four filter chips in order: All, Money in, Money out, Pending; All is shown as selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Three date headings in order: 'Today, Sunday 15 November', 'Yesterday, Saturday 14 November', 'Friday 13 November'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Twelve transactions, four under each heading, with the names, categories and amounts of the goal",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r6",
+          "text": "Amounts are right-aligned",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Money in (+$42.00, +$129.95, +$3,850.00) is green with a plus sign; money out is dark with a minus sign",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Each transaction has a round badge with two initials, tinted by kind of spending",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Filters are real buttons that say whether they are pressed; each day's transactions are a list",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including on the green header",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Everyday Account, ending 4821",
+        "$4,286.52",
+        "Available balance, updated 15 Nov at 14:02",
+        "Send money",
+        "Add money",
+        "All",
+        "Money in",
+        "Money out",
+        "Pending",
+        "Today, Sunday 15 November",
+        "Yesterday, Saturday 14 November",
+        "Friday 13 November",
+        "Blue Bottle Coffee",
+        "-$6.40",
+        "Alex Rivera",
+        "+$42.00",
+        "Refund from REI",
+        "+$129.95",
+        "Northline Studio",
+        "+$3,850.00",
+        "Pacific Gas & Electric",
+        "Greenway Rentals",
+        "-$1,650.00",
+        "Chipotle",
+        "-$13.75"
+      ],
+      "designNotes": [
+        "deep forest-green balance card, mint main action",
+        "money in in green, money out in dark text",
+        "white grouped lists on a light grey page",
+        "small uppercase date headings"
+      ],
+      "content": "Account: Everyday Account, ending 4821\nBalance: $4,286.52\nBalance note: Available balance, updated 15 Nov at 14:02\nActions: Send money, Add money\nFilters: All, Money in, Money out, Pending\nSelected filter: All\nTransactions by day (initials / name / category / amount):\nToday, Sunday 15 November\nBB / Blue Bottle Coffee / Eating out / -$6.40\nUB / Uber / Transport / -$18.25\nAR / Alex Rivera / Transfer in, dinner split / +$42.00\nWF / Whole Foods Market / Groceries / -$87.13\nYesterday, Saturday 14 November\nNF / Netflix / Subscriptions / -$15.49\nSH / Shell / Fuel / -$54.60\nTJ / Trader Joe's / Groceries / -$63.82\nRF / Refund from REI / Shopping / +$129.95\nFriday 13 November\nNL / Northline Studio / Salary / +$3,850.00\nPG / Pacific Gas & Electric / Bills / -$112.37\nGR / Greenway Rentals / Rent / -$1,650.00\nCP / Chipotle / Eating out / -$13.75\nMoney in: amounts starting with +. Money out: amounts starting with -.",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "kanban-board",
+      "title": "Kanban board",
+      "level": 2,
+      "category": "App screens and data",
+      "brief": "The web team needs its sprint board for the website relaunch. Anyone checking in should see where every task stands, who owns it and when it is due, and spot anything overdue. The kind of work each task is should be clear at a glance. Keep it light and organised, with indigo for the main action. The content is supplied. The attached reference is the target to match closely. Done means the board answers 'what's stuck and who has it' in seconds and still works on a phone.",
+      "acceptance": [
+        "I can see where every task stands at a glance",
+        "I can tell who owns each task and when it is due",
+        "Task types are easy to tell apart",
+        "The board is still usable on a phone screen",
+        "It matches the reference design closely"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Website relaunch' with 'Sprint 14, 9 to 27 November' and a 'New card' button",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four columns in this order: Backlog, In progress, Review, Done",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each column header shows how many cards it holds: 3, 3, 2, 3 (eleven cards in all)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Every card shows a label, a title, an initials avatar and a date",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Labels Design, Frontend, Content and Bug each have their own colour, used the same way on every card",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Card titles and dates match the goal, e.g. 'Build the new pricing table' due Nov 18, 'Contact form validation' due Nov 16",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "'Menu closes on iOS scroll' is overdue: 'Due Nov 14' is shown in red",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Done cards have struck-through titles and dates written 'Done Nov 10', 'Done Nov 11', 'Done Nov 12'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Columns are sections with headings and their cards are lists",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text, including labels and avatar initials, is easy to read against its background",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Website relaunch",
+        "Sprint 14, 9 to 27 November",
+        "New card",
+        "Backlog",
+        "In progress",
+        "Review",
+        "Done",
+        "Write FAQ answers for pricing",
+        "Empty states for the dashboard",
+        "Lazy-load case study images",
+        "Build the new pricing table",
+        "Menu closes on iOS scroll",
+        "Due Nov 14",
+        "Homepage hero illustration",
+        "About page copy, second draft",
+        "Contact form validation",
+        "New colour palette",
+        "Broken link in footer",
+        "Team bios and photos",
+        "Done Nov 12"
+      ],
+      "designNotes": [
+        "light and organised, soft grey columns",
+        "white cards with a faint shadow",
+        "one colour per label kind",
+        "indigo accent for the main button"
+      ],
+      "content": "Board: Website relaunch\nSprint: Sprint 14, 9 to 27 November\nAction: New card\nPeople (initials): Nadia Haddad (NH), Tomás Silva (TS), Kai Becker (KB)\nTasks by status (tag / title / assignee / date):\nBacklog (3 tasks)\n- Content / Write FAQ answers for pricing / NH / Due Nov 25\n- Design / Empty states for the dashboard / TS / Due Nov 26\n- Frontend / Lazy-load case study images / KB / Due Nov 27\nIn progress (3 tasks)\n- Frontend / Build the new pricing table / KB / Due Nov 18\n- Bug / Menu closes on iOS scroll / TS / Due Nov 14\n- Design / Homepage hero illustration / NH / Due Nov 19\nReview (2 tasks)\n- Content / About page copy, second draft / NH / Due Nov 17\n- Frontend / Contact form validation / KB / Due Nov 16\nDone (3 tasks)\n- Design / New colour palette / TS / Done Nov 10\n- Bug / Broken link in footer / KB / Done Nov 11\n- Content / Team bios and photos / NH / Done Nov 12\nTags: Content, Design, Frontend, Bug",
+      "maxPromptChars": 3500
+    },
+    {
+      "slug": "calendar-month",
+      "title": "Calendar month",
+      "level": 3,
+      "category": "App screens and data",
+      "brief": "Build the month view for our calendar app, November 2026. People should be able to place their events in the month at a glance, see what today is, and tell kinds of event apart. A multi-day event must read as one stretch, not three. Clean, quiet lines; strong blue only for today and the active view. The content is supplied. The reference design is the exact goal, and I will compare your page with it. Done means it reads like a real calendar.",
+      "acceptance": [
+        "I can see which day is today immediately",
+        "I can tell which day each event falls on",
+        "A multi-day event reads as one",
+        "Next to the reference, the two look like the same page"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Top bar with a 'Today' button, previous and next month buttons, the heading 'November 2026', and a Month / Week / Day switch with Month selected",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Weekday headers in order: Mon, Tue, Wed, Thu, Fri, Sat, Sun",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The dates fall on the right weekdays for November 2026: the 1st is a Sunday and the 30th a Monday",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r4",
+          "text": "Six week rows, from 26 October to 6 December; October and December days are greyed out but readable",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Today, 15 November, is marked with a filled blue circle behind its number",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "Nine events on the right days: Design review 10:00 (3rd), Dentist 15:30 (5th), Sprint planning 09:30 (9th), Web Summit, Lisbon (11th to 13th), Ana's birthday (14th), 1:1 with Priya 11:00 (18th), Quarterly report due (20th), Yoga 18:00 (24th), Team dinner 19:30 (26th)",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "'Web Summit, Lisbon' is a single chip spanning Wednesday 11 to Friday 13",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Event chips are coloured by kind, with the same kind always the same colour",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Arrow buttons have accessible names; the view switch says which view is pressed; dates are marked up as dates",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Text is easy to read against its background, including greyed-out days and chips",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Today",
+        "November 2026",
+        "Month",
+        "Week",
+        "Day",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun",
+        "10:00 Design review",
+        "15:30 Dentist",
+        "09:30 Sprint planning",
+        "Web Summit, Lisbon",
+        "Ana's birthday",
+        "11:00 1:1 with Priya",
+        "Quarterly report due",
+        "18:00 Yoga",
+        "19:30 Team dinner"
+      ],
+      "designNotes": [
+        "clean grid with thin grey lines",
+        "pastel event chips with dark text",
+        "one strong blue for today and the selected view",
+        "out-of-month days on a faint grey"
+      ],
+      "content": "Month shown: November 2026\nToday: Sunday 15 November 2026\nWeeks start on Monday. Weekday labels: Mon, Tue, Wed, Thu, Fri, Sat, Sun\nDays shown: Monday 26 October 2026 to Sunday 6 December 2026 (days outside November are from the neighbouring months)\nControls: Today, Previous month, Next month\nViews: Month, Week, Day (selected view: Month)\nEvents (date: event text, kind):\nTue 3 Nov: 10:00 Design review (work)\nThu 5 Nov: 15:30 Dentist (health)\nMon 9 Nov: 09:30 Sprint planning (work)\nWed 11 Nov to Fri 13 Nov, three days: Web Summit, Lisbon (travel)\nSat 14 Nov: Ana's birthday (personal)\nWed 18 Nov: 11:00 1:1 with Priya (work)\nFri 20 Nov: Quarterly report due (deadline)\nTue 24 Nov: 18:00 Yoga (health)\nThu 26 Nov: 19:30 Team dinner (personal)",
+      "maxPromptChars": 4000
+    },
+    {
+      "slug": "fitness-dashboard",
+      "title": "Fitness dashboard",
+      "level": 3,
+      "category": "App screens and data",
+      "brief": "I want Sam's activity dashboard for our fitness app. Sam should see in one look how today is going, how the week compares, and whether the weekly goals are on track. Good and bad changes must be obvious without relying on colour. Teal is the brand. The content is supplied. The reference is the final design, so match it closely. Done means it is useful at a glance, honest about the numbers and accessible.",
+      "acceptance": [
+        "I can tell how today is going in one look",
+        "I can compare this week's days easily",
+        "Progress towards each goal is clear",
+        "Charts have text alternatives for screen readers",
+        "It is a close match for the reference in look and arrangement"
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "Heading 'Good afternoon, Sam' with 'Sunday 15 November 2026' under it",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Four tiles in order: Steps today 8,432; Active minutes 47 min; Calories burned 612 kcal; Resting heart rate 58 bpm, each with its change note",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Change notes are green, except the heart-rate note '+2 on last week', which is red",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A drawn bar chart titled 'Steps this week' with seven bars Mon to Sun labelled 7,240, 9,815, 6,120, 11,032, 8,904, 12,460, 8,432, heights in proportion",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "A dashed goal line labelled 'Goal 10,000' across the chart, and Sunday's bar darker than the rest",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "A drawn progress ring titled 'Daily step goal' about 84% full, showing '84%', 'of 10,000' and '1,568 steps to go today'",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r7",
+          "text": "A table 'Recent workouts' with headers Date, Activity, Duration, Distance, Calories and five rows, newest first",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r8",
+          "text": "'Weekly goals' with three progress bars in order: Run 20 km (14.2 / 20 km), Strength sessions (2 / 3), Sleep 7 h a night (6.6 / 7 h), each filled in proportion",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r9",
+          "text": "Chart and ring carry text alternatives; progress bars expose their value",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Layout: tiles in one row of four, then chart wide with ring narrow, then table wide with goals narrow",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Text is easy to read against its background, including the labels on the bars",
+          "kind": "style",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Good afternoon, Sam",
+        "Sunday 15 November 2026",
+        "Steps today",
+        "8,432",
+        "Active minutes",
+        "Calories burned",
+        "612",
+        "Resting heart rate",
+        "58",
+        "+2 on last week",
+        "Steps this week",
+        "Goal 10,000",
+        "12,460",
+        "Daily step goal",
+        "84%",
+        "of 10,000",
+        "1,568 steps to go today",
+        "Recent workouts",
+        "Morning run",
+        "24.8 km",
+        "Strength training",
+        "Weekly goals",
+        "Run 20 km",
+        "14.2 / 20 km",
+        "Strength sessions",
+        "Sleep 7 h a night",
+        "6.6 / 7 h"
+      ],
+      "designNotes": [
+        "white panels on a light grey page",
+        "teal as the single accent",
+        "numbers big, labels small and grey",
+        "good news green, bad news red"
+      ],
+      "content": "User: Sam Okoro\nGreeting: Good afternoon, Sam\nDate: Sunday 15 November 2026\nToday's stats (label / value / change):\nSteps today / 8,432 / +6% on last Sunday\nActive minutes / 47 min / +12 on your average\nCalories burned / 612 kcal / +4% on last Sunday\nResting heart rate / 58 bpm / +2 on last week\nSteps this week (Goal 10,000):\nMon 7,240, Tue 9,815, Wed 6,120, Thu 11,032, Fri 8,904, Sat 12,460, Sun 8,432\nToday is Sunday. Highest day: Saturday, 12,460.\nDaily step goal: 84% of 10,000. 1,568 steps to go today.\nRecent workouts\nDate | Activity | Duration | Distance | Calories\nSun 15 Nov | Morning run | 32 min | 5.4 km | 348 kcal\nSat 14 Nov | Cycling | 1 h 05 min | 24.8 km | 612 kcal\nThu 12 Nov | Strength training | 45 min | - | 290 kcal\nWed 11 Nov | Easy run | 28 min | 4.6 km | 301 kcal\nMon 9 Nov | Strength training | 40 min | - | 262 kcal\nWeekly goals (goal: progress):\nRun 20 km: 14.2 / 20 km (71%)\nStrength sessions: 2 / 3 (67%)\nSleep 7 h a night: 6.6 / 7 h (94%)",
+      "maxPromptChars": 4000
+    }
+  ]
+}

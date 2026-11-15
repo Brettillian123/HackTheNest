@@ -1,0 +1,31 @@
+/* Credits page (credits.html). v8: matte panels, flat red, no glows. The balance is the one loud element. */
+.cr-notice{margin-top:var(--s-5)}
+.cr-notice b{color:var(--text)}
+.cr-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s-5);margin-top:var(--s-5);align-items:start}
+.cr-balance,.cr-buy{display:flex;flex-direction:column}
+.cr-big{margin-top:var(--s-3)}
+.cr-big .of{font-family:var(--ui);color:var(--text-3)}
+.cr-free{margin-top:var(--s-5);font-size:var(--fs-14);line-height:20px;color:var(--text-2)}
+.cr-sub{margin-top:var(--s-8);margin-bottom:var(--s-2)}
+
+.cr-packs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
+.cr-pack{display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-7) var(--s-6) var(--s-6);background:var(--sunk);border-radius:var(--r-panel);border:1px solid transparent}
+.cr-pack.best{border-color:var(--red-ring)}
+.cr-pack-k{font-size:var(--fs-10);letter-spacing:.4px;text-transform:uppercase;color:var(--text-3);height:14px}
+.cr-pack.best .cr-pack-k{color:var(--red)}
+.cr-pack-n{display:flex;align-items:baseline;gap:var(--s-2)}
+.cr-pack-n b{font:var(--w-bold) var(--fs-28)/1 var(--mono);color:var(--text)}
+.cr-pack-n span{font-size:var(--fs-13);color:var(--text-3)}
+.cr-price{font:var(--w-semi) var(--fs-17)/24px var(--mono);color:var(--text)}
+.cr-per{font-size:var(--fs-12);color:var(--text-4);margin-bottom:var(--s-4)}
+.cr-pack .btn{margin-top:auto}
+#payOff{margin-top:var(--s-5)}
+
+.cr-how{display:grid;gap:var(--s-2)}
+.cr-how li{display:flex;align-items:flex-start;gap:var(--s-3);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
+.cr-how li::before{content:"";width:6px;height:6px;margin-top:6px;border-radius:50%;background:var(--red);flex:none}
+
+@media (max-width:1180px){.cr-grid{grid-template-columns:1fr}}
+@media (max-width:760px){.cr-packs{grid-template-columns:1fr}.cr-big .n{font-size:var(--fs-28);letter-spacing:-1px}}
+/* .callout sets display:flex, so hidden needs saying here. */
+.cr-notice[hidden],#payOff[hidden],#testNote[hidden]{display:none}

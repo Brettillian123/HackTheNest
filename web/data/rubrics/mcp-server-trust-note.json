@@ -1,0 +1,21 @@
+{
+  "sections": [
+    { "name": "Servers", "aliases": ["Server", "Approved servers", "Which server", "Our servers"], "importance": "normal" },
+    { "name": "How to add", "aliases": ["Adding the server", "Add the server", "Install", "Installation", "Setup", "Set up"], "importance": "major" },
+    { "name": "Checks done", "aliases": ["Checks", "What we checked", "Vetting", "Review", "Trust checks"], "importance": "normal", "mustContain": ["publisher", "outside"] },
+    { "name": "Rules", "aliases": ["Usage rules", "Guidelines", "Ground rules", "Policy", "Constraints"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the command to add the server", "anyOf": ["claude mcp add --transport http --scope project notion https://mcp.notion.com/mcp"], "importance": "critical", "inCode": true, "section": "How to add" },
+    { "label": "the server URL", "anyOf": ["https://mcp.notion.com/mcp"], "section": "Servers" },
+    { "label": "the project config file .mcp.json", "anyOf": [".mcp.json"] },
+    { "label": "the /mcp command", "anyOf": ["/mcp"] },
+    { "label": "the publisher, Notion", "anyOf": ["Notion"], "section": "Checks done" },
+    { "label": "the tools allowed (read and search)", "anyOf": ["read and search", "search and read", "reading and searching", "searching and reading", "read, search", "read or search"], "section": "Checks done" },
+    { "label": "the rule that editing or creating pages is not allowed", "anyOf": ["editing or creating", "Editing or creating", "creating or editing", "Creating or editing", "edit or create", "Edit or create", "create or edit", "Create or edit", "editing and creating", "Editing and creating", "creating and editing", "Creating and editing"], "importance": "major", "section": "Rules" }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 300, "minWords": 60 }
+}

@@ -86,6 +86,42 @@ _Decided 2026-11-14._
 
 ---
 
+## How Challenges Are Made (read this before writing tutorials)
+
+_Added 2026-11-15 by Brett's grader session. Describes the challenge files on the `grader` branch under `challenge-pack/`. What the live site shows a player is the site session's to confirm._
+
+**Where they are.** 50 page challenges: `challenge-pack/pages-live/` (6), `pages/` (12), `pages-2/components|marketing|apps|forms/` (8 each). Each folder has `challenges.json` (`{ "challenges": [...] }`) and `goals/<slug>.html`, the reference page. Multi-page sites are in `sites/`, 3D models in `scenes/`, lesson challenges (documents and workflow plans) in `lessons/`.
+
+**One challenge entry.**
+
+| Field | Who sees it | What it is |
+|---|---|---|
+| `slug`, `title`, `level` (1 to 3), `category` | player | Identity. Level 1 is a small component, 3 a full page. |
+| `brief` | player | The assignment, written as a manager or teacher would give it: what the page is for, who uses it, what matters. No pixel sizes or colour codes. |
+| `acceptance` | player | Plain statements of what "done" means. |
+| `goals/<slug>.html` | player, as a picture | The reference. It is the exact target and the 100 mark. |
+| `content` | the model, automatically | The page's wording (headings, labels, prices). The player does not type it. |
+| `maxPromptChars` | player | Prompt length limit (3,500 to 5,000 on these). |
+| `requirements`, `keyFacts`, `designNotes`, `exactSpec` | nobody: hidden | Author's notes and older exact specs. Never show or quote these in a tutorial. |
+
+**How a run is scored.** The model's page and the reference are both drawn in a browser at 1280 x 800 with scripts and network off, and compared. No AI is involved; the same page always gets the same score. Three parts: works 30% (right content, in the right arrangement), engineering 45% (small file, accessibility, clean code), looks 25% (close in colour, size and style). Close counts: a few pixels or a slightly different shade costs a fraction of a point; a block in the wrong part of the page or the wrong colour scheme costs a lot. Level 1: 80 to 90 is solid. Levels 2 and 3: 70 or more is solid. 100 almost never happens.
+
+**What a tutorial should teach** (the skill is describing the reference, not copying a spec):
+
+- Say what the page is and list its parts in order, top to bottom, and how they are arranged (centred card, two columns, three cards in a row).
+- Describe the look in words a person would use: background, accent colour, light or dark, rounded or square, how much space.
+- Ask for the engineering by name: one HTML file with CSS inside it, no scripts, no outside fonts or images (draw icons and pictures as inline SVG), `lang` on `<html>`, a viewport meta tag, `<main>` and headings in order, a label tied to every form field, real lists and tables, readable contrast, nothing extra.
+- Do not ask for additions the reference does not have: extra sections, labels or buttons lose points.
+- A tutorial may walk through the brief, the reference picture and the acceptance list. It must not reveal the hidden fields or the reference's source code.
+
+**Making a new challenge.**
+
+1. Write the reference as one HTML file: CSS inside it, no scripts, no network, well engineered (it is the 100 mark). Save it as `goals/<slug>.html`.
+2. Add the entry to that folder's `challenges.json` with every field above. Write the brief as an assignment; put the wording in `content`; keep specifics in the hidden fields.
+3. Set `maxPromptChars`: characters of brief + acceptance + requirements + design notes, times 1.5, plus 1,000, rounded up to the next 500, between 2,000 and 12,000.
+4. Run the check scripts in `challenge-pack/` (`check-briefs.mjs`, `check-content-a.mjs`, `check-content-b.mjs`; see `challenge-pack/README.md`).
+5. Grade the reference against itself (must be 100), then one real model run, and look at the result next to the reference. Grader routes are in `grader/INTEGRATION.md`.
+
 ## Useful Context
 - The team builds with **Claude Code**. Logic, APIs and 2D web interfaces come together quickly; building 3D models or heavy rendering by hand is harder.
 - Left out of the base stack until the core loop works: model tiers and credits (including Solana), Exa, ElevenLabs voice challenges, 3D challenges, SSOJet, Tiger Data.
