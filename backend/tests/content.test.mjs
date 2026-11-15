@@ -35,7 +35,7 @@ function hiddenKeys(value, path = '$', found = []) {
 test('real file: 50 entries load with acceptance and content; no response carries a server-only field', async () => {
   process.env.CHALLENGES_DIR = realDir;
   const data = reloadChallenges();
-  assert.equal(FILE.length, 50);
+  assert.equal(FILE.length, 53);
   assert.equal(data.challenges.length, 50);
   assert.deepEqual(data.problems, []);
   setup({ model: 'x' });
