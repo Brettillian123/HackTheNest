@@ -534,7 +534,8 @@ function render() {
   $('runBtn').classList.toggle('busy', busy);
   $('runLabel').innerHTML = busy ? 'Running' : S.attempt && S.attempt.pending ? 'Score this page' : last ? 'Run again<small>adds 1 prompt</small>' : 'Run prompt';
   show('cancelBtn', busy);
-  show('overBtn', !busy && m === 'scored' && !!last);
+  // Start over is there whenever the attempt has used a prompt, not only right after a score.
+  show('overBtn', !busy && ((m === 'scored' && !!last) || !!(S.attempt && (S.attempt.promptCount > 0 || S.attempt.pending))));
   show('backBtn', m === 'refine' && !!last);
   const st = $('status');
   st.textContent = S.status;
