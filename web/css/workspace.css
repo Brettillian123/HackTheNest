@@ -209,3 +209,13 @@
   .ws-big-box{border-radius:0;border:0;padding:var(--s-4)}
 }
 .ws-content{margin:var(--s-3) 0 var(--s-2);padding:var(--s-3) var(--s-4);max-height:220px;overflow:auto;background:var(--sunk);border:1px solid var(--line-soft);border-radius:var(--r-3);font:var(--w-reg) var(--fs-12)/18px var(--mono);color:var(--text);white-space:pre-wrap;word-break:break-word}
+
+/* phones: calmer goal header, run bar in the flow, one-column score strip */
+@media (max-width:760px){
+  .ws-goal-cap{display:none}
+  .ws #goalTitle{white-space:nowrap}
+  .ws .again{position:static !important}
+  .ws .lb-strip{grid-template-columns:1fr}
+  .ws .lb-strip .nm{white-space:normal}
+  .ws-prompt .editor{min-height:200px}
+}
