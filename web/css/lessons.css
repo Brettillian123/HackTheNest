@@ -40,3 +40,6 @@
 .ls-chal-meta .mtag{margin-right:0}
 .ls-chal.off{opacity:.55}
 .ls-chal-off{font-size:var(--fs-12);line-height:17px;color:var(--text-3)}
+
+/* the side column sticks while reading, but scrolls inside itself when it is taller than the window */
+@media (min-width:761px){.ls-side{max-height:calc(100vh - var(--nav-h) - var(--s-10));overflow-y:auto;overscroll-behavior:contain;padding-bottom:var(--s-5)}}
