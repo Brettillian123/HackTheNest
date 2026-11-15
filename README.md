@@ -13,9 +13,17 @@ npm run dev
 
 Open the URL printed by the server (default `http://localhost:3000`). The home page is at `/home`; `/` redirects there.
 
+## Account pages
+
+- `/signup` creates a MongoDB user with a unique username and email.
+- `/login` validates email and password, then starts a session.
+- `/api/auth/me` returns the current signed-in user; `/api/auth/logout` ends the session.
+
+Passwords are stored as salted scrypt hashes. Session cookies are HttpOnly and SameSite=Lax. Sessions are held in memory for 24 hours, so restarting the server logs users out. Both routes require a working MongoDB connection.
+
 ## MongoDB test button
 
-On the home page, **Create test object** sends `POST /api/test-objects`. The backend uses the root `.env` connection string and inserts a document in `testObjects` containing MongoDB's generated `_id` plus a `randomString` of 4ï¿½10 alphanumeric characters. The URI stays server-side.
+On the home page, **Create test object** sends `POST /api/test-objects`. The backend inserts a document in `testObjects` containing MongoDB's generated `_id` plus a `randomString` of 4–10 alphanumeric characters. The URI stays server-side.
 
 ## Pages and project structure
 

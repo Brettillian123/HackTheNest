@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f2" />
+    <title>Log in · PromptDyno</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/auth.css" />
+  </head>
+  <body class="auth-page">
+    <header class="topbar auth-topbar">
+      <a class="brand" href="/home" aria-label="PromptDyno home"><span class="brand-mark">P<span>↗</span></span><span>Prompt<span class="brand-light">Dyno</span></span></a>
+      <a class="auth-top-link" href="/signup">New to PromptDyno? <b>Sign up ↗</b></a>
+    </header>
+    <main class="auth-main">
+      <section class="auth-card">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> GOOD TO HAVE YOU BACK</div>
+        <h1>Welcome back<span>.</span></h1>
+        <p class="auth-subtitle">Log in to pick up where you left off.</p>
+        <form id="auth-form" data-mode="login" novalidate>
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required />
+          <p class="form-message" id="form-message" role="alert" aria-live="polite"></p>
+          <button class="build-button auth-submit" type="submit"><span>Log in</span><span class="button-arrow">↗</span></button>
+        </form>
+        <p class="auth-switch">New to PromptDyno? <a href="/signup">Create an account</a></p>
+      </section>
+      <p class="auth-caption">✳ &nbsp; SMALL PROMPTS. BIG IDEAS.</p>
+    </main>
+    <script src="/scripts/auth.js"></script>
+  </body>
+</html>
