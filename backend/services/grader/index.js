@@ -42,6 +42,8 @@ function mapCriteria(list) {
     group: GROUPS.has(c.group) ? c.group : null,
     value: num(c.value) === null ? null : Math.max(0, Math.min(1, c.value)),
     notes: Array.isArray(c.notes) ? c.notes.filter(n => typeof n === 'string').slice(0, 5).map(n => n.slice(0, 500)) : [],
+    // Points this criterion took off the total (grader 0.9.6 and later).
+    ...(num(c.points) !== null && c.points > 0 ? { points: round1(c.points) } : {}),
   }));
 }
 
