@@ -46,6 +46,46 @@ test('Gemini: streamGenerateContent request and candidate text', async () => {
   const body = JSON.parse(request.init.body);
   assert.equal(body.systemInstruction.parts[0].text, 'SYS');
   assert.deepEqual(body.contents, [{ role: 'user', parts: [{ text: 'USER' }] }]);
+  assert.deepEqual(body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
+});
+
+// A raw SSE Response from text; when keepOpen is set the stream never closes.
+function rawResponse(text, { keepOpen = false, status = 200 } = {}) {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(encoder.encode(text));
+      if (!keepOpen) controller.close();
+    },
+  });
+  return new Response(stream, { status, headers: { 'content-type': 'text/event-stream' } });
+}
+
+test('Gemini: finishReason ends the stream even if the connection stays open', async () => {
+  const chunk = d => `data: ${JSON.stringify(d)}\n\n`;
+  const { text } = await collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse(
+    chunk({ candidates: [{ content: { parts: [{ text: 'plan', thought: true }] } }] })
+    + chunk({ candidates: [{ content: { parts: [{ text: '<p>A' }] } }] })
+    + chunk({ candidates: [{ content: { parts: [{ text: 'B</p>' }] }, finishReason: 'STOP' }] }),
+    { keepOpen: true },
+  ));
+  assert.equal(text, '<p>AB</p>');
+});
+
+test('Gemini: CRLF-separated events and a last event without a blank line', async () => {
+  const chunk = d => `data: ${JSON.stringify(d)}`;
+  const { text } = await collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse(
+    chunk({ candidates: [{ content: { parts: [{ text: '<p>' }] } }] }) + '\r\n\r\n'
+    + chunk({ candidates: [{ content: { parts: [{ text: 'x</p>' }] } }] }),
+  ));
+  assert.equal(text, '<p>x</p>');
+});
+
+test('Gemini: a non-200 answer fails fast with a plain message', async () => {
+  const started = Date.now();
+  await assert.rejects(collect('gemini-flash', { GEMINI_API_KEY: 'gk' }, rawResponse('{"error":{"code":404}}', { status: 404, keepOpen: true })),
+    { name: 'ModelError', message: 'The model service refused the request (404). Try again or pick another model.' });
+  assert.ok(Date.now() - started < 1000);
 });
 
 test('Anthropic: an error event becomes a plain error', async () => {
