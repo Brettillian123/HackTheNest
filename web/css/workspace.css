@@ -114,3 +114,34 @@
 .tool-lens{position:fixed;z-index:60;width:220px;height:220px;overflow:hidden;border-radius:var(--r-panel);background:var(--section);outline:2px solid var(--red);pointer-events:none}
 .tool-lens iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none}
 .tool-lens::after{content:"";position:absolute;left:var(--cx,50%);top:var(--cy,50%);width:9px;height:9px;margin:-5px 0 0 -5px;border:1px solid var(--red);border-radius:50%}
+
+/* ---------- grader result: bonus tag, pillar meters, report card ---------- */
+.bonus-tag{align-self:center;margin-left:var(--s-3);padding:3px var(--s-3);border-radius:var(--r-4);background:var(--red);color:var(--text-on-red);font:var(--w-bold) var(--fs-12)/1 var(--mono);white-space:nowrap}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);margin-top:var(--s-5)}
+.pl{display:flex;flex-direction:column;gap:5px;min-width:0}
+.pl-top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-2)}
+.pl-k{font-size:var(--fs-12);color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-v{font:var(--w-bold) var(--fs-14)/1 var(--mono);color:var(--text)}
+.pl-note{font-size:var(--fs-11);line-height:14px;color:var(--text-4)}
+.meter{display:block;height:6px;border-radius:var(--r-2);background:var(--fill-off);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--red)}
+.meter.sm{width:56px;height:4px;flex:none}
+.report{max-height:108px;overflow:auto;padding-right:var(--s-2)}
+.rc-group+.rc-group{margin-top:var(--s-4)}
+.rc-h{font:var(--w-semi) var(--fs-11)/16px var(--ui);letter-spacing:.4px;text-transform:uppercase;color:var(--text-4);margin-bottom:2px}
+.rc-item{padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.rc-top{display:flex;align-items:center;gap:var(--s-3);font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.rc-name{flex:1;min-width:0}
+.rc-v{width:26px;text-align:right;font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-2)}
+.rc-na{font:var(--fs-12) var(--mono);color:var(--text-4)}
+.rc-note{font-size:var(--fs-12);line-height:17px;color:var(--text-3);margin-top:2px}
+
+/* ---------- doc challenges: the task and the answer as text ---------- */
+.ws-doc{flex:1;min-height:0;overflow:auto;background:var(--section);border:1px solid var(--line);border-radius:var(--r-6,6px);padding:var(--s-6)}
+.ws-doc[hidden]{display:none}
+.ws-doc-brief{font-size:var(--fs-15,15px);line-height:23px;color:var(--text);margin-bottom:var(--s-6)}
+.ws-doc-crit{display:grid;gap:var(--s-2);margin-top:var(--s-3)}
+.ws-doc-crit li{position:relative;padding-left:var(--s-6);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
+.ws-doc-crit li::before{content:"";position:absolute;left:4px;top:7px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.ws-cmp-doc{max-height:300px}
+.kind-tag{margin-left:var(--s-3)}

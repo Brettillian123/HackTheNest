@@ -224,6 +224,23 @@ export function provisionalNote() {
   return `<p class="sim-note">${PROVISIONAL_NOTE}</p>`;
 }
 // Board panel header tag while boards use stand-in scores (api.isProvisional('boards')); '' otherwise.
-export function provisionalTag(on) {
-  return on ? `<span class="demo-tag" title="Scored by the stand-in scorer until the full grader is connected.">Provisional scores</span>` : '';
+// mixed: the board's rows come from more than one grader version (api.isProvisional('versions')).
+export function provisionalTag(on, mixed = false) {
+  return (on ? `<span class="demo-tag" title="Scored by the stand-in scorer until the full grader is connected.">Provisional scores</span>` : '') +
+    (mixed ? `<span class="demo-tag" title="Some rows were scored by an older grader.">Scores from more than one grader version</span>` : '');
+}
+
+// Scores go from 0 to 120 with one decimal: "92", "112.5". Shows a decimal only when there is one.
+export function fmtScore(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) return String(v ?? '');
+  const r = Math.round(n * 10) / 10;
+  return Number.isInteger(r) ? String(r) : r.toFixed(1);
+}
+
+// Small tag for a challenge kind other than a web page ("Doc", "Site", ...); '' for page.
+const KIND_LABEL = { doc: 'Doc', site: 'Site', scene: 'Scene', workflow: 'Workflow' };
+export function kindTag(kind) {
+  if (!kind || kind === 'page') return '';
+  return `<span class="mtag kind-tag">${esc(KIND_LABEL[kind] || kind)}</span>`;
 }

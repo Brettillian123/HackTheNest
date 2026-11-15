@@ -27,7 +27,7 @@
       </div>
       <div class="phead-sub">
         <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M4.6 7.2l1.7 1.6 3.2-3.4"/></svg><span id="hSolved">0 players solved</span></span>
-        <span class="mtag"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2" width="10" height="7" rx="1"/><path d="M4 11h4"/></svg><span id="hViewport">1280 x 800</span></span>
+        <span class="mtag" id="hViewportTag"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2" width="10" height="7" rx="1"/><path d="M4 11h4"/></svg><span id="hViewport">1280 x 800</span></span><span id="hKind"></span>
       </div>
     </div>
     <div class="phead-side">
@@ -46,7 +46,7 @@
     <div class="col">
       <section class="panel ws-dd-host" id="goalPanel">
         <div class="panel-head">
-          <h2 class="h">Goal page</h2>
+          <h2 class="h" id="goalTitle">Goal page</h2>
           <div class="right">
             <span class="dd-slot"></span>
             <div class="tools" role="group" aria-label="Page tools">
@@ -56,11 +56,12 @@
           </div>
         </div>
         <div class="frame" id="goalFrame"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div>
+        <div class="ws-doc" id="goalDoc" hidden></div>
       </section>
 
       <section class="panel grow" id="minePanel" hidden>
         <div class="panel-head">
-          <h2 class="h">Your page</h2>
+          <h2 class="h" id="mineTitle">Your page</h2>
           <div class="right">
             <span class="note" id="mineNote">Run 1</span>
             <div class="tools" role="group" aria-label="Page tools">
@@ -70,6 +71,7 @@
           </div>
         </div>
         <div class="frame" id="mineFrame"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div>
+        <div class="ws-doc md" id="mineDoc" hidden></div>
       </section>
 
       <section class="panel grow" id="lbPanel">
@@ -94,13 +96,15 @@
             </div>
           </div>
         </div>
-        <div class="pair">
+        <div class="pair" id="cmpPair">
           <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl w sm">G</span>Goal page</div><div class="frame" id="goalSmall"><iframe sandbox="allow-same-origin" title="Goal page"></iframe></div></div>
           <div class="ws-pair-box"><div class="frame-lbl"><span class="lvl r sm" id="cmpTag">1</span>Your page</div><div class="frame" id="mineSmall"><iframe sandbox="allow-same-origin" title="Your page"></iframe></div></div>
         </div>
+        <div class="ws-doc md ws-cmp-doc" id="cmpDoc" hidden></div>
         <div class="checks-wrap">
-          <div class="panel-head" style="margin-bottom:4px"><h3 class="h">Checks</h3></div>
+          <div class="panel-head" style="margin-bottom:4px"><h3 class="h" id="checksTitle">Checks</h3></div>
           <ul class="checks" id="checkList"></ul>
+          <div class="report" id="reportCard" hidden></div>
         </div>
         <div class="ws-run-prompt" id="runPromptBox">
           <div class="panel-head"><h3 class="h">Prompt for this run</h3><button class="btn btn-ghost sm" id="editKeepBtn">Edit and keep prompting</button></div>
@@ -141,13 +145,14 @@
 
       <section class="panel grow score fill ws-score" id="scorePanel" hidden>
         <div class="sc">
-          <div class="bigscore"><span class="n" id="scN">0</span><span class="of">/100</span></div>
+          <div class="bigscore"><span class="n" id="scN">0</span><span class="of">/100</span><span class="bonus-tag" id="scBonus" hidden></span></div>
           <div class="info"><div class="gain" id="scGain"></div><div class="rk" id="scRk"></div></div>
         </div>
         <div>
           <div class="seg" id="scSeg"></div>
           <div class="segcap"><span id="scCap"></span><span id="scRun"></span></div>
         </div>
+        <div class="pillars" id="scPillars" hidden></div>
         <div class="costs"><h3 class="h">Point costs</h3><div id="scCosts"></div></div>
         <div class="ws-sim" id="simScore" hidden></div>
         <p class="callout" id="scNote"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span id="scNoteText"></span></p>

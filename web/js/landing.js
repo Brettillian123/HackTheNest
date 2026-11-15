@@ -1,6 +1,6 @@
 // Landing page: shell, live counts, top 5 overall leaderboard.
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, esc, demoTag, setStat, provisionalTag } from './ui.js';
+import { fitFrames, esc, demoTag, setStat, provisionalTag, fmtScore } from './ui.js';
 import { listChallenges, getLeaderboard, me, isSimulated, isProvisional } from './api.js';
 
 async function start() {
@@ -32,7 +32,7 @@ async function loadBoard() {
   try {
     const { rows } = await getLeaderboard(null, { bracket: 'all', period: 'all' });
     const top = (rows || []).slice(0, 5);
-    document.getElementById('boardDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'));
+    document.getElementById('boardDemo').innerHTML = isSimulated('boards') ? demoTag() : provisionalTag(isProvisional('boards'), isProvisional('versions'));
     if (!top.length) {
       host.innerHTML = '<div class="empty"><p class="title">No scores yet</p><p class="small">Be the first on the board.</p><a class="btn btn-secondary" href="workspace.html?c=login-card">Try the first challenge</a></div>';
       return;
@@ -43,7 +43,7 @@ async function loadBoard() {
         `<tr${r.isYou ? ' class="you"' : ''}><td class="pos">#${esc(r.rank)}</td>` +
         `<td><span class="who">${esc(r.username)}</span></td>` +
         `<td class="r num">${esc(Number(r.avgPrompts ?? r.promptCount).toFixed(1))}</td>` +
-        `<td class="r sc-cell">${esc(r.score)}</td></tr>`).join('') +
+        `<td class="r sc-cell">${esc(fmtScore(r.score))}</td></tr>`).join('') +
       '</tbody></table>';
   } catch {
     host.innerHTML = '<div class="list-err"><span class="small">The leaderboard did not load.</span><button class="btn btn-secondary sm" type="button">Try again</button></div>';

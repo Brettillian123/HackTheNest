@@ -375,3 +375,21 @@ button.cost:hover .w{text-decoration:underline;text-decoration-color:var(--red-b
 .foot nav{display:flex;gap:var(--s-7)}
 .foot nav a:hover{color:var(--text)}
 .foot .end{margin-left:auto;color:var(--text-4)}
+
+/* ---------- .md: Markdown rendered by js/markdown.js (lessons, doc answers) ---------- */
+.md{color:var(--text-2);font-size:var(--fs-15,15px);line-height:24px}
+.md>*+*{margin-top:var(--s-5)}
+.md h1,.md h2,.md h3,.md h4{color:var(--text);font-weight:var(--w-bold);line-height:1.25;scroll-margin-top:80px}
+.md h1{font-size:28px}.md h2{font-size:22px;margin-top:var(--s-8)}.md h3{font-size:18px;margin-top:var(--s-7)}.md h4{font-size:15px}
+.md ul,.md ol{padding-left:22px}.md ul{list-style:disc}.md ol{list-style:decimal}
+.md li+li{margin-top:4px}
+.md a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+.md strong{color:var(--text);font-weight:var(--w-semi)}
+.md code{font:var(--fs-13) var(--mono);background:var(--fill-soft);border-radius:var(--r-3);padding:1px 5px;color:var(--text)}
+.md pre{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-4);padding:var(--s-5);overflow:auto}
+.md pre code{background:none;padding:0;font-size:var(--fs-13);line-height:20px;white-space:pre}
+.md blockquote{border-left:3px solid var(--red);padding-left:var(--s-5);color:var(--text-3)}
+.md hr{border:0;border-top:1px solid var(--line)}
+.md table{width:100%;border-collapse:collapse;font-size:var(--fs-13)}
+.md th,.md td{text-align:left;padding:6px var(--s-3);border-bottom:1px solid var(--line-soft)}
+.md th{color:var(--text);font-weight:var(--w-semi);border-bottom-color:var(--line)}

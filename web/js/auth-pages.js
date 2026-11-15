@@ -1,7 +1,7 @@
 // Log in, sign up and not-found pages.
 // initAuthPage('login' | 'signup') wires the form and side panel; initNotFound() fills 404.html.
 import { mountShell, shellUser, WELCOME_KEY } from './shell.js';
-import { esc, levelClass, demoTag } from './ui.js';
+import { esc, levelClass, demoTag, fmtScore } from './ui.js';
 import * as api from './api.js';
 
 const USERNAME_RE = api.USERNAME_RE;
@@ -67,7 +67,7 @@ function table(board) {
   if (!rows.length) return '';
   const ini = (n) => String(n).replace(/[_\-.]+/g, ' ').trim().slice(0, 2).toUpperCase();
   return '<table class="lbt"><thead><tr><th>Rank</th><th>Player</th><th class="r">Prompts</th><th class="r">Score</th></tr></thead><tbody>' +
-    rows.map((r) => `<tr${r.isYou ? ' class="you"' : ''}><td class="pos">#${esc(r.rank)}</td><td><span class="who"><span class="avatar">${esc(ini(r.username))}</span>${esc(r.isYou ? 'You' : r.username)}</span></td><td class="r num">${esc(r.promptCount)}</td><td class="r sc-cell">${esc(r.score)}</td></tr>`).join('') +
+    rows.map((r) => `<tr${r.isYou ? ' class="you"' : ''}><td class="pos">#${esc(r.rank)}</td><td><span class="who"><span class="avatar">${esc(ini(r.username))}</span>${esc(r.isYou ? 'You' : r.username)}</span></td><td class="r num">${esc(r.promptCount)}</td><td class="r sc-cell">${esc(fmtScore(r.score))}</td></tr>`).join('') +
     '</tbody></table>';
 }
 
@@ -86,7 +86,7 @@ async function renderSide(kind, signedIn) {
 
   if (waiting.length && !signedIn) {
     const top = waiting.reduce((a, b) => (b.best > a.best ? b : a));
-    const names = waiting.map((w) => `${w.title} ${w.best}`).join(', ');
+    const names = waiting.map((w) => `${w.title} ${fmtScore(w.best)}`).join(', ');
     let board = null;
     try { board = await api.getLeaderboard(top.slug); } catch { board = null; }
     const you = board && board.you;
@@ -95,7 +95,7 @@ async function renderSide(kind, signedIn) {
       `<section class="panel score">
         <div class="panel-head"><h2 class="h">Scores waiting</h2><span class="note">Saved on this browser only</span></div>
         <div class="sc">
-          <div class="bigscore"><span class="n">${esc(top.best)}</span><span class="of">/100</span></div>
+          <div class="bigscore"><span class="n">${esc(fmtScore(top.best))}</span><span class="of">/100</span></div>
           <div class="info"><div class="gain">${n} ${n === 1 ? 'score' : 'scores'} waiting</div>
           <div class="rk">Best on ${esc(top.title)}${you ? `, would rank #${esc(you.rank)}` : ''}</div></div>
         </div>
@@ -123,7 +123,7 @@ async function renderSide(kind, signedIn) {
     `<section class="panel score">
       <div class="panel-head"><div class="ph-l"><h2 class="h">Top score</h2>${api.isSimulated('boards') ? demoTag() : ''}</div><span class="note">${first ? `Challenge: ${esc(first.title)}` : ''}</span></div>
       <div class="sc">
-        <div class="bigscore"><span class="n">${lead ? esc(lead.score) : '-'}</span><span class="of">/100</span></div>
+        <div class="bigscore"><span class="n">${lead ? esc(fmtScore(lead.score)) : '-'}</span><span class="of">/100</span></div>
         <div class="info"><div class="gain">${lead ? esc(lead.username) : 'No runs yet'}</div>
         <div class="rk">${lead ? `${esc(lead.promptCount)} ${lead.promptCount === 1 ? 'prompt' : 'prompts'}, rank #1` : ''}</div></div>
       </div>

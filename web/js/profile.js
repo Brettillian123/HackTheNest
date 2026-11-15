@@ -1,6 +1,6 @@
 // Profile page: profile.html?u=<username>. Without u: the signed-in player, or a local view of this browser's runs.
 import { mountShell, shellUser } from './shell.js';
-import { esc, levelClass, fitFrames, demoTag } from './ui.js';
+import { esc, levelClass, fitFrames, demoTag, fmtScore } from './ui.js';
 import { getProfile, getLeaderboard, listChallenges, getChallenge, me, logout, isSimulated } from './api.js';
 import * as store from './store.js';
 
@@ -115,7 +115,7 @@ function headHtml(p, { self, local, rank }) {
     </div>
     <div class="phead-side">
       <div class="stat"><div class="k">Challenges solved</div>${v(p.totals.solved)}</div>
-      <div class="stat"><div class="k">Best score</div>${v(p.totals.solved ? p.totals.best : 'None yet')}</div>
+      <div class="stat"><div class="k">Best score</div>${v(p.totals.solved ? fmtScore(p.totals.best) : 'None yet')}</div>
       <div class="stat"><div class="k">Average prompts</div>${v(avg)}</div>
       <div class="stat"><div class="k">Overall rank</div>${v(rank ? '#' + rank : 'None yet')}</div>
     </div>`;
@@ -135,7 +135,7 @@ function solvedHtml(p, challenges, { self, local, demo }) {
     return `<a class="chal" href="workspace.html?c=${encodeURIComponent(s.slug)}">
       ${lv ? `<span class="lvl ${levelClass(lv)}">Lv ${lv}</span>` : '<span></span>'}
       <span class="chal-main"><span class="chal-title">${esc(s.title)}</span><span class="chal-brief">${esc(c && c.brief ? c.brief : '')}</span></span>
-      <span class="chal-cell"><span class="k">Best</span><span class="v best">${s.best}</span></span>
+      <span class="chal-cell"><span class="k">Best</span><span class="v best">${fmtScore(s.best)}</span></span>
       <span class="chal-cell"><span class="k">Prompts</span><span class="v">${s.promptCount}</span></span>
       <span class="chal-cell"><span class="k">When</span><span class="v is-word">${esc(ago(s.when))}</span></span>
       ${ICON.arrow}</a>`;

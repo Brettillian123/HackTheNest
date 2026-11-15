@@ -86,3 +86,6 @@
 .skel.rows i{height:122px;border-radius:var(--r-panel)}
 .list-err{display:flex;align-items:center;justify-content:space-between;gap:var(--s-5)}
 .list-foot{margin-top:var(--s-5)}
+.chal-kind{display:grid;place-items:center;background:var(--bg)}
+.chal-kind span{font:var(--w-bold) var(--fs-12)/1 var(--mono);letter-spacing:1px;color:var(--text-4)}
+.chal-off{display:block;margin-top:4px;color:var(--text-3)}
