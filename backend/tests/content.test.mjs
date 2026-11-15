@@ -72,7 +72,7 @@ test('the content block follows the prompt on first and follow-up runs; challeng
   assert.equal((await run('A calm sign-in card')).status, 200);
   assert.equal((await run('Make the button wider')).status, 200);
   for (const c of calls.model) assert.ok(c.body.messages[0].content.endsWith(block));
-  assert.match(calls.model[0].body.system, /use that content exactly as written/);
+  assert.match(calls.model[0].body.system, /spell it exactly as listed/);
   assert.match(calls.model[0].body.system, /layout and styling direction from the player's request/);
 });
 

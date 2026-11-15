@@ -12,8 +12,8 @@ nav a{margin-left:28px;color:#2b2118;text-decoration:none;font-size:16px}
 nav a:hover{color:#b4532a}
 .page{display:none;max-width:1040px;margin:0 auto;padding:48px 32px;min-height:560px}
 .page:target{display:block}
-#home{display:block}
-.page:target~#home{display:none}
+#page1{display:block}
+.page:target~#page1{display:none}
 .hero{padding:40px 0 48px}
 h1{font-size:52px;line-height:1.1;margin:0 0 16px;max-width:720px}
 h2{font-size:28px;margin:0 0 16px}
@@ -40,16 +40,16 @@ footer{padding:24px 64px;border-top:1px solid #e2e4e8;color:#5b6470;font-size:14
 </style>
 </head>
 <body>
-<header><div class="brand">Juniper Cafe</div><nav><a href="#home">Home</a><a href="#menu">Menu</a><a href="#visit">Visit</a></nav></header>
-<section class="page" id="menu">
+<header><div class="brand">Juniper Cafe</div><nav><a href="#page1">Home</a><a href="#page2">Menu</a><a href="#page3">Visit</a></nav></header>
+<section class="page" id="page2">
 <h2>Menu</h2><table><thead><tr><th>Item</th><th>Price</th></tr></thead><tbody><tr><td>Espresso</td><td>$3.00</td></tr><tr><td>Flat white</td><td>$4.25</td></tr><tr><td>Oat latte</td><td>$4.75</td></tr><tr><td>Butter croissant</td><td>$3.50</td></tr><tr><td>Cinnamon bun</td><td>$4.00</td></tr></tbody></table>
 </section>
-<section class="page" id="visit">
+<section class="page" id="page3">
 <h2>Visit us</h2><p>14 Alder Street, two doors down from the library.</p>
 <h2>Opening hours</h2><ul><li>Monday to Friday: 7 am to 5 pm</li><li>Saturday: 8 am to 4 pm</li><li>Sunday: 9 am to 2 pm</li></ul>
 </section>
-<section class="page" id="home">
-<div class="hero"><h1>Coffee worth the walk</h1><p>Small-batch roasts and fresh pastries, baked here every morning.</p><a class="btn" href="#menu">See the menu</a></div>
+<section class="page" id="page1">
+<div class="hero"><h1>Coffee worth the walk</h1><p>Small-batch roasts and fresh pastries, baked here every morning.</p><a class="btn" href="#page2">See the menu</a></div>
 <div class="row"><div class="card"><h3>Roasted weekly</h3><p>Beans from two farms we know by name.</p></div><div class="card"><h3>Baked daily</h3><p>Croissants out of the oven at 7 am.</p></div><div class="card"><h3>Dogs welcome</h3><p>Water bowls by the door.</p></div></div>
 </section>
 <footer>Juniper Cafe, 14 Alder Street. Open every day.</footer>
