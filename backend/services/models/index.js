@@ -68,18 +68,35 @@ function parse(data) {
   try { return JSON.parse(data); } catch { return null; }
 }
 
+// OpenAI reasoning models count reasoning tokens inside max_output_tokens
+// (https://developers.openai.com/api/docs/guides/reasoning), so the page budget gets a fixed
+// allowance on top, and effort is kept low ("reasoning": { "effort": "low" }).
+export const OPENAI_REASONING_ALLOWANCE = 8000;
+export const OPENAI_REASONING_EFFORT = 'low';
+
+// A short, safe label for the server log: an error type/code only, never a message or prompt.
+function code(value) {
+  return typeof value === 'string' && /^[\w.-]{1,64}$/.test(value) ? value : 'unknown';
+}
+
 const providers = {
   openai: {
     request: (model, key, system, user, maxTokens) => ({
       url: 'https://api.openai.com/v1/responses',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: { model, instructions: system, input: user, stream: true, max_output_tokens: maxTokens },
+      body: {
+        model, instructions: system, input: user, stream: true,
+        max_output_tokens: maxTokens + OPENAI_REASONING_ALLOWANCE,
+        reasoning: { effort: OPENAI_REASONING_EFFORT },
+      },
     }),
     read(msg) {
       if (!msg) return null;
       if (msg.type === 'response.output_text.delta') return { text: String(msg.delta || '') };
-      if (msg.type === 'error' || msg.type === 'response.failed') return { error: true };
-      if (msg.type === 'response.completed' || msg.type === 'response.incomplete') return { done: true };
+      if (msg.type === 'error') return { error: code(msg.code || msg.error?.code || msg.error?.type) };
+      if (msg.type === 'response.failed') return { error: code(msg.response?.error?.code) };
+      if (msg.type === 'response.incomplete') return { incomplete: code(msg.response?.incomplete_details?.reason) };
+      if (msg.type === 'response.completed') return { done: true };
       return null;
     },
   },
@@ -92,7 +109,7 @@ const providers = {
     read(msg) {
       if (!msg) return null;
       if (msg.type === 'content_block_delta' && msg.delta?.type === 'text_delta') return { text: String(msg.delta.text || '') };
-      if (msg.type === 'error') return { error: true };
+      if (msg.type === 'error') return { error: code(msg.error?.type) };
       if (msg.type === 'message_stop') return { done: true };
       return null;
     },
@@ -119,12 +136,26 @@ export async function* generate({ model, system, user, env, fetch, signal, maxOu
     throw new ModelError(`The model service refused the request (${res.status}). Try again or pick another model.`);
   }
   if (!res.body) throw new ModelError('The model service sent an empty answer. Run again.');
+  let tail = ''; // the last characters seen, enough to spot a closing </html>
   try {
     for await (const { data } of sse(res.body)) {
       const out = provider.read(parse(data));
       if (!out) continue;
-      if (out.error) throw new ModelError('The model stopped with an error. Run again.');
-      if (out.text) yield out.text;
+      if (out.error) {
+        console.error(`Model ${model.id}: stream error event (${out.error})`);
+        throw new ModelError('The model stopped with an error. Run again.');
+      }
+      if (out.incomplete) {
+        // A finished document that only ran out of room after </html> is still a page.
+        if (/<\/html\s*>/i.test(tail)) return;
+        console.error(`Model ${model.id}: response incomplete (${out.incomplete})`);
+        if (out.incomplete === 'max_output_tokens') throw new ModelError('The model ran out of room. Shorten the prompt or ask for less.');
+        throw new ModelError('The model stopped before finishing. Run again.');
+      }
+      if (out.text) {
+        tail = (tail + out.text).slice(-64);
+        yield out.text;
+      }
       if (out.done) return;
     }
   } catch (error) {
