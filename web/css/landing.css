@@ -62,7 +62,7 @@
 .lead-line{font-size:var(--fs-15);line-height:22px;color:var(--text)}
 .lead-line b{color:var(--red)}
 
-.bands{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-5)}
+.bands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-5)}
 .bands .stat .v{font-size:var(--fs-16)}
 .bands .stat .d{font-size:var(--fs-12);color:var(--text-3);margin-top:2px}
 .why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-8);align-items:start}

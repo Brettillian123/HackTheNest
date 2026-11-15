@@ -1,6 +1,6 @@
 # Challenge pack: multi-page sites and 3D models
 
-Fifteen challenges for the two categories the live site has none of yet. Each is built from a goal that already scores 100 against itself in the grader; the goal files are copied here unchanged (the five review scenes are taken out of their `.ts` wrappers as plain `.js`).
+Twenty-five challenges for multi-page sites and 3D models. The ten new scene challenges include one guided tutorial and three challenges at each level. Each scene target is a self-contained `buildScene(THREE)` reference in plain JavaScript.
 
 | Slug | Kind | Level |
 | --- | --- | --- |
@@ -19,6 +19,16 @@ Fifteen challenges for the two categories the live site has none of yet. Each is
 | snowman-3d | scene | 3 Hard |
 | bookshelf-3d | scene | 3 Hard |
 | bicycle-3d | scene | 3 Hard |
+| tutorial-first-shape-3d | scene | 1 Tutorial |
+| traffic-cone-3d | scene | 1 Easy |
+| cactus-pot-3d | scene | 1 Easy |
+| wooden-stool-3d | scene | 1 Easy |
+| lighthouse-3d | scene | 2 Medium |
+| treasure-chest-3d | scene | 2 Medium |
+| windmill-3d | scene | 2 Medium |
+| sailing-boat-3d | scene | 3 Hard |
+| robot-3d | scene | 3 Hard |
+| castle-3d | scene | 3 Hard |
 
 ## Files
 

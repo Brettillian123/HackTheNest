@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circle and square</title>
+<style>
+* { box-sizing: border-box; }
+html, body { width: 100%; min-height: 100%; }
+body { margin: 0; min-height: 800px; display: grid; place-items: center; background: #f4f6fb; font-family: Arial, Helvetica, sans-serif; }
+.shapes { display: flex; align-items: center; gap: 32px; }
+.circle, .square { width: 144px; height: 144px; }
+.circle { border-radius: 50%; background: #3478f6; }
+.square { background: #e34b4b; }
+</style>
+</head>
+<body><main class="shapes" aria-label="A blue circle beside a red square"><div class="circle" aria-hidden="true"></div><div class="square" aria-hidden="true"></div></main></body>
+</html>

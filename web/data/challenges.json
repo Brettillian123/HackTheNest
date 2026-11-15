@@ -20,6 +20,178 @@
   ],
   "challenges": [
     {
+      "slug": "tutorial-blue-circle",
+      "title": "Tutorial 1: Blue circle",
+      "level": 1,
+      "category": "Components",
+      "brief": "For your first practice, make a quiet placeholder page with one blue circle in the middle. Keep the page simple so the shape is the only thing to notice. Match the attached reference and make the circle feel balanced in the open space.",
+      "acceptance": [
+        "There is one blue circle centered on the page",
+        "The page background is a very light cool grey",
+        "No other text or decoration competes with the circle",
+        "The result closely matches the reference"
+      ],
+      "content": "Page: one blue circle, centered on a light cool grey background. No text.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "One circle is centered horizontally and vertically in the viewport",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The circle is a solid medium blue with no outline or shadow",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The page background is a very light cool grey",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The circle is the only visible page content",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "Use one HTML document with inline CSS, semantic HTML and no scripts or external assets",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "One blue circle",
+        "No text"
+      ],
+      "designNotes": [
+        "minimal open composition",
+        "single saturated blue shape on a cool light background"
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "tutorial-shapes",
+      "title": "Tutorial 2: Circle and square",
+      "level": 2,
+      "category": "Components",
+      "brief": "Now arrange two simple shapes together: a blue circle on the left and a red square on the right. Keep them the same size and give them a clear, even gap. The shapes should sit together in the middle of an otherwise quiet page.",
+      "acceptance": [
+        "A blue circle appears to the left of a red square",
+        "Both shapes are the same size and aligned through their centers",
+        "There is a clear gap between the shapes",
+        "The pair is centered on a light cool grey page",
+        "The result closely matches the reference"
+      ],
+      "content": "Page: a blue circle to the left of a red square, same size, with a gap. Center the pair on a light cool grey background. No text.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "A blue circle appears to the left of a red square",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "Both shapes have equal width and height and align at their vertical centers",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r3",
+          "text": "The pair is centered horizontally and vertically in the viewport",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The page background is very light cool grey and there is no additional content",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Use one HTML document with inline CSS, semantic HTML and no scripts or external assets",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Blue circle on the left",
+        "Red square on the right",
+        "Same size",
+        "No text"
+      ],
+      "designNotes": [
+        "simple horizontal pair",
+        "even gap",
+        "cool light background"
+      ],
+      "maxPromptChars": 2500
+    },
+    {
+      "slug": "tutorial-green-button",
+      "title": "Tutorial 3: Green button in a card",
+      "level": 3,
+      "category": "Components",
+      "brief": "For the final tutorial, place a single green Continue button inside a simple white card. Center the card on the page and give it a little depth and soft rounded corners. The button is the only content inside; keep the rest of the page uncluttered.",
+      "acceptance": [
+        "A white rounded card is centered on a light cool grey page",
+        "The card contains one green button labeled Continue",
+        "The button text is centered and easy to read",
+        "The card has a subtle border and soft shadow",
+        "The result closely matches the reference"
+      ],
+      "content": "Page: a centered white card with one green button labeled Continue. Light cool grey background. No other text.",
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "One white card is centered horizontally and vertically in the viewport",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "The card contains a green button labeled Continue",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "The card has rounded corners, a thin cool border and a subtle shadow",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "The button has white text and rounded corners",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r5",
+          "text": "Use a real button within one HTML document with inline CSS, no scripts or external assets",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Continue",
+        "Green button",
+        "White card"
+      ],
+      "designNotes": [
+        "single centred card",
+        "subtle depth",
+        "green as the only strong accent"
+      ],
+      "maxPromptChars": 2500
+    },
+    {
       "slug": "login-card",
       "title": "Login card",
       "level": 1,

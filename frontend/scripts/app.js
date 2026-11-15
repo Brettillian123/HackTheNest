@@ -1,106 +1,165 @@
+const challenges = [
+  { slug: '01-simple-shape', title: 'Circle study', difficulty: 'FOUNDATIONS', description: 'Recreate one centered red circle on a plain white background.', file: '01-simple-shape/index.html' },
+  { slug: '02-shape-study', title: 'Shape study', difficulty: 'STARTER', description: 'Place a red circle, blue square, and yellow triangle in one evenly spaced horizontal row on a light gray canvas.', file: '02-shape-study/index.html' },
+  { slug: '03-profile-card', title: 'Profile card', difficulty: 'BUILDER', description: 'Build a profile card with initials, Mina Patel’s details, and a Follow button.', file: '03-profile-card/index.html' },
+  { slug: '04-coffee-shop', title: 'The daily pour', difficulty: 'INTERMEDIATE', description: 'Recreate Daybreak Coffee’s bold orange-and-blue landing page with a geometric mug illustration.', file: '04-coffee-shop/index.html' },
+  { slug: '05-login-form', title: 'Sign in screen', difficulty: 'ADVANCED', description: 'Recreate a split-screen login with a dark graphic panel and a white form containing email, password, and remember me.', file: '05-login-form/index.html' },
+];
+
 const promptInput = document.querySelector('#prompt');
+const htmlInput = document.querySelector('#html-source');
+const cssInput = document.querySelector('#css-source');
 const buildButton = document.querySelector('#build-button');
 const scoreNode = document.querySelector('#score');
 const scoreDetail = document.querySelector('#score-detail');
 const output = document.querySelector('#output');
+const preview = document.querySelector('#candidate-preview');
 const outputStatus = document.querySelector('#output-status');
 const toast = document.querySelector('#toast');
 const attemptsNode = document.querySelector('#attempt-count');
 const charCount = document.querySelector('#char-count');
+const referenceFrame = document.querySelector('#reference-frame');
+const expandedFrame = document.querySelector('#enlarged-reference');
+const challengeSelect = document.querySelector('#challenge-select');
 const dialog = document.querySelector('#reference-dialog');
+const selectedTargetKey = 'promptdyno-current-target';
 
+let currentIndex = Math.max(0, Math.min(challenges.length - 1, Number(localStorage.getItem(selectedTargetKey) || 0)));
 let attempts = 0;
 let best = 0;
 let toastTimer;
-
-const referenceMarkup = document.querySelector('.coffee-site').innerHTML;
-document.querySelector('#enlarged-reference').innerHTML = referenceMarkup;
-
-promptInput.addEventListener('input', () => {
-  charCount.textContent = `${promptInput.value.length} / 500`;
-});
-
-document.querySelector('#open-reference').addEventListener('click', () => dialog.showModal());
-document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-dialog.addEventListener('click', event => {
-  if (event.target === dialog) dialog.close();
-});
 
 function showToast(message) {
   toast.textContent = message;
   toast.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-function scorePrompt(prompt) {
-  const text = prompt.toLowerCase();
-  const checks = [
-    { label: 'Layout', terms: ['layout', 'hero', 'nav', 'navigation', 'header', 'column', 'split', 'section', 'left', 'right', 'grid'], weight: 25 },
-    { label: 'Color palette', terms: ['color', 'colour', 'green', 'cream', 'beige', 'sage', 'earthy', 'palette', 'warm', 'neutral', 'olive'], weight: 25 },
-    { label: 'Typography', terms: ['font', 'type', 'typography', 'serif', 'italic', 'headline', 'heading', 'large text', 'editorial'], weight: 25 },
-    { label: 'Key details', terms: ['coffee', 'cup', 'button', 'order', 'morning', 'local', 'shop', 'leaf', 'steam', 'ypsilanti', 'slowday', 'slow day'], weight: 25 },
-  ];
-  const earned = checks.map(check => {
-    const hits = check.terms.filter(term => text.includes(term)).length;
-    return hits ? Math.min(check.weight, Math.round(check.weight * Math.min(hits / 2, 1))) : 0;
+function updateProgress() {
+  const challenge = challenges[currentIndex];
+  document.querySelector('#path-progress-label').textContent = `Target ${currentIndex + 1} of ${challenges.length}`;
+  document.querySelector('#path-progress-fill').style.width = `${((currentIndex + 1) / challenges.length) * 100}%`;
+  document.querySelector('#path-progress-hint').textContent = 'Use the arrows or list to browse all targets.';
+  challengeSelect.value = String(currentIndex);
+  [...challengeSelect.options].forEach((option, index) => {
+    option.disabled = false;
+    option.textContent = `${String(index + 1).padStart(2, '0')} · ${challenges[index].title}`;
   });
-  const lengthBonus = Math.min(10, Math.floor(prompt.trim().split(/\s+/).length / 8));
-  const total = Math.min(100, earned.reduce((sum, n) => sum + n, 0) + lengthBonus);
-  return { total, earned, checks };
+  document.querySelector('#target-count').textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(challenges.length).padStart(2, '0')}`;
+  document.querySelector('#challenge-number').textContent = String(currentIndex + 1).padStart(2, '0');
+  document.querySelector('#intro-challenge-label').textContent = `CHALLENGE ${String(currentIndex + 1).padStart(2, '0')}`;
+  document.querySelector('#challenge-title').textContent = challenge.title;
+  document.querySelector('#challenge-level').textContent = challenge.difficulty;
+  document.querySelector('#challenge-description').textContent = challenge.description;
+  document.querySelector('#criteria-list').innerHTML = ['Content', 'Layout', 'Style', 'Visual match'].map((label, index) => `<span><i>${String(index + 1).padStart(2, '0')}</i> ${label}</span>`).join('');
+  referenceFrame.src = `/testHtml/${challenge.file}`;
+  referenceFrame.title = `Target: ${challenge.title}`;
+  promptInput.placeholder = `Write the prompt you would give your model for the ${challenge.title.toLowerCase()}.`;
+  htmlInput.value = '';
+  cssInput.value = '';
+  preview.hidden = true;
+  output.querySelector('.empty-state').hidden = false;
+  scoreNode.textContent = '—';
+  scoreDetail.textContent = 'Render generated HTML and CSS to get a score';
+  document.querySelector('#score-breakdown').replaceChildren();
+  outputStatus.textContent = 'WAITING FOR SUBMISSION';
+  outputStatus.parentElement.classList.remove('ready', 'error');
+  buildButton.querySelector('span:first-child').textContent = 'Render & grade';
 }
 
-function outputPage(prompt) {
-  const result = document.createElement('div');
-  result.className = 'mini-result';
-  result.innerHTML = `<div class="mini-result-nav"><b>slow<span>day</span></b><span>OUR COFFEE　 OUR STORY　 FIND US</span></div><div class="mini-result-body"><div><small>GOOD COFFEE, NO RUSH.</small><h3>A slower<br>kind of <em>morning.</em></h3><p>Thoughtfully sourced. Slowly made.<br>Right around the corner.</p><button>COME ON IN　↗</button></div><div class="mini-result-art"><i></i><b>☕</b></div></div><div class="mini-result-foot">✳　 LOCAL BY NATURE <span>EST. 2018 · YPSILANTI, MI</span></div>`;
-  const text = prompt.toLowerCase();
-  const colors = text.includes('blue') ? ['#e7eeef', '#55716e', '#263f3b'] : text.includes('pink') ? ['#f2e7e3', '#9b6b5e', '#52382f'] : text.includes('dark') ? ['#d8d7cd', '#4d5548', '#263126'] : ['#efeee5', '#75815f', '#283c30'];
-  result.style.setProperty('--result-bg', colors[0]);
-  result.style.setProperty('--result-accent', colors[1]);
-  result.style.setProperty('--result-ink', colors[2]);
-  return result;
+function setChallenge(index) {
+  currentIndex = (index + challenges.length) % challenges.length;
+  localStorage.setItem(selectedTargetKey, String(currentIndex));
+  updateProgress();
+}
+
+challengeSelect.addEventListener('change', () => setChallenge(Number(challengeSelect.value)));
+document.querySelector('#previous-target').addEventListener('click', () => setChallenge(currentIndex - 1));
+document.querySelector('#next-target').addEventListener('click', () => setChallenge(currentIndex + 1));
+promptInput.addEventListener('input', () => { charCount.textContent = `${promptInput.value.length} / 500`; });
+
+document.querySelector('#open-reference').addEventListener('click', () => {
+  expandedFrame.src = referenceFrame.src;
+  dialog.showModal();
+});
+document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+
+function previewDocument(html, css) {
+  const safeCss = css.replace(/<\/style/gi, '<\\/style');
+  const policy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: blob:; style-src 'unsafe-inline'; font-src data:; form-action 'none'; base-uri 'none'">`;
+  const additions = `${policy}<style>${safeCss}</style>`;
+  if (/<head\b[^>]*>/i.test(html)) return html.replace(/<head\b[^>]*>/i, head => `${head}${additions}`);
+  if (/<html\b[^>]*>/i.test(html)) return html.replace(/<html\b[^>]*>/i, tag => `${tag}<head>${additions}</head>`);
+  return `<!doctype html><html><head><meta charset="utf-8">${additions}</head><body>${html}</body></html>`;
 }
 
 function updateLeaderboard(score) {
   if (score <= best) return;
   best = score;
-  document.querySelector('#your-score').innerHTML = `${score} <small>pts</small>`;
+  document.querySelector('#your-score').innerHTML = `${score.toFixed(1)} <small>pts</small>`;
   const rank = score > 91 ? '01' : score > 84 ? '02' : score > 78 ? '03' : '04';
   document.querySelector('#your-rank').textContent = rank;
 }
 
-buildButton.addEventListener('click', () => {
-  const prompt = promptInput.value.trim();
-  if (!prompt) {
-    promptInput.focus();
-    showToast('Write a prompt first, then build your page.');
+function renderBreakdown(breakdown) {
+  const labels = [
+    ['content', 'Content'], ['layout', 'Layout'], ['style', 'Style'], ['visual', 'Visual match'],
+  ];
+  document.querySelector('#score-breakdown').innerHTML = labels.map(([key, label]) => {
+    const value = breakdown[key];
+    return `<span>${label}<b>${value === null ? 'N/A' : `${value.toFixed(1)}/100`}</b></span>`;
+  }).join('');
+}
+
+buildButton.addEventListener('click', async () => {
+  const html = htmlInput.value.trim();
+  const css = cssInput.value;
+  if (!html) {
+    htmlInput.focus();
+    showToast('Paste the generated HTML before grading.');
     return;
   }
 
   attempts += 1;
   attemptsNode.textContent = attempts;
   buildButton.disabled = true;
-  buildButton.querySelector('span:first-child').textContent = 'Building your page…';
-  outputStatus.textContent = 'BUILDING';
-  outputStatus.parentElement.classList.remove('ready');
+  buildButton.querySelector('span:first-child').textContent = 'Rendering and grading…';
+  outputStatus.textContent = 'GRADING PAGE';
+  outputStatus.parentElement.classList.remove('ready', 'error');
+  output.querySelector('.empty-state').hidden = true;
+  preview.hidden = false;
+  preview.srcdoc = previewDocument(html, css);
 
-  window.setTimeout(() => {
-    const result = scorePrompt(prompt);
-    output.replaceChildren(outputPage(prompt));
-    scoreNode.textContent = result.total;
-    const achieved = result.checks.filter((_, index) => result.earned[index] > 0).map(check => check.label.toLowerCase());
-    scoreDetail.textContent = achieved.length ? `Nice start — you called out ${achieved.join(', ')}.` : 'Add details about layout, color, type, or coffee shop elements.';
-    document.querySelector('#score-breakdown').innerHTML = result.checks.map((check, index) => `<span>${check.label}<b>${result.earned[index]}/${check.weight}</b></span>`).join('');
-    outputStatus.textContent = 'PAGE READY';
-    outputStatus.parentElement.classList.add('ready');
-    buildButton.disabled = false;
-    buildButton.querySelector('span:first-child').textContent = 'Build again';
+  try {
+    const response = await fetch('/api/grade', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ challenge: challenges[currentIndex].slug, html, css }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'The grader could not process your page.');
+
+    const { result } = data;
+    scoreNode.textContent = result.total.toFixed(1);
     updateLeaderboard(result.total);
-    showToast(`Page built. You scored ${result.total} out of 100.`);
-  }, 550);
+    renderBreakdown(result.breakdown);
+    scoreDetail.textContent = result.error
+      ? `Grader could not render this submission: ${result.error}`
+      : `Rendered-page comparison · grader ${result.version} · ${result.details.matchedBlocks} of ${result.details.goalBlocks} target elements matched.`;
+    outputStatus.textContent = result.error ? 'RENDER ERROR' : 'PAGE GRADED';
+    outputStatus.parentElement.classList.add(result.error ? 'error' : 'ready');
+    buildButton.querySelector('span:first-child').textContent = 'Grade again';
+    showToast(result.error ? 'The page did not render. Review the submission and try again.' : `Rendered page scored ${result.total.toFixed(1)} out of 100.`);
+  } catch (error) {
+    scoreDetail.textContent = error.message;
+    outputStatus.textContent = 'GRADER UNAVAILABLE';
+    outputStatus.parentElement.classList.add('error');
+    showToast(error.message || 'Could not reach the grader service.');
+  } finally {
+    buildButton.disabled = false;
+  }
 });
 
-const resultStyles = document.createElement('style');
-resultStyles.textContent = `.mini-result{height:100%;min-height:82px;background:var(--result-bg);color:var(--result-ink);font-family:Manrope,sans-serif;display:flex;flex-direction:column;padding:0 9px}.mini-result-nav{height:20px;border-bottom:1px solid color-mix(in srgb,var(--result-ink) 15%,transparent);display:flex;align-items:center;justify-content:space-between;font:5px 'DM Sans';color:var(--result-ink)}.mini-result-nav b{font:800 9px Manrope;letter-spacing:-.6px}.mini-result-nav b span{font-weight:400}.mini-result-body{flex:1;display:grid;grid-template-columns:1fr .8fr;align-items:center;padding-left:9px}.mini-result-body small{font:5px 'DM Mono';letter-spacing:.5px;color:var(--result-accent)}.mini-result-body h3{font:14px/.95 Georgia,serif;margin:4px 0;color:var(--result-ink)}.mini-result-body h3 em{color:var(--result-accent)}.mini-result-body p{font:5px/1.5 'DM Sans';color:var(--result-accent);margin:3px 0}.mini-result-body button{border:1px solid var(--result-accent);background:none;color:var(--result-ink);font:5px 'DM Sans';padding:3px 5px}.mini-result-art{height:42px;border-radius:50%;background:color-mix(in srgb,var(--result-accent) 18%,var(--result-bg));display:grid;place-items:center;position:relative}.mini-result-art i{position:absolute;width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--result-accent) 20%,var(--result-bg))}.mini-result-art b{z-index:1;font-size:17px;filter:grayscale(.4)}.mini-result-foot{height:13px;border-top:1px solid color-mix(in srgb,var(--result-ink) 15%,transparent);display:flex;align-items:center;justify-content:space-between;font:4px 'DM Mono';color:var(--result-accent)}@media(max-width:760px){.mini-result{min-height:82px}}`;
-document.head.append(resultStyles);
+updateProgress();

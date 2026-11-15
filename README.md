@@ -1,17 +1,25 @@
 # PromptDyno
 
-A browser prototype for practicing prompts by recreating a target page, receiving deterministic feedback, and comparing scores.
+A browser prototype for practicing prompts by recreating progressively more complex target designs and receiving deterministic feedback.
 
 ## Start the app
 
-Requirements: Node.js and npm. Put `MONGODB_URI=...` in the root `.env` file, then run:
+Requirements: Node.js, npm, and Playwright Chromium. Put `MONGODB_URI=...` in the root `.env` file if you use the account or MongoDB features, then run:
 
 ```sh
 npm install
+npm install --prefix grader
+npx --prefix grader playwright install chromium
 npm run dev
 ```
 
-Open the URL printed by the server (default `http://localhost:3000`). The home page is at `/home`; `/` redirects there.
+Open `http://localhost:3000`. `npm run dev` starts both the web app and local grader service. The home page is at `/home`; `/` redirects there.
+
+## Challenges
+
+Challenge references live in `frontend/testHtml/`, with one numbered folder per generic target and its own HTML/CSS files. Browse the five targets—from a simple shape through a login form—with the arrows or selector; the active target and its rubric update together. Your selected target is saved in the browser.
+
+The challenge order is in `frontend/scripts/app.js`; references live in `frontend/testHtml/`. Write a prompt for your model, paste its generated HTML and CSS, and select **Render & grade**. The Playwright grader compares the rendered page against the selected target using content, layout, style, and screenshot similarity. Model generation is not connected yet. See [grader integration](docs/grader-integration.md) for local and deployment setup.
 
 ## Account pages
 
@@ -23,14 +31,10 @@ Passwords are stored as salted scrypt hashes. Session cookies are HttpOnly and S
 
 ## MongoDB test button
 
-On the home page, **Create test object** sends `POST /api/test-objects`. The backend inserts a document in `testObjects` containing MongoDB's generated `_id` plus a `randomString` of 4�10 alphanumeric characters. The URI stays server-side.
+On the home page, **Create test object** sends `POST /api/test-objects`. The backend inserts a document in `testObjects` containing MongoDB's generated `_id` plus a `randomString` of 4�10 alphanumeric characters. The URI stays server-side.
 
-## Pages and project structure
+## Structure
 
-Each root-level HTML file in `frontend/pages/` is served at its matching clean URL (for example, `login.html` ? `/login`). Keep shared files under `frontend/scripts/`, `frontend/styles/`, and `frontend/assets/`; use root-relative asset URLs.
+Each root-level HTML file in `frontend/pages/` is served at its matching clean URL (for example, `login.html` ? `/login`). Keep shared files under `frontend/scripts/`, `frontend/styles/`, and `frontend/assets/`.
 
 The backend separates route handling, controllers, services, models, and database configuration under `backend/`. Keep secrets in ignored local `.env` files and safe variable names in `.env.example`.
-
-## Prototype limits
-
-The page preview, challenge scoring, build counter, and sample leaderboard remain local demo behavior; they are not connected to an AI model or shared accounts/leaderboard.

@@ -31,8 +31,13 @@
 
     <main id="challenge">
       <section class="intro">
-        <div class="eyebrow"><span class="eyebrow-dot"></span> THE PROMPTING GYM <span class="eyebrow-rule"></span> CHALLENGE 01</div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span> THE PROMPTING GYM <span class="eyebrow-rule"></span> <span id="intro-challenge-label">CHALLENGE 01</span></div>
         <div class="intro-row"><div><h1>Make it <span>click.</span></h1><p class="subtitle">A little practice goes a long way. Recreate the page below with a prompt.</p></div><div class="streak"><span class="streak-icon">✳</span><div><b id="streak-count">0 day streak</b><small>Keep your momentum</small></div></div></div>
+      </section>
+
+      <section class="challenge-path" aria-label="Challenge progression">
+        <label for="challenge-select"><span class="eyebrow">CHOOSE A TARGET</span><select id="challenge-select"><option value="0">01 · Circle study</option><option value="1">02 · Shape study</option><option value="2">03 · Profile card</option><option value="3">04 · The daily pour</option><option value="4">05 · Sign in screen</option></select></label>
+        <div class="path-progress"><span id="path-progress-label">Target 1 of 5</span><div class="path-progress-track"><i id="path-progress-fill"></i></div><small id="path-progress-hint">Use the arrows or list to browse all targets.</small></div>
       </section>
 
       <section class="test-object-card" aria-labelledby="test-object-title">
@@ -41,39 +46,39 @@
       </section>
 
       <section class="challenge-card">
-        <div class="challenge-heading"><div class="challenge-title"><span class="challenge-number">01</span><div><div class="title-line"><h2>The daily pour</h2><span class="level">FOUNDATIONS</span></div><p>Recreate a clean, editorial landing page for a neighborhood coffee shop.</p></div></div><button class="more" aria-label="More challenge details">···</button></div>
+        <div class="challenge-heading"><div class="challenge-title"><span class="challenge-number" id="challenge-number">01</span><div><div class="title-line"><h2 id="challenge-title">Circle study</h2><span class="level" id="challenge-level">FOUNDATIONS</span></div><p id="challenge-description">Recreate one centered blue circle on a warm off-white background.</p></div></div><span class="more" aria-label="Progressive challenge">↗</span></div>
         <div class="workspace">
           <section class="reference-panel">
-            <div class="panel-top"><div class="panel-label"><span class="target-icon">⊙</span> THE TARGET</div><button id="open-reference" class="expand-link">View full size <span>↗</span></button></div>
-            <div class="reference-frame">
-              <div class="coffee-site">
-                <div class="coffee-nav"><span class="coffee-logo">slow<span>day</span><i>®</i></span><span>OUR COFFEE</span><span>OUR STORY</span><span>FIND US</span><button>ORDER AHEAD <b>↗</b></button></div>
-                <div class="coffee-hero"><div class="coffee-copy"><span class="coffee-kicker">GOOD COFFEE, NO RUSH.</span><h3>A slower<br />kind of <em>morning.</em></h3><p>Thoughtfully sourced. Slowly made.<br />Right around the corner.</p><button>COME ON IN <span>↗</span></button></div><div class="coffee-art"><div class="sun"></div><div class="steam steam-one"></div><div class="steam steam-two"></div><div class="cup"><div class="cup-coffee"></div><div class="cup-handle"></div></div><div class="saucer"></div><div class="coffee-leaf leaf-one"></div><div class="coffee-leaf leaf-two"></div><span class="art-note">A LITTLE PAUSE<br />IN YOUR DAY</span></div></div>
-                <div class="coffee-bottom"><span>✳ &nbsp; LOCAL BY NATURE</span><span>EST. 2018 · YPSILANTI, MI</span><span>SCROLL A LITTLE <b>↓</b></span></div>
-              </div>
-            </div>
+            <div class="panel-top"><div class="panel-label"><span class="target-icon">⊙</span> THE TARGET <span class="target-controls"><button id="previous-target" type="button" aria-label="Previous target">‹</button><span id="target-count">01 / 05</span><button id="next-target" type="button" aria-label="Next target">›</button></span></div><button id="open-reference" class="expand-link">View full size <span>↗</span></button></div>
+            <div class="reference-frame"><iframe id="reference-frame" title="Target design" src="/testHtml/01-simple-shape/index.html"></iframe></div>
             <div class="reference-hint"><span>✳</span> Study the layout, colors, and copy. Your prompt is the only tool you need.</div>
           </section>
 
           <section class="builder-panel">
-            <div class="panel-top"><div class="panel-label"><span class="sparkle">✳</span> YOUR WORKSPACE</div><div class="model-tag"><span></span> MINI MODEL <b>⌄</b></div></div>
-            <div class="prompt-label"><span>YOUR PROMPT</span><span id="char-count">0 / 500</span></div>
-            <textarea id="prompt" maxlength="500" placeholder="Describe the page you want to build...&#10;&#10;Try calling out the layout, colors, typography, and any details that stand out to you."></textarea>
-            <div class="prompt-footer"><span><kbd>↵</kbd> New line</span><span class="prompt-tip">Be specific. Every detail counts.</span></div>
-            <button id="build-button" class="build-button"><span>Build my page</span><span class="button-arrow">↗</span></button>
-            <div class="output-heading"><span>YOUR RESULT</span><span class="output-status"><i></i><span id="output-status">WAITING FOR PROMPT</span></span></div>
-            <div id="output" class="output-frame"><div class="empty-state"><span class="empty-icon">↗</span><b>Your page will show up here.</b><small>Write a prompt above, then hit build.</small></div></div>
+            <div class="panel-top"><div class="panel-label"><span class="sparkle">✳</span> YOUR WORKSPACE</div><div class="model-tag"><span></span> PLAYWRIGHT GRADER <b>0.2</b></div></div>
+            <div class="prompt-label"><span>YOUR PROMPT <small>(OPTIONAL NOTES)</small></span><span id="char-count">0 / 500</span></div>
+            <textarea id="prompt" maxlength="500" placeholder="Write the prompt you would give your model. Paste the model's HTML and CSS below to grade its result."></textarea>
+            <div class="code-submission">
+              <label for="html-source">GENERATED HTML <small>Paste the page markup</small></label>
+              <textarea id="html-source" maxlength="240000" spellcheck="false" placeholder="&lt;main class=&quot;canvas&quot;&gt;&#10;  &lt;div class=&quot;circle&quot;&gt;&lt;/div&gt;&#10;&lt;/main&gt;"></textarea>
+              <label for="css-source">GENERATED CSS <small>Styles for this page</small></label>
+              <textarea id="css-source" maxlength="40000" spellcheck="false" placeholder=".canvas { min-height: 100vh; display: grid; place-items: center; }&#10;.circle { width: 120px; height: 120px; border-radius: 50%; background: red; }"></textarea>
+              <p>The grader renders your HTML and CSS in Chromium and compares its screenshot with the target. Scripts and network requests are disabled.</p>
+            </div>
+            <button id="build-button" class="build-button"><span>Render &amp; grade</span><span class="button-arrow">↗</span></button>
+            <div class="output-heading"><span>YOUR RENDERED PAGE</span><span class="output-status"><i></i><span id="output-status">WAITING FOR SUBMISSION</span></span></div>
+            <div id="output" class="output-frame"><div class="empty-state"><span class="empty-icon">↗</span><b>Your rendered page will show up here.</b><small>Paste generated HTML and CSS, then grade it.</small></div><iframe id="candidate-preview" title="Your rendered page preview" sandbox="" hidden></iframe></div>
             <div class="score-row"><div class="score-label"><span>YOUR SCORE</span><small id="score-detail">Build a page to get your first score</small><div id="score-breakdown" class="score-breakdown" aria-live="polite"></div></div><div class="score-value"><b id="score">—</b><span>/ 100</span></div></div>
           </section>
         </div>
-        <div class="challenge-footer"><div class="criteria-label">WHAT WE LOOK AT</div><div class="criteria"><span><i>01</i> Layout</span><span><i>02</i> Color palette</span><span><i>03</i> Typography</span><span><i>04</i> Key details</span></div><div class="attempts"><span class="attempt-dot">↻</span><span><b id="attempt-count">0</b> builds</span></div></div>
+        <div class="challenge-footer"><div class="criteria-label">WHAT WE LOOK AT</div><div class="criteria" id="criteria-list"><span><i>01</i> Shape</span><span><i>02</i> Color</span><span><i>03</i> Placement</span><span><i>04</i> Scale &amp; canvas</span></div><div class="attempts"><span class="attempt-dot">↻</span><span><b id="attempt-count">0</b> builds</span></div></div>
       </section>
 
       <section id="leaderboard" class="leaderboard-card"><div><div class="eyebrow">A LITTLE FRIENDLY COMPETITION</div><h2>Today's leaderboard<span>.</span></h2><p>Your best score earns your spot. Give it a try.</p></div><div class="leaderboard-table"><div class="leader-head"><span>RANK</span><span>PLAYER</span><span>BEST SCORE</span></div><div class="leader-row"><span class="rank">01</span><span class="player-cell"><span class="mini-avatar avatar-peach">M</span> Maya Chen <span class="you-pill">TOP SCORE</span></span><b>91 <small>pts</small></b></div><div class="leader-row"><span class="rank">02</span><span class="player-cell"><span class="mini-avatar avatar-blue">J</span> Jordan Lee</span><b>84 <small>pts</small></b></div><div class="leader-row"><span class="rank">03</span><span class="player-cell"><span class="mini-avatar avatar-green">A</span> Alex Rivera</span><b>78 <small>pts</small></b></div><div class="leader-row your-row" id="your-row"><span class="rank" id="your-rank">—</span><span class="player-cell"><span class="mini-avatar avatar-dark">Y</span> You <span class="you-pill">YOU</span></span><b id="your-score">— <small>pts</small></b></div></div></section>
       <footer id="how-it-works"><span>✳ &nbsp; SMALL PROMPTS. BIG IDEAS.</span><span>Practice makes progress <b>↗</b></span><span>MADE FOR THE CURIOUS · 2026</span></footer>
     </main>
     <div id="toast" class="toast" role="status"></div>
-    <dialog id="reference-dialog"><button class="dialog-close" aria-label="Close">×</button><div class="coffee-site enlarged" id="enlarged-reference"></div></dialog>
+    <dialog id="reference-dialog"><button class="dialog-close" aria-label="Close">×</button><iframe class="enlarged-reference-frame" id="enlarged-reference" title="Target design full size"></iframe></dialog>
     <dialog id="logout-dialog" class="logout-dialog" aria-labelledby="logout-title">
       <div class="logout-dialog-icon">↗</div>
       <h2 id="logout-title">Log out of PromptDyno?</h2>

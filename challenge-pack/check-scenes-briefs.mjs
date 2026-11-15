@@ -14,7 +14,7 @@ try {
   process.exit(1);
 }
 const list = data.challenges ?? [];
-if (list.length !== 9) problems.push(`expected 9 challenges, found ${list.length}`);
+if (list.length !== 19) problems.push(`expected 19 challenges, found ${list.length}`);
 const slugs = new Set(list.map((c) => c.slug));
 if (slugs.size !== list.length) problems.push('slugs are not unique');
 

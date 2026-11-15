@@ -49,6 +49,10 @@ Open the deployment URL and check:
 4. `/api/auth/me` shows `{"error":"Not logged in."}` when logged out.
 5. Sign up, then log in. If either fails, look at **Deployments > (the deployment) > Logs**.
 
+## Grader service
+
+The Chromium grader must run as a separate Node service; it is not run in a Vercel function. Deploy `grader/server.ts` with Playwright Chromium installed and configure `GRADER_HOST=0.0.0.0`, `GRADER_PORT`, and `GRADER_SERVICE_TOKEN` on that service. In Vercel, configure `GRADER_SERVICE_URL` to the service's `/grade` endpoint and set the matching `GRADER_SERVICE_TOKEN`. `/api/grade` proxies submissions to it.
+
 ## Known limits on Vercel (raise with the backend owner)
 
 - Sessions are kept in memory (`backend/services/sessionService.js`). Each Vercel instance has
