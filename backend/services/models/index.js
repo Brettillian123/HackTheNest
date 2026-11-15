@@ -10,7 +10,7 @@
 //   "claude-sonnet-5-5" (the ids openai-mini and claude-haiku are kept so saved runs still match).
 
 export const MODELS = [
-  { id: 'openai-mini', label: 'OpenAI Sol', provider: 'openai', keyEnv: 'OPENAI_API_KEY', modelEnv: 'OPENAI_MODEL', defaultModel: 'gpt-6-sol' },
+  { id: 'openai-mini', label: 'OpenAI Luna', provider: 'openai', keyEnv: 'OPENAI_API_KEY', modelEnv: 'OPENAI_MODEL', defaultModel: 'gpt-6-luna' },
   { id: 'claude-haiku', label: 'Claude Sonnet', provider: 'anthropic', keyEnv: 'ANTHROPIC_API_KEY', modelEnv: 'ANTHROPIC_MODEL', defaultModel: 'claude-sonnet-5-5' },
 ];
 
