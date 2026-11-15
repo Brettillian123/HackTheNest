@@ -1,0 +1,54 @@
+/* Page layout for login.html, signup.html and 404.html. Tokens only. */
+
+/* two columns: auth card left, what the account is for right */
+.auth-grid{display:grid;grid-template-columns:440px minmax(0,1fr);gap:var(--s-5);align-items:stretch;min-height:calc(100vh - 220px)}
+.auth-grid > .col{min-width:0}
+.auth-card{display:flex;flex-direction:column}
+.auth-card form{display:flex;flex-direction:column}
+.auth-card .btn.block{height:44px;margin-top:var(--s-9);font-size:var(--fs-14)}
+.auth-card .auth-foot{margin-top:var(--s-7);font-size:var(--fs-13);color:var(--text-3)}
+.auth-card .auth-foot a,.auth-side a.lnk{color:var(--text);font-weight:var(--w-bold);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.auth-card .auth-foot a:hover,.auth-side a.lnk:hover{text-decoration-color:var(--red)}
+.auth-card .auth-bottom{margin-top:auto}
+.auth-card .auth-foot{margin-bottom:var(--s-9)}
+.auth-lead{font-size:var(--fs-13);line-height:19px;color:var(--text-2);margin-bottom:var(--s-8)}
+.auth-alert{margin-bottom:var(--s-6);color:var(--text-fail)}
+.auth-alert[hidden]{display:none}
+.field.bad .field-hint{display:none}
+
+/* password input with show or hide toggle */
+.pw-wrap{position:relative}
+.pw-wrap .input{padding-right:64px}
+.pw-tog{position:absolute;top:6px;right:6px;height:28px;padding:0 var(--s-4);border-radius:var(--r-4);font:var(--w-bold) var(--fs-12)/1 var(--ui);color:var(--text-2);background:var(--fill-soft)}
+.pw-tog:hover{color:var(--text);background:var(--fill-off)}
+
+/* signed-in card */
+.auth-in{display:flex;flex-direction:column;gap:var(--s-6)}
+.auth-who{display:flex;align-items:center;gap:var(--s-5)}
+.auth-who .title{word-break:break-all}
+.auth-acts{display:flex;gap:var(--s-3)}
+.auth-acts .btn{flex:1;height:44px;font-size:var(--fs-14)}
+
+/* waiting score rows */
+.wait{display:flex;flex-direction:column;gap:var(--s-2);margin-top:var(--s-6)}
+.wait a{display:flex;align-items:center;gap:var(--s-4);height:48px;padding:0 var(--s-5);background:var(--sunk);border-radius:var(--r-6);color:var(--text)}
+.wait a:hover{background:var(--hover)}
+.wait .t{font-size:var(--fs-14);font-weight:var(--w-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wait .p{font-size:var(--fs-12);color:var(--text-3);white-space:nowrap}
+.wait .s{margin-left:auto;font:var(--w-bold) var(--fs-20)/1 var(--mono);color:var(--red)}
+.auth-side .callout{margin-top:var(--s-6)}
+.auth-side .score .sc{min-height:116px}
+
+/* 404 */
+.nf{display:flex;flex-direction:column;justify-content:center;gap:var(--s-5);padding:var(--s-10) 40px}
+.nf .bigscore .n{font-size:var(--fs-128)}
+.nf .nf-line{font:var(--w-bold) var(--fs-20)/28px var(--ui);color:var(--text)}
+.nf .nf-path{font:var(--w-reg) var(--fs-13) var(--mono);color:var(--text-3);word-break:break-all}
+.nf .auth-acts{max-width:420px;margin-top:var(--s-4)}
+
+@media (max-width:1000px){
+  .auth-grid{grid-template-columns:minmax(0,1fr)}
+}
+.cost .pt.wide{width:auto;padding:0 var(--s-4)}
+.nf-split{min-height:calc(100vh - 84px)}
+.nf-costs-h{margin-bottom:var(--s-2)}

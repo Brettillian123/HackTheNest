@@ -1,16 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "outputDirectory": "frontend",
+  "outputDirectory": "web",
   "redirects": [
-    { "source": "/", "destination": "/home", "statusCode": 302 }
+    { "source": "/home", "destination": "/", "statusCode": 302 }
   ],
   "rewrites": [
-    { "source": "/home", "destination": "/pages/home.html" },
-    { "source": "/login", "destination": "/pages/login.html" },
-    { "source": "/signup", "destination": "/pages/signup.html" },
-    { "source": "/challenge", "destination": "/pages/home.html" },
+    { "source": "/challenge", "destination": "/challenges.html" },
     { "source": "/api/:route*", "destination": "/api/index" },
-    { "source": "/:page([A-Za-z0-9_-]+)", "destination": "/pages/:page.html" }
+    { "source": "/:page([A-Za-z0-9_-]+)", "destination": "/:page.html" }
   ]
 }

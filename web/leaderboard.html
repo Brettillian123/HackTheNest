@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leaderboard - promptdyno</title>
+<meta name="description" content="promptdyno leaderboards: best scores per challenge, ranked within prompt-count brackets.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/boards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<aside id="rail"></aside>
+<header id="nav"></header>
+
+<main class="page">
+  <section class="panel phead bd-head">
+    <div>
+      <div class="phead-t">
+        <h1>Leaderboard</h1>
+        <div class="dd bd-picker">
+          <button class="btn btn-secondary sm dd-btn" id="pickBtn" type="button"><span class="lbl" id="pickLbl">All challenges</span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></button>
+          <div class="dd-menu" id="pickMenu" role="menu" aria-label="Pick a challenge"></div>
+        </div>
+      </div>
+      <div class="phead-sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12h10M3 12V8h2.5v4M5.8 12V3.5h2.5V12M8.6 12V6.3h2.5V12"/></svg>Ranked by score. Filter by how many prompts it took.</span>
+      </div>
+    </div>
+    <div class="phead-side">
+      <div class="stat"><div class="k">Players</div><div class="v" id="stPlayers">0</div></div>
+      <div class="stat"><div class="k" id="stTopK">Top score</div><div class="v" id="stTop">none yet</div></div>
+      <div class="stat"><div class="k">Your rank</div><div class="v" id="stYou">none yet</div></div>
+    </div>
+  </section>
+
+  <div class="bd-grid">
+    <section class="panel bd-board" aria-labelledby="boardTitle">
+      <div class="panel-head">
+        <div class="ph-l"><h2 class="h" id="boardTitle">Standings</h2><span id="bdDemo"></span></div>
+        <div class="filters">
+          <div class="pills" role="group" aria-label="Prompts used" id="bracketPills">
+            <button type="button" data-b="all" aria-pressed="true">All</button><button type="button" data-b="1" aria-pressed="false">1 prompt</button><button type="button" data-b="2" aria-pressed="false">2</button><button type="button" data-b="3-5" aria-pressed="false">3 to 5</button><button type="button" data-b="6-10" aria-pressed="false">6 to 10</button><button type="button" data-b="11+" aria-pressed="false">11+</button>
+          </div>
+          <div class="pills" role="group" aria-label="Period" id="periodPills">
+            <button type="button" data-p="week" aria-pressed="false">This week</button><button type="button" data-p="all" aria-pressed="true">All time</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bd-podium" id="podium" aria-label="Top three"></div>
+
+      <div class="bd-wrap" id="wrap">
+        <table class="lbt" id="table">
+          <thead><tr><th>Rank</th><th>Player</th><th class="r" id="thPrompts">Prompts</th><th class="r" id="thScore">Score</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div id="state"></div>
+      </div>
+
+      <div class="bd-pin" id="pin" hidden></div>
+    </section>
+
+    <aside class="bd-side">
+      <section class="panel">
+        <div class="panel-head"><h2 class="h">How ranking works</h2></div>
+        <ol class="bd-rules">
+          <li><span class="n">1</span><span>Your <b>best score</b> on a challenge is what counts. Highest score ranks first.</span></li>
+          <li><span class="n">2</span><span>At the same score, <b>fewer prompts</b> wins the tie.</span></li>
+          <li><span class="n">3</span><span>A perfect 100 is rare. Scores in the <b>high 80s and 90s</b> are strong prompting, so a score under 100 is no mark against you.</span></li>
+        </ol>
+      </section>
+
+      <section class="panel grow">
+        <div class="panel-head"><h2 class="h">Players by prompts used</h2><span class="note" id="barsNote">All time</span></div>
+        <div class="bd-bars" id="bars" role="group" aria-label="Filter by prompts used"></div>
+        <p class="callout"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.2v3.6M7 4.3v.1"/></svg><span id="barsCallout">Each player sits in one row, by the prompts their best attempt took. Pick a row to filter the board.</span></p>
+      </section>
+
+      <section class="panel bd-act" id="act"></section>
+    </aside>
+  </div>
+</main>
+
+<script type="module" src="js/leaderboard.js"></script>
+</body>
+</html>

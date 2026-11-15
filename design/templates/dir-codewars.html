@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en" data-state="a">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16171b;          /* page */
+  --rail:#121216;        /* left rail */
+  --section:#222327;     /* panels */
+  --sunk:rgba(0,0,0,.2); /* crumb, wells */
+  --hexfill:#181919;
+  --line:rgba(255,255,255,.125);
+  --hover:rgba(255,255,255,.063);
+  --text:#efefef;
+  --text-2:#c0c0c0;
+  --text-3:#a2a2a4;
+  --red:#ff4d4d;         /* bright red, primary actions */
+  --red-brand:#b1361e;   /* underline, rail marker */
+  --red-btn:#bb432c;     /* small buttons */
+  --peach:#f29871;
+  --red-deep:#7a1f14;
+  --rank-white:#e6e6e6;
+  --ui:"Lato",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:400 14px/21px var(--ui);min-width:1000px;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* rail */
+.rail{position:fixed;inset:0 auto 0 0;width:52px;background:var(--rail);display:flex;flex-direction:column;align-items:center;padding-top:12px;gap:6px;z-index:5}
+.rail .logo{width:34px;height:34px;margin-bottom:14px}
+.rail a{position:relative;width:52px;height:42px;display:grid;place-items:center;color:var(--text-3)}
+.rail a.on{color:var(--text)}
+.rail a.on::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;background:var(--red);border-radius:0 3px 3px 0}
+.rail .dot{width:4px;height:4px;border-radius:50%;background:#3a3b40;margin:6px 0}
+.rail svg{width:20px;height:20px}
+
+.app{margin-left:52px;padding:0 16px 54px}
+
+/* top bar */
+.top{height:56px;display:flex;align-items:flex-start;gap:14px}
+.crumb{background:var(--sunk);color:#c9c9c9;border-radius:0 0 8px 8px;padding:13px 14px;font-size:14px;line-height:22px}
+.crumb b{color:var(--text);font-weight:700}
+.crumb .sep{color:#6b6c70;margin:0 6px}
+.word{margin-top:15px;font:600 15px/22px var(--mono);letter-spacing:-.2px;color:var(--text)}
+.word i{font-style:normal;color:var(--red)}
+.top nav{margin-left:auto;display:flex;align-items:center;gap:4px;margin-top:10px}
+.top nav a{color:var(--text-2);text-decoration:none;padding:8px 14px;font-size:14px;border-radius:8px}
+.top nav a.on{color:var(--text);background:var(--hover)}
+.me{display:flex;align-items:center;gap:10px;margin-left:12px;padding:5px 6px 5px 10px;border-radius:8px;background:var(--section)}
+.me .pts{font:600 13px var(--mono);color:var(--text)}
+.me .pts small{color:var(--text-3);font:400 11px var(--ui);margin-left:4px}
+.avatar{width:28px;height:28px;border-radius:4px;background:linear-gradient(135deg,#3a2b28,#5b2a20);display:grid;place-items:center;font:700 12px var(--ui);color:#ffd9cc}
+
+/* hex rank badge */
+.hex{--c:var(--rank-white);--cut:7px;position:relative;display:inline-grid;place-items:center;height:26px;min-width:38px;padding:0 9px;background:var(--c);
+  clip-path:polygon(var(--cut) 0,calc(100% - var(--cut)) 0,100% 50%,calc(100% - var(--cut)) 100%,var(--cut) 100%,0 50%);
+  color:var(--c);font:700 11px/1 var(--ui);white-space:nowrap;flex:none}
+.hex::before{content:"";position:absolute;inset:2px;background:var(--hexfill);
+  clip-path:polygon(calc(var(--cut) - 1px) 0,calc(100% - var(--cut) + 1px) 0,100% 50%,calc(100% - var(--cut) + 1px) 100%,calc(var(--cut) - 1px) 100%,0 50%)}
+.hex span{position:relative}
+.hex.r{--c:var(--red)} .hex.p{--c:var(--peach)} .hex.w{--c:var(--rank-white)} .hex.d{--c:#d9534f}
+
+/* panels */
+.section{background:var(--section);border-radius:8px;padding:16px;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}
+.h{font:700 14px/22px var(--ui);text-transform:uppercase;letter-spacing:.35px;color:var(--text-2)}
+.tag{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-2);display:inline-flex;align-items:center;gap:5px;margin-right:12px}
+.tag svg{width:11px;height:11px}
+.meta{color:var(--text-2);font-size:13px;display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.meta svg{width:13px;height:13px;color:var(--text-3)}
+
+/* challenge header */
+.head{display:flex;align-items:center;gap:20px}
+.head .t{display:flex;align-items:center;gap:10px}
+.head h1{font:700 17px/24px var(--ui);color:var(--text)}
+.head .sub{margin-top:6px;display:flex;align-items:center;flex-wrap:wrap}
+.head .side{margin-left:auto;display:flex;gap:10px;align-items:stretch}
+.stat{background:var(--sunk);border-radius:6px;padding:7px 12px;min-width:104px}
+.stat .k{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.stat .v{font:600 14px/20px var(--mono);color:var(--text)}
+.stat .v.model{display:flex;align-items:center;gap:7px}
+.chip-ico{width:18px;height:18px;border-radius:4px;background:rgba(255,77,77,.14);display:grid;place-items:center;color:var(--red)}
+.chip-ico svg{width:12px;height:12px}
+
+/* tabs */
+.tabs{display:flex;align-items:center;margin:10px 0}
+.tabs a{height:40px;display:inline-flex;align-items:center;gap:7px;padding:0 22px;font-size:13px;color:var(--text-2);border-radius:8px;text-decoration:none}
+.tabs a.on{background:var(--hover);color:#ebebeb}
+.tabs a svg{width:13px;height:13px}
+.tabs .right{margin-left:auto;display:flex;gap:18px;color:var(--text-2);font-size:13px}
+.tabs .right b{color:var(--text);font:600 13px var(--mono)}
+
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:12px;align-items:start}
+.row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.row .note{font-size:12px;color:var(--text-3)}
+
+/* page frames */
+.frame{position:relative;width:100%;aspect-ratio:960/600;overflow:hidden;border-radius:6px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.frame .mock{position:absolute;left:0;top:0;transform-origin:0 0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair .lbl{display:flex;align-items:center;gap:8px;margin-bottom:8px;font:700 11px/1 var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-2)}
+.pair .lbl .hex{height:20px;min-width:30px;font-size:10px;--cut:6px}
+
+/* checks */
+.checks{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.checks ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:20px}
+.checks li{display:flex;align-items:center;gap:9px;font-size:13px;line-height:19px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);color:var(--text)}
+.checks li .m{width:16px;height:16px;flex:none;border-radius:3px;display:grid;place-items:center}
+.checks li.ok .m{background:rgba(255,255,255,.08);color:var(--text-2)}
+.checks li.no{color:#ffb3a8}
+.checks li.no .m{background:var(--red);color:#16171b}
+.checks li .m svg{width:10px;height:10px}
+
+/* prompt editor */
+.editor{background:#1a1b1f;border:1px solid var(--line);border-radius:6px;display:grid;grid-template-columns:34px 1fr;font:400 12.5px/21px var(--mono);overflow:hidden}
+.editor .ln{background:var(--sunk);color:#5d5e63;text-align:right;padding:10px 8px 10px 0;user-select:none}
+.editor .code{padding:10px 12px;color:#e4e4e4;white-space:pre-wrap;word-break:break-word}
+.editor .code q{quotes:none;color:var(--peach)}
+.editor .code em{font-style:normal;color:#ff8a7a}
+.edfoot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--text-3)}
+.edfoot b{color:var(--text-2);font:600 12px var(--mono)}
+
+.run{margin-top:12px;width:100%;height:46px;border-radius:4px;background:var(--red);color:#16171b;font:600 15px/1 var(--mono);letter-spacing:.64px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 18px -6px rgba(255,77,77,.55)}
+.run svg{width:14px;height:14px}
+.run kbd{font:400 11px var(--mono);background:rgba(22,23,27,.16);padding:2px 6px;border-radius:3px;letter-spacing:0}
+
+/* leaderboard strip */
+.lb{margin-top:12px}
+.lb table{width:100%;border-collapse:collapse}
+.lb th{font:700 12px/1 var(--ui);color:var(--text-2);text-align:left;padding:6px 8px 8px}
+.lb td{font-weight:700;font-size:13px;padding:5px 8px;border-top:1px solid var(--line);height:34px}
+.lb td.u{display:flex;align-items:center;gap:8px;border-top:0;box-shadow:inset 0 1px var(--line)}
+.lb td.n{font:600 13px var(--mono);text-align:right}
+.lb th.n{text-align:right}
+.lb tr.you td{background:rgba(255,77,77,.08)}
+.lb tr.you td:first-child{box-shadow:inset 3px 0 var(--red)}
+
+/* score */
+.score{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 0% 0%,rgba(255,77,77,.22),rgba(255,77,77,0) 55%),var(--section)}
+.sc{display:flex;align-items:center;gap:18px}
+.bighex{--c:var(--red);position:relative;width:118px;height:96px;display:grid;place-items:center;background:var(--c);
+  clip-path:polygon(24px 0,94px 0,100% 50%,94px 100%,24px 100%,0 50%);flex:none}
+.bighex::before{content:"";position:absolute;inset:3px;background:var(--hexfill);clip-path:polygon(23px 0,89px 0,100% 50%,89px 100%,23px 100%,0 50%)}
+.bighex .n{position:relative;font:300 46px/1 var(--mono);letter-spacing:-2px;background:linear-gradient(to right,var(--peach),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bighex .of{position:absolute;bottom:14px;font:600 10px/1 var(--mono);color:var(--text-3);letter-spacing:.5px}
+.sc .info .k{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.sc .info .big{font:700 17px/24px var(--ui);color:var(--text)}
+.sc .info .gain{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:600 13px var(--mono);color:var(--red)}
+.seg{display:grid;grid-template-columns:repeat(14,1fr);gap:3px;margin:14px 0 6px}
+.seg i{height:8px;border-radius:2px;background:var(--red)}
+.seg i.x{background:rgba(255,255,255,.12)}
+.segcap{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2)}
+.segcap b{color:var(--text);font:600 12px var(--mono)}
+
+.costs{margin-top:12px}
+.cost{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.cost .pt{flex:none;width:44px;height:26px;border-radius:4px;background:rgba(255,77,77,.14);color:var(--red);font:600 13px/26px var(--mono);text-align:center}
+.cost .w{font-size:14px;color:var(--text)}
+.cost .w small{display:block;font-size:12px;line-height:16px;color:var(--text-3)}
+.again{display:flex;align-items:center;gap:12px;margin-top:12px}
+.again .run{margin-top:0;flex:1}
+.used{background:var(--sunk);border-radius:4px;height:46px;padding:0 14px;display:flex;flex-direction:column;justify-content:center}
+.used .k{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3)}
+.used .v{font:600 14px/18px var(--mono)}
+
+/* states */
+.b-only{display:none}
+html[data-state="b"] .a-only{display:none}
+html[data-state="b"] .b-only{display:block}
+html[data-state="b"] .b-flex{display:flex}
+
+/* state switch */
+.switch{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:4px;background:#0d0d10;border:1px solid var(--line);border-radius:8px;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.switch span{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3);padding:0 8px}
+.switch button{height:28px;padding:0 14px;border-radius:5px;font-size:12px;color:var(--text-2)}
+.switch button[aria-pressed="true"]{background:var(--red-btn);color:#fff}
+
+/* the goal mock (a light page drawn in real HTML) */
+.mock{width:960px;height:600px;background:#f7f4ef;color:#1f2933;font:400 15px/1.5 "Lato",system-ui,sans-serif}
+.mock .mbar{height:56px;display:flex;align-items:center;padding:0 40px;border-bottom:1px solid #e7e1d8;background:#fff}
+.mock .brand{font-weight:900;font-size:18px;color:#1f2933}
+.mock .brand i{font-style:normal;color:#0f766e}
+.mock .mlinks{margin-left:auto;display:flex;gap:26px;font-size:14px;color:#52606d}
+.mock .hero{text-align:center;padding:38px 0 26px}
+.mock h2{font:900 40px/1.1 "Lato",sans-serif;letter-spacing:-.5px;color:#1f2933}
+.mock .hero p{margin-top:10px;color:#52606d;font-size:16px}
+.mock .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:840px;margin:0 auto}
+.mock .card{position:relative;background:#fff;border:1px solid #e4ded6;border-radius:10px;padding:24px 24px 22px}
+.mock .card.pop{border:2px solid #1f2933;padding:23px 23px 21px}
+.mock .pill{position:absolute;top:-12px;left:23px;background:#0f766e;color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px;padding:3px 10px;border-radius:20px}
+.mock .pn{font-weight:700;font-size:16px}
+.mock .pr{margin-top:6px;font:900 38px/1 "Lato",sans-serif}
+.mock .pr small{font:400 14px "Lato",sans-serif;color:#7b8794;margin-left:3px}
+.mock ul{list-style:none;margin:16px 0 20px;font-size:14px;color:#3e4c59}
+.mock li{padding:4px 0 4px 20px;position:relative}
+.mock li::before{content:"";position:absolute;left:2px;top:11px;width:9px;height:5px;border-left:2px solid #0f766e;border-bottom:2px solid #0f766e;transform:rotate(-45deg)}
+.mock .mbtn{display:block;text-align:center;padding:10px;border-radius:6px;border:1px solid #cbd2d9;font-weight:700;font-size:14px;color:#1f2933}
+.mock .pop .mbtn{background:#1f2933;border-color:#1f2933;color:#fff}
+.mock .mfoot{position:absolute;left:0;right:0;bottom:0;height:58px;display:flex;align-items:center;padding:0 40px;border-top:1px solid #e7e1d8;font-size:13px;color:#7b8794}
+.mock .mfoot nav{display:flex;gap:22px;color:#52606d}
+.mock .mfoot span{margin-left:auto}
+/* the player's version: narrower cards, no footer links */
+.mock.mine .cards{max-width:700px;gap:16px}
+.mock.mine .mfoot nav{display:none}
+.mock.mine h2{font-size:38px}
+
+@media (max-width:1180px){
+  .main{grid-template-columns:minmax(0,1fr) 380px}
+  .head .side .stat:nth-child(3){display:none}
+  .checks ul{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<aside class="rail" aria-label="Main">
+  <svg class="logo" viewBox="0 0 34 34" aria-label="promptdyno">
+    <polygon points="17,1 31,9 31,25 17,33 3,25 3,9" fill="#ff4d4d"/>
+    <polygon points="17,5 27.5,11 27.5,23 17,29 6.5,23 6.5,11" fill="#121216"/>
+    <path d="M11 13l4.5 4-4.5 4M17.5 22h6" fill="none" stroke="#ff4d4d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <a href="#" class="on" title="Challenges"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r=".8" fill="currentColor"/></svg></a>
+  <a href="#" title="Leaderboard"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2.5 17.5h15M4 17.5V11h3.5v6.5M8.3 17.5V6h3.5v11.5M12.6 17.5V9h3.5v8.5"/></svg></a>
+  <span class="dot"></span>
+  <a href="#" title="History"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 6v4.3l2.8 1.7"/></svg></a>
+  <a href="#" title="Guide"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 4.5c2.5-1 5-1 7 .5v11c-2-1.5-4.5-1.5-7-.5zM17 4.5c-2.5-1-5-1-7 .5v11c2-1.5 4.5-1.5 7-.5z"/></svg></a>
+</aside>
+
+<div class="app">
+  <header class="top">
+    <div class="crumb">Challenges<span class="sep">/</span><b>Pricing page with three plans</b></div>
+    <div class="word">prompt<i>dyno</i></div>
+    <nav>
+      <a href="#" class="on">Challenges</a>
+      <a href="#">Leaderboard</a>
+      <div class="me">
+        <span class="hex p"><span>Lv 5</span></span>
+        <span class="pts">1,284<small>pts</small></span>
+        <span class="avatar">JR</span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="section head">
+    <div>
+      <div class="t">
+        <span class="hex r"><span>Lv 4</span></span>
+        <h1>Pricing page with three plans</h1>
+      </div>
+      <div class="sub">
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M4.6 7.2l1.7 1.6 3.2-3.4"/></svg>2,418 of 6,930 solved</span>
+        <span class="meta"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V7M7 12V2M12 12V5"/></svg>median score 71</span>
+        <span class="tag"><svg viewBox="0 0 12 12" fill="currentColor"><path d="M1 1h5l5 5-5 5-5-5z"/></svg>layout</span>
+        <span class="tag">pricing</span>
+        <span class="tag">cards</span>
+      </div>
+    </div>
+    <div class="side">
+      <div class="stat"><div class="k">Model</div><div class="v model"><span class="chip-ico"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="8" height="8" rx="1.5"/><path d="M4.5 6h3M6 4.5v3"/></svg></span>Llama 3.2 3B</div></div>
+      <div class="stat"><div class="k">Your best</div><div class="v"><span class="a-only">none yet</span><span class="b-only">84</span></div></div>
+      <div class="stat"><div class="k">Top score</div><div class="v">99</div></div>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <a href="#" class="on"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2" width="11" height="10" rx="1.5"/><path d="M1.5 5h11"/></svg>Workspace</a>
+    <a href="#"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="8" height="6" rx="1"/><path d="M5 6V4.5a2 2 0 014 0V6"/></svg>Solutions</a>
+    <a href="#"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 3h10v6H6l-3 2.5V9H2z"/></svg>Discussion (38)</a>
+    <div class="right">
+      <span>Prompts used <b class="a-only" style="display:inline">0</b><b class="b-only" style="display:none">3</b></span>
+      <span>Time limit <b>none</b></span>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- left: pages -->
+    <section class="section">
+      <div class="a-only">
+        <div class="row"><h2 class="h">Goal page:</h2><span class="note">960 x 600, recreate it with one prompt</span></div>
+        <div class="frame" id="goalFrame">
+          <div class="mock" id="goal">
+            <div class="mbar"><span class="brand">tally<i>.</i></span><span class="mlinks"><span>Product</span><span>Pricing</span><span>Sign in</span></span></div>
+            <div class="hero"><h2>Simple pricing</h2><p>One plan for you, one for your team. Cancel any time.</p></div>
+            <div class="cards">
+              <div class="card"><div class="pn">Free</div><div class="pr">$0<small>/month</small></div><ul><li>1 project</li><li>Basic reports</li><li>Community support</li></ul><span class="mbtn">Start free</span></div>
+              <div class="card pop"><span class="pill">Most popular</span><div class="pn">Pro</div><div class="pr">$8<small>/month</small></div><ul><li>Unlimited projects</li><li>Advanced reports</li><li>Email support</li></ul><span class="mbtn">Choose Pro</span></div>
+              <div class="card"><div class="pn">Team</div><div class="pr">$20<small>/month</small></div><ul><li>Up to 10 seats</li><li>Shared workspaces</li><li>Priority support</li></ul><span class="mbtn">Choose Team</span></div>
+            </div>
+            <div class="mfoot"><nav><span>Docs</span><span>Changelog</span><span>Privacy</span><span>Terms</span></nav><span>&copy; 2026 Tally</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-only">
+        <div class="row"><h2 class="h">Compare:</h2><span class="note">Run 3 of 3, scored just now</span></div>
+        <div class="pair">
+          <div><div class="lbl"><span class="hex w"><span>G</span></span>Goal page</div><div class="frame" id="goalSmall"></div></div>
+          <div><div class="lbl"><span class="hex r"><span>3</span></span>Your page</div><div class="frame" id="mineSmall"></div></div>
+        </div>
+        <div class="checks">
+          <div class="row" style="margin-bottom:4px"><h3 class="h">Checks:</h3><span class="note">11 passed, 3 failed</span></div>
+          <ul>
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Footer has four links</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Title reads "Simple pricing"</li>
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Page size within 1.5x of goal</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Three plan cards in one row</li>
+            <li class="no"><span class="m"><svg viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2 2l6 6M8 2L2 8"/></svg></span>Card width within 10% of goal</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Prices $0, $8 and $20</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Pro card is highlighted</li>
+            <li class="ok"><span class="m"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1.5 5.2l2.3 2.3 4.7-5"/></svg></span>Top bar with brand and links</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- right: prompt or score -->
+    <div>
+      <section class="section a-only">
+        <div class="row"><h2 class="h">Prompt:</h2><span class="note">Plain English, one shot</span></div>
+        <div class="editor">
+          <div class="ln">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+          <div class="code">Build a pricing page titled <q>"Simple pricing"</q> with a one line subtitle.
+Show three plan cards in one row: Free <em>$0</em>, Pro <em>$8</em>, Team <em>$20</em> a month.
+Each card lists three features and ends with a full width button.
+Give the Pro card a dark border and a <q>"Most popular"</q> label.
+Use a warm off-white background, dark text, one teal accent.
+Add a slim white top bar: brand left, three links right.
+End with a footer: four links left, copyright right.
+Return one HTML file with inline CSS and no scripts.</div>
+        </div>
+        <div class="edfoot"><span><b>512</b> / 1,200 characters</span><span>Runs on <b>Llama 3.2 3B</b></span></div>
+        <button class="run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9.5-5.5z"/></svg>Run prompt<kbd>Ctrl Enter</kbd></button>
+      </section>
+
+      <section class="section lb a-only">
+        <div class="row" style="margin-bottom:4px"><h2 class="h">Top on this challenge:</h2><span class="note">This week</span></div>
+        <table>
+          <thead><tr><th>#</th><th>Player</th><th class="n">Score</th><th class="n">Prompts</th></tr></thead>
+          <tbody>
+            <tr><td>#1</td><td class="u"><span class="hex d"><span>Lv 1</span></span>kmorrow</td><td class="n">99</td><td class="n">1</td></tr>
+            <tr><td>#2</td><td class="u"><span class="hex r"><span>Lv 3</span></span>ada_lin</td><td class="n">97</td><td class="n">2</td></tr>
+            <tr><td>#3</td><td class="u"><span class="hex r"><span>Lv 3</span></span>rvasquez</td><td class="n">96</td><td class="n">1</td></tr>
+            <tr><td>#4</td><td class="u"><span class="hex p"><span>Lv 5</span></span>tjin</td><td class="n">95</td><td class="n">3</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section score b-only">
+        <div class="sc">
+          <div class="bighex"><span class="n">84</span><span class="of">/ 100</span></div>
+          <div class="info">
+            <div class="k">Score, run 3</div>
+            <div class="big">Close. Three things cost you.</div>
+            <div class="gain">+24 pts&nbsp;<span style="color:var(--text-3);font-weight:400">rank #212 to #188</span></div>
+          </div>
+        </div>
+        <div class="seg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i></div>
+        <div class="segcap"><span><b>11 of 14</b> checks passed</span><span>3 failed</span></div>
+
+        <div class="costs">
+          <h3 class="h" style="margin-bottom:6px">Point costs:</h3>
+          <div class="cost"><span class="pt">&minus;8</span><span class="w">Footer links are missing<small>The goal has Docs, Changelog, Privacy and Terms.</small></span></div>
+          <div class="cost"><span class="pt">&minus;5</span><span class="w">Page is 2x the goal size<small>Your HTML and CSS weigh twice what the goal does.</small></span></div>
+          <div class="cost"><span class="pt">&minus;3</span><span class="w">Plan cards are narrower than the goal<small>The row is about 700 px wide, the goal is 840 px.</small></span></div>
+        </div>
+
+        <div class="again">
+          <div class="used"><span class="k">Prompts used</span><span class="v">3</span></div>
+          <button class="run"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 7a5 5 0 11-1.5-3.6M12 1.5v2.8H9.2"/></svg>Run again</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="switch" role="group" aria-label="Screen state">
+  <span>State</span>
+  <button type="button" data-s="a" aria-pressed="true">Before run</button>
+  <button type="button" data-s="b" aria-pressed="false">After scoring</button>
+</div>
+
+<script>
+(function(){
+  var goal = document.getElementById('goal');
+  var gs = goal.cloneNode(true); gs.removeAttribute('id');
+  var mine = goal.cloneNode(true); mine.removeAttribute('id'); mine.classList.add('mine');
+  document.getElementById('goalSmall').appendChild(gs);
+  document.getElementById('mineSmall').appendChild(mine);
+
+  function fit(frame){
+    var m = frame.querySelector('.mock');
+    if (m && frame.clientWidth) m.style.transform = 'scale(' + (frame.clientWidth / 960) + ')';
+  }
+  var frames = document.querySelectorAll('.frame');
+  var ro = new ResizeObserver(function(entries){ entries.forEach(function(e){ fit(e.target); }); });
+  frames.forEach(function(f){ ro.observe(f); fit(f); });
+
+  var root = document.documentElement;
+  document.querySelectorAll('.switch button').forEach(function(b){
+    b.addEventListener('click', function(){
+      root.setAttribute('data-state', b.dataset.s);
+      document.querySelectorAll('.switch button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('.tabs .right b.a-only').forEach(function(x){ x.style.display = b.dataset.s === 'a' ? 'inline' : 'none'; });
+      document.querySelectorAll('.tabs .right b.b-only').forEach(function(x){ x.style.display = b.dataset.s === 'b' ? 'inline' : 'none'; });
+      frames.forEach(fit);
+    });
+  });
+})();
+</script>
+</body>
+</html>

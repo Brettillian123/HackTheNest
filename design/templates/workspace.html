@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" data-theme="1" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>promptdyno workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+[data-theme="1"][data-mode="dark"]{--bg:#0F0D0C;--sf:#181514;--bd:#2E2826;--tx:#F1EBE4;--mu:#A39A92;--ac:#F1EBE4;--on:#0F0D0C;--br:#E5484D;--co:#E5484D;--ok:#5DBB7E}
+[data-theme="1"][data-mode="light"]{--bg:#F6F1EA;--sf:#FFFDF9;--bd:#DDD5CA;--tx:#171311;--mu:#62594F;--ac:#171311;--on:#F6F1EA;--br:#C4262B;--co:#C4262B;--ok:#1F7A45}
+[data-theme="2"][data-mode="dark"]{--bg:#0B0B0C;--sf:#141416;--bd:#29292D;--tx:#EDEDEF;--mu:#9A9AA2;--ac:#E5252A;--on:#FFFFFF;--br:#E5252A;--co:#F2A93B;--ok:#45C486}
+[data-theme="2"][data-mode="light"]{--bg:#FAFAFA;--sf:#FFFFFF;--bd:#E2E2E5;--tx:#0E0E10;--mu:#5C5C66;--ac:#D01F25;--on:#FFFFFF;--br:#D01F25;--co:#9A5E00;--ok:#18794A}
+[data-theme="3"][data-mode="dark"]{--bg:#120B0C;--sf:#1B1113;--bd:#352225;--tx:#F3E9E4;--mu:#AE9C98;--ac:#A61E29;--on:#F3E9E4;--br:#E2565E;--co:#E0A64A;--ok:#6FBF8B}
+[data-theme="3"][data-mode="light"]{--bg:#F7F0EC;--sf:#FFFBF8;--bd:#E2D4CD;--tx:#1E0F11;--mu:#6B5552;--ac:#8C1820;--on:#FFFBF8;--br:#8C1820;--co:#94590A;--ok:#1E7446}
+[data-theme="4"][data-mode="dark"]{--bg:#101112;--sf:#17191B;--bd:#2B2E31;--tx:#F2F3F4;--mu:#9BA1A6;--ac:#FF4B2B;--on:#101112;--br:#FF4B2B;--co:#F5B93F;--ok:#4CC38A}
+[data-theme="4"][data-mode="light"]{--bg:#FBFBFA;--sf:#F3F3F1;--bd:#DFDFDB;--tx:#101112;--mu:#585C60;--ac:#C92E14;--on:#FFFFFF;--br:#C92E14;--co:#8F5F00;--ok:#1A7F4B}
+:root{--hv:color-mix(in srgb,var(--sf),var(--tx) 5%);--bs:color-mix(in srgb,var(--bd),var(--tx) 18%);--r:6px;--sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--tx);font:400 14px/1.45 var(--sans);overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.mono{font-family:var(--mono)}
+.mu{color:var(--mu)}
+.app{height:calc(100vh - 36px);display:grid;grid-template-rows:48px 1fr;min-width:1000px}
+/* top bar */
+.top{display:flex;align-items:center;gap:16px;padding:0 20px;border-bottom:1px solid var(--bd)}
+.brand{font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand i{width:8px;height:8px;background:var(--br);border-radius:2px}
+.back{color:var(--mu);font-size:13px;padding:4px 8px;margin-left:-8px;border-radius:var(--r)}
+.back:hover{color:var(--tx);background:var(--hv)}
+.crumb{display:flex;align-items:center;gap:8px;font-weight:500}
+.crumb .sep{color:var(--bd)}
+.tag{font:500 12px var(--mono);color:var(--mu);border:1px solid var(--bd);border-radius:var(--r);padding:2px 8px}
+.top .end{margin-left:auto;display:flex;gap:16px;align-items:center;font-size:13px}
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;min-height:0}
+.work{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:16px;padding:16px 20px 20px;min-height:0}
+.previews{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0}
+.pv{display:flex;flex-direction:column;min-height:0}
+.pv h3{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:600;margin-bottom:8px}
+.pv h3 span{font:400 12px var(--mono);color:var(--mu)}
+.pv h3 .kb{margin-left:auto}
+.pv h3 .kb.bad{color:var(--co)}
+.frame{flex:1;min-height:0;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;background:#FFFFFF}
+/* miniature pages: fixed colours, they are someone else's site */
+.m{font:400 7px/1.4 system-ui,sans-serif;color:#1B2724;height:100%;display:flex;flex-direction:column}
+.m nav{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #E6ECEA}
+.m nav b{font-size:9px;color:#14594A;margin-right:auto}
+.m nav em{font-style:normal;background:#14594A;color:#FFF;padding:2px 7px;border-radius:3px}
+.m h1{font-size:15px;line-height:1.15;text-align:center;margin:14px 0 4px;letter-spacing:-.02em}
+.m .sub{text-align:center;color:#5B6B67;font-size:7.5px}
+.m .sw{display:flex;justify-content:center;margin:8px 0 10px}
+.m .sw span{border:1px solid #D5DEDB;padding:2px 8px}
+.m .sw span:first-child{background:#1B2724;color:#FFF;border-color:#1B2724;border-radius:3px 0 0 3px}
+.m .sw span:last-child{border-radius:0 3px 3px 0}
+.m .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px}
+.m .plan{border:1px solid #DCE4E1;border-radius:4px;padding:8px}
+.m .plan.hi{border-color:#14594A;box-shadow:inset 0 2px 0 #14594A}
+.m .plan strong{display:block;font-size:13px;margin:2px 0 4px}
+.m .plan p{color:#5B6B67;border-top:1px solid #EEF2F0;padding-top:2px}
+.m .plan u{display:block;text-decoration:none;text-align:center;margin-top:6px;padding:3px;border-radius:3px;border:1px solid #14594A;color:#14594A}
+.m .plan.hi u{background:#14594A;color:#FFF}
+.m footer{margin-top:auto;display:flex;gap:10px;padding:8px 14px;border-top:1px solid #E6ECEA;color:#5B6B67}
+.m footer span:first-child{margin-right:auto}
+.m.out h1{font-weight:600;margin-top:16px}
+.m.out .plans{gap:6px}
+.m.out .plan.hi{box-shadow:none}
+.m.out .plan.hi u{background:#1E6B59}
+/* prompt box: the focal point */
+.prompt{border:1px solid var(--bs);border-radius:var(--r);background:var(--sf);display:flex;flex-direction:column}
+.prompt:focus-within{border-color:var(--tx)}
+.ph{display:flex;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid var(--bd);font-size:13px}
+.ph b{font-weight:600}
+.ph .cnt{margin-left:auto;font:400 12px var(--mono);color:var(--mu)}
+textarea{border:0;resize:none;background:transparent;color:var(--tx);font:400 13.5px/1.6 var(--mono);padding:12px;height:132px;width:100%}
+textarea:focus{outline:none}
+.pf{display:flex;align-items:center;gap:12px;padding:8px 8px 8px 12px;border-top:1px solid var(--bd)}
+.pf label{font-size:13px;color:var(--mu);display:flex;align-items:center;gap:8px}
+select{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:4px 8px;font:500 12px var(--mono)}
+select:hover{border-color:var(--bs)}
+.note{font-size:12px;color:var(--mu)}
+.run{margin-left:auto;display:flex;align-items:center;gap:12px;background:var(--ac);color:var(--on);border:0;border-radius:var(--r);padding:8px 12px 8px 16px;font-weight:600;cursor:pointer;transition:filter .12s}
+.run:hover{filter:brightness(1.08)}
+.run:active{filter:brightness(.94)}
+.run kbd{font:500 11px var(--mono);opacity:.72;border:1px solid currentColor;border-radius:4px;padding:0 4px}
+/* score column */
+.side{border-left:1px solid var(--bd);display:flex;flex-direction:column;min-height:0}
+.score{padding:20px 20px 16px;border-bottom:1px solid var(--bd)}
+.score .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--mu)}
+.big{font:500 64px/1 var(--mono);letter-spacing:-.04em;margin:12px 0 12px}
+.big small{font-size:18px;color:var(--mu);letter-spacing:0;margin-left:4px}
+.meter{height:4px;background:var(--bd);border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;width:87%;background:var(--tx)}
+.delta{font:500 12px var(--mono);color:var(--ok);margin-top:8px}
+.list{padding:16px 20px;overflow:auto;flex:1}
+.list h4{font-size:12px;font-weight:600;color:var(--mu);margin:0 0 8px}
+.list h4+ul{margin-bottom:20px}
+.list ul{list-style:none;padding:0}
+.list li{display:grid;grid-template-columns:36px 1fr;gap:4px;padding:6px 0;border-top:1px solid var(--bd);font-size:13px}
+.list li:first-child{border-top:0}
+.list .pts{font:600 13px var(--mono);color:var(--co)}
+.list .ok{font:600 13px var(--mono);color:var(--ok)}
+.list li em{display:block;font-style:normal;color:var(--mu);font-size:12px}
+.hist{border-top:1px solid var(--bd);padding:12px 20px 16px}
+.hist h4{font-size:12px;font-weight:600;color:var(--mu);margin-bottom:8px}
+.att{display:flex;gap:8px}
+.att a{flex:1;border:1px solid var(--bd);border-radius:var(--r);padding:6px 8px;font-size:12px;color:var(--mu)}
+.att a:hover{background:var(--hv)}
+.att a b{display:block;font:600 16px var(--mono);color:var(--tx)}
+.att a.cur{border-color:var(--bs);background:var(--hv)}
+.att a.next{border-style:dashed}
+.att a.next b{color:var(--mu);font-weight:400}
+/* review control, not part of the product */
+.rv{position:fixed;left:0;right:0;bottom:0;height:36px;display:flex;align-items:center;justify-content:center;gap:4px;background:#2A2A2A;color:#BDBDBD;font:400 12px system-ui,sans-serif;border-top:1px solid #3A3A3A}
+.rv span{margin-right:8px;opacity:.7}
+.rv button{background:none;border:1px solid transparent;color:#BDBDBD;padding:3px 10px;border-radius:4px;cursor:pointer;font:inherit}
+.rv button[aria-pressed="true"]{border-color:#777;color:#FFF}
+.rv .gap{width:16px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="back" href="#challenges">&larr; Challenges</a>
+    <div class="brand"><i></i>promptdyno</div>
+    <div class="crumb"><span class="sep">/</span>Fernway pricing page<span class="tag">Medium</span></div>
+    <div class="end">
+      <span class="mu">Prompts used <span class="mono" style="color:var(--tx)">2</span></span>
+      <span class="tag">2-prompt board</span>
+    </div>
+  </header>
+  <div class="main">
+    <section class="work">
+      <div class="previews">
+        <div class="pv">
+          <h3>Goal <span>fernway.app/pricing</span><span class="kb">19.2 KB</span></h3>
+          <div class="frame"><div class="m">
+            <nav><b>Fernway</b><span>Product</span><span>Pricing</span><span>Docs</span><em>Sign in</em></nav>
+            <h1>Pricing that grows<br>with your team</h1>
+            <div class="sub">Start free. Upgrade when your board gets busy.</div>
+            <div class="sw"><span>Monthly</span><span>Yearly, save 20%</span></div>
+            <div class="plans">
+              <div class="plan">Starter<strong>$0</strong><p>3 boards</p><p>Up to 5 members</p><u>Get started</u></div>
+              <div class="plan hi">Team<strong>$12</strong><p>Unlimited boards</p><p>Guest access</p><u>Start trial</u></div>
+              <div class="plan">Business<strong>$29</strong><p>SSO and audit log</p><p>Priority support</p><u>Talk to sales</u></div>
+            </div>
+            <footer><span>&copy; 2026 Fernway</span><span>Status</span><span>Privacy</span><span>Terms</span></footer>
+          </div></div>
+        </div>
+        <div class="pv">
+          <h3>Your output <span>prompt 2, 3.4 s</span><span class="kb bad">38.6 KB</span></h3>
+          <div class="frame"><div class="m out">
+            <nav><b>Fernway</b><span>Product</span><span>Pricing</span><span>Docs</span><em>Sign in</em></nav>
+            <h1>Pricing that grows<br>with your team</h1>
+            <div class="sub">Start free. Upgrade when your board gets busy.</div>
+            <div class="sw"><span>Monthly</span><span>Yearly, save 20%</span></div>
+            <div class="plans">
+              <div class="plan">Starter<strong>$0</strong><p>3 boards</p><p>Up to 5 members</p><u>Get started</u></div>
+              <div class="plan hi">Team<strong>$12</strong><p>Unlimited boards</p><p>Guest access</p><u>Start trial</u></div>
+              <div class="plan">Business<strong>$29</strong><p>SSO and audit log</p><p>Priority support</p><u>Talk to sales</u></div>
+            </div>
+            <footer><span>&copy; 2026 Fernway</span></footer>
+          </div></div>
+        </div>
+      </div>
+      <div class="prompt">
+        <div class="ph"><b>Prompt 3</b><span class="mu">Running this moves you to the 3-5 prompt board.</span><span class="cnt">412 / 2000</span></div>
+        <textarea aria-label="Prompt" spellcheck="false">Keep everything from the last page exactly as it is. Add the footer links on the right: Status, Privacy, Terms, 24px apart, same grey as the copyright. Then cut the size: one small CSS block in the head, no repeated inline styles, no unused classes, and no comments.</textarea>
+        <div class="pf">
+          <label for="model">Model <select id="model"><option>qwen2.5-coder-7b</option><option>llama-3.1-8b</option><option>gemma-2-9b</option></select></label>
+          <span class="note">Output is scored against the goal at 1280 and 375 wide.</span>
+          <button class="run" type="button">Run prompt <kbd>Ctrl Enter</kbd></button>
+        </div>
+      </div>
+    </section>
+    <aside class="side">
+      <div class="score">
+        <div class="lbl"><span>Score, prompt 2</span><span class="mono">best</span></div>
+        <div class="big">87<small>/ 100</small></div>
+        <div class="meter"><i></i></div>
+        <div class="delta">+23 on prompt 1</div>
+      </div>
+      <div class="list">
+        <h4>Points lost</h4>
+        <ul>
+          <li><span class="pts">-8</span><span>Footer links are missing<em>Goal has Status, Privacy and Terms.</em></span></li>
+          <li><span class="pts">-5</span><span>Page is 2x the goal size<em>38.6 KB against 19.2 KB. Most of it is repeated inline styles.</em></span></li>
+        </ul>
+        <h4>Passed</h4>
+        <ul>
+          <li><span class="ok">ok</span><span>Layout matches at 1280 and 375 wide</span></li>
+          <li><span class="ok">ok</span><span>All headings, prices and plan names match</span></li>
+          <li><span class="ok">ok</span><span>Text contrast meets AA</span></li>
+          <li><span class="ok">ok</span><span>No console errors</span></li>
+        </ul>
+      </div>
+      <div class="hist">
+        <h4>Attempts</h4>
+        <div class="att">
+          <a href="#p1">Prompt 1<b>64</b></a>
+          <a href="#p2" class="cur">Prompt 2<b>87</b></a>
+          <a href="#p3" class="next">Prompt 3<b>not run</b></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<div class="rv" role="group" aria-label="Review controls">
+  <span>Review colourway</span>
+  <button data-t="1">Red ink</button><button data-t="2">Signal red</button><button data-t="3">Oxblood</button><button data-t="4">Carbon and flare</button>
+  <span class="gap"></span>
+  <button data-m="dark">Dark</button><button data-m="light">Light</button>
+</div>
+<script>
+(function(){
+  var h=document.documentElement,q=new URLSearchParams(location.search);
+  function set(t,m){
+    if(t)h.dataset.theme=t; if(m)h.dataset.mode=m;
+    document.querySelectorAll('.rv button').forEach(function(b){
+      b.setAttribute('aria-pressed',b.dataset.t===h.dataset.theme||b.dataset.m===h.dataset.mode);
+    });
+  }
+  set(/^[1-4]$/.test(q.get('theme'))?q.get('theme'):'1',/^(dark|light)$/.test(q.get('mode'))?q.get('mode'):'dark');
+  document.querySelector('.rv').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(b)set(b.dataset.t,b.dataset.m);
+  });
+})();
+</script>
+</body>
+</html>

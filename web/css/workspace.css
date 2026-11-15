@@ -1,0 +1,90 @@
+/* Workspace page layout. Colours and sizes come from tokens.css; components from components.css. */
+
+.ws [hidden]{display:none !important}
+
+/* one screen, no page scroll */
+.ws-page{height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;padding-bottom:var(--s-5);overflow:hidden}
+.ws-page > .phead,.ws-page > .tabs{flex:none}
+.ws-page > .split{flex:1;min-height:0}
+.ws-page .col{min-height:0}
+.ws-page .col > .panel{min-height:0;overflow:hidden}
+.ws-page .col > .panel.grow{flex:1 1 0}
+.ws-page .col > .panel.ws-dd-host{overflow:visible}
+
+/* frames hold the page at its real viewport, scaled by workspace.js */
+.ws .frame > iframe{width:1280px;height:800px}
+.ws-flex{display:flex;flex-direction:column}
+.ws-pair-box{min-width:0}
+
+/* tab counter */
+.ws-count{font:var(--w-semi) var(--fs-12) var(--mono);color:var(--text-3)}
+
+/* instructions menu */
+.ws-ins{min-width:380px;max-height:calc(100vh - 230px);overflow:auto}
+.ws-ins:focus-visible{outline:none}
+.ws-ins-group{padding:var(--s-3) var(--s-3) var(--s-1);font:var(--w-bold) var(--fs-11)/16px var(--ui);text-transform:uppercase;letter-spacing:.4px;color:var(--text-4)}
+.ws-model-menu{min-width:200px}
+.dd-item[aria-checked="true"]{color:var(--text);background:var(--hover)}
+
+/* prompt panel */
+.ws-prompt{display:flex;flex-direction:column}
+.ws-prompt .editor{flex:1 1 0;min-height:120px}
+.ws-status{display:flex;align-items:center;gap:var(--s-3);margin-top:var(--s-3);font-size:var(--fs-13);line-height:19px;color:var(--text-2)}
+.ws-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+.ws-prompt .again{margin-top:var(--s-5)}
+.ws-prompt .ws-sim{margin-top:var(--s-4)}
+.ws-tall{height:52px;padding:0 var(--s-8)}
+.ws-bl{display:flex;flex-direction:column;align-items:flex-start;gap:3px;line-height:1}
+.ws-bl small{font:var(--w-reg) var(--fs-11)/1 var(--ui);letter-spacing:0;opacity:.8}
+.run .ws-bl small{color:var(--text-on-red)}
+.btn .ws-bl small{color:var(--text-3)}
+
+/* last run summary while refining, and run detail costs */
+.ws-last{margin-bottom:var(--s-4);padding:var(--s-3) var(--s-5);background:var(--sunk);border-radius:var(--r-6)}
+.ws-last-top{display:flex;align-items:baseline;gap:var(--s-3);font-size:var(--fs-13);color:var(--text-2)}
+.ws-last-top b{font:var(--w-bold) var(--fs-16) var(--mono);color:var(--red)}
+.ws-mini{display:flex;align-items:baseline;gap:var(--s-4);padding:3px 0;font-size:var(--fs-13);line-height:19px;color:var(--text)}
+.ws-mini .pt{flex:none;min-width:30px;font:var(--w-bold) var(--fs-13) var(--mono);color:var(--red)}
+.ws-mini.none{color:var(--text-3)}
+
+/* score panel */
+.ws-score .costs{margin-top:0}
+.ws-score .costs .h{margin-bottom:var(--s-2)}
+.ws-score .callout{margin:0}
+.ws-score .again .btn{flex:none}
+
+/* compare panel: the prompt that produced this score fills the space under the checks */
+.ws-compare{display:flex;flex-direction:column}
+.ws-compare > .pair,.ws-compare > .checks-wrap,.ws-compare > .panel-head{flex:none}
+.ws-run-prompt{flex:1 1 0;min-height:0;display:flex;flex-direction:column;margin-top:var(--s-5);border-top:1px solid var(--line);padding-top:var(--s-4)}
+.ws-run-prompt .panel-head{margin-bottom:var(--s-3)}
+.ws-rp{flex:1 1 0;min-height:44px;padding-top:var(--s-3);padding-bottom:var(--s-3);overflow:auto;white-space:pre-wrap;word-break:break-word}
+
+/* runs panel */
+.ws-runs{display:flex;flex-direction:column;gap:var(--s-4)}
+.ws-runs .panel-head{margin-bottom:0}
+.ws-hist{max-height:150px;overflow:auto;flex:none}
+.hist-s small{margin-left:var(--s-2);font:var(--w-reg) var(--fs-11) var(--mono);color:var(--text-3)}
+.ws-detail{display:flex;flex-direction:column;gap:var(--s-3);min-height:0;flex:1}
+.ws-detail-top{display:flex;align-items:baseline;gap:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line)}
+.ws-detail-top .big{font:var(--w-bold) var(--fs-28)/1 var(--mono);color:var(--red)}
+.ws-detail-top .of{font:var(--w-semi) var(--fs-13) var(--mono);color:var(--text-4)}
+.ws-rd-costs{flex:1 1 0;min-height:60px;overflow:auto;margin-top:0}
+.ws-rd-costs .cost .w{font-size:var(--fs-15);line-height:22px}
+.ws-detail .btn{flex:none}
+
+/* stage panel */
+.ws-stages .stages.row{flex-wrap:wrap}
+
+/* page tools: overlay, ruler, magnifier */
+.tool-ov{position:absolute;inset:0;z-index:2;cursor:crosshair;touch-action:none;overflow:hidden}
+.tool-ov.mag{cursor:none}
+.tool-cx,.tool-cy{position:absolute;background:var(--red);pointer-events:none}
+.tool-cx{top:0;bottom:0;width:1px}
+.tool-cy{left:0;right:0;height:1px}
+.tool-tip{position:absolute;padding:2px var(--s-2);background:var(--overlay);border-radius:var(--r-3);font:var(--w-semi) var(--fs-11)/16px var(--mono);color:var(--text);white-space:nowrap;pointer-events:none}
+.tool-rect{position:absolute;border:1px solid var(--red);background:var(--red-tint);pointer-events:none}
+.tool-rect .tool-tip{left:0;top:100%;margin-top:var(--s-1)}
+.tool-lens{position:fixed;z-index:60;width:220px;height:220px;overflow:hidden;border-radius:var(--r-8);background:var(--white);box-shadow:0 0 0 2px var(--red),var(--shadow-float);pointer-events:none}
+.tool-lens iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none}
+.tool-lens::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-5px 0 0 -5px;border:1px solid var(--red);border-radius:50%}
