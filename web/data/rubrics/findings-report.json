@@ -1,0 +1,25 @@
+{
+  "sections": [
+    { "name": "Question", "aliases": ["The question", "Question asked"], "importance": "normal" },
+    { "name": "Answer", "aliases": ["Short answer", "Summary", "Conclusion"], "importance": "normal" },
+    { "name": "Claims", "aliases": ["Claims and sources", "Evidence", "Findings", "Details"], "importance": "normal" },
+    { "name": "Sources", "aliases": ["References", "Links", "Source list"], "importance": "major" },
+    { "name": "Not verified", "aliases": ["Unverified", "Not checked", "Open questions", "Unknowns", "Gaps"], "importance": "normal" },
+    { "name": "Cross-check", "aliases": ["Cross check", "Crosscheck", "Cross-checks", "How this was checked"], "importance": "normal" }
+  ],
+  "keyFacts": [
+    { "label": "the file name CLAUDE.md", "anyOf": ["CLAUDE.md"] },
+    { "label": "the file name AGENTS.md", "anyOf": ["AGENTS.md"] },
+    { "label": "the file name GEMINI.md", "anyOf": ["GEMINI.md"] },
+    { "label": "the setting context.fileName", "anyOf": ["context.fileName"] },
+    { "label": "the Codex size limit of 32 KiB", "anyOf": ["32 KiB"] },
+    { "label": "the Claude Code source link", "anyOf": ["https://code.claude.com/docs/en/memory"], "section": "Sources" },
+    { "label": "the OpenAI Codex source link", "anyOf": ["https://learn.chatgpt.com/docs/agent-configuration/agents-md"], "section": "Sources" },
+    { "label": "the Gemini CLI source link", "anyOf": ["https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-md.md"], "section": "Sources" },
+    { "label": "the unchecked free-tier question", "anyOf": ["free tier", "free-tier"], "importance": "major", "section": "Not verified" }
+  ],
+  "forbidden": [
+    { "label": "an angle-bracket gap", "pattern": "<[a-z][a-z _-]{1,30}>" }
+  ],
+  "limits": { "maxWords": 450, "minWords": 100 }
+}

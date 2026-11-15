@@ -75,6 +75,8 @@ export const DOC_GRADER_KINDS = ['instructions', 'readme', 'skill', 'mcp-tools']
 const DOC_KIND_BY_SLUG = {
   'agents-md-for-a-repo': 'instructions',
   'readme-for-a-cli': 'readme',
+  'mcp-server-trust-note': 'readme',
+  'findings-report': 'readme',
   'release-notes-skill': 'skill',
   'library-tools': 'mcp-tools',
 };
@@ -172,6 +174,8 @@ export const KINDS = {
       const rubric = loadRubric(dirs, slug);
       const docKind = [entry.docKind, rubric.kind, DOC_KIND_BY_SLUG[slug]].find(k => DOC_GRADER_KINDS.includes(k));
       if (!docKind) throw goalError(`no grader document kind for "${slug}" (set docKind to one of ${DOC_GRADER_KINDS.join(', ')}).`, 'This challenge is not ready yet: its grader document kind is not set.');
+      // The grader rejects unknown top-level rubric fields, so a kind in the rubric is never sent on.
+      if (!Array.isArray(rubric) && 'kind' in rubric) { const { kind, ...rest } = rubric; return { rubric: rest, docKind }; }
       return { rubric, docKind };
     },
     instruction: docInstruction,

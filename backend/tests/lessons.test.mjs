@@ -36,16 +36,29 @@ test('real lessons: 8 load in order, each with its bonus challenge linked and th
     assert.ok(one.markdown.startsWith('# '));
   }
   assert.deepEqual(bonus.filter(c => c.kind === 'workflow').map(c => c.slug).sort(), ['fix-loop-plan', 'three-page-site-plan']);
-  assert.deepEqual(bonus.filter(c => c.available).map(c => c.slug).sort(), ['fix-loop-plan', 'release-notes-skill', 'three-page-site-plan']);
+  assert.deepEqual(bonus.filter(c => !c.available).map(c => c.slug), []);
+  assert.deepEqual((await call('GET', '/api/health')).body.problems, []);
   const problems = (await call('GET', '/api/health')).body.problems;
   assert.equal(problems.some(p => p.includes('bonus challenge')), false);
 });
 
-test('a bonus challenge without a rubric is listed as unavailable with a plain reason, and runs answer 501', async () => {
-  setup({ model: 'x' });
-  const c = (await call('GET', '/api/challenges/agents-md-for-a-repo')).body.challenge;
-  assert.deepEqual([c.available, c.unavailableReason], [false, 'The grader rubric for this challenge has not been written yet.']);
-  assert.equal((await run('agents-md-for-a-repo', 'Write it')).status, 501);
+test('doc: library-tools asks for JSON only, keeps it as text, and is graded with kind "mcp-tools"', async () => {
+  const tools = { tools: [{ name: 'search_books', description: 'Search the catalogue.', inputSchema: { type: 'object', properties: {} } }] };
+  const graded = [];
+  const { calls } = setup({
+    model: '```json\n' + JSON.stringify(tools, null, 2) + '\n```',
+    service: true,
+    grader: (url, init) => { graded.push({ url, body: JSON.parse(init.body) }); return Response.json({ result: { version: '1.0.0', kind: 'mcp-tools', total: 75, pillars: { works: 75, looks: 80, engineering: 70 }, criteria: [], feedback: [] } }); },
+  });
+  const r = await run('library-tools', 'Write the tools');
+  assert.equal(r.status, 200);
+  assert.match(calls.model[0].body.system, /one JSON document and nothing else/);
+  assert.equal(r.text, JSON.stringify(tools, null, 2));
+  await score(r.headers['x-run-id']);
+  assert.equal(graded[0].url, 'https://grader.test/v1/grade/doc');
+  assert.deepEqual(graded[0].body, { kind: 'mcp-tools', rubric: rubric('library-tools'), candidate: r.text });
+  assert.equal(typeof graded[0].body.candidate, 'string');
+  assert.equal('kind' in graded[0].body.rubric, false);
 });
 
 test('doc: release-notes-skill runs as Markdown and is graded at /v1/grade/doc with kind "skill"', async () => {
