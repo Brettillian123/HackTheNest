@@ -407,7 +407,7 @@ function renderScore(run) {
     : r.intentGraded
     ? 'Marked on meeting the brief, not on matching the picture'
     : isBrief()
-    ? '80 to 90 is a solid score'
+    ? (S.ch.level >= 2 ? 'Higher levels are much harder, 70 or more is solid here' : '80 to 90 is a solid score')
     : bonus
     ? `<b>A perfect match, leaner than the goal: +${fmtScore(bonus)} bonus</b>`
     : r.total >= 100
