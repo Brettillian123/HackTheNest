@@ -1,12 +1,16 @@
 // Landing page: shell, live counts, top 5 overall leaderboard.
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, esc, demoTag, provisionalTag } from './ui.js';
+import { fitFrames, esc, demoTag, setStat, provisionalTag } from './ui.js';
 import { listChallenges, getLeaderboard, me, isSimulated, isProvisional } from './api.js';
 
 async function start() {
   mountShell({ active: 'home', user: null });
   fitFrames();
-  me().then((u) => { if (u) mountShell({ active: 'home', user: shellUser(u) }); }).catch(() => {});
+  me().then((u) => {
+    if (!u) return;
+    mountShell({ active: 'home', user: shellUser(u) });
+    setStat(document.getElementById('statAcct'), 'Signed in');
+  }).catch(() => {});
   loadCounts();
   loadBoard();
 }
@@ -38,7 +42,7 @@ async function loadBoard() {
       top.map((r) =>
         `<tr${r.isYou ? ' class="you"' : ''}><td class="pos">#${esc(r.rank)}</td>` +
         `<td><span class="who">${esc(r.username)}</span></td>` +
-        `<td class="r num">${esc(r.promptCount)}</td>` +
+        `<td class="r num">${esc(Number(r.avgPrompts ?? r.promptCount).toFixed(1))}</td>` +
         `<td class="r sc-cell">${esc(r.score)}</td></tr>`).join('') +
       '</tbody></table>';
   } catch {

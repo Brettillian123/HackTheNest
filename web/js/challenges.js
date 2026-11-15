@@ -1,6 +1,6 @@
 // Challenge list: level filter and sort kept in the URL query (?level=1&sort=solved).
 import { mountShell, shellUser } from './shell.js';
-import { fitFrames, levelClass, esc, demoTag } from './ui.js';
+import { fitFrames, levelClass, esc, demoTag, setStat } from './ui.js';
 import { listChallenges, me, isSimulated } from './api.js';
 
 const LEVELS = ['all', '1', '2', '3'];
@@ -42,10 +42,10 @@ function row(c) {
   const href = `workspace.html?c=${encodeURIComponent(c.slug)}`;
   return `<div class="chal wide">` +
     `<span class="lvl ${levelClass(c.level)}" title="${esc(c.levelLabel || '')}">Lv ${esc(c.level)}</span>` +
-    `<div class="frame" aria-hidden="true"><iframe src="data/goals/${encodeURIComponent(c.slug)}.html" title="" sandbox="allow-same-origin" loading="lazy" tabindex="-1"></iframe></div>` +
+    `<div class="frame" aria-hidden="true"><iframe src="data/goals/${encodeURIComponent(c.slug)}.html" title="" sandbox="allow-same-origin" scrolling="no" loading="lazy" tabindex="-1"></iframe></div>` +
     `<span class="chal-main"><a class="chal-link chal-title" href="${href}">${esc(c.title)}</a>` +
     `<span class="chal-brief">${esc(c.brief)}</span>` +
-    (c.levelLabel ? `<span class="chal-meta"><span class="mtag">Level ${esc(c.level)}: ${esc(c.levelLabel)}</span></span>` : '') +
+    (c.levelLabel ? `<span class="chal-meta"><span class="mtag">${esc(c.levelLabel)}</span></span>` : '') +
     `</span>` +
     `<span class="chal-cell"><span class="k">Solved</span><span class="v">${num(c.solvedCount)}</span></span>` +
     `<span class="chal-cell"><span class="k">Top score</span>${top}</span>` +
@@ -57,6 +57,7 @@ function render() {
   const state = readState();
   syncPills(state);
   let items = all.filter((c) => state.level === 'all' || String(c.level) === state.level);
+  renderCount(items.length);
   items = items.slice().sort((a, b) =>
     state.sort === 'solved'
       ? (b.solvedCount || 0) - (a.solvedCount || 0) || a.level - b.level
@@ -82,12 +83,18 @@ function setState(patch) {
   if (all) render(); else syncPills(next);
 }
 
+// "6 challenges", or "2 of 6 challenges" while a level filter is on.
+function renderCount(shown) {
+  const n = all.length;
+  const word = `challenge${n === 1 ? '' : 's'}`;
+  document.getElementById('count').textContent = shown === n ? `${n} ${word}` : `${shown} of ${n} ${word}`;
+}
+
 function renderCounts() {
   const n = all.length;
-  document.getElementById('count').textContent = `${n} challenge${n === 1 ? '' : 's'}`;
   const tried = all.filter((c) => c.yourBest != null);
   document.getElementById('statTried').textContent = `${tried.length} of ${n}`;
-  if (tried.length) document.getElementById('statBest').textContent = String(Math.max(...tried.map((c) => c.yourBest)));
+  if (tried.length) setStat(document.getElementById('statBest'), Math.max(...tried.map((c) => c.yourBest)));
 }
 
 async function load() {
@@ -114,7 +121,11 @@ document.getElementById('sorts').addEventListener('click', (e) => {
   if (b) setState({ sort: b.dataset.sort });
 });
 
-mountShell({ active: 'challenges', user: null, crumb: [{ label: 'Challenges' }] });
-me().then((u) => { if (u) mountShell({ active: 'challenges', user: shellUser(u), crumb: [{ label: 'Challenges' }] }); }).catch(() => {});
+mountShell({ active: 'challenges', user: null });
+me().then((u) => {
+  if (!u) return;
+  mountShell({ active: 'challenges', user: shellUser(u) });
+  document.getElementById('acct').textContent = `Signed in as ${u.username}`;
+}).catch(() => {});
 syncPills(readState());
 load();
