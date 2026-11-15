@@ -11,11 +11,11 @@
   "models": [
     {
       "id": "openai-mini",
-      "label": "OpenAI mini"
+      "label": "OpenAI Sol"
     },
     {
       "id": "claude-haiku",
-      "label": "Claude Haiku"
+      "label": "Claude Sonnet"
     }
   ],
   "challenges": [
