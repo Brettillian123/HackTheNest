@@ -8,6 +8,8 @@ process.env.AUTH_SECRET = 'test-secret-for-sessions-only';
 const goalFile = slug => readFileSync(new URL(`../../web/data/goals/${slug}.html`, import.meta.url), 'utf8');
 const GOAL = goalFile('login-card');
 const anon = (id = ANON) => ({ 'X-Anon-Id': id });
+// The number of main challenges, counted from the file rather than written in.
+const MAIN_CHALLENGES = JSON.parse(readFileSync(new URL('../../web/data/challenges.json', import.meta.url), 'utf8')).challenges.length;
 
 // The fake model returns the login-card goal page ("navpage" in the prompt: the nav-hero goal) (wrapped in chatter, with a script and a handler) unless
 // the prompt says "rough", which makes a weaker page.
@@ -101,7 +103,7 @@ test('claim after sign-up moves anonymous attempts, idempotently; boards show us
   const board = await call('GET', '/api/leaderboards?slug=login-card', { cookie });
   assert.deepEqual(board.body.rows, [{ rank: 1, username: 'claimer', promptCount: 1, score: 100, isYou: true }]);
   const me = await call('GET', '/api/players/me', { cookie });
-  assert.deepEqual(me.body, { user: { id: me.body.user.id, username: 'claimer', email: 'claimer@example.com' }, points: 100, level: 2, bests: { 'login-card': 100 } });
+  assert.deepEqual(me.body, { user: { id: me.body.user.id, username: 'claimer', email: 'claimer@example.com' }, points: 100, level: 2, bests: { 'login-card': 100 }, credits: 0, free: { challengesLeft: 2, promptsPerChallenge: 5, resetsAt: me.body.free.resetsAt } });
 });
 
 test('leaderboard brackets, tie-breaks, week period, overall board and profiles', async () => {
@@ -163,7 +165,7 @@ test('leaderboard brackets, tie-breaks, week period, overall board and profiles'
   const card = list.challenges.find(c => c.slug === 'login-card');
   assert.deepEqual([card.solvedCount, card.topScore, card.yourBest, card.yourBestPrompts], [4, 100, 100, 1]);
   assert.equal(list.statsAvailable, true);
-  assert.equal(list.challenges.length, 6);
+  assert.equal(list.challenges.length, MAIN_CHALLENGES);
   assert.equal(store.runs.size, 6); // amy 1, bob 2, cat 1, dan 2
 });
 
@@ -247,7 +249,7 @@ test('health reports db, models, grader mode and challenge problems without secr
   const { deps } = setup({ env: { ANTHROPIC_API_KEY: 'secret-model-key', GRADER_URL: 'https://g.test', GRADER_API_KEY: 'secret-grader-key' } });
   const res = await call('GET', '/api/health');
   // All eight shipped bonus challenges have their grader rubrics, so there are no problems.
-  assert.deepEqual(res.body, { ok: true, db: true, models: ['claude-haiku'], grader: 'service', challenges: 6, problems: [] });
+  assert.deepEqual(res.body, { ok: true, db: true, models: ['claude-haiku'], grader: 'service', challenges: MAIN_CHALLENGES, problems: [] });
   assert.doesNotMatch(res.text, /secret/);
   setDeps({ ...deps, env: {}, store: { ping: async () => { throw Object.assign(new Error('down'), { name: 'MongoServerSelectionError' }); } } });
   const down = await call('GET', '/api/health');
