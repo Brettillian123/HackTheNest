@@ -169,7 +169,7 @@ export class MemoryStore {
       if (!prev || isBetter(r, prev)) best.set(key, r);
     }
     return [...best.values()].map(r => ({
-      ownerKind: r.ownerKind, ownerId: r.ownerId, username: r.username, slug: r.slug, n: r.n, score: r.score, at: new Date(r.scoredAt),
+      ownerKind: r.ownerKind, ownerId: r.ownerId, username: r.username, slug: r.slug, n: r.n, score: r.score, at: new Date(r.scoredAt), graderVersion: r.graderVersion ?? null,
     }));
   }
 }

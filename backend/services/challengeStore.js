@@ -1,24 +1,24 @@
-// Challenges are files: web/data/challenges.json (one entry each) and web/data/goals/<slug>.html.
-// Adding a challenge = add the goal HTML + one JSON entry. Bad entries are skipped and listed in
-// /api/health "problems" instead of crashing. On Vercel the files ship with the function through
+// Challenges and lessons are files.
+// Main list: web/data/challenges.json + the goal per kind (page: web/data/goals/<slug>.html;
+// doc: web/data/rubrics/<slug>.json). Adding a challenge = add the goal file + one JSON entry.
+// Optional lessons in web/data/lessons/ (or LESSONS_DIR): index.json, NN-slug.md and challenges.json (bonus
+// challenges, tagged `lesson`, listed only with ?include=lessons). Bad entries are skipped and listed
+// in /api/health "problems" instead of crashing. On Vercel the files ship with the function through
 // "includeFiles" in vercel.json and are read relative to process.cwd().
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { KINDS, KIND_NAMES } from './kinds.js';
 
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const MAX_GOAL_BYTES = 300 * 1024;
 const DEFAULT_VIEWPORT = { width: 1280, height: 800 };
+const LESSON_FILE_RE = /^[A-Za-z0-9._-]+\.md$/;
 
 let cached = null;
 
-function dataDir() {
-  const candidates = [
-    process.env.CHALLENGES_DIR,
-    join(process.cwd(), 'web', 'data'),
-    fileURLToPath(new URL('../../web/data', import.meta.url)),
-  ].filter(Boolean);
-  return candidates.find(dir => existsSync(join(dir, 'challenges.json'))) || candidates[candidates.length - 1];
+function firstDir(envName, rel, marker) {
+  const candidates = [process.env[envName], join(process.cwd(), ...rel), fileURLToPath(new URL(`../../${rel.join('/')}`, import.meta.url))].filter(Boolean);
+  return candidates.find(dir => existsSync(join(dir, marker))) || null;
 }
 
 function validViewport(v) {
@@ -30,48 +30,139 @@ function validSpec(spec) {
     && g.items.every(i => i && typeof i.label === 'string' && typeof i.value === 'string'));
 }
 
-function load() {
-  const dir = dataDir();
-  const problems = [];
-  let data;
-  try {
-    data = JSON.parse(readFileSync(join(dir, 'challenges.json'), 'utf8'));
-  } catch {
-    return { challenges: [], bySlug: new Map(), levels: {}, models: [], viewport: DEFAULT_VIEWPORT, problems: ['challenges.json is missing or is not valid JSON.'] };
+function readJson(path) {
+  try { return { value: JSON.parse(readFileSync(path, 'utf8')) }; }
+  catch (error) { return { error: error.code === 'ENOENT' ? 'missing' : 'invalid' }; }
+}
+
+// Validates one entry; returns the challenge or pushes a problem and returns null.
+function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, problems }) {
+  const name = c && typeof c.slug === 'string' ? `"${c.slug}"` : `entry ${index + 1}`;
+  const fail = message => { problems.push(`${source} challenge ${name}: ${message}`); return null; };
+  if (!c || typeof c.slug !== 'string' || !SLUG_RE.test(c.slug) || c.slug.length > 64) return fail('slug must be lowercase letters, digits and dashes.');
+  if (bySlug.has(c.slug)) return fail('the slug is used twice.');
+  if (typeof c.title !== 'string' || !c.title.trim()) return fail('title is missing.');
+  if (!Number.isInteger(c.level) || c.level < 1 || c.level > 9) return fail('level must be a whole number from 1 to 9.');
+  if (typeof c.brief !== 'string') return fail('brief is missing.');
+  if (c.spec !== undefined && !validSpec(c.spec)) return fail('spec must be groups of { label, value } items.');
+  if (c.viewport !== undefined && !validViewport(c.viewport)) return fail('viewport must have whole-number width and height.');
+  const kind = c.kind === undefined ? 'page' : c.kind;
+  if (!KIND_NAMES.includes(kind)) return fail(`kind must be one of ${KIND_NAMES.join(', ')}.`);
+  if (c.criteria !== undefined && !(Array.isArray(c.criteria) && c.criteria.every(x => typeof x === 'string'))) return fail('criteria must be a list of sentences.');
+  const challenge = {
+    slug: c.slug,
+    title: c.title.trim(),
+    level: c.level,
+    levelLabel: typeof levels[String(c.level)] === 'string' ? levels[String(c.level)] : null,
+    brief: c.brief,
+    kind,
+    viewport: c.viewport ? { width: c.viewport.width, height: c.viewport.height } : viewport,
+    spec: c.spec || [],
+    available: KINDS[kind].available,
+    unavailableReason: KINDS[kind].notBuilt || null,
+  };
+  if (c.criteria) challenge.criteria = c.criteria.slice();
+  if (c.marks !== undefined) challenge.marks = c.marks; // reserved: sent next to the goal when present
+  if (KINDS[kind].loadGoal) {
+    try { Object.assign(challenge, KINDS[kind].loadGoal(dirs, c.slug)); }
+    catch (error) {
+      // A page without its goal is skipped; other kinds stay listed but cannot be played yet.
+      if (kind === 'page') return fail(error.message);
+      problems.push(`${source} challenge ${name}: ${error.message}`);
+      challenge.available = false;
+      challenge.unavailableReason = 'This challenge is not ready yet.';
+    }
   }
+  return challenge;
+}
+
+function parseFrontMatter(text) {
+  const m = /^﻿?---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text);
+  if (!m) return { fields: {}, markdown: text };
+  const fields = {};
+  for (const line of m[1].split(/\r?\n/)) {
+    const kv = /^([A-Za-z][\w-]*)\s*:\s*(.*)$/.exec(line);
+    if (!kv) continue;
+    let value = kv[2].trim().replace(/^(['"])(.*)\1$/, '$2');
+    if (/^-?\d+(\.\d+)?$/.test(value)) value = Number(value);
+    fields[kv[1]] = value;
+  }
+  return { fields, markdown: text.slice(m[0].length).replace(/^(\r?\n)+/, '') };
+}
+
+// Lessons live in <data folder>/lessons; LESSONS_DIR, when set, is used instead (no fallback).
+function lessonsFolder(dataDir) {
+  const dir = process.env.LESSONS_DIR || (dataDir ? join(dataDir, 'lessons') : null);
+  return dir && (existsSync(join(dir, 'index.json')) || existsSync(join(dir, 'challenges.json'))) ? dir : null;
+}
+
+function loadLessons(problems, dataDir) {
+  const dir = lessonsFolder(dataDir);
+  if (!dir) return { dir: null, lessons: [] };
+  const lessons = [];
+  const index = existsSync(join(dir, 'index.json')) ? readJson(join(dir, 'index.json')) : { value: [] };
+  if (index.error || !Array.isArray(index.value)) {
+    problems.push('lessons/index.json is not a valid JSON list.');
+    return { dir, lessons };
+  }
+  const seen = new Set();
+  index.value.forEach((l, i) => {
+    const name = l && typeof l.slug === 'string' ? `"${l.slug}"` : `entry ${i + 1}`;
+    if (!l || typeof l.slug !== 'string' || !SLUG_RE.test(l.slug) || seen.has(l.slug)) return problems.push(`Lesson ${name}: slug is missing, invalid or used twice.`);
+    if (typeof l.title !== 'string' || !l.title.trim()) return problems.push(`Lesson ${name}: title is missing.`);
+    if (typeof l.file !== 'string' || !LESSON_FILE_RE.test(l.file) || !existsSync(join(dir, l.file))) return problems.push(`Lesson ${name}: file is missing.`);
+    seen.add(l.slug);
+    lessons.push({
+      slug: l.slug,
+      title: l.title.trim(),
+      level: Number.isFinite(l.level) ? l.level : null,
+      minutes: Number.isFinite(l.minutes) ? l.minutes : null,
+      summary: typeof l.summary === 'string' ? l.summary : '',
+      file: l.file,
+      bonusChallenge: typeof l.bonusChallenge === 'string' && SLUG_RE.test(l.bonusChallenge) ? l.bonusChallenge : null,
+      grader: typeof l.grader === 'string' ? l.grader : null,
+      order: Number.isFinite(l.order) ? l.order : i + 1,
+    });
+  });
+  lessons.sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
+  return { dir, lessons };
+}
+
+function load() {
+  const problems = [];
+  const dataDir = firstDir('CHALLENGES_DIR', ['web', 'data'], 'challenges.json');
+  const main = dataDir ? readJson(join(dataDir, 'challenges.json')) : { error: 'missing' };
+  if (main.error) problems.push('challenges.json is missing or is not valid JSON.');
+  const data = main.value || {};
   const viewport = validViewport(data.viewport) ? { width: data.viewport.width, height: data.viewport.height } : DEFAULT_VIEWPORT;
   const levels = data.levels && typeof data.levels === 'object' ? data.levels : {};
   const models = Array.isArray(data.models) ? data.models.filter(m => m && typeof m.id === 'string' && typeof m.label === 'string') : [];
-  const challenges = [];
   const bySlug = new Map();
-  (Array.isArray(data.challenges) ? data.challenges : []).forEach((c, index) => {
-    const name = c && typeof c.slug === 'string' ? `"${c.slug}"` : `entry ${index + 1}`;
-    if (!c || typeof c.slug !== 'string' || !SLUG_RE.test(c.slug) || c.slug.length > 64) return problems.push(`Challenge ${name}: slug must be lowercase letters, digits and dashes.`);
-    if (bySlug.has(c.slug)) return problems.push(`Challenge ${name}: the slug is used twice.`);
-    if (typeof c.title !== 'string' || !c.title.trim()) return problems.push(`Challenge ${name}: title is missing.`);
-    if (!Number.isInteger(c.level) || c.level < 1 || c.level > 9) return problems.push(`Challenge ${name}: level must be a whole number from 1 to 9.`);
-    if (typeof c.brief !== 'string') return problems.push(`Challenge ${name}: brief is missing.`);
-    if (c.spec !== undefined && !validSpec(c.spec)) return problems.push(`Challenge ${name}: spec must be groups of { label, value } items.`);
-    if (c.viewport !== undefined && !validViewport(c.viewport)) return problems.push(`Challenge ${name}: viewport must have whole-number width and height.`);
-    let goalHtml;
-    try { goalHtml = readFileSync(join(dir, 'goals', `${c.slug}.html`), 'utf8'); }
-    catch { return problems.push(`Challenge ${name}: goals/${c.slug}.html is missing.`); }
-    if (!goalHtml.trim()) return problems.push(`Challenge ${name}: goals/${c.slug}.html is empty.`);
-    if (Buffer.byteLength(goalHtml) > MAX_GOAL_BYTES) return problems.push(`Challenge ${name}: goals/${c.slug}.html is over 300 KB.`);
-    const challenge = {
-      slug: c.slug,
-      title: c.title.trim(),
-      level: c.level,
-      levelLabel: typeof levels[String(c.level)] === 'string' ? levels[String(c.level)] : null,
-      brief: c.brief,
-      viewport: c.viewport ? { width: c.viewport.width, height: c.viewport.height } : viewport,
-      spec: c.spec || [],
-      goalHtml,
-    };
-    challenges.push(challenge);
-    bySlug.set(c.slug, challenge);
+  const challenges = [];
+  (Array.isArray(data.challenges) ? data.challenges : []).forEach((c, i) => {
+    const built = buildChallenge(c, i, { source: 'Main', dirs: [dataDir], levels, viewport, bySlug, problems });
+    if (built) { challenges.push(built); bySlug.set(built.slug, built); }
   });
-  return { challenges, bySlug, levels, models, viewport, problems };
+
+  const { dir: lessonsDir, lessons } = loadLessons(problems, dataDir);
+  const lessonChallenges = [];
+  if (lessonsDir && existsSync(join(lessonsDir, 'challenges.json'))) {
+    const file = readJson(join(lessonsDir, 'challenges.json'));
+    const list = Array.isArray(file.value) ? file.value : Array.isArray(file.value?.challenges) ? file.value.challenges : null;
+    if (!list) problems.push('lessons/challenges.json is not a valid challenge list.');
+    else {
+      const lessonLevels = file.value?.levels && typeof file.value.levels === 'object' ? file.value.levels : levels;
+      list.forEach((c, i) => {
+        const built = buildChallenge(c, i, { source: 'Lesson', dirs: [dataDir].filter(Boolean), levels: lessonLevels, viewport, bySlug, problems });
+        if (!built) return;
+        const owner = typeof c.lesson === 'string' ? c.lesson : lessons.find(l => l.bonusChallenge === built.slug)?.slug;
+        built.lesson = owner || null;
+        lessonChallenges.push(built);
+        bySlug.set(built.slug, built);
+      });
+    }
+  }
+  return { challenges, lessonChallenges, bySlug, levels, models, viewport, lessons, lessonsDir, problems };
 }
 
 export function challengeData() {
@@ -84,11 +175,31 @@ export function reloadChallenges() {
   return challengeData();
 }
 
-export function listChallengeFiles() {
-  return challengeData().challenges;
+export function listChallengeFiles({ includeLessons = false } = {}) {
+  const data = challengeData();
+  return includeLessons ? [...data.challenges, ...data.lessonChallenges] : data.challenges;
+}
+
+export function allChallengeFiles() {
+  return listChallengeFiles({ includeLessons: true });
 }
 
 export function getChallengeFile(slug) {
   if (typeof slug !== 'string' || !SLUG_RE.test(slug)) return null;
   return challengeData().bySlug.get(slug) || null;
+}
+
+export function listLessons() {
+  return challengeData().lessons;
+}
+
+// The lesson entry plus its Markdown (front matter stripped and parsed into `fields`), or null.
+export function getLesson(slug) {
+  if (typeof slug !== 'string' || !SLUG_RE.test(slug)) return null;
+  const data = challengeData();
+  const lesson = data.lessons.find(l => l.slug === slug);
+  if (!lesson) return null;
+  let text;
+  try { text = readFileSync(join(data.lessonsDir, lesson.file), 'utf8'); } catch { return null; }
+  return { ...lesson, ...parseFrontMatter(text) };
 }

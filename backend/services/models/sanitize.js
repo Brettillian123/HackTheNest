@@ -4,7 +4,9 @@
 // rebuilt from an allowed tag set with allowed attributes only. Any "<" that is not part of a
 // rebuilt tag is escaped, so dropped fragments can never join into a new tag. Attribute values are
 // entity-decoded and CSS is escape-decoded before URL and CSS checks. Only inert URLs survive:
-// "#..." and "mailto:" links, and small data:image/ (png, jpeg, gif, webp) images.
+// "#..." and "mailto:" links, url(#id) references inside inline SVG, and data:image/ (png, jpeg,
+// gif, webp, svg+xml) URLs up to 200 KB in img src and CSS url(). Inline <svg> is kept with a safe
+// set of shape, text and gradient elements and presentation attributes.
 // <style> blocks and style attributes are kept, minus @import, url(), image-set() and friends.
 //
 // Cleaning is idempotent (clean(clean(x)) === clean(x)) and prefix-stable: cleaning a prefix gives
@@ -31,11 +33,27 @@ const TAG_ATTRS = {
   details: ['open'], summary: [], progress: ['value', 'max'], meter: ['value', 'min', 'max', 'low', 'high', 'optimum'], output: [],
   title: [], style: [],
 };
+// Inline SVG: shapes, text, gradients, clipping and <use> of local ids. Tag names are written in
+// lower case; the browser's HTML parser restores SVG's camelCase names and attributes.
+const SVG_PRESENTATION = ['fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-opacity', 'stroke-miterlimit', 'opacity', 'transform', 'clip-path', 'clip-rule', 'mask', 'font-size', 'font-family', 'font-weight', 'font-style', 'text-anchor', 'dominant-baseline', 'letter-spacing', 'visibility', 'display', 'color', 'stop-color', 'stop-opacity', 'vector-effect', 'shape-rendering', 'paint-order'];
+const SVG_ATTRS = {
+  svg: ['xmlns', 'viewbox', 'width', 'height', 'preserveaspectratio', 'x', 'y', 'focusable', 'aria-hidden'],
+  g: [], defs: [], desc: [], symbol: ['viewbox', 'preserveaspectratio'],
+  path: ['d', 'pathlength'], circle: ['cx', 'cy', 'r'], ellipse: ['cx', 'cy', 'rx', 'ry'], rect: ['x', 'y', 'width', 'height', 'rx', 'ry'],
+  line: ['x1', 'y1', 'x2', 'y2'], polyline: ['points'], polygon: ['points'],
+  text: ['x', 'y', 'dx', 'dy', 'rotate', 'textlength', 'lengthadjust'], tspan: ['x', 'y', 'dx', 'dy'],
+  lineargradient: ['x1', 'y1', 'x2', 'y2', 'gradientunits', 'gradienttransform', 'spreadmethod'],
+  radialgradient: ['cx', 'cy', 'r', 'fx', 'fy', 'gradientunits', 'gradienttransform', 'spreadmethod'],
+  stop: ['offset'], clippath: ['clippathunits'], mask: ['maskunits', 'x', 'y', 'width', 'height'],
+  use: ['href', 'xlink:href', 'x', 'y', 'width', 'height'],
+};
+const SVG_TAGS = new Set(Object.keys(SVG_ATTRS));
+for (const [tag, attrs] of Object.entries(SVG_ATTRS)) TAG_ATTRS[tag] = [...attrs, ...SVG_PRESENTATION];
 const VOID = new Set(['br', 'hr', 'wbr', 'img', 'input', 'meta', 'col']);
 // Raw-text elements removed with their content (the browser does not parse markup inside them).
 const RAW_DROP = new Set(['script', 'iframe', 'noembed', 'noframes', 'xmp', 'noscript', 'plaintext']);
 // Elements removed with everything inside them (nesting counted).
-const NEST_DROP = new Set(['template', 'object', 'svg', 'math', 'canvas', 'video', 'audio', 'picture', 'frameset', 'applet', 'portal']);
+const NEST_DROP = new Set(['template', 'object', 'foreignobject', 'math', 'canvas', 'video', 'audio', 'picture', 'frameset', 'applet', 'portal']);
 const RCDATA_KEEP = new Set(['title', 'textarea']);
 const META_NAMES = new Set(['viewport', 'description']);
 
@@ -73,7 +91,8 @@ function encodeCss(css) {
   return css.replace(/\\/g, '\\\\').replace(/</g, '\\3c ');
 }
 
-const isDataImage = value => /^data:image\/(png|jpe?g|gif|webp);base64,[a-z0-9+/=\s]+$/i.test(value) && value.length <= MAX_DATA_IMAGE;
+const isDataImage = value => value.length <= MAX_DATA_IMAGE
+  && /^data:image\/(png|jpe?g|gif|webp|svg\+xml)(;charset=[\w-]+)?(;base64,[a-z0-9+/=\s]+|,[^"'()\\<>]*)$/i.test(value);
 
 // Replaces risky CSS functions (and everything up to their matching ")") with "none".
 function replaceFunctions(css) {
@@ -124,7 +143,7 @@ function readTag(s, i) {
   for (;;) {
     while (j < s.length && /[\s/]/.test(s[j])) j += 1;
     if (j >= s.length) return null;
-    if (s[j] === '>') return { name: name.toLowerCase(), attrs, end: j + 1, closing };
+    if (s[j] === '>') return { name: name.toLowerCase(), attrs, end: j + 1, closing, selfClosing: s[j - 1] === '/' };
     let attr = s[j++];
     while (j < s.length && !/[\s/>=]/.test(s[j])) attr += s[j++];
     while (j < s.length && /\s/.test(s[j])) j += 1;
@@ -175,12 +194,15 @@ function rebuildAttrs(tag, attrs) {
     if ((!allowed.has(name) && !isAria && !isData) || seen.has(name)) continue;
     seen.add(name);
     let value = raw == null ? null : decodeEntities(raw);
-    if (name === 'href') {
+    if (name === 'href' || name === 'xlink:href') {
       const v = (value || '').replace(/[\u0000- \u007f-\u009f]/g, '').toLowerCase();
       if (!(v.startsWith('#') || v.startsWith('mailto:'))) value = '#';
     } else if (name === 'src') {
       if (!isDataImage((value || '').trim())) continue;
       value = value.trim();
+    } else if (SVG_TAGS.has(tag) && value != null && /url\(|image|expression/i.test(decodeCssEscapes(value))) {
+      // Presentation attributes may only reference local ids: url(#id).
+      if (!/^\s*url\(\s*['"]?#[\w-]+['"]?\s*\)\s*$/.test(decodeCssEscapes(value))) continue;
     } else if (name === 'style') {
       value = cleanCss((value || '').replace(/&[a-zA-Z0-9]+;?/g, ''));
     }
@@ -189,7 +211,7 @@ function rebuildAttrs(tag, attrs) {
   return out;
 }
 
-function openTag(tag, attrs) {
+function openTag(tag, attrs, selfClosing = false) {
   if (tag === 'meta') {
     const kept = rebuildAttrs(tag, attrs);
     const name = attrs.find(([n]) => n === 'name')?.[1];
@@ -198,7 +220,8 @@ function openTag(tag, attrs) {
     return `<meta${kept.length ? ' ' + kept.join(' ') : ''}>`;
   }
   const kept = rebuildAttrs(tag, attrs);
-  return `<${tag}${kept.length ? ' ' + kept.join(' ') : ''}>`;
+  const close = selfClosing && SVG_TAGS.has(tag) ? ' /' : '';
+  return `<${tag}${kept.length ? ' ' + kept.join(' ') : ''}${close}>`;
 }
 
 // Cleans markup. final=false stops before an unfinished token (for streaming).
@@ -289,7 +312,7 @@ function cleanMarkup(s, final) {
       continue;
     }
     if (Object.hasOwn(TAG_ATTRS, name)) {
-      if (!emit(openTag(name, tag.attrs))) break;
+      if (!emit(openTag(name, tag.attrs, tag.selfClosing))) break;
     }
     i = tag.end;
   }

@@ -68,9 +68,9 @@ test('grader mode follows the two env variables', () => {
 
 test('service result maps to the site shape', () => {
   const r = mapServiceResult({ total: 87.5, pillars: { works: 90, engineering: 80, looks: 88 }, feedback: [{ message: 'An image has no text description.', points: 6.3 }, { message: 'Too big.', points: 9 }] });
-  assert.equal(r.total, 88);
-  assert.deepEqual(r.checks, [{ label: 'Page works', passed: true }, { label: 'Clean code', passed: false }, { label: 'Looks like the goal', passed: false }]);
-  assert.deepEqual(r.costs, [{ points: 9, message: 'Too big.' }, { points: 6, message: 'An image has no text description.' }]);
+  assert.equal(r.total, 87.5);
+  assert.deepEqual(r.checks, [{ label: 'It works', passed: true }, { label: 'Well engineered', passed: false }, { label: 'Looks like the goal', passed: false }]);
+  assert.deepEqual(r.costs, [{ points: 9, message: 'Too big.' }, { points: 6.3, message: 'An image has no text description.' }]);
   assert.equal(r.provisional, false);
 });
 

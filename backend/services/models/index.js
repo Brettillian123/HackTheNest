@@ -37,20 +37,8 @@ export function findModel(id, env) {
   return availableModels(env).find(m => m.id === id) || null;
 }
 
-export function systemInstruction(viewport) {
-  return [
-    'You are a web page generator. Reply with exactly one complete HTML document, starting with <!doctype html> and ending with </html>, and nothing else: no explanations, no Markdown, no code fences.',
-    'Put all CSS inline: in one <style> element in the head or in style attributes.',
-    'Do not use JavaScript: no <script> elements and no event-handler attributes.',
-    'Do not load anything external: no external stylesheets, web fonts, images, iframes or URLs. Use system fonts, and draw shapes with CSS instead of images.',
-    `Design for a browser viewport of ${viewport.width} x ${viewport.height} pixels.`,
-  ].join('\n');
-}
-
-export function userMessage(prompt, previousHtml) {
-  if (!previousHtml) return `Build this page:\n\n${prompt}`;
-  return `Here is the current page:\n\n${previousHtml}\n\nRevise it according to the instruction below and reply with the complete revised document.\n\nInstruction:\n${prompt}`;
-}
+// The fixed instructions per challenge kind live in ../kinds.js.
+export { pageInstruction as systemInstruction } from '../kinds.js';
 
 // Yields { event, data } from a server-sent events body.
 async function* sse(body) {
