@@ -56,7 +56,8 @@ export function validAnonId(value) {
   return typeof value === 'string' && ANON_RE.test(value);
 }
 
-function clientIp(request) {
+// A hash of the caller's IP address (never stored in the clear). Also used by the free tier.
+export function clientIp(request) {
   const forwarded = header(request, 'x-forwarded-for');
   const ip = (forwarded && forwarded.split(',')[0].trim()) || header(request, 'x-real-ip') || request.socket?.remoteAddress || 'unknown';
   return createHash('sha256').update(`promptdyno-ip:${ip}`).digest('base64url').slice(0, 22);

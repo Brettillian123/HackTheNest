@@ -9,6 +9,7 @@ import { graderMode, liveGraderVersion } from '../services/grader/index.js';
 import { checkDailyCap, optionalPlayer, requirePlayer, resolvePlayer, sessionUser, validAnonId } from '../services/playerService.js';
 import { ID_RE, PASTED_CODE, beginRun, claim, currentAttempt, finishRun, newId, previousOutput, promptHasCode, scoreRun, startOver } from '../services/gameService.js';
 import { BRACKETS, challengeStats, leaderboard, playerSummary, profile } from '../services/boardService.js';
+import { costFor, freeStatus, limitsOn, publicFree, reserveRun } from '../services/billingService.js';
 
 const USERNAME_RE = /^[A-Za-z0-9_]{3,24}$/;
 
@@ -19,16 +20,25 @@ function requireSlug(value) {
   return challenge;
 }
 
-function summary(c, stats) {
+function summary(c, stats, cost) {
   const s = stats?.get(c.slug) || { solvedCount: null, topScore: null, yourBest: null, yourBestPrompts: null };
   const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, brief: c.brief, kind: c.kind, available: c.available, maxPromptChars: c.maxPromptChars, maxOutputTokens: c.maxOutputTokens, ...s };
   if (c.lesson !== undefined) out.lesson = c.lesson;
+  if (cost !== undefined) out.cost = cost;
   return out;
 }
 
 async function statsOrNull(player, deps) {
   try { return await challengeStats(player, deps); }
   catch (error) { logError('Challenge stats', error); return null; }
+}
+
+// Today's free-tier counters for the cost labels, or null when they could not be read (every run is
+// then labelled with its credit cost).
+async function freeOrNull(request, player, deps) {
+  if (!limitsOn(deps.env)) return null;
+  try { return await freeStatus(request, player, deps); }
+  catch (error) { logError('Free tier status', error); return null; }
 }
 
 function modelList(env) {
@@ -43,18 +53,18 @@ const listChallenges = guarded('List challenges', async (request, response) => {
   const deps = getDeps();
   const player = optionalPlayer(request);
   const includeLessons = queryOf(request).get('include') === 'lessons';
-  const stats = await statsOrNull(player, deps);
-  sendJson(response, 200, { challenges: listChallengeFiles({ includeLessons }).map(c => summary(c, stats)), statsAvailable: Boolean(stats) });
+  const [stats, free] = await Promise.all([statsOrNull(player, deps), freeOrNull(request, player, deps)]);
+  sendJson(response, 200, { challenges: listChallengeFiles({ includeLessons }).map(c => summary(c, stats, costFor(c, free, deps.env))), statsAvailable: Boolean(stats) });
 });
 
 const getChallenge = guarded('Get challenge', async (request, response, [slug]) => {
   const deps = getDeps();
   const challenge = requireSlug(slug);
   const player = optionalPlayer(request);
-  const stats = await statsOrNull(player, deps);
+  const [stats, free] = await Promise.all([statsOrNull(player, deps), freeOrNull(request, player, deps)]);
   const models = modelList(deps.env);
   const detail = {
-    ...summary(challenge, stats),
+    ...summary(challenge, stats, costFor(challenge, free, deps.env)),
     goalUrl: challenge.kind === 'page' ? `/data/goals/${challenge.slug}.html` : null,
     viewport: { ...challenge.viewport },
     spec: challenge.spec,
@@ -118,76 +128,88 @@ const createRun = guarded('Create run', async (request, response) => {
   // Nothing is saved until the model's reply has been checked. The cap check and the previous
   // output are independent reads, made together.
   const [, previous] = await Promise.all([checkDailyCap(request, player, deps), previousOutput(player, challenge, deps)]);
-  const system = kind.instruction(challenge);
-  const stream = generate({
-    model, env: deps.env, fetch: deps.fetch, signal, maxOutputTokens: challenge.maxOutputTokens,
-    system,
-    user: kind.userMessage(prompt, previous),
-  });
-  const cleaner = kind.cleaner(challenge);
-  const leak = leakChecker(system);
-  const reject = message => { finished = true; controller.abort(); return new HttpError(422, message); };
-
-  // 1. Hold the reply until there is cleaned output and enough text to judge it, or until it ends
-  //    (a workflow plan is always held to the end so it can be checked as JSON).
-  let raw = '';
-  let pending = '';
-  let ended = false;
+  // The free prompt or the credits are reserved before the model is called (402 when neither is
+  // possible) and given back unless the run ends fully generated and saved.
+  const reservation = await reserveRun(request, player, challenge, runId, deps);
+  let saved = false;
   try {
-    for (;;) {
-      const step = await stream.next();
-      if (step.done) { ended = true; break; }
-      raw += step.value;
-      pending += cleaner.push(step.value);
-      if (!kind.bufferAll && pending && raw.length >= HOLD_CHARS) break;
-    }
-  } catch (error) {
-    if (error instanceof ModelError) throw new HttpError(error.status, error.message);
-    throw error;
-  }
-  let final = null;
-  if (ended) { final = cleaner.finish(); pending += final.rest; }
-  // A refusal, leaked instructions or no usable output: 422 and the prompt is not counted.
-  if (leak.leaks(raw) || (ended && (!final.html || isRefusal(raw))) || !pending) throw reject(NO_PAGE);
-  const invalid = ended && kind.validate ? kind.validate(final.html) : null;
-  if (invalid) throw reject(invalid);
+    const system = kind.instruction(challenge);
+    const stream = generate({
+      model, env: deps.env, fetch: deps.fetch, signal, maxOutputTokens: challenge.maxOutputTokens,
+      system,
+      user: kind.userMessage(prompt, previous),
+    });
+    const cleaner = kind.cleaner(challenge);
+    const leak = leakChecker(system);
+    const reject = message => { finished = true; controller.abort(); return new HttpError(422, message); };
 
-  // 2. Save the run and stream the rest.
-  const { attempt, run } = await beginRun({ player, challenge, prompt, model: model.id, runId }, deps);
-  response.writeHead(200, {
-    'Content-Type': kind.streamType,
-    'Cache-Control': 'no-store',
-    'X-Content-Type-Options': 'nosniff',
-    'Content-Security-Policy': "sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:",
-    'X-Run-Id': runId,
-    'X-Attempt-Id': attempt._id,
-    // The prompt count this run will have if it completes (a failed or cancelled run is discarded).
-    'X-Prompt-Count': String(run.n),
-  });
-  response.write(pending);
-
-  let status = 'done';
-  if (!ended) {
+    // 1. Hold the reply until there is cleaned output and enough text to judge it, or until it ends
+    //    (a workflow plan is always held to the end so it can be checked as JSON).
+    let raw = '';
+    let pending = '';
+    let ended = false;
     try {
-      for await (const chunk of stream) {
-        raw += chunk;
-        // Instructions showing up later stop the run; it is discarded and not counted.
-        if (leak.leaks(raw.slice(-(chunk.length + leak.window)))) { status = 'failed'; controller.abort(); break; }
-        const piece = cleaner.push(chunk);
-        if (piece) response.write(piece);
+      for (;;) {
+        const step = await stream.next();
+        if (step.done) { ended = true; break; }
+        raw += step.value;
+        pending += cleaner.push(step.value);
+        if (!kind.bufferAll && pending && raw.length >= HOLD_CHARS) break;
       }
     } catch (error) {
-      status = controller.signal.aborted ? 'cancelled' : 'failed';
-      if (!(error instanceof ModelError)) logError('Run stream', error);
+      if (error instanceof ModelError) throw new HttpError(error.status, error.message);
+      throw error;
     }
-    final = cleaner.finish();
-    if (final.rest && status === 'done') response.write(final.rest);
+    let final = null;
+    if (ended) { final = cleaner.finish(); pending += final.rest; }
+    // A refusal, leaked instructions or no usable output: 422 and the prompt is not counted.
+    if (leak.leaks(raw) || (ended && (!final.html || isRefusal(raw))) || !pending) throw reject(NO_PAGE);
+    const invalid = ended && kind.validate ? kind.validate(final.html) : null;
+    if (invalid) throw reject(invalid);
+
+    // 2. Save the run and stream the rest.
+    const { attempt, run } = await beginRun({ player, challenge, prompt, model: model.id, runId }, deps);
+    response.writeHead(200, {
+      'Content-Type': kind.streamType,
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+      'Content-Security-Policy': "sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:",
+      'X-Run-Id': runId,
+      'X-Attempt-Id': attempt._id,
+      // The prompt count this run will have if it completes (a failed or cancelled run is discarded).
+      'X-Prompt-Count': String(run.n),
+    });
+    response.write(pending);
+
+    let status = 'done';
+    if (!ended) {
+      try {
+        for await (const chunk of stream) {
+          raw += chunk;
+          // Instructions showing up later stop the run; it is discarded and not counted.
+          if (leak.leaks(raw.slice(-(chunk.length + leak.window)))) { status = 'failed'; controller.abort(); break; }
+          const piece = cleaner.push(chunk);
+          if (piece) response.write(piece);
+        }
+      } catch (error) {
+        status = controller.signal.aborted ? 'cancelled' : 'failed';
+        if (!(error instanceof ModelError)) logError('Run stream', error);
+      }
+      final = cleaner.finish();
+      if (final.rest && status === 'done') response.write(final.rest);
+    }
+    const output = final.html;
+    if (status === 'done' && !output) status = 'failed';
+    finished = true;
+    await finishRun(run, { output, status }, deps);
+    saved = status === 'done';
+    response.end();
+  } finally {
+    if (!saved) {
+      try { await reservation.release(); }
+      catch (error) { logError('Release run reservation', error); }
+    }
   }
-  const output = final.html;
-  if (status === 'done' && !output) status = 'failed';
-  finished = true;
-  await finishRun(run, { output, status }, deps);
-  response.end();
 });
 
 const scoreRunHandler = guarded('Score run', async (request, response, [runId]) => {
@@ -251,7 +273,13 @@ const userProfile = guarded('Profile', async (_request, response, [username]) =>
 const playersMe = guarded('Player summary', async (request, response) => {
   const deps = getDeps();
   const player = optionalPlayer(request);
-  sendJson(response, 200, await playerSummary(player, sessionUser(request), deps));
+  const user = sessionUser(request);
+  const [base, credits, free] = await Promise.all([
+    playerSummary(player, user, deps),
+    player?.kind === 'user' ? deps.store.getCredits(player.id) : null,
+    freeStatus(request, player, deps),
+  ]);
+  sendJson(response, 200, { ...base, credits, free: publicFree(free) });
 });
 
 // ------------------------------------------------------------------ health

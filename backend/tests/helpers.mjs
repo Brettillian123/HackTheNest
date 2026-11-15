@@ -105,7 +105,10 @@ function standinService(state) {
   };
 }
 
-export function setup({ env = { ANTHROPIC_API_KEY: 'test-model-key' }, model, grader, now, service = false } = {}) {
+// The free tier and credit charges (billingService.js) are switched off here unless `billing: true`,
+// so tests about other features can make as many runs as they need; billing.test.mjs turns them on.
+export function setup({ env = { ANTHROPIC_API_KEY: 'test-model-key' }, model, grader, now, service = false, billing = false } = {}) {
+  if (!billing) env = { ...env, BILLING_LIMITS: 'off' };
   const store = new MemoryStore();
   setDatabaseOverride(store.database());
   const calls = { model: [], grader: [] };

@@ -1,5 +1,6 @@
 // Game routes, matched by method and path. api.js calls matchGameRoute() before its 404.
 import { gameHandlers as h } from '../controller/gameController.js';
+import { billingHandlers as b } from '../controller/billingController.js';
 
 const routes = [
   ['GET', /^\/api\/health$/, h.health],
@@ -15,6 +16,10 @@ const routes = [
   ['GET', /^\/api\/leaderboards$/, h.leaderboards],
   ['GET', /^\/api\/users\/([^/]+)$/, h.userProfile],
   ['GET', /^\/api\/players\/me$/, h.playersMe],
+  ['GET', /^\/api\/billing\/summary$/, b.summary],
+  ['POST', /^\/api\/billing\/checkout$/, b.checkout],
+  ['POST', /^\/api\/billing\/confirm$/, b.confirm],
+  ['POST', /^\/api\/billing\/webhook$/, b.webhook],
 ];
 
 // Returns a (request, response) handler, or null when no game route matches.
