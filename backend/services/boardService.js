@@ -83,7 +83,11 @@ const isOwner = (e, player) => player && e.ownerKind === player.kind && e.ownerI
 
 export async function leaderboard({ slug, bracket, period, player }, { store, now, env }) {
   const since = period === 'week' ? new Date(now() - 7 * 86_400_000) : null;
-  const rows = await store.bestScores({ slug, since, ...FINAL });
+  // The player's own rows are read with the board, not after it (used when they are off the board).
+  const [rows, ownRows] = await Promise.all([
+    store.bestScores({ slug, since, ...FINAL }),
+    player ? store.bestScores({ slug, since, owner: player, ...FINAL }) : null,
+  ]);
   const counts = {};
   for (const name of Object.keys(BRACKETS)) counts[name] = entriesFor(rows, slug, BRACKETS[name]).length;
   const sorted = entriesFor(rows, slug, BRACKETS[bracket]).sort(compare);
@@ -94,7 +98,7 @@ export async function leaderboard({ slug, bracket, period, player }, { store, no
     const mineAt = sorted.findIndex(e => isOwner(e, player));
     if (mineAt >= 0) you = { rank: mineAt + 1, score: sorted[mineAt].score, promptCount: sorted[mineAt].promptCount };
     else {
-      const own = entriesFor(await store.bestScores({ slug, since, owner: player, ...FINAL }), slug, BRACKETS[bracket])[0];
+      const own = entriesFor(ownRows, slug, BRACKETS[bracket])[0];
       if (own) you = { rank: 1 + sorted.filter(e => better(e, own)).length, score: own.score, promptCount: own.promptCount };
     }
   }
@@ -104,8 +108,9 @@ export async function leaderboard({ slug, bracket, period, player }, { store, no
 
 // Live stats per challenge slug: { solvedCount, topScore, yourBest, yourBestPrompts }.
 export async function challengeStats(player, { store, now }) {
-  const everyone = bestPer(await allScoresCached(store, now), BRACKETS.all, true);
-  const mine = player ? bestPer(await store.bestScores({ owner: player, ...FINAL }), BRACKETS.all, true) : [];
+  const [allRows, myRows] = await Promise.all([allScoresCached(store, now), player ? store.bestScores({ owner: player, ...FINAL }) : []]);
+  const everyone = bestPer(allRows, BRACKETS.all, true);
+  const mine = bestPer(myRows, BRACKETS.all, true);
   const stats = new Map();
   for (const c of allChallengeFiles()) stats.set(c.slug, { solvedCount: 0, topScore: null, yourBest: null, yourBestPrompts: null });
   for (const e of everyone) {
@@ -123,8 +128,9 @@ export async function challengeStats(player, { store, now }) {
 
 // The rank change a new (final) score makes on the challenge's all-time board.
 export async function rankChange(player, slug, entry, { store }) {
-  const others = bestPer(await store.bestScores({ slug, ...FINAL }), BRACKETS.all, false).filter(e => !isOwner(e, player));
-  const prev = bestPer(await store.bestScores({ slug, owner: player, ...FINAL }), BRACKETS.all, false)[0] || null;
+  const [allRows, ownRows] = await Promise.all([store.bestScores({ slug, ...FINAL }), store.bestScores({ slug, owner: player, ...FINAL })]);
+  const others = bestPer(allRows, BRACKETS.all, false).filter(e => !isOwner(e, player));
+  const prev = bestPer(ownRows, BRACKETS.all, false)[0] || null;
   const rankOf = e => 1 + others.filter(o => better(o, e)).length;
   const after = prev && better(prev, entry) ? prev : entry;
   return { before: prev ? rankOf(prev) : null, after: rankOf(after) };

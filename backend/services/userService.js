@@ -22,14 +22,33 @@ export async function createUser({ username, email, password }) {
 
   const database = await getDatabase();
   const users = database.collection('users');
-  await users.createIndex({ email: 1 }, { unique: true, name: 'unique_user_email' });
-  await users.createIndex({ username: 1 }, { unique: true, name: 'unique_username' });
+  await userIndexes(database);
 
   const id = new ObjectId();
   const user = new User({ id, username: normalizedUsername, email: normalizedEmail, password: await hashPassword(password) });
   const document = { _id: user.id, username: user.username, email: user.email, password: user.password };
   await users.insertOne(document);
   return publicUser(document);
+}
+
+// Unique indexes are made once per database connection (per function instance), not on every sign-up.
+const userIndexDone = new WeakMap();
+// Keyed by the MongoClient (client.db() makes a new Db object per call) or the test stand-in.
+function userIndexes(database) {
+  const users = database.collection('users');
+  const key = database.client || database.s?.client || database;
+  let p = userIndexDone.get(key);
+  if (!p) {
+    p = Promise.all([
+      users.createIndex({ email: 1 }, { unique: true, name: 'unique_user_email' }),
+      users.createIndex({ username: 1 }, { unique: true, name: 'unique_username' }),
+    ]).catch(error => {
+      userIndexDone.delete(key);
+      throw error;
+    });
+    userIndexDone.set(key, p);
+  }
+  return p;
 }
 
 export async function authenticateUser({ email, password }) {
