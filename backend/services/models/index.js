@@ -14,7 +14,8 @@ export const MODELS = [
   { id: 'claude-haiku', label: 'Claude Haiku', provider: 'anthropic', keyEnv: 'ANTHROPIC_API_KEY', modelEnv: 'ANTHROPIC_MODEL', defaultModel: 'claude-haiku-5-5' },
 ];
 
-const MAX_OUTPUT_TOKENS = 16000;
+// Fallback only: each challenge carries its own maxOutputTokens (challengeStore.js, default per kind).
+const MAX_OUTPUT_TOKENS = 6000;
 export const GENERATION_TIMEOUT_MS = 50_000;
 
 export class ModelError extends Error {
@@ -69,10 +70,10 @@ function parse(data) {
 
 const providers = {
   openai: {
-    request: (model, key, system, user) => ({
+    request: (model, key, system, user, maxTokens) => ({
       url: 'https://api.openai.com/v1/responses',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: { model, instructions: system, input: user, stream: true, max_output_tokens: MAX_OUTPUT_TOKENS },
+      body: { model, instructions: system, input: user, stream: true, max_output_tokens: maxTokens },
     }),
     read(msg) {
       if (!msg) return null;
@@ -83,10 +84,10 @@ const providers = {
     },
   },
   anthropic: {
-    request: (model, key, system, user) => ({
+    request: (model, key, system, user, maxTokens) => ({
       url: 'https://api.anthropic.com/v1/messages',
       headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json' },
-      body: { model, max_tokens: MAX_OUTPUT_TOKENS, system, messages: [{ role: 'user', content: user }], stream: true },
+      body: { model, max_tokens: maxTokens, system, messages: [{ role: 'user', content: user }], stream: true },
     }),
     read(msg) {
       if (!msg) return null;
@@ -99,10 +100,12 @@ const providers = {
 };
 
 // Streams the model's text. Yields strings; throws ModelError with a plain message on failure.
-export async function* generate({ model, system, user, env, fetch, signal }) {
+// The system instruction and the player's (delimited) text travel in separate fields; error
+// messages are fixed sentences and never include the instruction, keys or the provider's reply.
+export async function* generate({ model, system, user, env, fetch, signal, maxOutputTokens = MAX_OUTPUT_TOKENS }) {
   const provider = providers[model.provider];
   const providerModel = (env[model.modelEnv] || '').trim() || model.defaultModel;
-  const req = provider.request(providerModel, env[model.keyEnv].trim(), system, user);
+  const req = provider.request(providerModel, env[model.keyEnv].trim(), system, user, maxOutputTokens);
   let res;
   try {
     res = await fetch(req.url, { method: 'POST', headers: req.headers, body: JSON.stringify(req.body), signal });

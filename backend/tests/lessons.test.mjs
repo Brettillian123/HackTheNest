@@ -98,10 +98,11 @@ test('workflow: the plan streams as text, is stored in markdown, and is graded a
   const current = (await call('GET', '/api/attempts/current?slug=fix-loop-plan', { headers: anon })).body.attempt;
   assert.equal(current.runs.at(-1).markdown, r.text);
 
-  // A reply that is not JSON scores 0 with a plain reason and never reaches the grader.
+  // A reply that is not JSON is rejected before anything is sent (422), is not saved and never reaches the grader.
   setup({ model: 'Here is my plan: step one, build it.', service: true, grader: () => { throw new Error('grader must not be called'); } });
   const bad = await run('three-page-site-plan', 'Plan the site');
-  const sb = await score(bad.headers['x-run-id']);
-  assert.equal(sb.body.run.result.total, 0);
-  assert.match(sb.body.run.result.rejectedReason, /not.*valid JSON/);
+  assert.equal(bad.status, 422);
+  assert.match(bad.body.error, /not.*valid JSON/);
+  assert.equal(bad.headers['x-run-id'], undefined);
+  assert.equal((await call('GET', '/api/attempts/current?slug=three-page-site-plan', { headers: anon })).body.attempt, null);
 });

@@ -2,8 +2,8 @@
 // Every handler is wrapped by guarded() (http.js), so failures become plain JSON errors.
 import { HttpError, guarded, queryOf, readJson, sendJson, logError } from './http.js';
 import { getDeps } from '../services/deps.js';
-import { challengeData, getChallengeFile, getLesson, listChallengeFiles, listLessons, SLUG_RE } from '../services/challengeStore.js';
-import { KINDS } from '../services/kinds.js';
+import { challengeData, getChallengeFile, getLesson, listChallengeFiles, listLessons, PROMPT_LIMITS, SLUG_RE } from '../services/challengeStore.js';
+import { KINDS, NO_PAGE, isRefusal, leakChecker } from '../services/kinds.js';
 import { MODELS, availableModels, findModel, generate, ModelError, GENERATION_TIMEOUT_MS } from '../services/models/index.js';
 import { graderMode, liveGraderVersion } from '../services/grader/index.js';
 import { checkDailyCap, optionalPlayer, requirePlayer, resolvePlayer, sessionUser, validAnonId } from '../services/playerService.js';
@@ -21,7 +21,7 @@ function requireSlug(value) {
 
 function summary(c, stats) {
   const s = stats?.get(c.slug) || { solvedCount: null, topScore: null, yourBest: null, yourBestPrompts: null };
-  const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, brief: c.brief, kind: c.kind, available: c.available, ...s };
+  const out = { slug: c.slug, title: c.title, level: c.level, levelLabel: c.levelLabel, brief: c.brief, kind: c.kind, available: c.available, maxPromptChars: c.maxPromptChars, maxOutputTokens: c.maxOutputTokens, ...s };
   if (c.lesson !== undefined) out.lesson = c.lesson;
   return out;
 }
@@ -83,13 +83,23 @@ const lesson = guarded('Get lesson', async (_request, response, [slug]) => {
 
 // ------------------------------------------------------------------ runs
 
+// The request body cap follows the largest prompt limit among the loaded challenges: up to 3 bytes
+// a character plus room for the slug and model id.
+function bodyLimit() {
+  const most = Math.max(PROMPT_LIMITS.ruleMin, ...listChallengeFiles({ includeLessons: true }).map(c => c.maxPromptChars || 0));
+  return most * 3 + 1000;
+}
+
+// Text gathered before anything is sent, so a refusal or leaked instructions can still get a 422.
+const HOLD_CHARS = 400;
+
 const createRun = guarded('Create run', async (request, response) => {
   const deps = getDeps();
   const player = requirePlayer(request);
-  const input = await readJson(request, 16_000);
+  const input = await readJson(request, bodyLimit());
   const challenge = requireSlug(input.slug);
   if (typeof input.prompt !== 'string' || !input.prompt.trim()) throw new HttpError(400, 'Write a prompt first, then run it.');
-  if (input.prompt.length > 2000) throw new HttpError(400, 'Prompts can be at most 2000 characters.');
+  if (input.prompt.length > challenge.maxPromptChars) throw new HttpError(400, `This challenge allows prompts up to ${challenge.maxPromptChars} characters.`);
   if (input.model !== undefined && input.model !== null && typeof input.model !== 'string') throw new HttpError(400, 'Send the model as a model id.');
   if (!challenge.available) throw new HttpError(501, challenge.unavailableReason || 'This challenge is not playable yet.');
   const kind = KINDS[challenge.kind];
@@ -105,21 +115,44 @@ const createRun = guarded('Create run', async (request, response) => {
   let finished = false;
   response.on?.('close', () => { if (!finished) controller.abort(); });
 
-  // Nothing is saved until the model has sent its first text. The cap check and the previous
+  // Nothing is saved until the model's reply has been checked. The cap check and the previous
   // output are independent reads, made together.
   const [, previous] = await Promise.all([checkDailyCap(request, player, deps), previousOutput(player, challenge, deps)]);
+  const system = kind.instruction(challenge);
   const stream = generate({
-    model, env: deps.env, fetch: deps.fetch, signal,
-    system: kind.instruction(challenge),
+    model, env: deps.env, fetch: deps.fetch, signal, maxOutputTokens: challenge.maxOutputTokens,
+    system,
     user: kind.userMessage(prompt, previous),
   });
-  let first;
-  try { first = await stream.next(); }
-  catch (error) {
+  const cleaner = kind.cleaner(challenge);
+  const leak = leakChecker(system);
+  const reject = message => { finished = true; controller.abort(); return new HttpError(422, message); };
+
+  // 1. Hold the reply until there is cleaned output and enough text to judge it, or until it ends
+  //    (a workflow plan is always held to the end so it can be checked as JSON).
+  let raw = '';
+  let pending = '';
+  let ended = false;
+  try {
+    for (;;) {
+      const step = await stream.next();
+      if (step.done) { ended = true; break; }
+      raw += step.value;
+      pending += cleaner.push(step.value);
+      if (!kind.bufferAll && pending && raw.length >= HOLD_CHARS) break;
+    }
+  } catch (error) {
     if (error instanceof ModelError) throw new HttpError(error.status, error.message);
     throw error;
   }
+  let final = null;
+  if (ended) { final = cleaner.finish(); pending += final.rest; }
+  // A refusal, leaked instructions or no usable output: 422 and the prompt is not counted.
+  if (leak.leaks(raw) || (ended && (!final.html || isRefusal(raw))) || !pending) throw reject(NO_PAGE);
+  const invalid = ended && kind.validate ? kind.validate(final.html) : null;
+  if (invalid) throw reject(invalid);
 
+  // 2. Save the run and stream the rest.
   const { attempt, run } = await beginRun({ player, challenge, prompt, model: model.id, runId }, deps);
   response.writeHead(200, {
     'Content-Type': kind.streamType,
@@ -131,24 +164,26 @@ const createRun = guarded('Create run', async (request, response) => {
     // The prompt count this run will have if it completes (a failed or cancelled run is discarded).
     'X-Prompt-Count': String(run.n),
   });
+  response.write(pending);
 
-  const cleaner = kind.cleaner(challenge);
   let status = 'done';
-  try {
-    if (!first.done) {
-      const out = cleaner.push(first.value);
-      if (out) response.write(out);
+  if (!ended) {
+    try {
       for await (const chunk of stream) {
+        raw += chunk;
+        // Instructions showing up later stop the run; it is discarded and not counted.
+        if (leak.leaks(raw.slice(-(chunk.length + leak.window)))) { status = 'failed'; controller.abort(); break; }
         const piece = cleaner.push(chunk);
         if (piece) response.write(piece);
       }
+    } catch (error) {
+      status = controller.signal.aborted ? 'cancelled' : 'failed';
+      if (!(error instanceof ModelError)) logError('Run stream', error);
     }
-  } catch (error) {
-    status = controller.signal.aborted ? 'cancelled' : 'failed';
-    if (!(error instanceof ModelError)) logError('Run stream', error);
+    final = cleaner.finish();
+    if (final.rest && status === 'done') response.write(final.rest);
   }
-  const { rest, html: output } = cleaner.finish();
-  if (rest && status === 'done') response.write(rest);
+  const output = final.html;
   if (status === 'done' && !output) status = 'failed';
   finished = true;
   await finishRun(run, { output, status }, deps);

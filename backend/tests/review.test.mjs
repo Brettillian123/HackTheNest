@@ -256,7 +256,7 @@ test('the run response carries a sandboxing CSP and nosniff', async () => {
 test('a run that fails mid-stream is discarded and does not count as a prompt', async () => {
   const { state, store } = setup({ model: GOAL });
   state.modelText = () => sseResponse([
-    { event: 'content_block_delta', data: { type: 'content_block_delta', delta: { type: 'text_delta', text: '<!doctype html><html><body><p>half' } } },
+    { event: 'content_block_delta', data: { type: 'content_block_delta', delta: { type: 'text_delta', text: `<!doctype html><html><body><p>${'half '.repeat(100)}` } } }, // past the 400-character hold
     { event: 'error', data: { type: 'error', error: { type: 'overloaded_error' } } },
   ]);
   const failed = await run('a login card');

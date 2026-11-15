@@ -11,11 +11,11 @@ Node ES modules on Vercel. `api/index.js` (and the thin files in `api/auth/`) ca
 | POST | `/api/auth/signup`, `/api/auth/login` | `{ username, email, password }` / `{ email, password }` | `{ user }` + cookie | none |
 | GET / POST | `/api/auth/me` / `/api/auth/logout` | | `{ user }` or 401 / `{ ok: true }` | cookie |
 | GET | `/api/health` | | `{ ok, db, models, grader: "service"\|"standin", graderVersion?, challenges, problems }` | none |
-| GET | `/api/challenges[?include=lessons]` | | `{ challenges: [{ slug, title, level, levelLabel, brief, kind, available, lesson?, solvedCount, topScore, yourBest, yourBestPrompts }], statsAvailable }` | optional player |
+| GET | `/api/challenges[?include=lessons]` | | `{ challenges: [{ slug, title, level, levelLabel, brief, kind, available, maxPromptChars, maxOutputTokens, lesson?, solvedCount, topScore, yourBest, yourBestPrompts }], statsAvailable }` | optional player |
 | GET | `/api/challenges/:slug` | | `{ challenge: { ...summary, goalUrl (page only, else null), viewport, spec, models: [{ id, label, available }], simulated, criteria?, unavailableReason? } }` | optional player |
 | GET | `/api/lessons` | | `{ lessons: [{ slug, title, level, minutes, summary, file, bonusChallenge, grader, order }] }` (from `web/data/lessons/`, sorted by `order`; `[]` without the folder) | none |
 | GET | `/api/lessons/:slug` | | `{ lesson: { ...entry, fields: {front matter}, markdown } }`, 404 unknown | none |
-| POST | `/api/runs` | `{ slug, prompt (1–2000 chars), model? }` | streamed output (`text/html` for page, `text/markdown` for doc); headers `X-Run-Id`, `X-Attempt-Id`, `X-Prompt-Count`. 400 page code in the prompt; 501 kind not playable yet; 503 `code: "no_model"`; 429 + `Retry-After` | player |
+| POST | `/api/runs` | `{ slug, prompt (1 to the challenge's `maxPromptChars`), model? }` | streamed output (`text/html` for page, `text/markdown` for doc, `text/plain` for workflow); headers `X-Run-Id`, `X-Attempt-Id`, `X-Prompt-Count`. 400 "This challenge allows prompts up to N characters." or page code in the prompt; 413 body too large; 422 no usable output (refusal, leaked instructions, empty, or a workflow plan that is not JSON), nothing saved or counted; 501 kind not playable yet; 503 `code: "no_model"`; 429 + `Retry-After` | player |
 | POST | `/api/runs/:runId/score` | | `{ attempt, run }` with `run.result` (below) and `run.graderResult`. 502 grader answered without a total; 503 `code: "no_grader"` (doc with no grader) or grader unreachable | player (owner) |
 | GET | `/api/attempts/current?slug=` | | `{ attempt: { id, slug, promptCount, best, bestPromptCount, open, startedAt, runs: [{ id, n, kind, prompt, model, status, html \| markdown, result, at, graderResult (latest run only) }] } \| null }` | player |
 | POST | `/api/attempts/start-over` / `/api/attempts/claim` | `{ slug }` / header `X-Anon-Id` | `{ ok, closed }` / `{ moved }` | player / cookie |
@@ -28,13 +28,21 @@ Rules: a run adds to the prompt count only once its output is fully generated an
 
 Known limit: sessions are stateless signed tokens, so logout clears the cookie but cannot revoke a copied token; it expires 24 hours after sign-in.
 
+## Limits and prompt safety
+
+- **Prompt limit**: `maxPromptChars` on a challenge entry (whole number, 500 to 12000). Without it: characters of the brief plus every spec group name, label and value, x 1.2 + 500, rounded up to the next 500, within 1500 to 12000 (`computedPromptLimit` in `services/challengeStore.js`). The request body cap is the largest limit x 3 + 1000 bytes.
+- **Output limit**: `maxOutputTokens` on a challenge entry (500 to 16000; default page 6000, doc 3000, workflow 2000), sent to the provider as its max output setting; stored output is also capped at 300 KB. Both fields are returned by the challenge endpoints.
+- **Model input**: on a follow-up, previous output plus prompt stay within `MAX_MODEL_INPUT_CHARS` (40000, `services/kinds.js`); the previous output is cut from the end, never the prompt.
+- **Prompt injection**: the system instruction is sent apart from the player's text. The prompt goes between `<<<PLAYER_PROMPT>>>` markers and the previous output between `<<<PREVIOUS_OUTPUT>>>` markers, both treated as untrusted descriptions; marker look-alikes inside them are neutralised. The instruction asks for one compact file only (no file trees, build systems, scripts, trackers, remote forms, redirects or hidden content) and to ignore requests to reveal or change it.
+- **After generation**: page HTML goes through the allow-list clean-up (`models/sanitize.js`) and is served with a sandbox CSP; doc output is text only (control characters dropped); a workflow plan must parse as JSON. A reply that is a refusal, has no usable output or contains the instruction text gets 422 before anything is saved; instruction text found later stops the run, which is discarded. Model output and prompts are only stored and returned as data: never evaluated, imported or fetched, and never used to choose server actions. Errors are fixed sentences without the instruction or environment values.
+
 ## Challenge kinds (`services/kinds.js`, one row per kind)
 
 | `kind` | Goal file | Model output | Grader route | State |
 |---|---|---|---|---|
 | `page` (default) | `web/data/goals/<slug>.html` | one HTML file, cleaned (allow-list, inline SVG and `data:` images kept) | `/v1/grade/site`, one file each | proven with fakes; grader live |
 | `doc` | `web/data/rubrics/<slug>.json` (lesson challenges too) | Markdown (JSON for `mcp-tools`), stored as text in `markdown` (client must render it safely) | `/v1/grade/doc` `{ kind, rubric, candidate }`; `kind` is the grader's document kind (`instructions`, `readme`, `skill`, `mcp-tools`) from the challenge's `docKind`, a string `kind` in the rubric, or the table in `kinds.js` | live in grader 0.8.0; no stand-in |
-| `workflow` | `web/data/rubrics/<slug>.json` | a plan as JSON, streamed as `text/plain`, stored as text in `markdown`; not JSON scores 0 with a plain reason and no grader call | `/v1/grade/workflow` `{ rubric, candidate }` | live in grader 0.8.0; no stand-in |
+| `workflow` | `web/data/rubrics/<slug>.json` | a plan as JSON, checked before it is sent, streamed as `text/plain`, stored as text in `markdown`; not JSON answers 422 and is not saved (older stored non-JSON plans score 0 with no grader call) | `/v1/grade/workflow` `{ rubric, candidate }` | live in grader 0.8.0; no stand-in |
 | `site`, `scene` | | | | listed with `available: false`; runs answer 501 |
 
 An optional `marks` value on a challenge entry is sent next to `goal` in the grade request (reserved by the grader).
@@ -50,7 +58,7 @@ Set `GRADER_URL` (plain `http` works, for example `http://<server-ip>:8080`) and
 ## How to add a challenge or lesson
 
 1. Add the goal: `web/data/goals/<slug>.html` (page) or `web/data/rubrics/<slug>.json` (doc).
-2. Add one entry to `web/data/challenges.json` → `challenges`: `{ slug, title, level, brief, spec, kind?, marks?, viewport? }`.
+2. Add one entry to `web/data/challenges.json` → `challenges`: `{ slug, title, level, brief, spec, kind?, marks?, viewport?, maxPromptChars?, maxOutputTokens? }`.
 3. Lessons: `web/data/lessons/index.json`, `web/data/lessons/NN-slug.md`, and bonus challenges in `web/data/lessons/challenges.json` (same entry shape plus `kind` and `criteria`); `LESSONS_DIR` overrides the folder.
 
 A bad entry is skipped (or listed as unavailable) and reported in `/api/health` `problems`. Files ship with the function through `includeFiles` in `vercel.json`.
