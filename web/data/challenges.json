@@ -23,15 +23,14 @@
       "slug": "tutorial-blue-circle",
       "title": "Tutorial 1: Blue circle",
       "level": 1,
-      "category": "Components",
-      "brief": "For your first practice, make a quiet placeholder page with one blue circle in the middle. Keep the page simple so the shape is the only thing to notice. Match the attached reference and make the circle feel balanced in the open space.",
+      "category": "Tutorials",
+      "brief": "Tutorial 1 of 5. Describe one thing well. The goal is a light grey page with a single blue circle in the middle. Say what the shape is, its colour, roughly how big it is and where it sits, and say what the background is. Tip: the model builds only what you describe, so anything you leave out will be missing.",
       "acceptance": [
         "There is one blue circle centered on the page",
         "The page background is a very light cool grey",
         "No other text or decoration competes with the circle",
         "The result closely matches the reference"
       ],
-      "content": "Page: one blue circle, centered on a light cool grey background. No text.",
       "requirements": [
         {
           "id": "r1",
@@ -62,24 +61,29 @@
           "text": "Use one HTML document with inline CSS, semantic HTML and no scripts or external assets",
           "kind": "engineering",
           "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The page sets its language and a title, and the text and shapes stand out clearly from the background",
+          "kind": "engineering",
+          "exact": false
         }
       ],
-      "keyFacts": [
-        "One blue circle",
-        "No text"
-      ],
+      "keyFacts": [],
       "designNotes": [
         "minimal open composition",
-        "single saturated blue shape on a cool light background"
+        "single saturated blue shape on a cool light background",
+        "the circle is about a sixth of the page height across"
       ],
-      "maxPromptChars": 2500
+      "maxPromptChars": 2500,
+      "content": "There is no text on this one, so there is nothing to spell."
     },
     {
       "slug": "tutorial-shapes",
       "title": "Tutorial 2: Circle and square",
       "level": 1,
-      "category": "Components",
-      "brief": "Now arrange two simple shapes together: a blue circle on the left and a red square on the right. Keep them the same size and give them a clear, even gap. The shapes should sit together in the middle of an otherwise quiet page.",
+      "category": "Tutorials",
+      "brief": "Tutorial 2 of 5. Now describe two things and how they relate: a blue circle on the left and a red square on the right, the same size, with an even gap, centred together on a light grey page. Tip: words like left, right, same size and centred are what place things.",
       "acceptance": [
         "A blue circle appears to the left of a red square",
         "Both shapes are the same size and aligned through their centers",
@@ -87,7 +91,6 @@
         "The pair is centered on a light cool grey page",
         "The result closely matches the reference"
       ],
-      "content": "Page: a blue circle to the left of a red square, same size, with a gap. Center the pair on a light cool grey background. No text.",
       "requirements": [
         {
           "id": "r1",
@@ -118,27 +121,29 @@
           "text": "Use one HTML document with inline CSS, semantic HTML and no scripts or external assets",
           "kind": "engineering",
           "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The page sets its language and a title, and the text and shapes stand out clearly from the background",
+          "kind": "engineering",
+          "exact": false
         }
       ],
-      "keyFacts": [
-        "Blue circle on the left",
-        "Red square on the right",
-        "Same size",
-        "No text"
-      ],
+      "keyFacts": [],
       "designNotes": [
         "simple horizontal pair",
         "even gap",
         "cool light background"
       ],
-      "maxPromptChars": 2500
+      "maxPromptChars": 2500,
+      "content": "There is no text on this one, so there is nothing to spell."
     },
     {
       "slug": "tutorial-green-button",
       "title": "Tutorial 3: Green button in a card",
       "level": 1,
-      "category": "Components",
-      "brief": "For the final tutorial, place a single green Continue button inside a simple white card. Center the card on the page and give it a little depth and soft rounded corners. The button is the only content inside; keep the rest of the page uncluttered.",
+      "category": "Tutorials",
+      "brief": "Tutorial 3 of 5. Now add text. A white card sits in the middle of a light grey page with one green button inside that reads Continue. Describe the card (rounded corners, thin border, soft shadow) and the button (green, white text). Tip: the exact wording is in the content list under the brief; quote it in your prompt so it is spelled the same.",
       "acceptance": [
         "A white rounded card is centered on a light cool grey page",
         "The card contains one green button labeled Continue",
@@ -146,7 +151,7 @@
         "The card has a subtle border and soft shadow",
         "The result closely matches the reference"
       ],
-      "content": "Page: a centered white card with one green button labeled Continue. Light cool grey background. No other text.",
+      "content": "Every text on the page, spelled exactly, in alphabetical order (the order says nothing about where a text goes):\n- Continue",
       "requirements": [
         {
           "id": "r1",
@@ -177,12 +182,16 @@
           "text": "Use a real button within one HTML document with inline CSS, no scripts or external assets",
           "kind": "engineering",
           "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The page sets its language and a title, and the text and shapes stand out clearly from the background",
+          "kind": "engineering",
+          "exact": false
         }
       ],
       "keyFacts": [
-        "Continue",
-        "Green button",
-        "White card"
+        "Continue"
       ],
       "designNotes": [
         "single centred card",
@@ -195,8 +204,8 @@
       "slug": "tutorial-two-pages",
       "title": "Tutorial 4: Two pages",
       "level": 1,
-      "category": "Sites with several pages",
-      "brief": "For your first multi-page practice, make a tiny two-page site for Pebble, a note-taking app. The Home page says what it is and the About page says who makes it. The menu at the top switches between the two pages.",
+      "category": "Tutorials",
+      "brief": "Tutorial 4 of 5. Now more than one page: a tiny two-page site for Pebble, a note-taking app. Home says what it is and About says who makes it, with a menu at the top that switches between them. Describe what is shared by both pages (header, menu, footer) first, then each page in turn. Tip: the exact wording is in the content list under the brief; say which text goes where.",
       "acceptance": [
         "The site has 2 pages (Home, About) and the menu switches between them",
         "The header and footer are the same on every page",
@@ -289,6 +298,155 @@
       ],
       "maxPromptChars": 6000,
       "maxOutputTokens": 6000
+    },
+    {
+      "slug": "tutorial-first-shape-3d",
+      "title": "Tutorial 5: First 3D shape",
+      "kind": "scene",
+      "level": 1,
+      "category": "Tutorials",
+      "brief": "Tutorial 5 of 5. Your first 3D model: one smooth blue sphere resting on the ground, centred. Say what the shape is, its colour, its size and that it sits on the ground at the centre. Tip: for 3D, name each part and say where it sits and how big it is next to the others. Your result is shown from four angles.",
+      "acceptance": [
+        "One blue sphere is the only visible object.",
+        "The sphere is centered and touches the ground.",
+        "Its smooth shape is easy to read from every view.",
+        "The model follows the attached reference closely."
+      ],
+      "requirements": [
+        {
+          "id": "parts-1",
+          "text": "Include and arrange these model parts as described: sphere.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "colours",
+          "text": "Use the described material colours for the named parts.",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "grounded",
+          "text": "The complete model is upright, centered near the origin and rests on the ground.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "silhouette",
+          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "group",
+          "text": "Return all named meshes together in one THREE.Group.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "names",
+          "text": "Give each mesh a useful name matching its role in the model.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "economy",
+          "text": "Use economical geometry with enough segments for smooth round parts.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "self-contained",
+          "text": "Build the model only from Three.js geometry and materials.",
+          "kind": "engineering",
+          "exact": false
+        },
+        {
+          "id": "scene-only",
+          "text": "Return the model without adding a camera or lights.",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [],
+      "designNotes": [
+        "one blue sphere",
+        "centered on the ground",
+        "single object and material"
+      ],
+      "exactSpec": [
+        {
+          "group": "Model",
+          "items": [
+            {
+              "label": "What it is",
+              "value": "A single blue sphere standing upright on the ground."
+            },
+            {
+              "label": "Up",
+              "value": "Y"
+            },
+            {
+              "label": "Placement",
+              "value": "Upright, centered near the origin; lowest point rests at y = 0"
+            }
+          ]
+        },
+        {
+          "group": "Parts",
+          "items": [
+            {
+              "label": "sphere",
+              "value": "Sphere, radius 0.45, 24 width segments and 16 height segments, centre (0, 0.45, 0)"
+            }
+          ]
+        },
+        {
+          "group": "Colours",
+          "items": [
+            {
+              "label": "sphere",
+              "value": "#3478f6"
+            }
+          ]
+        },
+        {
+          "group": "Build",
+          "items": [
+            {
+              "label": "Mesh names",
+              "value": "Set every mesh name to the part label used above"
+            },
+            {
+              "label": "Structure",
+              "value": "Return all meshes in one THREE.Group"
+            },
+            {
+              "label": "Geometry",
+              "value": "SphereGeometry with 24 by 16 segments; one MeshStandardMaterial."
+            }
+          ]
+        },
+        {
+          "group": "Output",
+          "items": [
+            {
+              "label": "Format",
+              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
+            },
+            {
+              "label": "Scene",
+              "value": "No lights or camera needed"
+            },
+            {
+              "label": "Dependencies",
+              "value": "Nothing but THREE"
+            }
+          ]
+        }
+      ],
+      "maxPromptChars": 3000,
+      "content": "There is no text on this one, so there is nothing to spell."
     },
     {
       "slug": "login-card",
@@ -8164,1410 +8322,6 @@
       "maxPromptChars": 4000
     },
     {
-      "slug": "cafe-site",
-      "title": "Cafe site",
-      "level": 1,
-      "category": "Sites with several pages",
-      "brief": "We need a small website for Juniper Cafe, a neighbourhood coffee shop. People look us up to see what we serve and when we are open, so the site has a welcoming Home page, a Menu page with prices and a Visit page with our hours and address.",
-      "acceptance": [
-        "The site has 3 pages (Home, Menu, Visit) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $3.00\n- $3.50\n- $4.00\n- $4.25\n- $4.75\n- 14 Alder Street, two doors down from the library.\n- Baked daily\n- Beans from two farms we know by name.\n- Butter croissant\n- Cinnamon bun\n- Coffee worth the walk\n- Croissants out of the oven at 7 am.\n- Dogs welcome\n- Espresso\n- Flat white\n- Home\n- Item\n- Juniper Cafe\n- Juniper Cafe, 14 Alder Street. Open every day.\n- Menu\n- Monday to Friday: 7 am to 5 pm\n- Oat latte\n- Opening hours\n- Price\n- Roasted weekly\n- Saturday: 8 am to 4 pm\n- See the menu\n- Small-batch roasts and fresh pastries, baked here every morning.\n- Sunday: 9 am to 2 pm\n- Visit\n- Visit us\n- Water bowls by the door.",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "menu.html",
-          "title": "Menu"
-        },
-        {
-          "id": "page3",
-          "path": "visit.html",
-          "title": "Visit"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 3 pages: Home, Menu, Visit",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Juniper Cafe on the left and a menu on the right with the links Home, Menu, Visit, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Juniper Cafe, 14 Alder Street. Open every day.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Coffee worth the walk\", one line of supporting text and a \"See the menu\" button that links to another page; then a row of 3 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Menu page has a heading \"Menu\" over a table with the columns Item, Price and 5 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Visit page has a heading \"Visit us\" with one paragraph under it; then a heading \"Opening hours\" over a list of 3 items",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "Page background #faf6ef, text #2b2118, and one accent colour #b4532a used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Menu",
-        "Item",
-        "Price",
-        "Espresso",
-        "$3.00",
-        "Flat white",
-        "$4.25",
-        "Oat latte",
-        "$4.75",
-        "Butter croissant",
-        "$3.50",
-        "Cinnamon bun",
-        "$4.00",
-        "Visit us",
-        "14 Alder Street, two doors down from the library.",
-        "Opening hours",
-        "Monday to Friday: 7 am to 5 pm",
-        "Saturday: 8 am to 4 pm",
-        "Sunday: 9 am to 2 pm",
-        "Coffee worth the walk",
-        "Small-batch roasts and fresh pastries, baked here every morning.",
-        "See the menu",
-        "Roasted weekly",
-        "Beans from two farms we know by name.",
-        "Baked daily",
-        "Croissants out of the oven at 7 am.",
-        "Dogs welcome",
-        "Water bowls by the door.",
-        "Juniper Cafe",
-        "Home",
-        "Visit",
-        "Juniper Cafe, 14 Alder Street. Open every day."
-      ],
-      "designNotes": [
-        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #b4532a with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 6000,
-      "maxOutputTokens": 6000
-    },
-    {
-      "slug": "dog-walker-site",
-      "title": "Dog walker site",
-      "level": 1,
-      "category": "Sites with several pages",
-      "brief": "Pawpath is a one-person dog walking business and needs a simple site. Owners want to know what walks are on offer and how to get in touch, so there is a Home page, a Services page with three walks and their prices, and a Contact page with a short form.",
-      "acceptance": [
-        "The site has 3 pages (Home, Services, Contact) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $15\n- $25\n- $60\n- 20 minutes\n- 4 hours\n- 40+\n- 5.0\n- 6\n- 60 minutes\n- average review\n- Book a day\n- Book a stroll\n- Book an hour\n- Contact\n- Day out\n- Email\n- Friendly group and solo walks around Laurelhurst Park.\n- Group of four\n- Happy dogs, every weekday\n- Home\n- Park hour\n- Pawpath\n- Pawpath dog walking, Portland. Insured and first-aid trained.\n- Prefer to call?\n- Quick stroll\n- regular dogs\n- Ring Sam on 503 555 0142 between 8 am and 6 pm.\n- Say hello\n- See services\n- Send message\n- Services\n- Solo walk\n- Trail hike\n- years walking\n- Your dog's name\n- Your name",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "services.html",
-          "title": "Services"
-        },
-        {
-          "id": "page3",
-          "path": "contact.html",
-          "title": "Contact"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 3 pages: Home, Services, Contact",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Pawpath on the left and a menu on the right with the links Home, Services, Contact, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Pawpath dog walking, Portland. Insured and first-aid trained.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Happy dogs, every weekday\", one line of supporting text and a \"See services\" button that links to another page; then a row of 3 figures, each a big number over a small label",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Services page has 3 price cards side by side, each with a name, a price, two points and a button",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Contact page has a form headed \"Say hello\" with the labelled fields Your name, Email, Your dog's name and a \"Send message\" button; then a heading \"Prefer to call?\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "Page background #f3f8f4, text #1c2b22, and one accent colour #2f855a used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Quick stroll",
-        "$15",
-        "20 minutes",
-        "Solo walk",
-        "Book a stroll",
-        "Park hour",
-        "$25",
-        "60 minutes",
-        "Group of four",
-        "Book an hour",
-        "Day out",
-        "$60",
-        "4 hours",
-        "Trail hike",
-        "Book a day",
-        "Say hello",
-        "Your name",
-        "Email",
-        "Your dog's name",
-        "Send message",
-        "Prefer to call?",
-        "Ring Sam on 503 555 0142 between 8 am and 6 pm.",
-        "Happy dogs, every weekday",
-        "Friendly group and solo walks around Laurelhurst Park.",
-        "See services",
-        "6",
-        "years walking",
-        "40+",
-        "regular dogs",
-        "5.0",
-        "average review",
-        "Pawpath",
-        "Home",
-        "Services",
-        "Contact",
-        "Pawpath dog walking, Portland. Insured and first-aid trained."
-      ],
-      "designNotes": [
-        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #2f855a with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 6000,
-      "maxOutputTokens": 6000
-    },
-    {
-      "slug": "band-site",
-      "title": "Band site",
-      "level": 1,
-      "category": "Sites with several pages",
-      "brief": "The Lanterns are a four-piece folk band with a new record out. Fans come to hear about the album and find a show near them, so the site is two pages: Home, about the new record, and Shows, a table of tour dates. It is a dark site with warm amber accents.",
-      "acceptance": [
-        "The site has 2 pages (Home, Shows) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- A limited run of 500 amber records.\n- Asheville\n- Chicago\n- City\n- Date\n- Find a show\n- Home\n- Listen\n- May 12\n- May 3\n- May 5\n- May 9\n- Minneapolis\n- Nashville\n- New album: Slow Rivers\n- Out now on every streaming service.\n- Schubas\n- Shows\n- Ten songs recorded live in a barn over one week in March.\n- The Basement\n- The Grey Eagle\n- The Lanterns\n- The Lanterns. Booking: hello@thelanterns.example\n- Tour dates\n- Turf Club\n- Venue\n- Vinyl",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "shows.html",
-          "title": "Shows"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 2 pages: Home, Shows",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name The Lanterns on the left and a menu on the right with the links Home, Shows, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: The Lanterns. Booking: hello@thelanterns.example",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"New album: Slow Rivers\", one line of supporting text and a \"Find a show\" button that links to another page; then a row of 2 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Shows page has a heading \"Tour dates\" over a table with the columns Date, City, Venue and 4 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "Page background #15131a, text #f3eefc, and one accent colour #f59e0b used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Tour dates",
-        "Date",
-        "City",
-        "Venue",
-        "May 3",
-        "Asheville",
-        "The Grey Eagle",
-        "May 5",
-        "Nashville",
-        "The Basement",
-        "May 9",
-        "Chicago",
-        "Schubas",
-        "May 12",
-        "Minneapolis",
-        "Turf Club",
-        "New album: Slow Rivers",
-        "Ten songs recorded live in a barn over one week in March.",
-        "Find a show",
-        "Listen",
-        "Out now on every streaming service.",
-        "Vinyl",
-        "A limited run of 500 amber records.",
-        "The Lanterns",
-        "Home",
-        "Shows",
-        "The Lanterns. Booking: hello@thelanterns.example"
-      ],
-      "designNotes": [
-        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #f59e0b with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 6000,
-      "maxOutputTokens": 6000
-    },
-    {
-      "slug": "yoga-studio-site",
-      "title": "Yoga studio site",
-      "level": 2,
-      "category": "Sites with several pages",
-      "brief": "Stillwater Yoga is opening a second room and wants a proper website. New students need to see what a week looks like, what it costs and how to sign up, so the site has four pages: Home, Classes with the weekly timetable, Pricing with three passes, and Contact with a sign-up form.",
-      "acceptance": [
-        "The site has 4 pages (Home, Classes, Pricing, Contact) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- £12\n- £65 a month\n- £95\n- 12:15 pm\n- 6:30 pm\n- 7:00 am\n- 9:00 am\n- Anika\n- Beginners welcome\n- Book your free class\n- Buy a class\n- Buy a pass\n- Cancel any time\n- Class\n- Classes\n- Come and try before you buy.\n- Contact\n- Day\n- Drop in\n- Email address\n- Every class\n- Every class has an easier option.\n- Family yoga\n- Find us\n- First class free\n- Full name\n- Home\n- Join now\n- Lunch stretch\n- Monday\n- Morning flow\n- No booking fee\n- One class\n- Power flow\n- Pricing\n- Priya\n- Request a place\n- Rooms are never crowded.\n- Saturday\n- See the timetable\n- Slow down, breathe out\n- Small classes for every body, seven days a week.\n- Stillwater Yoga\n- Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided.\n- Teacher\n- Ten classes\n- Ten pass\n- Thursday\n- Time\n- Tomas\n- Tuesday\n- Twelve mats\n- Unlimited\n- Up the stairs beside the bakery on Mill Lane.\n- Valid six months\n- Wednesday\n- Weekly timetable\n- Which class?\n- Yin",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "classes.html",
-          "title": "Classes"
-        },
-        {
-          "id": "page3",
-          "path": "pricing.html",
-          "title": "Pricing"
-        },
-        {
-          "id": "page4",
-          "path": "contact.html",
-          "title": "Contact"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 4 pages: Home, Classes, Pricing, Contact",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Stillwater Yoga on the left and a menu on the right with the links Home, Classes, Pricing, Contact, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Slow down, breathe out\", one line of supporting text and a \"See the timetable\" button that links to another page; then a row of 3 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Classes page has a heading \"Weekly timetable\" over a table with the columns Day, Time, Class, Teacher and 5 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The Contact page has a form headed \"Book your free class\" with the labelled fields Full name, Email address, Which class? and a \"Request a place\" button; then a heading \"Find us\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "Page background #f7f5f2, text #27303a, and one accent colour #0f766e used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Weekly timetable",
-        "Day",
-        "Time",
-        "Class",
-        "Teacher",
-        "Monday",
-        "7:00 am",
-        "Morning flow",
-        "Priya",
-        "Tuesday",
-        "6:30 pm",
-        "Yin",
-        "Tomas",
-        "Wednesday",
-        "12:15 pm",
-        "Lunch stretch",
-        "Thursday",
-        "Power flow",
-        "Anika",
-        "Saturday",
-        "9:00 am",
-        "Family yoga",
-        "Drop in",
-        "£12",
-        "One class",
-        "No booking fee",
-        "Buy a class",
-        "Ten pass",
-        "£95",
-        "Ten classes",
-        "Valid six months",
-        "Buy a pass",
-        "Unlimited",
-        "£65 a month",
-        "Every class",
-        "Cancel any time",
-        "Join now",
-        "Book your free class",
-        "Full name",
-        "Email address",
-        "Which class?",
-        "Request a place",
-        "Find us",
-        "Up the stairs beside the bakery on Mill Lane.",
-        "Slow down, breathe out",
-        "Small classes for every body, seven days a week.",
-        "See the timetable",
-        "Beginners welcome",
-        "Every class has an easier option.",
-        "Twelve mats",
-        "Rooms are never crowded.",
-        "First class free",
-        "Come and try before you buy.",
-        "Stillwater Yoga",
-        "Home",
-        "Classes",
-        "Pricing",
-        "Contact",
-        "Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided."
-      ],
-      "designNotes": [
-        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #0f766e with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 8000,
-      "maxOutputTokens": 7500
-    },
-    {
-      "slug": "app-landing-site",
-      "title": "App landing site",
-      "level": 2,
-      "category": "Sites with several pages",
-      "brief": "Ledgerly is invoicing software for freelancers and the team wants a marketing site. A freelancer should understand what it does, see the main features, compare plans and get common questions answered. That makes four pages: Home, Features, Pricing and FAQ.",
-      "acceptance": [
-        "The site has 4 pages (Home, Features, Pricing, FAQ) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $0\n- $12 a month\n- $210M\n- $29 a month\n- 3 clients\n- 38,000\n- 9 days\n- Agency\n- Automatic reminders\n- average time to paid\n- Can I import clients?\n- Card and bank payments\n- Choose Agency\n- Choose Studio\n- Clients pay from the invoice itself.\n- Export a full year in one click.\n- FAQ\n- Features\n- Five team seats\n- freelancers\n- Get paid without the paperwork\n- Home\n- Invoice in any of 32 currencies.\n- invoiced last year\n- Is there a contract?\n- Ledgerly\n- Ledgerly Inc. Invoices sent in under a minute.\n- No. Pay monthly and leave whenever you like.\n- One-minute invoices\n- Pick a client, add a line, press send.\n- Polite nudges at 7, 14 and 30 days.\n- Pricing\n- Priority support\n- Send an invoice in under a minute and let Ledgerly chase it for you.\n- Solo\n- Start free\n- Studio\n- Tax-ready reports\n- Unlimited clients\n- Unlimited invoices\n- Which currencies work?\n- Yes, upload a spreadsheet and we do the rest.",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "features.html",
-          "title": "Features"
-        },
-        {
-          "id": "page3",
-          "path": "pricing.html",
-          "title": "Pricing"
-        },
-        {
-          "id": "page4",
-          "path": "faq.html",
-          "title": "FAQ"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 4 pages: Home, Features, Pricing, FAQ",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Ledgerly on the left and a menu on the right with the links Home, Features, Pricing, FAQ, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Ledgerly Inc. Invoices sent in under a minute.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Get paid without the paperwork\", one line of supporting text and a \"Start free\" button that links to another page; then a row of 3 figures, each a big number over a small label",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Features page has a row of 4 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The FAQ page has a heading \"Is there a contract?\" with one paragraph under it; then a heading \"Which currencies work?\" with one paragraph under it; then a heading \"Can I import clients?\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "Page background #f5f7fb, text #111827, and one accent colour #4f46e5 used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "One-minute invoices",
-        "Pick a client, add a line, press send.",
-        "Automatic reminders",
-        "Polite nudges at 7, 14 and 30 days.",
-        "Card and bank payments",
-        "Clients pay from the invoice itself.",
-        "Tax-ready reports",
-        "Export a full year in one click.",
-        "Solo",
-        "$0",
-        "3 clients",
-        "Unlimited invoices",
-        "Start free",
-        "Studio",
-        "$12 a month",
-        "Unlimited clients",
-        "Choose Studio",
-        "Agency",
-        "$29 a month",
-        "Five team seats",
-        "Priority support",
-        "Choose Agency",
-        "Is there a contract?",
-        "No. Pay monthly and leave whenever you like.",
-        "Which currencies work?",
-        "Invoice in any of 32 currencies.",
-        "Can I import clients?",
-        "Yes, upload a spreadsheet and we do the rest.",
-        "Get paid without the paperwork",
-        "Send an invoice in under a minute and let Ledgerly chase it for you.",
-        "38,000",
-        "freelancers",
-        "$210M",
-        "invoiced last year",
-        "9 days",
-        "average time to paid",
-        "Ledgerly",
-        "Home",
-        "Features",
-        "Pricing",
-        "FAQ",
-        "Ledgerly Inc. Invoices sent in under a minute."
-      ],
-      "designNotes": [
-        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #4f46e5 with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 8000,
-      "maxOutputTokens": 7500
-    },
-    {
-      "slug": "bookshop-site",
-      "title": "Bookshop site",
-      "level": 2,
-      "category": "Sites with several pages",
-      "brief": "Marlowe Books is an independent bookshop that wants a site with some character. Readers come for recommendations and for our events, so there are four pages: Home, Staff picks with four books, Events with the month ahead, and About with our story and hours.",
-      "acceptance": [
-        "The site has 4 pages (Home, Staff picks, Events, About) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- 11:00 am\n- 6:30 pm\n- 7:00 pm\n- 7:30 pm\n- A bookshop for the curious\n- A whole floor of pre-loved paperbacks.\n- About\n- Author evening: Claire Keegan\n- Children's story hour\n- Chosen by Aoife: one evening, one hard choice.\n- Chosen by Dara: you will look at trees differently.\n- Chosen by Niamh: a walk that changes everything.\n- Chosen by Owen: strange, short and perfect.\n- Crime fiction club\n- Date\n- Event\n- Events\n- Forty fresh titles on the front table.\n- Home\n- June 11\n- June 18\n- June 25\n- June 4\n- Marlowe Books\n- Marlowe Books opened in 1987 in a former sail loft and has never moved.\n- Marlowe Books, 3 Quay Road, Galway. Independent since 1987.\n- Monday to Saturday: 9:30 am to 6 pm\n- New this week\n- Opening hours\n- Our story\n- Piranesi\n- Poetry open mic\n- Second-hand\n- See staff picks\n- Small Things Like These\n- Staff picks\n- Sunday: 12 pm to 5 pm\n- The Overstory\n- The Salt Path\n- This month\n- Three floors of new and second-hand books by the harbour.\n- Time",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "picks.html",
-          "title": "Staff picks"
-        },
-        {
-          "id": "page3",
-          "path": "events.html",
-          "title": "Events"
-        },
-        {
-          "id": "page4",
-          "path": "about.html",
-          "title": "About"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 4 pages: Home, Staff picks, Events, About",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Marlowe Books on the left and a menu on the right with the links Home, Staff picks, Events, About, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Marlowe Books, 3 Quay Road, Galway. Independent since 1987.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"A bookshop for the curious\", one line of supporting text and a \"See staff picks\" button that links to another page; then a row of 2 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Staff picks page has a row of 4 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Events page has a heading \"This month\" over a table with the columns Date, Event, Time and 4 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The About page has a heading \"Our story\" with one paragraph under it; then a heading \"Opening hours\" over a list of 2 items",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "Page background #fbf8f1, text #2a1f14, and one accent colour #8b1e3f used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "The Salt Path",
-        "Chosen by Niamh: a walk that changes everything.",
-        "Piranesi",
-        "Chosen by Owen: strange, short and perfect.",
-        "Small Things Like These",
-        "Chosen by Aoife: one evening, one hard choice.",
-        "The Overstory",
-        "Chosen by Dara: you will look at trees differently.",
-        "This month",
-        "Date",
-        "Event",
-        "Time",
-        "June 4",
-        "Poetry open mic",
-        "7:00 pm",
-        "June 11",
-        "Crime fiction club",
-        "6:30 pm",
-        "June 18",
-        "Author evening: Claire Keegan",
-        "7:30 pm",
-        "June 25",
-        "Children's story hour",
-        "11:00 am",
-        "Our story",
-        "Marlowe Books opened in 1987 in a former sail loft and has never moved.",
-        "Opening hours",
-        "Monday to Saturday: 9:30 am to 6 pm",
-        "Sunday: 12 pm to 5 pm",
-        "A bookshop for the curious",
-        "Three floors of new and second-hand books by the harbour.",
-        "See staff picks",
-        "New this week",
-        "Forty fresh titles on the front table.",
-        "Second-hand",
-        "A whole floor of pre-loved paperbacks.",
-        "Marlowe Books",
-        "Home",
-        "Staff picks",
-        "Events",
-        "About",
-        "Marlowe Books, 3 Quay Road, Galway. Independent since 1987."
-      ],
-      "designNotes": [
-        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #8b1e3f with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 8000,
-      "maxOutputTokens": 7500
-    },
-    {
-      "slug": "agency-site",
-      "title": "Design agency site",
-      "level": 3,
-      "category": "Sites with several pages",
-      "brief": "Northlight Studio is a brand and web design agency pitching for bigger clients, and the site has to show range. A prospect should see recent work, what we offer, who they would work with and how to start a project. Five pages: Home, Work, Services, Team and Contact, on a dark background with a hot orange accent.",
-      "acceptance": [
-        "The site has 5 pages (Home, Work, Services, Team, Contact) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- €4,500 a month\n- 120\n- 14\n- 2016\n- 2018\n- 2019\n- 2022\n- 9\n- Atlas Cycles\n- Brand sprint\n- Brand strategist\n- Brands people remember\n- Budget range\n- Built in-house\n- Company\n- Contact\n- Creative director\n- Design and build\n- Design and code under one roof.\n- design awards\n- Eight weeks\n- Email\n- Every project starts with a week of listening.\n- Fjord Coffee\n- from €18,000\n- from €8,000\n- Halden Bank\n- Home\n- Identity and app for a digital bank.\n- Ines Vermeer\n- Joined\n- Kofi Mensah\n- Lead developer\n- Logo and guidelines\n- Luca Romano\n- Monthly review\n- Motion designer\n- Museum Noord\n- Name\n- Northlight Studio\n- Northlight Studio, Rotterdam. hello@northlight.example\n- Ongoing design\n- Online shop for a bike maker.\n- Packaging for a roastery in Bergen.\n- people\n- Plan a sprint\n- Plan a website\n- projects shipped\n- Retainer\n- Role\n- Sanne de Wit\n- Schiekade 105, Rotterdam. Coffee is always on.\n- See our work\n- Send brief\n- Services\n- Start a project\n- Strategy first\n- Talk retainers\n- Team\n- The people you work with\n- Two weeks\n- Visit the studio\n- Wayfinding and ticketing site.\n- We design identities and websites for companies that want to be noticed.\n- Website\n- Work\n- Your name",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "work.html",
-          "title": "Work"
-        },
-        {
-          "id": "page3",
-          "path": "services.html",
-          "title": "Services"
-        },
-        {
-          "id": "page4",
-          "path": "team.html",
-          "title": "Team"
-        },
-        {
-          "id": "page5",
-          "path": "contact.html",
-          "title": "Contact"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 5 pages: Home, Work, Services, Team, Contact",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Northlight Studio on the left and a menu on the right with the links Home, Work, Services, Team, Contact, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Northlight Studio, Rotterdam. hello@northlight.example",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Brands people remember\", one line of supporting text and a \"See our work\" button that links to another page; then a row of 3 figures, each a big number over a small label; then a row of 2 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Work page has a row of 4 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Services page has 3 price cards side by side, each with a name, a price, two points and a button",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The Team page has a heading \"The people you work with\" over a table with the columns Name, Role, Joined and 4 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "The Contact page has a form headed \"Start a project\" with the labelled fields Your name, Company, Email, Budget range and a \"Send brief\" button; then a heading \"Visit the studio\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Page background #0f1115, text #eef0f4, and one accent colour #ff5a3c used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r11",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Halden Bank",
-        "Identity and app for a digital bank.",
-        "Fjord Coffee",
-        "Packaging for a roastery in Bergen.",
-        "Atlas Cycles",
-        "Online shop for a bike maker.",
-        "Museum Noord",
-        "Wayfinding and ticketing site.",
-        "Brand sprint",
-        "from €8,000",
-        "Two weeks",
-        "Logo and guidelines",
-        "Plan a sprint",
-        "Website",
-        "from €18,000",
-        "Eight weeks",
-        "Design and build",
-        "Plan a website",
-        "Retainer",
-        "€4,500 a month",
-        "Ongoing design",
-        "Monthly review",
-        "Talk retainers",
-        "The people you work with",
-        "Name",
-        "Role",
-        "Joined",
-        "Ines Vermeer",
-        "Creative director",
-        "2016",
-        "Kofi Mensah",
-        "Lead developer",
-        "2018",
-        "Sanne de Wit",
-        "Brand strategist",
-        "2019",
-        "Luca Romano",
-        "Motion designer",
-        "2022",
-        "Start a project",
-        "Your name",
-        "Company",
-        "Email",
-        "Budget range",
-        "Send brief",
-        "Visit the studio",
-        "Schiekade 105, Rotterdam. Coffee is always on.",
-        "Brands people remember",
-        "We design identities and websites for companies that want to be noticed.",
-        "See our work",
-        "120",
-        "projects shipped",
-        "14",
-        "people",
-        "9",
-        "design awards",
-        "Strategy first",
-        "Every project starts with a week of listening.",
-        "Built in-house",
-        "Design and code under one roof.",
-        "Northlight Studio",
-        "Home",
-        "Work",
-        "Services",
-        "Team",
-        "Contact",
-        "Northlight Studio, Rotterdam. hello@northlight.example"
-      ],
-      "designNotes": [
-        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #ff5a3c with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 10000,
-      "maxOutputTokens": 9000
-    },
-    {
-      "slug": "dental-clinic-site",
-      "title": "Dental clinic site",
-      "level": 3,
-      "category": "Sites with several pages",
-      "brief": "Oakfield Dental is a family practice that wants a calm, clear website. Patients need to see what we treat, what it costs, who will look after them and how to book. Five pages: Home, Treatments, Fees with a price table, Team and Book with an appointment form.",
-      "acceptance": [
-        "The site has 5 pages (Home, Treatments, Fees, Team, Book) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- £110\n- £2,400\n- £295\n- £55\n- £62\n- 12,000\n- 2 visits\n- 30 min\n- 4\n- 4.9\n- 40 min\n- 45 min\n- 9 months\n- A full exam and clean every six months.\n- Book\n- Book an appointment\n- Braces\n- Check-ups\n- Children\n- Clear aligners\n- Clear aligners for teens and adults.\n- Custom trays to use at home.\n- Dentist with a special interest in braces.\n- dentists\n- Dr Amir Qureshi\n- Dr Hannah Reid\n- Emergencies\n- Fee\n- Fee guide\n- Fees\n- Fillings\n- Free check-ups under 18.\n- Friday: 8 am to 4 pm\n- Full name\n- Gentle dentistry for the whole family\n- Home\n- Home whitening\n- Hygienist and gum health lead.\n- Hygienist visit\n- Longer slots and no rush.\n- Lucy Barker\n- Monday to Thursday: 8 am to 6 pm\n- Nervous patients\n- New patient exam\n- Oakfield Dental\n- Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190.\n- Opening hours\n- patient rating\n- patients\n- Payment plans\n- Phone number\n- Practice manager.\n- Preferred day\n- Principal dentist, here since 2009.\n- Request an appointment\n- Request appointment\n- Same-week appointments and clear prices before any treatment.\n- Saturday: 9 am to 1 pm\n- Seen the same day.\n- Spread any treatment over £300 across twelve months at no interest.\n- Team\n- Time\n- Tom Ellis\n- Tooth-coloured and done in one visit.\n- Treatment\n- Treatments\n- What do you need?\n- White filling\n- Whitening",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "treatments.html",
-          "title": "Treatments"
-        },
-        {
-          "id": "page3",
-          "path": "fees.html",
-          "title": "Fees"
-        },
-        {
-          "id": "page4",
-          "path": "team.html",
-          "title": "Team"
-        },
-        {
-          "id": "page5",
-          "path": "book.html",
-          "title": "Book"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 5 pages: Home, Treatments, Fees, Team, Book",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Oakfield Dental on the left and a menu on the right with the links Home, Treatments, Fees, Team, Book, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Gentle dentistry for the whole family\", one line of supporting text and a \"Book an appointment\" button that links to another page; then a row of 3 figures, each a big number over a small label; then a row of 3 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Treatments page has a row of 4 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Fees page has a heading \"Fee guide\" over a table with the columns Treatment, Time, Fee and 5 rows; then a heading \"Payment plans\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The Team page has a row of 4 equal cards, each with a title and one line of text",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "The Book page has a form headed \"Request an appointment\" with the labelled fields Full name, Phone number, Preferred day, What do you need? and a \"Request appointment\" button; then a heading \"Opening hours\" over a list of 3 items",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Page background #f4f9fb, text #17303b, and one accent colour #0e7490 used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r11",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Check-ups",
-        "A full exam and clean every six months.",
-        "Fillings",
-        "Tooth-coloured and done in one visit.",
-        "Whitening",
-        "Custom trays to use at home.",
-        "Braces",
-        "Clear aligners for teens and adults.",
-        "Fee guide",
-        "Treatment",
-        "Time",
-        "Fee",
-        "New patient exam",
-        "40 min",
-        "£55",
-        "Hygienist visit",
-        "30 min",
-        "£62",
-        "White filling",
-        "45 min",
-        "£110",
-        "Home whitening",
-        "2 visits",
-        "£295",
-        "Clear aligners",
-        "9 months",
-        "£2,400",
-        "Payment plans",
-        "Spread any treatment over £300 across twelve months at no interest.",
-        "Dr Hannah Reid",
-        "Principal dentist, here since 2009.",
-        "Dr Amir Qureshi",
-        "Dentist with a special interest in braces.",
-        "Lucy Barker",
-        "Hygienist and gum health lead.",
-        "Tom Ellis",
-        "Practice manager.",
-        "Request an appointment",
-        "Full name",
-        "Phone number",
-        "Preferred day",
-        "What do you need?",
-        "Request appointment",
-        "Opening hours",
-        "Monday to Thursday: 8 am to 6 pm",
-        "Friday: 8 am to 4 pm",
-        "Saturday: 9 am to 1 pm",
-        "Gentle dentistry for the whole family",
-        "Same-week appointments and clear prices before any treatment.",
-        "Book an appointment",
-        "4",
-        "dentists",
-        "12,000",
-        "patients",
-        "4.9",
-        "patient rating",
-        "Nervous patients",
-        "Longer slots and no rush.",
-        "Children",
-        "Free check-ups under 18.",
-        "Emergencies",
-        "Seen the same day.",
-        "Oakfield Dental",
-        "Home",
-        "Treatments",
-        "Fees",
-        "Team",
-        "Book",
-        "Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190."
-      ],
-      "designNotes": [
-        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #0e7490 with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 10000,
-      "maxOutputTokens": 9000
-    },
-    {
-      "slug": "api-docs-site",
-      "title": "API product site",
-      "level": 3,
-      "category": "Sites with several pages",
-      "brief": "Relay is an API for sending text messages and the developer site needs to sell and explain it at once. A developer should grasp the product, send a first message, look up the endpoints, check the price and see what changed lately. Five pages: Home, Quickstart, Reference, Pricing and Changelog, in a monospace look.",
-      "acceptance": [
-        "The site has 5 pages (Home, Quickstart, Reference, Pricing, Changelog) and the menu switches between them",
-        "The header and footer are the same on every page",
-        "Every text on every page is spelled exactly as given",
-        "Put side by side with the reference, each page is hard to tell apart"
-      ],
-      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- /v1/messages\n- /v1/messages/:id\n- /v1/numbers\n- /v1/numbers/:id\n- $0.008 a message\n- $400 a month\n- 1.2 s\n- 190\n- 2.1\n- 2.2\n- 2.3\n- 2.4\n- 75,000 messages\n- 99.99%\n- A messaging API with delivery in 190 countries and no monthly minimum.\n- Alphanumeric sender names\n- April 22\n- Change\n- Changelog\n- Chat support\n- Choose Scale\n- Contact sales\n- countries\n- Create a key\n- Create an API key in the dashboard\n- Custom\n- Date\n- DELETE\n- Delivery webhooks retry for 24 hours\n- Email support\n- Endpoints\n- Enterprise\n- Faster number search\n- February 11\n- GET\n- Home\n- Keys that start with test_ never send a real message.\n- List messages\n- March 30\n- March 4\n- median delivery\n- Method\n- Named engineer\n- No minimum\n- Path\n- Pay as you go\n- POST\n- POST to /v1/messages with a number and a body\n- Pricing\n- Quickstart\n- Read one message\n- Read the delivery status from the response\n- Read the quickstart\n- Recent changes\n- Reference\n- Relay API\n- Relay API. Status: all systems normal.\n- Release a number\n- Rent a number\n- Scale\n- Scheduled sending\n- Send a message\n- Send a text with one request\n- Send your first message\n- Test mode\n- uptime\n- Version\n- Volume pricing\n- What it does",
-      "pages": [
-        {
-          "id": "page1",
-          "path": "index.html",
-          "title": "Home"
-        },
-        {
-          "id": "page2",
-          "path": "quickstart.html",
-          "title": "Quickstart"
-        },
-        {
-          "id": "page3",
-          "path": "reference.html",
-          "title": "Reference"
-        },
-        {
-          "id": "page4",
-          "path": "pricing.html",
-          "title": "Pricing"
-        },
-        {
-          "id": "page5",
-          "path": "changelog.html",
-          "title": "Changelog"
-        }
-      ],
-      "requirements": [
-        {
-          "id": "r1",
-          "text": "The site has 5 pages: Home, Quickstart, Reference, Pricing, Changelog",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r2",
-          "text": "A shared header on every page shows the name Relay API on the left and a menu on the right with the links Home, Quickstart, Reference, Pricing, Changelog, in that order",
-          "kind": "structure",
-          "exact": true
-        },
-        {
-          "id": "r3",
-          "text": "Each menu link opens its page, and only one page shows at a time",
-          "kind": "behaviour",
-          "exact": false
-        },
-        {
-          "id": "r4",
-          "text": "A shared footer on every page reads: Relay API. Status: all systems normal.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "r5",
-          "text": "The Home page has a large heading \"Send a text with one request\", one line of supporting text and a \"Read the quickstart\" button that links to another page; then a row of 3 figures, each a big number over a small label",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r6",
-          "text": "The Quickstart page has a heading \"Send your first message\" over a list of 3 items; then a heading \"Test mode\" with one paragraph under it",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r7",
-          "text": "The Reference page has a heading \"Endpoints\" over a table with the columns Method, Path, What it does and 5 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r8",
-          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r9",
-          "text": "The Changelog page has a heading \"Recent changes\" over a table with the columns Version, Date, Change and 4 rows",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "r10",
-          "text": "Page background #fafafa, text #18181b, and one accent colour #7c3aed used for buttons and figures",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "r11",
-          "text": "Every form field has a visible label, and headings go in order without skipping a level",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Send your first message",
-        "Create an API key in the dashboard",
-        "POST to /v1/messages with a number and a body",
-        "Read the delivery status from the response",
-        "Test mode",
-        "Keys that start with test_ never send a real message.",
-        "Endpoints",
-        "Method",
-        "Path",
-        "What it does",
-        "POST",
-        "/v1/messages",
-        "Send a message",
-        "GET",
-        "/v1/messages/:id",
-        "Read one message",
-        "List messages",
-        "/v1/numbers",
-        "Rent a number",
-        "DELETE",
-        "/v1/numbers/:id",
-        "Release a number",
-        "Pay as you go",
-        "$0.008 a message",
-        "No minimum",
-        "Email support",
-        "Create a key",
-        "Scale",
-        "$400 a month",
-        "75,000 messages",
-        "Chat support",
-        "Choose Scale",
-        "Enterprise",
-        "Custom",
-        "Volume pricing",
-        "Named engineer",
-        "Contact sales",
-        "Recent changes",
-        "Version",
-        "Date",
-        "Change",
-        "2.4",
-        "April 22",
-        "Scheduled sending",
-        "2.3",
-        "March 30",
-        "Delivery webhooks retry for 24 hours",
-        "2.2",
-        "March 4",
-        "Alphanumeric sender names",
-        "2.1",
-        "February 11",
-        "Faster number search",
-        "Send a text with one request",
-        "A messaging API with delivery in 190 countries and no monthly minimum.",
-        "Read the quickstart",
-        "99.99%",
-        "uptime",
-        "1.2 s",
-        "median delivery",
-        "190",
-        "countries",
-        "Relay API",
-        "Home",
-        "Quickstart",
-        "Reference",
-        "Pricing",
-        "Changelog",
-        "Relay API. Status: all systems normal."
-      ],
-      "designNotes": [
-        "Font family \"Courier New\", monospace; the main heading is about 52px, section headings about 28px",
-        "Content sits in a centred column about 1040px wide with 48px of space above it",
-        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
-        "Buttons are solid #7c3aed with white bold text and 6px rounded corners"
-      ],
-      "maxPromptChars": 10000,
-      "maxOutputTokens": 9000
-    },
-    {
       "slug": "mug-3d",
       "title": "Mug on a saucer",
       "kind": "scene",
@@ -11381,160 +10135,6 @@
             {
               "label": "Structure",
               "value": "Twelve meshes in one Group, returned; the goal uses a tube(name, a, b, radius, material) helper that sets the quaternion from the up vector to the tube direction"
-            }
-          ]
-        },
-        {
-          "group": "Output",
-          "items": [
-            {
-              "label": "Format",
-              "value": "JavaScript only, defining function buildScene(THREE) that returns one object"
-            },
-            {
-              "label": "Scene",
-              "value": "No lights or camera needed"
-            },
-            {
-              "label": "Dependencies",
-              "value": "Nothing but THREE"
-            }
-          ]
-        }
-      ],
-      "maxPromptChars": 3000,
-      "available": false,
-      "unavailableReason": "3D scene challenges are not playable yet."
-    },
-    {
-      "slug": "tutorial-first-shape-3d",
-      "title": "Tutorial: First 3D shape",
-      "kind": "scene",
-      "level": 1,
-      "category": "3D models",
-      "brief": "Start with one simple object. Make a smooth blue sphere that stands on the ground, centered in an otherwise empty scene. This first exercise is about returning a named mesh inside a group and keeping the model upright. This is a single prop for a small scene. The attached reference is the target; use it to judge the silhouette, balance and relative placement of the parts. Keep the model upright, centered near the origin and resting on the ground. Make the major forms readable from the front and from a three-quarter view, with enough space around the shape to see its outline. Use clean, economical geometry and leave the camera and lighting to the viewer.",
-      "acceptance": [
-        "One blue sphere is the only visible object.",
-        "The sphere is centered and touches the ground.",
-        "Its smooth shape is easy to read from every view.",
-        "The model follows the attached reference closely."
-      ],
-      "content": "Three-dimensional scene target: A single blue sphere standing upright on the ground.",
-      "requirements": [
-        {
-          "id": "parts-1",
-          "text": "Include and arrange these model parts as described: sphere.",
-          "kind": "content",
-          "exact": true
-        },
-        {
-          "id": "colours",
-          "text": "Use the described material colours for the named parts.",
-          "kind": "style",
-          "exact": false
-        },
-        {
-          "id": "grounded",
-          "text": "The complete model is upright, centered near the origin and rests on the ground.",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "silhouette",
-          "text": "The major forms make a balanced, recognizable silhouette from multiple angles.",
-          "kind": "structure",
-          "exact": false
-        },
-        {
-          "id": "group",
-          "text": "Return all named meshes together in one THREE.Group.",
-          "kind": "engineering",
-          "exact": false
-        },
-        {
-          "id": "names",
-          "text": "Give each mesh a useful name matching its role in the model.",
-          "kind": "engineering",
-          "exact": false
-        },
-        {
-          "id": "economy",
-          "text": "Use economical geometry with enough segments for smooth round parts.",
-          "kind": "engineering",
-          "exact": false
-        },
-        {
-          "id": "self-contained",
-          "text": "Build the model only from Three.js geometry and materials.",
-          "kind": "engineering",
-          "exact": false
-        },
-        {
-          "id": "scene-only",
-          "text": "Return the model without adding a camera or lights.",
-          "kind": "engineering",
-          "exact": false
-        }
-      ],
-      "keyFacts": [
-        "Tutorial: First 3D shape",
-        "A single blue sphere standing upright on the ground."
-      ],
-      "designNotes": [
-        "one blue sphere",
-        "centered on the ground",
-        "single object and material"
-      ],
-      "exactSpec": [
-        {
-          "group": "Model",
-          "items": [
-            {
-              "label": "What it is",
-              "value": "A single blue sphere standing upright on the ground."
-            },
-            {
-              "label": "Up",
-              "value": "Y"
-            },
-            {
-              "label": "Placement",
-              "value": "Upright, centered near the origin; lowest point rests at y = 0"
-            }
-          ]
-        },
-        {
-          "group": "Parts",
-          "items": [
-            {
-              "label": "sphere",
-              "value": "Sphere, radius 0.45, 24 width segments and 16 height segments, centre (0, 0.45, 0)"
-            }
-          ]
-        },
-        {
-          "group": "Colours",
-          "items": [
-            {
-              "label": "sphere",
-              "value": "#3478f6"
-            }
-          ]
-        },
-        {
-          "group": "Build",
-          "items": [
-            {
-              "label": "Mesh names",
-              "value": "Set every mesh name to the part label used above"
-            },
-            {
-              "label": "Structure",
-              "value": "Return all meshes in one THREE.Group"
-            },
-            {
-              "label": "Geometry",
-              "value": "SphereGeometry with 24 by 16 segments; one MeshStandardMaterial."
             }
           ]
         },
@@ -13385,6 +11985,1410 @@
       "maxPromptChars": 3000,
       "available": false,
       "unavailableReason": "3D scene challenges are not playable yet."
+    },
+    {
+      "slug": "cafe-site",
+      "title": "Cafe site",
+      "level": 1,
+      "category": "Sites with several pages",
+      "brief": "We need a small website for Juniper Cafe, a neighbourhood coffee shop. People look us up to see what we serve and when we are open, so the site has a welcoming Home page, a Menu page with prices and a Visit page with our hours and address.",
+      "acceptance": [
+        "The site has 3 pages (Home, Menu, Visit) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $3.00\n- $3.50\n- $4.00\n- $4.25\n- $4.75\n- 14 Alder Street, two doors down from the library.\n- Baked daily\n- Beans from two farms we know by name.\n- Butter croissant\n- Cinnamon bun\n- Coffee worth the walk\n- Croissants out of the oven at 7 am.\n- Dogs welcome\n- Espresso\n- Flat white\n- Home\n- Item\n- Juniper Cafe\n- Juniper Cafe, 14 Alder Street. Open every day.\n- Menu\n- Monday to Friday: 7 am to 5 pm\n- Oat latte\n- Opening hours\n- Price\n- Roasted weekly\n- Saturday: 8 am to 4 pm\n- See the menu\n- Small-batch roasts and fresh pastries, baked here every morning.\n- Sunday: 9 am to 2 pm\n- Visit\n- Visit us\n- Water bowls by the door.",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "menu.html",
+          "title": "Menu"
+        },
+        {
+          "id": "page3",
+          "path": "visit.html",
+          "title": "Visit"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 3 pages: Home, Menu, Visit",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Juniper Cafe on the left and a menu on the right with the links Home, Menu, Visit, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Juniper Cafe, 14 Alder Street. Open every day.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Coffee worth the walk\", one line of supporting text and a \"See the menu\" button that links to another page; then a row of 3 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Menu page has a heading \"Menu\" over a table with the columns Item, Price and 5 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Visit page has a heading \"Visit us\" with one paragraph under it; then a heading \"Opening hours\" over a list of 3 items",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Page background #faf6ef, text #2b2118, and one accent colour #b4532a used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Menu",
+        "Item",
+        "Price",
+        "Espresso",
+        "$3.00",
+        "Flat white",
+        "$4.25",
+        "Oat latte",
+        "$4.75",
+        "Butter croissant",
+        "$3.50",
+        "Cinnamon bun",
+        "$4.00",
+        "Visit us",
+        "14 Alder Street, two doors down from the library.",
+        "Opening hours",
+        "Monday to Friday: 7 am to 5 pm",
+        "Saturday: 8 am to 4 pm",
+        "Sunday: 9 am to 2 pm",
+        "Coffee worth the walk",
+        "Small-batch roasts and fresh pastries, baked here every morning.",
+        "See the menu",
+        "Roasted weekly",
+        "Beans from two farms we know by name.",
+        "Baked daily",
+        "Croissants out of the oven at 7 am.",
+        "Dogs welcome",
+        "Water bowls by the door.",
+        "Juniper Cafe",
+        "Home",
+        "Visit",
+        "Juniper Cafe, 14 Alder Street. Open every day."
+      ],
+      "designNotes": [
+        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #b4532a with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 6000,
+      "maxOutputTokens": 6000
+    },
+    {
+      "slug": "dog-walker-site",
+      "title": "Dog walker site",
+      "level": 1,
+      "category": "Sites with several pages",
+      "brief": "Pawpath is a one-person dog walking business and needs a simple site. Owners want to know what walks are on offer and how to get in touch, so there is a Home page, a Services page with three walks and their prices, and a Contact page with a short form.",
+      "acceptance": [
+        "The site has 3 pages (Home, Services, Contact) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $15\n- $25\n- $60\n- 20 minutes\n- 4 hours\n- 40+\n- 5.0\n- 6\n- 60 minutes\n- average review\n- Book a day\n- Book a stroll\n- Book an hour\n- Contact\n- Day out\n- Email\n- Friendly group and solo walks around Laurelhurst Park.\n- Group of four\n- Happy dogs, every weekday\n- Home\n- Park hour\n- Pawpath\n- Pawpath dog walking, Portland. Insured and first-aid trained.\n- Prefer to call?\n- Quick stroll\n- regular dogs\n- Ring Sam on 503 555 0142 between 8 am and 6 pm.\n- Say hello\n- See services\n- Send message\n- Services\n- Solo walk\n- Trail hike\n- years walking\n- Your dog's name\n- Your name",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "services.html",
+          "title": "Services"
+        },
+        {
+          "id": "page3",
+          "path": "contact.html",
+          "title": "Contact"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 3 pages: Home, Services, Contact",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Pawpath on the left and a menu on the right with the links Home, Services, Contact, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Pawpath dog walking, Portland. Insured and first-aid trained.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Happy dogs, every weekday\", one line of supporting text and a \"See services\" button that links to another page; then a row of 3 figures, each a big number over a small label",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Services page has 3 price cards side by side, each with a name, a price, two points and a button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Contact page has a form headed \"Say hello\" with the labelled fields Your name, Email, Your dog's name and a \"Send message\" button; then a heading \"Prefer to call?\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Page background #f3f8f4, text #1c2b22, and one accent colour #2f855a used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Quick stroll",
+        "$15",
+        "20 minutes",
+        "Solo walk",
+        "Book a stroll",
+        "Park hour",
+        "$25",
+        "60 minutes",
+        "Group of four",
+        "Book an hour",
+        "Day out",
+        "$60",
+        "4 hours",
+        "Trail hike",
+        "Book a day",
+        "Say hello",
+        "Your name",
+        "Email",
+        "Your dog's name",
+        "Send message",
+        "Prefer to call?",
+        "Ring Sam on 503 555 0142 between 8 am and 6 pm.",
+        "Happy dogs, every weekday",
+        "Friendly group and solo walks around Laurelhurst Park.",
+        "See services",
+        "6",
+        "years walking",
+        "40+",
+        "regular dogs",
+        "5.0",
+        "average review",
+        "Pawpath",
+        "Home",
+        "Services",
+        "Contact",
+        "Pawpath dog walking, Portland. Insured and first-aid trained."
+      ],
+      "designNotes": [
+        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #2f855a with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 6000,
+      "maxOutputTokens": 6000
+    },
+    {
+      "slug": "band-site",
+      "title": "Band site",
+      "level": 1,
+      "category": "Sites with several pages",
+      "brief": "The Lanterns are a four-piece folk band with a new record out. Fans come to hear about the album and find a show near them, so the site is two pages: Home, about the new record, and Shows, a table of tour dates. It is a dark site with warm amber accents.",
+      "acceptance": [
+        "The site has 2 pages (Home, Shows) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- A limited run of 500 amber records.\n- Asheville\n- Chicago\n- City\n- Date\n- Find a show\n- Home\n- Listen\n- May 12\n- May 3\n- May 5\n- May 9\n- Minneapolis\n- Nashville\n- New album: Slow Rivers\n- Out now on every streaming service.\n- Schubas\n- Shows\n- Ten songs recorded live in a barn over one week in March.\n- The Basement\n- The Grey Eagle\n- The Lanterns\n- The Lanterns. Booking: hello@thelanterns.example\n- Tour dates\n- Turf Club\n- Venue\n- Vinyl",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "shows.html",
+          "title": "Shows"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 2 pages: Home, Shows",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name The Lanterns on the left and a menu on the right with the links Home, Shows, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: The Lanterns. Booking: hello@thelanterns.example",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"New album: Slow Rivers\", one line of supporting text and a \"Find a show\" button that links to another page; then a row of 2 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Shows page has a heading \"Tour dates\" over a table with the columns Date, City, Venue and 4 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "Page background #15131a, text #f3eefc, and one accent colour #f59e0b used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Tour dates",
+        "Date",
+        "City",
+        "Venue",
+        "May 3",
+        "Asheville",
+        "The Grey Eagle",
+        "May 5",
+        "Nashville",
+        "The Basement",
+        "May 9",
+        "Chicago",
+        "Schubas",
+        "May 12",
+        "Minneapolis",
+        "Turf Club",
+        "New album: Slow Rivers",
+        "Ten songs recorded live in a barn over one week in March.",
+        "Find a show",
+        "Listen",
+        "Out now on every streaming service.",
+        "Vinyl",
+        "A limited run of 500 amber records.",
+        "The Lanterns",
+        "Home",
+        "Shows",
+        "The Lanterns. Booking: hello@thelanterns.example"
+      ],
+      "designNotes": [
+        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #f59e0b with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 6000,
+      "maxOutputTokens": 6000
+    },
+    {
+      "slug": "yoga-studio-site",
+      "title": "Yoga studio site",
+      "level": 2,
+      "category": "Sites with several pages",
+      "brief": "Stillwater Yoga is opening a second room and wants a proper website. New students need to see what a week looks like, what it costs and how to sign up, so the site has four pages: Home, Classes with the weekly timetable, Pricing with three passes, and Contact with a sign-up form.",
+      "acceptance": [
+        "The site has 4 pages (Home, Classes, Pricing, Contact) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- £12\n- £65 a month\n- £95\n- 12:15 pm\n- 6:30 pm\n- 7:00 am\n- 9:00 am\n- Anika\n- Beginners welcome\n- Book your free class\n- Buy a class\n- Buy a pass\n- Cancel any time\n- Class\n- Classes\n- Come and try before you buy.\n- Contact\n- Day\n- Drop in\n- Email address\n- Every class\n- Every class has an easier option.\n- Family yoga\n- Find us\n- First class free\n- Full name\n- Home\n- Join now\n- Lunch stretch\n- Monday\n- Morning flow\n- No booking fee\n- One class\n- Power flow\n- Pricing\n- Priya\n- Request a place\n- Rooms are never crowded.\n- Saturday\n- See the timetable\n- Slow down, breathe out\n- Small classes for every body, seven days a week.\n- Stillwater Yoga\n- Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided.\n- Teacher\n- Ten classes\n- Ten pass\n- Thursday\n- Time\n- Tomas\n- Tuesday\n- Twelve mats\n- Unlimited\n- Up the stairs beside the bakery on Mill Lane.\n- Valid six months\n- Wednesday\n- Weekly timetable\n- Which class?\n- Yin",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "classes.html",
+          "title": "Classes"
+        },
+        {
+          "id": "page3",
+          "path": "pricing.html",
+          "title": "Pricing"
+        },
+        {
+          "id": "page4",
+          "path": "contact.html",
+          "title": "Contact"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 4 pages: Home, Classes, Pricing, Contact",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Stillwater Yoga on the left and a menu on the right with the links Home, Classes, Pricing, Contact, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Slow down, breathe out\", one line of supporting text and a \"See the timetable\" button that links to another page; then a row of 3 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Classes page has a heading \"Weekly timetable\" over a table with the columns Day, Time, Class, Teacher and 5 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The Contact page has a form headed \"Book your free class\" with the labelled fields Full name, Email address, Which class? and a \"Request a place\" button; then a heading \"Find us\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Page background #f7f5f2, text #27303a, and one accent colour #0f766e used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Weekly timetable",
+        "Day",
+        "Time",
+        "Class",
+        "Teacher",
+        "Monday",
+        "7:00 am",
+        "Morning flow",
+        "Priya",
+        "Tuesday",
+        "6:30 pm",
+        "Yin",
+        "Tomas",
+        "Wednesday",
+        "12:15 pm",
+        "Lunch stretch",
+        "Thursday",
+        "Power flow",
+        "Anika",
+        "Saturday",
+        "9:00 am",
+        "Family yoga",
+        "Drop in",
+        "£12",
+        "One class",
+        "No booking fee",
+        "Buy a class",
+        "Ten pass",
+        "£95",
+        "Ten classes",
+        "Valid six months",
+        "Buy a pass",
+        "Unlimited",
+        "£65 a month",
+        "Every class",
+        "Cancel any time",
+        "Join now",
+        "Book your free class",
+        "Full name",
+        "Email address",
+        "Which class?",
+        "Request a place",
+        "Find us",
+        "Up the stairs beside the bakery on Mill Lane.",
+        "Slow down, breathe out",
+        "Small classes for every body, seven days a week.",
+        "See the timetable",
+        "Beginners welcome",
+        "Every class has an easier option.",
+        "Twelve mats",
+        "Rooms are never crowded.",
+        "First class free",
+        "Come and try before you buy.",
+        "Stillwater Yoga",
+        "Home",
+        "Classes",
+        "Pricing",
+        "Contact",
+        "Stillwater Yoga, 8 Mill Lane, Bristol. Mats and blocks provided."
+      ],
+      "designNotes": [
+        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #0f766e with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 8000,
+      "maxOutputTokens": 7500
+    },
+    {
+      "slug": "app-landing-site",
+      "title": "App landing site",
+      "level": 2,
+      "category": "Sites with several pages",
+      "brief": "Ledgerly is invoicing software for freelancers and the team wants a marketing site. A freelancer should understand what it does, see the main features, compare plans and get common questions answered. That makes four pages: Home, Features, Pricing and FAQ.",
+      "acceptance": [
+        "The site has 4 pages (Home, Features, Pricing, FAQ) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- $0\n- $12 a month\n- $210M\n- $29 a month\n- 3 clients\n- 38,000\n- 9 days\n- Agency\n- Automatic reminders\n- average time to paid\n- Can I import clients?\n- Card and bank payments\n- Choose Agency\n- Choose Studio\n- Clients pay from the invoice itself.\n- Export a full year in one click.\n- FAQ\n- Features\n- Five team seats\n- freelancers\n- Get paid without the paperwork\n- Home\n- Invoice in any of 32 currencies.\n- invoiced last year\n- Is there a contract?\n- Ledgerly\n- Ledgerly Inc. Invoices sent in under a minute.\n- No. Pay monthly and leave whenever you like.\n- One-minute invoices\n- Pick a client, add a line, press send.\n- Polite nudges at 7, 14 and 30 days.\n- Pricing\n- Priority support\n- Send an invoice in under a minute and let Ledgerly chase it for you.\n- Solo\n- Start free\n- Studio\n- Tax-ready reports\n- Unlimited clients\n- Unlimited invoices\n- Which currencies work?\n- Yes, upload a spreadsheet and we do the rest.",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "features.html",
+          "title": "Features"
+        },
+        {
+          "id": "page3",
+          "path": "pricing.html",
+          "title": "Pricing"
+        },
+        {
+          "id": "page4",
+          "path": "faq.html",
+          "title": "FAQ"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 4 pages: Home, Features, Pricing, FAQ",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Ledgerly on the left and a menu on the right with the links Home, Features, Pricing, FAQ, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Ledgerly Inc. Invoices sent in under a minute.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Get paid without the paperwork\", one line of supporting text and a \"Start free\" button that links to another page; then a row of 3 figures, each a big number over a small label",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Features page has a row of 4 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The FAQ page has a heading \"Is there a contract?\" with one paragraph under it; then a heading \"Which currencies work?\" with one paragraph under it; then a heading \"Can I import clients?\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Page background #f5f7fb, text #111827, and one accent colour #4f46e5 used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "One-minute invoices",
+        "Pick a client, add a line, press send.",
+        "Automatic reminders",
+        "Polite nudges at 7, 14 and 30 days.",
+        "Card and bank payments",
+        "Clients pay from the invoice itself.",
+        "Tax-ready reports",
+        "Export a full year in one click.",
+        "Solo",
+        "$0",
+        "3 clients",
+        "Unlimited invoices",
+        "Start free",
+        "Studio",
+        "$12 a month",
+        "Unlimited clients",
+        "Choose Studio",
+        "Agency",
+        "$29 a month",
+        "Five team seats",
+        "Priority support",
+        "Choose Agency",
+        "Is there a contract?",
+        "No. Pay monthly and leave whenever you like.",
+        "Which currencies work?",
+        "Invoice in any of 32 currencies.",
+        "Can I import clients?",
+        "Yes, upload a spreadsheet and we do the rest.",
+        "Get paid without the paperwork",
+        "Send an invoice in under a minute and let Ledgerly chase it for you.",
+        "38,000",
+        "freelancers",
+        "$210M",
+        "invoiced last year",
+        "9 days",
+        "average time to paid",
+        "Ledgerly",
+        "Home",
+        "Features",
+        "Pricing",
+        "FAQ",
+        "Ledgerly Inc. Invoices sent in under a minute."
+      ],
+      "designNotes": [
+        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #4f46e5 with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 8000,
+      "maxOutputTokens": 7500
+    },
+    {
+      "slug": "bookshop-site",
+      "title": "Bookshop site",
+      "level": 2,
+      "category": "Sites with several pages",
+      "brief": "Marlowe Books is an independent bookshop that wants a site with some character. Readers come for recommendations and for our events, so there are four pages: Home, Staff picks with four books, Events with the month ahead, and About with our story and hours.",
+      "acceptance": [
+        "The site has 4 pages (Home, Staff picks, Events, About) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- 11:00 am\n- 6:30 pm\n- 7:00 pm\n- 7:30 pm\n- A bookshop for the curious\n- A whole floor of pre-loved paperbacks.\n- About\n- Author evening: Claire Keegan\n- Children's story hour\n- Chosen by Aoife: one evening, one hard choice.\n- Chosen by Dara: you will look at trees differently.\n- Chosen by Niamh: a walk that changes everything.\n- Chosen by Owen: strange, short and perfect.\n- Crime fiction club\n- Date\n- Event\n- Events\n- Forty fresh titles on the front table.\n- Home\n- June 11\n- June 18\n- June 25\n- June 4\n- Marlowe Books\n- Marlowe Books opened in 1987 in a former sail loft and has never moved.\n- Marlowe Books, 3 Quay Road, Galway. Independent since 1987.\n- Monday to Saturday: 9:30 am to 6 pm\n- New this week\n- Opening hours\n- Our story\n- Piranesi\n- Poetry open mic\n- Second-hand\n- See staff picks\n- Small Things Like These\n- Staff picks\n- Sunday: 12 pm to 5 pm\n- The Overstory\n- The Salt Path\n- This month\n- Three floors of new and second-hand books by the harbour.\n- Time",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "picks.html",
+          "title": "Staff picks"
+        },
+        {
+          "id": "page3",
+          "path": "events.html",
+          "title": "Events"
+        },
+        {
+          "id": "page4",
+          "path": "about.html",
+          "title": "About"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 4 pages: Home, Staff picks, Events, About",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Marlowe Books on the left and a menu on the right with the links Home, Staff picks, Events, About, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Marlowe Books, 3 Quay Road, Galway. Independent since 1987.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"A bookshop for the curious\", one line of supporting text and a \"See staff picks\" button that links to another page; then a row of 2 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Staff picks page has a row of 4 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Events page has a heading \"This month\" over a table with the columns Date, Event, Time and 4 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The About page has a heading \"Our story\" with one paragraph under it; then a heading \"Opening hours\" over a list of 2 items",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "Page background #fbf8f1, text #2a1f14, and one accent colour #8b1e3f used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "The Salt Path",
+        "Chosen by Niamh: a walk that changes everything.",
+        "Piranesi",
+        "Chosen by Owen: strange, short and perfect.",
+        "Small Things Like These",
+        "Chosen by Aoife: one evening, one hard choice.",
+        "The Overstory",
+        "Chosen by Dara: you will look at trees differently.",
+        "This month",
+        "Date",
+        "Event",
+        "Time",
+        "June 4",
+        "Poetry open mic",
+        "7:00 pm",
+        "June 11",
+        "Crime fiction club",
+        "6:30 pm",
+        "June 18",
+        "Author evening: Claire Keegan",
+        "7:30 pm",
+        "June 25",
+        "Children's story hour",
+        "11:00 am",
+        "Our story",
+        "Marlowe Books opened in 1987 in a former sail loft and has never moved.",
+        "Opening hours",
+        "Monday to Saturday: 9:30 am to 6 pm",
+        "Sunday: 12 pm to 5 pm",
+        "A bookshop for the curious",
+        "Three floors of new and second-hand books by the harbour.",
+        "See staff picks",
+        "New this week",
+        "Forty fresh titles on the front table.",
+        "Second-hand",
+        "A whole floor of pre-loved paperbacks.",
+        "Marlowe Books",
+        "Home",
+        "Staff picks",
+        "Events",
+        "About",
+        "Marlowe Books, 3 Quay Road, Galway. Independent since 1987."
+      ],
+      "designNotes": [
+        "Font family Georgia, serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #8b1e3f with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 8000,
+      "maxOutputTokens": 7500
+    },
+    {
+      "slug": "agency-site",
+      "title": "Design agency site",
+      "level": 3,
+      "category": "Sites with several pages",
+      "brief": "Northlight Studio is a brand and web design agency pitching for bigger clients, and the site has to show range. A prospect should see recent work, what we offer, who they would work with and how to start a project. Five pages: Home, Work, Services, Team and Contact, on a dark background with a hot orange accent.",
+      "acceptance": [
+        "The site has 5 pages (Home, Work, Services, Team, Contact) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- €4,500 a month\n- 120\n- 14\n- 2016\n- 2018\n- 2019\n- 2022\n- 9\n- Atlas Cycles\n- Brand sprint\n- Brand strategist\n- Brands people remember\n- Budget range\n- Built in-house\n- Company\n- Contact\n- Creative director\n- Design and build\n- Design and code under one roof.\n- design awards\n- Eight weeks\n- Email\n- Every project starts with a week of listening.\n- Fjord Coffee\n- from €18,000\n- from €8,000\n- Halden Bank\n- Home\n- Identity and app for a digital bank.\n- Ines Vermeer\n- Joined\n- Kofi Mensah\n- Lead developer\n- Logo and guidelines\n- Luca Romano\n- Monthly review\n- Motion designer\n- Museum Noord\n- Name\n- Northlight Studio\n- Northlight Studio, Rotterdam. hello@northlight.example\n- Ongoing design\n- Online shop for a bike maker.\n- Packaging for a roastery in Bergen.\n- people\n- Plan a sprint\n- Plan a website\n- projects shipped\n- Retainer\n- Role\n- Sanne de Wit\n- Schiekade 105, Rotterdam. Coffee is always on.\n- See our work\n- Send brief\n- Services\n- Start a project\n- Strategy first\n- Talk retainers\n- Team\n- The people you work with\n- Two weeks\n- Visit the studio\n- Wayfinding and ticketing site.\n- We design identities and websites for companies that want to be noticed.\n- Website\n- Work\n- Your name",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "work.html",
+          "title": "Work"
+        },
+        {
+          "id": "page3",
+          "path": "services.html",
+          "title": "Services"
+        },
+        {
+          "id": "page4",
+          "path": "team.html",
+          "title": "Team"
+        },
+        {
+          "id": "page5",
+          "path": "contact.html",
+          "title": "Contact"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 5 pages: Home, Work, Services, Team, Contact",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Northlight Studio on the left and a menu on the right with the links Home, Work, Services, Team, Contact, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Northlight Studio, Rotterdam. hello@northlight.example",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Brands people remember\", one line of supporting text and a \"See our work\" button that links to another page; then a row of 3 figures, each a big number over a small label; then a row of 2 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Work page has a row of 4 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Services page has 3 price cards side by side, each with a name, a price, two points and a button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The Team page has a heading \"The people you work with\" over a table with the columns Name, Role, Joined and 4 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The Contact page has a form headed \"Start a project\" with the labelled fields Your name, Company, Email, Budget range and a \"Send brief\" button; then a heading \"Visit the studio\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Page background #0f1115, text #eef0f4, and one accent colour #ff5a3c used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Halden Bank",
+        "Identity and app for a digital bank.",
+        "Fjord Coffee",
+        "Packaging for a roastery in Bergen.",
+        "Atlas Cycles",
+        "Online shop for a bike maker.",
+        "Museum Noord",
+        "Wayfinding and ticketing site.",
+        "Brand sprint",
+        "from €8,000",
+        "Two weeks",
+        "Logo and guidelines",
+        "Plan a sprint",
+        "Website",
+        "from €18,000",
+        "Eight weeks",
+        "Design and build",
+        "Plan a website",
+        "Retainer",
+        "€4,500 a month",
+        "Ongoing design",
+        "Monthly review",
+        "Talk retainers",
+        "The people you work with",
+        "Name",
+        "Role",
+        "Joined",
+        "Ines Vermeer",
+        "Creative director",
+        "2016",
+        "Kofi Mensah",
+        "Lead developer",
+        "2018",
+        "Sanne de Wit",
+        "Brand strategist",
+        "2019",
+        "Luca Romano",
+        "Motion designer",
+        "2022",
+        "Start a project",
+        "Your name",
+        "Company",
+        "Email",
+        "Budget range",
+        "Send brief",
+        "Visit the studio",
+        "Schiekade 105, Rotterdam. Coffee is always on.",
+        "Brands people remember",
+        "We design identities and websites for companies that want to be noticed.",
+        "See our work",
+        "120",
+        "projects shipped",
+        "14",
+        "people",
+        "9",
+        "design awards",
+        "Strategy first",
+        "Every project starts with a week of listening.",
+        "Built in-house",
+        "Design and code under one roof.",
+        "Northlight Studio",
+        "Home",
+        "Work",
+        "Services",
+        "Team",
+        "Contact",
+        "Northlight Studio, Rotterdam. hello@northlight.example"
+      ],
+      "designNotes": [
+        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #ff5a3c with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 10000,
+      "maxOutputTokens": 9000
+    },
+    {
+      "slug": "dental-clinic-site",
+      "title": "Dental clinic site",
+      "level": 3,
+      "category": "Sites with several pages",
+      "brief": "Oakfield Dental is a family practice that wants a calm, clear website. Patients need to see what we treat, what it costs, who will look after them and how to book. Five pages: Home, Treatments, Fees with a price table, Team and Book with an appointment form.",
+      "acceptance": [
+        "The site has 5 pages (Home, Treatments, Fees, Team, Book) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- £110\n- £2,400\n- £295\n- £55\n- £62\n- 12,000\n- 2 visits\n- 30 min\n- 4\n- 4.9\n- 40 min\n- 45 min\n- 9 months\n- A full exam and clean every six months.\n- Book\n- Book an appointment\n- Braces\n- Check-ups\n- Children\n- Clear aligners\n- Clear aligners for teens and adults.\n- Custom trays to use at home.\n- Dentist with a special interest in braces.\n- dentists\n- Dr Amir Qureshi\n- Dr Hannah Reid\n- Emergencies\n- Fee\n- Fee guide\n- Fees\n- Fillings\n- Free check-ups under 18.\n- Friday: 8 am to 4 pm\n- Full name\n- Gentle dentistry for the whole family\n- Home\n- Home whitening\n- Hygienist and gum health lead.\n- Hygienist visit\n- Longer slots and no rush.\n- Lucy Barker\n- Monday to Thursday: 8 am to 6 pm\n- Nervous patients\n- New patient exam\n- Oakfield Dental\n- Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190.\n- Opening hours\n- patient rating\n- patients\n- Payment plans\n- Phone number\n- Practice manager.\n- Preferred day\n- Principal dentist, here since 2009.\n- Request an appointment\n- Request appointment\n- Same-week appointments and clear prices before any treatment.\n- Saturday: 9 am to 1 pm\n- Seen the same day.\n- Spread any treatment over £300 across twelve months at no interest.\n- Team\n- Time\n- Tom Ellis\n- Tooth-coloured and done in one visit.\n- Treatment\n- Treatments\n- What do you need?\n- White filling\n- Whitening",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "treatments.html",
+          "title": "Treatments"
+        },
+        {
+          "id": "page3",
+          "path": "fees.html",
+          "title": "Fees"
+        },
+        {
+          "id": "page4",
+          "path": "team.html",
+          "title": "Team"
+        },
+        {
+          "id": "page5",
+          "path": "book.html",
+          "title": "Book"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 5 pages: Home, Treatments, Fees, Team, Book",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Oakfield Dental on the left and a menu on the right with the links Home, Treatments, Fees, Team, Book, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Gentle dentistry for the whole family\", one line of supporting text and a \"Book an appointment\" button that links to another page; then a row of 3 figures, each a big number over a small label; then a row of 3 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Treatments page has a row of 4 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Fees page has a heading \"Fee guide\" over a table with the columns Treatment, Time, Fee and 5 rows; then a heading \"Payment plans\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The Team page has a row of 4 equal cards, each with a title and one line of text",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The Book page has a form headed \"Request an appointment\" with the labelled fields Full name, Phone number, Preferred day, What do you need? and a \"Request appointment\" button; then a heading \"Opening hours\" over a list of 3 items",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Page background #f4f9fb, text #17303b, and one accent colour #0e7490 used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Check-ups",
+        "A full exam and clean every six months.",
+        "Fillings",
+        "Tooth-coloured and done in one visit.",
+        "Whitening",
+        "Custom trays to use at home.",
+        "Braces",
+        "Clear aligners for teens and adults.",
+        "Fee guide",
+        "Treatment",
+        "Time",
+        "Fee",
+        "New patient exam",
+        "40 min",
+        "£55",
+        "Hygienist visit",
+        "30 min",
+        "£62",
+        "White filling",
+        "45 min",
+        "£110",
+        "Home whitening",
+        "2 visits",
+        "£295",
+        "Clear aligners",
+        "9 months",
+        "£2,400",
+        "Payment plans",
+        "Spread any treatment over £300 across twelve months at no interest.",
+        "Dr Hannah Reid",
+        "Principal dentist, here since 2009.",
+        "Dr Amir Qureshi",
+        "Dentist with a special interest in braces.",
+        "Lucy Barker",
+        "Hygienist and gum health lead.",
+        "Tom Ellis",
+        "Practice manager.",
+        "Request an appointment",
+        "Full name",
+        "Phone number",
+        "Preferred day",
+        "What do you need?",
+        "Request appointment",
+        "Opening hours",
+        "Monday to Thursday: 8 am to 6 pm",
+        "Friday: 8 am to 4 pm",
+        "Saturday: 9 am to 1 pm",
+        "Gentle dentistry for the whole family",
+        "Same-week appointments and clear prices before any treatment.",
+        "Book an appointment",
+        "4",
+        "dentists",
+        "12,000",
+        "patients",
+        "4.9",
+        "patient rating",
+        "Nervous patients",
+        "Longer slots and no rush.",
+        "Children",
+        "Free check-ups under 18.",
+        "Emergencies",
+        "Seen the same day.",
+        "Oakfield Dental",
+        "Home",
+        "Treatments",
+        "Fees",
+        "Team",
+        "Book",
+        "Oakfield Dental, 22 Station Road, Leeds. Emergency line: 0113 555 0190."
+      ],
+      "designNotes": [
+        "Font family Arial, sans-serif; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #0e7490 with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 10000,
+      "maxOutputTokens": 9000
+    },
+    {
+      "slug": "api-docs-site",
+      "title": "API product site",
+      "level": 3,
+      "category": "Sites with several pages",
+      "brief": "Relay is an API for sending text messages and the developer site needs to sell and explain it at once. A developer should grasp the product, send a first message, look up the endpoints, check the price and see what changed lately. Five pages: Home, Quickstart, Reference, Pricing and Changelog, in a monospace look.",
+      "acceptance": [
+        "The site has 5 pages (Home, Quickstart, Reference, Pricing, Changelog) and the menu switches between them",
+        "The header and footer are the same on every page",
+        "Every text on every page is spelled exactly as given",
+        "Put side by side with the reference, each page is hard to tell apart"
+      ],
+      "content": "Every text on the site, spelled exactly, in alphabetical order (the order says nothing about which page a text is on or where it goes):\n- /v1/messages\n- /v1/messages/:id\n- /v1/numbers\n- /v1/numbers/:id\n- $0.008 a message\n- $400 a month\n- 1.2 s\n- 190\n- 2.1\n- 2.2\n- 2.3\n- 2.4\n- 75,000 messages\n- 99.99%\n- A messaging API with delivery in 190 countries and no monthly minimum.\n- Alphanumeric sender names\n- April 22\n- Change\n- Changelog\n- Chat support\n- Choose Scale\n- Contact sales\n- countries\n- Create a key\n- Create an API key in the dashboard\n- Custom\n- Date\n- DELETE\n- Delivery webhooks retry for 24 hours\n- Email support\n- Endpoints\n- Enterprise\n- Faster number search\n- February 11\n- GET\n- Home\n- Keys that start with test_ never send a real message.\n- List messages\n- March 30\n- March 4\n- median delivery\n- Method\n- Named engineer\n- No minimum\n- Path\n- Pay as you go\n- POST\n- POST to /v1/messages with a number and a body\n- Pricing\n- Quickstart\n- Read one message\n- Read the delivery status from the response\n- Read the quickstart\n- Recent changes\n- Reference\n- Relay API\n- Relay API. Status: all systems normal.\n- Release a number\n- Rent a number\n- Scale\n- Scheduled sending\n- Send a message\n- Send a text with one request\n- Send your first message\n- Test mode\n- uptime\n- Version\n- Volume pricing\n- What it does",
+      "pages": [
+        {
+          "id": "page1",
+          "path": "index.html",
+          "title": "Home"
+        },
+        {
+          "id": "page2",
+          "path": "quickstart.html",
+          "title": "Quickstart"
+        },
+        {
+          "id": "page3",
+          "path": "reference.html",
+          "title": "Reference"
+        },
+        {
+          "id": "page4",
+          "path": "pricing.html",
+          "title": "Pricing"
+        },
+        {
+          "id": "page5",
+          "path": "changelog.html",
+          "title": "Changelog"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "r1",
+          "text": "The site has 5 pages: Home, Quickstart, Reference, Pricing, Changelog",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r2",
+          "text": "A shared header on every page shows the name Relay API on the left and a menu on the right with the links Home, Quickstart, Reference, Pricing, Changelog, in that order",
+          "kind": "structure",
+          "exact": true
+        },
+        {
+          "id": "r3",
+          "text": "Each menu link opens its page, and only one page shows at a time",
+          "kind": "behaviour",
+          "exact": false
+        },
+        {
+          "id": "r4",
+          "text": "A shared footer on every page reads: Relay API. Status: all systems normal.",
+          "kind": "content",
+          "exact": true
+        },
+        {
+          "id": "r5",
+          "text": "The Home page has a large heading \"Send a text with one request\", one line of supporting text and a \"Read the quickstart\" button that links to another page; then a row of 3 figures, each a big number over a small label",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r6",
+          "text": "The Quickstart page has a heading \"Send your first message\" over a list of 3 items; then a heading \"Test mode\" with one paragraph under it",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r7",
+          "text": "The Reference page has a heading \"Endpoints\" over a table with the columns Method, Path, What it does and 5 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r8",
+          "text": "The Pricing page has 3 price cards side by side, each with a name, a price, two points and a button",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r9",
+          "text": "The Changelog page has a heading \"Recent changes\" over a table with the columns Version, Date, Change and 4 rows",
+          "kind": "structure",
+          "exact": false
+        },
+        {
+          "id": "r10",
+          "text": "Page background #fafafa, text #18181b, and one accent colour #7c3aed used for buttons and figures",
+          "kind": "style",
+          "exact": false
+        },
+        {
+          "id": "r11",
+          "text": "Every form field has a visible label, and headings go in order without skipping a level",
+          "kind": "engineering",
+          "exact": false
+        }
+      ],
+      "keyFacts": [
+        "Send your first message",
+        "Create an API key in the dashboard",
+        "POST to /v1/messages with a number and a body",
+        "Read the delivery status from the response",
+        "Test mode",
+        "Keys that start with test_ never send a real message.",
+        "Endpoints",
+        "Method",
+        "Path",
+        "What it does",
+        "POST",
+        "/v1/messages",
+        "Send a message",
+        "GET",
+        "/v1/messages/:id",
+        "Read one message",
+        "List messages",
+        "/v1/numbers",
+        "Rent a number",
+        "DELETE",
+        "/v1/numbers/:id",
+        "Release a number",
+        "Pay as you go",
+        "$0.008 a message",
+        "No minimum",
+        "Email support",
+        "Create a key",
+        "Scale",
+        "$400 a month",
+        "75,000 messages",
+        "Chat support",
+        "Choose Scale",
+        "Enterprise",
+        "Custom",
+        "Volume pricing",
+        "Named engineer",
+        "Contact sales",
+        "Recent changes",
+        "Version",
+        "Date",
+        "Change",
+        "2.4",
+        "April 22",
+        "Scheduled sending",
+        "2.3",
+        "March 30",
+        "Delivery webhooks retry for 24 hours",
+        "2.2",
+        "March 4",
+        "Alphanumeric sender names",
+        "2.1",
+        "February 11",
+        "Faster number search",
+        "Send a text with one request",
+        "A messaging API with delivery in 190 countries and no monthly minimum.",
+        "Read the quickstart",
+        "99.99%",
+        "uptime",
+        "1.2 s",
+        "median delivery",
+        "190",
+        "countries",
+        "Relay API",
+        "Home",
+        "Quickstart",
+        "Reference",
+        "Pricing",
+        "Changelog",
+        "Relay API. Status: all systems normal."
+      ],
+      "designNotes": [
+        "Font family \"Courier New\", monospace; the main heading is about 52px, section headings about 28px",
+        "Content sits in a centred column about 1040px wide with 48px of space above it",
+        "Cards have a 1px border, 10px rounded corners and 22px of padding, in a row with 20px gaps",
+        "Buttons are solid #7c3aed with white bold text and 6px rounded corners"
+      ],
+      "maxPromptChars": 10000,
+      "maxOutputTokens": 9000
     }
   ]
 }

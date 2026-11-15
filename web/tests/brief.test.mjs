@@ -88,5 +88,5 @@ test("filterByCategory: all, one category, and classic for entries with none", (
   assert.deepEqual(["Components", "Marketing and content", "App screens and data", "Forms, commerce and documents", "", "Other"].map(api.normCategory), ["components", "marketing", "apps", "forms", undefined, undefined]);
   assert.equal(api.formatOf({ requirements: [] }), "brief");
   assert.equal(api.formatOf({ requirements: [], spec: [] }), "spec");
-  assert.deepEqual(api.CATEGORY_FILTERS, ["all", "components", "marketing", "apps", "forms", "sites", "3d", "classic"]);
+  assert.deepEqual(api.CATEGORY_FILTERS, ["all", "tutorials", "components", "marketing", "apps", "forms", "sites", "3d", "classic"]);
 });

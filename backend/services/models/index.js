@@ -7,11 +7,11 @@
 //   high-volume tasks) and https://developers.openai.com/api/docs/guides/streaming-responses
 //   (Responses API, stream: true, SSE "response.output_text.delta" with "delta").
 // - Anthropic: Messages API with stream: true (content_block_delta / text_delta); default model
-//   "claude-haiku-5-5" as agreed for this project.
+//   "claude-sonnet-5-5" (the ids openai-mini and claude-haiku are kept so saved runs still match).
 
 export const MODELS = [
-  { id: 'openai-mini', label: 'OpenAI mini', provider: 'openai', keyEnv: 'OPENAI_API_KEY', modelEnv: 'OPENAI_MODEL', defaultModel: 'gpt-6-luna' },
-  { id: 'claude-haiku', label: 'Claude Haiku', provider: 'anthropic', keyEnv: 'ANTHROPIC_API_KEY', modelEnv: 'ANTHROPIC_MODEL', defaultModel: 'claude-haiku-5-5' },
+  { id: 'openai-mini', label: 'OpenAI Sol', provider: 'openai', keyEnv: 'OPENAI_API_KEY', modelEnv: 'OPENAI_MODEL', defaultModel: 'gpt-6-sol' },
+  { id: 'claude-haiku', label: 'Claude Sonnet', provider: 'anthropic', keyEnv: 'ANTHROPIC_API_KEY', modelEnv: 'ANTHROPIC_MODEL', defaultModel: 'claude-sonnet-5-5' },
 ];
 
 // Fallback only: each challenge carries its own maxOutputTokens (challengeStore.js, default per kind).

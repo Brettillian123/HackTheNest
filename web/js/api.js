@@ -532,7 +532,7 @@ function youName() {
 // ---------------------------------------------------------------- challenges
 
 // Challenge categories, in filter order. A challenge with no category is "classic" in the list filter.
-export const CATEGORIES = ["components", "marketing", "apps", "forms", "sites", "3d"];
+export const CATEGORIES = ["tutorials", "components", "marketing", "apps", "forms", "sites", "3d"];
 export const CATEGORY_FILTERS = ["all", ...CATEGORIES, "classic"];
 export const REQUIREMENT_KINDS = ["content", "structure", "behaviour", "style", "engineering"];
 // Category ids; long labels ("Marketing and content", "App screens and data") map by their first word.

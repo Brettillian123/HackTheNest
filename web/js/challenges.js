@@ -5,7 +5,9 @@ import { listChallenges, me, isSimulated, filterByCategory, categoryOf, CATEGORY
 
 const LEVELS = ['all', '1', '2', '3'];
 const SORTS = ['level', 'solved'];
-const CAT_LABEL = { components: 'Components', marketing: 'Marketing', apps: 'Apps', forms: 'Forms', sites: 'Multi-page', '3d': '3D', classic: 'Classic' };
+// Tutorials are listed first, in their own order.
+const tut = (c) => (categoryOf(c) === 'tutorials' ? 0 : 1);
+const CAT_LABEL = { tutorials: 'Tutorials', components: 'Components', marketing: 'Marketing', apps: 'Apps', forms: 'Forms', sites: 'Multi-page', '3d': '3D', classic: 'Classic' };
 const CHEVRON = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 2.5L9.5 7 5 11.5"/></svg>';
 
 const listEl = document.getElementById('list');
@@ -73,7 +75,7 @@ function render() {
   items = items.slice().sort((a, b) =>
     state.sort === 'solved'
       ? (b.solvedCount || 0) - (a.solvedCount || 0) || a.level - b.level
-      : a.level - b.level || (b.solvedCount || 0) - (a.solvedCount || 0));
+      : tut(a) - tut(b) || (tut(a) === 0 ? a.title.localeCompare(b.title) : 0) || a.level - b.level || (b.solvedCount || 0) - (a.solvedCount || 0));
 
   if (!items.length) {
     listEl.innerHTML =
