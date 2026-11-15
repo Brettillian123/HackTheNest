@@ -146,6 +146,7 @@ function buildChallenge(c, index, { source, dirs, levels, viewport, bySlug, prob
     viewport: c.viewport ? { width: c.viewport.width, height: c.viewport.height } : viewport,
     spec: format === 'spec' ? c.spec || [] : null,
     requirements: format === 'brief' ? c.requirements.map(r => ({ id: r.id, text: r.text, kind: r.kind, exact: r.exact })) : [],
+    pages: Array.isArray(c.pages) && c.pages.every(p => p && /^[a-z][a-z0-9-]{0,30}$/.test(p.id) && /^[a-z0-9-]{1,40}\.html$/.test(p.path) && typeof p.title === 'string') ? c.pages.slice(0, 5).map(p => ({ id: p.id, path: p.path, title: p.title.slice(0, 60) })) : null,
     keyFacts: Array.isArray(c.keyFacts) ? c.keyFacts.slice() : [],
     designNotes: Array.isArray(c.designNotes) ? c.designNotes.slice() : [],
     acceptance: Array.isArray(c.acceptance) ? c.acceptance.slice() : null,

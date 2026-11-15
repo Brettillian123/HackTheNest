@@ -5,7 +5,7 @@ import { listChallenges, me, isSimulated, filterByCategory, categoryOf, CATEGORY
 
 const LEVELS = ['all', '1', '2', '3'];
 const SORTS = ['level', 'solved'];
-const CAT_LABEL = { components: 'Components', marketing: 'Marketing', apps: 'Apps', forms: 'Forms', classic: 'Classic' };
+const CAT_LABEL = { components: 'Components', marketing: 'Marketing', apps: 'Apps', forms: 'Forms', sites: 'Multi-page', classic: 'Classic' };
 const CHEVRON = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 2.5L9.5 7 5 11.5"/></svg>';
 
 const listEl = document.getElementById('list');
